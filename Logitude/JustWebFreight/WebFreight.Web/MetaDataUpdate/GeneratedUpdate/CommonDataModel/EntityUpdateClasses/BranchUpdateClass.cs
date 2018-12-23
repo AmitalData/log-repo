@@ -119,6 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    CodeField =  "Code",
 			      				    NameField =  "EnglishName",
 			      				    ClientModuleName =  "Common",
+			      				    DescriptionDefaultText =  "Define your company’s branches and specify default data, such as ports, that applies at each branch.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

@@ -632,8 +632,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                           IsInternationalPartner = a.IsInternationalPartner,
                                           EnglishName= a.EnglishName,
                                           VatNumber = a.VatNumber,
-                                          
-                                  }
+                                          LocalName = a.LocalName
+                                      }
                                       ).ToList();
 
             List<GLAccountList> glaccounts = (from a in context.GLAccounts.Include("AccountingCompanyType").Include("TaxWithholdingAssessOffice").Include("WithholdingTaxDeductionType")
@@ -801,7 +801,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         byVendorList.VendorCity = selectedVendor.CityName;
                         byVendorList.IsAutonomy = selectedVendor.IsAutonomy;
                         byVendorList.IsInternationlPartner = selectedVendor.IsInternationalPartner;
-                    
+                    byVendorList.VendorLocalName = selectedVendor.LocalName;
                 }
                 byVendorList.SumOfAmountInLocalCurrency = item.AmountInLocalCurrency;
                 byVendorList.SumOfTaxDeductionLocalAmount = item.TaxDeductionLocalAmount;

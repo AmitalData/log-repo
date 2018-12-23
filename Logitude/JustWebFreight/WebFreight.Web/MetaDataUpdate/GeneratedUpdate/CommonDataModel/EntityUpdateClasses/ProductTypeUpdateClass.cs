@@ -125,6 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsLookUp =  true,
 			      				    SearchFields =  "ProductType,ProductTypes,,Code,",
 			      				    ClientModuleName =  "Common",
+			      				    DescriptionDefaultText =  "Define the types of products offered to customers.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

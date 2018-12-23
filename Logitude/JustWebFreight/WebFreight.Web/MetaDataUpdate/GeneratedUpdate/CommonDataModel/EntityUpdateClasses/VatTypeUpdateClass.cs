@@ -121,6 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    SearchFields =  "VatType,VatTypes,,Id,",
 			      				    CodeField =  "Code",
 			      				    NameField =  "EnglishName",
+			      				    DescriptionDefaultText =  "Maintain the types of VAT applied in your country. Update the VAT percents according to dates.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

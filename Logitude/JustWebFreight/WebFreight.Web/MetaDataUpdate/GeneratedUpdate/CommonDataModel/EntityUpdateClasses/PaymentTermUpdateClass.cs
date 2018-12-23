@@ -127,6 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    CodeField =  "Code",
 			      				    NameField =  "EnglishName",
 			      				    ClientModuleName =  "Common",
+			      				    DescriptionDefaultText =  "Define payment terms, specifying the number of days for calculating payment due date for invoices.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

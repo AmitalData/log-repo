@@ -367,7 +367,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ChargesGroupQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CARG", Name = "ChargesGroups" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -382,7 +382,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllChargesGroupsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ChargesGroupTextCode_0.Id, Code = "All Charges Groups",  QueryGroupCode = "CARG", IndexOrder = 1, Tenant = 0, ObjectTableId = ChargesGroupObjectTable.Id, QuerySection = "ChargesGroup", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ChargesGroupFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllChargesGroupsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ChargesGroupTextCode_0.Id, Code = "All Charges Groups",  QueryGroupCode = "CARG", IndexOrder = 1, Tenant = 0, ObjectTableId = ChargesGroupObjectTable.Id, QuerySection = "ChargesGroup", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ChargesGroupFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllChargesGroupsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChargesGroupsQuery.Id, IndexOrder = 1, ObjectFieldId = ChargesGroupObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ChargesGroupObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -429,10 +429,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   Feature ChargesGroupGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ChargesGroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChargesGroup.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CHGG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == ChargesGroupObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ChargesGroupObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ChargesGroup.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CHGG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ChargesGroupGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ChargesGroupObjectTable.Id, TabNameTextCodeId = ChargesGroupGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

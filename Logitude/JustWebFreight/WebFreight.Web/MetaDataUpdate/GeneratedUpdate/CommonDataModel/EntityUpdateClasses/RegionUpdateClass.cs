@@ -114,6 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsEditable =  true,
 			      				    ClientModuleName =  "Common",
 			      				    Code =  "RGQG",
+			      				    DescriptionDefaultText =  "Define the geographic regions to be used for specifying customers' regional location.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

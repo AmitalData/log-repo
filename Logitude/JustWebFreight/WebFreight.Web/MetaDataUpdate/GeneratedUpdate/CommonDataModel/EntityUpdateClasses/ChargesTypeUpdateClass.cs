@@ -121,12 +121,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    NewWizardComponentPath =  "./Common/Components/Maintenance/ChargesType/NewChargesTypeComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  false,
+			      				    AllowedForComputingPartners =  true,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
-			      				    IsLookUp =  false,
+			      				    IsLookUp =  true,
 			      				    SearchFields =  "ChargesType,ChargesTypes,Simplog.FreightLib.Views.ChargesTypes.ChargesTypeWizard.NewChargesTypeControlCommand,Id,",
+			      				    DescriptionDefaultText =  "Add and maintain the services you use or provide, both for receivable and payable transactions. Define properties for billing and printing on AWB.",
+			      				    CodeField =  "Code",
+			      				    NameField =  "EnglishName",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

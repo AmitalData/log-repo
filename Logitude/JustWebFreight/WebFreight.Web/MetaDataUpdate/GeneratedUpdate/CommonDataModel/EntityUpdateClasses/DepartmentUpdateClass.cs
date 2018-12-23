@@ -116,6 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    CustomFieldsCount =  0,
 			      				    SearchFields =  "Department,Departments,,Id,",
 			      				    ClientModuleName =  "Common",
+			      				    DescriptionDefaultText =  "Define your organization’s departments.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

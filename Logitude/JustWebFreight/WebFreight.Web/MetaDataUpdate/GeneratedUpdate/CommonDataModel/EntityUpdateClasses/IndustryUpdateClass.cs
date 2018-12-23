@@ -114,6 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsEditable =  true,
 			      				    ClientModuleName =  "Common",
 			      				    Code =  "IDST",
+			      				    DescriptionDefaultText =  "Define industries for use in queries and reports.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
