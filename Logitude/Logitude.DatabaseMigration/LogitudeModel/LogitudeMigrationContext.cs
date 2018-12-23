@@ -3443,6 +3443,19 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         #endregion
 
         #region Infrastructure Generated
+        public IDbSet<BIReport> BIReports
+        {
+            get;
+            set;
+
+        }
+        public IDbSet<BIReportsType> BIReportsTypes
+        {
+            get;
+            set;
+
+        }
+
         public IDbSet<BusinessRole> BusinessRoles
         {
             get;
@@ -4190,6 +4203,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
 
             #region Infrastructure Generated
+            modelBuilder.Configurations.Add(new BIReportMap());
+            modelBuilder.Configurations.Add(new BIReportsTypeMap());
             modelBuilder.Configurations.Add(new BusinessRoleMap());
             modelBuilder.Configurations.Add(new BusinessProcessQueueMap());
             modelBuilder.Configurations.Add(new TeamMap());

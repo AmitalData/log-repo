@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
@@ -65,7 +65,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             this.DisplaySATPaymentMethod = true;
         }
 
-        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARInvoiceEditExchangeRate")) {
+        if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
     }
@@ -183,19 +183,26 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     SetUIProperties_ExchangeRate() {
         var isFieldtEnabled = true;
 
-        if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
+        if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARInvoiceEditExchangeRate")) {
             isFieldtEnabled = false;
         }
 
-        else if (SessionLocator.TenantPM.CurrencyId == null) {
-            isFieldtEnabled = false;
+        else {
+            if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
+                isFieldtEnabled = false;
+            }
+
+            else if (SessionLocator.TenantPM.CurrencyId == null) {
+                isFieldtEnabled = false;
+            }
+
+            else if (SessionLocator.TenantPM.CurrencyId == this.InvoiceCurrencyId) {
+                isFieldtEnabled = false;
+            }
         }
 
-        else if (SessionLocator.TenantPM.CurrencyId == this.InvoiceCurrencyId) {
-            isFieldtEnabled = false;
-        }
-
-        this.RateIsEnabled = isFieldtEnabled;
+        //this.RateIsEnabled = isFieldtEnabled;
+        this.RateIsEnabled = true;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isFieldtEnabled);
     }
     SetUIProperties_General(isEnabled: boolean) {

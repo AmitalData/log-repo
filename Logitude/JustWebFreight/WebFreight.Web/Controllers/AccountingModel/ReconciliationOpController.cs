@@ -83,31 +83,22 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
         {
             try
             {
-                
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
 
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Reconciliation", "NEW", authToken.Tenant);
-                var accountingContext = AccountingContext.GetContext(authToken.Tenant);
-                var qs = new LedgerTransactionListQueryService(accountingContext);
-                
-                ReconciliationUpdateService service = new ReconciliationUpdateService(accountingContext, new Dictionary<string, IContext>(), entityPm.Tenant);
-                if (entityPm.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
-                {
-                    throw new Exception("Meanwhile Only Insert Enable ");
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.CheckContactFeature("Reconciliation", "NEW", authToken.Tenant);
+
+                    CreateReconciliationService recoService = new CreateReconciliationService();
+                    entityPm.Tenant = authToken.Tenant;
+                    RecoCallback recoCallback = recoService.CreateReconciliation(entityPm);
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, recoCallback);
                 }
-                entityPm.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                foreach (var item in entityPm.ReconciliationLines)
-                {
-                    item.ChangeSetOp = ChangeSetOperation.Insert;
-                }
-                entityPm.Tenant = authToken.Tenant;
-                //entityPm.AccountId = gLAccountId;
-                service.Update(entityPm, true);
-                return Request.CreateResponse(HttpStatusCode.OK, entityPm);
             }
-
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));

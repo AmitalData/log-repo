@@ -126,6 +126,7 @@ export class HomeComponent {
     public IsDataBackupVisible: boolean = false;
     public IsFillLocalStorageVisible: boolean = false;
     public IsDocumentsBackupVisible: boolean = false;
+    public IsCurrenciesRatesVisible: boolean = false;
     InitializeAppHeader() {
         this.EnvironmentUrl = Environment.GetEnvironmentUrl();
         this.EnvironmentSRC = Environment.GetEnvironmentIcon();
@@ -139,6 +140,10 @@ export class HomeComponent {
 
         else if (FeatureLocator.HasFeaturePermession("General", "General.Features.Customization")) {
             this.IsCustomizationVisible = true;
+        }
+                
+        if (!this.IsLogBox && FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
+            this.IsCurrenciesRatesVisible = true;
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "SIGNATURESETTING")) {

@@ -57,11 +57,6 @@ export class CustomsShipperPM {
     public set ValidityEndDate(newValue: Date) { if (this.validityEndDate != newValue) { this.validityEndDate = newValue; this.MarkAsDirty("ValidityEndDate"); } }
        
 	 
-    private futureDepositionExist: boolean;
-    public get FutureDepositionExist() { return this.futureDepositionExist; }
-    public set FutureDepositionExist(newValue: boolean) { if (this.futureDepositionExist != newValue) { this.futureDepositionExist = newValue; this.MarkAsDirty("FutureDepositionExist"); } }
-       
-	 
     private searchFields: string;
     public get SearchFields() { return this.searchFields; }
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }

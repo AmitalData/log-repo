@@ -45,5 +45,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LastActionByUserId { get; set; }
+
+        public string ChangeSetOp { get; set; }
     }
 }
