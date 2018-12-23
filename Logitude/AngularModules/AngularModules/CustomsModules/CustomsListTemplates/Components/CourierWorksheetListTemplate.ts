@@ -18,12 +18,9 @@ import { SendALLCorrectRequestParams } from '../../../Customs/DataContract/Reque
 import { ResponseDataBase } from '../../../Customs/DataContract/ResponseData/ResponseDataBase';
 import { CustomsRequestsSheetPM } from '../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 import { CourierMasterService } from '../../../Customs/Services/Others/CourierMasterService';
-import {GenericRequestParams} from '../../../Customs/DataContract/RequestParams/GenericRequestParams';
 import {SendRequestVIA} from '../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import {ShowProgressBarParams, CustomMessageProgressComponent} from '../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import {DeclarationWebService} from '../../../Customs/Services/WebServices/DeclarationWebService';
-import {SplitButtonComponent} from '../../../Controls/All/SplitButtonComponent';
-import {MANIFESTRequestRequestParams} from '../../../Customs/DataContract/RequestParams/MANIFESTRequestRequestParams'; 
 import { CourierWorksheetSharedDataService } from '../../../Customs/Services/DataChange/CourierWorksheetSharedDataService';
 import { SendDeclarationService } from '../../../CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendDeclarationComponent';
 import { SendManifestService } from '../../../CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendManifestComponent';
@@ -34,6 +31,8 @@ import {DeclarationCourierStatusPMService} from '../../../Customs/Services/Stand
 import {DeclarationCourierStatusPM} from '../../../Customs/EntityPMs/DeclarationCourierStatusPM';
 import { DeclarationCourierStatusList } from '../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { DeclarationCourierStatusListService } from '../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
+import { DeclarationMamanSpecialActionPMService } from '../../../Customs/Services/StandardPMs/DeclarationMamanSpecialActionPMService';
+import { DeclarationMamanSpecialActionPM } from '../../../Customs/EntityPMs/DeclarationMamanSpecialActionPM';
 import { retry } from 'rxjs/operator/retry';
 
 @Component({
@@ -68,6 +67,8 @@ export class CourierWorksheetListTemplate {
 
     _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
     _CourierMasterService: CourierMasterService = new CourierMasterService();
+    _DeclarationMamanSpecialActionPMService: DeclarationMamanSpecialActionPMService = new DeclarationMamanSpecialActionPMService();
+    _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
 
     FirePreventSelect() {
         SessionLocator.CurrentSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
@@ -463,4 +464,63 @@ export class CourierWorksheetListTemplate {
         }
     }
 
+    MamanStickerCommand(event, declarationId, mode) {
+        this.ButtonClick(event);
+
+        var logitudeWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        var declarationIdList = [];
+
+        this._DeclarationMamanSpecialActionPMService.get(declarationId,"4").subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                declarationIdList.push(response.Result);
+                windowArgs.DeclarationIdList = declarationIdList;
+                windowArgs.CourierHawb = this._CourierWorksheet.CourierHawb;
+                windowArgs.Mode = mode;
+
+                if (mode == "Delete") {
+                    var confirm = new ConfirmWindow();
+                    confirm.Width = 350;
+                    confirm.Height = 200;
+                    confirm.Title = "ביטול הפקת מדבקה";
+                    confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+                    confirm.ShowNoButton = true;
+                    confirm.Show("אשר שליחת מסר ביטול פעולה מיוחדת של הדפסת מדבקה");
+                    confirm.WindowClosed.subscribe((event: any) => {
+                        if (confirm.Yes) {
+                            this.CancelMamanSticker(response.Result);
+                        }
+                        confirm.Close();
+                    });
+                }
+                else {
+                    if (mode == "Update") {
+                        windowArgs.CourierPendingReasonCode = this._CourierWorksheet.CourierPendingReasonCode;
+                        windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
+                    }
+                    logitudeWindow.Width = 450;
+                    logitudeWindow.Height = 280;
+                    logitudeWindow.IsShowCloseButton = false;
+                    logitudeWindow.Title = "סימון ב Pending";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+                    logitudeWindow.WindowArgs = windowArgs;
+                    logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
+                    logitudeWindow.WindowClosed.subscribe(($event: any) => {
+                        //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
+                        this.RefreshData();
+                    });
+                }
+            }
+        });
+
+        this.CD.detectChanges();
+    }
+
+    CancelMamanSticker(declarationMamanSpecialActionPM: DeclarationMamanSpecialActionPM) {
+        //SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        //this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.Id, this.EntityPM.Tenant)
+        //    .subscribe((myResponse: ServiceResponse) => {
+        //        SessionLocator.CurrentSession.StopBusyIndicator();
+
+        //    });
+    }
 }

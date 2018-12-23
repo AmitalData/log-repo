@@ -36,6 +36,7 @@ using WebFreight.Web.Security;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.Models;
+using Logitude.Customs.BL.Messaging.Maman;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -1639,6 +1640,41 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         }
 
+        //DeclarationMamanSpecialAction
+        public HttpResponseMessage GetDeclarationMamanSpecialAction(string declarationId, int tenant, string actionCode, string mamanSpecialActionCode)
+        {
+            try
+            {
+                ICustomContext myContext = CustomContext.GetContext(tenant);
+                CourierGWMessageECSpclMamanRequestService courierGWMessageECSpclMamanRequestService = new CourierGWMessageECSpclMamanRequestService();
+                MamanActionCodeUpdateOrCancel mamanActionCode = MamanActionCodeUpdateOrCancel.Upsert;
+                MamanSpecialCode mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
+                if (actionCode == "C")
+                {
+                    mamanActionCode = MamanActionCodeUpdateOrCancel.Cancel;
+                }
+                switch(mamanSpecialActionCode)
+                {
+                    case "2":
+                        mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
+                        break;
+                    case "4":
+                        mamanSpecialCode = MamanSpecialCode.StickerPrinting;
+                        break;
+                    case "5":
+                        mamanSpecialCode = MamanSpecialCode.PrintDocuments;
+                        break;
+                }
+
+                string actionResultString = courierGWMessageECSpclMamanRequestService.BuildQueueSendWebAPI(declarationId, tenant, mamanActionCode, mamanSpecialCode);
+                return Request.CreateResponse(HttpStatusCode.OK, actionResultString);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
     
 }
