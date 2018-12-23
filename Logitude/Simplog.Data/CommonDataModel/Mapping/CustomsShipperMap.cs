@@ -29,7 +29,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ValidDepositionNumber).HasColumnName("ValidDepositionNumber");
             this.Property(t => t.ValidityStartDate).HasColumnName("ValidityStartDate");
             this.Property(t => t.ValidityEndDate).HasColumnName("ValidityEndDate");
-            this.Property(t => t.FutureDepositionExist).HasColumnName("FutureDepositionExist");
             this.HasRequired(t => t.Card).WithOptional(t => t.CustomsShipper);
 
         }
