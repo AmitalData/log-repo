@@ -1783,6 +1783,7 @@
     <Compile Include="InfrastructureModel\Tools\Validating\TipsVisibilityValidating.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\TipValidating.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\TraceEventValidating.cs" />
+    <Compile Include="Interfaces\ILoggedContactUtil.cs" />
     <Compile Include="Interfaces\IQuoteTemplateReportHelper.cs" />
     <Compile Include="Interfaces\IRulesValidator.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARInvoice.Generated.cs" />
@@ -2177,6 +2178,7 @@
     <Compile Include="QuoteModel\Tools\TraceEvents\QuoteTracing.QuoteStage.cs" />
     <Compile Include="QuoteModel\Tools\Validating\QuotetValidating.cs" />
     <Compile Include="Security\AutenticationException.cs" />
+    <Compile Include="Security\LoggedContactUtil.cs" />
     <Compile Include="Security\SecurityUtility.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\AirPackage.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Commodity.Generated.cs" />
