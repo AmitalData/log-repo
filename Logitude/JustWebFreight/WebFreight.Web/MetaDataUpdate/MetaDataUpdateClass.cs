@@ -33323,7 +33323,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "State",
-                FullFieldLable = "State",
+                FullFieldLable = "StateId",
                 FieldName = "StateId",
                 FieldsDataType = "LookUp",
                 MaxLength = 15,
@@ -34319,7 +34319,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowListIndex = 1,
                 DisplayInSearchWindowFilters = true,
                 DisplayInSearchWindowFiltersIndex = 1,
-                FullFieldLable = "Name",
+                FullFieldLable = "EnglishName",
                 FieldName = "EnglishName",
                 FieldsDataType = "Text",
                 IsCustom = false,
@@ -51627,7 +51627,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowListIndex = 1,
                 DisplayInSearchWindowFilters = true,
                 DisplayInSearchWindowFiltersIndex = 0,
-                FullFieldLable = "English Name",
+                FullFieldLable = "EnglishName",
                 FieldName = "EnglishName",
                 FieldsDataType = "Text",
                 IsCustom = false,
@@ -64973,6 +64973,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTablePM DWHSettingObjectTable = objectTables.Where(d => d.Name == "DWHSetting").FirstOrDefault();
             ObjectTablePM DWObjectTableObjectTable = objectTables.Where(d => d.Name == "DWObjectTable").FirstOrDefault();
             ObjectTablePM DWObjectFieldObjectTable = objectTables.Where(d => d.Name == "DWObjectField").FirstOrDefault();
+
             #endregion
 
             Dictionary<string, Feature> TenantFeatures = FeaturesRepository.GetFeaturesByTenant(tenant).ToDictionary(d => d.Code.Trim() + d.ObjectTableId, a => a);
@@ -66923,7 +66924,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature menuFeature_BP1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "MENU", Packagable = true, Code = "General.Features.BusinessProcessQueue", NameTextCodeCode = "General.Features.BusinessProcessQueue", NameTextCodeDefaultText = "Business Process Queues" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature menuFeature_BP2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "MENU", Packagable = true, Code = "General.Features.BusinessProcessBusinessRole", NameTextCodeCode = "General.Features.BusinessProcessBusinessRole", NameTextCodeDefaultText = "Business Process Business Roles" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature menuFeature_BP3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "MENU", Packagable = true, Code = "General.Features.BusinessProcessTeam", NameTextCodeCode = "General.Features.BusinessProcessTeam", NameTextCodeDefaultText = "Business Process Teams" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            #endregion 
+            #endregion
+
 
             textCodeRep.SubmitChanges();
             FeaturesRepository.SubmitChanges();
