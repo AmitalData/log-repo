@@ -104,8 +104,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
 
-                if (item.JournalLineNumber.ToString().Length > 9) { item.JournalLineNumber.ToString().Substring(0, 9); }
-                myStringBuilder.Append(item.JournalLineNumber.ToString().PadLeft(9, '0'));
+                if (item.JournalLineNumber.ToString().Length > 9) { item.JournalLineNumber.ToString().Substring(0, 5); }
+                myStringBuilder.Append(item.JournalLineNumber.ToString().PadLeft(5, '0'));
 
                 myStringBuilder.Append(' ', 8);
                 myStringBuilder.Append(' ', 15);
@@ -140,8 +140,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append("000");
                 if (item.Notes != null)
                 {
-                    if (item.Notes.Length > 50) { item.Notes.Substring(0, 50); }
+                    if (item.Notes.Length > 50) { item.Notes= item.Notes.Substring(0, 50); }
                     myStringBuilder.Append(item.Notes.PadLeft(50, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append(' ', 50);
                 }
 
                 var DocumentDate = String.Format("{0:yyyyMMdd}", item.DocumentDate);
