@@ -341,11 +341,13 @@ namespace Logitude.Accounting.Data.Repositories
 
         public List<Journal> GetARInvoiceJournals(DateTime? taxReportMonth, int tenant)
         {
+            int days= DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
+            DateTime date = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days);
             return (from a in context.Journals
                     join r in context.JournalLines on a.Id equals r.JournalId
                     join m in context.JournalAdditionalDatas on a.Id equals m.JournalId
                     where a.AccountingEntityCode == "2" && (m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode == null) && a.Tenant== tenant
-                    && r.DocumentDate <= taxReportMonth && m.TaxReportId==null
+                    && r.DocumentDate <= date && m.TaxReportId==null
 
                     select a).ToList();
 
