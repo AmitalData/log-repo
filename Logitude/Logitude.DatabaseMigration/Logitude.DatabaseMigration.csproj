@@ -430,6 +430,14 @@
     <Compile Include="Migrations\201812230937269_AbedDeleteFieldFutureDepositionExistFromCustomShipper.Designer.cs">
       <DependentUpon>201812230937269_AbedDeleteFieldFutureDepositionExistFromCustomShipper.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812230838425_AddBIReportsDB_Maheera.cs" />
+    <Compile Include="Migrations\201812230838425_AddBIReportsDB_Maheera.Designer.cs">
+      <DependentUpon>201812230838425_AddBIReportsDB_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812231037225_UpdateBIReportType_Maheera.cs" />
+    <Compile Include="Migrations\201812231037225_UpdateBIReportType_Maheera.Designer.cs">
+      <DependentUpon>201812231037225_UpdateBIReportType_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -690,6 +698,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812230937269_AbedDeleteFieldFutureDepositionExistFromCustomShipper.resx">
       <DependentUpon>201812230937269_AbedDeleteFieldFutureDepositionExistFromCustomShipper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812230838425_AddBIReportsDB_Maheera.resx">
+      <DependentUpon>201812230838425_AddBIReportsDB_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812231037225_UpdateBIReportType_Maheera.resx">
+      <DependentUpon>201812231037225_UpdateBIReportType_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
