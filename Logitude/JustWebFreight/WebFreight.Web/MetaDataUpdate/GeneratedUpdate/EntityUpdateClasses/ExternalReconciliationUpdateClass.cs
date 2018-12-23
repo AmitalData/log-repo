@@ -812,12 +812,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature ExternalReconciliationEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalReconciliation.Tab.Events", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliationFeatures.EREV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ERDT",HtmlComponentName = "ExternalRecoDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/ExternalReconciliation/ExternalRecoDetailsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "ExternalReconciliation.Tab.Details" && d.ObjectTableId == ExternalReconciliationObjectTable.Id).FirstOrDefault().Id, ControlPath = "ExternalRecoDetailsTabComponent", ObjectTableId = ExternalReconciliationObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ExternalReconciliation.TH.Details" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ERDT",HtmlComponentName = "ExternalRecoDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/ExternalReconciliation/ExternalRecoDetailsTabComponent", FeatureId = ExternalReconciliationDetailsFeature_TH0.Id, ControlPath = "ExternalRecoDetailsTabComponent", ObjectTableId = ExternalReconciliationObjectTable.Id, TabNameTextCodeId = ExternalReconciliationDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EREV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "ExternalReconciliation.Tab.Events" && d.ObjectTableId == ExternalReconciliationObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ExternalReconciliationObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ExternalReconciliation.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EREV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ExternalReconciliationEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ExternalReconciliationObjectTable.Id, TabNameTextCodeId = ExternalReconciliationEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -895,7 +895,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable ExternalReconciliationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ExternalReconciliation" && d.Tenant == 0).FirstOrDefault();       
     
 			   Feature ExternalReconciliationFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExtReconciliationCancelMenuButton", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.CancelReconcileMenuButton", NameTextCodeDefaultText = "Cancel Reconciltiation", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

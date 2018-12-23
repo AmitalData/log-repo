@@ -47,7 +47,7 @@ export class OpenFormatReportMenuButtonsHandler {
                                 break;
                             }
 
-                        case "OFMR":
+                        case "OPDL":
                             {
                                 if (this.EntityPM.StatusTypeCode != "3") {
                                     button.IsDisabled = true;

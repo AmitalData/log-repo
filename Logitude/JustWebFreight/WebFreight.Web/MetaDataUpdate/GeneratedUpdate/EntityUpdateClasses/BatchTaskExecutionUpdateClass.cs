@@ -172,9 +172,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  "Create Date",
+					  						DefaultText =  @"Create Date",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  "Create Date",
+					  						ListLableDefaultText =  @"Create Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -228,7 +228,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  "Created By",
+					  						DefaultText =  @"Created By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -282,9 +282,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search ...",
+					  						DefaultText =  @"Search ...",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "Search ...",
+					  						ListLableDefaultText =  @"Search ...",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -339,9 +339,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClassName",
-					  						DefaultText =  "Class Name",
+					  						DefaultText =  @"Class Name",
 					  						ListFieldLable =  "ClassNameListLable",
-					  						ListLableDefaultText =  "Class Name",
+					  						ListLableDefaultText =  @"Class Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -395,9 +395,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PrametersXml",
-					  						DefaultText =  "Prameters Xml ",
+					  						DefaultText =  @"Prameters Xml ",
 					  						ListFieldLable =  "PrametersXmlListLable",
-					  						ListLableDefaultText =  "Prameters Xml ",
+					  						ListLableDefaultText =  @"Prameters Xml ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -451,9 +451,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusCode",
-					  						DefaultText =  "Status",
+					  						DefaultText =  @"Status",
 					  						ListFieldLable =  "StatusCodeListLable",
-					  						ListLableDefaultText =  "Status Code",
+					  						ListLableDefaultText =  @"Status Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -508,9 +508,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ErrorLog",
-					  						DefaultText =  "Error Log ",
+					  						DefaultText =  @"Error Log ",
 					  						ListFieldLable =  "ErrorLogListLable",
-					  						ListLableDefaultText =  "Error Log ",
+					  						ListLableDefaultText =  @"Error Log ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -564,9 +564,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StartDateTime",
-					  						DefaultText =  "Start Date Time",
+					  						DefaultText =  @"Start Date Time",
 					  						ListFieldLable =  "StartDateTimeListLable",
-					  						ListLableDefaultText =  "Start Date Time",
+					  						ListLableDefaultText =  @"Start Date Time",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -620,9 +620,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DoneDateTime",
-					  						DefaultText =  "Done Date Time",
+					  						DefaultText =  @"Done Date Time",
 					  						ListFieldLable =  "DoneDateTimeListLable",
-					  						ListLableDefaultText =  "Done Date Time",
+					  						ListLableDefaultText =  @"Done Date Time",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -676,9 +676,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ProgressMessage",
-					  						DefaultText =  "Progress Message ",
+					  						DefaultText =  @"Progress Message ",
 					  						ListFieldLable =  "ProgressMessageListLable",
-					  						ListLableDefaultText =  "Progress Message ",
+					  						ListLableDefaultText =  @"Progress Message ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -732,9 +732,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ProgressPercentage",
-					  						DefaultText =  "Progress Percentage ",
+					  						DefaultText =  @"Progress Percentage ",
 					  						ListFieldLable =  "ProgressPercentageListLable",
-					  						ListLableDefaultText =  "Progress Percentage ",
+					  						ListLableDefaultText =  @"Progress Percentage ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -789,9 +789,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusName",
-					  						DefaultText =  "Status Name",
+					  						DefaultText =  @"Status Name",
 					  						ListFieldLable =  "StatusNameListLable",
-					  						ListLableDefaultText =  "Status",
+					  						ListLableDefaultText =  @"Status",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -845,9 +845,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserName",
-					  						DefaultText =  "Created By",
+					  						DefaultText =  @"Created By",
 					  						ListFieldLable =  "CreatedByUserNameListLable",
-					  						ListLableDefaultText =  "Created By",
+					  						ListLableDefaultText =  @"Created By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -901,9 +901,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Subject",
-					  						DefaultText =  "Subject",
+					  						DefaultText =  @"Subject",
 					  						ListFieldLable =  "SubjectListLable",
-					  						ListLableDefaultText =  "Subject",
+					  						ListLableDefaultText =  @"Subject",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -955,9 +955,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CallStack",
-					  						DefaultText =  "Call Stack",
+					  						DefaultText =  @"Call Stack",
 					  						ListFieldLable =  "CallStackListLable",
-					  						ListLableDefaultText =  "Call Stack",
+					  						ListLableDefaultText =  @"Call Stack",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -975,7 +975,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup BatchTaskExecutionQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "2fc2", Name = " Query Group" }, queryGroupRepository);
 						QueryGroup BatchTaskExecutionQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "173e", Name = " Query Group" }, queryGroupRepository);
@@ -991,7 +991,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query BTEAllTasksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BatchTaskExecutionTextCode_0.Id, Code = "BTEAllTasks",  QueryGroupCode = "2fc2", IndexOrder = 0, Tenant = 0, ObjectTableId = BatchTaskExecutionObjectTable.Id, QuerySection = "BatchTaskExecution", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BatchTaskExecutionFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query BTEAllTasksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BatchTaskExecutionTextCode_0.Id, Code = "BTEAllTasks",  QueryGroupCode = "2fc2", IndexOrder = 0, Tenant = 0, ObjectTableId = BatchTaskExecutionObjectTable.Id, QuerySection = "BatchTaskExecution", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BatchTaskExecutionFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn BTEAllTasksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BTEAllTasksQuery.Id, IndexOrder = 0, ObjectFieldId = BatchTaskExecutionObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1068,14 +1068,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature BatchTaskExecutionParametersFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BatchTaskExecution.Tab.Parameters", ObjectTableId = BatchTaskExecutionObjectTable.Id, Tenant = 0, NameTextCodeCode = "BatchTaskExecutionFeatures.BTEP", NameTextCodeDefaultText = "Parameters", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BTEG",HtmlComponentName = "BTEGeneralTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/BatchTaskExecution/BTEGeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "BatchTaskExecution.Tab.General" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ControlPath = "BTEGeneralTabComponent", ObjectTableId = BatchTaskExecutionObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "BatchTaskExecution.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BTEG",HtmlComponentName = "BTEGeneralTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/BatchTaskExecution/BTEGeneralTabComponent", FeatureId = BatchTaskExecutionGeneralFeature_TH0.Id, ControlPath = "BTEGeneralTabComponent", ObjectTableId = BatchTaskExecutionObjectTable.Id, TabNameTextCodeId = BatchTaskExecutionGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BTEL",HtmlComponentName = "BTELogTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/BatchTaskExecution/BTELogTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "BatchTaskExecution.Tab.Log" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ControlPath = "BTELogTabComponent", ObjectTableId = BatchTaskExecutionObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "BatchTaskExecution.TH.Log" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BTEL",HtmlComponentName = "BTELogTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/BatchTaskExecution/BTELogTabComponent", FeatureId = BatchTaskExecutionLogFeature_TH1.Id, ControlPath = "BTELogTabComponent", ObjectTableId = BatchTaskExecutionObjectTable.Id, TabNameTextCodeId = BatchTaskExecutionLogTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BTEP",HtmlComponentName = "BTEParameterTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/BatchTaskExecution/BTEParameterTabComponent/BTEParameterTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "BatchTaskExecution.Tab.Parameters" && d.ObjectTableId == BatchTaskExecutionObjectTable.Id).FirstOrDefault().Id, ControlPath = "BTEParameterTabComponent", ObjectTableId = BatchTaskExecutionObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "BatchTaskExecution.TH.Parameters" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BTEP",HtmlComponentName = "BTEParameterTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/BatchTaskExecution/BTEParameterTabComponent/BTEParameterTabComponent", FeatureId = BatchTaskExecutionParametersFeature_TH2.Id, ControlPath = "BTEParameterTabComponent", ObjectTableId = BatchTaskExecutionObjectTable.Id, TabNameTextCodeId = BatchTaskExecutionParametersTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1132,7 +1132,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

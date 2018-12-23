@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy}  from '@angular/core';
+import {Component, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
 import {ARInvoiceLinePM} from '../../../../Invoice/EntityPMs/ARInvoiceLinePM';
@@ -1281,7 +1281,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         line.ForiegnCurrencyId = this.InvoiceCurrencyId;
         line.ForiegnCurrencyCode = this.InvoiceCurrencyCode;
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
-
+        line.LineActionCode = "1";
         var logWindow = new LogitudeWindow();
         logWindow.Title = TextCodeTranslator.Translate("ARInvoiceLine.O.EditInvoiceLine");
         var addEditViewModel: ARInvoiceLineItem = new ARInvoiceLineItem(line, this, true);

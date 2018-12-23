@@ -412,6 +412,9 @@ namespace WebFreight.Web.DataProviders
 
         public double TotalProfitCurr { get; set; }
         
+        public string Notify1Address { get; set; }
+        public string Notify1VATNumber { get; set; }
+
         public class InvoicesReport
         {
             public string InvoiceType { get; set; }

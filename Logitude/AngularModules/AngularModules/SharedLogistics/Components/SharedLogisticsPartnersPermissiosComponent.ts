@@ -73,16 +73,14 @@ export class SharedLogisticsPartnersPermissiosComponent implements OnInit {
         var item1: PartnerItem = new PartnerItem(this);
         item1.Code = "SH";
         item1.PartnerName = "Shipper";
-        item1.SuggestedIsChecked = true;
-        item1.ChooseIsChecked = true;
-        item1.IsEnabled = false;
+        item1.SuggestedIsChecked = this.TenantZeroEntity.IsShipperShared;
+        item1.ChooseIsChecked = this.EntityPM.IsShipperShared;
 
         var item2: PartnerItem = new PartnerItem(this);
         item2.Code = "CO";
         item2.PartnerName = "Consignee";
-        item2.SuggestedIsChecked = true;
-        item2.ChooseIsChecked = true;
-        item2.IsEnabled = false;
+        item2.SuggestedIsChecked = this.TenantZeroEntity.IsConsigneeShared;
+        item2.ChooseIsChecked = this.EntityPM.IsConsigneeShared;
 
         var item3: PartnerItem = new PartnerItem(this);
         item3.Code = "AG";
@@ -277,12 +275,12 @@ export class PartnerItem {
     private SetIsChecked() {
         switch (this.Code) {
             case "SH": {
-                
+                this.father.EntityPM.IsShipperShared = this.ChooseIsChecked;
                 break;
             }
 
             case "CO": {
-
+                this.father.EntityPM.IsConsigneeShared = this.ChooseIsChecked;
                 break;
             }
 

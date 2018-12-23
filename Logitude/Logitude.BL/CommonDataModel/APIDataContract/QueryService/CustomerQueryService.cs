@@ -55,20 +55,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 {
                     temp = myQuery.GetSinglePM(MyEntity.Id, Tenant);
                 }
-
-                //if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
-                //{
-                //    ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
-                //    var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode, ComputingPartnerName, "Card");
-
-                //    if (string.IsNullOrEmpty(MyCode))
-                //    {
-                //        throw new ApplicationException("Card with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
-                //    }
-
-                //    temp = myQuery.GetSingleCustomerPMByCode(MyCode, Tenant);
-                //}
-
+                
                 if (temp == null)
                 {
                     throw new ApplicationException("Card with Id " + MyEntity.Id + " doesn't exist");
@@ -82,6 +69,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 temp.EnglishName = MyEntity.EnglishName;
                 temp.LocalName = MyEntity.LocalName;
                 temp.VatNumber = MyEntity.VatNumber;
+                temp.Code = MyEntity.Code;
 
                 PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
                 if (MyEntity.PaymentTerm != null)
@@ -123,36 +111,46 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                     temp.Contacts = ContactService2.ContactCustomDataMappingAndValidatin(MyEntity, MyEntity.Contacts, Tenant, ComputingPartnerName);
                 }
 
+                AddressQueryService AddressQueryService = new AddressQueryService(Tenant);
                 if (MyEntity.MainAddress != null)
                 {
-                    AddressQueryService AddressQueryService = new AddressQueryService(Tenant);
-                    AddressPM address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.MainAddress, Tenant, ComputingPartnerName);
+                    AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.MainAddress, Tenant);
+                    if (!string.IsNullOrEmpty(MyEntity.MainAddress.City.Code))
+                    {
+                        address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.MainAddress, Tenant, ComputingPartnerName);
+                    }
+
+                    else if(!string.IsNullOrEmpty(MyEntity.MainAddress.City.Name))
+                    {                        
+                        address.City = MyEntity.MainAddress.City.Name;
+                    }
+                    
                     address.AddressTypeId = "M";
                     address.Description = "Main Address";
-                    address.Tenant = Tenant;
+                    address.Tenant = Tenant;                    
+
                     temp.Addresses.Add(address);
                 }
 
                 if (MyEntity.BillingAddress != null)
                 {
-                    AddressQueryService AddressQueryService = new AddressQueryService(Tenant);
-                    AddressPM address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.BillingAddress, Tenant, ComputingPartnerName);
+                    AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.BillingAddress, Tenant);
+                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City.Code))
+                    {
+                        address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.BillingAddress, Tenant, ComputingPartnerName);
+                    }
+
+                    else if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City.Name))
+                    {
+                        address.City = MyEntity.BillingAddress.City.Name;
+                    }
+
                     address.AddressTypeId = "B";
                     address.Description = "Billing Address";
                     address.Tenant = Tenant;
                     temp.Addresses.Add(address);
                 }
-
-                //IGLAccountQueryServiceExt GLAccountGLAccountService = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-                //if (MyEntity.GLAccount != null)
-                //{
-                //    var myGLAccountPM = GLAccountGLAccountService.GLAccountDataMappingAndValidatin(MyEntity.GLAccount, Tenant, ComputingPartnerName);
-                //    if (myGLAccountPM != null)
-                //    {
-                //        temp.GLAccountId = myGLAccountPM.Id;                        
-                //    }
-                //}
-
+                
                 return temp;
             }
 

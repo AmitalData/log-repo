@@ -1948,6 +1948,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
                                                             JournalId = journal.Id,
                                                             DebitAccountId = g.Key.ChargeTypeGLAccountId,
+                                                            CreditAccountId = theEntityPm.VendorGLAccountId,
                                                             Line = ++counter,
                                                             DocumentDate = theEntityPm.InvoiceDate.Value,
                                                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
@@ -1992,6 +1993,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             Reference1 = theEntityPm.InvoiceNumber,
                             Reference2 = theEntityPm.MainEntityReference,
                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
+                            CreditAccountId = theEntityPm.VendorGLAccountId,
                         };
 
                         journal.JournalLines.Add(journalLine);
