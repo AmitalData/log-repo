@@ -104,8 +104,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
 
-                if (item.JournalLineNumber.ToString().Length > 9) { item.JournalLineNumber.ToString().Substring(0, 9); }
-                myStringBuilder.Append(item.JournalLineNumber.ToString().PadLeft(9, '0'));
+                if (item.JournalLineNumber.ToString().Length > 9) { item.JournalLineNumber.ToString().Substring(0, 5); }
+                myStringBuilder.Append(item.JournalLineNumber.ToString().PadLeft(5, '0'));
 
                 myStringBuilder.Append(' ', 8);
                 myStringBuilder.Append(' ', 15);
@@ -117,7 +117,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
              
-                var entityPartnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(item.AccountingEntityCode, "ACC", "AccountingEntity");
+                var entityPartnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(item.AccountingEntityCode, "Cust", "AccountingEntity");
 
                 if (entityPartnerCode != null)
                 {
@@ -140,13 +140,17 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append("000");
                 if (item.Notes != null)
                 {
-                    if (item.Notes.Length > 50) { item.Notes.Substring(0, 50); }
+                    if (item.Notes.Length > 50) { item.Notes= item.Notes.Substring(0, 50); }
                     myStringBuilder.Append(item.Notes.PadLeft(50, '0'));
                 }
+                else
+                {
+                    myStringBuilder.Append(' ', 50);
+                }
 
-                var DocumentDate = String.Format("{0:ddMMyyyy}", item.DocumentDate);
-                var AccountingDate = String.Format("{0:ddMMyyyy}", item.AccountingDate);
-                var CreateDate = String.Format("{0:ddMMyyyy}", item.CreateDate);
+                var DocumentDate = String.Format("{0:yyyyMMdd}", item.DocumentDate);
+                var AccountingDate = String.Format("{0:yyyyMMdd}", item.AccountingDate);
+                var CreateDate = String.Format("{0:yyyyMMdd}", item.CreateDate);
 
                 if (AccountingDate.Length > 8) { AccountingDate.Substring(0, 8); }
                 myStringBuilder.Append(AccountingDate.PadLeft(8, '0'));
