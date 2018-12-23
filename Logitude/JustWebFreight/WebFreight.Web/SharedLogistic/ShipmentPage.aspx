@@ -226,17 +226,23 @@ img {
                                         <div id="EntityHeaderArea" style="margin:0 10px;">
                                             <table style="width:100%; margin:0; padding:0px;">
                                                 <tr>
-                                                    <td style="width:250px; vertical-align:top;">
+                                                    <td style="width:270px; vertical-align:top;">
                                                         <%--<p class="BlueLabel">General</p>--%>
                                                         <div style="margin:0 0 0 5px;">
                                                         <div>
-                                                        <span class="LabelTextStyle" style="display:inline-block; width:40px;">Ref.:</span>
+                                                        <span class="LabelTextStyle" style="display:inline-block; width:75px;" data-bind="text: MyReferenceLabel"></span>
                                                         <span class="ValueTextStyle" data-bind="text: MyReference"></span>
                                                         </div>
                                                         <div>
-                                                        <span class="LabelTextStyle" style="display:inline-block; width:40px;">House:</span>
+                                                        <span class="LabelTextStyle" style="display:inline-block; width:75px;">House:</span>
                                                         <span class="ValueTextStyle" data-bind="text: House"></span>
                                                         </div>
+
+                                                        <div class="ShowTenant1495Data">
+                                                        <span class="LabelTextStyle" style="display:inline-block; width:75px;">Delivery Date:</span>
+                                                        <span class="ValueTextStyle" data-bind="text: DeliveryDate"></span>
+                                                        </div>
+                                                            
                                                         </div>
                                                     </td>
 

@@ -125,6 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsLookUp =  true,
 			      				    SearchFields =  "CountryCity,CountryCities,,Id,",
 			      				    ClientModuleName =  "Common",
+			      				    DescriptionDefaultText =  "Manage the cities to be used in addresses.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

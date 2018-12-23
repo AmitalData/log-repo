@@ -54,6 +54,7 @@ using Logitude.SystemLogs.Repositories;
 using Logitude.SystemLogs.POCOs;
 using Logitude.Server.Tools.Counters;
 
+
 namespace WebFreight.Web
 {
     public class Global : System.Web.HttpApplication
@@ -174,13 +175,14 @@ namespace WebFreight.Web
             ContainerAccessor.InitContainer();
             ContainerAccessor.RegisterTypeFactory<IRulesValidator, RulesValidator>("RulesValidator", new RulesValidator());
             ContainerAccessor.RegisterTypeFactory<IQuoteTemplateReportHelper, QuoteTemplateReportHelper>("QuoteTemplateReportHelper", new QuoteTemplateReportHelper());
+            ContainerAccessor.Container.RegisterType<ILoggedContactUtil, Logitude.BL.Security.LoggedContactUtil>("LoggedContactUtil", new InjectionFactory(c => new Logitude.BL.Security.LoggedContactUtil()));
 
             MessagingServiceFactoryHelper.InitContainer();
 
 
             AccountingRegistrations.Register();
             CustomsRegistrations.Register();
-
+            
             CacheManager.CacheWrapper = new CacheWrapper(HttpContext.Current.Cache);
             if (LogitudeSettings.DeploymentStage == "Simplog" || LogitudeSettings.DeploymentStage == "amitalstorage" || LogitudeSettings.DeploymentStage == "Dev" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "logboxwe1")
             {

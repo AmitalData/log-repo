@@ -114,6 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsEditable =  true,
 			      				    ClientModuleName =  "Common",
 			      				    Code =  "LDSR",
+			      				    DescriptionDefaultText =  "Define the sources that supply you with information about  new customers.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

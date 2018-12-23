@@ -115,6 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ClientModuleName =  "Common",
 			      				    NewWizardComponentPath =  "./CommonModules/CommonPartners/Components/NewEntity/NewVendorComponent",
 			      				    Code =  "VNDR",
+			      				    DescriptionDefaultText =  "Add and manage information about Suppliers and Vendors you work with. Specify communication, address and billing details and create list of contacts.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

@@ -116,6 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ClientModuleName =  "Common",
 			      				    NewWizardComponentPath =  "./CommonModules/CommonPartners/Components/NewEntity/NewShippingLineComponent",
 			      				    Code =  "SHLN",
+			      				    DescriptionDefaultText =  "Add and manage information about shipping companies you work with. Specify association to shipping agent, communication, address and billing details, and create list of contacts.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

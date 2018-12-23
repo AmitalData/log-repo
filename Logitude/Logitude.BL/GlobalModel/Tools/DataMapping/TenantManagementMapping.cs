@@ -110,6 +110,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.StockTypeCode = entityPM.StockTypeCode;
             entityPOCO.PackageCodeSearchField = entityPM.PackageCodeSearchField;
             entityPOCO.IsINTTRAStockPrepaid = entityPM.IsINTTRAStockPrepaid;
+            entityPOCO.IsINTTRAOnlyDemo = entityPM.IsINTTRAOnlyDemo;
 
             if (entityPM.IsMultiPackage)
             {

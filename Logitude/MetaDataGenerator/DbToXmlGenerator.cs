@@ -256,6 +256,11 @@ namespace MetaDataGenerator
                             GenerateAdditionalTextCodes(doc, entityElement, table, fields);
                             break;
                         }
+                    case "entity":
+                        {
+                            this.UpdateEntityElement(entityElement, doc, table, tableTextCodes);
+                            break;
+                        }
                 }
 
                 //foreach (XmlNode node in dataContractsNodesList)
@@ -287,7 +292,7 @@ namespace MetaDataGenerator
 
         private XmlElement UpdateEntityElement(XmlElement entityElement, XmlDocument doc, ObjectTable table, List<TextCode> tableTextCodes)
         {
-
+          
             //SetAttribute("Id", GetStringValue(Guid.NewGuid()), entityElement, null);
             if (string.IsNullOrEmpty(this.GetAttributeValue("ObjectTableName", entityElement)))
                 SetAttribute("ObjectTableName", GetStringValue(table.Name), entityElement);
@@ -306,6 +311,14 @@ namespace MetaDataGenerator
             if (table.DescriptionTextCode != null)
             {
                 SetAttribute("DescriptionDefaultText", GetStringValue(table.DescriptionTextCode.DefaultText), entityElement);
+                SetAttribute("DescriptionLocalDefaultText", GetStringValue(table.DescriptionTextCode.LocalDefaultText), entityElement);
+
+            }
+
+            if (table.NewButtonTextCode != null)
+            {
+                SetAttribute("NewButtonDefaultText", GetStringValue(table.NewButtonTextCode.DefaultText), entityElement);
+                SetAttribute("NewButtonLocalDefaultText", GetStringValue(table.NewButtonTextCode.LocalDefaultText), entityElement);
 
             }
 
@@ -313,6 +326,8 @@ namespace MetaDataGenerator
                 f => f.Name != "ObjectTableSingular" &&
                     f.Name != "ObjectTablePlural" &&
                     f.Name != "DescriptionDefaultText" &&
+                     f.Name != "DescriptionTextCodeId" &&
+                     f.Name != "NewButtonTextCodeId" &&
                      f.Name != "Id" &&
                       f.Name != "Tenant" &&
                       f.Name != "ObjectTableName" &&
