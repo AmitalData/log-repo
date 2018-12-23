@@ -508,6 +508,7 @@
     <Content Include="Main Branch\2018\12 - 2018\Day 12  [Islam]  Fixes forwrong text codes.sql" />
     <Content Include="Main Branch\2018\12 - 2018\Day 10  [Abed] Fix wrong text codes.sql" />
     <Content Include="Main Branch\2018\12 - 2018\Day 17  [Maheera]  Fill Package in TenantManagement.sql" />
+    <Content Include="Main Branch\2018\12 - 2018\Day 23  [Abed] Fix wrong text codes.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />
