@@ -185,7 +185,7 @@ namespace WebFreight.Web.InfrastructureModel
 
         static FullAccountingSettingRepository fullAccountingSettingsRepository;
         static BankCodeRepository bankCodeRepository;
-
+        public static TaxWithholdingAssessOfficeRepository taxWithholdingAssessOfficeRepository;
         public static void InitializeRepositories(int theTenant)
         {
             #region Repositories and Queries
@@ -279,6 +279,7 @@ namespace WebFreight.Web.InfrastructureModel
 
             fullAccountingSettingsRepository = new FullAccountingSettingRepository(theTenant);
             bankCodeRepository = new BankCodeRepository(theTenant);
+            taxWithholdingAssessOfficeRepository = new TaxWithholdingAssessOfficeRepository(theTenant);
             #endregion
         }
         private static Setting setting;
@@ -342,6 +343,7 @@ namespace WebFreight.Web.InfrastructureModel
                 List<DocumentsMetaDataType> tenantZeroDocumentsMetaDataType = null;
                 List<Simplog.Data.InvoiceModel.EntityPOCOs.AccountingPaymentMethod> tenantZeroPaymentMethods;
                 List<BankCode> tenantZeroBankCodes = null;
+                List<TaxWithholdingAssessOffice> tenantZeroTaxWithholdingAssessOffices = null;
                 //Tickets
                 List<TicketType> tenantZeroTicketTypes = null;
                 List<TicketStage> tenantZeroTicketStages = null;
@@ -410,7 +412,7 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroSLALines = slaLineRepository.GetAll(0).ToList();
                     tenantZeroWithholdingTaxDeductionType = withholdingTaxDeductionTypeRepository.GetAll(0).ToList();
                     tenantZeroSATInterfaceSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(0);
-
+                    tenantZeroTaxWithholdingAssessOffices = taxWithholdingAssessOfficeRepository.GetAll(0).ToList();
                     if (setting.WorkEnvironment == "customs")
                     {
                         tenantZeroCustomsRequiredFields = CustomsRequiredFieldRepository.GetAll(0).ToList();
@@ -480,7 +482,7 @@ namespace WebFreight.Web.InfrastructureModel
                 AddWithholdingTaxDeductionTypes(tenant, withholdingTaxDeductionTypeRepository, tenantZeroWithholdingTaxDeductionType);
                 //AddSLALines(tenant, slaLineRepository, tenantZeroSLALines);
                 AddBankCodes(tenant, bankCodeRepository, tenantZeroBankCodes);
-
+                AddTaxWithholdingAssessOffice(tenant, taxWithholdingAssessOfficeRepository, tenantZeroTaxWithholdingAssessOffices);
                 //AddJournalActionTypes(tenant);
 
 
@@ -908,6 +910,35 @@ namespace WebFreight.Web.InfrastructureModel
 
                 theAccountingSettingsRepository.Add(settings);
                 theAccountingSettingsRepository.SubmitChanges();
+            }
+        }
+
+        private static void AddTaxWithholdingAssessOffice(int theTenant, TaxWithholdingAssessOfficeRepository theTaxWithholdingAssessOfficeRepository, List<TaxWithholdingAssessOffice>  tenantZeroTaxWithholdingAssessOffices)
+        {
+
+            foreach (TaxWithholdingAssessOffice field in tenantZeroTaxWithholdingAssessOffices)
+            {
+
+
+                if (tenantZeroTaxWithholdingAssessOffices != null)
+                {
+                    TaxWithholdingAssessOffice poco = new TaxWithholdingAssessOffice()
+                    {
+                        Id = IdCounter.GetNumber("TaxWithholdingAssessOffice", tenant).ToString(),
+
+                        Code = field.Code,
+                        LocalName = field.LocalName,
+                        Name = field.Name,
+                        Inactive = field.Inactive,
+                        Tenant = theTenant,
+                        SearchFields = field.Code + "," + field.Name + "," + field.LocalName,
+                        
+
+                    };
+
+                    theTaxWithholdingAssessOfficeRepository.Add(poco);
+                    theTaxWithholdingAssessOfficeRepository.SubmitChanges();
+                }
             }
         }
 

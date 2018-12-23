@@ -946,7 +946,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             this.messageWindow.Width = 300;
             this.messageWindow.Height = 150;
             this.messageWindow.Title = "Invalid Query";
-            this.messageWindow.Message = "The query should contains at least one column.";
+            this.messageWindow.Message = "The query should contain at least one column.";
             this.messageWindow.Show(this.messageWindow.Message);
             return;
         }
@@ -1362,7 +1362,16 @@ export class DWObjectFieldsDetails extends BaseComponent {
                             if (field.DisplayInQueryBuilder == true) {
                                 var view = new DWObjectFieldsDetails(field, this.MyParentClass);
                                 view.ParentDataTypeCode = DWObjectField.DataTypeCode;
-                                view.DisplayName = '[' + (DWObjectField.Code.replace('[', '').replace(']', '') + view.Code.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
+                                if (!AppTool.IsNullOrEmpty(DWObjectField.Code)) {
+                                    view.DisplayName = '[' + (DWObjectField.Code.replace('[', '').replace(']', '') + view.Code.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
+                                }
+                                else if (!AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) {
+                                    view.DisplayName = DWObjectField.DisplayName;
+                                }
+                                else {
+                                    view.DisplayName = '[' + (DWObjectField.Name + view.Code.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
+
+                                }
                                 view.ParentCode = DWObjectField.Code;
                                 view.ParentDimTabelName = DWObjectField.DimensionTableCode;
 
