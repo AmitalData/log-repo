@@ -1952,6 +1952,8 @@ namespace WebFreight.Web
             {
                 SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(shipment.Tenant);
                 SharedLogisticsSetting sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(shipment.Tenant.ToString(), shipment.Tenant);
+                bool isShipperShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsShipperShared;
+                bool isConsigneeShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsConsigneeShared;
                 bool isAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsAgentShared;
                 bool isColoaderShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsColoaderShared;
                 bool isConsigneeNotImporterShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsConsigneeNotImporterShared;
@@ -1966,7 +1968,7 @@ namespace WebFreight.Web
                 bool isReleasingAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsReleasingAgentShared;
                 bool isIssuingCarrierAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsIssuingCarrierAgentShared;
 
-                if (!string.IsNullOrEmpty(shipment.ShipperId))
+                if (!string.IsNullOrEmpty(shipment.ShipperId) && isShipperShared)
                 {
                     #region Shipper
                     CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
@@ -2017,7 +2019,7 @@ namespace WebFreight.Web
                     #endregion
                 }
 
-                if (!string.IsNullOrEmpty(shipment.ConsigneeId))
+                if (!string.IsNullOrEmpty(shipment.ConsigneeId) && isConsigneeShared)
                 {
                     #region Consignee
                     ShipmentPartnerPM item = new ShipmentPartnerPM();

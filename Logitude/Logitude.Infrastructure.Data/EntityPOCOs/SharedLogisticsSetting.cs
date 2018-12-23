@@ -57,6 +57,10 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public bool IsConsolidatorShared { get; set; }
         [Column("IsReleasingAgentShared")]
 	    public bool IsReleasingAgentShared { get; set; }
+        [Column("IsShipperShared")]
+	    public bool IsShipperShared { get; set; }
+        [Column("IsConsigneeShared")]
+	    public bool IsConsigneeShared { get; set; }
     }
 }
 	 

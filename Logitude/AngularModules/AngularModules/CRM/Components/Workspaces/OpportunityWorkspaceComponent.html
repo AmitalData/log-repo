@@ -1,4 +1,4 @@
-﻿
+
 <div style="overflow-x:auto;height:100%;width:100%">
     <table style="min-width:1075px">
 
@@ -139,7 +139,7 @@
                                         <div class="QueriesSection" *ngIf="OpenQueriesVisibility">
                                             <div>Open Opportunities</div>
                                             <div style="height:22px; width: 57px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px; right:2px;">
-                                                <button class="Button" (click)="RunOpportunityWizard()">New</button>
+                                                <button id="{{'NEWOPPORTUNITY' | IdGeneratorPipe}}" class="Button" (click)="RunOpportunityWizard()">New</button>
                                             </div>
                                             <div>
                                                 <p class="QueryLink" (click)="ViewOpportunityQuery('Open:My')" *ngIf="MyOpenQueryVisibility">My Open Opportunities ({{MyOpenCount}})</p>

@@ -4374,7 +4374,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup APInvoiceQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "APIN", Name = "AP Invoices" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -4421,7 +4421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllGeneralAPInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APInvoiceTextCode_0.Id, Code = "All General APInvoices",  QueryGroupCode = "APIN", IndexOrder = 0, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			  Query AllGeneralAPInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APInvoiceTextCode_0.Id, Code = "All General APInvoices",  QueryGroupCode = "APIN", IndexOrder = 0, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllGeneralAPInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4452,7 +4452,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
   
 	      
 
-			  Query DraftGeneralAPInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APInvoiceTextCode_1.Id, Code = "Draft General APInvoices",  QueryGroupCode = "APIN", IndexOrder = 0, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_1.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			  Query DraftGeneralAPInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APInvoiceTextCode_1.Id, Code = "Draft General APInvoices",  QueryGroupCode = "APIN", IndexOrder = 0, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_1.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn DraftGeneralAPInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralAPInvoicesQuery.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4483,7 +4483,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
   
 	      
 
-			  Query ApprovalGeneralAPInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APInvoiceTextCode_2.Id, Code = "Approval General APInvoices",  QueryGroupCode = "APIN", IndexOrder = 0, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_2.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			  Query ApprovalGeneralAPInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APInvoiceTextCode_2.Id, Code = "Approval General APInvoices",  QueryGroupCode = "APIN", IndexOrder = 0, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_2.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ApprovalGeneralAPInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralAPInvoicesQuery.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4514,7 +4514,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
   
 	      
 
-			  Query AllInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APInvoiceTextCode_3.Id, Code = "All Invoices",  QueryGroupCode = "APIN", IndexOrder = 0, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_3.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			  Query AllInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APInvoiceTextCode_3.Id, Code = "All Invoices",  QueryGroupCode = "APIN", IndexOrder = 0, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_3.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoicesQuery.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4542,7 +4542,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
   
 	      
 
-			  Query WaitingforApprovalQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APInvoiceTextCode_4.Id, Code = "Waiting for Approval",  QueryGroupCode = "APIN", IndexOrder = 1, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_4.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			  Query WaitingforApprovalQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APInvoiceTextCode_4.Id, Code = "Waiting for Approval",  QueryGroupCode = "APIN", IndexOrder = 1, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_4.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn WaitingforApprovalQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WaitingforApprovalQuery.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4567,7 +4567,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
   
 	      
 
-			  Query UnpaidInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APInvoiceTextCode_5.Id, Code = "Unpaid Invoices",  QueryGroupCode = "APIN", IndexOrder = 2, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_5.Id, DefaultSortName = "DueDate", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query UnpaidInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APInvoiceTextCode_5.Id, Code = "Unpaid Invoices",  QueryGroupCode = "APIN", IndexOrder = 2, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_5.Id, DefaultSortName = "DueDate", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn UnpaidInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4594,7 +4594,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			  Query NotReadyInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APInvoiceTextCode_6.Id, Code = "Not Ready Invoices",  EditWizardName = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APTransferEditControl",
 			   EditWizardComponentPath = "./InvoiceModules/APInvoice/Components/NewEntity/APInvoiceTransferTemplate",
-			   QueryGroupCode = "APIN", IndexOrder = 3, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_6.Id, DefaultSortName = "InvoiceDate", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "APIN", IndexOrder = 3, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_6.Id, DefaultSortName = "InvoiceDate", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn NotReadyInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyInvoicesQuery.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4617,7 +4617,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			  Query MarkedasblockedfortransferQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APInvoiceTextCode_7.Id, Code = "Marked as blocked for transfer",  EditWizardName = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APTransferEditControl",
 			   EditWizardComponentPath = "./InvoiceModules/APInvoice/Components/NewEntity/APInvoiceTransferTemplate",
-			   QueryGroupCode = "APIN", IndexOrder = 4, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_7.Id, DefaultSortName = "InvoiceDate", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "APIN", IndexOrder = 4, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_7.Id, DefaultSortName = "InvoiceDate", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MarkedasblockedfortransferQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MarkedasblockedfortransferQuery.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4636,7 +4636,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			  Query ErrorInTransferInvoicesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APInvoiceTextCode_8.Id, Code = "Error In Transfer Invoices",  EditWizardName = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APTransferEditControl",
 			   EditWizardComponentPath = "./InvoiceModules/APInvoice/Components/NewEntity/APInvoiceTransferTemplate",
-			   QueryGroupCode = "APIN", IndexOrder = 5, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_8.Id, DefaultSortName = "InvoiceDate", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "APIN", IndexOrder = 5, Tenant = 0, ObjectTableId = APInvoiceObjectTable.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APInvoiceFeature_8.Id, DefaultSortName = "InvoiceDate", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ErrorInTransferInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferInvoicesQuery.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4734,24 +4734,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   Feature APInvoiceEventsFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "APInvoice.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIDE",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDetailsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "DETAILS" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APInvoiceDetailsTabControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "APInvoice.TH.Details" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIDE",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDetailsTabComponent", FeatureId = APInvoiceDetailsFeature_TH0.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APInvoiceDetailsTabControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "APInvoice.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = APInvoiceGeneralFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceGeneralTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIDO",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDocsOutTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "DOCSOUT" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APInvoiceDocsOutControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "APInvoice.TH.DocsOut" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIDO",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDocsOutTabComponent", FeatureId = APInvoiceDocsOutFeature_TH2.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APInvoiceDocsOutControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceDocsOutTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIDI",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDocsInTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APInvoiceDocsInControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "APInvoice.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIDI",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDocsInTabComponent", FeatureId = APInvoiceDocsInFeature_TH3.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APInvoiceDocsInControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceDocsInTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIAC",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceTransferTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "ACCOUNTINGTRANSFER" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APTransferTabControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "APInvoice.TH.Transfer" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIAC",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceTransferTabComponent", FeatureId = APInvoiceTransferDetailsFeature_TH4.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APTransferTabControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceTransferDetailsTextCode_TH4.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIPY",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoicePaymentsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "APPAYMENTS" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APPaymentsTabControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "APInvoice.TH.APPayments" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIPY",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoicePaymentsTabComponent", FeatureId = APInvoicePaymentsFeature_TH5.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APPaymentsTabControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoicePaymentsTextCode_TH5.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "COMMUNICATION" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "APInvoice.TH.Communications" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = APInvoiceCommunicationFeature_TH6.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceCommunicationTextCode_TH6.Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APIE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == APInvoiceObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "APInvoice.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APIE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = APInvoiceEventsFeature_TH7.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceEventsTextCode_TH7.Id, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -4916,7 +4916,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable APInvoiceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APInvoice" && d.Tenant == 0).FirstOrDefault();       
     
 			   Feature APInvoiceFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SaveAPInvoice", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "APInvoice.Features.Save", NameTextCodeDefaultText = "Save", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

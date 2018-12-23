@@ -422,6 +422,10 @@
     <Compile Include="Migrations\201812181345516_textcode_fixes2.Designer.cs">
       <DependentUpon>201812181345516_textcode_fixes2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812191006531_AddMoreSettingsToSharedLogistics.cs" />
+    <Compile Include="Migrations\201812191006531_AddMoreSettingsToSharedLogistics.Designer.cs">
+      <DependentUpon>201812191006531_AddMoreSettingsToSharedLogistics.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -676,6 +680,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812181345516_textcode_fixes2.resx">
       <DependentUpon>201812181345516_textcode_fixes2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812191006531_AddMoreSettingsToSharedLogistics.resx">
+      <DependentUpon>201812191006531_AddMoreSettingsToSharedLogistics.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

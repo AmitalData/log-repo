@@ -491,7 +491,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ExternalSystemsTablesCodeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ESTC", Name = "ExternalSystemsTablesCode" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -506,7 +506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllExternalTablesCodesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExternalSystemsTablesCodeTextCode_0.Id, Code = "All External Tables Codes",  QueryGroupCode = "ESTC", IndexOrder = 0, Tenant = 0, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, QuerySection = "ExternalSystemsTablesCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExternalSystemsTablesCodeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllExternalTablesCodesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExternalSystemsTablesCodeTextCode_0.Id, Code = "All External Tables Codes",  QueryGroupCode = "ESTC", IndexOrder = 0, Tenant = 0, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, QuerySection = "ExternalSystemsTablesCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExternalSystemsTablesCodeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllExternalTablesCodesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalTablesCodesQuery.Id, IndexOrder = 1, ObjectFieldId = ExternalSystemsTablesCodeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ExternalSystemsTablesCodeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
