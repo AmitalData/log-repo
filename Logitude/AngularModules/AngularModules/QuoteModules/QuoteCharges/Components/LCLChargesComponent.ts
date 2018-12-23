@@ -57,10 +57,10 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.ItemsSource = new ObservableCollection([]);
 
-        if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
+        if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
-
+        
         if (this.EntityPM.TransportModeId == "A" && FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARIFFS")) {
             this.DisplayTariffs = true;
         }
@@ -260,18 +260,21 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         var isExchangeRateEnabled = false;
 
         if (this.IsEditingEnabled) {
-            isExchangeRateEnabled = true;
+            if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
+                isExchangeRateEnabled = true;
 
-            if (AppTool.IsNullOrEmpty(this.SaleCurrencyId)) {
-                isExchangeRateEnabled = false;
-            }
+                if (AppTool.IsNullOrEmpty(this.SaleCurrencyId)) {
+                    isExchangeRateEnabled = false;
+                }
 
-            else if (this.SaleCurrencyId == SessionLocator.LocalCurrencyId) {
-                isExchangeRateEnabled = false;
+                else if (this.SaleCurrencyId == SessionLocator.LocalCurrencyId) {
+                    isExchangeRateEnabled = false;
+                }
             }
         }      
 
-        this.IsExchangeRateEnabled = isExchangeRateEnabled;
+        //this.IsExchangeRateEnabled = isExchangeRateEnabled;
+        this.IsExchangeRateEnabled = true;
         this.IsCurrencyFilterVisible = this.LocalCurrencyId == this.EntityPM.SaleCurrencyId ? false : true;
         this.UIProperties.SetEnabled("SaleCurrencyId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ExchangeRate", this.ObjectTableName, isExchangeRateEnabled);
@@ -1113,22 +1116,25 @@ export class QuoteChargeItem extends BaseComponent {
         var isEnabled = false;
 
         if (this.IsEditingEnabled) {
-            isEnabled = true;
+            if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
+                isEnabled = true;
 
-            if (AppTool.IsNullOrEmpty(this.CostCurrencyId)) {
-                isEnabled = false;
-            }
+                if (AppTool.IsNullOrEmpty(this.CostCurrencyId)) {
+                    isEnabled = false;
+                }
 
-            else if (this.CostCurrencyId == SessionLocator.LocalCurrencyId) {
-                isEnabled = false;
-            }
+                else if (this.CostCurrencyId == SessionLocator.LocalCurrencyId) {
+                    isEnabled = false;
+                }
 
-            else if (this.CostCurrencyId == this.fatherComponent.SaleCurrencyId) {
-                isEnabled = false;
+                else if (this.CostCurrencyId == this.fatherComponent.SaleCurrencyId) {
+                    isEnabled = false;
+                }
             }
         }
 
-        this.IsEnabled_CostExchangeRate = isEnabled;
+        //this.IsEnabled_CostExchangeRate = isEnabled;
+        this.IsEnabled_CostExchangeRate = true;
         this.UIProperties.SetEnabled("CostExchangeRate", this.ObjectTableName, isEnabled);
     }
 

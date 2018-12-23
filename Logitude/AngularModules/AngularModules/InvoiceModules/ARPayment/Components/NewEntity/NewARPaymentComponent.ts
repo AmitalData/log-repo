@@ -68,9 +68,9 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.DisplaySATSettings = true;
         }
 
-        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARPaymentEditExchangeRate")) {
+        if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
-        }
+        } 
     }
 
     ngOnInit() {
@@ -126,19 +126,24 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
     public RateIsEnabled = false;
     SetUIProperties() {
-
         var isRateEnabled = true;
 
-        if (this.IsCreatedFromInvoiceSide) {
+        if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARPaymentEditExchangeRate")) {
             isRateEnabled = false;
         }
 
-        else if (this.PaymentCurrencyId == this.TenantPM.CurrencyId || this.PaymentCurrencyId == null || this.TenantPM.CurrencyId == null) {
-            isRateEnabled = false;
+        else {
+            if (this.IsCreatedFromInvoiceSide) {
+                isRateEnabled = false;
+            }
+
+            else if (this.PaymentCurrencyId == this.TenantPM.CurrencyId || this.PaymentCurrencyId == null || this.TenantPM.CurrencyId == null) {
+                isRateEnabled = false;
+            }
         }
 
-        this.RateIsEnabled = isRateEnabled;
-
+        //this.RateIsEnabled = isRateEnabled;
+        this.RateIsEnabled = true;
         this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isRateEnabled);
 
         this.SetUIProperties_Payment();
