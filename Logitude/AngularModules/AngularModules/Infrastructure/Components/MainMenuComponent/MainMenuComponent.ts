@@ -313,7 +313,8 @@ export class MainMenuComponent {
                     }
                     case "General.MH.Reports": {
                         ServiceLocator.SendTotangoUserActivity("Reports", "Main View");
-                        myComponentPath = "./Report/Components/Workspaces/ReportComponent";
+                        //myComponentPath = "./Report/Components/Workspaces/ReportComponent";
+                        myComponentPath = "./Report/Components/Workspaces/MainReportsWorkspace";
                         break;
                     }
                     case "General.MH.Maintenance": {

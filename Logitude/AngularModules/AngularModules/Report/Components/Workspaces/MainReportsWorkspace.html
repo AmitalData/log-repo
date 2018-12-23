@@ -1,0 +1,30 @@
+
+<table *ngIf="IsResourcesReady">
+    <tr style="height:21px;" *ngIf="IsMenuVisible">
+        <td>
+            <ul class="PagesMenu">
+                <li id="{{'Report' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'Report'" (click)="SelectedItem = 'Report'">Reports</li>
+
+                <li id="{{'BI' | IdGeneratorPipe}}" *ngIf="IsBIItemVisible" [class.SelectedPageMenu]="SelectedItem == 'BI'" (click)="SelectedItem = 'BI'">BI</li>
+            </ul>
+        </td>
+    </tr>
+
+    <tr style="height:10px;" *ngIf="IsMenuVisible">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="CellStretch">
+            <div class="CellContent" [hidden]="SelectedItem != 'Report'" style="overflow-x:auto">
+                <div LocationDirective Code="Report"></div>
+            </div>
+
+            <div class="CellContent" [hidden]="SelectedItem != 'BI'">
+                <div LocationDirective Code="BI"></div>
+            </div>
+        </td>
+    </tr>
+</table>
