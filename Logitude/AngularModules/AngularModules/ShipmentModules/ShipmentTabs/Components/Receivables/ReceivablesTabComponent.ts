@@ -81,10 +81,10 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
             this.IsProrateReceivablesVisible = true;
         }
 
-        if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentEditExchangeRate")) {
+        if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
-
+        
         if (this.ShipmentLevelCode == "D" || this.ShipmentLevelCode == "H") {
             if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
                 if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments) {
@@ -1373,7 +1373,6 @@ export class ShipmentReceivableItem extends BaseComponent {
     SetUIProperties() {
         this.IsEditExchangeRateVisible = this.fatherComponent.IsEditExchangeRateVisible;
         
-
         var isLineAttachted = false;
         var isEditingEnabled = this.fatherComponent.IsEditingEnabled;
 
@@ -1401,9 +1400,11 @@ export class ShipmentReceivableItem extends BaseComponent {
                 isChargeEnabled = true;
             }
 
-            if (this.CurrencyId != null) {
-                if (this.CurrencyId != SessionLocator.LocalCurrencyId) {
-                    isRateEnabled = true;
+            if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentEditExchangeRate")) {
+                if (this.CurrencyId != null) {
+                    if (this.CurrencyId != SessionLocator.LocalCurrencyId) {
+                        isRateEnabled = true;
+                    }
                 }
             }
 
@@ -1413,17 +1414,9 @@ export class ShipmentReceivableItem extends BaseComponent {
                 isTotalAmountEnabled = true;
             }
         }
-
-        //if (this.EntityPM.IsBackToBack) {
-        //    isEditingEnabled = false;
-        //    isRateEnabled = false;
-        //    isChargeEnabled = false;
-        //    isQuantityEnabled = false;
-        //    isUnitPriceEnabled = false;
-        //    isTotalAmountEnabled = false;
-        //}
-
-        this.IsRateEnabled = isRateEnabled;
+        
+        //this.IsRateEnabled = isRateEnabled;
+        this.IsRateEnabled = true;
         this.IsQuantityEnabled = isQuantityEnabled;
         this.IsUnitPriceEnabled = isUnitPriceEnabled;
         this.IsTotalAmountEnabled = isTotalAmountEnabled;
