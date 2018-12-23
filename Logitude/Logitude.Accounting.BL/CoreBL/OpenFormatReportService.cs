@@ -144,9 +144,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(item.Notes.PadLeft(50, '0'));
                 }
 
-                var DocumentDate = String.Format("{0:ddMMyyyy}", item.DocumentDate);
-                var AccountingDate = String.Format("{0:ddMMyyyy}", item.AccountingDate);
-                var CreateDate = String.Format("{0:ddMMyyyy}", item.CreateDate);
+                var DocumentDate = String.Format("{0:yyyyMMdd}", item.DocumentDate);
+                var AccountingDate = String.Format("{0:yyyyMMdd}", item.AccountingDate);
+                var CreateDate = String.Format("{0:yyyyMMdd}", item.CreateDate);
 
                 if (AccountingDate.Length > 8) { AccountingDate.Substring(0, 8); }
                 myStringBuilder.Append(AccountingDate.PadLeft(8, '0'));
