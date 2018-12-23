@@ -9886,7 +9886,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BookingConfirmationNumber",
-					  						DefaultText =  @"Confirmation",
+					  						DefaultText =  @"Booking Conf #",
 					  						ListFieldLable =  "BookingConfirmationNumberListLable",
 					  						ListLableDefaultText =  @"Booking Conf #",
 					  						IsMaxLength =  false,
