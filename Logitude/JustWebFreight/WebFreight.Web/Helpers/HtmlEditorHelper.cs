@@ -4140,13 +4140,13 @@ namespace WebFreight.Web.Helpers
 
         #region GetEntityFieldValue
 
-
-        public string GetEntityFieldValue(object theEntity, string propertyName, List<ObjectField> theEntityObjectFields, int tenant)
+        public string GetEntityFieldValue(object theEntity, string propertyName, List<ObjectField> theEntityObjectFields, int tenant, string propertyNameFullName = " ")
         {
-            string resultValue = " ";
+            string resultValue = propertyNameFullName;
             PropertyInfo propertyPathPi = theEntity.GetType().GetProperty(propertyName.Trim());
             if (propertyPathPi != null)
             {
+                resultValue = " ";
                 object value = propertyPathPi.GetValue(theEntity, null);
 
                 if (value != null)
@@ -4318,30 +4318,31 @@ namespace WebFreight.Web.Helpers
 
         #region GetInsideEntityFieldValue
 
-        public string GetInsideEntityFieldValue(object theEntity, List<ObjectField> theEntityObjectFields, string[] fields, int tenant, GeneralDomainService theGeneralService)
+        public string GetInsideEntityFieldValue(object theEntity, List<ObjectField> theEntityObjectFields, string[] fields, int tenant, GeneralDomainService theGeneralService, string propertyNameFullName = " ")
         {
-            //
+
             int i = 0;
-            string resultValue = " ";
+            string resultValue = propertyNameFullName;
             object currentEntity = theEntity;
             List<ObjectField> currentEntityObjectFields = theEntityObjectFields;
-
 
             while (true)
             {
                 PropertyInfo propertyPathPi = currentEntity.GetType().GetProperty(fields[i].Trim());
                 if (propertyPathPi != null)
                 {
-                    object value = propertyPathPi.GetValue(currentEntity, null);
 
+                    object value = propertyPathPi.GetValue(currentEntity, null);
 
                     if (value == null || i >= fields.Count())
                     {
+                        if (value == null) resultValue = " ";
                         break;
                     }
 
-                 
                     ObjectField objectField = currentEntityObjectFields.Where(f => f.FieldName == fields[i]).FirstOrDefault();
+
+
                     if (objectField != null && !string.IsNullOrEmpty(objectField.LookUpTableId))
                     {
                         ObjectTable lookTable = tablesRepository.GetObjectTableById(objectField.LookUpTableId, tenant);
@@ -4353,14 +4354,19 @@ namespace WebFreight.Web.Helpers
                         // ==================================================================================
                         List<ObjectField> insideEntityObjectFields = GetEntityObjectFields(insideEntityName, tenant);//generalService.ObjectFieldsRepository.GetObjectFieldsByObjectTableName(insideEntityName, tenant).ToList();
 
-                        if ((i + 1) >= fields.Count()) break;
-                     
+                        if ((i + 1) >= fields.Count())
+                        {
+                            break;
+                        }
+
                         ObjectField insideObjectField = insideEntityObjectFields.Where(f => f.FieldName == fields[i + 1]).FirstOrDefault();
 
                         if (insideObjectField != null && insideObjectField.IsCustom)
                         {
                             insideObjectField = insideEntityObjectFields.Where(f => f.FieldName == fields[i + 1] && f.Tenant == tenant).FirstOrDefault();
                         }
+
+
 
                         Assembly blAssembly = Assembly.Load("Logitude.BL");
 
@@ -4504,21 +4510,24 @@ namespace WebFreight.Web.Helpers
                                                         object newValue = customFieldResolver.GetFieldValue(insideEntity, insideObjectField, tenant);
                                                         resultValue = (newValue != null ? newValue.ToString() : " ");
                                                     }
-
                                                 }
+
                                                 else if (insideValue is DateTime)
                                                 {
                                                     DateTime date = (DateTime)insideValue;
                                                     insideValue = date.ToShortDateString();
                                                     resultValue = (insideValue != null ? insideValue.ToString() : " ");
                                                 }
-                                                else resultValue = (insideValue != null ? insideValue.ToString() : " ");
+
+                                                else resultValue = insideValue.ToString();
+
 
                                             }
 
                                         }
                                         else
                                         {
+                                            resultValue = propertyNameFullName;
                                             break;
                                         }
                                     }
@@ -4567,6 +4576,7 @@ namespace WebFreight.Web.Helpers
                         }
 
                     }
+
                     else if (objectField.DataTypeCode == "DateTime")
                     {
                         if (value != null && fields.Count() == 2)
@@ -4597,7 +4607,6 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-
                     break;
                 }
             }
@@ -4980,7 +4989,7 @@ namespace WebFreight.Web.Helpers
         private string GetHtmlNodeValue(HtmlNode node, string nodeText, object theEntity, List<ObjectField> theEntityObjectFields, Dictionary<HtmlNode, HtmlNode> tablesDic, SystemDataPM systemEntity, List<ObjectField> systemEntityObjectFields, List<HtmlNode> signatureNodeList, int tenant, GeneralDomainService theGeneralService, List<HtmlNode> ticketHeaderNode = null, List<HtmlNode> ticketFooterNode = null)
         {
 
-            string nodeTextValue = " ";
+            string nodeTextValue = nodeText;
             string[] properties = nodeText.Split('[');
 
             foreach (string property in properties)
@@ -5002,7 +5011,7 @@ namespace WebFreight.Web.Helpers
                                 if (objectField != null)
                                 {
 
-                                    nodeTextValue = ResolveObjectFieldValueHtml(objectField, fields, tenant, propertyName, systemEntity, systemEntityObjectFields, tablesDic, node, nodeTextValue, childEntity, childEntityObjectFields);
+                                    nodeTextValue = ResolveObjectFieldValueHtml(objectField, fields, tenant, propertyName, systemEntity, systemEntityObjectFields, tablesDic, node, nodeTextValue, childEntity, childEntityObjectFields, nodeText);
                                 }
                                 else
                                 {
@@ -5013,7 +5022,7 @@ namespace WebFreight.Web.Helpers
                                         if (objectField != null)
                                         {
 
-                                            nodeTextValue = ResolveObjectFieldValueHtml(objectField, fields, tenant, propertyName, systemEntity, systemEntityObjectFields, tablesDic, node, nodeTextValue, theEntity, theEntityObjectFields);
+                                            nodeTextValue = ResolveObjectFieldValueHtml(objectField, fields, tenant, propertyName, systemEntity, systemEntityObjectFields, tablesDic, node, nodeTextValue, theEntity, theEntityObjectFields, nodeText);
                                         }
                                     }
                                 }
@@ -5027,7 +5036,7 @@ namespace WebFreight.Web.Helpers
                                     if (objectField != null)
                                     {
 
-                                        nodeTextValue = ResolveObjectFieldValueHtml(objectField, fields, tenant, propertyName, systemEntity, systemEntityObjectFields, tablesDic, node, nodeTextValue, theEntity, theEntityObjectFields);
+                                        nodeTextValue = ResolveObjectFieldValueHtml(objectField, fields, tenant, propertyName, systemEntity, systemEntityObjectFields, tablesDic, node, nodeTextValue, theEntity, theEntityObjectFields, nodeText);
                                     }
                                 }
                             }
@@ -5040,7 +5049,7 @@ namespace WebFreight.Web.Helpers
                             {
                                 string[] systemFields = propertyName.Split('.');
 
-                                string resultValue = GetInsideEntityFieldValue(systemEntity, systemEntityObjectFields, systemFields, tenant, theGeneralService);
+                                string resultValue = GetInsideEntityFieldValue(systemEntity, systemEntityObjectFields, systemFields, tenant, theGeneralService, nodeText);
 
                                 node.InnerHtml = node.InnerHtml.Replace("[SystemData." + propertyName + "]", resultValue);
 
@@ -5051,8 +5060,7 @@ namespace WebFreight.Web.Helpers
                                 if (propertyName != "Signature" && propertyName != "Logo" && propertyName != "SmallLogo")
                                 {
 
-
-                                    string resultValue = GetEntityFieldValue(systemEntity, propertyName, systemEntityObjectFields, tenant);
+                                    string resultValue = GetEntityFieldValue(systemEntity, propertyName, systemEntityObjectFields, tenant, nodeText);
 
                                     node.InnerHtml = node.InnerHtml.Replace("[SystemData." + propertyName + "]", resultValue);
                                     nodeTextValue = resultValue;
@@ -5138,6 +5146,7 @@ namespace WebFreight.Web.Helpers
                             if (theEntityObjectFields != null)
                             {
                                 objectField = theEntityObjectFields.Where(f => f.FieldName == propertyName).FirstOrDefault();
+
                             }
                             if (objectField != null)
                             {
@@ -5222,12 +5231,13 @@ namespace WebFreight.Web.Helpers
 
 
 
-        private string ResolveObjectFieldValueHtml(ObjectField objectField, string[] fields, int tenant, string propertyName, SystemDataPM systemEntity, List<ObjectField> systemEntityObjectFields, Dictionary<HtmlNode, HtmlNode> tablesDic, HtmlNode node, string nodeTextValue, object theEntity, List<ObjectField> theEntityObjectFields)
+        private string ResolveObjectFieldValueHtml(ObjectField objectField, string[] fields, int tenant, string propertyName, SystemDataPM systemEntity, List<ObjectField> systemEntityObjectFields, Dictionary<HtmlNode, HtmlNode> tablesDic, HtmlNode node, string nodeTextValue, object theEntity, List<ObjectField> theEntityObjectFields, string propertyNameFullName = " ")
         {
-            string value = " ";
+            string value = propertyNameFullName;
+
             if (objectField.DataTypeCode == "LookUp" || !string.IsNullOrEmpty(objectField.LookUpTableId))
             {
-                string resultValue = GetInsideEntityFieldValue(theEntity, theEntityObjectFields, fields, tenant, generalService);
+                string resultValue = GetInsideEntityFieldValue(theEntity, theEntityObjectFields, fields, tenant, generalService, propertyNameFullName);
                 node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue);
                 nodeTextValue = resultValue;
                 value = resultValue;
@@ -5238,6 +5248,7 @@ namespace WebFreight.Web.Helpers
                 PropertyInfo propertyPathPi = theEntity.GetType().GetProperty(fields[0].Trim());
                 if (propertyPathPi != null)
                 {
+                    value = " ";
                     object datetimevalue = propertyPathPi.GetValue(theEntity, null);
                     if (datetimevalue != null)
                     {
