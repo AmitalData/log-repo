@@ -11,12 +11,12 @@ using Logitude.Accounting.BL.Validators;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
-    class CreateAutoReconcileWhileStreamingService
+    public class CreateAutoReconcileWhileStreamingService : ICreateAutoReconcileWhileStreamingService
     {
         private IAccountingContext _AccountingContext;
         private JournalPM _JournalPM;
         List<LedgerTransactionPM> _NewLedgerTransactionsWithCounters;
-        internal void MustInit(
+        public void MustInit(
             IAccountingContext accountingContext, 
             JournalPM JournalPM,
             List<LedgerTransactionPM> myNewLedgerTransactionsWithCounters
@@ -30,15 +30,13 @@ namespace Logitude.Accounting.BL.CoreBL
         public List<ReconciliationPM> ReconciliationList { get; private set; }
         public void CreateAutoReconcileWhileStreaming()
         {
-            
+
             if (_JournalPM.JournalReconciles.Count == 0)
             {
                 return;
             }
             var theReconcileAgainstLTranIdList = _JournalPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
-            var qs = new LedgerTransactionQueryService(_AccountingContext);
-
-            var myOldTransToReconcile = qs.GetLedgerTransactionPMsByIdList(theReconcileAgainstLTranIdList, _JournalPM.Tenant);
+            List<LedgerTransactionPM> myOldTransToReconcile = GetLedgerTransactionToReconcile(theReconcileAgainstLTranIdList);
             if (myOldTransToReconcile.Any(r => !r.InReconcileProgress))
             {
                 throw new Exception("_JournalPM.JournalReconciles have  myOldTransToReconcile.Any( r=> !r.InReconcileProgress) ");
@@ -79,7 +77,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 var newLTranListOfAccountID = _NewLedgerTransactionsWithCounters.Where(r => r.AccountId == currentAccountId).ToList();
                 decimal totNew = newLTranListOfAccountID.Sum(r => r.OpenAmount);
-                if (totNew + totReconciliationAmount!=0)
+                if (totNew + totReconciliationAmount != 0)
                 //if (totNew - totReconciliationAmount != 0)
                 {
                     throw new Exception($"for JournalPM.Id ={_JournalPM.Id} Account {currentAccountId}  (totNew != totReconciliationAmount) = ({totNew} != {totReconciliationAmount})");
@@ -141,6 +139,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
+        }
+
+        public virtual List<LedgerTransactionPM> GetLedgerTransactionToReconcile(List<string> theReconcileAgainstLTranIdList)
+        {
+            var qs = new LedgerTransactionQueryService(_AccountingContext);
+
+            var myOldTransToReconcile = qs.GetLedgerTransactionPMsByIdList(theReconcileAgainstLTranIdList, _JournalPM.Tenant);
+            return myOldTransToReconcile;
         }
 
         private string ResolvedCreatedByUserId()
