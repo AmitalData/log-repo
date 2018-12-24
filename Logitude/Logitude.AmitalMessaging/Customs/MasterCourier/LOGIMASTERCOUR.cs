@@ -72,6 +72,8 @@ public partial class LogitudeMasterCourier
 
     private string tenantField;
 
+    private string flightNumberField;
+
     /// <remarks/>
     public string AirlineId
     {
@@ -199,6 +201,19 @@ public partial class LogitudeMasterCourier
         set
         {
             this.tenantField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string FlightNumber
+    {
+        get
+        {
+            return this.flightNumberField;
+        }
+        set
+        {
+            this.flightNumberField = value;
         }
     }
 }
