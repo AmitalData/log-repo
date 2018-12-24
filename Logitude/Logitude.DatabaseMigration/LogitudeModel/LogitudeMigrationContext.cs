@@ -1400,7 +1400,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
-
+        public IDbSet<SharedUserQuery> SharedUserQueries
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Shipment Context
@@ -4176,7 +4180,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new OpenFormatReportStatusMap());
             #endregion
 
-
             #region WareHouse
             modelBuilder.Configurations.Add(new WarehouseEntryMap());
             modelBuilder.Configurations.Add(new WarehouseReleaseMap());
@@ -4186,7 +4189,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new WarehouseEntryStatusMap());
             modelBuilder.Configurations.Add(new WarehouseReleaseStatusMap());
             #endregion
-
 
             #region Time Management
             modelBuilder.Configurations.Add(new TMEmployeeTimeMap());
@@ -4200,8 +4202,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
             #endregion
 
-
-
             #region Infrastructure Generated
             modelBuilder.Configurations.Add(new BIReportMap());
             modelBuilder.Configurations.Add(new BIReportsTypeMap());
@@ -4214,8 +4214,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new BatchTaskExecutionStatusMap());
             modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
             #endregion
-
-
 
             modelBuilder.Configurations.Add(new BlobFileMap());
 
@@ -4739,11 +4737,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DWQueryFilterMap());
             modelBuilder.Configurations.Add(new ShipmentPackageHarmonizeMap());
             modelBuilder.Configurations.Add(new PickUpDeliveryPackageHarmonizeMap());
-
-
             modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new CustomerDepositionMap());
-
+            modelBuilder.Configurations.Add(new SharedUserQueryMap());
 
             base.OnModelCreating(modelBuilder);
         }
