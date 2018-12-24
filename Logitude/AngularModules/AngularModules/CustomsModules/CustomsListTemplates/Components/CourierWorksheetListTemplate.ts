@@ -2,8 +2,8 @@
 declare var window: any;
 import { EditComponent } from "../../../Infrastructure/Components/EditComponent/EditComponent";
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
-import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
-import { Component, ChangeDetectorRef, ViewChild ,OnInit, Output, EventEmitter, ComponentRef, QueryList} from '@angular/core';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ARPaymentExtendedListService} from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -31,9 +31,10 @@ import {DeclarationCourierStatusPMService} from '../../../Customs/Services/Stand
 import {DeclarationCourierStatusPM} from '../../../Customs/EntityPMs/DeclarationCourierStatusPM';
 import { DeclarationCourierStatusList } from '../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { DeclarationCourierStatusListService } from '../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
-import { DeclarationMamanSpecialActionPMService } from '../../../Customs/Services/StandardPMs/DeclarationMamanSpecialActionPMService';
+import { DeclarationMamanSpecialActionListService } from '../../../Customs/Services/StandardLists/DeclarationMamanSpecialActionListService';
 import { DeclarationMamanSpecialActionPM } from '../../../Customs/EntityPMs/DeclarationMamanSpecialActionPM';
 import { retry } from 'rxjs/operator/retry';
+import { forEach } from "@angular/router/src/utils/collection";
 
 @Component({
     moduleId: module.id,
@@ -65,9 +66,13 @@ export class CourierWorksheetListTemplate {
     SuspentionReasonText: string;
     SuspentionReasonTip: string;
 
+    MamanStickerDetails: DeclarationMamanSpecialActionPM = null;
+    IsReceivingDelayCertificate: boolean = false;
+    IsPrintDocuments: boolean = false;
+
     _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
     _CourierMasterService: CourierMasterService = new CourierMasterService();
-    _DeclarationMamanSpecialActionPMService: DeclarationMamanSpecialActionPMService = new DeclarationMamanSpecialActionPMService();
+    _DeclarationMamanSpecialActionListService: DeclarationMamanSpecialActionListService = new DeclarationMamanSpecialActionListService();
     _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
 
     FirePreventSelect() {
@@ -115,6 +120,8 @@ export class CourierWorksheetListTemplate {
         //  this.MySplitButtonComponent.DropdownDisplayClose();
         //}
     }
+
+
 
     setVariables(courierWorksheet: DeclarationCourierStatusList, fieldName: string)/*, AdditionalData:any)*/ {
         this._CourierWorksheet = courierWorksheet;
@@ -214,10 +221,11 @@ export class CourierWorksheetListTemplate {
             this.IsHighLow = false;
         }
 
-      if (this._CourierWorksheet.CourierCustomStatusCode == "2") {
+        if (this._CourierWorksheet.CourierCustomStatusCode == "2") {
           this.SuspentionReasonTip = this._CourierWorksheet.CourierSuspentionReasonName;
-      }
-    this.SuspentionReasonText = this._CourierWorksheet.CourierCustomStatusName;
+        }
+
+        this.SuspentionReasonText = this._CourierWorksheet.CourierCustomStatusName;
 
         this.BuildDeclarationsCheckBox();
         this.CD.detectChanges();
@@ -289,8 +297,6 @@ export class CourierWorksheetListTemplate {
             });
 
     }
-
-
 
     ButtonClick(event) {
         this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = true;
@@ -375,11 +381,42 @@ export class CourierWorksheetListTemplate {
             );
     }
 
+    _IsDropdownMenuFilterReady: boolean = false;
+    PrepareDropdownMenuFilter(event, declarationId) {
+        this._IsDropdownMenuFilterReady = false;
+
+        var filters = new ApiQueryFilters();
+        filters.addAdditionalFilter("DeclarationId", declarationId, null, null, "Equals", false, false, false, "string");
+        this._DeclarationMamanSpecialActionListService.getByFilters(filters).subscribe((response: ServiceResponse) => {
+            this.IsReceivingDelayCertificate = false;
+            this.IsPrintDocuments = false;
+            this.MamanStickerDetails = null;
+            if (!response.HasError && response.Result != null) {
+                response.Result.forEach((declarationMamanSpecialActionPMItem: DeclarationMamanSpecialActionPM) => {
+                    switch (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode) {
+                        case "2": {
+                            this.IsReceivingDelayCertificate = true;
+                            break;
+                        }
+                        case "4": {
+                            this.MamanStickerDetails = declarationMamanSpecialActionPMItem;
+                            break;
+                        }
+                        case "5": {
+                            this.IsPrintDocuments = true;
+                            break;
+                        }
+                    }
+                });
+
+            }
+            this._IsDropdownMenuFilterReady = true;
+            });
+
+    }
+
 
     CourierPendingReasonCommand(event, declarationId, mode) {
-        //event.stopPropagation();
-        //SplitButtonComponent.EnsureLastSplitButtonIsClosed();
-        //DropdownMenuFilterComponent.EnsureLastDropdownMenuIsClosed();
       this.ButtonClick(event);
 
         var logitudeWindow = new LogitudeWindow();
@@ -420,7 +457,6 @@ export class CourierWorksheetListTemplate {
                     logitudeWindow.WindowArgs = windowArgs;
                     logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
                     logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                        //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
                       this.RefreshData();
                     });
                 }
@@ -436,7 +472,6 @@ export class CourierWorksheetListTemplate {
         declarationCourierStatusPM.PendingRemarks = null;
         this._DeclarationCourierStatusPMService.update(declarationCourierStatusPM).subscribe((response: ServiceResponse) => {
             SessionLocator.CurrentSession.StopBusyIndicator();
-            //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
           this.RefreshData();
         });
     }
@@ -486,7 +521,7 @@ export class CourierWorksheetListTemplate {
             var logitudeWindow = new LogitudeWindow();
             var windowArgs: any = {};
             windowArgs.DeclarationId = declarationId;
-            windowArgs.CourierHawb = this._CourierWorksheet.CourierHawb;
+            windowArgs.EntityPM = this.MamanStickerDetails;
             windowArgs.Mode = mode;
 
             logitudeWindow.Width = 450;
@@ -496,7 +531,6 @@ export class CourierWorksheetListTemplate {
             logitudeWindow.WindowArgs = windowArgs;
             logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/MamanSpecialAction/AddEditMamanStickerComponent');
             logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
                 this.RefreshData();
             });
         }

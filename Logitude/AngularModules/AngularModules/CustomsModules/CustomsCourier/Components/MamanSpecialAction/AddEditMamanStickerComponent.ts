@@ -84,15 +84,6 @@ export class AddEditMamanStickerComponent
 
     OkButtonClicked() {
 
-        var errors = [];
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-
-        if (errors.length > 0) {
-            this.ValidationErrorsList = [];
-            this.ValidationErrorsList = errors;
-            return;
-        } 
-
         this._DeclarationMamanSpecialActionPMService.insert(this.EntityPM).subscribe(myResult => {
             this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, this.EntityPM.MamanSpecialActionCode, this.EntityPM.MamanSpecialActionStatusCode).subscribe(myResult => {
                 if (myResult.HasError) {
