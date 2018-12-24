@@ -58,7 +58,7 @@ namespace Logitude.XSD.INTTRA.BL
         public string INTTRA_OutSettingsId { get; set; }
         private Tenant TenantObject;
         private Address TenantAddress;
-        private Port FromPort;
+        public Port FromPort;
         private Port FinalPort;
         private Branch Branch;
         private MoveType MoveType;
@@ -66,11 +66,11 @@ namespace Logitude.XSD.INTTRA.BL
         private Contact LoggedContact;
         private Contact BranchContact;
         private Contact EmergencyContact;
-        private Country FromPortCountry;
+        public Country FromPortCountry;
         private Country FinalPortCountry;
         private Vessel MainVessel;
-        private ShippingLine MainShippingLine;
-        private List<ShipmentPackage> ShipmentPackages = new List<ShipmentPackage>();
+        public ShippingLine MainShippingLine;
+        public List<ShipmentPackage> ShipmentPackages = new List<ShipmentPackage>();
         private List<InsideShipmentPackage> InsidePackages = new List<InsideShipmentPackage>();
         private List<ShipmentPackageHarmonize> AllHarmonizes = new List<ShipmentPackageHarmonize>();
         public IShipmentsContext shipmentContext;
@@ -303,7 +303,7 @@ namespace Logitude.XSD.INTTRA.BL
                                 }
 
                             default:
-                                {
+                                 {
                                     this.Errors.Add("Illegal value in move type");
                                     break;
                                 }

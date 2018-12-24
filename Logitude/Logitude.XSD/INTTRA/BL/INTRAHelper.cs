@@ -747,21 +747,69 @@ namespace Logitude.XSD.INTTRA.BL
 
                 MessageBody = new INTTRA_Status.MessageBodyType()
                 {
-                     MessageProperties = new INTTRA_Status.MessagePropertiesType()
-                     {
-                         EventCode  = "EE",
-                         
-                         //ReferenceInformation = new List<INTTRA_Status.MessagePropertiesTypeReferenceInformation>().ToArray(),
-                     },
+                    MessageProperties = new INTTRA_Status.MessagePropertiesType()
+                    {
+                        EventCode = "EE",
 
-                     MessageDetails = new INTTRA_Status.MessageDetailsType()
-                     {
+                        EventLocation = new INTTRA_Status.EventLocationType()
+                        {
+                            Location = new INTTRA_Status.LocationType()
+                            {
+                                LocationType1 = INTTRA_Status.LocationTypeLocationType.ActivityLocation,
 
-                     },
+                                LocationCode = new INTTRA_Status.LocationTypeLocationCode()
+                                {
+                                    Agency = INTTRA_Status.LocationCodeTypeAgency.UN,
+                                    Value = this.DataContext.FromPortCountry.Code + this.DataContext.FromPort.Code,
+                                },
+
+                                LocationName = this.DataContext.FromPort.EnglishName,
+
+                                LocationCountry = this.DataContext.FromPortCountry.Code,
+
+                                DateTime = new INTTRA_Status.LocationTypeDateTime()
+                                {
+                                    DateType = INTTRA_Status.DateTimeType1DateType.StatusChange,
+                                    Value = this.DataContext.XMLCreateDate,
+                                },
+                            },
+                        },
+
+                        //ReferenceInformation = new List<INTTRA_Status.MessagePropertiesTypeReferenceInformation>().ToArray(),
+
+                        TransportationDetails = new INTTRA_Status.TransportationDetailsType()
+                        {
+                            ConveyanceInformation = new INTTRA_Status.ConveyanceInformationType()
+                            {
+                                CarrierSCAC = this.DataContext.MainShippingLine.SCACCode,
+                                ConveyanceName = "TEST123",
+                                VoyageTripNumber = "TEST123",
+                                TransportIdentification = new INTTRA_Status.ConveyanceInformationTypeTransportIdentification()
+                                {
+                                    TransportIdentificationType1 = INTTRA_Status.TransportIdentificationTypeTransportIdentificationType.LloydsCode,
+                                    TransportIdentificationType1Specified = true,
+                                    Value = "1234567",
+                                }
+                            },
+                        },
+
+                        Parties = new INTTRA_Status.PartiesType1()
+                        {
+                            PartnerInformation = new INTTRA_Status.PartnerInformationType1()
+                            {
+                                PartnerRole = INTTRA_Status.PartnerInformationType1PartnerRole.Carrier,
+                                PartnerIdentifier = new INTTRA_Status.PartnerIdentifierType1()
+                                {
+                                    Agency = INTTRA_Status.PartnerIdentifierType1Agency.AssignedByCarrier,
+                                    Value = this.DataContext.MainShippingLine.SCACCode,
+                                }
+                            },
+                        },
+                    },                    
                 },
             };
 
-            #region ReferenceInformation 
+            #region MessageProperties: ReferenceInformation 
             if (this.DataContext.ReferenceInformations != null)
             {
                 if (this.DataContext.ReferenceInformations.Count > 0)
@@ -861,6 +909,36 @@ namespace Logitude.XSD.INTTRA.BL
             }
             #endregion
 
+            #region MessageDetails
+            ShipmentPackage iContainer = this.DataContext.ShipmentPackages.FirstOrDefault();
+            if (iContainer != null)
+            {
+                PackageTypeRepository iPackageTypeRepository = new PackageTypeRepository(this.CommonContext);
+                PackageType iPackageType = iPackageTypeRepository.GetSinglePackageType(iContainer.PackageTypeId, this.Tenant);
+                if (iPackageType != null)
+                {
+                    iMessage_STATUS.MessageBody.MessageDetails = new INTTRA_Status.MessageDetailsType()
+                    {
+                        EquipmentDetails = new INTTRA_Status.EquipmentDetailsType()
+                        {
+                            LineNumber = "1",
+
+                            EquipmentIdentifier = new INTTRA_Status.EquipmentDetailsTypeEquipmentIdentifier()
+                            {
+                                LoadType = INTTRA_Status.EquipmentIdentifierTypeLoadType.Empty,
+                                Value = iContainer.ContainerNumber,
+                            },
+
+                            EquipmentType = new INTTRA_Status.EquipmentTypeType()
+                            {
+                                EquipmentTypeCode = iPackageType.Code,
+                            },
+                        },
+                    };
+                }
+            }
+            #endregion
+
             this.BuildDemoXMLFile(iMessage_STATUS);
         }
         private void BuildDemoXMLFile(object myRequest)
@@ -894,27 +972,34 @@ namespace Logitude.XSD.INTTRA.BL
         }
         private void BuildAnalyzeQueue(string xmlString)
         {
-            byte[] fileBytes = Encoding.ASCII.GetBytes(xmlString);
+            System.DateTime iCreateDate =  TenantServerConfigration.GetCurrentDateTime(0);
 
-            AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
-
-            AnalyzeQueue analyzeQueue = new AnalyzeQueue()
+            using (TransactionScope scope1 = TransactionFactory.GetNewTransaction())
             {
-                CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
-                From = "INTTRA",
-                Id = IdCounter.GetNumber("AnalyzeQueue", 0),
-                MessageBody = fileBytes,
-                Status = "W",
-                Retries = 0,
-                ConnectedToEntity = false,
-                ConnectedToTenant = false,
-                Tenant = 0,
-                FileSize = fileBytes.Length,
-            };
+                byte[] fileBytes = Encoding.ASCII.GetBytes(xmlString);
 
-            analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
-            analyzeQueueReposiory.Add(analyzeQueue);
-            analyzeQueueReposiory.SubmitChanges();
+                AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
+
+                AnalyzeQueue analyzeQueue = new AnalyzeQueue()
+                {
+                    CreateDate = iCreateDate,
+                    From = "INTTRA",
+                    Id = IdCounter.GetNumber("AnalyzeQueue", 0),
+                    MessageBody = fileBytes,
+                    Status = "W",
+                    Retries = 0,
+                    ConnectedToEntity = false,
+                    ConnectedToTenant = false,
+                    Tenant = 0,
+                    FileSize = fileBytes.Length,
+                };
+
+                analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
+                analyzeQueueReposiory.Add(analyzeQueue);
+                analyzeQueueReposiory.SubmitChanges();
+
+                scope1.Complete();
+            }
         }
         #endregion
     }
