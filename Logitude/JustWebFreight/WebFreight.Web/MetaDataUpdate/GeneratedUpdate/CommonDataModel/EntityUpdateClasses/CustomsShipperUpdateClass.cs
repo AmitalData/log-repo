@@ -84,7 +84,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    OldDBTableName =  "CustomsShippers",
 			      				    ObjectTableSingular =  "Customs Shipper",
 			      				    ObjectTablePlural =  "CustomsShippers",
-			      				    HasCustomFilter =  false,
+			      				    HasCustomFilter =  true,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
@@ -113,7 +113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Shipper",
-			      				    Code =  "52d7",
+			      				    Code =  "3852",
 			      				    Name =  "CustomsShipper",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -142,6 +142,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -198,12 +199,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -218,6 +220,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipper",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -227,7 +230,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomsShipperCode",
-					  						DefaultText =  @"Customs Shipper Code",
+					  						DefaultText =  @"Shipper Code",
+					  						ListFieldLable =  "CustomsShipperCodeListLable",
+					  						ListLableDefaultText =  @"Shipper Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -251,12 +256,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  20,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -271,6 +277,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipper",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -281,6 +288,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ValidDepositionNumber",
 					  						DefaultText =  @"Deposition Number",
+					  						ListFieldLable =  "ValidDepositionNumberListLable",
+					  						ListLableDefaultText =  @"Deposition Number",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -304,12 +313,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -324,6 +334,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipper",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -334,6 +345,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ValidityStartDate",
 					  						DefaultText =  @"Validity Start Date",
+					  						ListFieldLable =  "ValidityStartDateListLable",
+					  						ListLableDefaultText =  @"Start Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -357,18 +370,191 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ValidityEndDate",
 					  						ListPropertyPath =  "ValidityEndDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipper",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ValidityEndDate",
+					  						DefaultText =  @"ValidityEndDate",
+					  						ListFieldLable =  "ValidityEndDateListLable",
+					  						ListLableDefaultText =  @"End Date",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "EnglishName",
+					  						OldFieldName =  "EnglishName",
+					  						ObjectTableName =  "CustomsShipper",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  70,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "EnglishName",
+					  						ListPropertyPath =  "EnglishName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipper",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "EnglishName",
+					  						DefaultText =  @"Name",
+					  						ListFieldLable =  "EnglishNameListLable",
+					  						ListLableDefaultText =  @"Name",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ShipperVAT",
+					  						OldFieldName =  "VatNumber",
+					  						ObjectTableName =  "CustomsShipper",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  20,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ShipperVAT",
+					  						ListPropertyPath =  "ShipperVAT",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsShipper",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ShipperVAT",
+					  						DefaultText =  @"Vat Number",
+					  						ListFieldLable =  "ShipperVATListLable",
+					  						ListLableDefaultText =  @"Vat Number",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "DepositionsDateFilter",
+					  						OldFieldName =  "DepositionsDateFilter",
+					  						ObjectTableName =  "CustomsShipper",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  150,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  true,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "DepositionsDateFilter",
+					  						ListPropertyPath =  "DepositionsDateFilter",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -385,8 +571,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ValidityEndDate",
-					  						DefaultText =  @"ValidityEndDate",
+					  						FullFieldLable =  "DepositionsDateFilter",
+					  						DefaultText =  @"Depositions Date Filter",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -402,16 +588,120 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup CustomsShipperQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3852", Name = "CustomsShipper" }, queryGroupRepository);
+						QueryGroup CustomsShipperQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "cde1", Name = " Query Group" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable CustomsShipperObjectTable = objectContext.ObjectTables.Where(d => d.Name == "CustomsShipper" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> CustomsShipperObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomsShipper").ToList();   
+
+			   TextCode CustomsShipperTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsShipper.Q.AllDepositionsQuery", DefaultText = @"All Depositions",LocalDefaultText = "All Depositions", ObjectTableId = CustomsShipperObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomsShipperFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsShipper.Q.AllDepositionsQuery", ObjectTableId = CustomsShipperObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsShipperFeatures.AllDepositionsQuery", NameTextCodeDefaultText = "AllDepositionsQuery", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+
+			   TextCode CustomsShipperTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsShipper.Q.EndsNext30DaysQuery", DefaultText = @"Ends Next 30 Days",LocalDefaultText = "Ends Next 30 Days", ObjectTableId = CustomsShipperObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomsShipperFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsShipper.Q.EndsNext30DaysQuery", ObjectTableId = CustomsShipperObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsShipperFeatures.EndsNext30DaysQuery", NameTextCodeDefaultText = "EndsNext30DaysQuery", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+
+			   TextCode CustomsShipperTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsShipper.Q.InValidDepositionsQuery", DefaultText = @"InValid Depositions",LocalDefaultText = "InValid Depositions", ObjectTableId = CustomsShipperObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomsShipperFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsShipper.Q.InValidDepositionsQuery", ObjectTableId = CustomsShipperObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsShipperFeatures.InValidDepositionsQuery", NameTextCodeDefaultText = "InValidDepositionsQuery", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query AllDepositionsQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsShipperTextCode_0.Id, Code = "AllDepositionsQuery",  QueryGroupCode = "3852", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsShipperObjectTable.Id, QuerySection = "CustomsShipper", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsShipperFeature_0.Id, DefaultSortName = "ValidityStartDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn AllDepositionsQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "CustomsShipperCode" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllDepositionsQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllDepositionsQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 2, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ShipperVAT" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllDepositionsQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 3, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidDepositionNumber" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllDepositionsQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 4, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityStartDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllDepositionsQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 5, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityEndDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+  
+	      
+
+			  Query EndsNext30DaysQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsShipperTextCode_1.Id, Code = "EndsNext30DaysQuery",  QueryGroupCode = "3852", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomsShipperObjectTable.Id, QuerySection = "CustomsShipper", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsShipperFeature_1.Id, DefaultSortName = "ValidityStartDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn EndsNext30DaysQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "CustomsShipperCode" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn EndsNext30DaysQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn EndsNext30DaysQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 2, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ShipperVAT" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn EndsNext30DaysQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 3, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidDepositionNumber" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn EndsNext30DaysQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 4, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityStartDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn EndsNext30DaysQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 5, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityEndDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter EndsNext30DaysQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "DepositionsDateFilter" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "EndNext30Days",PredefinedValue2 = null, QueryId = EndsNext30DaysQueryQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+  
+	      
+
+			  Query InValidDepositionsQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsShipperTextCode_2.Id, Code = "InValidDepositionsQuery",  QueryGroupCode = "3852", IndexOrder = 2, Tenant = 0, ObjectTableId = CustomsShipperObjectTable.Id, QuerySection = "CustomsShipper", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsShipperFeature_2.Id, DefaultSortName = "ValidityStartDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn InValidDepositionsQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "CustomsShipperCode" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn InValidDepositionsQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn InValidDepositionsQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 2, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ShipperVAT" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn InValidDepositionsQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 3, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidDepositionNumber" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn InValidDepositionsQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 4, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityStartDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn InValidDepositionsQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 5, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityEndDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter InValidDepositionsQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "DepositionsDateFilter" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "InValidDepositions",PredefinedValue2 = null, QueryId = InValidDepositionsQueryQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CustomsShipperObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsShipper" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> CustomsShipperObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomsShipper").ToList();
+		       
+	      
+
+	         Screen CustomsShipperCustomsShipperHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsShipper.HeaderScreen", Name = "CustomsShipperHeaderScreen", ObjectTableId = CustomsShipperObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+            ScreenField CustomsShipperCustomsShipperHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "CustomsShipperCode").FirstOrDefault().Id, ScreenId = CustomsShipperCustomsShipperHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomsShipperCustomsShipperHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = CustomsShipperCustomsShipperHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomsShipperCustomsShipperHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidDepositionNumber").FirstOrDefault().Id, ScreenId = CustomsShipperCustomsShipperHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         	
+		    CustomsShipperObjectTable.HeaderScreenId = CustomsShipperCustomsShipperHeaderScreenScreen0.Id;
+	   		  
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {    
+			 ObjectTable CustomsShipperObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsShipper" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode CustomsShipperGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsShipper.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = CustomsShipperObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CustomsShipperGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsShipper.Tab.General", ObjectTableId = CustomsShipperObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsShipperFeatures.CSGE", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSGE",HtmlComponentName = "CustomsShipperGeneralTabComponent",HtmlComponentUrl = "./CommonModules/CommonOthers/Components/Depositions/EditTab/CustomsShipperGeneralTabComponent", FeatureId = CustomsShipperGeneralFeature_TH0.Id, ControlPath = "./CommonModules/CommonOthers/Components/Depositions/EditTab/CustomsShipperGeneralTabComponent", ObjectTableId = CustomsShipperObjectTable.Id, TabNameTextCodeId = CustomsShipperGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
@@ -426,6 +716,43 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
+			ObjectTable CustomsShipperObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsShipper" && d.Tenant == 0).FirstOrDefault(); 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CREV",
+                EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = CustomsShipperObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "UPEV",
+                EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = CustomsShipperObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
