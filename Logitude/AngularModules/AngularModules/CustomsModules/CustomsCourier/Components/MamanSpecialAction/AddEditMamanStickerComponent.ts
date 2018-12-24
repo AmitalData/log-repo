@@ -6,7 +6,8 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import { DeclarationMamanSpecialActionPM } from '../../../../Customs/EntityPMs/DeclarationMamanSpecialActionPM';
-import { CourierPendingReasonExtendedListService } from '../../../../Customs/Services/ExtendedLists/CourierPendingReasonExtendedListService';
+import { DeclarationMamanSpecialActionPMService } from '../../../../Customs/Services/StandardPMs/DeclarationMamanSpecialActionPMService';
+import { DeclarationWebService } from '../../../../Customs/Services/WebServices/DeclarationWebService';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
@@ -26,7 +27,8 @@ export class AddEditMamanStickerComponent
     ValidationErrorsList: any[] = [];
 
     private _EntityResourceService: EntityResourceService = new EntityResourceService();
-    private _CourierPendingReasonPMService: CourierPendingReasonPMService = new CourierPendingReasonPMService();
+    private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
+    private _DeclarationMamanSpecialActionPMService: DeclarationMamanSpecialActionPMService = new DeclarationMamanSpecialActionPMService;
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -90,14 +92,16 @@ export class AddEditMamanStickerComponent
             this.ValidationErrorsList = errors;
             return;
         } 
-            
-        this._CourierPendingReasonPMService.insert(this.EntityPM).subscribe(myResult => {
-            if (myResult.HasError) {
-                this.ValidationErrorsList = [];
-                this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
-                return;
-            }
-            this.CancelButtonClicked();
+
+        this._DeclarationMamanSpecialActionPMService.insert(this.EntityPM).subscribe(myResult => {
+            this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, this.EntityPM.MamanSpecialActionCode, this.EntityPM.MamanSpecialActionStatusCode).subscribe(myResult => {
+                if (myResult.HasError) {
+                    this.ValidationErrorsList = [];
+                    this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
+                    return;
+                }
+                this.CancelButtonClicked();
+            });
         });
         
     }

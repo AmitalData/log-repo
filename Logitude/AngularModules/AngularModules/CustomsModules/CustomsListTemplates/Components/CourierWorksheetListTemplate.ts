@@ -467,60 +467,49 @@ export class CourierWorksheetListTemplate {
     MamanStickerCommand(event, declarationId, mode) {
         this.ButtonClick(event);
 
-        var logitudeWindow = new LogitudeWindow();
-        var windowArgs: any = {};
-        var declarationIdList = [];
-
-        this._DeclarationMamanSpecialActionPMService.get(declarationId,"4").subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-                declarationIdList.push(response.Result);
-                windowArgs.DeclarationIdList = declarationIdList;
-                windowArgs.CourierHawb = this._CourierWorksheet.CourierHawb;
-                windowArgs.Mode = mode;
-
-                if (mode == "Delete") {
-                    var confirm = new ConfirmWindow();
-                    confirm.Width = 350;
-                    confirm.Height = 200;
-                    confirm.Title = "ביטול הפקת מדבקה";
-                    confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
-                    confirm.ShowNoButton = true;
-                    confirm.Show("אשר שליחת מסר ביטול פעולה מיוחדת של הדפסת מדבקה");
-                    confirm.WindowClosed.subscribe((event: any) => {
-                        if (confirm.Yes) {
-                            this.CancelMamanSticker(response.Result);
-                        }
-                        confirm.Close();
-                    });
+        if (mode == "Delete") {
+            var confirm = new ConfirmWindow();
+            confirm.Width = 350;
+            confirm.Height = 200;
+            confirm.Title = "ביטול הפקת מדבקה";
+            confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+            confirm.ShowNoButton = true;
+            confirm.Show("אשר שליחת מסר ביטול פעולה מיוחדת של הדפסת מדבקה");
+            confirm.WindowClosed.subscribe((event: any) => {
+                if (confirm.Yes) {
+                    this.CancelMamanSticker(declarationId);
                 }
-                else {
-                    if (mode == "Update") {
-                        windowArgs.CourierPendingReasonCode = this._CourierWorksheet.CourierPendingReasonCode;
-                        windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
-                    }
-                    logitudeWindow.Width = 450;
-                    logitudeWindow.Height = 280;
-                    logitudeWindow.IsShowCloseButton = false;
-                    logitudeWindow.Title = "סימון ב Pending";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
-                    logitudeWindow.WindowArgs = windowArgs;
-                    logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
-                    logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                        //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
-                        this.RefreshData();
-                    });
-                }
-            }
-        });
+                confirm.Close();
+            });
+        }
+        else {
+            var logitudeWindow = new LogitudeWindow();
+            var windowArgs: any = {};
+            windowArgs.DeclarationId = declarationId;
+            windowArgs.CourierHawb = this._CourierWorksheet.CourierHawb;
+            windowArgs.Mode = mode;
+
+            logitudeWindow.Width = 450;
+            logitudeWindow.Height = 280;
+            logitudeWindow.IsShowCloseButton = false;
+            logitudeWindow.Title = "פרטי מדבקה";//TextCodeTranslator.Translate("Customs.CourierMaster.O.StickerDetails");;
+            logitudeWindow.WindowArgs = windowArgs;
+            logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/MamanSpecialAction/AddEditMamanStickerComponent');
+            logitudeWindow.WindowClosed.subscribe(($event: any) => {
+                //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
+                this.RefreshData();
+            });
+        }
 
         this.CD.detectChanges();
     }
 
-    CancelMamanSticker(declarationMamanSpecialActionPM: DeclarationMamanSpecialActionPM) {
-        //SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-        //this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.Id, this.EntityPM.Tenant)
-        //    .subscribe((myResponse: ServiceResponse) => {
-        //        SessionLocator.CurrentSession.StopBusyIndicator();
+    CancelMamanSticker(declarationId: string) {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant,"C", "4")
+            .subscribe((myResponse: ServiceResponse) => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
 
-        //    });
+            });
     }
 }
