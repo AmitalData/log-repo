@@ -16,14 +16,12 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 })
 
 export class AddEditMamanStickerComponent
-    extends BaseComponent
-    implements OnInit{
+    extends BaseComponent{
 
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.DeclarationMamanSpecialAction";
     public EntityPM: DeclarationMamanSpecialActionPM;
     isWindowMode: boolean = true;
-    isFromUnifreight: boolean = false;
     ValidationErrorsList: any[] = [];
 
     private _EntityResourceService: EntityResourceService = new EntityResourceService();
@@ -36,21 +34,23 @@ export class AddEditMamanStickerComponent
         SessionLocator.CurrentSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             SessionLocator.CurrentSession.StopBusyIndicator();
-            if (AppTool.IsNullOrEmpty(entityArgs.EntityPM)) {
-                this.EntityPM = new DeclarationMamanSpecialActionPM();
-                this.EntityPM.Tenant = SessionLocator.Tenant;
-                this.isWindowMode = true;
-            } 
         });
     }
 
-    Loaded: boolean = false;
-    ngOnInit() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
-            this.Loaded = true;
-        });
+    SetWindowArgs(entityArgs: any) {
+        if (!AppTool.IsNullOrEmpty(entityArgs)) {
+            this.isWindowMode = true;
+
+            if (AppTool.IsNullOrEmpty(entityArgs.EntityPM)) {
+                this.EntityPM = new DeclarationMamanSpecialActionPM();
+                this.EntityPM.Tenant = SessionLocator.Tenant;
+                this.EntityPM.DeclarationId = entityArgs.DeclarationId;
+                this.EntityPM.MamanSpecialActionCode = "4";
+            }
+            else {
+                this.EntityPM = entityArgs.EntityPM;
+            }
+        }
     }
 
 
@@ -85,7 +85,7 @@ export class AddEditMamanStickerComponent
     OkButtonClicked() {
 
         this._DeclarationMamanSpecialActionPMService.insert(this.EntityPM).subscribe(myResult => {
-            this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, this.EntityPM.MamanSpecialActionCode, this.EntityPM.MamanSpecialActionStatusCode).subscribe(myResult => {
+            this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, "U", "4").subscribe(myResult => {
                 if (myResult.HasError) {
                     this.ValidationErrorsList = [];
                     this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
