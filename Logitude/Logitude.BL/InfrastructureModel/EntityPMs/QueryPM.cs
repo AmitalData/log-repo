@@ -38,6 +38,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool IsNewFromTenantZeroOnly { get; set; }
         public string NewViewName { get; set; }
         public string EditWizardComponentPath { get; set; }
-
+        public bool SharedWithAll { get; set; }
+        public bool SharedWithSpecificUsers { get; set; }
+        public string SharedByUserId { get; set; }
     }
 }

@@ -4651,9 +4651,12 @@ namespace WebFreight.Web.Helpers
         {
             byte[] resultFile = null;
 
-            if (folderName.ToLower() == "logos")
+            if (!fileName.Contains("sharedLogtsitcslogo"))
             {
-                fileName = fileName.ToLower();
+                if (folderName.ToLower() == "logos")
+                {
+                    fileName = fileName.ToLower();
+                }
             }
 
             //Check if InAzure 
@@ -4815,7 +4818,7 @@ namespace WebFreight.Web.Helpers
                                             }
                                             else
                                             {
-                                                if (propertyName != "Signature" && propertyName != "Logo" && propertyName != "SmallLogo")
+                                                if (propertyName != "Signature" && propertyName != "Logo" && propertyName != "SmallLogo" && propertyName != "WideLogo")
                                                 {
 
 
@@ -4826,7 +4829,7 @@ namespace WebFreight.Web.Helpers
                                                 }
                                                 else
                                                 {
-                                                    if (propertyName == "Logo" || propertyName == "SmallLogo")
+                                                    if (propertyName == "Logo" || propertyName == "SmallLogo" || propertyName == "WideLogo")
                                                     {
                                                         string logoString = GetTenantLogoHtml(propertyName, tenant);
 
@@ -5057,7 +5060,7 @@ namespace WebFreight.Web.Helpers
                             }
                             else
                             {
-                                if (propertyName != "Signature" && propertyName != "Logo" && propertyName != "SmallLogo")
+                                if (propertyName != "Signature" && propertyName != "Logo" && propertyName != "SmallLogo" && propertyName != "WideLogo")
                                 {
 
                                     string resultValue = GetEntityFieldValue(systemEntity, propertyName, systemEntityObjectFields, tenant, nodeText);
@@ -5068,7 +5071,7 @@ namespace WebFreight.Web.Helpers
                                 }
                                 else
                                 {
-                                    if (propertyName == "Logo" || propertyName == "SmallLogo")
+                                    if (propertyName == "Logo" || propertyName == "SmallLogo" || propertyName == "WideLogo")
                                     {
                                         string logoString = GetTenantLogoHtml(propertyName, tenant);
 
@@ -5588,8 +5591,19 @@ namespace WebFreight.Web.Helpers
         public string GetTenantLogoHtml(string logoName, int tenant)
         {
             string logoCode = " ";
-            string logoFileName = logoName + tenant;
-            byte[] logoFile = GetFileFromServer(logoFileName, "jpg", "logos", tenant);
+            string fileName = logoName;
+            string fileExtension = "jpg";
+
+
+            if (fileName == "WideLogo")
+            {
+                fileName = "sharedLogtsitcslogo";
+                fileExtension = "png";
+            }
+
+            string logoFileName = fileName + tenant;
+
+            byte[] logoFile = GetFileFromServer(logoFileName, fileExtension, "logos", tenant);
 
             if (logoFile != null)
             {
@@ -5606,12 +5620,6 @@ namespace WebFreight.Web.Helpers
                 System.Drawing.Image image = System.Drawing.Image.FromStream(ms, true);
                 string width = image.Width.ToString() + "px";
                 string height = image.Height.ToString() + "px";
-                //"'" + " UriSource='" + uri + "' " +
-                // string uri = GetFileServerPath(logoName + tenant, "jpg", "logos");
-                // string m = @"/";
-                // UriSource="/Silverlight.Help.RadRichTextBoxSamples;component/Demos/Images/RadRichTextBox.png"
-                // uri = @"../"+ uri.Replace(@"\", @"/");
-                // string ChildIndex = tenant.ToString();//GetFileServerPath(logoName + tenant, "jpg", "logos");
 
                 if (isSendMail)
                 {
@@ -6201,7 +6209,7 @@ namespace WebFreight.Web.Helpers
                 if (isDateField)
                 {
                     if (data.Contains("systemdata.logo")) height = 8;
-                    else if (data.Contains("systemdata.smalllogo")) height = 4;
+                    else if (data.Contains("systemdata.smalllogo")|| data.Contains("systemdata.widelogo")) height = 4;
 
                 }
                 else
