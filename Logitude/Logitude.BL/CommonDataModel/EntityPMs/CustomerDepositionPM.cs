@@ -17,6 +17,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public DateTime? ValidityStartDate { get; set; }
         public DateTime? ValidityEndDate { get; set; }
         public DateTime CreateDate { get; set; }
+    
     }
 
 

@@ -982,6 +982,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\CommunicationLogStepController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ComputingPartnerViewsExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\AgentSharedDocumentExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\CustomerDepositionExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\DocumentFilingBackupBatchExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\HybridTenantStateExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ImporterDepositionController.cs" />

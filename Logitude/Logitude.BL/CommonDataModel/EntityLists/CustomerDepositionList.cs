@@ -17,5 +17,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public DateTime? ValidityStartDate { get; set; }
         public DateTime? ValidityEndDate { get; set; }
         public DateTime CreateDate { get; set; }
+        public string ValidityEndDateColor { get; set; }
     }
 }
