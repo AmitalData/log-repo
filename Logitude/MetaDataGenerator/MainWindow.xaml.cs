@@ -286,7 +286,7 @@ namespace MetaDataGenerator
 
 
 
-                        tables = (from a in rep.context.ObjectTables
+                        tables = (from a in rep.context.ObjectTables.Include("DescriptionTextCode").Include("NewButtonTextCode")
                                   where allFiles.Contains(a.Name)
                                   select a).OrderBy(t => t.Name).ToList();
 

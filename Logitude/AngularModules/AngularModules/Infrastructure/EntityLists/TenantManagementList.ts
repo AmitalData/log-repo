@@ -117,5 +117,6 @@ export class TenantManagementList {
 		ChangeHeaderColor: boolean;
 		IsINTTRAStockPrepaid: boolean;
 		PackageCodeSearchField: string;
+		IsINTTRAOnlyDemo: boolean;
 	
 }

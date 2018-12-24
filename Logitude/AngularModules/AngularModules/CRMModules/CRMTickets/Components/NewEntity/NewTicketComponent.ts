@@ -695,7 +695,7 @@ export class NewTicketComponent extends BaseComponent implements OnInit {
         }
     }
     ChooseEntity() {
-        if (!this.IsShipmentIdDisabled) {
+        if (!this.IsShipmentIdDisabled && this.EntityType != null) {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 800;
             logWindow.Height = 570;

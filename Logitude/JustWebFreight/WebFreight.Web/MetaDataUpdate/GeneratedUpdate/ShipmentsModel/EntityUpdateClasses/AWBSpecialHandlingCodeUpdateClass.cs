@@ -102,7 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    CustomFieldsCount =  0,
 			      				    HasCustomFields =  false,
 			      				    InActive =  false,
-			      				    SearchFields =  "AWBSpecialHandlingCode,AWBSpecialHandlingCodes,,Id,Code",
+			      				    SearchFields =  "AWBSpecialHandlingCode,AWBSpecialHandlingCodes,,Id,",
 			      				    IsSaveButtonVisible =  true,
 			      				    EnableSecurity =  false,
 			      				    ObjectTableTypeCode =  "MD",

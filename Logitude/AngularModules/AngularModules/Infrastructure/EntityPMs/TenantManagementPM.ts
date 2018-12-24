@@ -619,6 +619,11 @@ export class TenantManagementPM {
     public set IsINTTRAStockPrepaid(newValue: boolean) { if (this.isINTTRAStockPrepaid != newValue) { this.isINTTRAStockPrepaid = newValue; this.MarkAsDirty("IsINTTRAStockPrepaid"); } }
        
 	 
+    private isINTTRAOnlyDemo: boolean;
+    public get IsINTTRAOnlyDemo() { return this.isINTTRAOnlyDemo; }
+    public set IsINTTRAOnlyDemo(newValue: boolean) { if (this.isINTTRAOnlyDemo != newValue) { this.isINTTRAOnlyDemo = newValue; this.MarkAsDirty("IsINTTRAOnlyDemo"); } }
+       
+	 
     private packageCodeSearchField: string;
     public get PackageCodeSearchField() { return this.packageCodeSearchField; }
     public set PackageCodeSearchField(newValue: string) { if (this.packageCodeSearchField != newValue) { this.packageCodeSearchField = newValue; this.MarkAsDirty("PackageCodeSearchField"); } }

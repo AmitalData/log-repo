@@ -156,5 +156,6 @@ namespace WebFreight.Web.DataProviders
         public string Reference4 { get; set; }
 
         public string OnCarriageCarrier { get; set; }
+        public string FreightLocation { get; set; }
     }
 }

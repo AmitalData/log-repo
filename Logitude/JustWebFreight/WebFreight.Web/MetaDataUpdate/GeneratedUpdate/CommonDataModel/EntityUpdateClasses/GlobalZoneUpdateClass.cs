@@ -113,6 +113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsEditable =  true,
 			      				    ClientModuleName =  "Common",
 			      				    Code =  "GLBL",
+			      				    DescriptionDefaultText =  "Logitude supplies the global zones for you. You can modify the names and add local names.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

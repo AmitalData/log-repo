@@ -41,7 +41,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.FiltersXML).HasColumnName("FiltersXML");
 
 
-            this.HasRequired(t => t.DWObjectTable).WithMany().HasForeignKey(d => d.DWFactTableCode);
+            //this.HasRequired(t => t.DWObjectTable).WithMany().HasForeignKey(d => d.DWFactTableCode);
             //this.HasRequired(t => t.CreatedBy).WithMany().HasForeignKey(d => d.CreatedByUserId);
             //this.HasRequired(t => t.UpdateBy).WithMany().HasForeignKey(d => d.UpdateByUserId);
             this.HasRequired(t => t.DWQuery).WithMany().HasForeignKey(d => d.DWQueryId);

@@ -127,6 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    CodeField =  "Code",
 			      				    NameField =  "EnglishName",
 			      				    ClientModuleName =  "Common",
+			      				    DescriptionDefaultText =  "Logitude supplies and maintains the countries for you. You can maintain the country information, and connect countries to global zones and the EC.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

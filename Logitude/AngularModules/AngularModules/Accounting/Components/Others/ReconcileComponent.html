@@ -496,11 +496,15 @@
 
 </div>-->
 <!-- Alert -->
-<div *ngIf="showAlert" class="alert-animation SaveAlert"
+<div *ngIf="showAlert && recoCallback" class="alert-animation SaveAlert"
      [style.text-align]="isRTL ? 'right' : 'left'"
      style="min-width: 325px;width: fit-content;background: #c0e8c2;border: 1px solid #54a758;color: #6a7769;" >
     <div class="alert-close" (click)="CloseAlert()" [style.right]="isRTL ? 'initial' : '5px'" [style.left]="isRTL ? '5px' : 'initial'" style="color: #439c47;text-decoration: underline;">{{'Accounting.General.B.Close' | TextCodeTranslationPipe}}</div>
-    {{'Accounting.General.O.Reconciliation' | TextCodeTranslationPipe}} <a *ngIf="RecoPM" href="#" (click)="OpenReco()"> {{RecoPM.Number }}</a> {{'Accounting.General.O.wascreatedsuccessfully' | TextCodeTranslationPipe}}.
+
+    <span *ngIf="!recoCallback.isSplitted">{{'Accounting.General.O.Reconciliation' | TextCodeTranslationPipe}} <a *ngIf="RecoPM" href="#" (click)="OpenReco()"> {{RecoPM.Number }}</a> {{'Accounting.General.O.wascreatedsuccessfully' | TextCodeTranslationPipe}}.</span>
+    <span *ngIf="recoCallback.isSplitted" >{{recoCallback.splittedRecoCount}} {{'Accounting.O.MultiRecoCreated' | TextCodeTranslationPipe}}.</span>
+
+
 </div>
 
 

@@ -115,6 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ClientModuleName =  "Common",
 			      				    NewWizardComponentPath =  "./Common/Components/Maintenance/BusinessUnit/NewBusinessUnitComponent",
 			      				    Code =  "BUQG",
+			      				    DescriptionDefaultText =  "Define the business units you want to work with for controlling access to information and sharing of information.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

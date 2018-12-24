@@ -58,7 +58,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 dataProvider.Destination = warehouseEntryPM.Destination;
                 dataProvider.ShipperName = warehouseEntryPM.ShipperName;
                 dataProvider.ConsigneeName =  warehouseEntryPM.ConsigneeName;
-
+                dataProvider.EntryNumber = warehouseEntryPM.EntryNumber;
 
                 List<string> cardIds = new List<string>();
                 List<CardList> cardLists = new List<CardList>();
@@ -165,6 +165,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     if (shipmentDataView != null)
                     {
                         dataProvider.MainCarriageCarrierName = shipmentDataView.MainCarriageCarrierName;
+                        dataProvider.ShipmentNumber = shipmentDataView.ShipmentNumber;
                     }
                 }
 

@@ -123,6 +123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    CodeField =  "CombinedCode",
 			      				    NameField =  "EnglishName",
 			      				    ClientModuleName =  "Common",
+			      				    DescriptionDefaultText =  "Logitude supplies and maintains the ports for you. You can modify port names and add local names.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

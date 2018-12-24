@@ -190,7 +190,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
             //editWindow.Title = windowTitle;
             editWindow.Height = 770;
             editWindow.Width = 1500;
-
+            editWindow.IsHideHeader  = true;
             editWindow.ShowEditComponent(this.AccountPM.Id, "GLAccount", "GATR");
             editWindow.WindowClosed.subscribe(res => {
                 this.LoadAllData();
