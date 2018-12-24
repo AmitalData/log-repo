@@ -438,6 +438,10 @@
     <Compile Include="Migrations\201812231037225_UpdateBIReportType_Maheera.Designer.cs">
       <DependentUpon>201812231037225_UpdateBIReportType_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812241039017_AbedAddSearchFieldsToCustomsShipper.cs" />
+    <Compile Include="Migrations\201812241039017_AbedAddSearchFieldsToCustomsShipper.Designer.cs">
+      <DependentUpon>201812241039017_AbedAddSearchFieldsToCustomsShipper.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -704,6 +708,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812231037225_UpdateBIReportType_Maheera.resx">
       <DependentUpon>201812231037225_UpdateBIReportType_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812241039017_AbedAddSearchFieldsToCustomsShipper.resx">
+      <DependentUpon>201812241039017_AbedAddSearchFieldsToCustomsShipper.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

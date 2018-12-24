@@ -37,13 +37,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public CustomsShipper GetSingleCustomsShipper(string id, int tenant)
         {
-            return (from a in context.CustomsShippers where a.Id == id && a.Tenant == tenant select a).FirstOrDefault();
+            return (from a in context.CustomsShippers.Include("Card") where a.Id == id && a.Tenant == tenant select a).FirstOrDefault();
         }
 
 
         public IQueryable<CustomsShipper> GetCustomsShippers(int tenant)
         {
-            return from a in context.CustomsShippers
+            return from a in context.CustomsShippers.Include("Card")
                    where a.Tenant == tenant
                    select a;
         }
