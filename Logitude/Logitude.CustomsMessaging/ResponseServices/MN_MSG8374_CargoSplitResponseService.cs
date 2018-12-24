@@ -135,6 +135,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 applicationId = customResponse.ResponseContentHeader.ApplicationID.ToString();
                 hasException = false;
                 exceptionMessage = "מענה לבקשת פיצול מטען נשלח בהצלחה";
+                string userMess = null;
 
                 if ((customResponse.CargoSplitRequestResponse.CargoSpllitRequestNumberSpecified && string.IsNullOrWhiteSpace(_DeclarationCargoSplitPM.RequestNumber))
                  || (customResponse.CargoSplitRequestResponse.responseStatus != _DeclarationCargoSplitPM.ResponseStatusCode))
@@ -148,7 +149,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (customResponse.CargoSplitRequestResponse.responseStatus != _DeclarationCargoSplitPM.ResponseStatusCode)
                     {
                         _DeclarationCargoSplitPM.ResponseStatusCode = customResponse.CargoSplitRequestResponse.responseStatus;
-                        RaiseDeclarationCargoSplitResponseStatus(_DeclarationCargoSplitPM, customResponse, requestParams);
+                        userMess = RaiseDeclarationCargoSplitResponseStatus(_DeclarationCargoSplitPM, customResponse, requestParams);
+                        if (userMess != null) exceptionMessage = userMess;
                     }
                     if (customResponse.CargoSplitRequestResponse.CargoIdentifier != null)
                     {
@@ -215,8 +217,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-        private void RaiseDeclarationCargoSplitResponseStatus(DeclarationCargoSplitPM _DeclarationCargoSplitPM, MN_MSG8374_CargoSplitRequestFeedBack_Message customResponse, CargoSplitRequestParams requestParams)
+        private string RaiseDeclarationCargoSplitResponseStatus(DeclarationCargoSplitPM _DeclarationCargoSplitPM, MN_MSG8374_CargoSplitRequestFeedBack_Message customResponse, CargoSplitRequestParams requestParams)
         {
+            string userMessage = null;
             string status = null;
             string notificationDefinitionCode = "";
             string notificationDescription = "";
@@ -241,22 +244,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     status = "CSA";
                     notificationDefinitionCode = "8374A";
                     notificationDescription = "בקשת פיצול מטען אושרה " + customsFileNo;
+                    userMessage = "בקשת פיצול מטען " + _DeclarationCargoSplitPM.RequestNumber + "אושרה ";
                     break;
                 case "2":
                     status = "CSJ";
                     notificationDefinitionCode = "8374J";
                     notificationDescription = "בקשת פיצול מטען נדחתה " + customsFileNo;
+                    userMessage = "בקשת פיצול מטען " + _DeclarationCargoSplitPM.RequestNumber + "נדחתה ";
                     break;
                 case "4":
                 case "7":
                     status = "CSC";
                     notificationDefinitionCode = "8374C";
                     notificationDescription = "בקשת פיצול מטען בוטלה " + customsFileNo;
+                    userMessage = "בקשת פיצול מטען " + _DeclarationCargoSplitPM.RequestNumber + "בוטלה ";
                     break;
                 case "6":
                     status = "CSD";
                     notificationDefinitionCode = "8374D";
                     notificationDescription = "בוצע פיצול מטען " + customsFileNo;
+                    userMessage = "בוצע פיצול מטען לבקשה " + _DeclarationCargoSplitPM.RequestNumber;
                     break;
             }
 
@@ -286,6 +293,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var DeclarationCargoSplitUpdateService = new DeclarationCargoSplitUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _DeclarationCargoSplitPM.Tenant);
                 DeclarationCargoSplitUpdateService.RaiseDeclarationCargoSplitEventAndStatus(status, status, _DeclarationCargoSplitPM, declaration, false, "", "");
             }
+            return (userMessage);
         }
 
 
