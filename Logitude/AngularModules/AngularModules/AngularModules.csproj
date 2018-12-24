@@ -221,6 +221,10 @@
     <Content Include="Images\arrow_right_w.png" />
     <Content Include="Images\Flags\--.png" />
     <Content Include="Images\Flags\XK.png" />
+    <Content Include="Images\Menu\Deposition.png" />
+    <Content Include="Images\Menu\Deposition.Selected.png" />
+    <Content Include="Images\Menu\Documents.png" />
+    <Content Include="Images\Menu\Documents.Selected.png" />
     <Content Include="Images\train.png" />
     <Content Include="Images\truck.png" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessProcessQueue\QueueNewComponent.html" />
