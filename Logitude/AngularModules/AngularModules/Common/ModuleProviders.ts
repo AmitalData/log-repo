@@ -28,7 +28,7 @@ import {CustomAgentListService} from './Services/StandardLists/CustomAgentListSe
 import {TemplateFormatListService} from './Services/StandardLists/TemplateFormatListService';
 import {CustomerTenantAccessListService} from './Services/StandardLists/CustomerTenantAccessListService';
 import {AirlineMessagingRuleListService} from './Services/StandardLists/AirlineMessagingRuleListService';
-
+import {CustomsShipperListService} from './Services/StandardLists/CustomsShipperListService';
 
 //import {CustomerAdditionalServiceListService} from './Services/StandardLists/CustomerAdditionalServiceListService';
 import {CustomerListService} from './Services/StandardLists/CustomerListService';
@@ -191,7 +191,7 @@ import { WarehousePMService } from './Services/StandardPMs/WarehousePMService';
 
 import { AgentSharedManifestPMService } from './Services/StandardPMs/AgentSharedManifestPMService';
 //import {WeightUnitPMService} from './Services/StandardPMs/WeightUnitPMService';
-
+import {CustomsShipperPMService} from './Services/StandardPMs/CustomsShipperPMService';
 import {CustomerMenuButtonsHandler} from './Components/MenuButtons/CustomerMenuButtonsHandler';
 import {UserMenuButtonsHandler} from './Components/MenuButtons/UserMenuButtonsHandler';
 import {CommunicationLogMenuButtonsHandler} from './Components/MenuButtons/CommunicationLogMenuButtonsHandler';
@@ -329,6 +329,11 @@ export class ModuleProviders {
             case "WeightUnitListService": { myResult = new WeightUnitListService(); break; }
             case "AgentSharedManifestListService": { myResult = new AgentSharedManifestListService(); break; }
             case "VatFormatTypeListService": { myResult = new VatFormatTypeListService(); break; }
+
+            case "CustomsShipperListService": { myResult = new CustomsShipperListService(); break; }
+
+
+
             case "CustomerTenantAccessPMService": { myResult = new CustomerTenantAccessPMService(); break; }
 
                 
@@ -415,7 +420,7 @@ export class ModuleProviders {
             case "VendorPMService": { myResult = new VendorPMService(); break; }
             case "VesselPMService": { myResult = new VesselPMService(); break; }
             case "WarehousePMService": { myResult = new WarehousePMService(); break; }
-
+            case "CustomsShipperPMService": { myResult = new CustomsShipperPMService(); break; }
                 
             //case "WeightUnitPMService": { myResult = new WeightUnitPMService(); break; }
 

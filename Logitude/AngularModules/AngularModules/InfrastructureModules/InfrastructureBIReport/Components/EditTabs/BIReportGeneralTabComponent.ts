@@ -1,30 +1,25 @@
-import { Component } from '@angular/core';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { BIReportPM } from '../../../../Infrastructure/EntityPMs/BIReportPM';
 import { BIReportPMService } from '../../../../Infrastructure/Services/StandardPMs/BIReportPMService';
-import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
+    selector: 'BIReportGeneralTabComponent',
     moduleId: module.id,
-    templateUrl: './NewBIReport.html',
+    templateUrl: './BIReportGeneralTabComponent.html',
 })
 
-export class NewBIReport extends BaseComponent {
-    public EntityPM: BIReportPM;
-    public ValidationErrorsList: string[] = [];
-    private myService: BIReportPMService;
-    public DataContext: NewBIReport = this;
-    public ObjectTableName: string = "BIReport";
+export class BIReportGeneralTabComponent extends BaseComponent {
 
-    constructor() {
+    public EntityPM: BIReportPM;
+    public ObjectTableName: string;
+    public DataContext: BIReportGeneralTabComponent = this;
+
+    constructor(public entityArgs: EntityArgs) {
         super();
-        this.EntityPM = new BIReportPM();
-        this.EntityPM.Tenant = SessionLocator.Tenant;
-        this.TypeCode ="EXL";
-        this.myService = new BIReportPMService();
+        this.EntityPM = this.entityArgs.EntityPM;
         this.SetUIProperties();
     }
 
@@ -40,20 +35,19 @@ export class NewBIReport extends BaseComponent {
         }
     }
 
-    get Description() { return this.EntityPM.Description; }
+    get Description() { return this.EntityPM.Name; }
     set Description(newValue: string) {
         if (this.EntityPM.Description != newValue) {
             this.EntityPM.Description = newValue;
         }
     }
 
-    get DWQueryId() { return this.EntityPM.DWQueryId; }
+    get DWQueryId() { return this.EntityPM.Name; }
     set DWQueryId(newValue: string) {
         if (this.EntityPM.DWQueryId != newValue) {
             this.EntityPM.DWQueryId = newValue;
         }
     }
-
 
     get TypeCode() { return this.EntityPM.TypeCode; }
     set TypeCode(newValue: string) {
@@ -75,23 +69,5 @@ export class NewBIReport extends BaseComponent {
                 }
             });
         });
-    }
-
-    CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit('cancel');
-    }
-
-    OkButtonClicked() {
-        this.ValidationErrorsList = [];
-
-        if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-            this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                if (myResponse.HasError) {
-                    this.ValidationErrorsList = myResponse.ErrorsArray;
-                }
-            });
-        }
     }
 }

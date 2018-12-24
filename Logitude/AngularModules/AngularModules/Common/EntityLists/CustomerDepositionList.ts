@@ -14,5 +14,6 @@ export class CustomerDepositionList {
 		ValidityStartDate: Date;
 		ValidityEndDate: Date;
 		CreateDate: Date;
+		ValidityEndDateColor: string;
 	
 }
