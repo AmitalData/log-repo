@@ -1548,6 +1548,7 @@
     <Compile Include="InfrastructureModel\EntityPMs\SharedLogisticsInvitationStatusPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\SharedLogisticsUpdatePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\SharedLogisticsUpdateStatusPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\SharedUserQueryPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\TaskSchedulerHistoryPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\TasksSchedulerPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\TenantSettingPM.cs" />
@@ -1570,6 +1571,7 @@
     <Compile Include="InfrastructureModel\EntityQueries\DWQueryFilterQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DWSubQueryQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DWQueryQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\SharedUserQueryQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\TaskSchedulerHistoryQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\TasksSchedulerQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\QueueMessageMoreDetailsQuery.cs" />
@@ -1628,6 +1630,7 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\DWQueryFilterMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DWSubQueryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DWQueryMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\SharedUserQueryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\VolumeUnitMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\TransportModeMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DirectionMapping.cs" />
@@ -1679,6 +1682,7 @@
     <Compile Include="InfrastructureModel\Tools\EntityService\DWQueryFilterService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DWSubQueryService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DWQueryService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\SharedUserQueryService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\VolumeUnitService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\TransportModeService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DirectionService.cs" />
