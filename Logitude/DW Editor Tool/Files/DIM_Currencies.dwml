@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;d5e80365-8d59-4a2d-8e22-673b483884f3&quot;" Code="&quot;DIM_Currencies&quot;" Name="&quot;DIM_Currencies&quot;" TypeCode="&quot;Dimension&quot;" IsClosed="false">
+<entity Id="&quot;d5e80365-8d59-4a2d-8e22-673b483884f3&quot;" Code="&quot;DIM_Currencies&quot;" Name="&quot;DIM_Currencies&quot;" TypeCode="&quot;Dimension&quot;" IsClosed="false" DefaultFilterBy="&quot;[Name]&quot;">
   <fields>
     <field Id="&quot;6ea12f8f-450f-40fe-953d-569205b5c9ea&quot;" Code="&quot;[Id_Number]&quot;" Name="&quot;Id_Number&quot;" DataTypeCode="&quot;Integer&quot;" IsRequired="true" MinLength="0" MaxLength="0" IsPrimaryKey="true" IsMeasurement="false" DisplayInQueryBuilder="false" />
     <field Id="&quot;00cd5dda-bed5-4881-9551-eb4e1885758f&quot;" Code="&quot;[Id]&quot;" Name="&quot;Id&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="15" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="false" />
