@@ -181,7 +181,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 _CourierMasterPM.GatewayPortCode = TranslateInternationalSite(_LogitudeMasterCourier.GatewayPortCode);
                 _CourierMasterPM.OriginPortCode = TranslateInternationalSite(_LogitudeMasterCourier.OriginPortCode);
                 _CourierMasterPM.Tenant = ResolvedTenant();
-
+                _CourierMasterPM.FlightNumber = _LogitudeMasterCourier.FlightNumber;
                 _CourierMasterPM.CurrentContextTag = UpsertActionConst;
                 myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
 

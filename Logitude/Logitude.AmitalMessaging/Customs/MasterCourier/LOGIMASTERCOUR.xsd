@@ -20,6 +20,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="PackageQuantityTy" />
         <xs:element minOccurs="0" maxOccurs="1" ref="GrossMassMeasure" />
         <xs:element minOccurs="0" maxOccurs="1" ref="Tenant" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="FlightNumber" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -33,4 +34,5 @@
   <xs:element name="PackageQuantityTy" type="xs:string" />
   <xs:element name="GrossMassMeasure" type="xs:string" />
   <xs:element name="Tenant" type="xs:string" />
+  <xs:element name="FlightNumber" type="xs:string" />
 </xs:schema>
