@@ -29,6 +29,7 @@ import { AppComponent } from './AppComponent';
             { loadChildren: 'InfrastructureModules/InfrastructureUser/ModuleInfrastructureUser#ModuleInfrastructureUser' },
             { loadChildren: 'InfrastructureModules/InfrastructureComputingPartner/ModuleInfrastructureComputingPartner#ModuleInfrastructureComputingPartner' },
             { loadChildren: 'InfrastructureModules/InfrastructureBusinessProcess/ModuleInfrastructureBusinessProcess#ModuleInfrastructureBusinessProcess' },
+            { loadChildren: 'InfrastructureModules/InfrastructureBIReport/ModuleInfrastructureBIReport#ModuleInfrastructureBIReport' },
 
             //Common Modules
             { loadChildren: 'Common/Module_COMN#LogitudeCommonModule' },

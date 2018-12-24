@@ -10,6 +10,7 @@ import { ReportGroupService } from '../../../Common/Services/ExtendedLists/Repor
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { ReportsTemplateListExtendedService } from '../../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     moduleId: './Report/Components/Workspaces/',
@@ -24,6 +25,16 @@ export class BIReportComponent {
     }
 
     public NewBIReportButtonClicked() {
+        var windowTitle = "New BI eport";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 850;
+        logWindow.Height = 700;
+        logWindow.Title = windowTitle;
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewBIReportWindowClosed($event));
+        logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
+
+    }
+    OnNewBIReportWindowClosed(arg: any) {
 
 
     }
