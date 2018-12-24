@@ -6,11 +6,8 @@ import { AddEditCourierPendingReasonComponent } from './Components/CourierPendin
 import { DropdownMenuFilterComponent} from './Components/CourierWorkSheet/DropdownMenuFilterComponent';
 import { CourierMasterGeneralTabComponent} from './Components/EditTabs/CourierMasterGeneralTabComponent';
 import { CourierWorksheetComponent} from './Components/CourierWorkSheet/CourierWorksheetComponent';
-import { GetInternalBankComponent } from './Components/CourierWorkSheet/GetInternalBankComponent';
-
+import { GetInternalBankComponent} from './Components/CourierWorkSheet/GetInternalBankComponent';
 import { AddEditMamanStickerComponent } from './Components/MamanSpecialAction/AddEditMamanStickerComponent';
-
-
 
 
 
@@ -45,7 +42,6 @@ export class ModuleDeclarations {
             case "CourierWorksheetComponent": { myResult = CourierWorksheetComponent; break; }
             case "GetInternalBankComponent": { myResult = GetInternalBankComponent; break; }
             case "AddEditMamanStickerComponent": { myResult = AddEditMamanStickerComponent; break; }
-                
         }
 
         return myResult;

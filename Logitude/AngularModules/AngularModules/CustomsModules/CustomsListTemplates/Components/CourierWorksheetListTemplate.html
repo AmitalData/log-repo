@@ -191,15 +191,15 @@
     <!--style="width: 14px; height: 14px; margin-top:7.5px; margin-right:16.5px; text-align:right;background-color:red"-->
     <div *ngIf="fieldName == 'CourierPendingReasonCode'"  style="text-align:right;cursor:default;height:35px;width:120px;" (click)="ButtonClick($event)">
         <div (click)="ButtonClick($event)" style="margin:3px;">
-            <courier-filter-button #MyDropdownMenuFilterComponent (DropdownMenuButtonClicked)="DropdownMenuButtonClicked(event)">
+            <courier-filter-button #MyDropdownMenuFilterComponent (DropdownMenuButtonClicked)="DropdownMenuButtonClicked(event);PrepareDropdownMenuFilter($event,_CourierWorksheet['DeclarationId'])">
                 <div class="class-filter-content">
                     <div>
                         <img style="width: 14px; height: 14px; position: center;" src="./Images/Icons/Actions.png" />
                     </div>
                 </div>
 
-                <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();">
-                    <ul class="P-button-drop-menu" style="width:110px; ">
+                <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose()">
+                    <ul *ngIf="_IsDropdownMenuFilterReady" class="P-button-drop-menu" style="width:110px; ">
                         <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] == null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
                             <span>הזנת Pending</span>
                         </li>
@@ -213,20 +213,28 @@
                         <li class='has-submenu'>
                             <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();">
                                 <ul class="P-button-drop-menu" style="width:110px; ">
-                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                                    <li *ngIf="!IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
                                         <span>הפקת תעודת עיכוב</span>
+                                    </li>
+                                    <li *ngIf="IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                                        <span>ביטול תעודת עיכוב</span>
                                     </li>
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); MamanStickerCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
                                         <span>הפקת מדבקה</span>
                                     </li>
-                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                                    <li *ngIf="MamanStickerDetails != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); MamanStickerCommand($event,_CourierWorksheet['DeclarationId'],'Delete');">
+                                        <span>ביטול הפקת מדבקה</span>
+                                    </li>
+                                    <li *ngIf="!IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
                                         <span>הדפסת מסמכים</span>
+                                    </li>
+                                    <li *ngIf="IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                                        <span>ביטול הדפסת מסמכים</span>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                     </ul>
-
                 </div>
             </courier-filter-button>
         </div>
