@@ -822,6 +822,8 @@ div#two {
                     <li>
                         SysCheck
 
+                            <asp:Button ID="_AccountingIntegrityService" runat="server" Text="AccountingIntegrityService" OnClick="_AccountingIntegrityService_Click" />
+
                             <asp:Button ID="_ButtonSysCheckTotalSumIsZero" runat="server" Text="TotalSumIsZero" OnClick="_ButtonSysCheckTotalSumIsZero_Click" />
                         <asp:Button ID="_ButtonSysCheckLdegerTransSumIsZero" runat="server" Text="LdegerTransSumSumIsZero" OnClick="_ButtonSysCheckLdegerTransSumIsZero_Click" />
                         <asp:Button ID="_ButtonSysCheckGLAccJL2Total" runat="server" Text="GLAccJL2Total" OnClick="_ButtonSysCheckGLAccJL2Total_Click" />
@@ -847,8 +849,7 @@ div#two {
                             <asp:Button ID="_ButtonJournalApproveQueue" runat="server" Text=".Queue" OnClick="_ButtonJournalApproveQueue_Click" /></li>
                         <li>
                             <asp:Button ID="_ButtonJournalApprove" runat="server" Text=".WorkWithoutQueue" OnClick="_ButtonJournalApprove_Click" /></li>
-                                                <li>
-                            </li>
+                                                
 
                     </ul>
                 </li>

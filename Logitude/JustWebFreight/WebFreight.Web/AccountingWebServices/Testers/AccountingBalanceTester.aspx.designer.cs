@@ -58,6 +58,15 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         protected global::System.Web.UI.WebControls.Button _ButtonReverseGLBalance;
         
         /// <summary>
+        /// _AccountingIntegrityService control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button _AccountingIntegrityService;
+        
+        /// <summary>
         /// _ButtonSysCheckTotalSumIsZero control.
         /// </summary>
         /// <remarks>
