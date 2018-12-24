@@ -7,7 +7,21 @@
     </tr>
 
     <tr>
-        <td style="color:#1B90CB; font-size:15px; line-height: 15px;">Filter By:</td>
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 80px; color:#1B90CB; font-size:15px; line-height: 15px;">Filter By:</td>
+
+                    <td style="width: 1px;">
+                        <CheckBox [IsChecked]="IsByCreateDate" (Checked)="IsByCreateDate = $event" [Text]="'By create date'"></CheckBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
     </tr>
 
     <tr style="height: 32px;">
