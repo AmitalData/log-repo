@@ -912,7 +912,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine.DueDate = theEntityPm.ValueDate.Value;
                     journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency - (decimal)theEntityPm.TaxDeductionLocalAmount;
                     journalLine.CurrencyId = theEntityPm.PaymentCurrencyId;
-                    journalLine.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency - ((decimal)theEntityPm.TaxDeductionLocalAmount * (decimal)theEntityPm.PaymentCurrencyExchangeRate);
+                    journalLine.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency - ((decimal)theEntityPm.TaxDeductionLocalAmount/(decimal)theEntityPm.PaymentCurrencyExchangeRate);
                     journalLine.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
                     journalLine.Reference1 = theEntityPm.PaymentNo;
                     journalLine.Reference2 = theEntityPm.ChequeOrPaymentRef;
@@ -962,7 +962,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         var foreignAmount = theEntityPm.TaxDeductionLocalAmount;
                         if (theEntityPm.PaymentCurrencyId != tenantPOCO.CurrencyId)
                         {
-                            foreignAmount = (decimal)theEntityPm.TaxDeductionLocalAmount * (decimal)theEntityPm.PaymentCurrencyExchangeRate;
+                            foreignAmount = (decimal)theEntityPm.TaxDeductionLocalAmount / (decimal)theEntityPm.PaymentCurrencyExchangeRate;
                         }
                         journalLine.ForeignAmount = (decimal)foreignAmount;
                         journalLine.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
