@@ -152,4 +152,16 @@ export class QueryPM {
     private editWizardComponentPath: string;
     public get EditWizardComponentPath() { return this.editWizardComponentPath; }
     public set EditWizardComponentPath(newValue: string) { this.editWizardComponentPath = newValue; }
+
+    private sharedWithAll: string;
+    public get SharedWithAll() { return this.sharedWithAll; }
+    public set SharedWithAll(newValue: string) { this.sharedWithAll = newValue; }
+
+    private sharedWithSpecificUsers: string;
+    public get SharedWithSpecificUsers() { return this.sharedWithSpecificUsers; }
+    public set SharedWithSpecificUsers(newValue: string) { this.sharedWithSpecificUsers = newValue; }
+
+    private sharedByUserId: string;
+    public get SharedByUserId() { return this.sharedByUserId; }
+    public set SharedByUserId(newValue: string) { this.sharedByUserId = newValue; }
 }

@@ -1,4 +1,6 @@
-import {ReportComponent} from './Components/Workspaces/ReportComponent';
+import { ReportComponent } from './Components/Workspaces/ReportComponent';
+import { MainReportsWorkspace } from './Components/Workspaces/MainReportsWorkspace';
+import { BIReportComponent } from './Components/Workspaces/BIReportComponent';
 import {ReportTemplateComponent} from './Components/ReportTemplateComponent';
 import {ReportsPreviewComponent} from './Components/ReportsPreviewComponent';
 import {ReportsTemplateRestoreComponent} from './Components/ReportsTemplateRestoreComponent';
@@ -68,7 +70,9 @@ import { ShipmentDetailsFilterComponent } from './Components/FilterReportCompone
 
 export const Components =
     [
+        MainReportsWorkspace,
         ReportComponent,
+        BIReportComponent,
         ReportTemplateComponent,
         ReportsPreviewComponent,
         ReportsTemplateRestoreComponent,
@@ -128,7 +132,9 @@ export class ModuleDeclarations {
         var myResult: any = null;
 
         switch (name) {
+            case "MainReportsWorkspace": { myResult = MainReportsWorkspace; break; }
             case "ReportComponent": { myResult = ReportComponent; break; }
+            case "BIReportComponent": { myResult = BIReportComponent; break; }
             case "ReportsPreviewComponent": { myResult = ReportsPreviewComponent; break; }
             case "ReportTemplateComponent": { myResult = ReportTemplateComponent; break; }     
             case "ReportsTemplateRestoreComponent": { myResult = ReportsTemplateRestoreComponent; break; }  

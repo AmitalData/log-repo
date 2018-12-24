@@ -13,7 +13,6 @@ export class CustomsShipperList {
 		ValidDepositionNumber: string;
 		ValidityStartDate: Date;
 		ValidityEndDate: Date;
-		FutureDepositionExist: boolean;
 		SearchFields: string;
 		EnglishName: string;
 		LocalName: string;

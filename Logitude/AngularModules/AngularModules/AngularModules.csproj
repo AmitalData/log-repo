@@ -563,6 +563,8 @@
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationFollowUp.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationQueuedTask.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationSetValue.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\BIReportList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\BIReportsTypeList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BusinessProcessQueueList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BusinessRoleList.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderComponent.ts" />
@@ -572,6 +574,8 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryFilterList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWSubQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportPM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportsTypePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWObjectFieldPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWObjectTablePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryColumnPM.ts" />
@@ -580,17 +584,21 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LBPTeamMemberPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SharedLogisticsSettingPM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\SharedUserQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\TeamMemberBusinessRolePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\TeamPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BusinessRolePM.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BusinessRoleExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWQueryBuilderService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIReportListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIReportsTypeListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BusinessProcessQueueListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BusinessRoleListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWObjectFieldExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWObjectFieldListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWObjectTableListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\BIReportPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWObjectFieldPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWObjectTablePMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWSubQueryPMService.ts" />
@@ -633,6 +641,7 @@
     <Content Include="Report\Components\FiltersComponent\Accounting\DetailedShipmentChargesAnalysisComponent.html" />
     <Content Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.html" />
+    <Content Include="Report\Components\Workspaces\MainReportsWorkspace.html" />
     <Content Include="SharedLogistics\Components\SharedLogisticsMoneyPermissiosComponent.html" />
     <Content Include="SharedLogistics\Components\SharedLogisticsPartnersPermissiosComponent.html" />
     <Content Include="SharedLogistics\Components\Workspaces\SharedInvoicesWorkspaceComponent.html" />
@@ -3021,6 +3030,7 @@
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\DetailedShipmentChargesAnalysisComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\Workspaces\MainReportsWorkspace.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsMoneyPermissiosComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsPartnersPermissiosComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\Workspaces\SharedInvoicesWorkspaceComponent.ts" />

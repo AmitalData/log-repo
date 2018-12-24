@@ -182,6 +182,7 @@ export class DynamicLoader {
             case "InfrastructureModules/InfrastructureUser": { myResult = "InfrastructureModules/InfrastructureUser/ModuleInfrastructureUser#ModuleInfrastructureUser"; break; }
             case "InfrastructureModules/InfrastructureComputingPartner": { myResult = "InfrastructureModules/InfrastructureComputingPartner/ModuleInfrastructureComputingPartner#ModuleInfrastructureComputingPartner"; break; }
             case "InfrastructureModules/InfrastructureBusinessProcess": { myResult = "InfrastructureModules/InfrastructureBusinessProcess/ModuleInfrastructureBusinessProcess#ModuleInfrastructureBusinessProcess"; break; }
+            case "InfrastructureModules/InfrastructureBIReport": { myResult = "InfrastructureModules/InfrastructureBIReport/ModuleInfrastructureBIReport#ModuleInfrastructureBIReport"; break; }
 
                 //Common
             case "Common": { myResult = "Common/Module_COMN#LogitudeCommonModule"; break; }

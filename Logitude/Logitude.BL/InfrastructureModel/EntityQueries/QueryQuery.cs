@@ -68,10 +68,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  EditWizardName = a.EditWizardName,
                  Perspective = a.Perspective,
                  IsHiddenFromView = a.IsHiddenFromView,
-                 IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
-               
+                 IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,               
                  NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
                  EditWizardComponentPath = a.EditWizardComponentPath,
+                 SharedWithAll = a.SharedWithAll,
+                 SharedWithSpecificUsers = a.SharedWithSpecificUsers,
+                 SharedByUserId = a.SharedByUserId,
              }).FirstOrDefault();
 
             //if (result != null)
@@ -129,6 +131,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
                  NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
                  EditWizardComponentPath = a.EditWizardComponentPath,
+                 SharedWithAll = a.SharedWithAll,
+                 SharedWithSpecificUsers = a.SharedWithSpecificUsers,
+                 SharedByUserId = a.SharedByUserId,
              }).FirstOrDefault();
 
             //if (result != null)
@@ -186,6 +191,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
                                          NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
                                          EditWizardComponentPath = a.EditWizardComponentPath,
+                                         SharedWithAll = a.SharedWithAll,
+                                         SharedWithSpecificUsers = a.SharedWithSpecificUsers,
+                                         SharedByUserId = a.SharedByUserId,
                                      }).ToList();
 
             //foreach (QueryPM item in queries)
@@ -242,6 +250,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
                        NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
                        EditWizardComponentPath = a.EditWizardComponentPath,
+                       SharedWithAll = a.SharedWithAll,
+                       SharedWithSpecificUsers = a.SharedWithSpecificUsers,
+                       SharedByUserId = a.SharedByUserId,
                    }).ToList();
 
             //TranslationRepository translationRepository=new TranslationRepository(tenant);
@@ -302,6 +313,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
                                          NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
                                          EditWizardComponentPath = a.EditWizardComponentPath,
+                                         SharedWithAll = a.SharedWithAll,
+                                         SharedWithSpecificUsers = a.SharedWithSpecificUsers,
+                                         SharedByUserId = a.SharedByUserId,
                                      }).ToList();
 
             //foreach (QueryPM item in queries)
@@ -358,6 +372,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
                                   NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
                                   EditWizardComponentPath = a.EditWizardComponentPath,
+                                  SharedWithAll = a.SharedWithAll,
+                                  SharedWithSpecificUsers = a.SharedWithSpecificUsers,
+                                  SharedByUserId = a.SharedByUserId,
                               }).FirstOrDefault();
 
 
@@ -420,6 +437,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                          IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
                          NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
                          EditWizardComponentPath = a.EditWizardComponentPath,
+                         SharedWithAll = a.SharedWithAll,
+                         SharedWithSpecificUsers = a.SharedWithSpecificUsers,
+                         SharedByUserId = a.SharedByUserId,
                      }).ToList();
 
             }
@@ -461,6 +481,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
                              NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
                              EditWizardComponentPath = a.EditWizardComponentPath,
+                             SharedWithAll = a.SharedWithAll,
+                             SharedWithSpecificUsers = a.SharedWithSpecificUsers,
+                             SharedByUserId = a.SharedByUserId,
                          }).ToList();
 
             }
@@ -523,8 +546,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          Perspective = a.Perspective,
                                          IsHiddenFromView = a.IsHiddenFromView,
                                          IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
-
                                          EditWizardComponentPath = a.EditWizardComponentPath,
+                                         SharedWithAll = a.SharedWithAll,
+                                         SharedWithSpecificUsers = a.SharedWithSpecificUsers,
+                                         SharedByUserId = a.SharedByUserId,
                                      }).ToList();
 
       

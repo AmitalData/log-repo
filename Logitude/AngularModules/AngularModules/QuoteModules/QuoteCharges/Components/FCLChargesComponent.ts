@@ -392,14 +392,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         var isExchangeRateEnabled = false;
 
         if (this.IsEditingEnabled) {
-            isExchangeRateEnabled = true;
+            if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
+                isExchangeRateEnabled = true;
 
-            if (AppTool.IsNullOrEmpty(this.SaleCurrencyId)) {
-                isExchangeRateEnabled = false;
-            }
+                if (AppTool.IsNullOrEmpty(this.SaleCurrencyId)) {
+                    isExchangeRateEnabled = false;
+                }
 
-            else if (this.SaleCurrencyId == SessionLocator.LocalCurrencyId) {
-                isExchangeRateEnabled = false;
+                else if (this.SaleCurrencyId == SessionLocator.LocalCurrencyId) {
+                    isExchangeRateEnabled = false;
+                }
             }
         }
 
@@ -1208,7 +1210,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
     public IsEditingEnabled: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     SetUIProperties() {
-        if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
+        if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {          
             if (this.IsAdhoc) {
                 this.IsEditExchangeRateVisible = true;
             }
@@ -1365,22 +1367,25 @@ export class FCLQuoteChargeItem extends BaseComponent {
         var isEnabled = false;
 
         if (this.IsEditingEnabled) {
-            isEnabled = true;
+            if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
+                isEnabled = true;
 
-            if (AppTool.IsNullOrEmpty(this.CostCurrencyId)) {
-                isEnabled = false;
-            }
+                if (AppTool.IsNullOrEmpty(this.CostCurrencyId)) {
+                    isEnabled = false;
+                }
 
-            else if (this.CostCurrencyId == SessionLocator.LocalCurrencyId) {
-                isEnabled = false;
-            }
+                else if (this.CostCurrencyId == SessionLocator.LocalCurrencyId) {
+                    isEnabled = false;
+                }
 
-            else if (this.CostCurrencyId == this.fatherComponent.SaleCurrencyId) {
-                isEnabled = false;
+                else if (this.CostCurrencyId == this.fatherComponent.SaleCurrencyId) {
+                    isEnabled = false;
+                }
             }
         }
 
-        this.IsEnabled_CostExchangeRate = isEnabled;
+        //this.IsEnabled_CostExchangeRate = isEnabled;
+        this.IsEnabled_CostExchangeRate = true;
         this.UIProperties.SetEnabled("CostExchangeRate", this.ObjectTableName, isEnabled);
     }
 
