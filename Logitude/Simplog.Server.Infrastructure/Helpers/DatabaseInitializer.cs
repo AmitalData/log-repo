@@ -159,7 +159,7 @@ namespace Simplog.Server.Infrastructure
             sqlBuilder.UserID = userName;
             sqlBuilder.MultipleActiveResultSets = true;
             sqlBuilder.ConnectTimeout = 60;
-            
+            sqlBuilder.MaxPoolSize = 200;
             //sqlBuilder.ConnectTimeout = 240;
             // Build the SqlConnection connection string.
             string providerString = sqlBuilder.ToString();
