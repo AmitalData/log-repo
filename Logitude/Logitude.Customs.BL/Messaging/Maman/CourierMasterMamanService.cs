@@ -54,15 +54,14 @@ namespace Logitude.Customs.BL.Messaging.Maman
             courierMasterMamanModel.GatewayPortCode = _CourierMasterPM.GatewayPortCode != null ? _CourierMasterPM.GatewayPortCode.Substring(_CourierMasterPM.GatewayPortCode.Length - 3) : "";
             courierMasterMamanModel.Weight = "K";
             courierMasterMamanModel.PackageQuantity = _CourierMasterPM.PackageQuantity > 0 && _CourierMasterPM.PackageQuantity.ToString().Length <= 4 ? _CourierMasterPM.PackageQuantity.ToString() : "";
-
-
-            decimal result = (decimal)_CourierMasterPM.GrossMassMeasure - Math.Truncate((decimal)_CourierMasterPM.GrossMassMeasure);
-            var Firstdigits = (int)(Math.Round(result, 2) * 100);
-
-            //decimal result2 = decimal.Parse(_CourierMasterPM.GrossMassMeasure.ToString("0.0"));
-
-
-            courierMasterMamanModel.GrossMassMeasure = _CourierMasterPM.GrossMassMeasure > 0 && _CourierMasterPM.GrossMassMeasure.ToString().Length <= 4 ? _CourierMasterPM.GrossMassMeasure.ToString() : "";
+            courierMasterMamanModel.GrossMassMeasure = "";
+            if (_CourierMasterPM.GrossMassMeasure > 0 && ((int)_CourierMasterPM.GrossMassMeasure).ToString().Length <= 5)
+            {
+                decimal result = (decimal)_CourierMasterPM.GrossMassMeasure - Math.Truncate((decimal)_CourierMasterPM.GrossMassMeasure);
+                var firstdigits = ((int)(Math.Round(result, 2) * 100)).ToString().Substring(0, 1);
+                var number = ((int)_CourierMasterPM.GrossMassMeasure).ToString();
+                courierMasterMamanModel.GrossMassMeasure = string.Concat(number, firstdigits);
+            }
             courierMasterMamanModel.Description = "";
 
             var declarationQS = new DeclarationQueryService(_Context);
