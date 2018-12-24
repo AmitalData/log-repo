@@ -67,6 +67,8 @@ namespace Logitude.XSD.INTTRA.BL
             this.Result = new INTTRAResult()
             {
                 Id = Tenant,
+                IsDemoTenant = this.DataContext.IsDemoTenant,
+                IsStockPrepaid = this.DataContext.IsStockPrepaid,
                 IsValid = this.DataContext.IsValid,
                 IsLimited = this.DataContext.IsLimited,
                 Errors = this.DataContext.Errors,
@@ -104,38 +106,18 @@ namespace Logitude.XSD.INTTRA.BL
                         this.SendXMLFile(message);
                         this.UpdateStock();
                         this.SaveChanges();
+
+                        if (this.Result.IsDemoTenant)
+                        {
+                            this.BuildDemoRespond();
+                        }
                     }
                 }
-            }
-        }
-
-        private void GetGlobalVariables()
-        {
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                if (this.Result.IsValid)
-                {
-                    TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
-                    TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(Tenant);
-                    if (tenantManagement != null)
-                    {
-                        this.Result.IsStockPrepaid = tenantManagement.IsINTTRAStockPrepaid;
-                    }
-
-                    if (Tenant == 65)
-                    {
-                        this.Result.IsDemoTenant = true;
-                    }
-                }
-
-                scope.Complete();
             }
         }
 
         private void CheckStockValidity()
         {
-            this.GetGlobalVariables();
-
             if (!this.Result.IsDemoTenant)
             {
                 if (this.Result.IsStockPrepaid)
@@ -170,7 +152,6 @@ namespace Logitude.XSD.INTTRA.BL
                     }
                 }
             }
-
         }
         private void UpdateStock()
         {
@@ -288,23 +269,26 @@ namespace Logitude.XSD.INTTRA.BL
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             storageservice.Write(myByteArray, fileInfo);
 
-            try
+            if (!this.Result.IsDemoTenant)
             {
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue(commLog.QueueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", Tenant.ToString() } });
-            }
-
-            catch (Exception ex)
-            {
-                string ip = "";
-
-                if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                try
                 {
-                    ip = HttpContext.Current.Request.UserHostAddress;
+                    IQueueService queueservice = new DbQueueService();
+                    queueservice.InitializeQueue(commLog.QueueName, 0);
+                    queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", Tenant.ToString() } });
                 }
 
-                ExceptionHandler.HandleException(ex, System.DateTime.Now, 0, null, "INTTRA controller", null, ip);
+                catch (Exception ex)
+                {
+                    string ip = "";
+
+                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                    {
+                        ip = HttpContext.Current.Request.UserHostAddress;
+                    }
+
+                    ExceptionHandler.HandleException(ex, System.DateTime.Now, 0, null, "INTTRA controller", null, ip);
+                }
             }
         }
 
@@ -380,6 +364,13 @@ namespace Logitude.XSD.INTTRA.BL
                 commLog.AWBNumber = this.DataContext.MasterData.Master;
             }
 
+            if (this.Result.IsDemoTenant)
+            {
+                commLog.CommunicationStatusTypeCode = "D";
+                commLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
+                commLog.DoneDateUTC = System.DateTime.UtcNow;
+            }
+
             communicationLogRepository.Add(commLog);
 
             this.myDocumentId = document.Id;
@@ -388,7 +379,6 @@ namespace Logitude.XSD.INTTRA.BL
             this.myCommunicationLogId = commLog.Id;
             return commLog;
         }
-
         private string GetLogSettings(string xmlSubject)
         {
             string myResult = null;
@@ -423,6 +413,510 @@ namespace Logitude.XSD.INTTRA.BL
             this.DataContext.shipmentRepository.SubmitChanges();
             this.CommonContext.SaveChanges();
         }
+
+        #region DemoRespond
+        List<INTTRA.PartnerInformation> DemoHeaderParties;
+        List<INTTRA.PartnerInformation> DemoBodyParties;
+        List<INTTRA.ShipmentComments> DemoBodyInstructions;
+        private void BuildDemoRespond()
+        {
+            this.BuildDemo_Data();
+            this.BuildDemo_CONTRL();
+            this.BuildDemo_APERAK();
+            this.BuildDemo_Status();
+        }
+        private void BuildDemo_Data()
+        {
+            // HeaderParties 
+            this.DemoHeaderParties = new List<INTTRA.PartnerInformation>();
+            this.DemoHeaderParties.Add(new INTTRA.PartnerInformation()
+            {
+                PartnerRole = INTTRA.PartnerInformationPartnerRole.Sender,
+
+                PartnerIdentifier = new INTTRA.PartnerIdentifier()
+                {
+                    Value = this.DataContext.Recipient.PartnerIdentifier.Value,
+                    Agency = PartnerIdentifierAgency.AssignedBySender,
+                },
+            });
+
+            this.DemoHeaderParties.Add(new INTTRA.PartnerInformation()
+            {
+                PartnerRole = INTTRA.PartnerInformationPartnerRole.Recipient,
+
+                PartnerIdentifier = new INTTRA.PartnerIdentifier()
+                {
+                    Value = this.DataContext.Sender.PartnerIdentifier.Value,
+                    Agency = PartnerIdentifierAgency.AssignedByRecipient,
+                },
+            });
+
+            // BodyInstructions
+            this.DemoBodyInstructions = new List<INTTRA.ShipmentComments>();
+            this.DemoBodyInstructions.Add(new INTTRA.ShipmentComments()
+            {
+                CommentType = INTTRA.ShipmentCommentsCommentType.General,
+                Value = "Accepted",
+            });
+
+            // BodyParties
+            this.DemoBodyParties = new List<PartnerInformation>();
+            INTTRA_Out.PartnerInformation iOutRequestor = this.DataContext.MessagePropertiesParties.Where(d => d.PartnerRole == INTTRA_Out.PartnerInformationPartnerRole.Requestor).FirstOrDefault();
+            if (iOutRequestor != null)
+            {
+                this.DemoBodyParties.Add(new INTTRA.PartnerInformation()
+                {
+                    PartnerRole = INTTRA.PartnerInformationPartnerRole.Requestor,
+
+                    PartnerName = iOutRequestor.PartnerName,
+
+                    PartnerIdentifier = new INTTRA.PartnerIdentifier()
+                    {
+                        Value = iOutRequestor.PartnerIdentifier.Value,
+                        Agency = PartnerIdentifierAgency.AssignedByRecipient,
+                    },
+                });
+            }
+
+            INTTRA_Out.PartnerInformation iOutCarrier = this.DataContext.MessagePropertiesParties.Where(d => d.PartnerRole == INTTRA_Out.PartnerInformationPartnerRole.Carrier).FirstOrDefault();
+            if (iOutCarrier != null)
+            {
+                this.DemoBodyParties.Add(new INTTRA.PartnerInformation()
+                {
+                    PartnerRole = INTTRA.PartnerInformationPartnerRole.Carrier,
+
+                    PartnerName = iOutCarrier.PartnerName,
+
+                    PartnerIdentifier = new INTTRA.PartnerIdentifier()
+                    {
+                        Value = iOutCarrier.PartnerIdentifier.Value,
+                        Agency = PartnerIdentifierAgency.AssignedByRecipient,
+                    },
+                });
+            }
+        }
+        private void BuildDemo_CONTRL()
+        {
+            INTTRA.Message iMessage_CONTROL = new INTTRA.Message()
+            {
+                Header = new INTTRA.Header()
+                {
+                    MessageType = new INTTRA.MessageType() { Value = "CONTRL", MessageVersion = 1 },
+
+                    DocumentIdentifier = this.DataContext.ShipmentNumber + "-" + this.DataContext.Tenant + "-" + this.DataContext.XMLCreateDate + "-" + this.DataContext.CommunicationLogIdCounter,
+
+                    DateTime = new INTTRA.DateTime()
+                    {
+                        DateType = INTTRA.DateTimeDateType.Document,
+                        Value = this.DataContext.XMLCreateDate,
+                    },
+
+                    Parties = this.DemoHeaderParties.ToArray(),
+                },
+
+                MessageBody = new INTTRA.MessageBody()
+                {
+                    MessageProperties = new INTTRA.MessageProperties()
+                    {
+                        ShipmentID = new INTTRA.ShipmentID()
+                        {
+                             ShipmentIdentifier = new INTTRA.ShipmentIdentifier()
+                             {
+                                  Acknowledgment = INTTRA.Acknowledgment.Accepted,
+                                   MessageStatus = INTTRA.ShipmentIdentifierMessageStatus.Original,
+                                    Value = this.DataContext.ShipmentNumber,
+                             },                              
+                        },
+
+                        DateTime = new INTTRA.DateTime()
+                        {
+                            DateType = INTTRA.DateTimeDateType.Document,
+                            Value = this.DataContext.XMLCreateDate,
+                        },
+
+                        Instructions = this.DemoBodyInstructions.ToArray(),
+                    },
+                },
+            };
+
+            this.BuildDemoXMLFile(iMessage_CONTROL);
+        }
+        private void BuildDemo_APERAK()
+        {
+            INTTRA.Message iMessage_APERAK = new INTTRA.Message()
+            {
+                Header = new INTTRA.Header()
+                {
+                    MessageType = new INTTRA.MessageType() { Value = "ApplicationAcknowledgment", MessageVersion = 1 },
+
+                    DocumentIdentifier = this.DataContext.XMLCreateDate.ToString(),
+
+                    DateTime = new INTTRA.DateTime()
+                    {
+                        DateType = INTTRA.DateTimeDateType.Document,
+                        Value = this.DataContext.XMLCreateDate,
+                    },
+
+                    Parties = this.DemoHeaderParties.ToArray(),
+                },
+
+                MessageBody = new INTTRA.MessageBody()
+                {
+                    MessageProperties = new INTTRA.MessageProperties()
+                    {
+                        ShipmentID = new INTTRA.ShipmentID()
+                        {
+                            ShipmentIdentifier = new INTTRA.ShipmentIdentifier()
+                            {
+                                Acknowledgment = INTTRA.Acknowledgment.Accepted,
+                                MessageStatus = INTTRA.ShipmentIdentifierMessageStatus.Original,
+                                Value = this.DataContext.ShipmentNumber,
+                            },
+                        },
+
+                        DateTime = new INTTRA.DateTime()
+                        {
+                            DateType = INTTRA.DateTimeDateType.StatusChange,
+                            Value = this.DataContext.XMLCreateDate,
+                        },
+
+                        Instructions = this.DemoBodyInstructions.ToArray(),
+
+                        Parties = this.DemoBodyParties.ToArray(),
+                    },
+                },
+            };
+
+            #region ReferenceInformation 
+            if (this.DataContext.ReferenceInformations != null)
+            {
+                if (this.DataContext.ReferenceInformations.Count > 0)
+                {
+                    List<INTTRA.ReferenceInformation> iReferenceInformations = new List<INTTRA.ReferenceInformation>();
+
+                    foreach (INTTRA_Out.ReferenceInformation item in this.DataContext.ReferenceInformations)
+                    {
+                        bool isExists = true;
+                        INTTRA_Out.ReferenceInformationReferenceType itemReferenceType = item.ReferenceType;
+                        INTTRA.ReferenceInformationReferenceType iReferenceType = INTTRA.ReferenceInformationReferenceType.BookingNumber;
+
+                        switch (itemReferenceType)
+                        {
+                            case INTTRA_Out.ReferenceInformationReferenceType.BookingNumber:
+                                {
+                                    iReferenceType = INTTRA.ReferenceInformationReferenceType.BookingNumber;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.BillOfLadingNumber:
+                                {
+                                    iReferenceType = INTTRA.ReferenceInformationReferenceType.BillOfLadingNumber;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.BrokerReferenceNumber:
+                                {
+                                    iReferenceType = INTTRA.ReferenceInformationReferenceType.BrokerReferenceNumber;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.ConsigneeOrderNumber:
+                                {
+                                    iReferenceType = INTTRA.ReferenceInformationReferenceType.ConsigneeOrderNumber;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.ContractNumber:
+                                {
+                                    iReferenceType = INTTRA.ReferenceInformationReferenceType.ContractNumber;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.ExportersReferenceNumber:
+                                {
+                                    iReferenceType = INTTRA.ReferenceInformationReferenceType.ExportersReferenceNumber;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.FreightForwarderReference:
+                                {
+                                    iReferenceType = INTTRA.ReferenceInformationReferenceType.FreightForwarderReference;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.FederalMaritimeComNumber:
+                                {
+                                    iReferenceType = INTTRA.ReferenceInformationReferenceType.FederalMaritimeComNumber;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.InvoiceNumber:
+                                {
+                                    iReferenceType = INTTRA.ReferenceInformationReferenceType.InvoiceNumber;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.PurchaseOrderNumber:
+                                {
+                                    iReferenceType = INTTRA.ReferenceInformationReferenceType.PurchaseOrderNumber;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.ShipperIdentifyingNumber:
+                                {
+                                    iReferenceType = INTTRA.ReferenceInformationReferenceType.ShipperIdentifyingNumber;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.TransactionReferenceNumber:
+                                {
+                                    iReferenceType = INTTRA.ReferenceInformationReferenceType.TransactionReferenceNumber;
+                                    break;
+                                }
+
+                            default:
+                                {
+                                    isExists = false;
+                                    break;
+                                }
+                        }
+
+                        if (isExists)
+                        {
+                            iReferenceInformations.Add(new INTTRA.ReferenceInformation()
+                            {
+                                ReferenceType = iReferenceType,
+                                Value = item.Value,
+                            });
+                        }
+                    }
+
+                    if (iReferenceInformations.Count > 0)
+                    {
+                        iMessage_APERAK.MessageBody.MessageProperties.ReferenceInformation = iReferenceInformations.ToArray();
+                    }
+                }
+            }
+            #endregion
+
+            this.BuildDemoXMLFile(iMessage_APERAK);
+        }
+        private void BuildDemo_Status()
+        {
+            #region HeaderParties  
+            List<INTTRA_Status.PartnerInformationType> iDemoHeaderParties = new List<INTTRA_Status.PartnerInformationType>();
+            iDemoHeaderParties.Add(new INTTRA_Status.PartnerInformationType()
+            {
+                PartnerRole = INTTRA_Status.PartnerInformationTypePartnerRole.Sender,
+
+                PartnerIdentifier = new INTTRA_Status.PartnerIdentifierType()
+                {
+                    Value = this.DataContext.Recipient.PartnerIdentifier.Value,
+                    Agency = INTTRA_Status.PartnerIdentifierTypeAgency.AssignedBySender,
+                },
+            });
+
+            iDemoHeaderParties.Add(new INTTRA_Status.PartnerInformationType()
+            {
+                PartnerRole = INTTRA_Status.PartnerInformationTypePartnerRole.Recipient,
+
+                PartnerIdentifier = new INTTRA_Status.PartnerIdentifierType()
+                {
+                    Value = this.DataContext.Sender.PartnerIdentifier.Value,
+                    Agency = INTTRA_Status.PartnerIdentifierTypeAgency.AssignedByRecipient,
+                },
+            });
+            #endregion
+
+            INTTRA_Status.MessageType iMessage_STATUS = new INTTRA_Status.MessageType()
+            {
+                Header = new INTTRA_Status.HeaderType()
+                {
+                    MessageType = new INTTRA_Status.HeaderTypeMessageType() { Value = "Status", MessageVersion = 1 },
+
+                    DocumentIdentifier = this.DataContext.XMLCreateDate.ToString(),
+
+                    DateTime = new INTTRA_Status.HeaderTypeDateTime()
+                    {
+                        DateType = INTTRA_Status.DateTimeTypeDateType.Document,
+                        Value = this.DataContext.XMLCreateDate,
+                    },
+
+                    Parties = iDemoHeaderParties.ToArray(),
+                },
+
+                MessageBody = new INTTRA_Status.MessageBodyType()
+                {
+                     MessageProperties = new INTTRA_Status.MessagePropertiesType()
+                     {
+                         EventCode  = "EE",
+                         
+                         //ReferenceInformation = new List<INTTRA_Status.MessagePropertiesTypeReferenceInformation>().ToArray(),
+                     },
+
+                     MessageDetails = new INTTRA_Status.MessageDetailsType()
+                     {
+
+                     },
+                },
+            };
+
+            #region ReferenceInformation 
+            if (this.DataContext.ReferenceInformations != null)
+            {
+                if (this.DataContext.ReferenceInformations.Count > 0)
+                {
+                    List<INTTRA_Status.MessagePropertiesTypeReferenceInformation> iReferenceInformations = new List<INTTRA_Status.MessagePropertiesTypeReferenceInformation>();
+
+                    foreach (INTTRA_Out.ReferenceInformation item in this.DataContext.ReferenceInformations)
+                    {
+                        bool isExists = true;
+                        INTTRA_Out.ReferenceInformationReferenceType itemReferenceType = item.ReferenceType;
+                        INTTRA_Status.ReferenceInformationTypeReferenceType iReferenceType = INTTRA_Status.ReferenceInformationTypeReferenceType.BillOfLadingNumber;
+
+                        switch (itemReferenceType)
+                        {
+                            case INTTRA_Out.ReferenceInformationReferenceType.BookingNumber:
+                                {
+                                    iReferenceType = INTTRA_Status.ReferenceInformationTypeReferenceType.BookingNumber;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.BillOfLadingNumber:
+                                {
+                                    iReferenceType = INTTRA_Status.ReferenceInformationTypeReferenceType.BillOfLadingNumber;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.ConsigneeOrderNumber:
+                                {
+                                    iReferenceType = INTTRA_Status.ReferenceInformationTypeReferenceType.ConsigneeOrderNumber;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.ContractNumber:
+                                {
+                                    iReferenceType = INTTRA_Status.ReferenceInformationTypeReferenceType.ContractNumber;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.FreightForwarderReference:
+                                {
+                                    iReferenceType = INTTRA_Status.ReferenceInformationTypeReferenceType.FreightForwarderReference;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.PurchaseOrderNumber:
+                                {
+                                    iReferenceType = INTTRA_Status.ReferenceInformationTypeReferenceType.PurchaseOrderNumber;
+                                    break;
+                                }
+
+                            case INTTRA_Out.ReferenceInformationReferenceType.ShipperIdentifyingNumber:
+                                {
+                                    iReferenceType = INTTRA_Status.ReferenceInformationTypeReferenceType.ShipperIdentifyingNumber;
+                                    break;
+                                }
+
+                            //case INTTRA_Out.ReferenceInformationReferenceType.ContractPartyReferenceNumber:
+                            //    {
+                            //        iReferenceType = INTTRA_Status.ReferenceInformationTypeReferenceType.ContractPartyReferenceNumber;
+                            //        break;
+                            //    }
+
+                            //case INTTRA_Out.ReferenceInformationReferenceType.ConsigneeReferenceNumber:
+                            //    {
+                            //        iReferenceType = INTTRA_Status.ReferenceInformationTypeReferenceType.ConsigneeReferenceNumber;
+                            //        break;
+                            //    }
+
+                            //case INTTRA_Out.ReferenceInformationReferenceType.InttraBookingNumber:
+                            //    {
+                            //        iReferenceType = INTTRA_Status.ReferenceInformationTypeReferenceType.InttraBookingNumber;
+                            //        break;
+                            //    }
+
+                            default:
+                                {
+                                    isExists = false;
+                                    break;
+                                }
+                        }
+
+                        if (isExists)
+                        {
+                            iReferenceInformations.Add(new INTTRA_Status.MessagePropertiesTypeReferenceInformation()
+                            {
+                                ReferenceType = iReferenceType,
+                                Value = item.Value,
+                            });
+                        }
+                    }
+
+                    if (iReferenceInformations.Count > 0)
+                    {
+                        iMessage_STATUS.MessageBody.MessageProperties.ReferenceInformation = iReferenceInformations.ToArray();
+                    }
+                }
+            }
+            #endregion
+
+            this.BuildDemoXMLFile(iMessage_STATUS);
+        }
+        private void BuildDemoXMLFile(object myRequest)
+        {
+            Type myType = myRequest.GetType();
+            MemoryStream myMemoryStream = new MemoryStream();
+            XmlSerializer ser = new XmlSerializer(myType);
+            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+
+            XmlWriterSettings settings = new XmlWriterSettings()
+            {
+                Indent = true,
+                IndentChars = "",
+                OmitXmlDeclaration = true,
+                NewLineChars = "",
+                NewLineHandling = NewLineHandling.Replace,
+            };
+
+            XmlWriter writer = XmlTextWriter.Create(myMemoryStream, settings);
+            writer.WriteRaw("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n");
+
+            ser.Serialize(writer, myRequest, ns);
+            myMemoryStream.Seek(0, SeekOrigin.Begin);
+
+            var reader = new StreamReader(myMemoryStream);
+
+            string xmlString = reader.ReadToEnd();
+            xmlString = xmlString.Replace(" />", "/>");
+
+            this.BuildAnalyzeQueue(xmlString);
+        }
+        private void BuildAnalyzeQueue(string xmlString)
+        {
+            byte[] fileBytes = Encoding.ASCII.GetBytes(xmlString);
+
+            AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
+
+            AnalyzeQueue analyzeQueue = new AnalyzeQueue()
+            {
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
+                From = "INTTRA",
+                Id = IdCounter.GetNumber("AnalyzeQueue", 0),
+                MessageBody = fileBytes,
+                Status = "W",
+                Retries = 0,
+                ConnectedToEntity = false,
+                ConnectedToTenant = false,
+                Tenant = 0,
+                FileSize = fileBytes.Length,
+            };
+
+            analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
+            analyzeQueueReposiory.Add(analyzeQueue);
+            analyzeQueueReposiory.SubmitChanges();
+        }
+        #endregion
     }
     public class INTTRAResult
     {

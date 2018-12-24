@@ -31,6 +31,7 @@ export class WizardComponent extends BaseComponent {
     public IsDevelopment: boolean = false;
     public SimulatorIsVisible: boolean = false;
     public IsEditingEnabled: boolean = false;
+    public IsDemoAreaVisible: boolean = false;
     private myService: INTRAWebService;
     private CardListService: CardListService;
     private entityArgs: EntityArgs;
@@ -38,6 +39,10 @@ export class WizardComponent extends BaseComponent {
         super();
         this.myService = new INTRAWebService();
         this.CardListService = new CardListService();
+
+        if (SessionLocator.Tenant == 65 || SessionLocator.TenantManagementPM.IsINTTRAOnlyDemo) {
+            this.IsDemoAreaVisible = true;
+        }
     }
 
     SetWindowArgs(args: any) {

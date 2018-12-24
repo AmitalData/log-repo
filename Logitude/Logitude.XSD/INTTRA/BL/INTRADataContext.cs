@@ -32,6 +32,8 @@ namespace Logitude.XSD.INTTRA.BL
         public string ShipmentId { get; set; }
         public bool IsValid { get; set; }
         public bool IsLimited { get; set; }
+        public bool IsDemoTenant { get; set; }
+        public bool IsStockPrepaid { get; set; }
         public bool IsGroupageEntity { get; set; }
         public bool IsCarrierRegisteredToINTTRA { get; set; }
         public bool IsCarrierRegisteredToBranch { get; set; }
@@ -83,63 +85,6 @@ namespace Logitude.XSD.INTTRA.BL
             this.Shipment = shipmentRepository.GetSingleShipment(ShipmentId, Tenant);
             this.MasterData = shipmentMasterDataRepository.GetSingleMasterData(Shipment.MasterShipmentDataId);
 
-            if (!string.IsNullOrEmpty(this.Shipment.INTTRASIStatusCode))
-            {
-                if (this.Shipment.INTTRASIStatusCode != "NSEN" && this.Shipment.INTTRASIStatusCode != "RJIN")
-                {
-                    TenantManagement tenantManagement = null;
-                    List<TenantManagementLicense> Licenses = new List<TenantManagementLicense>();
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    {
-                        IGlobalContext globalContext= GlobalContext.GetContext();
-
-                        TenantManagementRepository tenantManagementRepository = new TenantManagementRepository(globalContext);
-                        tenantManagement = tenantManagementRepository.GetSingleTenantManagement(Tenant);
-
-                        if(tenantManagement != null)
-                        {
-                            if (tenantManagement.IsMultiPackage)
-                            {
-                                Licenses = (from d in globalContext.TenantManagementLicenses where d.Tenant == Tenant select d).ToList();
-                            }
-                        }
-
-                        scope.Complete();
-                    }
-
-                    bool isDevelopment = false;
-                    if (tenantManagement != null)
-                    {
-                        if (tenantManagement.IsMultiPackage)
-                        {
-                            List<string> myGroupedList = (from d in Licenses
-                                                          group d by d.PackageCode into g
-                                                          select g.Key).ToList();
-
-                            if (myGroupedList.Count == 1)
-                            {
-                                if (myGroupedList[0] == "DVMT")
-                                {
-                                    isDevelopment = true;
-                                }
-                            }
-                        }
-
-                        else
-                        {
-                            if (tenantManagement.PackageCode == "DVMT")
-                            {
-                                isDevelopment = true;
-                            }
-                        }
-                    }
-
-                    if (!isDevelopment)
-                    {
-                        this.IsLimited = true;
-                    }
-                }
-            }
 
             if (!string.IsNullOrEmpty(this.Shipment.ShipmentTypeId))
             {
@@ -149,6 +94,7 @@ namespace Logitude.XSD.INTTRA.BL
                 }
             }
 
+            this.GetGlobalVariables();
             this.GetObjects_Tenant();
             this.GetObjects_Branch();
             this.GetObjects_MoveType();
@@ -161,6 +107,76 @@ namespace Logitude.XSD.INTTRA.BL
 
             this.IsValid = this.Errors.Count == 0 ? true : false;
         }
+        private void GetGlobalVariables()
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                IGlobalContext globalContext = GlobalContext.GetContext();
+                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository(globalContext);
+
+                bool isINTTRAOnlyDemo = false;
+                TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(Tenant);
+                if (tenantManagement != null)
+                {
+                    isINTTRAOnlyDemo = tenantManagement.IsINTTRAOnlyDemo;
+                    this.IsStockPrepaid = tenantManagement.IsINTTRAStockPrepaid;
+
+                    if (!string.IsNullOrEmpty(this.Shipment.INTTRASIStatusCode))
+                    {
+                        if (this.Shipment.INTTRASIStatusCode != "NSEN" && this.Shipment.INTTRASIStatusCode != "RJIN")
+                        {
+                            List<TenantManagementLicense> Licenses = new List<TenantManagementLicense>();
+
+                            if (tenantManagement.IsMultiPackage)
+                            {
+                                Licenses = (from d in globalContext.TenantManagementLicenses where d.Tenant == Tenant select d).ToList();
+                            }
+                           
+                            bool isDevelopment = false;
+                            if (tenantManagement != null)
+                            {
+                                if (tenantManagement.IsMultiPackage)
+                                {
+                                    List<string> myGroupedList = (from d in Licenses
+                                                                  group d by d.PackageCode into g
+                                                                  select g.Key).ToList();
+
+                                    if (myGroupedList.Count == 1)
+                                    {
+                                        if (myGroupedList[0] == "DVMT")
+                                        {
+                                            isDevelopment = true;
+                                        }
+                                    }
+                                }
+
+                                else
+                                {
+                                    if (tenantManagement.PackageCode == "DVMT")
+                                    {
+                                        isDevelopment = true;
+                                    }
+                                }
+                            }
+
+                            if (!isDevelopment)
+                            {
+                                this.IsLimited = true;
+                            }
+                        }
+                    }
+
+                }
+
+                if (Tenant == 65 || isINTTRAOnlyDemo)
+                {
+                    this.IsDemoTenant = true;
+                }
+
+                scope.Complete();
+            }
+        }
+
         private void GetObjects_Tenant()
         {
             this.TenantObject = (from d in CommonContext.Tenants where d.Id == this.Tenant select d).FirstOrDefault();
@@ -721,8 +737,8 @@ namespace Logitude.XSD.INTTRA.BL
         }
 
         // Message Header
-        private INTTRA_Out.PartnerInformation Sender;
-        private INTTRA_Out.PartnerInformation Recipient;
+        public INTTRA_Out.PartnerInformation Sender;
+        public INTTRA_Out.PartnerInformation Recipient;
         public List<INTTRA_Out.PartnerInformation> MessageHeaderParties;
         private void BuildMessageHeader()
         {
