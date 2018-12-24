@@ -113,7 +113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport",
 			      				    DefaultText =  "BI Report",
-			      				    Code =  "f1ef",
+			      				    Code =  "6d0d",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -696,7 +696,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {    
+			 ObjectTable BIReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BIReport" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode BIReportGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BIReport.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature BIReportGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Tab.General", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFeatures.BIGE", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode BIReportEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BIReport.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature BIReportEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Tab.Events", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFeatures.BIEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BIGE",HtmlComponentName = "BIReportGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureBIReport/Components/EditTabs/BIReportGeneralTabComponent", FeatureId = BIReportGeneralFeature_TH0.Id, ControlPath = "./InfrastructureModules/InfrastructureBIReport/Components/EditTabs/BIReportGeneralTabComponent", ObjectTableId = BIReportObjectTable.Id, TabNameTextCodeId = BIReportGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BIEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = BIReportEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = BIReportObjectTable.Id, TabNameTextCodeId = BIReportEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
