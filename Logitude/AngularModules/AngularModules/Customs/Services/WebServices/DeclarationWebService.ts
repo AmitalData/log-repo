@@ -1028,6 +1028,25 @@ export class DeclarationWebService {
         );
     }
 
+    GetDeclarationMamanSpecialAction(declarationId: string, tenant: number, actionCode: string, mamanSpecialActionCode: string) {
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetDeclarationMamanSpecialAction/?declarationId=" + declarationId + "&tenant=" + tenant + "&actionCode=" + actionCode + "&mamanSpecialActionCode=" + mamanSpecialActionCode, {
+                headers: authHeader
+            }).map(response => {
+
+                var res = response.json();
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     // ---------------------------------------- MAPING --------------------------------------------------
     MapJsonToEntity(jsonPM: any, mapParent: boolean = true, entityPM: DeclarationErrorView = null) {
 
