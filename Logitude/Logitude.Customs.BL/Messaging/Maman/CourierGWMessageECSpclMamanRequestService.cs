@@ -127,15 +127,15 @@ namespace Logitude.Customs.BL.Messaging.Maman
             return new ECSpclMamanMessage()
             {
                 ActionCode = mamanActionCodeUpdateOrCancel,
-                BaldarAwb = _DeclarationPM.CourierHAWB,
-                BaldarHp = _DeclarationPM.AgentId,
+                BaldarAwb = _DeclarationPM.CourierHAWB ?? "",
+                BaldarHp = _DeclarationPM.AgentId ?? "",
                 OpenBaldarAwbDate = CourierGWMessageECTHRDataMamanRequestService.GetOpenBaldarAwbDate(this._DeclarationPM),
-                SpSpclCode = mamanSpecialActionCode,
-                SpLabel1 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText1 : null,
-                SpLabel2 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText2 : null,
-                SpLabel3 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText3 : null,
-                SpLabel4 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText4 : null,
-                SpLabel5 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText5 : null,
+                SpSpclCode = mamanSpecialActionCode ?? "",
+                SpLabel1 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText1 ?? "" : "",
+                SpLabel2 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText2 ?? "" : "",
+                SpLabel3 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText3 ?? "" : "",
+                SpLabel4 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText4 ?? "" : "",
+                SpLabel5 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText5 ?? "" : "",
 
 
             };

@@ -94,14 +94,14 @@ namespace Logitude.Customs.BL.Messaging.Maman
             var courierHawbMamanModel = new GWMessageECTHRData()
             {
                 BaldarCode = defBaldarCodeValue,//"לקחת מדיפולט קוד משלח בלדר",
-                BaldarAwb = _DeclarationPM.CourierHAWB,
+                BaldarAwb = _DeclarationPM.CourierHAWB??"",
                 //AirlineAwbPref = _CourierMasterPM.AirlineId,//יש לשלוח את Airline PRFIX)- 114
                 AirlineAwbPref = _CourierMasterPM.AirlinePrefix??"",//יש לשלוח את Airline PRFIX)- 114
 
                 Master = CInt(_CourierMasterPM.MAWB),
                 Awb8 = CInt(_CourierMasterPM.ShortHAWB),
-                HawbExtnd = _CourierMasterPM.HAWB,
-                AirlineCode = customsAirline.AirlineCode,
+                HawbExtnd = _CourierMasterPM.HAWB??"",
+                AirlineCode = customsAirline.AirlineCode??"",
                 FltNo = CInt(_CourierMasterPM.FlightNumber),
                 FltDate = _CourierMasterPM.DepartureDate.GetValueOrDefault().Date,// fltdate is not nullable ??
                 LandTime = _CourierMasterPM.EstimatedArrivalDate,// LandTime is not nullable ??
@@ -109,13 +109,13 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 DecWeight = DecWeight,
                 DolarValue = DolarValue,
                 StoreTypeReq = "67",//לפי טבלה B1                יש לשלוח תמיד 67
-                Description = _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription,
-                CustomerName = _DeclarationPM.ImporterName,
-                CustomerAddress = _DeclarationPM.ImporterAddress,
-                CustomerPhone = _DeclarationPM.CasualImporterTel,
+                Description = _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription??"",
+                CustomerName = _DeclarationPM.ImporterName??"",
+                CustomerAddress = _DeclarationPM.ImporterAddress??"",
+                CustomerPhone = _DeclarationPM.CasualImporterTel??"",
                 DestLineDesc = "1",//יש לנהל קו הפרדה פר לקוח                יעד הפצה של חברת ההפצה לצורך בניית ממשקים
                 BaldarMessageTime = DateTime.Now,
-                BaldarHp = _DeclarationPM.AgentId,
+                BaldarHp = _DeclarationPM.AgentId??"",
                 OpenBaldarAwbDate = GetOpenBaldarAwbDate(this._DeclarationPM),// _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().ThirdCargoID.GetValueOrDefault(),///ThirdCargoID.Consignment
 
 

@@ -125,6 +125,7 @@
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntReasonExpComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\NewEntity\NewClaimComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\SendClaim\SendClaimComponent.html" />
+    <Content Include="CustomsModules\CustomsCourier\Components\MamanSpecialAction\AddEditMamanStickerComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationCargoSplit\Components\EditTabs\DecCargoSplitConsPackDetComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\VendorExtendedSearchComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\AddEditCustomsAirlineComponent.html" />
@@ -293,6 +294,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsControls\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddEditCourierPendingReasonComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\CourierWorksheetComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\MamanSpecialAction\AddEditMamanStickerComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\ModuleCustomsCourier.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\Components\EditTabs\DecCargoSplitConComponent.ts" />

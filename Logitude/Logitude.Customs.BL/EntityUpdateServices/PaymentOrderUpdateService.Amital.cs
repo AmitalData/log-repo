@@ -402,7 +402,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 eventContextTagModel.UnifreighTaskCode = "";
                 dirtyEntityPM.CurrentContextTag = eventContextTagModel;
                 OpenUnifreighTask(dirtyEntityPM.AccountingCustomFile, connectedDeclarationPM, "LP2UB", "RSH", true, "");
-                LogMessagingUtil.Instance.AppendLine("UpdateUnifreightPaymentOrder->OpenUnifreighTask->LP2U");
+                LogMessagingUtil.Instance.AppendLine("UpdateUnifreightPaymentOrder->OpenUnifreighTask->LP2UB");
             }
 
         }

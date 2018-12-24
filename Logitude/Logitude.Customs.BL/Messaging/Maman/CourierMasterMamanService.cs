@@ -54,7 +54,14 @@ namespace Logitude.Customs.BL.Messaging.Maman
             courierMasterMamanModel.GatewayPortCode = _CourierMasterPM.GatewayPortCode != null ? _CourierMasterPM.GatewayPortCode.Substring(_CourierMasterPM.GatewayPortCode.Length - 3) : "";
             courierMasterMamanModel.Weight = "K";
             courierMasterMamanModel.PackageQuantity = _CourierMasterPM.PackageQuantity > 0 && _CourierMasterPM.PackageQuantity.ToString().Length <= 4 ? _CourierMasterPM.PackageQuantity.ToString() : "";
-            courierMasterMamanModel.GrossMassMeasure = _CourierMasterPM.GrossMassMeasure > 0 && _CourierMasterPM.GrossMassMeasure.ToString().Length <= 4 ? _CourierMasterPM.GrossMassMeasure.ToString() : "";
+            courierMasterMamanModel.GrossMassMeasure = "";
+            if (_CourierMasterPM.GrossMassMeasure > 0 && ((int)_CourierMasterPM.GrossMassMeasure).ToString().Length <= 5)
+            {
+                decimal result = (decimal)_CourierMasterPM.GrossMassMeasure - Math.Truncate((decimal)_CourierMasterPM.GrossMassMeasure);
+                var firstdigits = ((int)(Math.Round(result, 2) * 100)).ToString().Substring(0, 1);
+                var number = ((int)_CourierMasterPM.GrossMassMeasure).ToString();
+                courierMasterMamanModel.GrossMassMeasure = string.Concat(number, firstdigits);
+            }
             courierMasterMamanModel.Description = "";
 
             var declarationQS = new DeclarationQueryService(_Context);
@@ -64,7 +71,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             courierMasterMamanModel.Agent = forwarder;
             courierMasterMamanModel.SystemDate = String.Format("{0:yyMMdd}", DateTime.Now);
             courierMasterMamanModel.Forwarder = forwarder;
-            courierMasterMamanModel.Internet = "I";
+            courierMasterMamanModel.Internet = " ";
             courierMasterMamanModel.HAWB = _CourierMasterPM.HAWB != null ? _CourierMasterPM.HAWB : "";
 
             StringBuilder messageToMaman = new StringBuilder(444);

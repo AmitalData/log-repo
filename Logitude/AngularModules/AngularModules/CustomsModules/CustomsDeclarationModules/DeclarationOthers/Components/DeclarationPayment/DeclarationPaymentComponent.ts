@@ -668,7 +668,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     let obj = response.Result;
                     if (obj) {
                         let DefaultValue = obj['DefaultValue'];
-                        if (DefaultValue == "A") {
+                        if (DefaultValue == "Y") {
                             if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
                                 this.JustAutoFillPaymentScreenCash();
                             }
