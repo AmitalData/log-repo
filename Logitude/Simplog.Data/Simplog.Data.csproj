@@ -525,11 +525,13 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQuery .cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQueryColumn.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQueryFilter.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\SharedUserQuery.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWObjectFieldMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWObjectTableMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWQueryColumnMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWQueryFilterMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWSubQueryMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\SharedUserQueryMap.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryColumnRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryFilterRepository.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWQueryMap.cs" />
@@ -537,6 +539,7 @@
     <Compile Include="InfrastructureModel\Repositories\DWObjectTableRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWSubQueryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\SharedUserQueryRepository.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\APPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\BankAccountLite.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATPaymentMethod.cs" />
