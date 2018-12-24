@@ -108,6 +108,14 @@ namespace DW_Editor_Tool.ViewModels
             set { category2 = value; FirePropertyChanged("Category2"); }
         }
 
+        string lOVAdditionalFields;
+        public string LOVAdditionalColumns
+        {
+            get { return lOVAdditionalFields; }
+            set { lOVAdditionalFields = value; FirePropertyChanged("LOVAdditionalColumns"); }
+        }
+        
+
         // is Measurement , Aggregation Type
 
         public List<string> DataTypesList { get { return new List<string>() { "Text", "nText", "Date", "DateTime", "Boolean", "Decimal", "Integer", "Dimension" }; } }

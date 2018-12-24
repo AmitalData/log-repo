@@ -124,6 +124,11 @@
                                 <TextBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" Text="{Binding Category2, Mode=TwoWay}" />
 
                             </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+                                <TextBlock  Width="220"   VerticalAlignment="Center" FontWeight="Bold" Text="LOV Additional Fields:" />
+                                <TextBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" Text="{Binding LOVAdditionalColumns, Mode=TwoWay}" />
+
+                            </StackPanel>
                         </StackPanel>
 
                       
