@@ -94,14 +94,14 @@ export class AddEditMamanStickerComponent
         } 
 
         this._DeclarationMamanSpecialActionPMService.insert(this.EntityPM).subscribe(myResult => {
-            this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, this.EntityPM.MamanSpecialActionCode, this.EntityPM.MamanSpecialActionStatusCode).subscribe(myResult => {
-                if (myResult.HasError) {
-                    this.ValidationErrorsList = [];
-                    this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
-                    return;
-                }
-                this.CancelButtonClicked();
-            });
+            //this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, this.EntityPM.MamanSpecialActionCode, this.EntityPM.MamanSpecialActionStatusCode).subscribe(myResult => {
+            //    if (myResult.HasError) {
+            //        this.ValidationErrorsList = [];
+            //        this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
+            //        return;
+            //    }
+            //    this.CancelButtonClicked();
+            //});
         });
         
     }
