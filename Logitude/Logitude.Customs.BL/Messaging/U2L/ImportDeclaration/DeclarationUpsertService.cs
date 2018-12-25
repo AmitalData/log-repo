@@ -511,6 +511,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             unloadportId = TranslateUnloadPort(_AmitalCustomsFile.UnloadportId);
                         }
                         this._MyDeclarationPM.Consignments[0].UnloadPortCode = unloadportId;
+                        if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWBDATE))
+                        {
+                            this._MyDeclarationPM.Consignments[0].ManifestDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.HAWBDATE, "AmitalCustomsFile.HAWBDATE");
+                        }
+                        else if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ManifestDate))
+                        {
+                            this._MyDeclarationPM.Consignments[0].ManifestDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.ManifestDate, "AmitalCustomsFile.ManifestDate");
+                        }
                     }
 
                     // moran 1.2.17 - AMI-59543 <--
