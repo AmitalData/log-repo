@@ -6,7 +6,7 @@ import {LoadSampleDataComponent} from './Components/LoadSampleData/LoadSampleDat
 import { DWQueryBuilderComponent } from './Components/DWQueryBuilder/DWQueryBuilderComponent';
 import { DWQueryBuilderFiltersComponent } from './Components/DWQueryBuilder/DWQueryBuilderFiltersComponent';
 
-
+import { CustomsShipperGeneralTabComponent } from './Components/Depositions/EditTab/CustomsShipperGeneralTabComponent';
 
 export const Components =
     [
@@ -16,6 +16,7 @@ export const Components =
         LoadSampleDataComponent,
         DWQueryBuilderComponent,
         DWQueryBuilderFiltersComponent,
+        CustomsShipperGeneralTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -30,7 +31,8 @@ export class ModuleDeclarations {
             case "LoadSampleDataComponent": { myResult = LoadSampleDataComponent; break; }
             case "DWQueryBuilderComponent": { myResult = DWQueryBuilderComponent; break; }
             case "DWQueryBuilderFiltersComponent": { myResult = DWQueryBuilderFiltersComponent; break; }
-
+            case "CustomsShipperGeneralTabComponent": { myResult = CustomsShipperGeneralTabComponent; break; }
+                
         }
 
         return myResult;

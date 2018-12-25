@@ -24,7 +24,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
 
         //[ForeignKey("DWFactTableCode")]
-        public virtual DWObjectTable DWObjectTable { get; set; }
+        //public virtual DWObjectTable DWObjectTable { get; set; }
 
         [ForeignKey("DWQueryId")]
         public virtual DWQuery DWQuery { get; set; }

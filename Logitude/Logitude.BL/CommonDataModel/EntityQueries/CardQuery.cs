@@ -1905,5 +1905,29 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return cardList;
         }
 
+        public CardList GetCardListForCustomsShipperById(string cardId, int tenant)
+        {
+            CardList cardList = (from a in repository.context.Cards
+                                 where a.Id == cardId && a.Tenant == tenant
+                                 select new CardList()
+                                 {
+                                     Id = a.Id,
+                                     Tenant = a.Tenant,
+                                     EnglishName = a.EnglishName,
+                                     Code = a.Code,
+                                     VatNumber = a.VatNumber,
+                                     CountryId = a.CountryId,
+                                     CountryCode = a.CountryCode,
+                                     CountryName = a.CountryName,
+                                     CreatedByUserId = a.CreatedByUserId,
+                                     UpdatedByUserId = a.UpdatedByUserId,
+                                     CreateDate = a.CreateDate,
+                                     UpdateDate = a.UpdateDate,
+                                 }).FirstOrDefault();
+
+            return cardList;
+        }
+
+
     }
 }
