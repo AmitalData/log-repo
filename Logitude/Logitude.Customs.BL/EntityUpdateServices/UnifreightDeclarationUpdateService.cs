@@ -1846,6 +1846,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 cCUMSHGRPM.HAWBDATE = AmitalConvertUtil.GetUnifreightFormatedDate(decConsignment.ThirdCargoID, "decConsignment.ThirdCargoID");
             }
+            if (!_DirtyDeclarationPM.IsCourierDeclaration)
+            {
+                if (_DirtyDeclarationPM.TransportModeId == "A")
+                {
+                    if (!string.IsNullOrWhiteSpace(cCUMSHGRPM.HAWB))
+                    {
+                        //cCUMSHGRPM.HAWBDATE = decConsignment.
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
 
             cCUMSHGRPM.CARNETNUMBER = "";
             cCUMSHGRPM.IDENTIFIERNO = "";
