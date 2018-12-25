@@ -640,7 +640,7 @@ export class ImporterDetailsComponent extends BaseComponent {
 
     doDisable: boolean;
     DeleteImporterDetailsButtonClicked() {
-        this.ImporterTypeCode = null;
+        //this.ImporterTypeCode = null;
         this.ImporterPassportNumber = null;
         this.ImporterPassCountryCode = null;
         this.MainImporterEntitlemntTypeCode = null;
@@ -658,8 +658,8 @@ export class ImporterDetailsComponent extends BaseComponent {
         this.EntityPM.CalculatedImporterName = null
 
         //this.OkButtonClicked();
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+        //SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        //SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
     }
     OkButtonClicked() {
         if (this.type == "Importer" && this.isCourierDeclaration) {

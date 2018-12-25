@@ -961,7 +961,7 @@ export class MaintenanceComponent {
                         return;
                     }
                     var logitudeWindow = new LogitudeWindow();
-                    logitudeWindow.Title = " הגדרות FTP לשותפים";
+                    logitudeWindow.Title = "הגדרות תקשורת ";
                     logitudeWindow.Width = 900;
                     logitudeWindow.Height = 530;
                     logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/CustomsPartnerFtpListComponent');
