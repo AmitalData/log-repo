@@ -8,6 +8,7 @@ using System.Text;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.Validators;
+using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -127,8 +128,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 }
 
-                var validContext = AccountingValidationContextServiceProvider.NewReconciliationValidatorContext((this._AccountingContext as IAccountingContext), myReconciliationPM);
-                var result = ReconciliationValidator.IsReconciliationValid(myReconciliationPM, validContext);
+                ValidationResult result = ValidateReconcile(myReconciliationPM);
                 if (result != null)
                 {
 
@@ -139,6 +139,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
+        }
+
+        public virtual ValidationResult ValidateReconcile(ReconciliationPM myReconciliationPM)
+        {
+            var validContext = AccountingValidationContextServiceProvider.NewReconciliationValidatorContext((this._AccountingContext as IAccountingContext), myReconciliationPM);
+            var result = ReconciliationValidator.IsReconciliationValid(myReconciliationPM, validContext);
+            return result;
         }
 
         public virtual List<LedgerTransactionPM> GetLedgerTransactionToReconcile(List<string> theReconcileAgainstLTranIdList)
