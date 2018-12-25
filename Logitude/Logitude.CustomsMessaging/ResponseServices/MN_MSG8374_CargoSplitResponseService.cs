@@ -244,20 +244,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     status = "CSA";
                     notificationDefinitionCode = "8374A";
                     notificationDescription = "בקשת פיצול מטען אושרה " + customsFileNo;
-                    userMessage = "בקשת פיצול מטען " + _DeclarationCargoSplitPM.RequestNumber + "אושרה ";
+                    userMessage = "בקשת פיצול מטען " + _DeclarationCargoSplitPM.RequestNumber + " אושרה";
                     break;
                 case "2":
                     status = "CSJ";
                     notificationDefinitionCode = "8374J";
                     notificationDescription = "בקשת פיצול מטען נדחתה " + customsFileNo;
-                    userMessage = "בקשת פיצול מטען " + _DeclarationCargoSplitPM.RequestNumber + "נדחתה ";
+                    userMessage = "בקשת פיצול מטען " + _DeclarationCargoSplitPM.RequestNumber + " נדחתה";
                     break;
                 case "4":
                 case "7":
                     status = "CSC";
                     notificationDefinitionCode = "8374C";
                     notificationDescription = "בקשת פיצול מטען בוטלה " + customsFileNo;
-                    userMessage = "בקשת פיצול מטען " + _DeclarationCargoSplitPM.RequestNumber + "בוטלה ";
+                    userMessage = "בקשת פיצול מטען " + _DeclarationCargoSplitPM.RequestNumber + " בוטלה";
                     break;
                 case "6":
                     status = "CSD";
