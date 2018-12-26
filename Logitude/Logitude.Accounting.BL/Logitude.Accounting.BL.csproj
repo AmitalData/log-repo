@@ -451,6 +451,7 @@
     <Compile Include="EntityUpdateServiceExt\JournalVoidUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\PaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServices\ARPaymentChequeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\BankDepositOnCreatingService.cs" />
     <Compile Include="EntityUpdateServices\BankAccountOnCreatingService.cs" />
     <Compile Include="EntityUpdateServices\BankAccountOnUpdatingService.cs" />
     <Compile Include="EntityUpdateServices\BankAccountValidateService.cs" />
