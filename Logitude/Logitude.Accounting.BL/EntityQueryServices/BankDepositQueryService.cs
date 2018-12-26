@@ -581,6 +581,19 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             journalUpdateService.Update(journalPM, true);
         }
 
+        public void CancelDeposit(string bankDepositId, int tenant)
+        {
+
+            if (bankDepositId == null) throw new ApplicationException("No bankDepositId to cancel!!!");
+
+            //get entity
+            BankDepositPM depositPM = GetSingle(bankDepositId, true, false);
+
+            //update
+            depositPM.ChangeSetOp = ChangeSetOperation.Update;
+            BankDepositUpdateService depositUpdateService = new BankDepositUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            depositUpdateService.Update(depositPM, true);
+        }
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
 

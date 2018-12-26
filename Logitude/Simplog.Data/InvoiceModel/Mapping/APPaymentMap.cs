@@ -163,13 +163,12 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.CreditCardTypeId).HasColumnName("CreditCardTypeId");
             this.Property(t => t.ExternalAccountingEntityId).HasColumnName("ExternalAccountingEntityId");
             this.Property(t => t.TransferStatusCode).HasColumnName("TransferStatusCode");
-
             this.Property(t => t.TaxDeductionLocalAmount).HasColumnName("TaxDeductionLocalAmount");
             this.Property(t => t.TaxDeductionPercentage).HasColumnName("TaxDeductionPercentage");
             this.Property(t => t.ApprovedByUserId).HasColumnName("ApprovedByUserId");
             this.Property(t => t.ApprovedDateTime).HasColumnName("ApprovedDateTime");
-
             this.Property(t => t.BankAccountId).HasColumnName("BankAccountId");
+            this.Property(t => t.FirstApproveDate).HasColumnName("FirstApproveDate");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

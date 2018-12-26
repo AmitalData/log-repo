@@ -2259,5 +2259,7 @@
     <TextCode Code="&quot;Shipment.M.DeleteThisReceivable&quot;" DefaultText="&quot;Delete this receivable?&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.S.NewShipment.CustomAgentExport&quot;" DefaultText="&quot;Customs Agent Export&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature Code="&quot;CSPV&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Shipment.Features.CSPV&quot;" FeatureDefaultText="&quot;Allow user to control the spotlight per view&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>
