@@ -15,55 +15,53 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.EntityLists;
 
 namespace Logitude.Infrastructure.Data.EntityListQueryServices
-{ 
+{
 
     public partial class BIReportListQueryService
     {
-	    private IQueryable<BIReportList> GetIqueryableList(IQueryable<BIReport> iQueryable)
+        private IQueryable<BIReportList> GetIqueryableList(IQueryable<BIReport> iQueryable)
         {
-		IQueryable<BIReportList> query = (from a in iQueryable
-                                            select new BIReportList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-					                          CreateDate = a.CreateDate,
-					
-					                          CreatedByUserId = a.CreatedByUserId,
-					
-					                          UpdateDate = a.UpdateDate,
-					
-					                          UpdatedByUserId = a.UpdatedByUserId,
-					
-					                          SearchFields = a.SearchFields,
-					
-					                          Name = a.Name,
-					
-					                          Description = a.Description,
-					
-					                          DWQueryId = a.DWQueryId,
-					
-					                          Inactive = a.Inactive,
-					
-					                          TypeCode = a.TypeCode,
-					
-		                    	            });
+            IQueryable<BIReportList> query = (from a in iQueryable
+                                              select new BIReportList()
+                                              {
+
+                                                  Id = a.Id,
+
+                                                  Tenant = a.Tenant,
+
+                                                  CreateDate = a.CreateDate,
+
+                                                  CreatedByUserId = a.CreatedByUserId,
+
+                                                  UpdateDate = a.UpdateDate,
+
+                                                  UpdatedByUserId = a.UpdatedByUserId,
+
+                                                  SearchFields = a.SearchFields,
+
+                                                  Name = a.Name,
+
+                                                  Description = a.Description,
+
+                                                  DWQueryId = a.DWQueryId,
+
+                                                  Inactive = a.Inactive,
+
+                                                  TypeCode = a.TypeCode,
+
+                                              });
             return query;
-		}
+        }
 
-		private IQueryable<BIReport> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<BIReport> iQueryable, int tenant)
+        private IQueryable<BIReport> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<BIReport> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
-				private IQueryable<BIReport> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<BIReport> iQueryable, int tenant)
+            return iQueryable;
+        }
+        private IQueryable<BIReport> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<BIReport> iQueryable, int tenant)
         {
-			return iQueryable;
-		}
-		
-			}
+            return iQueryable;
+        }
 
-
+    }
 }
 	
