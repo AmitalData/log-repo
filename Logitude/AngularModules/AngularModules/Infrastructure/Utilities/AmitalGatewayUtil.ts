@@ -972,7 +972,7 @@ export class ShowGeneralLOVReturnSelected {
         let UnifreightEntityNumber = unifreightMessage.UnifreightEntityNumber;
         //let ImporterVat = unifreightMessage.LogitudeEntityNumber;
         //let formtitle: string=            = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.formtitle");
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         let LOVText: string
             = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.LOVText");
         var logWindow = new LogitudeWindow();

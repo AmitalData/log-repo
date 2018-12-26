@@ -78,11 +78,13 @@ export class GeneralLOVComponent
         this.LOVText = arg.LOVText;
 
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.EntityResource = true;
+            this.Loaded = true;
+
             if (AppTool.IsNullOrEmpty(this.Code)) {
-                this.EntityResource = true;
-                this.Loaded = true;
                 if (this.EntityResource && this.Loaded) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    
                 }
             }
             
