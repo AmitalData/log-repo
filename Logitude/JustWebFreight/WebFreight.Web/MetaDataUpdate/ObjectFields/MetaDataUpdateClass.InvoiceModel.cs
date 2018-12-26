@@ -4121,7 +4121,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                FieldName = "Journal Number",
+                FieldName = "JournalNumber",
                 FullFieldLable = "JournalNumber",
                 DefaultText = "Journal Number",
                 FieldsDataType = "Text",
