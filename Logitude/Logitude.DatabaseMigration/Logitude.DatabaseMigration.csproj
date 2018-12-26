@@ -462,6 +462,10 @@
     <Compile Include="Migrations\201812241826236_AddFirstApproveDate.Designer.cs">
       <DependentUpon>201812241826236_AddFirstApproveDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812260830476_spotlightShowBoolean_Query_Khalid.cs" />
+    <Compile Include="Migrations\201812260830476_spotlightShowBoolean_Query_Khalid.Designer.cs">
+      <DependentUpon>201812260830476_spotlightShowBoolean_Query_Khalid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -746,6 +750,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812241826236_AddFirstApproveDate.resx">
       <DependentUpon>201812241826236_AddFirstApproveDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812260830476_spotlightShowBoolean_Query_Khalid.resx">
+      <DependentUpon>201812260830476_spotlightShowBoolean_Query_Khalid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

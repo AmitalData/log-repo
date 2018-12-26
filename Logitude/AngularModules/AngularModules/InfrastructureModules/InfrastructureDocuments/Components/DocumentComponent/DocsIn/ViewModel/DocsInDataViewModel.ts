@@ -318,6 +318,11 @@ export class DocsInDataViewModel extends BaseComponent{
             this.SetReceivedButtonVisibility = false;
             this.DownloadButtonVisibility = true;
             this.Received = this.CurrentDocument.Received;
+            if (this.DocsInComponent.ObjectTableName == "Shipment") {
+                this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentShipmentEvent(this.DocsInComponent.EntityId, "Shipment", this.FileName).subscribe(res => {
+
+                });
+            }
          
 
         }

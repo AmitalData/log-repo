@@ -1549,6 +1549,7 @@
     <EventType Code="&quot;WHRD&quot;" ObjectTableName="&quot;Shipment&quot;" EnglishName="&quot;Warehouse Release&quot;" LocalName="&quot;Warehouse Release&quot;" IsManualEntry="true" ShortView="true" EventTypeCategoryCode="&quot;LEG&quot;" IsAgentView="true" IsCustomerView="true" IsSharedLogisticsEnabled="true" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="true" FollowUpEnglishName="&quot;Warehouse Release&quot;" FollowUpLocalName="&quot;Warehouse Release&quot;" />
     <EventType Code="&quot;SFCR&quot;" ObjectTableName="&quot;Shipment&quot;" EnglishName="&quot;Follow up Created&quot;" LocalName="&quot;Follow up Created&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;SFCM&quot;" ObjectTableName="&quot;Shipment&quot;" EnglishName="&quot;Follow up Completed&quot;" LocalName="&quot;Follow up Completed&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType Code="&quot;DOUP&quot;" ObjectTableName="&quot;Shipment&quot;" EnglishName="&quot;Document Uploaded&quot;" LocalName="&quot;Document Uploaded&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons MenuButtonGroupType="&quot;ShipmentEdit&quot;" MenuButtonGroupName="&quot;ShipmentEditButtonsGroup&quot;">
@@ -2261,5 +2262,7 @@
     <TextCode Code="&quot;Shipment.M.DeleteThisReceivable&quot;" DefaultText="&quot;Delete this receivable?&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.S.NewShipment.CustomAgentExport&quot;" DefaultText="&quot;Customs Agent Export&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature Code="&quot;CSPV&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Shipment.Features.CSPV&quot;" FeatureDefaultText="&quot;Allow user to control the spotlight per view&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>

@@ -21,11 +21,27 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             globalContext = context;
         }
 
-        public WebhookKeys GetSingleWebhookKeysById(int id)
+        public WebhookKeys GetSingleWebhookKeysById(string id)
         {
             WebhookKeys item = context.WebhookKeys.Where(d => d.Id == id).FirstOrDefault();
             return item;
         }
+
+        public WebhookKeys GetSingleWebhookKeys(string id,int Tenant)
+        {
+            WebhookKeys item = context.WebhookKeys.Where(d => d.Id == id && d.Tenant == Tenant).FirstOrDefault();
+            return item;
+        }
+
+
+        public IQueryable<WebhookKeys> GetWebhookKeys(int Tenant)
+        {
+            IQueryable<WebhookKeys> items = context.WebhookKeys.Where(d => d.Tenant == Tenant);
+            return items;
+        }
+        
+
+
 
         public WebhookKeys GetSingleWebhookKeyByAccessKey(string key)
         {
