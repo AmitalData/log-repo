@@ -230,6 +230,20 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
+        public IQueryable<CustomerTenantAccessCardList> GetustomerTenantAccessCardListsByTenant(int Tenant)
+        {
+            IQueryable<CustomerTenantAccessCardList> customerIds = (from a in repository.context.CustomerTenantAccessCards
+                                                                    where a.Tenant == Tenant && a.StatusTypeCode == "A"
+                                                                    select new CustomerTenantAccessCardList()
+                                                                    {
+                                                                        CustomerId = a.CustomerId,
+                                                                        CustomerTenantAccessId = a.CustomerTenantAccessId,
+                                                                    }
+                                                             );
+
+
+            return customerIds;
+        }
 
 
 
