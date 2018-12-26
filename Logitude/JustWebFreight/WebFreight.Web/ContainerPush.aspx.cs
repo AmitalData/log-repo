@@ -462,7 +462,7 @@ namespace WebFreight.Web
             catch (Exception ex)
             {
                 WriteError("Failed to getData" + Environment.NewLine + ex.ToString());
-                //throw;
+               throw;
             }
         }
 
