@@ -88,9 +88,20 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
     }
 
-    
+    IsReady: boolean = false;
     SetWindowArgs(args: any) {
 
+        var _entityResourceService: EntityResourceService = new EntityResourceService();
+        _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe(response => {
+            this.IsReady = true;
+            this.Load(args);
+        });
+
+
+       
+    }
+
+    Load(args: any) {
         this.froalaEditorSetting = new FroalaEditorSetting();
         this.froalaEditorSetting.Id = Guid.newGuid();
         this.froalaEditorSetting.IsDisableEdit = true;
