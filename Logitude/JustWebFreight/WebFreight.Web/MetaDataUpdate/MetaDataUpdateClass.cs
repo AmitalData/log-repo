@@ -19923,7 +19923,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "State",
-                FullFieldLable = "State_Potential",
+                FullFieldLable = "StateId_Potential",
                 FieldName = "StateId_Potential",
                 FieldsDataType = "LookUp",
                 IsCustom = false,
@@ -20460,7 +20460,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowListIndex = 2,
                 DisplayInSearchWindowFilters = true,
                 DisplayInSearchWindowFiltersIndex = 0,
-                FullFieldLable = "Name",
+                FullFieldLable = "EnglishName",
                 FullLocalDefaultText = "שם אנגלית",
                 FieldName = "EnglishName",
                 FieldsDataType = "Text",
@@ -20762,7 +20762,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 DefaultText = "Payment Term Name",
                 DisplayOnLookUp = false,
-                FullFieldLable = "PaymentTermName",
+                FullFieldLable = "PaymentTermEnglishName",
                 FieldName = "PaymentTermEnglishName",
                 FieldsDataType = "Text",
                 IsCustom = false,
@@ -33323,7 +33323,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "State",
-                FullFieldLable = "State",
+                FullFieldLable = "StateId",
                 FieldName = "StateId",
                 FieldsDataType = "LookUp",
                 MaxLength = 15,
@@ -33482,7 +33482,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",
-                LookUpTableId = UsersObject.Id,
+                LookUpTableId = null,
                 CanFilter = true,
                 DisplayInList = true,
                 ListFieldLable = "TechnologyListLable",
@@ -34319,7 +34319,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowListIndex = 1,
                 DisplayInSearchWindowFilters = true,
                 DisplayInSearchWindowFiltersIndex = 1,
-                FullFieldLable = "Name",
+                FullFieldLable = "EnglishName",
                 FieldName = "EnglishName",
                 FieldsDataType = "Text",
                 IsCustom = false,
@@ -51627,7 +51627,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowListIndex = 1,
                 DisplayInSearchWindowFilters = true,
                 DisplayInSearchWindowFiltersIndex = 0,
-                FullFieldLable = "English Name",
+                FullFieldLable = "EnglishName",
                 FieldName = "EnglishName",
                 FieldsDataType = "Text",
                 IsCustom = false,
@@ -61092,6 +61092,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Tasks", DefaultText = "Tasks", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Shipments", DefaultText = "Shipments", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Invoices", DefaultText = "Invoices", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Depositions", DefaultText = "Depositions", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
+
 
             #endregion
 
@@ -63152,7 +63154,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewConsolidationInvoiceErrorMsg6", DefaultText = "Credit limit setting is blocking invoice for bill to", LocalDefaultText = "הגדרת מסגרת האשראי חוסמת את הפקת החשבונית ללקוח זה", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewGeneralInvoiceErrorMsg1", DefaultText = "The chosen card doesn’t have GLAccount connected to it", LocalDefaultText = "לכרטיס הנבחר לא קושר כרטיס הנהלת חשבונות", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewGeneralInvoiceErrorMsg2", DefaultText = "The invoice currency does not match to the bill to GLAccount", LocalDefaultText = "מטבע החשבונית אינו תואם למטבע המוגדר בכרטיס", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewGeneralInvoiceErrorMsg2", DefaultText = "The invoice currency does not match to the bill to GLAccount", LocalDefaultText = "מטבע החשבונית אינו תואם את מטבע הכרטיס לחיוב", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewGeneralInvoiceErrorMsg3", DefaultText = "The chosen card doesn’t have GLAccount connected to it", LocalDefaultText = "לכרטיס הנבחר לא קושר כרטיס הנהלת חשבונות", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.DueDateLowerThanInvoiceDate", DefaultText = "The Due date shouldn't be lower than the Accounting date", LocalDefaultText = "לא ניתן להזין תאריך פירעון נמוך מהתאריך החשבונאי", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
 
@@ -64281,6 +64283,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.NoVendorTaxWithholdingPercentage", DefaultText = "There is no tax withholding definitions for this vendor, the default tax withholding percentage will be taken from system defaults", LocalDefaultText = "לא מוגדר ללקוח אחוז ניכוי מס במקור, אחוז ניכוי ברירת מחדל ילקח מהגדרות מערכת", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.FullAccountingCashBookCheck", DefaultText = "Cashbook amount is lower than payment amount", LocalDefaultText = "היתרה בקופה הינה קטנה מסכום הוראת התשלום", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.ValueDateCantBeFutureDate", LocalDefaultText = "תאריך ערך לא יכול להיות תאריך עתידי", DefaultText = "Value date can't be future date", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.CheckPaymentChequesBeforeCancel", LocalDefaultText = "לא ניתן לבטל את התשלום לספק, משום שהתשלום בוצע ע”י המחאה שנפרעה כבר, יש לבטל את ההתאמה החיצונית ע”מ לעדכן את הסטטוס של ההמחאה", DefaultText = "The payment cheque that connected to the APPayment is redeemed, you should cancel the external reconciliation in order to update the status of the payment cheque", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region 
@@ -64971,6 +64975,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTablePM DWHSettingObjectTable = objectTables.Where(d => d.Name == "DWHSetting").FirstOrDefault();
             ObjectTablePM DWObjectTableObjectTable = objectTables.Where(d => d.Name == "DWObjectTable").FirstOrDefault();
             ObjectTablePM DWObjectFieldObjectTable = objectTables.Where(d => d.Name == "DWObjectField").FirstOrDefault();
+
             #endregion
 
             Dictionary<string, Feature> TenantFeatures = FeaturesRepository.GetFeaturesByTenant(tenant).ToDictionary(d => d.Code.Trim() + d.ObjectTableId, a => a);
@@ -64998,6 +65003,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature GeneralTasksfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TASKS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Tasks", NameTextCodeDefaultText = "Tasks", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature sharedShipmentsfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDSHIPMENTS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.SharedShipments", NameTextCodeDefaultText = "Shared Logistics Shipments", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature sharedInvoicesfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDINVOICES", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.SharedInvoices", NameTextCodeDefaultText = "Shared Logistics Invoices", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature GeneralDepositionsfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEPOSITIONS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Deposition", NameTextCodeDefaultText = "Depositions", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+      
 
             Feature GeneralShippersandConsignee = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPPERSANDCONSIGNEES", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ShippersAndConsignees", NameTextCodeDefaultText = "Shippers and Consignees", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralAgentsfeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AGENTS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Agents", NameTextCodeDefaultText = "Agents", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -65098,7 +65105,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature menuFeature019 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "MENU", Packagable = true, Code = "General.Features.SystemUserPassword", NameTextCodeCode = "General.Features.SystemUserPassword", NameTextCodeDefaultText = "System User Password" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature menuFeature20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "MENU", Packagable = true, Code = "General.Features.Automations", NameTextCodeCode = "General.Features.Automations", NameTextCodeDefaultText = "Automations" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature menuFeature21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, Code = "General.Features.DocumentsBackup", NameTextCodeCode = "General.Features.DocumentsBackup", NameTextCodeDefaultText = "Documents Backup", FeatureTypeCode = "OTH", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
 
 
             Feature menuFeature025 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, Code = "SIGNATURESETTING", NameTextCodeCode = "General.Features.Signature", NameTextCodeDefaultText = "Signature", FeatureTypeCode = "OTH", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -66921,7 +66927,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature menuFeature_BP1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "MENU", Packagable = true, Code = "General.Features.BusinessProcessQueue", NameTextCodeCode = "General.Features.BusinessProcessQueue", NameTextCodeDefaultText = "Business Process Queues" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature menuFeature_BP2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "MENU", Packagable = true, Code = "General.Features.BusinessProcessBusinessRole", NameTextCodeCode = "General.Features.BusinessProcessBusinessRole", NameTextCodeDefaultText = "Business Process Business Roles" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature menuFeature_BP3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "MENU", Packagable = true, Code = "General.Features.BusinessProcessTeam", NameTextCodeCode = "General.Features.BusinessProcessTeam", NameTextCodeDefaultText = "Business Process Teams" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            #endregion 
+            #endregion
+
 
             textCodeRep.SubmitChanges();
             FeaturesRepository.SubmitChanges();

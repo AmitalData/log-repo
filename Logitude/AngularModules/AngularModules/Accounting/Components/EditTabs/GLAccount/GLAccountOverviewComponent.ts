@@ -1,3 +1,4 @@
+import { EntityResourceService } from './../../../../Infrastructure/Services/EntityResourceService';
 import { LedgerTransactionList } from './../../../EntityLists/LedgerTransactionList';
 import {Component, ChangeDetectorRef}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -30,30 +31,45 @@ declare var makeAmBarChart;
 })
 
 export class GLAccountOverviewComponent extends BaseComponent {
-    public AccountPM: GLAccountPM = null;
-    public GLAccountMoreData: GLAccountMoreDataList = null;
-    public ObjectTableName = "GLAccount";
+
+    // Const
     public DataContext = this;
+    public ObjectTableName = "GLAccount";
     txtcode_Amount: string = TextCodeTranslator.Translate("Accounting.General.O.Amount");
     txtcode_AgingDetails: string = TextCodeTranslator.Translate("GLAccounts.O.AgingDetails");
 
+    // Variables
+    public AccountPM: GLAccountPM = null;
+    public GLAccountMoreData: GLAccountMoreDataList = null;
     public isRTL: boolean = false;
+    public isUsedOutside: boolean = false; // when view tab inside customer ..
+
+    //Services
+    _EntityResourceService: EntityResourceService = new EntityResourceService();
     _GLAccountMoreDataListService: GLAccountMoreDataListService = new GLAccountMoreDataListService();
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
+
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-        // Set Entity
-        this.AccountPM = entityArgs.EntityPM;
+        //Resources
+        this._EntityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => { });
+        this._EntityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { });
 
-        this.SetUIProperties();
+        // Set Entity
+        if(entityArgs && entityArgs.ObjectTableName == "GLAccount")
+        {
+            this.AccountPM = entityArgs.EntityPM;
+            this.LoadAllData();
+        }
+        else
+        {
+            this.isUsedOutside = true;
+        }
 
         this.chartId = "CustomerOverview_" + SessionLocator.CurrentSession.GetChartId();
-
-        this.LoadAllData();
-
         this.Listen();
     }
 
@@ -99,6 +115,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.GetDefaultValues();
         this.GetLastTransactions();
         this.LoadChartData();
+        this.SetUIProperties();
+
     }
 
     //#region Properties
@@ -164,25 +182,31 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     DisplayTransactionsLinkClicked() {
 
-        SessionLocator.CurrentSession.CurrentEditComponent.SetSelectedTabByCode("GATR");
+        if(this.isUsedOutside)
+        {
+            var editWindow = new LogitudeWindow();
 
-        //var editWindow = new LogitudeWindow();
-
-        //editWindow.ShowHeaderButtons = true;
-        ////editWindow.Title = windowTitle;
-        //editWindow.Height = 770;
-        //editWindow.Width = 1500;
-
-        //editWindow.ShowEditComponent(this.AccountPM.Id, "GLAccount", "GATR");
-        //editWindow.WindowClosed.subscribe(res => {
-
-        //});
+            editWindow.ShowHeaderButtons = true;
+            //editWindow.Title = windowTitle;
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            editWindow.IsHideHeader  = true;
+            editWindow.ShowEditComponent(this.AccountPM.Id, "GLAccount", "GATR");
+            editWindow.WindowClosed.subscribe(res => {
+                this.LoadAllData();
+            });
+        }
+        else
+        {
+            SessionLocator.CurrentSession.CurrentEditComponent.SetSelectedTabByCode("GATR");
+        }
 
     }
     ReconcileLinkClicked() {
         this.ReconcileButtonClicked();
     }
-    ReconcileButtonClicked() {
+    ReconcileButtonClicked()
+    {
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         var screenWidth = this.getScreenWidth();
         var screenHeight = this.getScreenHeight();

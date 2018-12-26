@@ -50,6 +50,7 @@
                             <ComboBoxItem Content="Menus"/>
                             <ComboBoxItem Content="Tabs"/>
                             <ComboBoxItem Content="TextCodes"/>
+                            <ComboBoxItem Content="Entity"/>
 
                         </ComboBox>
 

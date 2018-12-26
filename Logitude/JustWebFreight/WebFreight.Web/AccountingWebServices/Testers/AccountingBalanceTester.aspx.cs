@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.CoreBL;
+﻿//test task 46490!!
+using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.CoreBL.Mapping;
 using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.Def.EntityPMs;
@@ -72,6 +73,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _ButtonIsApprovedJournalTOTZero_Click,
             _ButtonReverseTotalFIX_Click,
             _ButtonReverseGLBalanceFIX_Click,
+            _AccountingIntegrityService_Click,
 
         }
 
@@ -277,7 +279,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 }
 
                 param = LogitudeXmlSerializer.DeserializeObject<ParamBasic>(_TextBoxParam.Text);
-                var s = new ReverseEngineerGLAccountBalance(param.MyDate, param.MyTenant);
+                var s = new ReverseEngineerGLAccountBalance(/*param.MyDate,*/ param.MyTenant);
                 s.CheckDbIntegrity();
 
                 var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<GLAccountBalanceDTO>>(s.CompareReport.GLAccountBalanceList);
@@ -302,7 +304,67 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             }
         }
 
+        
+              protected void _AccountingIntegrityService_Click(object sender, EventArgs e)
+        {
+            AccountingIntegrityInParam param = null;
+            var paramDefault = new AccountingIntegrityInParam()
+            {
+                Tenant = 1064,
+                FromMonthInclusive = DateTime.Now.AddMonths(-3),
+                ToMonthInclusive = DateTime.Now,
 
+            };
+            string serializeObjectstring = "";
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._AccountingIntegrityService_Click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    return;
+                }
+
+                param = JsonConvert.DeserializeObject<AccountingIntegrityInParam>(_TextBoxParam.Text);
+
+                
+                var accountingIntegrityService = new AccountingIntegrityService();
+                
+                string errorMessage = accountingIntegrityService.CheckParams(param);
+                if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    throw new Exception(errorMessage);
+                }
+                var res= accountingIntegrityService.CheckIntegrity(param);
+
+                serializeObjectstring = JsonConvert.SerializeObject(res);
+                
+
+
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+                _MyLastAction.Value = MyLastAction._AccountingIntegrityService_Click.ToString();
+                if (param == null)
+                {
+                    _TextBoxParam.Text = JsonConvert.SerializeObject(paramDefault);
+                }
+                else
+                {
+                    _TextBoxParam.Text = JsonConvert.SerializeObject(param);
+                }
+
+                _LabelLog.Text = serializeObjectstring?? LogMessagingUtil.Instance.ToString();
+            }
+        }
 
         protected void _ButtonReverseGLBalanceFIX_Click(object sender, EventArgs e)
         {
@@ -330,7 +392,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var MyTenant = (int)param.MyTenant;
                 var MyDate = (DateTime)param.MyDate;
 
-                var s = new ReverseEngineerGLAccountBalance(MyDate, MyTenant);
+                var s = new ReverseEngineerGLAccountBalance(/*MyDate,*/ MyTenant);
                 s.FIXCheckDbIntegrity();
 
                 var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<GLAccountBalanceDTO>>(s.CompareReport.GLAccountBalanceList);
@@ -1162,8 +1224,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var tenant = (int)param.MyTenant;
                 string AccountId = param.AccountId;
                 Response.Clear();
-                var myDueLocalBalanceService = new DueLocalBalanceService();
-                var listDiff = myDueLocalBalanceService.ReverseEngineer(tenant, AccountId);
+                    var myDueLocalBalanceService = new DueLocalBalanceService();
+                    var listDiff = myDueLocalBalanceService.ReverseEngineer(tenant, AccountId);
 
                 //var myAllCardServiceDS = new GLAccountDashboard();
                 //var dic = myAllCardServiceDS.GetCardsLocalBalanceGByChartOfAccountsTypeCode(tenant);

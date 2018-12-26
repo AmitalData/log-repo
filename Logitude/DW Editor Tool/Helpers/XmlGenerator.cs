@@ -34,7 +34,7 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("Name", GetStringValue(tableViewModel.Name), entityElement);
                 SetAttribute("TypeCode", GetStringValue(tableViewModel.TypeCode), entityElement);
                 SetAttribute("IsClosed", tableViewModel.IsClosed.ToString().ToLower(), entityElement);
-
+                SetAttribute("DefaultFilterBy", GetStringValue(tableViewModel.DefaultFilterBy), entityElement);
                 XmlElement fieldsTagElement = doc.CreateElement("fields");
                 entityElement.AppendChild(fieldsTagElement);
                 BuildFieldTags(tableViewModel, doc, fieldsTagElement);
@@ -91,6 +91,7 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("DisplayInQueryBuilder", fieldViewModel.DisplayInQueryBuilder.ToString().ToLower(), fieldElement);
                 SetAttribute("Category1", GetStringValue(fieldViewModel.Category1), fieldElement);
                 SetAttribute("Category2", GetStringValue(fieldViewModel.Category2), fieldElement);
+                SetAttribute("LOVAdditionalColumns", GetStringValue(fieldViewModel.LOVAdditionalColumns), fieldElement);
 
 
 
@@ -123,6 +124,7 @@ namespace DW_Editor_Tool.Helpers
                         tableViewModel.Name = GetAttributeStringValue(entity.Attributes["Name"]);
                         tableViewModel.TypeCode = GetAttributeStringValue(entity.Attributes["TypeCode"]);
                         tableViewModel.IsClosed = GetAttributeBoolValue(entity.Attributes["IsClosed"]);
+                        tableViewModel.DefaultFilterBy = GetAttributeStringValue(entity.Attributes["DefaultFilterBy"]);
 
                         List<DWObjectFieldViewModel> fieldsList = new List<DWObjectFieldViewModel>();
                         foreach (XmlNode childNode in entity.ChildNodes)
@@ -181,6 +183,7 @@ namespace DW_Editor_Tool.Helpers
             fieldViewModel.DisplayInQueryBuilder = GetAttributeBoolValueDefaultTrue(fieldNode.Attributes["DisplayInQueryBuilder"]);
             fieldViewModel.Category1 = GetAttributeStringValue(fieldNode.Attributes["Category1"]);
             fieldViewModel.Category2 = GetAttributeStringValue(fieldNode.Attributes["Category2"]);
+            fieldViewModel.LOVAdditionalColumns = GetAttributeStringValue(fieldNode.Attributes["LOVAdditionalColumns"]);
 
 
 
@@ -210,6 +213,12 @@ namespace DW_Editor_Tool.Helpers
 
         private static string GetStringValue(object value)
         {
+            if (value != null)
+            {
+                if (string.IsNullOrEmpty(value.ToString())) value = null;
+            }
+
+
             if (value != null)
             {
                 return "\"" + value.ToString().Replace("\"", "\u0022") + "\""; 

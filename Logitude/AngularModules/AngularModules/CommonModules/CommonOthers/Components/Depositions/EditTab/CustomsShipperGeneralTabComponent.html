@@ -1,0 +1,79 @@
+﻿
+<table>
+    <tr>
+        <td>
+            <div class="TabHolder">
+                <table>
+                    <tr class="TabTitleRow">
+                        <td>Deposition History</td>
+                    </tr>
+
+                    <tr style="height:100%;">
+                        <td *ngIf="IsReady">
+                            <table>
+             
+                                <tr style="height:100%;">
+                                    <td>
+                                        <table>
+
+                                            <tr>
+                                                <td style="width:450px">
+                                                    <div class="MediaFill">
+                                                        <div class="SimpleGridView">
+                                                            <div class="SimpleGridViewHeader">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 150px; min-width:150px; max-width:150px;">   {{'CustomerDeposition.F.DepositionNumber' | TextCodeTranslationPipe}} </td>
+                                                                        <td style="width: 150px; min-width:150px; max-width:150px;">{{'CustomerDeposition.F.ValidityStartDate' | TextCodeTranslationPipe}} </td>
+                                                                        <td style="width: 100%; min-width:100%; max-width:100%;">{{'CustomerDeposition.F.ValidityEndDate' | TextCodeTranslationPipe}} </td>
+                                                                        
+                                                                     
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                   
+                                                            <div class="SimpleGridViewBody">
+                                                                <table>
+                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource">
+                                 
+
+                                                                        <td class="GridViewCell" style="width: 150px; min-width:150px; max-width:150px;">{{item.DepositionNumber}}</td>
+                                                                        <td class="GridViewCell" style="width: 150px; min-width:150px; max-width:150px;">{{item.ValidityStartDate | DateTimeToDatePipe}}</td>
+                                                                        <td [style.color]="item.ValidityEndDateColor" class="GridViewCell" style="width: 100%; min-width:100%; max-width:100%;">{{item.ValidityEndDate | DateTimeToDatePipe}}</td>
+                                                                      
+
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td colspan="3">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+
+
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

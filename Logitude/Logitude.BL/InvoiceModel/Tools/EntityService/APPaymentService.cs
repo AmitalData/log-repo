@@ -102,38 +102,64 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-
             if (tenantPOCO.AccountingActivated && setVoided)
             {
-                IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
-                JournalPM journalPM = journalQuery.GetJournalIdByAccountingEntityId(entityPM.Id, entityPM.Tenant);
-                if (journalPM != null)
+                bool useLocal = true;
+                var user = GetLoggedContact(tenant);
+                if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
+                if(theEntityPm.PaymentMethodCode == "CH")
                 {
-                    var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride("", 1)) as IJournalVoidUpdateServiceExt;
-                    journalUpdate.Update(journalPM, new StornoOverrideM()
+                    IPaymentChequeQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IPaymentChequeQueryServiceExt), "PaymentChequeQueryServiceExt", new ParameterOverride("", 1)) as IPaymentChequeQueryServiceExt;
+                    List<PaymentChequePM> PaymentCheques = query.GetPaymentChequesByPaymentId(theEntityPm.Id, tenant);
+                    if (PaymentCheques != null)
                     {
-                        AccountingEntityCode = "5",
-                        AccountingEntityId = entityPM.Id,
-                        AccountingEntityReference = entityPM.PaymentNo,
-                    });
-                }
-
-                // Update Payment Cheques
-                IPaymentChequeQueryServiceExt paymentChequeQuery = ContainerAccessor.Container.Resolve(typeof(IPaymentChequeQueryServiceExt), "PaymentChequeQueryServiceExt", new ParameterOverride("", 1)) as IPaymentChequeQueryServiceExt;
-                List <PaymentChequePM> paymentCheques = paymentChequeQuery.GetPaymentChequesByPaymentId(entityPM.Id, entityPM.Tenant);
-                if(paymentCheques != null)
-                {
-                    foreach(  var item in paymentCheques)
-                    {
-                        IPaymentChequeUpdateServiceExt paymentChequeUpdate = ContainerAccessor.Container.Resolve(typeof(IPaymentChequeUpdateServiceExt), "PaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IPaymentChequeUpdateServiceExt;
-                        item.PaymentChequeStatusCode = "4";
-                        item.ChangeSetOp = ChangeSetOperation.Update;
-                        paymentChequeUpdate.Update(item);
+                        var list = PaymentCheques.Where(a => a.PaymentChequeStatusCode == "3").ToList();
+                        if (list != null && list.Count() != 0)
+                        {
+                            string msg = TranslateTextsClass.Translate("APPayment.M.CheckPaymentChequesBeforeCancel", theEntityPm.Tenant, useLocal);
+                            throw new ApplicationException(msg);
+                        }
+                        else
+                        {
+                            CompleteCancelAPPaymentInFullAccounting(theEntityPm);
+                        }
                     }
+                }
+                else
+                {
+                    CompleteCancelAPPaymentInFullAccounting(theEntityPm);
                 }
             }
         }
+        private void CompleteCancelAPPaymentInFullAccounting(APPaymentPM theEntityPm)
+        {
+            IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+            JournalPM journalPM = journalQuery.GetJournalIdByAccountingEntityId(theEntityPm.Id, theEntityPm.Tenant);
+            if (journalPM != null)
+            {
+                var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride("", 1)) as IJournalVoidUpdateServiceExt;
+                journalUpdate.Update(journalPM, new StornoOverrideM()
+                {
+                    AccountingEntityCode = "5",
+                    AccountingEntityId = theEntityPm.Id,
+                    AccountingEntityReference = theEntityPm.PaymentNo,
+                });
+            }
 
+            // Update Payment Cheques
+            IPaymentChequeQueryServiceExt paymentChequeQuery = ContainerAccessor.Container.Resolve(typeof(IPaymentChequeQueryServiceExt), "PaymentChequeQueryServiceExt", new ParameterOverride("", 1)) as IPaymentChequeQueryServiceExt;
+            List<PaymentChequePM> paymentCheques = paymentChequeQuery.GetPaymentChequesByPaymentId(theEntityPm.Id, theEntityPm.Tenant);
+            if (paymentCheques != null)
+            {
+                foreach (var item in paymentCheques)
+                {
+                    IPaymentChequeUpdateServiceExt paymentChequeUpdate = ContainerAccessor.Container.Resolve(typeof(IPaymentChequeUpdateServiceExt), "PaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IPaymentChequeUpdateServiceExt;
+                    item.PaymentChequeStatusCode = "4";
+                    item.ChangeSetOp = ChangeSetOperation.Update;
+                    paymentChequeUpdate.Update(item);
+                }
+            }
+        }
         private List<APPaymentInvoicePM> APPaymentInvoiceChangeSet;
         public void SetChangeSet(List<APPaymentInvoicePM> APPaymentInvoiceChangeSet)
         {
@@ -214,7 +240,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             //Full Accounting 
             AddAPPaymentJournalAndJournalLines(theEntityPm, setApproved);
-            this.VoidAPPaymentInFullAccounting(theEntityPm, setVoided);
+            VoidAPPaymentInFullAccounting(theEntityPm, setVoided);
 
             paymentRepository.Update(payment);
             paymentRepository.SubmitChanges();
@@ -886,7 +912,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine.DueDate = theEntityPm.ValueDate.Value;
                     journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency - (decimal)theEntityPm.TaxDeductionLocalAmount;
                     journalLine.CurrencyId = theEntityPm.PaymentCurrencyId;
-                    journalLine.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency - ((decimal)theEntityPm.TaxDeductionLocalAmount * (decimal)theEntityPm.PaymentCurrencyExchangeRate);
+                    journalLine.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency - ((decimal)theEntityPm.TaxDeductionLocalAmount/(decimal)theEntityPm.PaymentCurrencyExchangeRate);
                     journalLine.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
                     journalLine.Reference1 = theEntityPm.PaymentNo;
                     journalLine.Reference2 = theEntityPm.ChequeOrPaymentRef;
@@ -936,7 +962,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         var foreignAmount = theEntityPm.TaxDeductionLocalAmount;
                         if (theEntityPm.PaymentCurrencyId != tenantPOCO.CurrencyId)
                         {
-                            foreignAmount = (decimal)theEntityPm.TaxDeductionLocalAmount * (decimal)theEntityPm.PaymentCurrencyExchangeRate;
+                            foreignAmount = (decimal)theEntityPm.TaxDeductionLocalAmount / (decimal)theEntityPm.PaymentCurrencyExchangeRate;
                         }
                         journalLine.ForeignAmount = (decimal)foreignAmount;
                         journalLine.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;

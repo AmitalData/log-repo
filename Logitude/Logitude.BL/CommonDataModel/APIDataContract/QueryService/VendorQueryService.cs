@@ -50,20 +50,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 {
                     temp = myQuery.GetSinglePM(MyEntity.Id, Tenant);
                 }
-
-                if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
-                {
-                    ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
-                    var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode, ComputingPartnerName, "Card");
-
-                    if (string.IsNullOrEmpty(MyCode))
-                    {
-                        throw new ApplicationException("Card with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
-                    }
-
-                    temp = myQuery.GetSingleVendorPMByCode(MyCode, Tenant);
-                }
-
+                
                 if (temp == null)
                 {
                     throw new ApplicationException("Card with Id " + MyEntity.Id + " doesn't exist");
@@ -77,6 +64,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 temp.EnglishName = MyEntity.EnglishName;
                 temp.LocalName = MyEntity.LocalName;
                 temp.VatNumber = MyEntity.VatNumber;
+                temp.Code = MyEntity.Code;
 
                 PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
                 if (MyEntity.PaymentTerm != null)
@@ -87,19 +75,25 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                         temp.PaymentTermId = myPaymentTermPM.Id;
                     }
                 }
-                
-                if (string.IsNullOrEmpty(temp.Code))
-                {
-                    temp.Code = MyEntity.PartnerCode;
-                }
-                
+                                
                 if (MyEntity.MainAddress != null)
                 {
                     AddressQueryService AddressQueryService = new AddressQueryService(Tenant);
-                    AddressPM address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.MainAddress, Tenant, ComputingPartnerName);
+                    AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.MainAddress, Tenant);
+                    if (!string.IsNullOrEmpty(MyEntity.MainAddress.City.Code))
+                    {
+                        address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.MainAddress, Tenant, ComputingPartnerName);
+                    }
+
+                    else if (!string.IsNullOrEmpty(MyEntity.MainAddress.City.Name))
+                    {
+                        address.City = MyEntity.MainAddress.City.Name;
+                    }
+
                     address.AddressTypeId = "M";
                     address.Description = "Main Address";
                     address.Tenant = Tenant;
+
                     temp.Addresses.Add(address);
                 }
 

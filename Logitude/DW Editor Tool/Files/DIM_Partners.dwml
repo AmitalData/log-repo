@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;5749ec3f-19b5-40dd-be9f-163f69847bcb&quot;" Code="&quot;DIM_Partners&quot;" Name="&quot;DIM_Partners&quot;" TypeCode="&quot;Dimension&quot;" IsClosed="false">
+<entity Id="&quot;5749ec3f-19b5-40dd-be9f-163f69847bcb&quot;" Code="&quot;DIM_Partners&quot;" Name="&quot;DIM_Partners&quot;" TypeCode="&quot;Dimension&quot;" IsClosed="false" DefaultFilterBy="&quot;[Name]&quot;">
   <fields>
     <field Id="&quot;7f4d97dc-e8ec-4f5a-90d1-4c829ba67768&quot;" Code="&quot;[Id_Number]&quot;" Name="&quot;Id_Number&quot;" DataTypeCode="&quot;Integer&quot;" IsRequired="true" MinLength="0" MaxLength="0" IsPrimaryKey="true" IsMeasurement="false" DisplayInQueryBuilder="false" />
     <field Id="&quot;5ffff81f-56ab-4a1c-821a-90d03a4adda9&quot;" Code="&quot;[Id]&quot;" Name="&quot;Id&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="15" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="false" />

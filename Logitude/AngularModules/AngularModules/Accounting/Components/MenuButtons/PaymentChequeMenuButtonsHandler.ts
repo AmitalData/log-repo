@@ -1,4 +1,4 @@
-﻿import {PaymentChequePM} from '../../EntityPMs/PaymentChequePM';
+import {PaymentChequePM} from '../../EntityPMs/PaymentChequePM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
@@ -78,7 +78,7 @@ export class PaymentChequeMenuButtonsHandler
                             }
                         case "CancelCheque":
                             {
-                                if (this.EntityPM.PaymentChequeStatusCode == "3" || this.EntityPM.IsCancelled || this.EntityPM.PaymentChequeStatusCode == "2") {
+                                if (this.EntityPM.PaymentChequeStatusCode == "3" || this.EntityPM.IsCancelled ) {
                                     button.IsDisabled = true;
                                 }
                                 else

@@ -418,6 +418,46 @@
     <Compile Include="Migrations\201812180645307_textcode_fixes.Designer.cs">
       <DependentUpon>201812180645307_textcode_fixes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812181345516_textcode_fixes2.cs" />
+    <Compile Include="Migrations\201812181345516_textcode_fixes2.Designer.cs">
+      <DependentUpon>201812181345516_textcode_fixes2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812191006531_AddMoreSettingsToSharedLogistics.cs" />
+    <Compile Include="Migrations\201812191006531_AddMoreSettingsToSharedLogistics.Designer.cs">
+      <DependentUpon>201812191006531_AddMoreSettingsToSharedLogistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812230937269_AbedDeleteFieldFutureDepositionExistFromCustomShipper.cs" />
+    <Compile Include="Migrations\201812230937269_AbedDeleteFieldFutureDepositionExistFromCustomShipper.Designer.cs">
+      <DependentUpon>201812230937269_AbedDeleteFieldFutureDepositionExistFromCustomShipper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812230838425_AddBIReportsDB_Maheera.cs" />
+    <Compile Include="Migrations\201812230838425_AddBIReportsDB_Maheera.Designer.cs">
+      <DependentUpon>201812230838425_AddBIReportsDB_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812231037225_UpdateBIReportType_Maheera.cs" />
+    <Compile Include="Migrations\201812231037225_UpdateBIReportType_Maheera.Designer.cs">
+      <DependentUpon>201812231037225_UpdateBIReportType_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812231253165_AddSharedPropertiesToQueryTable_Samar.cs" />
+    <Compile Include="Migrations\201812231253165_AddSharedPropertiesToQueryTable_Samar.Designer.cs">
+      <DependentUpon>201812231253165_AddSharedPropertiesToQueryTable_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812240733569_RemoveDWSubQueryDWObjectTableRelation_Rabaia.cs" />
+    <Compile Include="Migrations\201812240733569_RemoveDWSubQueryDWObjectTableRelation_Rabaia.Designer.cs">
+      <DependentUpon>201812240733569_RemoveDWSubQueryDWObjectTableRelation_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812240733528_AddSharedUserQueryTable_Samar.cs" />
+    <Compile Include="Migrations\201812240733528_AddSharedUserQueryTable_Samar.Designer.cs">
+      <DependentUpon>201812240733528_AddSharedUserQueryTable_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812241223276_FixDWSubQueryObjectTableRelation_Rabaia.cs" />
+    <Compile Include="Migrations\201812241223276_FixDWSubQueryObjectTableRelation_Rabaia.Designer.cs">
+      <DependentUpon>201812241223276_FixDWSubQueryObjectTableRelation_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812241039017_AbedAddSearchFieldsToCustomsShipper.cs" />
+    <Compile Include="Migrations\201812241039017_AbedAddSearchFieldsToCustomsShipper.Designer.cs">
+      <DependentUpon>201812241039017_AbedAddSearchFieldsToCustomsShipper.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -669,6 +709,36 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812180645307_textcode_fixes.resx">
       <DependentUpon>201812180645307_textcode_fixes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812181345516_textcode_fixes2.resx">
+      <DependentUpon>201812181345516_textcode_fixes2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812191006531_AddMoreSettingsToSharedLogistics.resx">
+      <DependentUpon>201812191006531_AddMoreSettingsToSharedLogistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812230937269_AbedDeleteFieldFutureDepositionExistFromCustomShipper.resx">
+      <DependentUpon>201812230937269_AbedDeleteFieldFutureDepositionExistFromCustomShipper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812230838425_AddBIReportsDB_Maheera.resx">
+      <DependentUpon>201812230838425_AddBIReportsDB_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812231037225_UpdateBIReportType_Maheera.resx">
+      <DependentUpon>201812231037225_UpdateBIReportType_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812231253165_AddSharedPropertiesToQueryTable_Samar.resx">
+      <DependentUpon>201812231253165_AddSharedPropertiesToQueryTable_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812240733569_RemoveDWSubQueryDWObjectTableRelation_Rabaia.resx">
+      <DependentUpon>201812240733569_RemoveDWSubQueryDWObjectTableRelation_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812240733528_AddSharedUserQueryTable_Samar.resx">
+      <DependentUpon>201812240733528_AddSharedUserQueryTable_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812241223276_FixDWSubQueryObjectTableRelation_Rabaia.resx">
+      <DependentUpon>201812241223276_FixDWSubQueryObjectTableRelation_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812241039017_AbedAddSearchFieldsToCustomsShipper.resx">
+      <DependentUpon>201812241039017_AbedAddSearchFieldsToCustomsShipper.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

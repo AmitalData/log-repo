@@ -1345,7 +1345,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup AccountingSystemQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ACCS", Name = "Accounting System" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -1360,7 +1360,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllAccountingSystemsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingSystemTextCode_0.Id, Code = "All Accounting Systems",  QueryGroupCode = "ACCS", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingSystemObjectTable.Id, QuerySection = "AccountingSystem", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingSystemFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllAccountingSystemsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingSystemTextCode_0.Id, Code = "All Accounting Systems",  QueryGroupCode = "ACCS", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingSystemObjectTable.Id, QuerySection = "AccountingSystem", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingSystemFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllAccountingSystemsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 0, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1423,10 +1423,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature AccountingSystemGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingSystem.Tab.General", ObjectTableId = AccountingSystemObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingSystem.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AyGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "AccountingSystem.Tab.General" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InvoiceLib.Views.AccountingSystemGeneralTabControl", ObjectTableId = AccountingSystemObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "AccountingSystem.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AyGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingSystemGeneralFeature_TH0.Id, ControlPath = "Simplog.InvoiceLib.Views.AccountingSystemGeneralTabControl", ObjectTableId = AccountingSystemObjectTable.Id, TabNameTextCodeId = AccountingSystemGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

@@ -107,7 +107,9 @@ import {SelectDocumentTypesComponent} from './Components/Maintenance/Automation/
 import {NewViewComponent} from './Components/NewViewComponent/NewViewComponent';
 import {Export2ExcelControl} from './Components/Export2ExcelControl/Export2ExcelControl';
 import {QueryColumnsEditComponent} from './Components/QueryColumnsComponents/QueryColumnsEditComponent';
-import {btnComponent} from './Components/QueryColumnsComponents/btnComponent';
+import { btnComponent } from './Components/QueryColumnsComponents/btnComponent';
+import { btnUpdateComponent } from './Components/QueryColumnsComponents/btnUpdateComponent';
+
 import {ToComponent} from './Components/QueryColumnsComponents/ToComponent';
 import {NewEntityComponent} from './GenericComponents/NewEntityComponent';
 import {LogSearchWindowComponent} from './Components/LogitudeComponents/LogSearchWindowComponent';
@@ -274,7 +276,8 @@ export const Components =
         NewViewComponent,
         Export2ExcelControl,
         QueryColumnsEditComponent,
-        btnComponent,
+        btnComponent, 
+        btnUpdateComponent,
         ToComponent,
         NewEntityComponent,
         LogSearchWindowComponent,
@@ -357,6 +360,7 @@ export class ModuleDeclarations {
             case 'Export2ExcelControl': { myResult = Export2ExcelControl; break; }
             case 'QueryColumnsEditComponent': { myResult = QueryColumnsEditComponent; break; }
             case 'btnComponent': { myResult = btnComponent; break; }
+            case 'btnUpdateComponent': { myResult = btnUpdateComponent; break; }                
             case 'ToComponent': { myResult = ToComponent; break; }
             case 'NewEntityComponent': { myResult = NewEntityComponent; break; }
             case 'LogSearchWindowComponent': { myResult = LogSearchWindowComponent; break; }
