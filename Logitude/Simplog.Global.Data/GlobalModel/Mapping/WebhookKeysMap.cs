@@ -17,8 +17,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.HasKey(t => t.Id);
 
             // Properties
-            this.Property(t => t.Id)
-                .IsRequired();
+            this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
 
             // Properties
             this.Property(t => t.Tenant)

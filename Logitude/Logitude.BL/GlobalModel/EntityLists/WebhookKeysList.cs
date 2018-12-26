@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
+namespace Logitude.BL.GlobalModel.EntityPMs
 {
-  public  class WebhookKeys
+    public class WebhookKeysList
     {
-        [Key]
+        
+       [Key]
         public string Id { get; set; }
         public string AccessKey { get; set; }
         public int Tenant { get; set; }
@@ -20,5 +21,6 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string UpdatedByUserName { get; set; }
         public DateTime UpdateDate { get; set; }
         public string Description { get; set; }
+
     }
 }
