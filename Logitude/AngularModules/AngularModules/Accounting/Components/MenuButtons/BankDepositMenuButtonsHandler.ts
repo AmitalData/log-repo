@@ -1,4 +1,5 @@
-﻿declare var window: any;
+﻿import { BankDepositExtendedPMService } from './../../Services/ExtendedPMs/BankDepositExtendedPMService';
+declare var window: any;
 import {BankDepositPM} from '../../EntityPMs/BankDepositPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -31,6 +32,7 @@ export class BankDepositMenuButtonsHandler {
     private _documentOutPMService: DocumentOutPMService = new DocumentOutPMService();
     private _documentTypePMService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
     private _exportDocumentService: ExportDocumentService = new ExportDocumentService();
+    private _BankDepositExtendedPMService: BankDepositExtendedPMService = new BankDepositExtendedPMService();
 
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -150,15 +152,31 @@ export class BankDepositMenuButtonsHandler {
                 }
             case "CancelDeposit":
                 {
-                    this.EntityPM.IsCanceled = true;
-                    this.entityArgs.EditComponent.SaveChanges();
-                    this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                        if (isSaveSuccess) {
+                    ///// save in server
+                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    this._BankDepositExtendedPMService.cancelDeposit(this.EntityPM.Id).subscribe(myResult => {
+                        SessionLocator.CurrentSession.StopBusyIndicator();
 
-                        } else {
-                            this.EntityPM.IsCanceled = false;
+                        var mm: ServiceResponse = myResult;
+                        if (!mm.HasError) {
+
+                        }
+                        else {
+                            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = mm.ErrorsArray;
                         }
                     });
+
+                    ///// old save pattern: update in client then submitchanges
+                    // this.EntityPM.IsCanceled = true;
+                    // this.entityArgs.EditComponent.SaveChanges();
+                    // this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    //     if (isSaveSuccess) {
+
+                    //     } else {
+                    //         this.EntityPM.IsCanceled = false;
+                    //     }
+                    // });
+
                     return;
                 }
 
