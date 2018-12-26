@@ -74,6 +74,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  SharedWithAll = a.SharedWithAll,
                  SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                  SharedByUserId = a.SharedByUserId,
+                 SpotlightModeActivated = a.SpotlightModeActivated,
+
              }).FirstOrDefault();
 
             //if (result != null)
@@ -194,6 +196,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          SharedWithAll = a.SharedWithAll,
                                          SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                                          SharedByUserId = a.SharedByUserId,
+                                         SpotlightModeActivated = a.SpotlightModeActivated,
+
                                      }).ToList();
 
             //foreach (QueryPM item in queries)
@@ -253,6 +257,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        SharedWithAll = a.SharedWithAll,
                        SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                        SharedByUserId = a.SharedByUserId,
+                       SpotlightModeActivated = a.SpotlightModeActivated,
+
                    }).ToList();
 
             //TranslationRepository translationRepository=new TranslationRepository(tenant);
@@ -316,6 +322,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          SharedWithAll = a.SharedWithAll,
                                          SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                                          SharedByUserId = a.SharedByUserId,
+                                         SpotlightModeActivated = a.SpotlightModeActivated,
+
                                      }).ToList();
 
             //foreach (QueryPM item in queries)
@@ -375,6 +383,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   SharedWithAll = a.SharedWithAll,
                                   SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                                   SharedByUserId = a.SharedByUserId,
+                                  SpotlightModeActivated = a.SpotlightModeActivated,
+
                               }).FirstOrDefault();
 
 
@@ -440,6 +450,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                          SharedWithAll = a.SharedWithAll,
                          SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                          SharedByUserId = a.SharedByUserId,
+                         SpotlightModeActivated = a.SpotlightModeActivated,
+
                      }).ToList();
 
             }
@@ -484,6 +496,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              SharedWithAll = a.SharedWithAll,
                              SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                              SharedByUserId = a.SharedByUserId,
+                             SpotlightModeActivated = a.SpotlightModeActivated,
+
                          }).ToList();
 
             }
@@ -550,6 +564,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          SharedWithAll = a.SharedWithAll,
                                          SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                                          SharedByUserId = a.SharedByUserId,
+                                         SpotlightModeActivated = a.SpotlightModeActivated,
+
                                      }).ToList();
 
       

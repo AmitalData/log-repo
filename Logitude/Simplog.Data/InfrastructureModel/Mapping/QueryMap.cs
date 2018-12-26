@@ -56,6 +56,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.SharedWithAll).HasColumnName("SharedWithAll");
             this.Property(t => t.SharedWithSpecificUsers).HasColumnName("SharedWithSpecificUsers");
             this.Property(t => t.SharedByUserId).HasColumnName("SharedByUserId");
+            this.Property(t => t.SpotlightModeActivated).HasColumnName("SpotlightModeActivated");
 
             // Relationships
             this.HasOptional(t => t.Feature).WithMany().HasForeignKey(d => d.FeatureId);
