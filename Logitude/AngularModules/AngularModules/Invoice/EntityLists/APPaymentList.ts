@@ -59,5 +59,6 @@ export class APPaymentList {
 		AccountingPaymentMethodId: string;
 		BankAccountId: string;
 		BranchName: string;
+		FirstApproveDate: Date;
 	
 }
