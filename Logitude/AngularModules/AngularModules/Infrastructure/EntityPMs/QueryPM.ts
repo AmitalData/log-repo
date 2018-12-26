@@ -164,4 +164,10 @@ export class QueryPM {
     private sharedByUserId: string;
     public get SharedByUserId() { return this.sharedByUserId; }
     public set SharedByUserId(newValue: string) { this.sharedByUserId = newValue; }
+
+    private spotlightModeActivated: boolean;
+    public get SpotlightModeActivated() { return this.spotlightModeActivated; }
+    public set SpotlightModeActivated(newValue: boolean) { this.spotlightModeActivated = newValue; }
+
+
 }
