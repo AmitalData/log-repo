@@ -783,7 +783,7 @@ public CargoIdentifiersList: ObservableCollection;
 
         CustomMessageProgressComponent
           .ShowProgressBar(this.requestParams.PBId,
-            "שליחת בקשה לפיצול מטען", true)
+            "שליחת בקשה לפיצול מטען", false)
           .then((res) => {
             this.responseData = res;
             this.OnMassageDisplayMethod();

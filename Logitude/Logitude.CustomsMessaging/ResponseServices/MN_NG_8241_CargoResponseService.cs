@@ -204,7 +204,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             RaiseStatus = _status,
                             CargoData = "",
                             StatusDate = _statusDate,
-                            FileAdditionalData =  _FileAdditionalData
+                            FileAdditionalData = _FileAdditionalData
                     };
                         _MyDeclarationPM.CurrentContextTag = _cargoContext;
 
