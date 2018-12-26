@@ -36897,7 +36897,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		   Feature ShipmentFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ShipmentFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ShipmentFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ShipmentFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.PackageFeature", NameTextCodeDefaultText = "Shipment Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature ShipmentFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.PackageFeature", NameTextCodeDefaultText = "Shipment Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature ShipmentFeature_CSPV = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CSPV", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.CSPV", NameTextCodeDefaultText = @"Allow user to control the spotlight per view" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -38819,6 +38825,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 IsFollowUp =  true,
                 FollowUpEnglishName =  "Warehouse Release",
                 FollowUpLocalName =  "Warehouse Release",
+                ObjectTableId = ShipmentObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "DOUP",
+                EnglishName =  "Document Uploaded",
+                LocalName =  "Document Uploaded",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = ShipmentObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);

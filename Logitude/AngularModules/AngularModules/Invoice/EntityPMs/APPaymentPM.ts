@@ -262,6 +262,11 @@ export class APPaymentPM {
     public set CreditCardTypeId(newValue: string) { if (this.creditCardTypeId != newValue) { this.creditCardTypeId = newValue; this.MarkAsDirty("CreditCardTypeId"); } }
        
 	 
+    private firstApproveDate: Date;
+    public get FirstApproveDate() { return this.firstApproveDate; }
+    public set FirstApproveDate(newValue: Date) { if (this.firstApproveDate != newValue) { this.firstApproveDate = newValue; this.MarkAsDirty("FirstApproveDate"); } }
+       
+	 
      
 	private paymentInvoices: APPaymentInvoicePM[];
     get  PaymentInvoices() {

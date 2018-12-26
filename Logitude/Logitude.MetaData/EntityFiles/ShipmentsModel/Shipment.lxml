@@ -1547,6 +1547,7 @@
     <EventType Code="&quot;AFD&quot;" ObjectTableName="&quot;Shipment&quot;" EnglishName="&quot;Available for Delivery&quot;" LocalName="&quot;Available for Delivery&quot;" IsManualEntry="true" ShortView="true" EventTypeCategoryCode="&quot;LEG&quot;" IsAgentView="true" IsCustomerView="true" IsSharedLogisticsEnabled="true" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="true" FollowUpEnglishName="&quot;Available for Delivery&quot;" FollowUpLocalName="&quot;Available for Delivery&quot;" EntityStatusCode="&quot;SAFD&quot;" />
     <EventType Code="&quot;WHED&quot;" ObjectTableName="&quot;Shipment&quot;" EnglishName="&quot;Warehouse Entry&quot;" LocalName="&quot;Warehouse Entry&quot;" IsManualEntry="true" ShortView="true" EventTypeCategoryCode="&quot;LEG&quot;" IsAgentView="true" IsCustomerView="true" IsSharedLogisticsEnabled="true" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="true" FollowUpEnglishName="&quot;Warehouse Entry&quot;" FollowUpLocalName="&quot;Warehouse Entry&quot;" EntityStatusCode="&quot;INWH&quot;" />
     <EventType Code="&quot;WHRD&quot;" ObjectTableName="&quot;Shipment&quot;" EnglishName="&quot;Warehouse Release&quot;" LocalName="&quot;Warehouse Release&quot;" IsManualEntry="true" ShortView="true" EventTypeCategoryCode="&quot;LEG&quot;" IsAgentView="true" IsCustomerView="true" IsSharedLogisticsEnabled="true" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="true" FollowUpEnglishName="&quot;Warehouse Release&quot;" FollowUpLocalName="&quot;Warehouse Release&quot;" />
+    <EventType Code="&quot;DOUP&quot;" ObjectTableName="&quot;Shipment&quot;" EnglishName="&quot;Document Uploaded&quot;" LocalName="&quot;Document Uploaded&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons MenuButtonGroupType="&quot;ShipmentEdit&quot;" MenuButtonGroupName="&quot;ShipmentEditButtonsGroup&quot;">
@@ -2259,5 +2260,7 @@
     <TextCode Code="&quot;Shipment.M.DeleteThisReceivable&quot;" DefaultText="&quot;Delete this receivable?&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.S.NewShipment.CustomAgentExport&quot;" DefaultText="&quot;Customs Agent Export&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature Code="&quot;CSPV&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Shipment.Features.CSPV&quot;" FeatureDefaultText="&quot;Allow user to control the spotlight per view&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>

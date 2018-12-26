@@ -24,6 +24,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using WebFreight.Web.DataContracts;
 
 namespace WebFreight.Web.Helpers
 {
@@ -53,30 +54,51 @@ namespace WebFreight.Web.Helpers
                 MapImporterDepositionPMToImporterDepositionAM(importerDepositionPM, importerDepositionAM);
                 importerDepositionAM.CustomerTenant = (int)customerTenant;
 
+
+                string token = string.Empty;
+                APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
+                {
+                    PrimaryKey = "8eb9c6e4-c1ca-43e5-8061-87a7adcdc5f8",
+                    SecondaryKey = "c2dd0ebf-20bf-4d44-916c-7f9000dce4ec"
+                };
                 using (var client = new HttpClient())
                 {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    client.DefaultRequestHeaders.Add("Token", token);
-                    string AuthURI = URI + "ImporterDeposition";
-                    var serializedObject = JsonConvert.SerializeObject(importerDepositionAM);
+                    string AuthURI = URI + "APIAuthentication";
+                    var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-
-                    var resultData = await client.PostAsync(AuthURI, content);
-                    if (resultData.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        response.Result = resultData.Content.ReadAsStringAsync().Result;
-                    }
-                    else
-                    {
-                        var temp1 = resultData.Content.ReadAsStringAsync().Result;
-                        APIException EXC = JsonConvert.DeserializeObject<APIException>(temp1);
-                        if (EXC != null)
-                        {
-                            throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
-                        }
-                    }
-
+                    var result = await client.PostAsync(AuthURI, content);
+                    var tempUser = result.Content.ReadAsStringAsync().Result;
+                    ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
+                    token = User.Token;
                 }
+
+                if (!string.IsNullOrEmpty(token))
+                {
+                    using (var client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.Add("Token", token);
+                        string AuthURI = URI + "ImporterDeposition";
+                        var serializedObject = JsonConvert.SerializeObject(importerDepositionAM);
+                        var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+
+                        var resultData = await client.PostAsync(AuthURI, content);
+                        if (resultData.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            response.Result = resultData.Content.ReadAsStringAsync().Result;
+                        }
+                        else
+                        {
+                            var temp1 = resultData.Content.ReadAsStringAsync().Result;
+                            APIException EXC = JsonConvert.DeserializeObject<APIException>(temp1);
+                            if (EXC != null)
+                            {
+                                throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
+                            }
+                        }
+
+                    }
+                }
+              
             }
             else
             {
