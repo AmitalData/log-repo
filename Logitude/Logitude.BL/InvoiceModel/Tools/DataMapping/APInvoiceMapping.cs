@@ -28,7 +28,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                     entity.Tenant = entityPM.Tenant;
                     entity.CreatedByUserId = entityPM.CreatedByUserId;
                     entity.CreateDate = entityPM.CreateDate;
-                    entity.LocalCurrencyId = entityPM.LocalCurrencyId;                    
+                    entity.LocalCurrencyId = entityPM.LocalCurrencyId;
                     entity.ProfitCurrencyId = entityPM.ProfitCurrencyId;
                     entity.Description = entityPM.Description;
                     entity.IsMultipleEntities = entityPM.IsMultipleEntities;
@@ -43,11 +43,11 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.InvoiceCurrencyExchangeRate = entityPM.InvoiceCurrencyExchangeRate;
                 entity.AmountInInvoiceCurrency = entityPM.AmountInInvoiceCurrency;
                 entity.AmountInLocalCurrency = entityPM.AmountInLocalCurrency;
-                entity.AmountInProfitCurrency = entityPM.AmountInProfitCurrency;                             
+                entity.AmountInProfitCurrency = entityPM.AmountInProfitCurrency;
                 entity.InvoiceNumber = entityPM.InvoiceNumber;
-                entity.PaymentTermId = entityPM.PaymentTermId;               
+                entity.PaymentTermId = entityPM.PaymentTermId;
                 entity.SubTotalInInvoiceCurrency = entityPM.SubTotalInInvoiceCurrency;
-                entity.SubTotalInLocalCurrency = entityPM.SubTotalInLocalCurrency;               
+                entity.SubTotalInLocalCurrency = entityPM.SubTotalInLocalCurrency;
                 entity.VendorId = entityPM.VendorId;
                 entity.VATNumber = entityPM.VATNumber;
                 entity.OperationalDate = entityPM.OperationalDate;
@@ -80,7 +80,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             entityPM.UpdatedByUserId = loggedContact.Id;
             entity.UpdateDate = entityPM.UpdateDate;
-            entity.UpdatedByUserId = entityPM.UpdatedByUserId;          
+            entity.UpdatedByUserId = entityPM.UpdatedByUserId;
             entity.MainEntityId = entityPM.MainEntityId;
             entity.MainEntityReference = entityPM.MainEntityReference;
             entity.RefundAmount = entityPM.RefundAmount;
@@ -103,12 +103,24 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ApprovedByUserId = entityPM.ApprovedByUserId;
             entity.IsGeneralInvoice = entityPM.IsGeneralInvoice;
             entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
+
+            if (entityPM.SetApproved)
+            {
+                if (entity.FirstApproveDate == null)
+                {
+                    if (entityPM.ApprovedDate != null)
+                    {
+                        entity.FirstApproveDate = entityPM.ApprovedDate;
+                        entityPM.FirstApproveDate = entityPM.ApprovedDate;
+                    }
+                }
+            }
+
             entityPM.SetVoided = false;
             entityPM.SetApproved = false;
             entityPM.SetCancelApproval = false;
             entityPM.SetReTransfer = false;
             entityPM.SetReSendQBO = false;
-
         }
 
         public static void MapInvoiceLine(APInvoiceLinePM entityPM, APInvoiceLine entity, bool isNewState)
