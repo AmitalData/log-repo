@@ -412,7 +412,7 @@ export class CourierWorksheetListTemplate {
             }
             this._IsDropdownMenuFilterReady = true;
             });
-
+        this.CD.detectChanges();
     }
 
 
@@ -502,48 +502,77 @@ export class CourierWorksheetListTemplate {
     MamanStickerCommand(event, declarationId, mode) {
         this.ButtonClick(event);
 
-        if (mode == "Delete") {
-            var confirm = new ConfirmWindow();
-            confirm.Width = 350;
-            confirm.Height = 200;
-            confirm.Title = "ביטול הפקת מדבקה";
-            confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
-            confirm.ShowNoButton = true;
-            confirm.Show("אשר שליחת מסר ביטול פעולה מיוחדת של הדפסת מדבקה");
-            confirm.WindowClosed.subscribe((event: any) => {
-                if (confirm.Yes) {
-                    this.CancelMamanSticker(declarationId);
-                }
-                confirm.Close();
-            });
-        }
-        else {
-            var logitudeWindow = new LogitudeWindow();
-            var windowArgs: any = {};
-            windowArgs.DeclarationId = declarationId;
-            windowArgs.EntityPM = this.MamanStickerDetails;
-            windowArgs.Mode = mode;
+        var logitudeWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs.DeclarationId = declarationId;
+        windowArgs.EntityPM = this.MamanStickerDetails;
+        windowArgs.Mode = mode;
 
-            logitudeWindow.Width = 450;
-            logitudeWindow.Height = 280;
-            logitudeWindow.IsShowCloseButton = false;
-            logitudeWindow.Title = "פרטי מדבקה";//TextCodeTranslator.Translate("Customs.CourierMaster.O.StickerDetails");;
-            logitudeWindow.WindowArgs = windowArgs;
-            logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/MamanSpecialAction/AddEditMamanStickerComponent');
-            logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                this.RefreshData();
-            });
-        }
+        logitudeWindow.Width = 450;
+        logitudeWindow.Height = 280;
+        logitudeWindow.IsShowCloseButton = false;
+        logitudeWindow.Title = "פרטי מדבקה";//TextCodeTranslator.Translate("Customs.CourierMaster.O.StickerDetails");;
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/MamanSpecialAction/AddEditMamanStickerComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            this.RefreshData();
+        });
 
         this.CD.detectChanges();
     }
 
-    CancelMamanSticker(declarationId: string) {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-        this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant,"C", "4")
-            .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+    SendMamanSpecialAction(declarationId: string, actionCode: string, mamanSpecialActionCode: string) {
+        var titleText: string = "מסר פעולות מיוחדות";
+        var questionText: string = "אשר שליחת מסר ביטול פעולה מיוחדת";
 
-            });
+        switch (mamanSpecialActionCode) {
+            case "2": {
+                if (actionCode == "U") {
+                    titleText = "הפקת תעודת עיכוב";
+                    questionText = "אשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
+                }
+                else if (actionCode == "C") {
+                    titleText = "ביטול תעודת עיכוב";
+                    questionText = "אשר שליחת מסר ביטול פעולה מיוחדת של תעודת עיכוב למסוף";
+                }
+                break;
+            }
+            case "4": {
+                titleText = "ביטול הפקת מדבקה";
+                questionText = "אשר שליחת מסר ביטול פעולה מיוחדת של הדפסת מדבקה";
+                break;
+            }
+            case "5": {
+                if (actionCode == "U") {
+                    titleText = "הדפסת מסמכים";
+                    questionText = "אשר שליחת מסר פעולה מיוחדת של הדפסת מסמכים";
+                }
+                else if (actionCode == "C") {
+                    titleText = "ביטול הדפסת מסמכים";
+                    questionText = "אשר שליחת מסר ביטול פעולה מיוחדת של הדפסת מסמכים";
+                }
+                break;
+            }
+        }
+
+        var confirm = new ConfirmWindow();
+        confirm.Width = 350;
+        confirm.Height = 200;
+        confirm.Title = titleText;
+        confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+        confirm.ShowNoButton = true;
+        confirm.Show(questionText);
+        confirm.WindowClosed.subscribe((event: any) => {
+            if (confirm.Yes) {
+                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, actionCode, mamanSpecialActionCode)
+                    .subscribe((myResponse: ServiceResponse) => {
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+
+                    });
+            }
+            confirm.Close();
+        });
+
     }
 }
