@@ -285,7 +285,7 @@ namespace WebFreight.Web
                 }
                 AzureLog.SaveLogsInStorage("Container Push error  " + Environment.NewLine + errorMessage, "E", DateTime.Now, errorMessage, errorMessage, 0, null, null, null);
                 Communications.UpdateCommunicationLogStatus(ComId, tenant, null, ComStatusCode, "Exception occured while adding adding status " + DateTime.Now.ToString(), errorMessage);
-                throw (ex);
+                //throw (ex);
             }
 
         }
@@ -399,7 +399,7 @@ namespace WebFreight.Web
 
                         Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, commLog.CommunicationStatusTypeCode, "Exception occured while adding message to queue " + DateTime.Now.ToString(), errorMessage);
 
-                        throw ex;
+                        //throw ex;
                     }
                 }
                 scope.Complete();
@@ -462,7 +462,7 @@ namespace WebFreight.Web
             catch (Exception ex)
             {
                 WriteError("Failed to getData" + Environment.NewLine + ex.ToString());
-                throw;
+                //throw;
             }
         }
 
