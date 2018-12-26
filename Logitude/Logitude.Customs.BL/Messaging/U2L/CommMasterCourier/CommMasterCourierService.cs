@@ -182,6 +182,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 _CourierMasterPM.OriginPortCode = TranslateInternationalSite(_LogitudeMasterCourier.OriginPortCode);
                 _CourierMasterPM.Tenant = ResolvedTenant();
                 _CourierMasterPM.FlightNumber = _LogitudeMasterCourier.FlightNumber;
+                _CourierMasterPM.WeightValueCode = TranslateWeightValue(_LogitudeMasterCourier.WeightValueCode);
                 _CourierMasterPM.CurrentContextTag = UpsertActionConst;
                 myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
 
@@ -208,6 +209,30 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 return;
             }
             
+        }
+
+        private string TranslateWeightValue(string weightValueCode)
+        {
+            if (String.IsNullOrWhiteSpace(weightValueCode))
+            {
+                AppendLogLine("weightValueCode is null");
+                return null;
+            }
+            string weightValueCodeId = null;
+            
+            FreightPaymentMethodQueryService freightPaymentMethodQueryService = new FreightPaymentMethodQueryService(ResolvedTenant());
+            FreightPaymentMethodPM freightPaymentMethodPM = freightPaymentMethodQueryService.GetSingle(weightValueCode, true, false);
+            if (freightPaymentMethodPM != null && !freightPaymentMethodPM.Inactive)
+            {
+                weightValueCodeId = freightPaymentMethodPM.Code;
+            }
+            else
+            {
+                AppendLogLine("freightPaymentMethod = " + weightValueCode + " could not translate to Logitude Id");
+                return null;
+            }
+            AppendLogLine("freightPaymentMethod = " + weightValueCode + " Translated to " + weightValueCodeId);
+            return weightValueCodeId;
         }
 
         private string TranslateAirline(string airlineId)
