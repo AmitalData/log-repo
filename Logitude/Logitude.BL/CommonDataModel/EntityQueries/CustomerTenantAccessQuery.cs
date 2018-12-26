@@ -325,7 +325,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         }
 
+        public List<string> GetCustomerTenantAccessListsByIdsLists(List<string> ids, string stockTypeCode)
+        {
+            List<string> results = (from a in repository.context.CustomerTenantAccesses
+                                    where ids.Contains(a.Id) && a.StockTypeCode == stockTypeCode
+                                    select a.Id).ToList();
+            return results;
 
+
+        }
 
 
 
