@@ -513,6 +513,10 @@
     <Content Include="Main Branch\2018\12 - 2018\Day 25  [Ayman]  Fill APInvoice FirstApproveDate.sql" />
     <Content Include="Main Branch\2018\12 - 2018\Day 25  [Ayman]  Fill APPayment FirstApproveDate.sql" />
     <Content Include="Main Branch\2018\12 - 2018\Day 26  [Abed]  Fixes forwrong text codes.sql" />
+    <Content Include="Main Branch\2018\12 - 2018\Day 27  [Ayman] 01  Fill Tenants Event.sql" />
+    <Content Include="Main Branch\2018\12 - 2018\Day 27  [Ayman] 02  Fill Tenants Event.sql" />
+    <Content Include="Main Branch\2018\12 - 2018\Day 27  [Ayman] 03  Fill Tenants Event.sql" />
+    <Content Include="Main Branch\2018\12 - 2018\Day 27  [Ayman] 04  Fill Tenants Event.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />
