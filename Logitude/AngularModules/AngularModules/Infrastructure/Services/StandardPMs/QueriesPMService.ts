@@ -1,5 +1,5 @@
-﻿
-import {Injectable} from '@angular/core';
+
+import {Injectable, Query} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityPMServiceResponse} from '../../../Infrastructure/DataContracts/EntityPMServiceResponse';
@@ -7,9 +7,8 @@ import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevel
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
 import {Observable}     from 'rxjs/Rx';
-
 import {QueryPM} from '../../EntityPMs/QueryPM';
-
+import { SharedUserQueryPM } from '../../EntityPMs/SharedUserQueryPM';
 
 @Injectable()
 export class QueriesPMService {
@@ -27,27 +26,7 @@ export class QueriesPMService {
         this._http = serviceArgs.http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/queries';
     }
-
-    //getadvancedqueryfiltersbytenant(tenant: number, userid: string) {
-
-
-    //    var authHeader = new Headers();
-    //    authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-    //    return Rx.Observable.defer(() => {
-    //        return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenant?' + 'tenant=' + tenant + '&loggedcontactid=' + userid, {
-    //            headers: authHeader
-    //        }).map(response => {
-    //            var pms = response.json();
-
-    //            return pms;
-    //        });
-    //    }
-
-    //    );
-
-    //}
-
+    
     insert(entityPM: QueryPM) {
 
         return Observable.defer(() => {
@@ -195,38 +174,144 @@ export class QueriesPMService {
         );
     }
 
-    MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: QueryPM = null) {
-
-
+    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: QueryPM = null) {        
         if (!entityPM) {
-
             entityPM = new QueryPM();
         }
 
         var jsonPMKeys = Object.keys(jsonPM);
 
         for (var key in jsonPMKeys) {
-            if (jsonPMKeys[key] === "UIProperties") {
-
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
                 continue;
             }
+
             var property = jsonPMKeys[key];
             entityPM[property] = jsonPM[property];
         }
 
+        this.MapSharedUserQueies(entityPM, jsonPM, mapParent);
 
-        //entityPM.IsDirty = false;
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
 
-        //if (getCallMap) {
-        //    entityPM.OldEntityPM = this.clone(entityPM);
+            entityPM.OldEntityPM.SharedUserQueries = [];
+            for (var item in entityPM.SharedUserQueries) {
+                var mySharedUserQueryPM = entityPM.SharedUserQueries[item];
+                var newSharedUserQueryPM: SharedUserQueryPM = this.clone(mySharedUserQueryPM);
+                entityPM.OldEntityPM.SharedUserQueries.push(newSharedUserQueryPM);
+            }
+        }
 
-        //}
-        //else {
+        else {
 
-        //    entityPM.OldEntityPM = null;
-        //}
+            entityPM.OldEntityPM = null;
+        }
 
         return entityPM;
     }
 
+    MapSharedUserQueies(entityPM: QueryPM, jsonPM: any, mapParent: boolean = true) {
+        var oldSharedUserQueries: SharedUserQueryPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldSharedUserQueries = entityPM.OldEntityPM.SharedUserQueries;
+        }
+
+        entityPM.SharedUserQueries = new Array<SharedUserQueryPM>();
+        for (var item in jsonPM.SharedUserQueries) {
+            var jItem = jsonPM.SharedUserQueries[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newSharedUserQueryPM: SharedUserQueryPM;
+
+            if (mapParent) {
+                newSharedUserQueryPM = new SharedUserQueryPM(entityPM);
+            }
+            else {
+                newSharedUserQueryPM = new SharedUserQueryPM(null);
+            }
+
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newSharedUserQueryPM[pmProperty] = jItem[pmProperty];
+            }
+            newSharedUserQueryPM.IsDirty = false;
+
+            if (mapParent) {
+                newSharedUserQueryPM.UniqueKey = Guid.newGuid();
+                newSharedUserQueryPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newSharedUserQueryPM.OldEntityPM = this.clone(newSharedUserQueryPM);
+            }
+            else {
+                if (newSharedUserQueryPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newSharedUserQueryPM.ChangeSetOp = "Update";
+                }
+                else {
+                    newSharedUserQueryPM.ChangeSetOp = "Insert";
+                }
+
+                newSharedUserQueryPM.OldEntityPM = null;
+                newSharedUserQueryPM.EntityParentPM = null;
+            }
+
+            newSharedUserQueryPM.IsDirty = false;
+
+            entityPM.SharedUserQueries.push(newSharedUserQueryPM);
+        }
+
+        if (oldSharedUserQueries) {
+            for (var itemKey in oldSharedUserQueries) {
+                if (entityPM.SharedUserQueries.filter(p => p.UniqueKey === oldSharedUserQueries[itemKey].UniqueKey).length === 0) {
+
+                    if (oldSharedUserQueries[itemKey]) {
+                        var oldItemJson = oldSharedUserQueries[itemKey];
+                        var deletedPM: SharedUserQueryPM = new SharedUserQueryPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+
+                        deletedPM.OldEntityPM = null;
+                        entityPM.SharedUserQueries.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+
+    public clone(jsonPM: any) {
+        var entityPM: any;
+        entityPM = {};
+
+        var jsonPMKeys = Object.keys(jsonPM);
+        for (var key in jsonPMKeys) {
+
+            if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
+                continue;
+            }
+
+            var property = jsonPMKeys[key];
+            entityPM[property] = jsonPM[property];
+
+        }
+        return entityPM;
+    }
 }

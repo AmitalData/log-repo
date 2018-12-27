@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 using System.ServiceModel.DomainServices.Server;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 
@@ -58,6 +59,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public User SharedByUser { get; set; }
 
         public Query OriginalQuery { get; set; }
-        public List<Query> CopiedQueries { get; set; }      
+        public List<Query> CopiedQueries { get; set; }
     }
 }

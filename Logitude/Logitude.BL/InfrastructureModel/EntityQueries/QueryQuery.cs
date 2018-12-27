@@ -214,6 +214,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public List<QueryPM> GetQueries(int tenant, string userid)
         {
+            SharedUserQueryQuery sharedUserQueryQuery = new SharedUserQueryQuery(tenant);
+
             List<QueryPM> queries = ( from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
                    where (a.Tenant == tenant && a.UserId == userid) || a.Tenant == 0
                    select new QueryPM()
@@ -254,25 +256,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                        SharedByUserId = a.SharedByUserId,
                    }).ToList();
-
-            //TranslationRepository translationRepository=new TranslationRepository(tenant);
-            //Dictionary<string, Translation> translations = translationRepository.GetTranslationsByTenantDictionary(tenant);
             
-            //foreach (QueryPM item in queries)
-            //{
-            //    if (!string.IsNullOrEmpty(item.NameTextCodeCode))
-            //    {
-            //        item.QueryLabel = TranslateTextsClass.Translate(item.NameTextCodeCode, item.Tenant);
-            //    }
-
-            //    else
-            //    {
-            //        item.QueryLabel = item.Code;
-            //    }
-            //}
+            foreach(QueryPM item in queries)
+            {
+                item.SharedUserQueries = sharedUserQueryQuery.GetSharedUserQueriesForQuery(item.Id, tenant).ToList();
+            }
 
             return queries;
-
         }
 
         public IQueryable<QueryPM> GetQueryPMsByTenantSystemLevel(int tenant)
@@ -505,14 +495,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return query.AsQueryable().OrderBy(d => d.IndexOrder);
 
         }
-
-
-
-
-
-
-
-
+        
         public List<QueryPM> GetQueriesByObjectTableAndUserId(string userid, string objectTableId ,int tenant)
         {
             List<QueryPM> queries = (from a in repository.context.Queries.Include("NameTextCode")
@@ -557,10 +540,5 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return queries;
 
         }
-
-
-
-
-
     }
 }
