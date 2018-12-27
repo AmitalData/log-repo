@@ -26,13 +26,13 @@ import { SendDeclarationService } from '../../../CustomsModules/CustomsDeclarati
 import { SendManifestService } from '../../../CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendManifestComponent';
 import {DeclarationPMService} from '../../../Customs/Services/StandardPMs/DeclarationPMService';
 import {DropdownMenuFilterComponent} from '../../../CustomsModules/CustomsCourier/Components/CourierWorkSheet/DropdownMenuFilterComponent';
-import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import {DeclarationCourierStatusPMService} from '../../../Customs/Services/StandardPMs/DeclarationCourierStatusPMService';
 import {DeclarationCourierStatusPM} from '../../../Customs/EntityPMs/DeclarationCourierStatusPM';
 import { DeclarationCourierStatusList } from '../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { DeclarationCourierStatusListService } from '../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
 import { DeclarationMamanSpecialActionListService } from '../../../Customs/Services/StandardLists/DeclarationMamanSpecialActionListService';
 import { DeclarationMamanSpecialActionPM } from '../../../Customs/EntityPMs/DeclarationMamanSpecialActionPM';
+import { DeclarationMamanSpecialActionPMService } from '../../../Customs/Services/StandardPMs/DeclarationMamanSpecialActionPMService';
 import { retry } from 'rxjs/operator/retry';
 import { forEach } from "@angular/router/src/utils/collection";
 
@@ -70,10 +70,11 @@ export class CourierWorksheetListTemplate {
     IsReceivingDelayCertificate: boolean = false;
     IsPrintDocuments: boolean = false;
 
-    _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
-    _CourierMasterService: CourierMasterService = new CourierMasterService();
-    _DeclarationMamanSpecialActionListService: DeclarationMamanSpecialActionListService = new DeclarationMamanSpecialActionListService();
-    _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
+    private _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
+    private _CourierMasterService: CourierMasterService = new CourierMasterService();
+    private _DeclarationMamanSpecialActionListService: DeclarationMamanSpecialActionListService = new DeclarationMamanSpecialActionListService();
+    private _DeclarationMamanSpecialActionPMService: DeclarationMamanSpecialActionPMService = new DeclarationMamanSpecialActionPMService;
+    private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
 
     FirePreventSelect() {
         SessionLocator.CurrentSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
@@ -386,14 +387,18 @@ export class CourierWorksheetListTemplate {
         this._IsDropdownMenuFilterReady = false;
 
         var filters = new ApiQueryFilters();
+        filters.PageIndex = 0;
+        filters.PageSize = 1000;
         filters.addAdditionalFilter("DeclarationId", declarationId, null, null, "Equals", false, false, false, "string");
+        //filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+
         this._DeclarationMamanSpecialActionListService.getByFilters(filters).subscribe((response: ServiceResponse) => {
             this.IsReceivingDelayCertificate = false;
             this.IsPrintDocuments = false;
             this.MamanStickerDetails = null;
             if (!response.HasError && response.Result != null) {
                 response.Result.forEach((declarationMamanSpecialActionPMItem: DeclarationMamanSpecialActionPM) => {
-                    switch (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode) {
+                    switch (declarationMamanSpecialActionPMItem.MamanSpecialActionCode) {
                         case "2": {
                             this.IsReceivingDelayCertificate = true;
                             break;
@@ -411,6 +416,7 @@ export class CourierWorksheetListTemplate {
 
             }
             this._IsDropdownMenuFilterReady = true;
+            this.CD.detectChanges();
             });
         this.CD.detectChanges();
     }
@@ -524,7 +530,7 @@ export class CourierWorksheetListTemplate {
     SendMamanSpecialAction(declarationId: string, actionCode: string, mamanSpecialActionCode: string) {
         var titleText: string = "מסר פעולות מיוחדות";
         var questionText: string = "אשר שליחת מסר ביטול פעולה מיוחדת";
-
+        
         switch (mamanSpecialActionCode) {
             case "2": {
                 if (actionCode == "U") {
@@ -564,12 +570,31 @@ export class CourierWorksheetListTemplate {
         confirm.Show(questionText);
         confirm.WindowClosed.subscribe((event: any) => {
             if (confirm.Yes) {
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-                this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, actionCode, mamanSpecialActionCode)
-                    .subscribe((myResponse: ServiceResponse) => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                this._IsDropdownMenuFilterReady = false;
+                SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+                if (actionCode == "U") {
+                    var declarationMamanSpecialActionPM: DeclarationMamanSpecialActionPM = new DeclarationMamanSpecialActionPM();
+                    declarationMamanSpecialActionPM.Tenant = SessionLocator.Tenant;
+                    declarationMamanSpecialActionPM.DeclarationId = declarationId;
+                    declarationMamanSpecialActionPM.MamanSpecialActionCode = mamanSpecialActionCode;
 
+                    this._DeclarationMamanSpecialActionPMService.insert(declarationMamanSpecialActionPM).subscribe(res => {
+                        this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, "U", mamanSpecialActionCode)
+                            .subscribe((myResponse: ServiceResponse) => {
+                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                var myMessageWindow = new MessageWindow();
+                                myMessageWindow.Show(myResponse.Result);
+                            });
                     });
+                }
+                else {
+                    this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, "C", mamanSpecialActionCode)
+                        .subscribe((myResponse: ServiceResponse) => {
+                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            var myMessageWindow = new MessageWindow();
+                            myMessageWindow.Show(myResponse.Result);
+                        });
+                }
             }
             confirm.Close();
         });
