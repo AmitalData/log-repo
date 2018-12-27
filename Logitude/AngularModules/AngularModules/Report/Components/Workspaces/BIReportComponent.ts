@@ -42,23 +42,21 @@ export class BIReportComponent {
         this.BIReportListService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var myResult: BIReportList[] = myResponse.Result;
-                this.ItemsSource = myResult;
+                //this.ItemsSource = myResult;
+                if (AppTool.IsNullOrEmpty(this.mySearchText)) {
+                    this.ItemsSource = myResult;
+                }
+                else {
+                    myResult.forEach((item) => {
+                        if (!AppTool.IsNullOrEmpty(item.Name) && item.Name.toUpperCase().indexOf(this.mySearchText.toUpperCase()) > -1
+                            ||
+                            !AppTool.IsNullOrEmpty(item.Name) && item.Name.toUpperCase().indexOf(this.mySearchText.toUpperCase()) > -1) {
+                            this.ItemsSource.push(item);
+                        }
+                    });
+                }
             }
         });
-    }
-
-    FillData() {
-        if (!AppTool.IsNullOrEmpty(this.mySearchText)) {
-            var myResult = this.ItemsSource;
-            this.ItemsSource = [];
-            myResult.forEach((item) => {
-                if (!AppTool.IsNullOrEmpty(item.Name) && item.Name.toUpperCase().indexOf(this.mySearchText.toUpperCase()) > -1
-                    ||
-                    !AppTool.IsNullOrEmpty(item.Name) && item.Name.toUpperCase().indexOf(this.mySearchText.toUpperCase()) > -1) {
-                    this.ItemsSource.push(item);
-                }
-            });
-        }
     }
 
     public NewBIReportButtonClicked() {
@@ -110,6 +108,6 @@ export class BIReportComponent {
     public mySearchText: string = null;
     SearchTextChanged(text: string) {
         this.mySearchText = text;
-        this.FillData();
+        this.LoadData();
     }
 }
