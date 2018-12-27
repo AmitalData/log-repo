@@ -10,14 +10,11 @@ import {PartnersDomainService} from '../../Services/PartnersDomainService';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ActionStepsTemplate, ActionStepsTemplateArgs} from '../../../CommonModules/CommonPartners/Components/Templates/ActionStepsTemplate';
-import {EntityPMService} from '../../../Infrastructure/Services/EntityPMService';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {CustomerActivationArgs} from '../../../Common/Args';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
-import {ContactListService} from '../../../Common/Services/StandardLists/ContactListService';
-import {ContactList} from '../../../Common/EntityLists/ContactList';
+
 import {CreateTenantHelper} from '../../../InfrastructureModules/InfrastructureOthers/Components/CreateTenant/CreateTenantHelper';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {TenantManagementPMService} from '../../../Infrastructure/Services/StandardPMs/TenantManagementPMService';
