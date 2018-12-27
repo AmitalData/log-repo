@@ -16,21 +16,19 @@ using WebFreight.Web.DataProviders;
 namespace WebFreight.Web.Helpers.DataProviderHelpers
 {
     public class ShipmentsStocksDataProviderHelper
-    { 
+    {
 
         public ShipmentsStocksDataProvider LoadShipmentsStocksDataProvider(byte[] xmlFilters, int tenant)
         {
             ShipmentsStocksDataProvider dataProvider = new ShipmentsStocksDataProvider();
             dataProvider.ResultList = new List<ShipmentsStocksResult>();
 
-            bool includeShipmentsDetails =  false;
+            bool includeShipmentsDetails = false;
             DateTime? fromDate = null;
             DateTime? toDate = null;
 
 
             #region Report Filters
-
-
 
 
             //if (xmlFilters != null)
@@ -50,7 +48,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 //IncludeShipmentsDetails
                 queryFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeShipmentsDetails").FirstOrDefault();
                 if (queryFilterItem != null && queryFilterItem.FieldValue != null) includeShipmentsDetails = queryFilterItem.FieldValue.ToString().ToLower() == "true" ? true : false;
-           // }
+            //}
             //else
             //{
             //    includeShipmentsDetails = true;
@@ -59,76 +57,95 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             //    tenant = 946;
             //}
 
-            CustomerTenantAccessCardQuery customerTenantAccessCardQuery = new CustomerTenantAccessCardQuery(tenant);
-            List<string> cardIds = customerTenantAccessCardQuery.GetCustomerIdsByTenant(tenant);
-            List<CardList> cardLists = null;
-            if (cardIds.Count > 0)
-            {
-                CardQuery cardQuery = new CardQuery(tenant);
-                cardLists = cardQuery.GetCardListsByCardIds(cardIds, tenant);
-            }
 
-            
-            if (cardLists != null)
+    CustomerTenantAccessCardQuery customerTenantAccessCardQuery = new CustomerTenantAccessCardQuery(tenant);
+            IQueryable<CustomerTenantAccessCardList> allCustomerTenantAccessCardLists = customerTenantAccessCardQuery.GetustomerTenantAccessCardListsByTenant(tenant);
+            List<CustomerTenantAccessCardList> customerTenantAccessCardLists = null;
+            if (allCustomerTenantAccessCardLists.Count() > 0)
             {
-                TenantPM tenantPm = TenantQuery.GetSingleTenantPM(tenant, true);
-                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                cardIds = cardLists.GroupBy(d => d.Id).Select(d => d.First().Id).ToList();
-               IQueryable<ShipmentList> shipmentLists = shipmentQuery.GetShipmentListsByCustomerIdsAndDates(cardIds, fromDate, toDate, tenant);
-                foreach (CardList card in cardLists)
+                CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
+                List<string> allcustomerTenantAccessIds = allCustomerTenantAccessCardLists.GroupBy(d => d.CustomerTenantAccessId).Select(d => d.FirstOrDefault().CustomerTenantAccessId).ToList();
+                List<string> customerTenantAccessIds = customerTenantAccessQuery.GetCustomerTenantAccessListsByIdsLists(allcustomerTenantAccessIds, "A");
+
+                if (customerTenantAccessIds.Count() > 0)
                 {
-                    var lastShipment = shipmentLists.Where(d => d.CustomerId == card.Id).OrderByDescending(d => d.CreateDateTime).FirstOrDefault();
-                    int shipmentCount = shipmentLists.Where(d => d.CustomerId == card.Id).Count();
+                    customerTenantAccessCardLists = allCustomerTenantAccessCardLists.Where(d => customerTenantAccessIds.Contains(d.CustomerTenantAccessId)).ToList();
+                }
+            }
+      
+            if (customerTenantAccessCardLists != null && customerTenantAccessCardLists.Count() > 0)
+            {
+                List<string> cardIds = customerTenantAccessCardLists.GroupBy(d => d.CustomerId).Select(d => d.FirstOrDefault().CustomerId).ToList();
+                List<CardList> cardLists = null;
+                if (cardIds.Count > 0)
+                {
+                    CardQuery cardQuery = new CardQuery(tenant);
+                    cardLists = cardQuery.GetCardListsByCardIds(cardIds, tenant);
+                }
 
-                    string lastDate = string.Empty;
-                    if (lastShipment != null && lastShipment.CreateDateTime!=null)
-                    {
-                        if (tenantPm.DateTimeFormat != null) lastDate = lastShipment.CreateDateTime.ToString(tenantPm.DateTimeFormat, CultureInfo.CurrentCulture);
-                        else lastDate = lastShipment.CreateDateTime.ToString("d", CultureInfo.CurrentCulture);
-                    }
 
-                    dataProvider.ResultList.Add(new ShipmentsStocksResult()
+                if (cardLists != null)
+                {
+                    TenantPM tenantPm = TenantQuery.GetSingleTenantPM(tenant, true);
+                    ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                    cardIds = cardLists.GroupBy(d => d.Id).Select(d => d.First().Id).ToList();
+                    IQueryable<ShipmentList> shipmentLists = shipmentQuery.GetShipmentListsByCustomerIdsAndDates(cardIds, fromDate, toDate, tenant);
+                    foreach (CardList card in cardLists)
                     {
-                        Id = card.Id,
-                        CustomerName = card.EnglishName,
-                        LastShipmentDate = lastDate,
-                        TotalShipments = shipmentCount.ToString("N"),
-                    });
+                        var lastShipment = shipmentLists.Where(d => d.CustomerId == card.Id).OrderByDescending(d => d.CreateDateTime).FirstOrDefault();
+                        int shipmentCount = shipmentLists.Where(d => d.CustomerId == card.Id).Count();
 
-                    if (includeShipmentsDetails)
-                    {
-                        foreach (ShipmentList shipment in shipmentLists.Where(d => d.CustomerId == card.Id))
+                        string lastDate = string.Empty;
+                        if (lastShipment != null && lastShipment.CreateDateTime != null)
                         {
-                           string createDate = string.Empty;
-                            if (shipment.CreateDateTime != null)
-                            {
-                                if (tenantPm.DateTimeFormat != null) createDate = shipment.CreateDateTime.ToString(tenantPm.DateTimeFormat, CultureInfo.CurrentCulture);
-                                else createDate = shipment.CreateDateTime.ToString("d", CultureInfo.CurrentCulture);
+                            if (tenantPm.DateTimeFormat != null) lastDate = lastShipment.CreateDateTime.ToString(tenantPm.DateTimeFormat, CultureInfo.CurrentCulture);
+                            else lastDate = lastShipment.CreateDateTime.ToString("d", CultureInfo.CurrentCulture);
+                        }
 
-                       
+                        dataProvider.ResultList.Add(new ShipmentsStocksResult()
+                        {
+                            Id = card.Id,
+                            CustomerName = card.EnglishName,
+                            LastShipmentDate = lastDate,
+                            TotalShipments = shipmentCount.ToString("N"),
+                        });
+
+                        if (includeShipmentsDetails)
+                        {
+                            foreach (ShipmentList shipment in shipmentLists.Where(d => d.CustomerId == card.Id))
+                            {
+                                string createDate = string.Empty;
+                                if (shipment.CreateDateTime != null)
+                                {
+                                    if (tenantPm.DateTimeFormat != null) createDate = shipment.CreateDateTime.ToString(tenantPm.DateTimeFormat, CultureInfo.CurrentCulture);
+                                    else createDate = shipment.CreateDateTime.ToString("d", CultureInfo.CurrentCulture);
+
+
+                                }
+
+                                dataProvider.ResultList.Add(new ShipmentsStocksResult()
+                                {
+
+                                    Id = shipment.Id,
+                                    ParentId = card.Id,
+                                    Status = shipment.StatusName,
+                                    ShipmentNumber = shipment.ShipmentNumber,
+                                    CreateDate = shipment.CreateDateTime,
+
+                                    CustomerName = shipment.ShipmentNumber,
+                                    TotalShipments = createDate,
+                                    LastShipmentDate = shipment.StatusName,
+
+
+                                });
                             }
-
-                            dataProvider.ResultList.Add(new ShipmentsStocksResult()
-                            {
-             
-                                Id = shipment.Id,
-                                ParentId = card.Id,
-                                Status = shipment.StatusName,
-                                ShipmentNumber  = shipment.ShipmentNumber,
-                                CreateDate = shipment.CreateDateTime,
-
-                                CustomerName = shipment.ShipmentNumber,
-                                TotalShipments = createDate,
-                                LastShipmentDate = shipment.StatusName,
-                                
-
-                            });
                         }
                     }
+                    dataProvider.TotlaShipment = shipmentLists.Count();
                 }
-                dataProvider.TotlaShipment = shipmentLists.Count();
+                #endregion
             }
-            #endregion
+
 
             return dataProvider;
         }
