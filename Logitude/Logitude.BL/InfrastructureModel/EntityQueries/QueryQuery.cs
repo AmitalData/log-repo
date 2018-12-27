@@ -36,7 +36,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public QueryPM GetSingleQueryPM(string id, int tenant)
         {
             QueryPM result =
-            (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
+            (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode").Include("SharedByUser")
              where a.Id == id && (a.Tenant == tenant || a.Tenant == 0)
              select new QueryPM()
              {
@@ -74,25 +74,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  SharedWithAll = a.SharedWithAll,
                  SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                  SharedByUserId = a.SharedByUserId,
+                 SharedByUserName = a.SharedByUser == null ? null : a.SharedByUser.Contact.EnglishName,
                  SpotlightModeActivated = a.SpotlightModeActivated,
-
              }).FirstOrDefault();
 
-            //if (result != null)
-            //{
-            //    if (!string.IsNullOrEmpty(result.NameTextCodeCode))
-            //    {
-            //        result.QueryLabel = TranslateTextsClass.Translate(result.NameTextCodeCode, result.Tenant);
-            //    }
-
-            //    else
-            //    {
-            //        result.QueryLabel = result.Code;
-            //    }
-            //}
-
+            SharedUserQueryQuery sharedUserQueryQuery = new SharedUserQueryQuery(tenant);
+            result.SharedUserQueries = sharedUserQueryQuery.GetSharedUserQueriesForQuery(result.Id, tenant).ToList();            
+            
             return result;
-
         }
 
         public QueryPM GetSingleQueryPM(string id)
@@ -218,8 +207,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public List<QueryPM> GetQueries(int tenant, string userid)
         {
-            SharedUserQueryQuery sharedUserQueryQuery = new SharedUserQueryQuery(tenant);
-
             List<QueryPM> queries = ( from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
                    where (a.Tenant == tenant && a.UserId == userid) || a.Tenant == 0
                    select new QueryPM()
@@ -261,13 +248,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        SharedByUserId = a.SharedByUserId,
                        SpotlightModeActivated = a.SpotlightModeActivated,
 
-                   }).ToList();
+                   }).ToList();          
             
-            foreach(QueryPM item in queries)
-            {
-                item.SharedUserQueries = sharedUserQueryQuery.GetSharedUserQueriesForQuery(item.Id, tenant).ToList();
-            }
-
             return queries;
         }
 

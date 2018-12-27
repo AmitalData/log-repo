@@ -17,24 +17,17 @@ import { SharedUserQueryPM } from '../../EntityPMs/SharedUserQueryPM';
 export class ChooseUserComponent {
     UsersItemsSource: UserItem[] = [];
     userService: UserListService;
-    mySelectedUsers: UserList[];
     private args: ChooseUserArgs;
     constructor() {
-        this.userService = new UserListService();
-        this.mySelectedUsers = [];        
+        this.userService = new UserListService();       
     }
 
     public MyQuery: QueryPM;
-    private mySharedUsersQueriesList: SharedUserQueryPM[];
     SetWindowArgs(args: ChooseUserArgs) {
         this.args = args;
         this.MyQuery = args.MyQuery;
 
         this.LoadUsers();
-
-        if (args.MyQuery != null) {
-            this.mySharedUsersQueriesList = args.MyQuery.SharedUserQueries;
-        }
     }
 
     myUsersList: UserList[];
@@ -75,7 +68,7 @@ export class ChooseUserComponent {
         }
 
         myList.forEach((item) => {
-            var mySharedUser: SharedUserQueryPM = this.mySharedUsersQueriesList.filter(d => d.UserId == item.Id)[0];
+            var mySharedUser: SharedUserQueryPM = this.MyQuery.SharedUserQueries.filter(d => d.UserId == item.Id)[0];
             this.UsersItemsSource.push(new UserItem(item, mySharedUser, this));
         });
     }
@@ -96,12 +89,11 @@ export class ChooseUserComponent {
     SaveButtonClicked() {
         this.ValidationErrorsList = [];
 
-        if (this.mySelectedUsers.length > 0) {
+        if (this.MyQuery.SharedUserQueries.length > 0) {
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Show("Are you sure you want to share this view with the selected users?");
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
-                    this.args.SelectedUsers = this.mySelectedUsers;
                     this.CloseButtonClicked();
                 }
 
@@ -112,26 +104,8 @@ export class ChooseUserComponent {
 
         }
         else {
-
             this.ValidationErrorsList.push("Please choose at least one user");
         }
-    }
-       
-    AddUser(user: UserList) {
-        if (this.mySelectedUsers.filter(d => d.Id == user.Id).length == 0) {
-            this.mySelectedUsers.push(user);
-        }
-    }
-
-    RemoveUser(user: UserList) {
-        var item: UserList = this.mySelectedUsers.filter(d => d.Id == user.Id)[0];
-        if (item != null) {
-            var index = this.mySelectedUsers.indexOf(item);
-
-            if (index > -1) {
-                this.mySelectedUsers.splice(index, 1);
-            }
-        }  
     }
 }
 
@@ -162,38 +136,26 @@ export class UserItem extends BaseComponent {
         }
     }
 
-    private SetIsChecked() { 
-        if (this.fatherCompo.MyQuery != null) {
-            if (this.IsChecked) {
-                var newItem: SharedUserQueryPM = new SharedUserQueryPM(this.fatherCompo.MyQuery);
-                newItem.Tenant = SessionLocator.Tenant;
-                newItem.UserId = this.userList.Id;
+    private SetIsChecked() {
+        if (this.IsChecked) {
+            var newItem: SharedUserQueryPM = new SharedUserQueryPM(this.fatherCompo.MyQuery);
+            newItem.Tenant = SessionLocator.Tenant;
+            newItem.UserId = this.userList.Id;
 
-                if (this.fatherCompo.MyQuery.SharedUserQueries.indexOf(newItem) == -1) {
-                    this.fatherCompo.MyQuery.AddSharedUserQueryPM(newItem);
-                }
-            }
-
-            else {
-                var index = this.fatherCompo.MyQuery.SharedUserQueries.indexOf(this.sharedUserQuery);
-                if (index > -1) {
-                    this.fatherCompo.MyQuery.RemoveSharedUserQueryPM(this.sharedUserQuery);
-                }  
+            if (this.fatherCompo.MyQuery.SharedUserQueries.indexOf(newItem) == -1) {
+                this.fatherCompo.MyQuery.AddSharedUserQueryPM(newItem);
             }
         }
-        
+
         else {
-            if (this.IsChecked) {
-                this.fatherCompo.AddUser(this.userList);
+            var index = this.fatherCompo.MyQuery.SharedUserQueries.indexOf(this.sharedUserQuery);
+            if (index > -1) {
+                this.fatherCompo.MyQuery.RemoveSharedUserQueryPM(this.sharedUserQuery);
             }
-            else {
-                this.fatherCompo.RemoveUser(this.userList);
-            }
-        }        
+        }
     }
 }
 
 export class ChooseUserArgs {
     public MyQuery: QueryPM;
-    public SelectedUsers: UserList[];
 }

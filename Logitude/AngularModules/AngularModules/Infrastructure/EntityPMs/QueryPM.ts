@@ -163,12 +163,14 @@ export class QueryPM {
     public get SharedByUserId() { return this.sharedByUserId; }
     public set SharedByUserId(newValue: string) { this.sharedByUserId = newValue; }
 
+    private sharedByUserName: string;
+    public get SharedByUserName() { return this.sharedByUserName; }
+    public set SharedByUserName(newValue: string) { this.sharedByUserName = newValue; }
+
     private spotlightModeActivated: boolean;
     public get SpotlightModeActivated() { return this.spotlightModeActivated; }
     public set SpotlightModeActivated(newValue: boolean) { this.spotlightModeActivated = newValue; }
-
-
-
+       
     private sharedUserQueries: SharedUserQueryPM[];
     get SharedUserQueries() {
         if (this.sharedUserQueries == null) {

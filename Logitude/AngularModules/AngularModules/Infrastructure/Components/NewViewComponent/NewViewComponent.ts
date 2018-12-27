@@ -29,6 +29,7 @@ import { ChooseUserArgs } from '../../../Infrastructure/Components/NewViewCompon
 import { UserList } from '../../../Common/EntityLists/UserList';
 import { SharedUserQueryPM } from '../../../Infrastructure/EntityPMs/SharedUserQueryPM';
 import { FeatureLocator } from '../../Utilities/FeatureLocator';
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 
 @Component({
     selector: 'NewViewComponent',
@@ -40,6 +41,7 @@ import { FeatureLocator } from '../../Utilities/FeatureLocator';
 })
 
 export class NewViewComponent {
+    public EntityPM: QueryPM = null;
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
     @Output() onDataSourceChangedEvent = new EventEmitter();
     @Output() onUnSelectedDataLoadedEvent = new EventEmitter();
@@ -74,6 +76,7 @@ export class NewViewComponent {
     public _http: Http;
     public BooleanValues = ["True", "False", "No Filter"];
     public ShareTabIsVisible: boolean = true;
+    public IsSharedByMessageVisible: boolean = false;
     constructor(fb: FormBuilder, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
         this.serviceArgs.http = ServiceHelper.Http;
@@ -113,13 +116,7 @@ export class NewViewComponent {
     SetWindowArgs(args: any) {
         this.IsNew = args.IsNew;
         this.pubSubAdvanceQueryFiltersService = args.pubSubAdvanceQueryFiltersService;
-        if (!this.IsNew) {
-            this.QueryName = args.QueryName;
-            this.CreateBtnText = TextCodeTranslator.Translate("General.B.Save");
-        }
-        else {
-            this.CreateBtnText = TextCodeTranslator.Translate("General.B.Create");
-        }
+        
         this.QueryId = args.queryId;
         this.CurrentObjectTable = args.currentObjectTable;
         this.IsEnabled = false;
@@ -129,9 +126,39 @@ export class NewViewComponent {
         this.filterFields = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
         this.NEWallFilterFieldsClass = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
         this.constantFilterFields = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
-        
+
+        if (!this.IsNew) {
+            this.QueryName = args.QueryName;
+            this.CreateBtnText = TextCodeTranslator.Translate("General.B.Save");
+
+            this.LoadQueryPM();
+        }
+
+        else {
+            this.CreateBtnText = TextCodeTranslator.Translate("General.B.Create");
+            this.EntityPM = new QueryPM();
+        }
+
         this.FillShareValuesList();
         this.Run();
+    }
+
+    private LoadQueryPM() {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        var myService: QueriesPMService = new QueriesPMService();
+        myService.setServiceArgs(this.serviceArgs);
+
+        myService.get(this.QueryId).subscribe(myResult => {
+            var myResponse: ServiceResponse = myResult;
+            if (!myResponse.HasError) {
+                this.EntityPM = myResponse.Result;
+                this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
+                this.SharedByUserName = this.EntityPM.SharedByUserName;
+                this.IsSharedByMessageVisible = !AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId);
+            }
+
+            SessionLocator.CurrentSession.StopBusyIndicator();
+        });
     }
 
     ClearPlaceHolder() {
@@ -322,12 +349,11 @@ export class NewViewComponent {
     }
 
     public ShareWithUsersCount: number;
-    private SharedUsersList: UserList[];
+    public SharedByUserName: string;
     ChooseUsers() {
-        var myQuery: QueryPM = window.Queries.filter(d => d.Id == this.QueryId)[0];
-
         var args = new ChooseUserArgs();
-        args.MyQuery = myQuery;
+        args.MyQuery = this.EntityPM;
+
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Users List";
         logWindow.Width = 725;
@@ -335,10 +361,12 @@ export class NewViewComponent {
         logWindow.WindowArgs = args;
         logWindow.Show("./Infrastructure/Components/NewViewComponent/ChooseUserComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
-            this.SharedUsersList = args.SelectedUsers;
-            if (this.SharedUsersList) {
-                this.ShareWithUsersCount = this.SharedUsersList.length;
-            }
+            //this.SharedUsersList = args.SelectedUsers;
+            //if (this.SharedUsersList) {
+            //   this.ShareWithUsersCount = this.SharedUsersList.length;
+            //}
+
+            this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
         });
     }
 
@@ -893,71 +921,57 @@ export class NewViewComponent {
                 var theCurrentQuery = (window.Queries.filter(q => q.Id == this.QueryId)[0]);
                 var temp = window.Queries.filter(q => q.ObjectTableId == theCurrentQuery.ObjectTableId && q.UserId == theCurrentQuery.UserId && q.QueryGroupCode == theCurrentQuery.QueryGroupCode).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
                 var maxIndex = temp[temp.length - 1];
-                var newQuery = new QueryPM();
-
-                newQuery.QuerySection = theCurrentQuery.QuerySection;
-                newQuery.ObjectTableId = theCurrentQuery.ObjectTableId;
-                newQuery.ObjectTableName = theCurrentQuery.ObjectTableName;
-                newQuery.Tenant = SessionInfo.LoggedUserTenant;
-                newQuery.UserId = SessionInfo.LoggedUserId;
-                newQuery.Code = "111";
-                newQuery.IndexOrder = maxIndex.IndexOrder + 1;
-                newQuery.ObjectTableIsNewWizard = theCurrentQuery.ObjectTableIsNewWizard;
-                newQuery.ObjectTableNewWizardControlName = theCurrentQuery.ObjectTableNewWizardControlName;
-                newQuery.OriginalQueryId = theCurrentQuery.Id;
-                newQuery.QueryGroupCode = theCurrentQuery.QueryGroupCode;
-                newQuery.IsAddNewEntityEnabled = theCurrentQuery.IsAddNewEntityEnabled;
-                newQuery.NewViewName = queryName;
-                newQuery.Perspective = theCurrentQuery.Perspective;
-                newQuery.EditWizardName = theCurrentQuery.EditWizardName;
-                newQuery.SpotlightModeActivated = this.ShowInSpotLight;
+                
+                this.EntityPM.QuerySection = theCurrentQuery.QuerySection;
+                this.EntityPM.ObjectTableId = theCurrentQuery.ObjectTableId;
+                this.EntityPM.ObjectTableName = theCurrentQuery.ObjectTableName;
+                this.EntityPM.Tenant = SessionInfo.LoggedUserTenant;
+                this.EntityPM.UserId = SessionInfo.LoggedUserId;
+                this.EntityPM.Code = "111";
+                this.EntityPM.IndexOrder = maxIndex.IndexOrder + 1;
+                this.EntityPM.ObjectTableIsNewWizard = theCurrentQuery.ObjectTableIsNewWizard;
+                this.EntityPM.ObjectTableNewWizardControlName = theCurrentQuery.ObjectTableNewWizardControlName;
+                this.EntityPM.OriginalQueryId = theCurrentQuery.Id;
+                this.EntityPM.QueryGroupCode = theCurrentQuery.QueryGroupCode;
+                this.EntityPM.IsAddNewEntityEnabled = theCurrentQuery.IsAddNewEntityEnabled;
+                this.EntityPM.NewViewName = queryName;
+                this.EntityPM.Perspective = theCurrentQuery.Perspective;
+                this.EntityPM.EditWizardName = theCurrentQuery.EditWizardName;
+                this.EntityPM.SpotlightModeActivated = this.ShowInSpotLight;
 
                 if (this.ShareValueSelectedItem) {
                     switch (this.ShareValueSelectedItem.Code) {
                         case "ALL": {
-                            newQuery.SharedWithAll = true;
-                            newQuery.SharedWithSpecificUsers = false;
-                            newQuery.SharedByUserId = SessionLocator.LoggedUserId;
+                            this.EntityPM.SharedWithAll = true;
+                            this.EntityPM.SharedWithSpecificUsers = false;
+                            this.EntityPM.SharedByUserId = SessionLocator.LoggedUserId;
                             break;
                         }
 
                         case "SPF": {
-                            newQuery.SharedWithAll = false;
-                            newQuery.SharedWithSpecificUsers = true;
-                            newQuery.SharedByUserId = SessionLocator.LoggedUserId;
+                            this.EntityPM.SharedWithAll = false;
+                            this.EntityPM.SharedWithSpecificUsers = true;
+                            this.EntityPM.SharedByUserId = SessionLocator.LoggedUserId;
                             break;
                         }
 
                         case "NON": {
-                            newQuery.SharedWithAll = false;
-                            newQuery.SharedWithSpecificUsers = false;
-                            newQuery.SharedByUserId = null;
+                            this.EntityPM.SharedWithAll = false;
+                            this.EntityPM.SharedWithSpecificUsers = false;
+                            this.EntityPM.SharedByUserId = null;
                             break;
                         }
                     }
                 }
-
-                if (this.SharedUsersList && this.SharedUsersList.length > 0) {
-                    this.SharedUsersList.forEach((item) => {
-                        var newItem: SharedUserQueryPM = new SharedUserQueryPM(null);
-                        newItem.Tenant = SessionLocator.Tenant;
-                        newItem.UserId = item.Id;
-
-                        if (newQuery.SharedUserQueries.indexOf(newItem) == -1) {
-                            newQuery.AddSharedUserQueryPM(newItem);
-                        }  
-                    });
-                }
-
+                
                 myService.setServiceArgs(this.serviceArgs);
                 textCodesService.setServiceArgs(this.serviceArgs);
-                myService.insert(newQuery).subscribe(myResult => {
+                myService.insert(this.EntityPM).subscribe(myResult => {
                     textCodesService.get(myResult.Result.NameTextCodeId, myResult.Result.Tenant).subscribe(res => {
                         window.TextCodesTranslations.push(res);
                         this.AddFiltersAndColumns(myResult.Result);
                         window.Queries.push(myResult.Result);
                     });
-
                 });
             }
         }
@@ -1074,7 +1088,8 @@ export class NewViewComponent {
         var myService: QueriesPMService = new QueriesPMService();
         var textCodesService: TextCodePMService = new TextCodePMService();
         var DoSaving = false;
-        var CurrentQuery = window.Queries.filter(x => x.Id == this.QueryId)[0];
+        //var CurrentQuery = window.Queries.filter(x => x.Id == this.QueryId)[0];
+        //this.EntityPM = this.currentQuery;
 
         if (!AppTool.IsNullOrEmpty(queryName)) {
             if (queryName.length > 30) {
@@ -1112,13 +1127,13 @@ export class NewViewComponent {
         }
         if (DoSaving == true) {
             SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-            CurrentQuery.NewViewName = queryName;
+            this.EntityPM.NewViewName = queryName;
 
-            CurrentQuery.SpotlightModeActivated = this.ShowInSpotLight;
+            this.EntityPM.SpotlightModeActivated = this.ShowInSpotLight;
             var spotlightTemplate: string = "";
-            if (CurrentQuery.SpotlightModeActivated) {
+            if (this.EntityPM.SpotlightModeActivated) {
                 if (this.ShowInSpotLight) {
-                    switch (CurrentQuery.ObjectTableName) {
+                    switch (this.EntityPM.ObjectTableName) {
                         case "Shipment": {
                             spotlightTemplate = "ShipmentSpotlightDataTemplate";
                             break;
@@ -1133,36 +1148,33 @@ export class NewViewComponent {
                             break;
                         }
                     }
-                    CurrentQuery.SpotlightDataTemplate = spotlightTemplate;
+                    this.EntityPM.SpotlightDataTemplate = spotlightTemplate;
                 }
             }
             else {
-                CurrentQuery.SpotlightDataTemplate = null;
-            }
-        
-
+                this.EntityPM.SpotlightDataTemplate = null;
+            }     
             
-
             if (this.ShareValueSelectedItem) {
                 switch (this.ShareValueSelectedItem.Code) {
                     case "ALL": {
-                        CurrentQuery.SharedWithAll = true;
-                        CurrentQuery.SharedWithSpecificUsers = false;
-                        CurrentQuery.SharedByUserId = SessionLocator.LoggedUserId;
+                        this.EntityPM.SharedWithAll = true;
+                        this.EntityPM.SharedWithSpecificUsers = false;
+                        this.EntityPM.SharedByUserId = SessionLocator.LoggedUserId;
                         break;
                     }
 
                     case "SPF": {
-                        CurrentQuery.SharedWithAll = false;
-                        CurrentQuery.SharedWithSpecificUsers = true;
-                        CurrentQuery.SharedByUserId = SessionLocator.LoggedUserId;
+                        this.EntityPM.SharedWithAll = false;
+                        this.EntityPM.SharedWithSpecificUsers = true;
+                        this.EntityPM.SharedByUserId = SessionLocator.LoggedUserId;
                         break;
                     }
 
                     case "NON": {
-                        CurrentQuery.SharedWithAll = false;
-                        CurrentQuery.SharedWithSpecificUsers = false;
-                        CurrentQuery.SharedByUserId = null;
+                        this.EntityPM.SharedWithAll = false;
+                        this.EntityPM.SharedWithSpecificUsers = false;
+                        this.EntityPM.SharedByUserId = null;
                         break;
                     }
                 }
@@ -1170,7 +1182,7 @@ export class NewViewComponent {
             
             myService.setServiceArgs(this.serviceArgs);
             textCodesService.setServiceArgs(this.serviceArgs);
-            myService.update(CurrentQuery).subscribe(myResult => {
+            myService.update(this.EntityPM).subscribe(myResult => {
                 if (!SessionLocator.UseCachedData) {
                 textCodesService.get(myResult.Result.NameTextCodeId, myResult.Result.Tenant).subscribe(res => {
                     window.TextCodesTranslations = window.TextCodesTranslations.filter(a => a.TextCodeId != myResult.Result.NameTextCodeId);

@@ -160,12 +160,33 @@
             </td>
         </tr>
 
-        <tr [style.float]="RTL == true ? 'right' : 'left'" style="width:300px;margin-bottom:25px;">
-            <td *ngIf="RTL == false" style="float: left;width: 305px;">
-                <img style="float:left;margin: 5px;" src="./Images/Icons/Validation.png" />
-                <label style="float:left;width:80px;">{{'General.O.ViewName' | TextCodeTranslationPipe}}:</label>
-                <input type="text" style="float:left;width:190px;" [(ngModel)]="QueryName" />
+        <tr [style.float]="RTL == true ? 'right' : 'left'" style="margin-bottom:25px;">
+            <td *ngIf="RTL == false" style="float: left;">
+                <table>
+                    <tr>
+                        <td style="float:left;margin: 5px; width:10px;">
+                            <img src="./Images/Icons/Validation.png" />
+                        </td>
+
+                        <td style="float:left;width:80px;">
+                            {{'General.O.ViewName' | TextCodeTranslationPipe}}:
+                        </td>
+
+                        <td  style="float:left;width:190px;">
+                            <input type="text" [(ngModel)]="QueryName" />
+                        </td>
+
+                        <td style="width:10px;"><div></div></td>
+
+                        <td>
+                            <div *ngIf="IsSharedByMessageVisible" class="OrangeInfo">
+                                This view has been shared by {{SharedByUserName}}. You can’t edit it
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </td>
+
             <td *ngIf="RTL == true" style="float: right;width: 305px;">
                 <input type="text" style="float:left;width:190px;" [(ngModel)]="QueryName" />
                 <label style="float:left;width:80px;">{{'General.O.ViewName' | TextCodeTranslationPipe}}:</label>

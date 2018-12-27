@@ -9,6 +9,8 @@ import {ServiceHelper} from '../../Utilities/ServiceHelper';
 import {Observable}     from 'rxjs/Rx';
 import {QueryPM} from '../../EntityPMs/QueryPM';
 import { SharedUserQueryPM } from '../../EntityPMs/SharedUserQueryPM';
+import { SessionInfo } from '../../Utilities/SessionInfo';
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 
 @Injectable()
 export class QueriesPMService {
@@ -26,7 +28,30 @@ export class QueriesPMService {
         this._http = serviceArgs.http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/queries';
     }
-    
+
+    get(id: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
+                var entity: QueryPM;
+                if (pm) {
+                    entity = this.MapJsonToEntityPM(pm);
+                }
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
+                
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     insert(entityPM: QueryPM) {
 
         return Observable.defer(() => {
@@ -174,7 +199,7 @@ export class QueriesPMService {
         );
     }
 
-    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: QueryPM = null) {        
+    public MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: QueryPM = null) {        
         if (!entityPM) {
             entityPM = new QueryPM();
         }
