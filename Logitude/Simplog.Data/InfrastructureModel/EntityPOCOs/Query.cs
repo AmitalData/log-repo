@@ -39,7 +39,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool SharedWithAll { get; set; }
         public bool SharedWithSpecificUsers { get; set; }
         public string SharedByUserId { get; set; }
-        
+        public bool SpotlightModeActivated { get; set; }
+
         [ForeignKey("FeatureId")]
         public virtual Feature Feature { get; set; }
 

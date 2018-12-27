@@ -70,7 +70,13 @@ import {BusinessProcessQueueListService} from  './Services/StandardLists/Busines
 import {BusinessProcessQueuePMService} from  './Services/StandardPMs/BusinessProcessQueuePMService';
 import {TeamListService} from  './Services/StandardLists/TeamListService'; 
 import {TeamPMService} from './Services/StandardPMs/TeamPMService'; 
-import {DWQueryBuilderService} from './Services/ExtendedPMs/DWQueryBuilderService';
+import { DWQueryBuilderService } from './Services/ExtendedPMs/DWQueryBuilderService';
+
+
+import { BIReportListService } from './Services/StandardLists/BIReportListService';
+import { BIReportPMService } from './Services/StandardPMs/BIReportPMService';
+import { BIReportsTypeListService } from './Services/StandardLists/BIReportsTypeListService';
+
 
 export class ModuleProviders {
     
@@ -79,6 +85,9 @@ export class ModuleProviders {
         var myResult: any = null;
 
         switch (name) {
+            case "BIReportPMService": { myResult = new BIReportPMService(); break; }
+            case "BIReportsTypeListService": { myResult = new BIReportsTypeListService(); break; }
+            case "BIReportListService": { myResult = new BIReportListService(); break; }
             case "BusinessHoursHolidayListService": { myResult = new BusinessHoursHolidayListService(); break; }
             case "ChargesGroupListService": { myResult = new ChargesGroupListService(); break; }
             case "CustomPickListListService": { myResult = new CustomPickListListService(); break; }

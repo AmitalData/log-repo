@@ -28,6 +28,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ChooseUserArgs } from '../../../Infrastructure/Components/NewViewComponent/ChooseUserComponent';
 import { UserList } from '../../../Common/EntityLists/UserList';
 import { SharedUserQueryPM } from '../../../Infrastructure/EntityPMs/SharedUserQueryPM';
+import { FeatureLocator } from '../../Utilities/FeatureLocator';
 
 @Component({
     selector: 'NewViewComponent',
@@ -64,6 +65,7 @@ export class NewViewComponent {
     IsNew: boolean = true;
     removedQueryFilters: any[];
     public myForm: FormGroup;
+   public SpotlightFeatureEnabled: boolean = false;
     GeneralEntitiesArgs: GeneralEntitiesArgs;
     pubSubAdvanceQueryFiltersService: PubSubService;
     ValidationErrorsList: string[]; 
@@ -94,6 +96,7 @@ export class NewViewComponent {
             this.SearchFieldsId = "SearchFields_-1_-1";
             this.FiltersSearchFieldsId = "FiltersSearchFieldsId_-1_-1";
         }
+      
 
         else {
             this.SearchFieldsId = "NewViewSearchFields_" + SessionLocator.CurrentSession.GetNewId("NewViewSearchFields");
@@ -164,6 +167,12 @@ export class NewViewComponent {
         ServiceLocator.SendTotangoUserActivity("Customization", "QueryDefinition");
         var copy = false;
 
+        var currentQuery = window.Queries.filter(d => d.Id == this.QueryId)[0];
+        if (FeatureLocator.HasFeaturePermession("Shipment", "CSPV") && (currentQuery.ObjectTableName == "Shipment" || currentQuery.ObjectTableName == "Master"  )) {
+            this.SpotlightFeatureEnabled = true;
+        }
+
+        this.ShowInSpotLight = currentQuery.SpotlightModeActivated;
         var currentQuery = window.Queries.filter(d => d.Id == this.QueryId)[0];        
         this.addedQueryColumnList = [];
         this.removedQueryColumnList = [];
@@ -359,7 +368,15 @@ export class NewViewComponent {
     public set QueryName(newValue: string) {
         this.queryName = newValue;
     }
-    
+
+    private showInSpotLight: boolean;
+    public get ShowInSpotLight() { return this.showInSpotLight; }
+    public set ShowInSpotLight(newValue: boolean) {
+        if (this.showInSpotLight != newValue) {
+            this.showInSpotLight = newValue;
+        }
+    }
+
     private fieldSelectedItem: any;
     public get FieldSelectedItem() { return this.fieldSelectedItem; }
     public set FieldSelectedItem(newValue: any) {
@@ -893,6 +910,7 @@ export class NewViewComponent {
                 newQuery.NewViewName = queryName;
                 newQuery.Perspective = theCurrentQuery.Perspective;
                 newQuery.EditWizardName = theCurrentQuery.EditWizardName;
+                newQuery.SpotlightModeActivated = this.ShowInSpotLight;
 
                 if (this.ShareValueSelectedItem) {
                     switch (this.ShareValueSelectedItem.Code) {
@@ -1095,6 +1113,35 @@ export class NewViewComponent {
         if (DoSaving == true) {
             SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             CurrentQuery.NewViewName = queryName;
+
+            CurrentQuery.SpotlightModeActivated = this.ShowInSpotLight;
+            var spotlightTemplate: string = "";
+            if (CurrentQuery.SpotlightModeActivated) {
+                if (this.ShowInSpotLight) {
+                    switch (CurrentQuery.ObjectTableName) {
+                        case "Shipment": {
+                            spotlightTemplate = "ShipmentSpotlightDataTemplate";
+                            break;
+                        }
+                        case "Master": {
+                            spotlightTemplate = "MasterSpotlightDataTemplate";
+                            break;
+                        }
+
+                        case "ARInvoice": {
+                            spotlightTemplate = "ARInvoiceSpotlightDataTemplate";
+                            break;
+                        }
+                    }
+                    CurrentQuery.SpotlightDataTemplate = spotlightTemplate;
+                }
+            }
+            else {
+                CurrentQuery.SpotlightDataTemplate = null;
+            }
+        
+
+            
 
             if (this.ShareValueSelectedItem) {
                 switch (this.ShareValueSelectedItem.Code) {

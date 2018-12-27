@@ -80,6 +80,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
 
+
+
+
+     
+
+
         public HttpResponseMessage GetAll()
         {
             try
@@ -496,6 +502,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                                                   CountryId = card.CountryId,
                                                   CountryCode = card.CountryCode,
                                                   CountryName = card.CountryName,
+                                                  UpdateDate=card.UpdateDate==null?card.CreateDate:card.UpdateDate,
                                               };
 
                 var entityLists = myList;
@@ -585,6 +592,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         else
                         {
                             list.InUse = false;
+                        }
+
+                        if (myCards.Where(p => p.CreateDate == list.UpdateDate).FirstOrDefault() != null)
+                        {
+                            list.TenantZeroUpdated = false;
+                        }
+                        else
+                        {
+                            list.TenantZeroUpdated = true;
                         }
 
                         if (SecurityUtility.CheckTableContactFeature(table.Name, "READ", tenant))

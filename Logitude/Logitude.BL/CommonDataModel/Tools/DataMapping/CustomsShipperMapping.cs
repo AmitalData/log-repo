@@ -40,9 +40,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.CustomsShipperCode = entityPM.CustomsShipperCode;
             entityPOCO.ValidityStartDate = entityPM.ValidityStartDate;
             entityPOCO.ValidityEndDate = entityPM.ValidityEndDate;
-
-            
             BuildSearchFields(entityPM, entityCard);
+
+            entityPOCO.SearchFields = entityPM.SearchFields;
         }
 
         private static void BuildSearchFields(CustomsShipperPM entityPM, Card entityCard)
@@ -51,10 +51,11 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CustomsShipperCode);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.EnglishName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ShipperVAT);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ValidDepositionNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.LocalName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityCard.CityName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityCard.CountryName);
-
 
             if (mySearchFields.Length > 1000)
             {

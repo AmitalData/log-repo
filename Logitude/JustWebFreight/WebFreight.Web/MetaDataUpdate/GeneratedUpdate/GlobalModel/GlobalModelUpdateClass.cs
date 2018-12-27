@@ -85,6 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 		TenantManagementLicenseUpdateClass  TenantManagementLicenseUpdateClass = new TenantManagementLicenseUpdateClass();
 		TenantManagmentPrivateLabelsUpdateClass  TenantManagmentPrivateLabelsUpdateClass = new TenantManagmentPrivateLabelsUpdateClass();
 		TenantTypeUpdateClass  TenantTypeUpdateClass = new TenantTypeUpdateClass();
+		WebhookKeysUpdateClass  WebhookKeysUpdateClass = new WebhookKeysUpdateClass();
 	
 		public void LoadObjectsTenantZero(IWebFreightContext context)
         {
@@ -185,6 +186,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	
 	   	   TenantTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
+	   	   WebhookKeysUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
         }
    
 
@@ -219,6 +222,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	
 	   	   TenantTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
+	   	   WebhookKeysUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
         }
 
 		public void CreateAllQueries()
@@ -251,6 +256,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	   	   TenantManagmentPrivateLabelsUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   TenantTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
+	   	   WebhookKeysUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
         }
 
@@ -285,6 +292,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	
 	   	   TenantTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
+	   	   WebhookKeysUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
         }
 
 		public void CreateAllTabs()
@@ -317,6 +326,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	   	   TenantManagmentPrivateLabelsUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   TenantTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
+	   	   WebhookKeysUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
         }
 
@@ -351,6 +362,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	
 	   	   TenantTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
+	   	   WebhookKeysUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
+	
         }
 
 		public void CreateAllFeatures()
@@ -384,6 +397,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	
 	   	   TenantTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   WebhookKeysUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
         }
 		public void CreateAdditionalTextCodes()
         {
@@ -415,6 +430,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	   	   TenantManagmentPrivateLabelsUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   TenantTypeUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   WebhookKeysUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
         }
 		public void CreateAllMenuButtons()
@@ -448,6 +465,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	
 	   	   TenantTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
+	   	   WebhookKeysUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
         }
 
 		public void CreateAllClosedTables()
@@ -473,6 +492,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	   
 	   	   TenantTypeUpdateClass.FillTenantType();
 	
+	   
         }
 
    	 

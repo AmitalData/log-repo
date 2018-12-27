@@ -92,6 +92,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ApprovedByUserId = a.ApprovedByUserId,
                                        ApprovedDateTime = a.ApprovedDateTime,
                                        BankAccountId = a.BankAccountId,
+                                       FirstApproveDate = a.FirstApproveDate,
                                    }).FirstOrDefault();
 
             payment.PaymentInvoices = apInvoicePaymentQuery.GetAPPaymentInvoicePMsForPayment(payment.Id, tenant);
@@ -164,6 +165,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ApprovedByUserId = a.ApprovedByUserId,
                                        ApprovedDateTime = a.ApprovedDateTime,
                                        BankAccountId = a.BankAccountId,
+                                       FirstApproveDate = a.FirstApproveDate,
                                    }).FirstOrDefault();
 
             payment.PaymentInvoices = apInvoicePaymentQuery.GetAPPaymentInvoicePMsForPayment(payment.Id, tenant);
@@ -232,6 +234,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         ApprovedByUserId = a.ApprovedByUserId,
                         ApprovedDateTime = a.ApprovedDateTime,
                         BankAccountId = a.BankAccountId,
+                        FirstApproveDate = a.FirstApproveDate,
                     });
 
             result = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APPaymentPM>(new QueryOperations(), result, tenant);
@@ -291,6 +294,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ApprovedByUserId = a.ApprovedByUserId,
                                        ApprovedDateTime = a.ApprovedDateTime,
                                        BankAccountId = a.BankAccountId,
+                                       FirstApproveDate = a.FirstApproveDate,
 
                                    }).FirstOrDefault();
             payment.PaymentInvoices = apInvoicePaymentQuery.GetAPPaymentInvoicePMsForPayment(payment.Id, tenant).ToList();
@@ -359,6 +363,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    ApprovedByUserId = a.ApprovedByUserId,
                                                    ApprovedDateTime = a.ApprovedDateTime,
                                                    BankAccountId = a.BankAccountId,
+                                                   FirstApproveDate = a.FirstApproveDate,
                                                };
             return result;
         }
@@ -420,6 +425,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             ApprovedByUserId = a.ApprovedByUserId,
                             ApprovedDateTime = a.ApprovedDateTime,
                             BankAccountId = a.BankAccountId,
+                            FirstApproveDate = a.FirstApproveDate,
                         };
 
             return query;

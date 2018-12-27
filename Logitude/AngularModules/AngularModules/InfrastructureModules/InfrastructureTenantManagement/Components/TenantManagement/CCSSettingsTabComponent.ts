@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnInit}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -75,6 +75,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("IsDEXXConnectionEnabled", this.ObjectTableName, this.isTenantManagementEditable);
 
         this.UIProperties.SetVisibility("IsEAWBOnlyDemo", this.ObjectTableName, (SessionLocator.Tenant == 0 || SessionLocator.Tenant == 341) ? true : false);
+        this.UIProperties.SetVisibility("IsINTTRAOnlyDemo", this.ObjectTableName, (SessionLocator.Tenant == 0) ? true : false);
 
         this.SetUIProperties_SetRequires();
     }
@@ -142,6 +143,13 @@ export class CCSSettingsTabComponent extends BaseComponent {
         }
     }
 
+    get IsINTTRAOnlyDemo() { return this.EntityPM.IsINTTRAOnlyDemo; }
+    set IsINTTRAOnlyDemo(newValue: boolean) {
+        if (this.EntityPM.IsINTTRAOnlyDemo != newValue) {
+            this.EntityPM.IsINTTRAOnlyDemo = newValue;
+        }
+    }
+
     get IsCargonautEnabled() { return this.EntityPM.IsCargonautEnabled; }
     set IsCargonautEnabled(newValue: boolean) {
         if (this.EntityPM.IsCargonautEnabled != newValue) {
@@ -164,6 +172,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
             this.SetUIProperties();
         }
     }
+
 
     QuickSearchItemClicked(entity: any) {
         //RefreshScreenEvent myEvent = SessionLocator.CurrentAssemblyLocator.EventAggregator.GetEvent<RefreshScreenEvent>();

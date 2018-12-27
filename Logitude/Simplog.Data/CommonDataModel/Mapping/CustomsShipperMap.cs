@@ -19,8 +19,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomsShipperCode).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ValidDepositionNumber).IsRequired().HasMaxLength(20).IsUnicode(false);
-
-
+            this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(false);
+            
             // Table & Column Mappings
             this.ToTable("CustomsShippers");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -29,6 +29,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ValidDepositionNumber).HasColumnName("ValidDepositionNumber");
             this.Property(t => t.ValidityStartDate).HasColumnName("ValidityStartDate");
             this.Property(t => t.ValidityEndDate).HasColumnName("ValidityEndDate");
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields");
+
+            
             this.HasRequired(t => t.Card).WithOptional(t => t.CustomsShipper);
 
         }

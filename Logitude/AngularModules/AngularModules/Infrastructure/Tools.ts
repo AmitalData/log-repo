@@ -1,4 +1,4 @@
-﻿import {EventEmitter, Output} from '@angular/core';
+import {EventEmitter, Output} from '@angular/core';
 import {TextCodeTranslator} from './Utilities/TextCodeTranslator';
 import {NumbersPipe} from './Pipes/NumbersPipe';
 
@@ -928,6 +928,19 @@ export class AppTool {
                 myResult = "CrossDocks";
                 break;
             }
+
+            case "General.MH.Documents":
+            case "General.MH.DocumentsFiling":
+            {
+                myResult = "Documents";
+                break;
+            }
+
+            case "General.MH.Depositions": {
+                myResult = "Deposition";
+                break;
+            }
+                
 
             default: {
                 myResult = "Person";

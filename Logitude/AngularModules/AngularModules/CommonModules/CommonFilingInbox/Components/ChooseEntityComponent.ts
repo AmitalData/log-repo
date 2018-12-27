@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ShipmentList} from '../../../Shipment/EntityLists/ShipmentList';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -77,7 +77,7 @@ export class ChooseEntityComponent {
         var filters = new ApiQueryFilters();
         filters.PageIndex = 0;
         filters.PageSize = 100;
-        filters.GetAll = true;
+        filters.GetAll = false;
         filters.GetCount = true;
         var searchValue = null;
 
@@ -139,7 +139,7 @@ export class ChooseEntityComponent {
         var filters = new ApiQueryFilters();
         filters.PageIndex = 0;
         filters.PageSize = 100;
-        filters.GetAll = true;
+        filters.GetAll = false;
         filters.GetCount = true;
         var searchValue = null;
 

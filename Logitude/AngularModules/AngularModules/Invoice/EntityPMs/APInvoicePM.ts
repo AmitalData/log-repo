@@ -423,6 +423,11 @@ export class APInvoicePM {
     public set IsGeneralInvoice(newValue: boolean) { if (this.isGeneralInvoice != newValue) { this.isGeneralInvoice = newValue; this.MarkAsDirty("IsGeneralInvoice"); } }
        
 	 
+    private firstApproveDate: Date;
+    public get FirstApproveDate() { return this.firstApproveDate; }
+    public set FirstApproveDate(newValue: Date) { if (this.firstApproveDate != newValue) { this.firstApproveDate = newValue; this.MarkAsDirty("FirstApproveDate"); } }
+       
+	 
      
 	private invoiceLines: APInvoiceLinePM[];
     get  InvoiceLines() {

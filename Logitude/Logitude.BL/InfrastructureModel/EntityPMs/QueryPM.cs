@@ -67,5 +67,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
                 sharedUserQueries = value;
             }
         }
+        public bool SpotlightModeActivated { get; set; }
+
     }
 }
