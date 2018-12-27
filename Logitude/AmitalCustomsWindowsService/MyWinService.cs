@@ -155,6 +155,10 @@ namespace AmitalCustomsWindowsService
                 {
                     AddWorkerFromAppSetting<SendWEBAPIMessage2MamanWR>();
                     AddWorkerFromAppSetting<FTPToAnalyzeQueueWR>();
+                    AddWorkerFromAppSetting<CustomsAnalyzeQueueWR>();
+                    
+
+
                 }
                 if (!AmitalProxy.Have_UnfConnectionString())
                 {
@@ -236,7 +240,8 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
             listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
-
+            listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
+            
 
             BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
             BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
