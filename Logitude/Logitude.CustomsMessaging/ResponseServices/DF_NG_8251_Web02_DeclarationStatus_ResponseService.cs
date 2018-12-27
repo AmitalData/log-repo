@@ -198,7 +198,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             if (declarationPM.IsCourierDeclaration)
                             {
-
+                                declarationPM.CourierSuspentionReasonCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
                                 switch (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode)
                                 {
                                     case "3":

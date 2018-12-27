@@ -75,38 +75,6 @@
         cursor: pointer;
     }
 
-    .A-button-drop-menu {
-        background: #343434;
-        color: #eee;
-        height: 35px;
-        border-bottom: 4px solid #eeeded
-    }
-
-    A-button-drop-menu li {
-        float: left;
-        display: inline;
-        position: relative;
-        font: bold 12px Arial;
-        text-shadow: 0 -1px 0 #000;
-        border-right: 1px solid #444;
-        border-left: 1px solid #111;
-        text-transform: uppercase
-    }
-
-    .A-button-drop-menu li span:hover {
-        background: #D3D3D3;
-        cursor: pointer;
-    }
-
-    .A-button-drop-menu ul.A-button-drop-menu .submenu {
-        display: none;
-        position: absolute;
-        left: 180px;
-        background: #111;
-        top: 0;
-        width: 180px;
-    }
-
      .LogitudeCheckBox input:focus  {
         border: 1px solid #3BB3E2;
     }
@@ -210,25 +178,25 @@
                             <span>מחיקת Pending</span>
                         </li>
 
-                        <li class='has-submenu'>
+                        <li>
                             <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();">
                                 <ul class="P-button-drop-menu" style="width:110px; ">
-                                    <li *ngIf="!IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                                    <li *ngIf="!IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','2');">
                                         <span>הפקת תעודת עיכוב</span>
                                     </li>
-                                    <li *ngIf="IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                                    <li *ngIf="IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','2');">
                                         <span>ביטול תעודת עיכוב</span>
                                     </li>
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); MamanStickerCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
                                         <span>הפקת מדבקה</span>
                                     </li>
-                                    <li *ngIf="MamanStickerDetails != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); MamanStickerCommand($event,_CourierWorksheet['DeclarationId'],'Delete');">
+                                    <li *ngIf="MamanStickerDetails != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','4');">
                                         <span>ביטול הפקת מדבקה</span>
                                     </li>
-                                    <li *ngIf="!IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                                    <li *ngIf="!IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','5');">
                                         <span>הדפסת מסמכים</span>
                                     </li>
-                                    <li *ngIf="IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                                    <li *ngIf="IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','5');">
                                         <span>ביטול הדפסת מסמכים</span>
                                     </li>
                                 </ul>

@@ -134,7 +134,9 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
     EditButtonClicked(item: TapagList) {
 
         if (!AppTool.IsNullOrEmpty(item)) {
+            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
             this.tapagPMService.get(item.Id).subscribe(response => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
                 switch (item.TapagTypeCode) {
                     case "1":
                         {

@@ -1233,6 +1233,7 @@
     <Compile Include="EntityUpdateServices\DeclarationConsAcceptanceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.amital.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\DeclarationMamanSpecialActionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\AcceptanceStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AccumalationStateUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ActionCodeUpdateService.Generated.cs" />

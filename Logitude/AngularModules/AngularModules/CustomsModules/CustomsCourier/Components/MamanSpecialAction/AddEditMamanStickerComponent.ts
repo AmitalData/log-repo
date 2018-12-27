@@ -9,6 +9,7 @@ import { DeclarationMamanSpecialActionPM } from '../../../../Customs/EntityPMs/D
 import { DeclarationMamanSpecialActionPMService } from '../../../../Customs/Services/StandardPMs/DeclarationMamanSpecialActionPMService';
 import { DeclarationWebService } from '../../../../Customs/Services/WebServices/DeclarationWebService';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     moduleId: module.id,
@@ -83,13 +84,18 @@ export class AddEditMamanStickerComponent
     //#endregion\
 
     OkButtonClicked() {
-
-        this._DeclarationMamanSpecialActionPMService.insert(this.EntityPM).subscribe(myResult => {
+        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this._DeclarationMamanSpecialActionPMService.insert(this.EntityPM).subscribe(res => {
             this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, "U", "4").subscribe(myResult => {
                 if (myResult.HasError) {
                     this.ValidationErrorsList = [];
                     this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
                     return;
+                }
+                else {
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    var myMessageWindow = new MessageWindow();
+                    myMessageWindow.Show(myResult.Result);
                 }
                 this.CancelButtonClicked();
             });
