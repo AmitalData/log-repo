@@ -1,4 +1,5 @@
-﻿using Logitude.Server.Tools.Utils;
+﻿using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
+using Logitude.Server.Tools.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +13,76 @@ namespace Logitude.Customs.BL.CloseTables
     public class CustomsPartnerFtpDetails
     {
         public const string InterfaceName_SubManifest = "SUBMANIFEST";
-        public const string InterfaceName_ECTHR = "ECTHR";
-        public const string InterfaceName_ECSPCL = "ECSPCL";
+        public const string InterfaceName_ECTHR = "ECTHR";//EC = E-Commerce
+        public const string InterfaceName_ECSPCL = "ECSPCL";//EC = E-Commerce
+        public const string InterfaceName_ECSTS = "ECSTS";//EC = E-Commerce
         public const string PartnerCode_Mamam = "MAMAN";
         public const string TypeCode_Out = "OUT";
         public const string TypeCode_In = "IN";
+
+        public List<InterfaceDetails> GetAllInterfaceDetails()
+        {
+            var all = new List<InterfaceDetails>() { 
+            //all.Add(new KeyValuePair<string, string>("", ""));
+
+            new InterfaceDetails()
+            {
+                Code = InterfaceName_SubManifest,
+                Name = "תת מצהר לממן",
+                TypeCode = TypeCode_Out,
+                Partner = PartnerCode_Mamam,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key
+            }
+            ,
+            new InterfaceDetails()
+            {
+                Code = InterfaceName_ECTHR,
+                Name = "ש.מ.ב לממן",
+                TypeCode = TypeCode_Out,
+                Partner = PartnerCode_Mamam,
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
+            }
+
+            , new InterfaceDetails()
+            {
+                Code = InterfaceName_ECSPCL,
+                Name = "פעולות מיוחדות לממן",
+                TypeCode = TypeCode_Out,
+                Partner = PartnerCode_Mamam,
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
+            }
+            ,
+
+            new InterfaceDetails()
+            {
+                Code = InterfaceName_ECSTS,
+                Name = "סטטוס/זמינות ממן",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_Mamam,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+                QueueName="AnalyzeQueue",
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilitySpliterService,
+                Subject="Status / Availability Maman"
+            }
+            };
+            ///
+
+            //all.Add(new KeyValuePair<string, string>("TST", "Test"));
+            return all;
+        }
 
         public List<KeyValuePair<string,string>> GetAllInterfaceName()
         {
             var all = new List<KeyValuePair<string, string>>();
             //all.Add(new KeyValuePair<string, string>("", ""));
 
+            var allInterfaceDetails=GetAllInterfaceDetails();
+            allInterfaceDetails.ForEach(r =>
+            {
+                all.Add(new KeyValuePair<string, string>(r.Code,
+                    ProxyUtil.JsonConvertSerialize(r)));
+            });
+            return all;
             all.Add(new KeyValuePair<string, string>(InterfaceName_SubManifest,
                 ProxyUtil.JsonConvertSerialize(new InterfaceDetails()
                 {
@@ -54,6 +114,18 @@ namespace Logitude.Customs.BL.CloseTables
                 }
             )));
 
+            all.Add(new KeyValuePair<string, string>(InterfaceName_ECSTS,
+                ProxyUtil.JsonConvertSerialize(new InterfaceDetails()
+                {
+                    Code = InterfaceName_ECSTS,
+                    Name = "סטטוס/זמינות ממן",
+                    TypeCode = TypeCode_In,
+                    Partner = PartnerCode_Mamam,
+                    ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key
+                }
+            )));
+            ///
+
             //all.Add(new KeyValuePair<string, string>("TST", "Test"));
             return all;
         }
@@ -82,10 +154,30 @@ namespace Logitude.Customs.BL.CloseTables
             all.Add(new KeyValuePair<string, string>("WEBAPI", "WEBAPI"));
             return all;
         }
-        
 
+        public CustomAnalyzerQueueBase GetCustomAnalyzerQueueService(InterfaceDetails @interface)
+        {
+            switch (@interface.AnalyzeQueueService)
+            {
+                case AnalyzeQueueServiceEnum.MamanStatusAvailabilitySpliterService:
+                    return new MamanStatusAvailabilitySplitterService(@interface);
+                    break;
+                case AnalyzeQueueServiceEnum.MamanStatusAvailabilityService:
+                    return new MamanStatusAvailabilityService(@interface);
+                    break;
+                default:
+                    throw new Exception("No analyze service define " + @interface.Code);
+                    break;
+            }
+        }
     }
-    class InterfaceDetails
+    public enum AnalyzeQueueServiceEnum
+    {
+        none,
+        MamanStatusAvailabilitySpliterService,
+        MamanStatusAvailabilityService,
+    }
+    public class InterfaceDetails
     {
         public string Code { get; set; }
         public string Name { get; set; }
@@ -93,6 +185,9 @@ namespace Logitude.Customs.BL.CloseTables
         public string TypeCode { get; set; }
         public string Partner { get; set; }
         public string ViaMethod { get; set; }
+        public string QueueName { get; set; }
+        public AnalyzeQueueServiceEnum AnalyzeQueueService { get; internal set; }
+        public string Subject { get; internal set; }
     }
 
 
@@ -104,4 +199,5 @@ namespace Logitude.Customs.BL.CloseTables
         public string Password { get; set; }
 
     }
+
 }

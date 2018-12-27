@@ -79,6 +79,7 @@
     <Compile Include="EntityPMs\CustomsDocumentPointerPM.cs" />
     <Compile Include="EntityPMs\CustomsDocumentsTicketPM.cs" />
     <Compile Include="EntityPMs\CustomsHouseTypePM.cs" />
+    <Compile Include="EntityPMs\CustomsPartnerFtpPM.cs" />
     <Compile Include="EntityPMs\CustomsPartnersItemPM.cs" />
     <Compile Include="EntityPMs\CustomsPartnersItemValidator.cs" />
     <Compile Include="EntityPMs\CustomsRequestsSheetPM.cs" />

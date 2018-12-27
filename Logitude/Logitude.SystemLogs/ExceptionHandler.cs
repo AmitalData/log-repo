@@ -24,6 +24,7 @@ namespace Logitude.SystemLogs
                 }
 
             }
+            Debug.WriteLine(exception.ToString());
             AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Error);
             string ErrorMessage = "";
 

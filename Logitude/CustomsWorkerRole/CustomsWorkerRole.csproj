@@ -142,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\SerialAnalyzeDcaResponseByAggregateKey.cs" />
+    <Compile Include="CustomsAnalyzeQueueWR.cs" />
     <Compile Include="CustomsCommandAnalyzeResponseWR.cs" />
     <Compile Include="CustomsCommandBase.cs" />
     <Compile Include="CustomsCommandDownloadDcaReceiveCorrelationWR.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="DCA\DCATester.cs" />
     <Compile Include="DCA\LastAccessFileInDCADirM.cs" />
     <Compile Include="DownloadDcaMessageSheetWR.cs" />
+    <Compile Include="FTPToAnalyzeQueueWR.cs" />
     <Compile Include="General.cs" />
     <Compile Include="L2U\ReceivedBMessageAction.cs" />
     <Compile Include="L2U\ReceivedDbMessageAction.cs" />

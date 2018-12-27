@@ -1233,6 +1233,7 @@
     <Compile Include="EntityUpdateServices\DeclarationConsAcceptanceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.amital.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\DeclarationMamanSpecialActionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\AcceptanceStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AccumalationStateUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ActionCodeUpdateService.Generated.cs" />
@@ -1614,6 +1615,9 @@
     <Compile Include="Messaging\Amital\SendMessageToUServerUtil.cs" />
     <Compile Include="Messaging\Amital\UnifreightTaskService.cs" />
     <Compile Include="Messaging\Amital\UServerCommunicationService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\CustomAnalyzerQueueBase.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilityService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilitySplitterService.cs" />
     <Compile Include="Messaging\Customs\ClientProgressBarIndicatorService.cs" />
     <Compile Include="Messaging\Customs\CustomsRequestsSheetDomainModelUtil.cs" />
     <Compile Include="Messaging\Customs\CustomsRequestsSheetPostUpdateService.cs" />
