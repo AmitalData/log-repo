@@ -41,6 +41,9 @@ using Logitude.Server.Tools.FTP;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Unifreight.Data.AmitalModel;
+using Logitude.Server.Tools.Utils;
 
 namespace CustomsWorkerRole
 {
@@ -48,6 +51,12 @@ namespace CustomsWorkerRole
      * ///couriernet_global _global _global
 Insert into BATCHSERVICESDEFINITIONS (CODE,CLASSNAME) values ('FTPToAnalyzeQueueWR','FTPToAnalyzeQueueWR');
 Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values ('FTPToAnalyzeQueueWR',0,1);
+
+
+        
+INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('D', 'Done')
+INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('F', 'Fail')
+INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
      */
 
     //public class SendWebAPI2MamanGWMessageECTHRDataWR
@@ -226,8 +235,12 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
             try
             {
+                Debug.WriteLine($"DownloadFTPFiles({customsPartnerFtpPM.InterfaceName})");
                 var ftpDetail = customsPartnerFtpPM.MyFtpDetail;
+
+                Debug.WriteLine($"FTPService({ftpDetail.Host}, {ftpDetail.UserName}, {ftpDetail.Password})");
                 FTPService ftpService = new FTPService(ftpDetail.Host, ftpDetail.UserName, ftpDetail.Password);
+                Debug.WriteLine($"DirectoryListSimple({ftpDetail.Folder})");
                 var directoryFiles = ftpService.DirectoryListSimple(ftpDetail.Folder).ToList();
 
                 if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileExt))
@@ -247,14 +260,17 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 foreach (string fileName in directoryFiles)
                 {
 
-                    byte[] fileData = ftpService.Download(fileName);
+                    var fileWithFolder = ftpDetail.Folder + "/" + fileName;
+                    Debug.WriteLine($"ftpService.Download({fileWithFolder})");
+                    byte[] fileData = ftpService.Download(fileWithFolder);
 
 
 
+                    Debug.WriteLine($"SaveMessageToAnalyzeQueue");
                     SaveMessageToAnalyzeQueue(fileName, fileData, customsPartnerFtpPM);
 
-
-                    ftpService.Delete(fileName);
+                    Debug.WriteLine($"ftpService.Delete({fileName})");
+                    ftpService.Delete(fileWithFolder);
                 }
 
             }
@@ -266,6 +282,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
         private void SaveMessageToAnalyzeQueue(string fileName, byte[] messageData, CustomsPartnerFtpPM customsPartnerFtpPM)
         {
+            var def =(new CustomsPartnerFtpDetails()).GetAllInterfaceDetails().First(r => r.Code == customsPartnerFtpPM.InterfaceName);
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
 
@@ -276,18 +293,21 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
                 var analyzeQueue = new AnalyzeQueue()
                 {
-                    Subject = fileName.StartsWith("bl") ? "BL Response" : (fileName.StartsWith("voyage") ? "Voyage Response" : "Artemus Response"),
+                    Subject = def.Subject,
+                    //fileName.StartsWith("bl") ? "BL Response" : (fileName.StartsWith("voyage") ? "Voyage Response" : "Artemus Response"),
                     CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
-                    From = "Artemus",
+                    From = customsPartnerFtpPM.PartnerCode +"," + customsPartnerFtpPM.InterfaceName,
                     Id = IdCounter.GetNumber("AnalyzeQueue", 0),
-                    MessageBody = messageData,
+                    MessageBody = System.Text.Encoding.UTF8.GetBytes(" "),//ismust !!!!!
                     Status = "W",
                     Retries = 0,
                     ConnectedToEntity = false,
                     ConnectedToTenant = true,
                     Tenant = customsPartnerFtpPM.Tenant,
-                    FileSize = messageData.Length,
+                    FileSize = System.Text.Encoding.UTF8.GetBytes(" ").Length,
                     FileName = fileName,
+                    
+                    CommunicationLogId = BuildCommunicationLog(messageData, customsPartnerFtpPM)
                 };
 
                 analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
@@ -299,6 +319,115 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         }
 
 
+
+        public string BuildCommunicationLog(byte[] bytearray, CustomsPartnerFtpPM customsPartnerFtpPM)///using  by SendWEBAPIMessage2MamanWRWR
+        {
+            
+            
+            ICommonDataContext commonContext = CommonDataContext.GetContext(customsPartnerFtpPM.Tenant);
+            CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
+            DocumentRepository documentRepository = new DocumentRepository(commonContext);
+            
+            
+            
+            
+
+            
+            
+           
+            ContactRepository contactRepository = new ContactRepository(customsPartnerFtpPM.Tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(customsPartnerFtpPM.Tenant), customsPartnerFtpPM.Tenant);
+            string loggedContactId = "";
+            if (loggedContact != null)
+            {
+                loggedContactId = loggedContact.Id;
+            }
+
+            //.PostIt("", "F_unitedf", "Unit2019", data);
+            var settings = new Courier2MamanCommSettings()
+            {
+                MessageCode = customsPartnerFtpPM.InterfaceName,
+                Tenant = customsPartnerFtpPM.Tenant,
+                LoggedContactId = loggedContactId
+            };
+            var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
+
+            Document document = new Document()
+            {
+                CreateDate = DateTime.Now,
+                Extension = "TXT",
+                FileSize = bytearray.Length,
+                Tenant = Convert.ToInt32(customsPartnerFtpPM.Tenant),
+                Id = IdCounter.GetNumber("Document", customsPartnerFtpPM.Tenant),
+                HasFile = true,
+                Folder = CustomsPartnerFtpDetails.PartnerCode_Mamam.ToLower(),
+            };
+
+            documentRepository.Add(document);
+            documentRepository.SubmitChanges();
+
+            var def = (new CustomsPartnerFtpDetails()).GetAllInterfaceDetails().First(r => r.Code == customsPartnerFtpPM.InterfaceName);
+            CommunicationLog commLog = new CommunicationLog()
+            {
+                Id = IdCounter.GetNumber("CommunicationLog", customsPartnerFtpPM.Tenant),
+                LastStatusDate = TenantServerConfigration.GetCurrentDateTime(customsPartnerFtpPM.Tenant),
+                LastStatusDateUTC = DateTime.UtcNow,
+                //To = ,
+                From= CustomsPartnerFtpDetails.PartnerCode_Mamam +","+ CustomsPartnerFtpDetails.InterfaceName_ECSTS,
+                InOut = "O",
+                //EntityId = declarationId,
+                //ObjectTableId = objectTableId,
+                Subject = customsPartnerFtpPM.InterfaceName,
+                Tenant = customsPartnerFtpPM.Tenant,
+                CommunicationLogTypeCode = "T",
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(customsPartnerFtpPM.Tenant),
+                CommunicationStatusTypeCode = "W",
+                DocumentId = document.Id,
+                CreateDateUTC = DateTime.UtcNow,
+                CreatedByUserId = loggedContactId,
+                LogSettings = settingsData,
+                QueueName = def.QueueName //SBQueueNames.SendWEBAPIMessage2MamanQ.ToString() ///using  by SendWEBAPIMessage2MamanWR
+            };
+
+            communicationLogRepository.Add(commLog);
+            communicationLogRepository.SubmitChanges();
+
+            Logitude.Server.Tools.BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = document.Id,
+                FolderName = document.Folder,
+                Extension = document.Extension,
+                Tenant = customsPartnerFtpPM.Tenant,
+                FileSize = bytearray.Length,
+            };
+
+            Logitude.Server.Tools.StorageService.IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+            storageservice.Write(bytearray.ToArray(), fileInfo);
+            bool useQueueMessage = false;
+            if (useQueueMessage)
+            {
+                SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, customsPartnerFtpPM.Tenant);
+            }
+            
+
+            return commLog.Id;
+
+        }
+
+        private void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant)
+        {
+            try
+            {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue(queueName, 0);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Send FTP CommunicationLog Queue", null, null);
+            }
+        }
     }
 
 

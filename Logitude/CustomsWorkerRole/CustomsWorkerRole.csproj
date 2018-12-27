@@ -142,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\SerialAnalyzeDcaResponseByAggregateKey.cs" />
+    <Compile Include="CustomsAnalyzeQueueWR.cs" />
     <Compile Include="CustomsCommandAnalyzeResponseWR.cs" />
     <Compile Include="CustomsCommandBase.cs" />
     <Compile Include="CustomsCommandDownloadDcaReceiveCorrelationWR.cs" />

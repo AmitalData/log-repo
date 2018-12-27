@@ -1,4 +1,5 @@
-﻿using Logitude.Server.Tools.Utils;
+﻿using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
+using Logitude.Server.Tools.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,7 +59,10 @@ namespace Logitude.Customs.BL.CloseTables
                 Name = "סטטוס/זמינות ממן",
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_Mamam,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+                QueueName="AnalyzeQueue",
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilitySpliterService,
+                Subject="Status / Availability Maman"
             }
             };
             ///
@@ -150,8 +154,28 @@ namespace Logitude.Customs.BL.CloseTables
             all.Add(new KeyValuePair<string, string>("WEBAPI", "WEBAPI"));
             return all;
         }
-        
 
+        public CustomAnalyzerQueueBase GetCustomAnalyzerQueueService(InterfaceDetails @interface)
+        {
+            switch (@interface.AnalyzeQueueService)
+            {
+                case AnalyzeQueueServiceEnum.MamanStatusAvailabilitySpliterService:
+                    return new MamanStatusAvailabilitySplitterService(@interface);
+                    break;
+                case AnalyzeQueueServiceEnum.MamanStatusAvailabilityService:
+                    return new MamanStatusAvailabilityService(@interface);
+                    break;
+                default:
+                    throw new Exception("No analyze service define " + @interface.Code);
+                    break;
+            }
+        }
+    }
+    public enum AnalyzeQueueServiceEnum
+    {
+        none,
+        MamanStatusAvailabilitySpliterService,
+        MamanStatusAvailabilityService,
     }
     public class InterfaceDetails
     {
@@ -161,6 +185,9 @@ namespace Logitude.Customs.BL.CloseTables
         public string TypeCode { get; set; }
         public string Partner { get; set; }
         public string ViaMethod { get; set; }
+        public string QueueName { get; set; }
+        public AnalyzeQueueServiceEnum AnalyzeQueueService { get; internal set; }
+        public string Subject { get; internal set; }
     }
 
 
@@ -172,4 +199,5 @@ namespace Logitude.Customs.BL.CloseTables
         public string Password { get; set; }
 
     }
+
 }

@@ -170,6 +170,7 @@ namespace AmitalCustomsWindowsService
             ///itzik +  ihab  listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
+            listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
 
 
 
