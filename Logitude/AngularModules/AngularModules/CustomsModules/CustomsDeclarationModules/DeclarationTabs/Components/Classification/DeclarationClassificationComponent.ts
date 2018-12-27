@@ -690,6 +690,9 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         
         this.SInvoiceTabs = [];
         for (let item of this.EntityPM.SupplierInvoices) {
+            if (AppTool.IsNullOrEmpty(item.SequenceNumeric)) {
+                continue;
+            }
             var si = item as SupplierInvoicePM;
             //var jsonSI = mySupplierInvoiceExtendedPMService.clone(si);
             //mySupplierInvoiceExtendedPMService.MapSupplierInvoiceItems(si, jsonSI, true);
