@@ -54,6 +54,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             courierMasterMamanModel.GatewayPortCode = _CourierMasterPM.GatewayPortCode != null ? _CourierMasterPM.GatewayPortCode.Substring(_CourierMasterPM.GatewayPortCode.Length - 3) : "";
             courierMasterMamanModel.Weight = "K";
             courierMasterMamanModel.PackageQuantity = _CourierMasterPM.PackageQuantity > 0 && _CourierMasterPM.PackageQuantity.ToString().Length <= 4 ? _CourierMasterPM.PackageQuantity.ToString() : "";
+            courierMasterMamanModel.PackageQuantityExt = _CourierMasterPM.PackageQuantity > 0 && _CourierMasterPM.PackageQuantity.ToString().Length <= 6 ? _CourierMasterPM.PackageQuantity.ToString() : "";
             courierMasterMamanModel.GrossMassMeasure = "";
             if (_CourierMasterPM.GrossMassMeasure > 0 && ((int)_CourierMasterPM.GrossMassMeasure).ToString().Length <= 5)
             {
@@ -107,6 +108,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             messageToMaman.Append(' ', 17);
             messageToMaman.Append(' ', 9);
             messageToMaman.Append(courierMasterMamanModel.HAWB.PadRight(35));
+            messageToMaman.Append(courierMasterMamanModel.PackageQuantityExt.PadLeft(6, '0'));
 
             return messageToMaman.ToString();
 
@@ -129,5 +131,6 @@ namespace Logitude.Customs.BL.Messaging.Maman
         public string Forwarder { get; set; }
         public string Internet { get; set; }
         public string HAWB { get; set; }
+        public string PackageQuantityExt { get; set; }
     }
 }
