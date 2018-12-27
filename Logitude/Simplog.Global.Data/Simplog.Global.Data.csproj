@@ -284,6 +284,10 @@
     <Compile Include="Migrations\201812231027196_AddIsINTTRAOnlyDemo.Designer.cs">
       <DependentUpon>201812231027196_AddIsINTTRAOnlyDemo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812260848362_ChangeWebHookIdToString_Rabaia.cs" />
+    <Compile Include="Migrations\201812260848362_ChangeWebHookIdToString_Rabaia.Designer.cs">
+      <DependentUpon>201812260848362_ChangeWebHookIdToString_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -350,6 +354,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812231027196_AddIsINTTRAOnlyDemo.resx">
       <DependentUpon>201812231027196_AddIsINTTRAOnlyDemo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812260848362_ChangeWebHookIdToString_Rabaia.resx">
+      <DependentUpon>201812260848362_ChangeWebHookIdToString_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

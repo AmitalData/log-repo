@@ -2039,6 +2039,9 @@ namespace Simplog.Data.InfrastructureModel
             get { throw new NotImplementedException(); }
         }
 
-        public IDbSet<SharedUserQuery> SharedUserQueries => throw new NotImplementedException();
+        public IDbSet<SharedUserQuery> SharedUserQueries
+        {
+            get { throw new NotImplementedException(); }
+        } 
     }
 }

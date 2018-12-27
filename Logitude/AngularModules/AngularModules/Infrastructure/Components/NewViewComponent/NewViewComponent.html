@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .CustomTabControl .CustomTabControlHead li:not(.Selected):hover {
         background: #FFFBA3;
@@ -151,6 +151,7 @@
         display: none;
     }
 </style>
+
 <div class="ScrollViewer">
     <table class="ScrollContent">
         <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -172,27 +173,58 @@
                 
             </td>
         </tr>
+
         <tr>
             <td>
                 <div class="CustomTabControl" style="margin-top:-20px; float:left; top: 50px; height: 470px;">
                     <div class="CustomTabControlHead">
-                        <ul style="margin-left: 2px;">
-                            <li [class.Selected]="SelectedTabCode == 'COL'" [style.float]="RTL == true ? 'right' : 'left'" (click)="SelectedTabCode = 'COL'" style="width:109px;font-size:13px;color:#45494A;height:25px;border-radius: 7px 7px 0 0;">
-                                <div class="InnerChild">
-                                    <img [style.float]="RTL == true ? 'right' : 'left'" src="./Images/Icons/Columns.png" style="margin-top:3px;" />
-                                    <span class="CenterCenter" [style.left.px]="RTL == true ? 840 : 35" style="top:2px;">{{'General.O.Columns' | TextCodeTranslationPipe}}</span>
-                                   
-                                </div>
-                            </li>
-                            <li [class.Selected]="SelectedTabCode == 'FLT'" [style.float]="RTL == true ? 'right' : 'left'" (click)="SelectedTabCode = 'FLT'" style="width:109px;font-size:13px;color:#45494A;height:25px;border-radius: 7px 7px 0 0;">
-                                <div class="InnerChild">
-                                    <img [style.float]="RTL == true ? 'right' : 'left'" src="./Images/Icons/Filter.png" style="margin-top:3px;" />
-                                    <span class="CenterCenter" [style.left.px]="RTL == true ? 750 : 140" [style.right.px]="RTL == true ? 120 : 0" style="top:2px;">{{'General.O.Filters' | TextCodeTranslationPipe}}</span>
-                                    
-                                </div>
-                            </li>
-                        </ul>
+                        <table>
+                            <tr>
+                                <td>
+                                    <ul style="margin-left: 2px;">
+                                        <li [class.Selected]="SelectedTabCode == 'COL'" [style.float]="RTL == true ? 'right' : 'left'" (click)="SelectedTabCode = 'COL'" style="width:109px;font-size:13px;color:#45494A;height:25px;border-radius: 7px 7px 0 0;">
+                                            <div class="InnerChild">
+                                                <img [style.float]="RTL == true ? 'right' : 'left'" src="./Images/Icons/Columns.png" style="margin-top:3px;" />
+                                                <span class="CenterCenter" [style.left.px]="RTL == true ? 840 : 35" style="top:2px;">{{'General.O.Columns' | TextCodeTranslationPipe}}</span>
+
+                                            </div>
+                                        </li>
+                                        <li [class.Selected]="SelectedTabCode == 'FLT'" [style.float]="RTL == true ? 'right' : 'left'" (click)="SelectedTabCode = 'FLT'" style="width:109px;font-size:13px;color:#45494A;height:25px;border-radius: 7px 7px 0 0;">
+                                            <div class="InnerChild">
+                                                <img [style.float]="RTL == true ? 'right' : 'left'" src="./Images/Icons/Filter.png" style="margin-top:3px;" />
+                                                <span class="CenterCenter" [style.left.px]="RTL == true ? 750 : 140" [style.right.px]="RTL == true ? 120 : 0" style="top:2px;">{{'General.O.Filters' | TextCodeTranslationPipe}}</span>
+
+                                            </div>
+                                        </li>
+
+                                        <li *ngIf="ShareTabIsVisible" [class.Selected]="SelectedTabCode == 'SHR'" [style.float]="RTL == true ? 'right' : 'left'" (click)="SelectedTabCode = 'SHR'" style="width:109px;font-size:13px;color:#45494A;height:25px;border-radius: 7px 7px 0 0;">
+                                            <div class="InnerChild">
+                                                <img [style.float]="RTL == true ? 'right' : 'left'" src="./Images/Icons/Share.png" style="margin-top:1px;" />
+                                                <span class="CenterCenter" [style.left.px]="RTL == true ? 660 : 250" [style.right.px]="RTL == true ? 240 : 120" style="top:2px;">Share</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                </td>
+                                <td style="width:170px" *ngIf="SpotlightFeatureEnabled">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <label> Show in Spotlight Mode</label>
+                                            </td>
+                                            <td>
+                                                <CheckBox [IsChecked]="ShowInSpotLight" (Checked)="ShowInSpotLight = $event"></CheckBox>
+                                            </td>
+                                            <td style="width:10px"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                       
                     </div>
+
                     <div class="TabControlBody">
                         <!-- Columns -->
                         <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'COL'" [style.float]="RTL == true ? 'right' : 'left'">
@@ -225,7 +257,7 @@
                                                                 <table class="BodyBackground">
                                                                     <tr>
                                                                         <td>
-                                                                            <LogListBox [DataSource]="unSelectedList" [Height]="'380'" [Binding]="'ListTextCodeCode'"  [DataSourceChanged]="onUnSelectedDataSourceChangedEvent" [event]="onUnSelectedDataLoadedEvent" (SelectedItemChanged)="onFieldSelectedItemChanged($event)"></LogListBox>
+                                                                            <LogListBox [DataSource]="unSelectedList" [Height]="'380'" [Binding]="'ListTextCodeCode'" [DataSourceChanged]="onUnSelectedDataSourceChangedEvent" [event]="onUnSelectedDataLoadedEvent" (SelectedItemChanged)="onFieldSelectedItemChanged($event)"></LogListBox>
                                                                         </td>
                                                                     </tr>
                                                                     <tr><td style="height:100%;"></td></tr>
@@ -245,7 +277,7 @@
                                                 </button>
                                                 <button (click)="btnRemove_Click()" class="Button" [disabled]="IsbtnRemoveEnabled" style="width:80px;margin: 7px;">
                                                     <img *ngIf="RTL == false" src="./Images/Icons/ArrowLeft.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
-                                                    <img *ngIf="RTL == true" src="./Images/Icons/ArrowRight.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" /> 
+                                                    <img *ngIf="RTL == true" src="./Images/Icons/ArrowRight.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
                                                     {{'General.B.Remove' | TextCodeTranslationPipe}}
                                                 </button>
                                             </td>
@@ -333,7 +365,7 @@
                                                                                     <div *ngIf="item" class="CheckBox" style="margin: 10px;">
                                                                                         <LogCheckBox [ObjectFieldName]="'Exists'" [DataContext]="item" [Text]="item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe" [Value]="item.Exists"></LogCheckBox>
                                                                                         <!--<input id="{{item.ControlId}}" type="checkbox" [(ngModel)]="item.Exists" />
-                                                                                        <label [attr.for]="item.FieldName">{{item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe}}</label>-->
+                                                                    <label [attr.for]="item.FieldName">{{item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe}}</label>-->
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -345,7 +377,7 @@
                                                     </td>
                                                     <td style="width:10px;"></td>
                                                     <td>
-                                                        <table   style="width:96%;">
+                                                        <table style="width:96%;">
                                                             <tr style="height:30px;">
                                                                 <td>
                                                                     <div [style.float]="RTL == true ? 'right' : 'left'">
@@ -389,7 +421,7 @@
                                                                                             <div *ngSwitchCase="'Text'" style="display: inline-flex;">
                                                                                                 <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>
                                                                                                 <div style="width:150px;">
-                                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)"  *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'"  [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                                                                                 </div>
                                                                                             </div>
 
@@ -397,7 +429,7 @@
                                                                                             <div *ngSwitchCase="'nText'" style="display: inline-flex;">
                                                                                                 <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>
                                                                                                 <div style="width:150px;">
-                                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)"  *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'"  [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
+                                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
                                                                                                 </div>
                                                                                             </div>
 
@@ -405,18 +437,17 @@
                                                                                             <div *ngSwitchCase="'LookUp'" style="display: inline-flex;">
                                                                                                 <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" (SelectedItemChanged)="item.OperationValueChanged($event)" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                                                                                 <div style="width:150px;">
-                                                                                                    <!--<LogLov 
-                                                                                                            *ngIf="item.ObjectField"
-                                                                                                            [ObjectFieldName]="'TextValue'"
-                                                                                                            
-                                                                                                            [DataContext]="item"
-                                                                                                            [LookUpTableName]="item.ObjectField.ObjectTable_LookUpTableName"
-                                                                                                            [PlaceHolder]="item.ObjectField.ObjectTable_LookUpTableName"
-                                                                                                            (ValueChanged)="item.onTextChange($event)">
-                                                                                                    </LogLov>-->
-                                                                                                    <LogLov
-                                                                                                            *ngIf="item.ObjectField"
-                                                                                                            [SelectedValue] ="item.TextValue"
+                                                                                                    <!--<LogLov
+                                                                                        *ngIf="item.ObjectField"
+                                                                                        [ObjectFieldName]="'TextValue'"
+
+                                                                                        [DataContext]="item"
+                                                                                        [LookUpTableName]="item.ObjectField.ObjectTable_LookUpTableName"
+                                                                                        [PlaceHolder]="item.ObjectField.ObjectTable_LookUpTableName"
+                                                                                        (ValueChanged)="item.onTextChange($event)">
+                                                                                </LogLov>-->
+                                                                                                    <LogLov *ngIf="item.ObjectField"
+                                                                                                            [SelectedValue]="item.TextValue"
                                                                                                             [ObjectFieldName]="'TextValue'"
                                                                                                             [DataContext]="item"
                                                                                                             [ObjectTableName]="CurrentObjectTable"
@@ -444,13 +475,13 @@
                                                                                             <div *ngSwitchCase="'Integer'" style="display: inline-flex;">
                                                                                                 <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>
                                                                                                 <div style="width:150px;">
-                                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)"  *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'"  [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div *ngSwitchCase="'Double'" style="display: inline-flex;">
                                                                                                 <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>
                                                                                                 <div style="width:150px;">
-                                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)"  *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'"  [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div *ngSwitchCase="'Decimal'" style="display: inline-flex;">
@@ -460,16 +491,16 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                             <!--<div *ngSwitchCase="'PickList'" style="display: inline-flex;">
-                                                                                                <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
-                                                                                                <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                                                                                    <PickList [ObjectFieldName]="item.ObjectField.FieldName"
-                                                                                                              [ObjectTableName]="ObjectTableName" [NoValidation]="true" [FromNewView]="true"
-                                                                                                              [DataContext]="item"
-                                                                                                              (SelectedItemChanged)="item.onTextChange($event ? $event.Id:'')"
-                                                                                                              [PlaceHolder]="item[item.ObjectField.FieldName]!=null?item[item.ObjectField.FieldName].Code:''">
-                                                                                                    </PickList>
-                                                                                                </div>
-                                                                                            </div>-->
+                                                                            <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
+                                                                            <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
+                                                                                <PickList [ObjectFieldName]="item.ObjectField.FieldName"
+                                                                                          [ObjectTableName]="ObjectTableName" [NoValidation]="true" [FromNewView]="true"
+                                                                                          [DataContext]="item"
+                                                                                          (SelectedItemChanged)="item.onTextChange($event ? $event.Id:'')"
+                                                                                          [PlaceHolder]="item[item.ObjectField.FieldName]!=null?item[item.ObjectField.FieldName].Code:''">
+                                                                                </PickList>
+                                                                            </div>
+                                                                        </div>-->
                                                                                             <div *ngSwitchCase="'PickList'" style="display: inline-flex;">
                                                                                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                                                                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
@@ -497,6 +528,33 @@
                                                     </td>
                                                 </tr>
                                             </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Share -->
+                        <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'SHR'" [style.float]="RTL == true ? 'right' : 'left'">
+                            <div class="LocationDirective" LocationDirective Code="SHR">
+                                <table style="margin: 7px 20px 7px 7px;">
+                                    <tr class="FormFieldRow">
+                                        <td style="width:100px" class="Label">Share with:</td>
+                                        <td style="width:150px;">
+                                            <ComboBox [ItemsSource]="ShareValuesList" [SelectedItem]="ShareValueSelectedItem" [Binding]="'Name'" (SelectedItemChanged)="ShareValueSelectedItem = $event"></ComboBox>
+                                        </td>
+                                        <td style="width:30px;" *ngIf="IsChooseUsersVisible">
+                                            <Hyperlink style="margin-left:5px;" (click)="ChooseUsers()" [FontSize]="12" [Text]="'Choose'"></Hyperlink>
+                                        </td>
+                                        <td *ngIf="IsChooseUsersVisible">
+                                            <div style="margin-left:5px;color: #1E8DC4">( {{ShareWithUsersCount}} selected )</div>
+                                        </td>
+                                        <td><div></div></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div></div>
                                         </td>
                                     </tr>
                                 </table>

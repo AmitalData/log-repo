@@ -119,6 +119,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                         string CurrencyError = "";
                         string paymentTermError = "Payment Term: " + entityPM.PaymentTermName + ". External ID is missing"; // 
                         string vatError = "";
+                        string InvoiceLengthError = "Due to QBO limitation, invoices with a number that exceeds 21 characters can't be transmitted";
+
 
                         CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(tenant);
                         IQueryable<CardExternalCodeByCurrency> iQueryable_CardExternals = cardExternalCodeByCurrencyRepository.GetCardExternalCodeByCurrenciesByTenant(tenant);
@@ -190,6 +192,13 @@ namespace Logitude.BL.InvoiceModel.Tools
                                 myError = string.IsNullOrEmpty(myError) ? "Payment term Field Is Required " : myError + ";" + "Payment term Field Is Required";
 
                             }
+                        }
+
+                        if (entityPM.InvoiceNumber.Length > 21)
+                        {
+                            isReady = false;
+                            myError = string.IsNullOrEmpty(myError) ? InvoiceLengthError : myError + ";" + InvoiceLengthError;
+
                         }
 
 

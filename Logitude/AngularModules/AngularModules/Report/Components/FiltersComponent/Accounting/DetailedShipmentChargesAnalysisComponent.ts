@@ -57,6 +57,14 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
         }
     }
 
+    private isByCreateDate: boolean = false;
+    public get IsByCreateDate() { return this.isByCreateDate; }
+    public set IsByCreateDate(value: boolean) {
+        if (this.isByCreateDate != value) {
+            this.isByCreateDate = value;
+        }
+    }
+
     private includeDraftInvoices: boolean = false;
     public get IncludeDraftInvoices() { return this.includeDraftInvoices; }
     public set IncludeDraftInvoices(value: boolean) {
@@ -101,6 +109,7 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
             myFilterItems.push(new QueryFilterItem("IncludeDraftInvoices", this.IncludeDraftInvoices));
             myFilterItems.push(new QueryFilterItem("IncludeEstimations", this.IncludeEstimations));
             myFilterItems.push(new QueryFilterItem("SplitByCharges", this.SplitByCharges));
+            myFilterItems.push(new QueryFilterItem("IsByCreateDate", this.IsByCreateDate));
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;

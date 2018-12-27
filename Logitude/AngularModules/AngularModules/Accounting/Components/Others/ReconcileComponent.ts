@@ -503,28 +503,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             return;
         }
 
-        if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
-            //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
-            //this.AdjustButton();
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Width = 390;
-
-
-            confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-
-
-                    this.AdjustWithNewJournalScreen();
-
-                } else if (confirmWindow.No) {
-
-                }
-            });
-            return;
-        }
         //else if (!this.IsEntityValid) {
-        else if (this.SelectedLines.Collection.find(d => d.isLineValid == false )) {
+        if (this.SelectedLines.Collection.find(d => d.isLineValid == false )) {
 
 
             //errors.push("Check amount!");
@@ -533,8 +513,30 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             //Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         }
 
+
+
+
         this.ValidationErrorsList = errors;
-        if (this.ValidationErrorsList.length == 0) {
+        if (this.ValidationErrorsList.length == 0)
+        {
+
+            //Adjust
+            if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
+                //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
+                //this.AdjustButton();
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 390;
+                confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        this.AdjustWithNewJournalScreen();
+                    } else if (confirmWindow.No) {
+                    }
+                });
+                return;
+            }
+            //
+
             SessionLocator.CurrentSession.StartBusyIndicatorSaving();
             var entity = this.CreateReconciliation();
             this.SubmitChanges(entity);

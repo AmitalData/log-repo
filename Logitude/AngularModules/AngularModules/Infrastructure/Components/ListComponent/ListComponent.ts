@@ -1147,7 +1147,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
 
             this.GetQueryColumns(this.SelectedQuery.Id, this.UserId);
-        }
+        }   
         //if (!AppTool.IsNullOrEmpty(this.SelectedQuery.SpotlightDataTemplate)) {
         //    this.EnableSpotLight = true;
         //    //this.CD.detectChanges();

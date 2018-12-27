@@ -115,7 +115,7 @@ namespace Simplog.Data.CommonDataModel
             }
 
             Database.SetInitializer<CommonDataContext>(null);
-
+            modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
             modelBuilder.Configurations.Add(new Accounts1Map());

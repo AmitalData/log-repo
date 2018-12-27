@@ -117,6 +117,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         IsExternalEntity = a.IsExternalEntity,
                                         IsGeneralInvoice = a.IsGeneralInvoice,
                                         ExternalAccountingEntityId = a.ExternalAccountingEntityId,
+                                        FirstApproveDate = a.FirstApproveDate,
                                     }).FirstOrDefault();
 
             APInvoiceLineRepository invoiceLineRepository = new APInvoiceLineRepository(repository.context);
@@ -774,6 +775,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              AccountingDate = a.AccountingDate,
                              IsExternalEntity = a.IsExternalEntity,
                              IsGeneralInvoice = a.IsGeneralInvoice,
+                             FirstApproveDate = a.FirstApproveDate,
                          };
              
             return result;
@@ -845,6 +847,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             AccountingDate = a.AccountingDate,
                             IsExternalEntity = a.IsExternalEntity,
                             IsGeneralInvoice = a.IsGeneralInvoice,
+                            FirstApproveDate = a.FirstApproveDate,
                         };
 
             return query;
@@ -952,6 +955,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              AccountingDate = a.AccountingDate,
                              IsExternalEntity = a.IsExternalEntity,
                              IsGeneralInvoice = a.IsGeneralInvoice,
+                             FirstApproveDate = a.FirstApproveDate,
                          };
 
             return result;
@@ -1031,6 +1035,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         IsExternalEntity = a.IsExternalEntity,
                                         IsGeneralInvoice = a.IsGeneralInvoice,
                                         ExternalAccountingEntityId = a.ExternalAccountingEntityId,
+                                        FirstApproveDate = a.FirstApproveDate,
                                     }).ToList();
 
             return invoicePMs;
