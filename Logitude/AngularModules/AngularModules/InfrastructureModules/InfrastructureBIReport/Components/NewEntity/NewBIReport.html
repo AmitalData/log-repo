@@ -32,7 +32,7 @@
                     <td colspan="2">
                         <table>
                             <tr>
-                                <td style="width:370px;height:85px;">
+                                <td style="width:260px;height:85px;">
                                     <div class="MediaFill">
                                         <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
                                     </div>
@@ -62,15 +62,18 @@
                 </tr>
 
                 <!-- DWQueryId -->
-                <tr>
+                <tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'DWQueryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
                         <table>
                             <tr>
-                                <td style="width: 57px;">
+                                <td *ngIf="IsNewQuery" style="width: 57px;">
                                     <button class="Button" (click)="ShowQueryBuilderClicked()">Build Query</button>
+                                </td>
+                                <td *ngIf="!IsNewQuery" s style="width: 57px;">
+                                    <button class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
                                 </td>
                                 <td>
                                     <div></div>
@@ -88,6 +91,7 @@
                         <div></div>
                     </td>
                 </tr>
+
             </table>
         </td>
     </tr>

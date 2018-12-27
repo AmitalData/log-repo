@@ -105,7 +105,8 @@ import {AuditAutomationTabComponent} from './Components/Maintenance/Automation/A
 import {SelectDocumentTypesComponent} from './Components/Maintenance/Automation/SelectDocumentTypesComponent';
 
 import {NewViewComponent} from './Components/NewViewComponent/NewViewComponent';
-import {Export2ExcelControl} from './Components/Export2ExcelControl/Export2ExcelControl';
+import { Export2ExcelControl } from './Components/Export2ExcelControl/Export2ExcelControl';
+import { ExportBI2ExcelControl } from './Components/ExportBI2ExcelControl/ExportBI2ExcelControl';
 import {QueryColumnsEditComponent} from './Components/QueryColumnsComponents/QueryColumnsEditComponent';
 import { btnComponent } from './Components/QueryColumnsComponents/btnComponent';
 import { btnUpdateComponent } from './Components/QueryColumnsComponents/btnUpdateComponent';
@@ -275,6 +276,7 @@ export const Components =
 
         NewViewComponent,
         Export2ExcelControl,
+        ExportBI2ExcelControl,
         QueryColumnsEditComponent,
         btnComponent, 
         btnUpdateComponent,
@@ -358,6 +360,7 @@ export class ModuleDeclarations {
 
             case 'NewViewComponent': { myResult = NewViewComponent; break; }
             case 'Export2ExcelControl': { myResult = Export2ExcelControl; break; }
+            case 'ExportBI2ExcelControl': { myResult = ExportBI2ExcelControl; break; }
             case 'QueryColumnsEditComponent': { myResult = QueryColumnsEditComponent; break; }
             case 'btnComponent': { myResult = btnComponent; break; }
             case 'btnUpdateComponent': { myResult = btnUpdateComponent; break; }                

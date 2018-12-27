@@ -13,6 +13,8 @@ import { ReportsTemplateListExtendedService } from '../../../Common/Services/Ext
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { BIReportList } from '../../../Infrastructure/EntityLists/BIReportList';
 import { BIReportListService } from '../../../Infrastructure/Services/StandardLists/BIReportListService';
+import { InfrastructureDomainService } from '../../../Infrastructure/Services/InfrastructureDomainService';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     moduleId: './Report/Components/Workspaces/',
@@ -23,12 +25,19 @@ export class BIReportComponent {
   
     public ItemsSource: BIReportList[] = [];
     private BIReportListService: BIReportListService;
+    private InfrastructureDomainService: InfrastructureDomainService;
 
     constructor(private entityResourceService: EntityResourceService) {
         this.LoadData();
+        this.InfrastructureDomainService = new InfrastructureDomainService();
+    }
+
+    InitComponent() {
+
     }
 
     LoadData() {
+        this.ItemsSource = [];
         this.BIReportListService = new BIReportListService();
         this.BIReportListService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -36,6 +45,20 @@ export class BIReportComponent {
                 this.ItemsSource = myResult;
             }
         });
+    }
+
+    FillData() {
+        if (!AppTool.IsNullOrEmpty(this.mySearchText)) {
+            var myResult = this.ItemsSource;
+            this.ItemsSource = [];
+            myResult.forEach((item) => {
+                if (!AppTool.IsNullOrEmpty(item.Name) && item.Name.toUpperCase().indexOf(this.mySearchText.toUpperCase()) > -1
+                    ||
+                    !AppTool.IsNullOrEmpty(item.Name) && item.Name.toUpperCase().indexOf(this.mySearchText.toUpperCase()) > -1) {
+                    this.ItemsSource.push(item);
+                }
+            });
+        }
     }
 
     public NewBIReportButtonClicked() {
@@ -54,24 +77,39 @@ export class BIReportComponent {
         }
     }
 
-    EditBIReportClickedViewBIReportClicked(report: BIReportList) {
-        if (!AppTool.IsNullOrEmpty(report.Id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: report.Id, ObjectTableName: 'BIReport' });
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
+    EditBIReportClicked(report: BIReportList) {
+        this.entityResourceService.getEntityResourceByTableName("BIReport", 0).subscribe(response => {
+            if (!AppTool.IsNullOrEmpty(report.Id)) {
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run({ EntityId: report.Id, ObjectTableName: 'BIReport' });
+                        cmpRef.instance.BackCompleted.subscribe(bk => {
+                        });
                     });
-                });
-        }
+            }
+        });
     }
 
-    ViewBIReportClickedViewBIReportClicked(report: BIReportList) {
-       
+    ViewBIReportClicked(report: BIReportList) {
+
+
+    }
+
+    ExportToExcelClicked(report: BIReportList) {
+        var windowArgs: any = {};
+        windowArgs.queryId = report.DWQueryId;
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 500;
+        logitudeWindow.Height = 200;
+        logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./Infrastructure/Components/ExportBI2ExcelControl/ExportBI2ExcelControl');
     }
 
     public mySearchText: string = null;
     SearchTextChanged(text: string) {
         this.mySearchText = text;
+        this.FillData();
     }
 }
