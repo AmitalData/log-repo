@@ -76,7 +76,7 @@ import { DWQueryBuilderService } from './Services/ExtendedPMs/DWQueryBuilderServ
 import { BIReportListService } from './Services/StandardLists/BIReportListService';
 import { BIReportPMService } from './Services/StandardPMs/BIReportPMService';
 import { BIReportsTypeListService } from './Services/StandardLists/BIReportsTypeListService';
-
+import { WebhookKeysListService } from './Services/StandardLists/WebhookKeysListService';
 
 export class ModuleProviders {
     
@@ -159,7 +159,9 @@ export class ModuleProviders {
             case "TeamListService": { myResult = new TeamListService(); break; }   
             case "TeamPMService": { myResult = new TeamPMService(); break; }   
             case "BatchTaskExecutionPMService": { myResult = new BatchTaskExecutionPMService(); break; } 
-            case "DWQueryBuilderService": { myResult = new DWQueryBuilderService(); break; }        
+            case "DWQueryBuilderService": { myResult = new DWQueryBuilderService(); break; }
+            case "WebhookKeysListService": { myResult = new WebhookKeysListService(); break; }
+                
         }
 
         return myResult;

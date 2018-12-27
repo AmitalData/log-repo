@@ -679,7 +679,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 		   Feature WebhookKeysFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature WebhookKeysFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature WebhookKeysFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WebhookKeysFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.PackageFeature", NameTextCodeDefaultText = "WebhookKeys Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature WebhookKeysFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.PackageFeature", NameTextCodeDefaultText = "WebhookKeys Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature WebhookKeysFeature_WebhookKeys = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WebhookKeys", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.WebhookKeys", NameTextCodeDefaultText = @"Webhook Keys" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 

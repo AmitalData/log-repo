@@ -317,6 +317,15 @@ export class MaintenanceComponent {
                 item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "ApiCredintials")[0].Id
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
+            if (FeatureLocator.HasFeaturePermession("WebhookKeys", "WebhookKeys")) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CMS";
+                item.Icon = "List"
+                item.Code = "WHKS";
+                item.ObjectTableName = "WebhookKeys";
+                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "WebhookKeys")[0].Id
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
             if (FeatureLocator.HasFeaturePermession("APILogs", "APILogs")) {
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "CMS";

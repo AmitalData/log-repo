@@ -30,5 +30,7 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature Code="&quot;WebhookKeys&quot;" FeatureTypeCode="&quot;MENU&quot;" FeatureTextCodeCode="&quot;WebhookKeys.Features.WebhookKeys&quot;" FeatureDefaultText="&quot;Webhook Keys&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>
