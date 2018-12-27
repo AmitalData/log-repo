@@ -121,6 +121,7 @@ import {LogTabsComponent} from './Components/LogitudeComponents/LogTabsComponent
 import { MenuButtonsComponentLoader } from './Components/LogitudeComponents/MenuButtonsComponent/MenuButtonsComponentLoader';
 import { LogWaterMarkComponent } from './Components/Templates/LogWaterMarkComponent';
 import {DWLogSearchWindowFieldsComponent} from './Components/QueryColumnsComponents/DWLogSearchWindowFieldsComponent';
+import { ChooseUserComponent } from './Components/NewViewComponent/ChooseUserComponent';
 
 
 
@@ -282,7 +283,7 @@ export const Components =
         NewEntityComponent,
         LogSearchWindowComponent,
         DWLogSearchWindowComponent,
-
+        ChooseUserComponent,
 
         InfrastructureFieldTemplateComponent,
 
@@ -367,6 +368,7 @@ export class ModuleDeclarations {
             case 'DWLogSearchWindowComponent': { myResult = DWLogSearchWindowComponent; break; }
             case 'StimulsoftViewerComponent': { myResult = StimulsoftViewerComponent; break; }
             case 'TipsComponent': { myResult = TipsComponent; break; }
+            case 'ChooseUserComponent': { myResult = ChooseUserComponent; break; }
 
             case 'ChooseDatesComponent': { myResult = ChooseDatesComponent; break; }
             case 'InfrastructureFieldTemplateComponent': { myResult = InfrastructureFieldTemplateComponent; break; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simplog.Server.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public int Tenant { get; set; }        
         public string UserId { get; set; }
         public string QueryId { get; set; }
+
+        public ChangeSetOperation ChangeSetOp { get; set; }
     }
 }
