@@ -62900,7 +62900,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.View", DefaultText = "View", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Hide", DefaultText = "Hide", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Expand", DefaultText = "Expand", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-   
+
 
             #endregion
 
@@ -64393,7 +64393,7 @@ namespace WebFreight.Web.MetaDataUpdate
         private void LoadTextCodes_QuoteTemplate(Dictionary<string, TextCode> textcodes)
         {
             string objectTableId = ObjectContext.ObjectTables.Where(f => f.Name == "QuoteTemplate" && f.Tenant == 0).FirstOrDefault().Id;
-
+            
             #region Others
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PageHeader", DefaultText = "Page Header", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
@@ -64480,8 +64480,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TotalPerContainerSettings", DefaultText = "Total Per Container Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TotalPerContainerTable", DefaultText = "Total Per Container Table", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowPageBreakBeforeTable", DefaultText = "Show Page Break Before Table", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowTotalinLocalCurrency", DefaultText = "Show Total in Local Currency", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowTotalinSaleCurrency", DefaultText = "Show Total in Sale Currency", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TotalPerContainerDesign", DefaultText = "Total Per Container Design", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PageFooterSettings", DefaultText = "Page Footer Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PricingContainersSettings", DefaultText = "Pricing Containers Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
@@ -64519,6 +64517,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.Loading", DefaultText = "Loading...", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             #endregion
 
+     
 
             ObjectContext.SaveChanges();
         }
@@ -65149,9 +65148,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature GeneralTasksfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TASKS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Tasks", NameTextCodeDefaultText = "Tasks", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature sharedShipmentsfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDSHIPMENTS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.SharedShipments", NameTextCodeDefaultText = "Shared Logistics Shipments", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature sharedInvoicesfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDINVOICES", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.SharedInvoices", NameTextCodeDefaultText = "Shared Logistics Invoices", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature GeneralDepositionsfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEPOSITIONS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Deposition", NameTextCodeDefaultText = "Depositions", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-      
-
+        
             Feature GeneralShippersandConsignee = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPPERSANDCONSIGNEES", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ShippersAndConsignees", NameTextCodeDefaultText = "Shippers and Consignees", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralAgentsfeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AGENTS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Agents", NameTextCodeDefaultText = "Agents", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralCustomAgentsfeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMAGENTS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomAgents", NameTextCodeDefaultText = "CustomAgents", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -65251,6 +65248,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature menuFeature019 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "MENU", Packagable = true, Code = "General.Features.SystemUserPassword", NameTextCodeCode = "General.Features.SystemUserPassword", NameTextCodeDefaultText = "System User Password" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature menuFeature20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "MENU", Packagable = true, Code = "General.Features.Automations", NameTextCodeCode = "General.Features.Automations", NameTextCodeDefaultText = "Automations" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature menuFeature21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, Code = "General.Features.DocumentsBackup", NameTextCodeCode = "General.Features.DocumentsBackup", NameTextCodeDefaultText = "Documents Backup", FeatureTypeCode = "OTH", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature GeneralDepositionsfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEPOSITIONS", ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Deposition", NameTextCodeDefaultText = "Depositions", FeatureTypeCode = "MENU", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
 
             Feature menuFeature025 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, Code = "SIGNATURESETTING", NameTextCodeCode = "General.Features.Signature", NameTextCodeDefaultText = "Signature", FeatureTypeCode = "OTH", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
