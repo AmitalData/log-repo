@@ -97,6 +97,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             A.CallTo(() => bankAccountOnCreatingService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
             A.CallTo(() => bankAccountOnCreatingService.IdCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedParentIdCounter);
             A.CallTo(() => bankAccountOnCreatingService.CodeCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedCodeCounter);
+            A.CallTo(() => bankAccountOnCreatingService.LogActivity(entityPM)).DoesNothing();
 
             // Act
             bankAccountOnCreatingService.OnCreating(entityPM);
