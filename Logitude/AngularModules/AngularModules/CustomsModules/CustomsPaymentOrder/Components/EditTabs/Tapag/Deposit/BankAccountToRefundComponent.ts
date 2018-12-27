@@ -102,10 +102,10 @@ export class BankAccountToRefundComponent
             this.RequestParams.FileNumber = value;
         }
         if (value) {
-            this.UIProperties.SetRequired("FileNumber", null, false);
+            this.UIProperties.SetRequired("FileNumber", this.ObjectTableName, false);
         }
         else {
-            this.UIProperties.SetRequired("FileNumber", null, true);
+            this.UIProperties.SetRequired("FileNumber", this.ObjectTableName, true);
         }
     }
 
@@ -231,12 +231,18 @@ export class BankAccountToRefundComponent
             return;
         }
 
+        this.InternalBankId = null;
+        this.SelectedBankIndex = null;
+        this.BankCode = null;
+        this.AccountBranch = null;
+        this.AccountNumber = null;
+        this.AccountCurrency = null;
+
         switch (this.CountryCode) {
             case "IL": // Israel
                 this.SetIsraelBankFieldsEnabled();
                 break;
             default: // Foreign
-                this.InternalBankId = null;
                 this.SetIsraelBankFieldsDisabled();
                 break;
         }
@@ -244,13 +250,15 @@ export class BankAccountToRefundComponent
 
     SetIsraelBankFieldsDisabled() {
         this.IsraelBankFieldsEnabled = false;
-        this.UIProperties.SetEnabled("InternalBankId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("InternalBankId", null, false);
+        this.UIProperties.SetEnabled("AccountCurrency", null, true);
         this.UIProperties.SetRequired("AccountCurrency", null, true);
     }
 
     SetIsraelBankFieldsEnabled() {
         this.IsraelBankFieldsEnabled = true;
-        this.UIProperties.SetEnabled("InternalBankId", this.ObjectTableName, true);
+        this.UIProperties.SetEnabled("InternalBankId", null, true);
+        this.UIProperties.SetEnabled("AccountCurrency", null, false);
         this.UIProperties.SetRequired("AccountCurrency", null, false);
     }
 
@@ -356,8 +364,8 @@ export class BankAccountToRefundComponent
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.LoggingEntityId = this.declarationId;
         currRequestParams.LoggingObjectTableId = "Customs.Declaration";
-
-        currRequestParams.FileType = "2";//this.FileTypeCode;
+        
+        currRequestParams.FileType = this.FileTypeCode;
         currRequestParams.FileNumber = this.FileNumber;
         currRequestParams.Numeral = this.Numeral;
         currRequestParams.IdentifierType = this.IdentifierType;
