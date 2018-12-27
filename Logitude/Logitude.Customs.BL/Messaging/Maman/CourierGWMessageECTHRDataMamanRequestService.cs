@@ -113,11 +113,17 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 CustomerName = _DeclarationPM.ImporterName??"",
                 CustomerAddress = _DeclarationPM.ImporterAddress??"",
                 CustomerPhone = _DeclarationPM.CasualImporterTel??"",
-                DestLineDesc = "1",//יש לנהל קו הפרדה פר לקוח                יעד הפצה של חברת ההפצה לצורך בניית ממשקים
+//                DestLineDesc = "1",//יש לנהל קו הפרדה פר לקוח                יעד הפצה של חברת ההפצה לצורך בניית ממשקים
+                DestLineDesc = "כללי",// - שינוי בשדה יעד המטען שליחה של "כללי" כברירת מחדל במקום 1
                 BaldarMessageTime = DateTime.Now,
                 BaldarHp = _DeclarationPM.AgentId??"",
                 OpenBaldarAwbDate = GetOpenBaldarAwbDate(this._DeclarationPM),// _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().ThirdCargoID.GetValueOrDefault(),///ThirdCargoID.Consignment
 
+                //Task 46455:
+                DestLineCode = "9999999999",
+                DeclarationId = this._DeclarationPM.DeclarationNumber,
+                CustomIkuv = this._DeclarationPM.CourierSuspentionReasonCode,
+                //Task 46455
 
 
 
@@ -205,6 +211,14 @@ namespace Logitude.Customs.BL.Messaging.Maman
         public string CustomerAddress { get; set; }
         public string CustomerPhone { get; set; }
         public string DestLineDesc { get; set; }
+        //task 46455:
+        public string DestLineCode { get; set; }
+        public string DistributorHP { get; set; }
+        public string DistributorName { get; set; }
+        public string DeclarationId { get; set; }
+        public string CustomIkuv { get; set; }
+        //TAsk 46455.
+
         public DateTime BaldarMessageTime { get; set; }
         public string BaldarHp { get; set; }
         public DateTime OpenBaldarAwbDate { get; set; }
