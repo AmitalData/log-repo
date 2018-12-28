@@ -4,7 +4,7 @@ import {SessionLocator} from '../Utilities/SessionLocator';
 import {AppTool, DateTool} from '../Tools';
 import {UserPM} from '../../Common/EntityPMs/UserPM';
 import {TenantPM} from '../../Common/EntityPMs/TenantPM';
-import {TenantManagementPM} from '../EntityPMs/TenantManagementPM';
+import { TenantManagementJS } from '../DataContracts/TenantManagementJS';
 import {AccountingSettingPM} from '../../Common/EntityPMs/AccountingSettingPM';
 import {CustomsInterfaceSettingPM} from '../../Common/EntityPMs/CustomsInterfaceSettingPM';
 import { SharedLogisticsSettingPM } from '../EntityPMs/SharedLogisticsSettingPM';
@@ -31,12 +31,13 @@ export class ObjectsUpdater {
         ObjectsLocator.LoggedUserPM = value;
     }
 
-    public static UpdateTenantManagementPM(value: TenantManagementPM) {
+    public static UpdateTenantManagementJS(value: TenantManagementJS) {
         if (!value) {
-            value = new TenantManagementPM();
+            value = new TenantManagementJS();
         }
 
-        ObjectsLocator.TenantManagementPM = value;
+        ObjectsLocator.TenantManagementJS = value;
+        SessionLocator.TenantManagementJS = value;
     }
 
     public static UpdateAccountingSettingPM(value: AccountingSettingPM) {

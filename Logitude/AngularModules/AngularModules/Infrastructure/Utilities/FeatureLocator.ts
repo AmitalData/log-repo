@@ -1,10 +1,9 @@
-﻿declare var window: any;
+declare var window: any;
 import {AppTool} from '../Tools';
 import {FeaturePM} from '../EntityPMs/FeaturePM';
 import {SessionLocator} from './SessionLocator';
 import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
 import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
-//import {InfrastructureDomainService} from '../Services/InfrastructureDomainService';
 
 export class FeatureLocator {
     public static DisableRuleValidation: boolean;
@@ -17,8 +16,8 @@ export class FeatureLocator {
         var myResult = false;
 
         if (!AppTool.IsNullOrEmpty(myPackageCode)) {
-            if (SessionLocator.TenantManagementPM != null) {
-                var myPackagesCodes: string[] = SessionLocator.TenantManagementPM.PackagesCodes_PK;
+            if (SessionLocator.TenantManagementJS != null) {
+                var myPackagesCodes: string[] = SessionLocator.TenantManagementJS.PackagesCodes_PK;
 
                 if (myPackagesCodes.length > 0) {
                     var myGroupedList: string[] = [];
@@ -43,13 +42,13 @@ export class FeatureLocator {
         var myResult = false;
 
         if (myCodes.length > 0) {
-            if (SessionLocator.TenantManagementPM != null) {
+            if (SessionLocator.TenantManagementJS != null) {
                 var myPackagesCodes: string[] = [];
 
-                if (SessionLocator.TenantManagementPM.PackagesCodes_PK.length > 0) {
+                if (SessionLocator.TenantManagementJS.PackagesCodes_PK.length > 0) {
                     var myGroupedList: string[] = [];
 
-                    SessionLocator.TenantManagementPM.PackagesCodes_PK.forEach(item => {
+                    SessionLocator.TenantManagementJS.PackagesCodes_PK.forEach(item => {
                         myPackagesCodes.push(item);
 
                         if (myGroupedList.indexOf(item) == -1) {

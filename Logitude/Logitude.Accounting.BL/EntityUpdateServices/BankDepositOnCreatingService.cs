@@ -57,15 +57,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
             // Activity log
-            //if (user != null)
-            //{
-            //    ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-            //    ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("BankDeposit", 0, true);
-            //    ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", user.Id);
-            //}
-
-
-
+            this.LogActivity(entityPM);
+         
         }
 
         public virtual DateTime GetCurrentDateTime(int tenant)
@@ -107,6 +100,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     "BankDeposit", Tenant);
         }
 
+        public virtual void LogActivity(BankDepositPM entityPM)
+        {
+            //Activity Log
+            ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+            ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("BankDeposit", 0, true);
+            var myLoggedUser = GetLoggedContact(entityPM.Tenant);
+            if (myLoggedUser != null)
+            {
+                ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", myLoggedUser.Id);
+            }
+        }
+
     }
 
 
@@ -116,5 +121,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         ContactPM GetLoggedContact(int tenant);
         string IdCounterWrapperGetNumber(int Tenant);
         int CodeCounterWrapperGetNumber(int Tenant);
+        void LogActivity(BankDepositPM entityPM);
     }
 }

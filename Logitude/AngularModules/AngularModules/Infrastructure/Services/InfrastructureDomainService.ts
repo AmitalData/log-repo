@@ -695,6 +695,7 @@ export class InfrastructureDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
 }
 
 export class FeaturesUpdateHelper {

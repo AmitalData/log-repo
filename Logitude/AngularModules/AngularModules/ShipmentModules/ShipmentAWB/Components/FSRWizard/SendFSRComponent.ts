@@ -1,4 +1,4 @@
-﻿declare var System: any, window: any;
+declare var System: any, window: any;
 import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -347,7 +347,7 @@ export class SendFSRComponent {
     get DemoAreaIsVisible() {
         var myResult = false;
 
-        if (this.Tenant == 65 || InfraSettings.TenantManagementPM.IsEAWBOnlyDemo) {
+        if (this.Tenant == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
             myResult = true;
         }
 

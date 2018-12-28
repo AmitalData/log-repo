@@ -19,7 +19,6 @@ import { DWObjectTableListService } from '../../../../Infrastructure/Services/St
 
 @Component({
     moduleId: module.id,
-
     selector: 'DWQueryBuilder',
     templateUrl: './DWQueryBuilderComponent.html',
 })
@@ -174,7 +173,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
     }
     SetWindowArgs(args: any) {
-        //this.QueryId = args.queryId;
+        //this.ID = args.queryId;
         //this.isNewQueryMode = args.isNewQueryMode;
         //this.CurrentObjectTable = args.currentObjectTable;
         //this.IsEnabled = false;

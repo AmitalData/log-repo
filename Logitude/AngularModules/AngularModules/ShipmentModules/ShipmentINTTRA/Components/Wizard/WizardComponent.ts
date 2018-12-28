@@ -40,7 +40,7 @@ export class WizardComponent extends BaseComponent {
         this.myService = new INTRAWebService();
         this.CardListService = new CardListService();
 
-        if (SessionLocator.Tenant == 65 || SessionLocator.TenantManagementPM.IsINTTRAOnlyDemo) {
+        if (SessionLocator.Tenant == 65 || SessionLocator.TenantManagementJS.IsINTTRAOnlyDemo) {
             this.IsDemoAreaVisible = true;
         }
     }

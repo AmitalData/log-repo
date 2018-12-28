@@ -37,7 +37,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(this.MainContext as IAccountingContext);
             List<RevaluationList> revaluations = revaluationListQueryService.GetOpenRevaluationList(entityPM.Tenant);
-            if (revaluations != null)
+            if (revaluations != null && revaluations.Count > 0)
             {
                 throw new ApplicationException(TextCodesTranslator.TranslateText("Revaluations.Q.OpenRevaluations", entityPM.Tenant));
             }

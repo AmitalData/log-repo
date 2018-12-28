@@ -30,10 +30,11 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     public DataContext: TenantManagementGeneralTabComponent = this;
     public ObjectTableName: string = "TenantManagement";
     public EntityPM: TenantManagementPM;
+    private iGlobalDomainService: GlobalDomainService;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
-
+        this.iGlobalDomainService = new GlobalDomainService();
         this.LoadParentTenants();
         this.Listen();
     }
@@ -48,14 +49,14 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    InfraSettings.TenantManagementPM = this.EntityPM;
+                    this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
                 }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    InfraSettings.TenantManagementPM = this.EntityPM;
+                    this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
                 }
             });
         }
@@ -300,9 +301,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     }
 
     private LoadParentTenants() {
-        var service: GlobalDomainService = new GlobalDomainService();
-
-        service.GetParentTenants().subscribe((myResponse: ServiceResponse) => {
+        this.iGlobalDomainService.GetParentTenants().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var myList: TenantManagementList[] = myResponse.Result
 
