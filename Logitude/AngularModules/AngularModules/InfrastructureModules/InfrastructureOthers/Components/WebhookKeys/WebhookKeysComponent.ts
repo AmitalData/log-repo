@@ -1,273 +1,208 @@
-//import {Component} from '@angular/core';
-//import { WebhookKeysPM } from '../../../../Infrastructure/EntityPMs/WebhookKeys';
-//import { WebhookKeysPMService } from '../../../../Infrastructure/Services/StandardPMs/WebhookKeysPMService';
-//import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-//import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-//import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-//import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-//import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
-//import {Validator} from '../../../../Infrastructure/Validators/Validator';
+import {Component} from '@angular/core';
+import { WebhookKeysPM } from '../../../../Infrastructure/EntityPMs/WebhookKeysPM';
+import { WebhookKeysPMService } from '../../../../Infrastructure/Services/StandardPMs/WebhookKeysPMService';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
+import {Validator} from '../../../../Infrastructure/Validators/Validator';
 
-//@Component({
-//    moduleId: module.id,
-//    templateUrl: './WebhookKeysComponent.html',
-//})
+@Component({
+    moduleId: module.id,
+    templateUrl: './WebhookKeysComponent.html',
+})
 
-//export class WebhookKeysComponent extends BaseComponent {
-//    public EntityPM: ApiCredintialsPM = null;
-//    public ObjectTableName = "ApiCredintials";
-//    public DataContext = this;
-//    public EntityId: string = null;
-//    public IsNewEntity: boolean = false;
-//    public ValidationErrorsList: string[] = [];
-//    public IsEntityReady: boolean = false;
-//    public IsResourcesReady: boolean = false;
-//    private myService: ApiCredintialsPMService;
-//    private isPrimaryGenerated: boolean = false;
-//    private isSecondaryGenerated: boolean = false;
-//    constructor(private entityResourceService: EntityResourceService) {
-//        super();
-//        this.myService = new ApiCredintialsPMService();
-//    }
+export class WebhookKeysComponent extends BaseComponent {
+    public EntityPM: WebhookKeysPM = null;
+    public ObjectTableName = "WebhookKeys";
+    public DataContext = this;
+    public EntityId: string = null;
+    public IsNewEntity: boolean = false;
+    public ValidationErrorsList: string[] = [];
+    public IsEntityReady: boolean = false;
+    public IsResourcesReady: boolean = false;
+    private myService: WebhookKeysPMService;
+    private isPrimaryGenerated: boolean = false;
+    private isSecondaryGenerated: boolean = false;
+    constructor(private entityResourceService: EntityResourceService) {
+        super();
+        this.myService = new WebhookKeysPMService();
+    }
 
-//    SetWindowArgs(args: any) {
-//        this.EntityId = args['EntityId'];
-//        this.InitializeComponent();
-//    }
-//    SetNewWizardArgs(args: any) {
-//        this.IsNewEntity = args['IsNewEntity'];
-//        this.InitializeComponent();
-//    }
-//    InitializeComponent() {
-//        this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
+    SetWindowArgs(args: any) {
+        this.EntityId = args['EntityId'];
+        this.InitializeComponent();
+    }
+    SetNewWizardArgs(args: any) {
+        this.IsNewEntity = args['IsNewEntity'];
+        this.InitializeComponent();
+    }
+    InitializeComponent() {
+        this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
 
-//            this.IsResourcesReady = true;
+            this.IsResourcesReady = true;
 
-//            if (this.IsNewEntity) {
-//                this.EntityPM = new ApiCredintialsPM();
-//                this.EntityPM.Tenant = SessionLocator.Tenant;
-//                this.EntityPM.AllowedIPs = "*";
-//                this.EntityPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
-//                this.EntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-//                this.EntityPM.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
-//                this.EntityPM.UpdatedBy = SessionLocator.LoggedUserPM.EnglishName;
-//                this.IsEntityReady = true;
-//            }
+            if (this.IsNewEntity) {
+                this.EntityPM = new WebhookKeysPM();
+                this.EntityPM.Tenant = SessionLocator.Tenant;
+                this.EntityPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
+                this.EntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc(); 
+                this.EntityPM.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+                this.EntityPM.UpdatedByUserName = SessionLocator.LoggedUserPM.EnglishName; 
+                this.IsEntityReady = true;
+            }
 
-//            else {
+            else {
 
-//                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
 
-//                this.myService.get(this.EntityId).subscribe((myResponse: ServiceResponse) => {
-//                    if (myResponse.HasError) {
-//                        this.ValidationErrorsList = myResponse.ErrorsArray;
-//                    }
+                this.myService.get(this.EntityId).subscribe((myResponse: ServiceResponse) => {
+                    if (myResponse.HasError) {
+                        this.ValidationErrorsList = myResponse.ErrorsArray;
+                    }
 
-//                    else {
-//                        this.EntityPM = myResponse.Result;
+                    else {
+                        this.EntityPM = myResponse.Result;
 
-//                        if (this.EntityPM) {
-//                            this.IsEntityReady = true;
-//                        }
-//                    }
+                        if (this.EntityPM) {
+                            this.IsEntityReady = true;
+                        }
+                    }
 
-//                    SessionLocator.CurrentSession.StopBusyIndicator();
-//                });
-//            }
-//        });
-//    }
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                });
+            }
+        });
+    }
+    /*
+        Id: string;
+		AccessKey: string;
+		Tenant: number;
+		PartnerName: string;
+		InActive: boolean;
+		CreatedByUserName: string;
+		CreateDate: Date;
+		UpdatedByUserName: string;
+		UpdateDate: Date;
+		Description: string;
+    */
+    get Description() { return this.EntityPM.Description; }
+    set Description(value: string) {
+        if (this.EntityPM.Description != value) {
+            this.EntityPM.Description = value;
+        }
+    }
 
-//    get UsedFor() { return this.EntityPM.UsedFor; }
-//    set UsedFor(value: string) {
-//        if (this.EntityPM.UsedFor != value) {
-//            this.EntityPM.UsedFor = value;
-//        }
-//    }
+    get AccessKey() { return this.EntityPM.AccessKey; }
+    set AccessKey(value: string) {
+        if (this.EntityPM.AccessKey != value) {
+            this.EntityPM.AccessKey = value;
+        }
+    }
 
-//    get AllowedIPs() { return this.EntityPM.AllowedIPs; }
-//    set AllowedIPs(value: string) {
-//        if (this.EntityPM.AllowedIPs != value) {
-//            this.EntityPM.AllowedIPs = value;
-//        }
-//    }
+    get PartnerName() { return this.EntityPM.PartnerName; }
+    set PartnerName(value: string) {
+        if (this.EntityPM.PartnerName != value) {
+            this.EntityPM.PartnerName = value;
+        }
+    }
 
-//    get HashedPrimaryAccessKey() {
+    get InActive() { return this.EntityPM.InActive; }
+    set InActive(value: boolean) {
+        if (this.EntityPM.InActive != value) {
+            this.EntityPM.InActive = value;
+        }
+    }
 
-//        if (AppTool.IsNullOrEmpty(this.EntityPM.HashedPrimaryAccessKey)) {
-//            this.EntityPM.HashedPrimaryAccessKey = AppTool.GetNewGuid();
-//        }
+     
 
-//        if (this.IsNewEntity || this.isPrimaryGenerated) {
-//            return this.EntityPM.HashedPrimaryAccessKey;
-//        }
+    get CreatedByUserName() { return this.EntityPM.CreatedByUserName; }
+    set CreatedByUserName(value: string) {
+        if (this.EntityPM.CreatedByUserName != value) {
+            this.EntityPM.CreatedByUserName = value;
+        }
+    }
 
-//        else {
-//            return this.EntityPM.MaskedPrimaryAccessKey;
-//        }
-//    }
-//    set HashedPrimaryAccessKey(value: string) {
-//        if (this.EntityPM.HashedPrimaryAccessKey != value) {
-//            this.EntityPM.HashedPrimaryAccessKey = value;
-//        }
-//    }
+    get UpdatedByUserName() { return this.EntityPM.UpdatedByUserName; }
+    set UpdatedByUserName(value: string) {
+        if (this.EntityPM.UpdatedByUserName != value) {
+            this.EntityPM.UpdatedByUserName = value;
+        }
+    }
 
-//    get HashedSeconderyAccessKey() {
+    get CreateDate() { return this.EntityPM.CreateDate; }
+    set CreateDate(value: Date) {
+        if (this.EntityPM.CreateDate != value) {
+            this.EntityPM.CreateDate = value;
+        }
+    }
 
-//        if (AppTool.IsNullOrEmpty(this.EntityPM.HashedSeconderyAccessKey)) {
-//            this.EntityPM.HashedSeconderyAccessKey = AppTool.GetNewGuid();
-//        }
+    get UpdateDate() { return this.EntityPM.UpdateDate; }
+    set UpdateDate(value: Date) {
+        if (this.EntityPM.UpdateDate != value) {
+            this.EntityPM.UpdateDate = value;
+        }
+    }
+     
+    GeneratePrimaryKeyClicked() {
+        this.isPrimaryGenerated = true;
+        this.AccessKey = AppTool.GetNewGuid();
+    }
+     
+    CancelButtonClicked() {        
+        SessionLocator.CurrentSession.CloseCurrentWindow();
+    }
 
-//        if (this.IsNewEntity || this.isSecondaryGenerated) {
-//            return this.EntityPM.HashedSeconderyAccessKey;
-//        }
+    OkButtonClicked() {
+        var errors: string[] = [];
 
-//        else {
-//            return this.EntityPM.MaskedSeconderyAccessKey;
-//        }
-//    }
-//    set HashedSeconderyAccessKey(value: string) {
-//        if (this.EntityPM.HashedSeconderyAccessKey != value) {
-//            this.EntityPM.HashedSeconderyAccessKey = value;
-//        }
-//    }
+        //if (!AppTool.IsNullOrEmpty(this.UsedFor) && !AppTool.IsNullOrEmpty(this.AllowedIPs)) {
+        //    this.MaskedPrimaryAccessKey = this.CreateMaskedString(this.HashedPrimaryAccessKey);
+        //    this.MaskedSeconderyAccessKey = this.CreateMaskedString(this.HashedSeconderyAccessKey);
+        //}
 
-//    get MaskedPrimaryAccessKey() { return this.EntityPM.MaskedPrimaryAccessKey; }
-//    set MaskedPrimaryAccessKey(value: string) {
-//        if (this.EntityPM.MaskedPrimaryAccessKey != value) {
-//            this.EntityPM.MaskedPrimaryAccessKey = value;
-//        }
-//    }
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
-//    get MaskedSeconderyAccessKey() { return this.EntityPM.MaskedSeconderyAccessKey; }
-//    set MaskedSeconderyAccessKey(value: string) {
-//        if (this.EntityPM.MaskedSeconderyAccessKey != value) {
-//            this.EntityPM.MaskedSeconderyAccessKey = value;
-//        }
-//    }
+        this.ValidationErrorsList = errors;
 
-//    get CreatedBy() { return this.EntityPM.CreatedBy; }
-//    set CreatedBy(value: string) {
-//        if (this.EntityPM.CreatedBy != value) {
-//            this.EntityPM.CreatedBy = value;
-//        }
-//    }
+        if (errors.length == 0) {           
 
-//    get UpdatedBy() { return this.EntityPM.UpdatedBy; }
-//    set UpdatedBy(value: string) {
-//        if (this.EntityPM.UpdatedBy != value) {
-//            this.EntityPM.UpdatedBy = value;
-//        }
-//    }
+            if (this.IsNewEntity) {
 
-//    get CreateDate() { return this.EntityPM.CreateDate; }
-//    set CreateDate(value: Date) {
-//        if (this.EntityPM.CreateDate != value) {
-//            this.EntityPM.CreateDate = value;
-//        }
-//    }
+                SessionLocator.CurrentSession.StartBusyIndicatorCreating();
 
-//    get UpdateDate() { return this.EntityPM.UpdateDate; }
-//    set UpdateDate(value: Date) {
-//        if (this.EntityPM.UpdateDate != value) {
-//            this.EntityPM.UpdateDate = value;
-//        }
-//    }
+                this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-//    get ComputingPartnerId() { return this.EntityPM.ComputingPartnerId; }
-//    set ComputingPartnerId(value: string) {
-//        if (this.EntityPM.ComputingPartnerId != value) {
-//            this.EntityPM.ComputingPartnerId = value;
-//        }
-//    }
-    
+                    SessionLocator.CurrentSession.StopBusyIndicator();
 
-//    GeneratePrimaryKeyClicked() {
-//        this.isPrimaryGenerated = true;
-//        this.HashedPrimaryAccessKey = AppTool.GetNewGuid();
-//    }
+                    if (myResponse.HasError) {
+                        this.ValidationErrorsList = myResponse.ErrorsArray;
+                    }
 
-//    GenerateSeconderyKeyClicked() {
-//        this.isSecondaryGenerated = true;
-//        this.HashedSeconderyAccessKey = AppTool.GetNewGuid();
-//    }
+                    else {
+                        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                    }
+                });
+            }
 
-//    CreateMaskedString(Key: string) {
-//        var maskedPKey: string = "";
+            else {
 
-//        if (!AppTool.IsNullOrEmpty(Key)) {
-//            var i: number = 0;
+                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
 
-//            for (var index = 0; index < Key.length; index++) {
-//                var item = Key[index];
+                this.myService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-//                if (item != '-' && i < 32) {
-//                    maskedPKey += "*";
-//                }
+                    SessionLocator.CurrentSession.StopBusyIndicator();
 
-//                else {
-//                    maskedPKey += item;
-//                }
+                    if (myResponse.HasError) {
+                        this.ValidationErrorsList = myResponse.ErrorsArray;
+                    }
 
-//                i++;
-//            }
-//        }
-
-//        return maskedPKey;
-//    }
-
-//    CancelButtonClicked() {        
-//        SessionLocator.CurrentSession.CloseCurrentWindow();
-//    }
-
-//    OkButtonClicked() {
-//        var errors: string[] = [];
-
-//        if (!AppTool.IsNullOrEmpty(this.UsedFor) && !AppTool.IsNullOrEmpty(this.AllowedIPs)) {
-//            this.MaskedPrimaryAccessKey = this.CreateMaskedString(this.HashedPrimaryAccessKey);
-//            this.MaskedSeconderyAccessKey = this.CreateMaskedString(this.HashedSeconderyAccessKey);
-//        }
-
-//        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-
-//        this.ValidationErrorsList = errors;
-
-//        if (errors.length == 0) {           
-
-//            if (this.IsNewEntity) {
-
-//                SessionLocator.CurrentSession.StartBusyIndicatorCreating();
-
-//                this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-
-//                    SessionLocator.CurrentSession.StopBusyIndicator();
-
-//                    if (myResponse.HasError) {
-//                        this.ValidationErrorsList = myResponse.ErrorsArray;
-//                    }
-
-//                    else {
-//                        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
-//                    }
-//                });
-//            }
-
-//            else {
-
-//                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-
-//                this.myService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-
-//                    SessionLocator.CurrentSession.StopBusyIndicator();
-
-//                    if (myResponse.HasError) {
-//                        this.ValidationErrorsList = myResponse.ErrorsArray;
-//                    }
-
-//                    else {
-//                        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
-//                    }
-//                });
-//            }            
-//        }
-//    }
-//}
+                    else {
+                        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                    }
+                });
+            }            
+        }
+    }
+}

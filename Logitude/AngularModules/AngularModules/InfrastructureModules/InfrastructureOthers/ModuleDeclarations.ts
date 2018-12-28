@@ -1,4 +1,4 @@
-﻿import {ApiCredintialsComponent} from './Components/ApiCredintials/ApiCredintialsComponent';
+import {ApiCredintialsComponent} from './Components/ApiCredintials/ApiCredintialsComponent';
 import {DatabaseBackupComponent} from './Components/CustomizeLogitude/DatabaseBackupComponent';
 import {TermsOfUseStartupComponent} from './Components/TermsOfUse/TermsOfUseStartupComponent';
 import {TermsofUseSignatureComponent} from './Components/TermsOfUse/TermsofUseSignatureComponent';
@@ -15,7 +15,8 @@ import {CreateTenantValidationScreenComponent} from './Components/CreateTenant/C
 import {TenantLoginPolicyComponent} from './Components/TenantSecurityPolicy/TenantLoginPolicyComponent';
 import {ErrorLogExceptionComponent} from './Components/ErrorLog/ErrorLogExceptionComponent';
 import {MoveTypeGeneralTabComponent} from './Components/MoveType/MoveTypeGeneralTabComponent';
-import {NewMoveTypeComponent} from './Components/MoveType/NewMoveTypeComponent';
+import { NewMoveTypeComponent } from './Components/MoveType/NewMoveTypeComponent';
+import { WebhookKeysComponent } from './Components/WebhookKeys/WebhookKeysComponent';
 
 export const Components =
     [
@@ -37,6 +38,7 @@ export const Components =
         HybridTenantThresholdComponent,
         ErrorLogExceptionComponent,
         NewMoveTypeComponent,
+        WebhookKeysComponent,
 
     ];
 
@@ -64,6 +66,8 @@ export class ModuleDeclarations {
             case "HybridTenantThresholdComponent": { myResult = HybridTenantThresholdComponent; break; }
             case "ErrorLogExceptionComponent": { myResult = ErrorLogExceptionComponent; break; }
             case "NewMoveTypeComponent": { myResult = NewMoveTypeComponent; break; }
+            case "WebhookKeysComponent": { myResult = WebhookKeysComponent; break; }
+
 
         }
 

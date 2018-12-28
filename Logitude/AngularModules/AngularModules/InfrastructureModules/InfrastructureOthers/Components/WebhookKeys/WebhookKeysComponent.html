@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -11,14 +11,14 @@
             <div class="MediaFill" *ngIf="IsResourcesReady">
                 <table *ngIf="IsEntityReady">
 
-                    <!-- UsedFor -->
+                    <!-- Description -->
                     <tr class="FormFieldRow">
                         <td style="width: 150px;">
-                            <LogLabel [ObjectFieldName]="'UsedFor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td style="width: 450px;">
-                            <LogTextBox [ObjectFieldName]="'UsedFor'" [Text]="UsedFor" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'Description'" [Text]="UsedFor" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                         </td>
 
                         <td>
@@ -26,14 +26,14 @@
                         </td>
                     </tr>
 
-                    <!-- AllowedIPs -->
+                    <!-- PartnerName -->
                     <tr class="FormFieldRow">
                         <td>
-                            <LogLabel [ObjectFieldName]="'AllowedIPs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'PartnerName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
-                            <LogTextBox [ObjectFieldName]="'AllowedIPs'" [Text]="AllowedIPs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'PartnerName'" [Text]="AllowedIPs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                         </td>
 
                         <td>
@@ -44,14 +44,14 @@
                     <!-- PrimaryAccessKey -->
                     <tr class="FormFieldRow">
                         <td>
-                            <LogLabel [ObjectFieldName]="'HashedPrimaryAccessKey'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'AccessKey'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
                             <table>
                                 <tr>
                                     <td>
-                                        <input type="text" [attr.value]="HashedPrimaryAccessKey" readonly style="background: #E6E7E8; font-size: 12px;">
+                                        <input type="text" [attr.value]="AccessKey" readonly style="background: #E6E7E8; font-size: 12px;">
                                     </td>
 
                                     <td style="width: 2px;">
@@ -60,39 +60,6 @@
 
                                     <td style="width: 80px;">
                                         <button class="Button" (click)="GeneratePrimaryKeyClicked()">Generate</button>
-                                    </td>
-
-                                    <td style="width: 36px;">
-                                        <div></div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-
-                    <!-- SeconderyAccessKey -->
-                    <tr class="FormFieldRow">
-                        <td>
-                            <LogLabel [ObjectFieldName]="'HashedSeconderyAccessKey'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
-
-                        <td>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <input type="text" [attr.value]="HashedSeconderyAccessKey" readonly style="background: #E6E7E8; font-size: 12px;">
-                                    </td>
-
-                                    <td style="width: 2px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width: 80px;">
-                                        <button class="Button" (click)="GenerateSeconderyKeyClicked()">Generate</button>
                                     </td>
 
                                     <td style="width: 36px;">
@@ -126,11 +93,11 @@
                     <!-- CreatedBy -->
                     <tr class="FormFieldRow" *ngIf="!IsNewEntity">
                         <td>
-                            <LogLabel [ObjectFieldName]="'CreatedBy'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'CreatedByUserName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td style="width: 450px;">
-                            <span class="Value">{{CreatedBy}}</span>
+                            <span class="Value">{{CreatedByUserName}}</span>
                         </td>
 
                         <td>
@@ -157,29 +124,11 @@
                     <!-- UpdatedBy -->
                     <tr class="FormFieldRow" *ngIf="!IsNewEntity">
                         <td>
-                            <LogLabel [ObjectFieldName]="'UpdatedBy'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'UpdatedByUserName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
-                            <span class="Value">{{UpdatedBy}}</span>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-
-
-                    <tr class="FormFieldRow" >
-                        <td>
-                            <LogLabel [ObjectFieldName]="'ComputingPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
-
-                        <td>
-                            <div style="width:250px">
-                                <LogLov [ObjectFieldName]="'ComputingPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [LookUpTableName]="'ComputingPartner'"></LogLov>
-                            </div>
-                           
+                            <span class="Value">{{UpdatedByUserName}}</span>
                         </td>
 
                         <td>
@@ -187,14 +136,28 @@
                         </td>
                     </tr>
 
+                    <tr class="FormFieldRow" *ngIf="!IsNewEntity">
+                        <td>
+                            <label style="margin-left:10px;">In Active</label>
+                        </td>
 
+                        <td>
+                            <LogCheckBox [ObjectFieldName]="'InActive'" [DataContext]="DataContext" style="float:left;"></LogCheckBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                     
 
                     <!--<tr class="FormFieldRow" style="vertical-align:top">
-                        <td style="width:5px"><div></div></td>
-                        <td style="width:120px;">  <LogLabel [ObjectFieldName]="'DocumentTypeCategoryCode'" [Text]="'Category'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
-                        <td style="width:230px"><LogLov style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'DocumentTypeCategoryCode'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM" [LookUpTableName]="'DocumentTypeCategory'"></LogLov></td>
-                        <td><div></div></td>
-                    </tr>-->
+        <td style="width:5px"><div></div></td>
+        <td style="width:120px;">  <LogLabel [ObjectFieldName]="'DocumentTypeCategoryCode'" [Text]="'Category'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
+        <td style="width:230px"><LogLov style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'DocumentTypeCategoryCode'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM" [LookUpTableName]="'DocumentTypeCategory'"></LogLov></td>
+        <td><div></div></td>
+    </tr>-->
                     <tr>
                         <td colspan="3">
                             <div></div>
