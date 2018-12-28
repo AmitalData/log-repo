@@ -276,14 +276,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
                 Tenant iTenant = (from d in commonDataContext.Tenants where d.Id == tenant select d).FirstOrDefault();
-                List<string> allTextCodesIds = myResult.Where(d=> d.NameTextCodeId != null).Select(s => s.NameTextCodeId).ToList();
+                List<string> allTextCodesIds = myResult.Where(d => d.NameTextCodeId != null).Select(s => s.NameTextCodeId).ToList();
                 List<TextCode> allTextCodes = (from d in webFreightContext.TextCodes where allTextCodesIds.Contains(d.Id) select d).ToList();
                 List<Translation> allTranslations = new List<Translation>();
 
                 if (iTenant.Language != null)
                 {
                     TranslationHeader iTranslationHeader = (from d in webFreightContext.TranslationHeaders where d.Code == iTenant.Language select d).FirstOrDefault();
-                    if(iTranslationHeader != null)
+                    if (iTranslationHeader != null)
                     {
                         allTranslations = (from d in webFreightContext.Translations
                                            where d.TranslationHeaderCode == iTranslationHeader.Code
@@ -303,7 +303,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             item.TranslatedName = iTextCode.DefaultText;
 
                             Translation iTranslation = allTranslations.Where(d => d.TextCodeId == item.NameTextCodeId).FirstOrDefault();
-                            if(iTranslation != null)
+                            if (iTranslation != null)
                             {
                                 item.TranslatedName = iTranslation.TranslatedText;
                             }
@@ -500,7 +500,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             this.BuildFeatureChangesAdded(ref myFeatureChanges, featuresAdded);
                             this.BuildFeatureChangesRemoved(ref myFeatureChanges, featuresRemoved);
 
-                            if(myFeatureChanges != null)
+                            if (myFeatureChanges != null)
                             {
                                 string loggedUserEmail = authToken.Email;
                                 string loggedUserId = this.GetLoggedUserId(loggedUserEmail, tenant);
@@ -946,7 +946,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                         UserName = d.User == null ? null : d.User.Contact.EnglishName,
                                                     }).ToList();
 
-                return Request.CreateResponse(HttpStatusCode.OK, myResult.OrderByDescending(d=> d.EventDateTime));
+                return Request.CreateResponse(HttpStatusCode.OK, myResult.OrderByDescending(d => d.EventDateTime));
             }
 
             catch (Exception ex)
@@ -1167,7 +1167,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("TenantManagement", "TenantManagement.Action.EraseData", tenant);
 
@@ -1178,11 +1178,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 if (!string.IsNullOrEmpty(authToken.Email))
                 {
                     Contact contact = contactRepository.GetSingleContactByEmail(authToken.Email, tenant);
-                    if(contact != null)
+                    if (contact != null)
                     {
                         User user = userRepository.GetSingleUser(contact.Id, tenant);
 
-                        if(user == null)
+                        if (user == null)
                         {
                             throw new Exception("Not a user");
                         }
@@ -1205,7 +1205,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     ip = HttpContext.Current.Request.UserHostAddress;
                 }
 
-                if(string.IsNullOrEmpty(ip) && ip != "82.213.2.230")
+                if (string.IsNullOrEmpty(ip) && ip != "82.213.2.230")
                 {
                     throw new Exception("Not logged in from company IP");
                 }
@@ -1299,7 +1299,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         public HttpResponseMessage GetResetCountersForTenant(int entityId, string code)
         {
             try
@@ -1308,7 +1308,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
-                IWebFreightContext webFreightContext = WebFreightContext.GetContext(entityId); 
+                IWebFreightContext webFreightContext = WebFreightContext.GetContext(entityId);
                 CounterRepository counterRepository = new CounterRepository(webFreightContext);
                 CounterDefinitionRepository counterDefRep = new CounterDefinitionRepository(webFreightContext);
                 CounterStatRepository counterStatRep = new CounterStatRepository(webFreightContext);
@@ -1558,7 +1558,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 //IQueryable<TaskSchedulerHistory> iQueryable = taskSchedulerHistoryRepository.GetTaskSchedulerHistory(tenant, taskId);                
                 //IQueryable<TaskSchedulerHistoryList> query2 = taskSchedulerHistoryQuery.GetIQueryableEntityList(iQueryable);
-                
+
                 return Request.CreateResponse(HttpStatusCode.OK, query2);
             }
 
@@ -1627,6 +1627,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
     }
 }
 

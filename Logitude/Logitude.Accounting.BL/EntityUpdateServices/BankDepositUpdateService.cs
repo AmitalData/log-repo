@@ -40,14 +40,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             bankDepositOnCreatingService.OnCreating(entityPM);
 
 
-            //Activity Log
-            ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-            ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("BankDeposit", 0, true);
-            var myLoggedUser = GetLoggedContact(entityPM.Tenant);
-            if (myLoggedUser != null)
-            {
-                ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", myLoggedUser.Id);
-            }
+           
         }
 
         protected override void OnUpdating(BankDepositPM entityPM)

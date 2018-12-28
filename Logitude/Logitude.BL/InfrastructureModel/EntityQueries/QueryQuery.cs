@@ -36,7 +36,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public QueryPM GetSingleQueryPM(string id, int tenant)
         {
             QueryPM result =
-            (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
+            (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode").Include("SharedByUser")
              where a.Id == id && (a.Tenant == tenant || a.Tenant == 0)
              select new QueryPM()
              {
@@ -74,25 +74,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  SharedWithAll = a.SharedWithAll,
                  SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                  SharedByUserId = a.SharedByUserId,
+                 SharedByUserName = a.SharedByUser == null ? null : a.SharedByUser.Contact.EnglishName,
                  SpotlightModeActivated = a.SpotlightModeActivated,
-
              }).FirstOrDefault();
 
-            //if (result != null)
-            //{
-            //    if (!string.IsNullOrEmpty(result.NameTextCodeCode))
-            //    {
-            //        result.QueryLabel = TranslateTextsClass.Translate(result.NameTextCodeCode, result.Tenant);
-            //    }
-
-            //    else
-            //    {
-            //        result.QueryLabel = result.Code;
-            //    }
-            //}
-
+            SharedUserQueryQuery sharedUserQueryQuery = new SharedUserQueryQuery(tenant);
+            result.SharedUserQueries = sharedUserQueryQuery.GetSharedUserQueriesForQuery(result.Id, tenant).ToList();            
+            
             return result;
-
         }
 
         public QueryPM GetSingleQueryPM(string id)
@@ -259,26 +248,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        SharedByUserId = a.SharedByUserId,
                        SpotlightModeActivated = a.SpotlightModeActivated,
 
-                   }).ToList();
-
-            //TranslationRepository translationRepository=new TranslationRepository(tenant);
-            //Dictionary<string, Translation> translations = translationRepository.GetTranslationsByTenantDictionary(tenant);
+                   }).ToList();          
             
-            //foreach (QueryPM item in queries)
-            //{
-            //    if (!string.IsNullOrEmpty(item.NameTextCodeCode))
-            //    {
-            //        item.QueryLabel = TranslateTextsClass.Translate(item.NameTextCodeCode, item.Tenant);
-            //    }
-
-            //    else
-            //    {
-            //        item.QueryLabel = item.Code;
-            //    }
-            //}
-
             return queries;
-
         }
 
         public IQueryable<QueryPM> GetQueryPMsByTenantSystemLevel(int tenant)
@@ -519,14 +491,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return query.AsQueryable().OrderBy(d => d.IndexOrder);
 
         }
-
-
-
-
-
-
-
-
+        
         public List<QueryPM> GetQueriesByObjectTableAndUserId(string userid, string objectTableId ,int tenant)
         {
             List<QueryPM> queries = (from a in repository.context.Queries.Include("NameTextCode")
@@ -573,10 +538,5 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return queries;
 
         }
-
-
-
-
-
     }
 }

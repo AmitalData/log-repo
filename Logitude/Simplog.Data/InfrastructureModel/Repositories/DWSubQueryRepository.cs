@@ -66,6 +66,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return webFreightContext.DWSubQueries.Where(a => a.Id == Id && a.Tenant == Tenant).FirstOrDefault();
         }
 
+        public DWSubQuery GetSingleDWSubQueryByDWQueryId(string DWQueryId, int Tenant)
+        {
+            return webFreightContext.DWSubQueries.Where(a => a.DWQueryId == DWQueryId && a.Tenant == Tenant).FirstOrDefault();
+        }
+
         public IQueryable<DWSubQuery> GetDWSubQueriesForDWQuery(string DWQueryId, int Tenant)
         {
             return webFreightContext.DWSubQueries.Where(a => a.DWQueryId == DWQueryId && a.Tenant == Tenant);
