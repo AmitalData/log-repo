@@ -575,6 +575,11 @@
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationFollowUp.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationQueuedTask.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationSetValue.ts" />
+    <TypeScriptCompile Include="Infrastructure\DataContracts\ChangePasswordParameter.ts" />
+    <TypeScriptCompile Include="Infrastructure\DataContracts\ComponentArgs.ts" />
+    <TypeScriptCompile Include="Infrastructure\DataContracts\KeyCode.ts" />
+    <TypeScriptCompile Include="Infrastructure\DataContracts\ParameterComponentArgs.ts" />
+    <TypeScriptCompile Include="Infrastructure\DataContracts\TenantManagementJS.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BIReportList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BIReportsTypeList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BusinessProcessQueueList.ts" />

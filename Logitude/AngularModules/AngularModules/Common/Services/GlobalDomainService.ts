@@ -2,20 +2,13 @@ import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Rx';
-import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
-import {TenantManagementList} from '../../Infrastructure/EntityLists/TenantManagementList';
+import { TenantManagementList } from '../../Infrastructure/EntityLists/TenantManagementList';
+import { BatchServicesDefinitionPM } from '../../Infrastructure/EntityPMs/BatchServicesDefinitionPM';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
-import {ARInvoicePM} from '../../Invoice/EntityPMs/ARInvoicePM';
-import {Guid} from '../../Infrastructure/Utilities/Guid';
-
-import {ARInvoiceLinePM} from '../../Invoice/EntityPMs/ARInvoiceLinePM';
-import {ARInvoiceEntityPM} from '../../Invoice/EntityPMs/ARInvoiceEntityPM';
-import {ARInvoicePaymentPM} from '../../Invoice/EntityPMs/ARInvoicePaymentPM';
-import {ARInvoiceTransferHistoryPM} from '../../Invoice/EntityPMs/ARInvoiceTransferHistoryPM';
-import {ConstituentPM} from '../../Invoice/EntityPMs/ConstituentPM';
-import {ARInvoiceValidator} from '../../Invoice/Validators/ARInvoiceValidator';
-import {BatchServicesDefinitionPM} from '../../Infrastructure/EntityPMs/BatchServicesDefinitionPM';
+import { TenantManagementPM } from '../../Infrastructure/EntityPMs/TenantManagementPM';
+import { TenantManagementJS } from '../../Infrastructure/DataContracts/TenantManagementJS';
+import { ObjectsUpdater } from '../../Infrastructure/Locators/ObjectsUpdater';
 
 @Injectable()
 
@@ -426,5 +419,79 @@ export class GlobalDomainService {
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
+    }
+
+    GetTenantManagementJS() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetTenantManagementJS?';
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var iResultJson = response.json();
+                var iResultMapped: TenantManagementJS;
+
+                if (iResultJson) {
+                    iResultMapped = this.MapTenantManagementJS(iResultJson);
+                }
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = iResultMapped;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    MapTenantManagementJS(jsonList: any) {
+
+        var entityList: TenantManagementJS = new TenantManagementJS();
+        var jsonListKeys = Object.keys(jsonList);
+
+        for (var key in jsonListKeys) {
+            var property = jsonListKeys[key];
+            entityList[property] = jsonList[property];
+        }
+
+        return entityList;
+    }
+    UpdateTenantManagementJS(entityPM: TenantManagementPM) {
+        var myResult: TenantManagementJS = new TenantManagementJS();
+        myResult.Id = entityPM.Id;
+        myResult.Name = entityPM.Name;
+        myResult.PackageCode = entityPM.PackageCode;
+        myResult.PackageName = entityPM.PackageName;
+        myResult.TTY = entityPM.TTY;
+        myResult.PIMA = entityPM.PIMA;
+        myResult.AWBMessagesCCSTypeCode = entityPM.AWBMessagesCCSTypeCode;
+        myResult.IsAWBStockPrepaid = entityPM.IsAWBStockPrepaid;
+        myResult.TrialStartDate = entityPM.TrialStartDate;
+        myResult.TrialEndDate = entityPM.TrialEndDate;
+        myResult.PaidUntilDate = entityPM.PaidUntilDate;
+        myResult.PrivateLabelId = entityPM.PrivateLabelId;
+        myResult.PaymentFailure = entityPM.PaymentFailure;
+        myResult.SuspendDate = entityPM.SuspendDate;
+        myResult.IsTrial = entityPM.IsTrial;
+        myResult.IsRecurring = entityPM.IsRecurring;
+        myResult.IsEAWBOnlyDemo = entityPM.IsEAWBOnlyDemo;
+        myResult.IsRestrictedByAirline = entityPM.IsRestrictedByAirline;
+        myResult.IsCargonautEnabled = entityPM.IsCargonautEnabled;
+        myResult.IsDEXXConnectionEnabled = entityPM.IsDEXXConnectionEnabled;
+        myResult.ManageLicencesPerUser = entityPM.ManageLicencesPerUser;
+        myResult.ChangeHeaderColor = entityPM.ChangeHeaderColor;
+        myResult.TrailDaysLeft = entityPM.TrailDaysLeft;
+        myResult.PaidDaysLeft = entityPM.PaidDaysLeft;
+        myResult.SuspendDaysLeft = entityPM.SuspendDaysLeft;
+        myResult.NumberOfUsers = entityPM.NumberOfUsers;
+        myResult.BluesnapContractId = entityPM.BluesnapContractId;
+        myResult.BluesnapAccount = entityPM.BluesnapAccount;
+        myResult.ManagesRegisteredAgent = entityPM.ManagesRegisteredAgent;
+        myResult.IsINTTRAOnlyDemo = entityPM.IsINTTRAOnlyDemo;
+        myResult.IsMultiPackage = entityPM.IsMultiPackage;
+        myResult.TemporalPackageCode = entityPM.TemporalPackageCode;
+        myResult.PackagesCodes_PK = entityPM.PackagesCodes_PK;
+        myResult.PackagesCodes_BS = entityPM.PackagesCodes_BS;
+        myResult.TenantManagementLicenses = entityPM.TenantManagementLicenses;        
+        ObjectsUpdater.UpdateTenantManagementJS(myResult);
     }
 }
