@@ -79,6 +79,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         SATInterfaceHelper sATInterfaceHelper;
         AccountingSetting accountingSetting;
         private Tenant TenantObject;
+        private string QBOARPaymentId;      
         public ARInvoiceService(IInvoiceContext objectContext, int tenant)
         {
             this.sATInterfaceHelper = new SATInterfaceHelper();
@@ -468,6 +469,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
+
+            if(!String.IsNullOrEmpty(QBOARPaymentId))
+            {
+                ARPaymentHelper service = new ARPaymentHelper();
+                ARPaymentQuery PaymentQuery = new ARPaymentQuery(paymentRepository);
+                ARPaymentPM paymentPM = PaymentQuery.GetSinglePM(QBOARPaymentId, tenant);
+                if (paymentPM.TransferStatusCode == "TR")
+                {              
+                ARPaymentRepository repository = new ARPaymentRepository(tenant);
+                ARPayment payment = repository.GetSingleARPayment(paymentPM.Id, tenant);
+                service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, false);
+                }
+            }
 
             this.GetForeignFields();
             this.RunStoredProcedures();
@@ -2818,6 +2832,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
 
+
+            if (this.entityPM.TransferStatusCode=="TR")
+            {
+                QBOARPaymentId = itemPM.ARPaymentId;               
+            }
+
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 Tenant = tenant,
@@ -2856,6 +2876,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             myPaymentNumber = myPayment.PaymentNo;
                         }
                     }
+                }
+
+
+                if (this.entityPM.TransferStatusCode == "TR")
+                {
+                    QBOARPaymentId = itemPM.ARPaymentId;
                 }
 
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
