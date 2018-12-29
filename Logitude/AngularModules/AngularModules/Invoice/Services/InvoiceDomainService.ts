@@ -697,6 +697,37 @@ export class InvoiceDomainService {
         });
     }
 
+    getConnectedARPayments(invoiceId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/getConnectedARPayments?invoiceId=' + invoiceId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response.json();
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    getConnectedAPPayments(invoiceId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/getConnectedAPPayments?invoiceId=' + invoiceId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response.json();
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+
+    
+
     MapARPaymentJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ARPaymentPM = null) {
         if (!entityPM) {
             entityPM = new ARPaymentPM();
