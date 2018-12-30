@@ -79,7 +79,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                     Retries = 0,
                     ConnectedToEntity = false,
                     ConnectedToTenant = true,
-                    Tenant = tenant,
+                    Tenant = 0,// IHAB said It Must be ZERO !!!
                     FileSize = System.Text.Encoding.UTF8.GetBytes(" ").Length,
                     FileName = fileName,
 
@@ -153,7 +153,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 InOut = "O",
                 //EntityId = declarationId,
                 //ObjectTableId = objectTableId,
-                Subject = defInterfaceDetail.Code,
+                Subject = defInterfaceDetail.Subject,
                 Tenant = tenant,
                 CommunicationLogTypeCode = "T",
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),

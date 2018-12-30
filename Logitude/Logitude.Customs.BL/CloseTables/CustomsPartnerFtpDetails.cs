@@ -16,7 +16,7 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_ECTHR = "ECTHR";//EC = E-Commerce
         public const string InterfaceName_ECSPCL = "ECSPCL";//EC = E-Commerce
         public const string InterfaceName_ECSTS = "ECSTS";//EC = E-Commerce
-        public const string InterfaceName_ECSTS_Splited = "ECSTS1";//EC = E-Commerce
+        public const string InterfaceName_ECSTS_Splited = "ECSTS+P";//EC = E-Commerce
         public const string PartnerCode_Mamam = "MAMAN";
         public const string TypeCode_Out = "OUT";
         public const string TypeCode_In = "IN";
