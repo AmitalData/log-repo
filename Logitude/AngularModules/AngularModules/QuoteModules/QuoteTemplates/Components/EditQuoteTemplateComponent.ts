@@ -603,8 +603,9 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
     RemoveQuoteTemplateSectionClicked(item: QuoteTemplateSectionViewModel) {
 
+
         var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Are you sure you want to delete this section?");
+        confirmWindow.Show(TextCodeTranslator.Translate("QuoteTemplate.M.DeleteSectionConfirmMessage"));
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 item.IsCancel = true;
