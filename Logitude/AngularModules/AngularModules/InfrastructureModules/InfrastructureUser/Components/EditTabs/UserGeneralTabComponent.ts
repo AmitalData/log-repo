@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy}  from '@angular/core';
+import {Component, OnDestroy}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UserPM} from '../../../../Common/EntityPMs/UserPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -127,7 +127,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
             this.IsSalesmanVisible = true;
         }
 
-        if (SessionLocator.TenantManagementPM.ManageLicencesPerUser) {
+        if (SessionLocator.TenantManagementJS.ManageLicencesPerUser) {
             this.IsLicencedUserVisible = true;
         }
 
@@ -244,7 +244,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
             var isDirty: boolean = this.EntityPM.IsDirty;
             this.EntityPM.InActive = value;
 
-            if (SessionLocator.TenantManagementPM.IsMultiPackage) {
+            if (SessionLocator.TenantManagementJS.IsMultiPackage) {
                 var service: UserExtendedListService = new UserExtendedListService();
                 service.GetUserLicensesCountForUser(this.EntityPM.Id).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;

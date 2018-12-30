@@ -173,6 +173,65 @@ export class WebhookKeysPMService {
 
     }
 
+    PushHookContent(DataToPush: any) {
+
+        var callTime = new Date();
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+           
+            var errorsArray = [];//validator.Validate("WebhookKeys", entityPM);
+
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            if (errorsArray.length == 0) {
+                //var mappedEntity: WebhookKeysPM;
+                //mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+
+                return this._http.post(this._apiUrl + '/PostPushHookContent', JSON.stringify(DataToPush),
+                    { headers: authHeader }).map((response) => {
+
+                        //var pm = response.json();
+                        //if (pm) {
+                        //    //var mappedResult: WebhookKeysPM;
+                        //    //mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                        //    serviceResponse.Result = pm;
+                        //}
+                        if (response.status == 200) {
+                            serviceResponse.HasError = false;
+                            serviceResponse.Result = "Data Pushed Successfully";
+                        }
+                        else {
+                            serviceResponse.HasError = true;
+                            serviceResponse.Result = "Data Didn't Pushed Successfully";
+                        }
+
+
+                        //var servertime = response.headers.get('ServerExecutionTime');
+                        //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WebhookKeys", "SaveChanges", "");
+
+
+                        return serviceResponse;
+
+                    }).catch(ServiceHelper.HandleServiceError);
+            }
+            else {
+
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+
+                return Observable.of(serviceResponse);
+
+            }
+        }
+
+        );
+    }
+
    
 
 	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: WebhookKeysPM = null) {

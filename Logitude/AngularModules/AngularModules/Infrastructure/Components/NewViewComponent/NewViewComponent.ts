@@ -75,7 +75,7 @@ export class NewViewComponent {
     public serviceArgs: ServiceArgs;
     public _http: Http;
     public BooleanValues = ["True", "False", "No Filter"];
-    public ShareTabIsVisible: boolean = true;
+    public ShareTabIsVisible: boolean = false;
     public IsSharedByMessageVisible: boolean = false;
     constructor(fb: FormBuilder, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
@@ -139,6 +139,10 @@ export class NewViewComponent {
             this.EntityPM = new QueryPM();
         }
 
+        if (FeatureLocator.HasFeaturePermession("User", "User.Feature.ViewsSharing")) {
+            this.ShareTabIsVisible = true;
+        }
+
         this.FillShareValuesList();
         this.Run();
     }
@@ -154,7 +158,10 @@ export class NewViewComponent {
                 this.EntityPM = myResponse.Result;
                 this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
                 this.SharedByUserName = this.EntityPM.SharedByUserName;
-                this.IsSharedByMessageVisible = !AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId);
+
+                if (!FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
+                    this.IsSharedByMessageVisible = !AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId);
+                }
             }
 
             SessionLocator.CurrentSession.StopBusyIndicator();

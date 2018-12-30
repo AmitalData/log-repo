@@ -5,6 +5,8 @@ using Intuit.Ipp.QueryFilter;
 using Intuit.Ipp.Security;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools;
 using Logitude.BL.InvoiceModel.Tools.DataMapping;
 using Logitude.Server.Tools.QueueService;
@@ -16,6 +18,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
@@ -45,7 +48,9 @@ namespace CommunicationWorkerRole
         CloudQueue quickbooksonlinequeue;
         DbQueueService queueservice;
         private string queueName;
-        ICommonDataContext context;
+        ICommonDataContext Commoncontext;
+        IInvoiceContext Invoicecontext;
+
         private string type;
         private string QBOIDSuccess = null;
         private string APInvoiceId = null;
@@ -67,8 +72,9 @@ namespace CommunicationWorkerRole
                             string communicationLogId = response.MessageValues["QuickbooksOnline"].ToString();
                             type = response.MessageValues["type"].ToString();
                             int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
-                            context = CommonDataContext.GetContext(tenant);
-                            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
+                            Commoncontext = CommonDataContext.GetContext(tenant);
+                            Invoicecontext = InvoiceContext.GetContext(tenant);
+                            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(Commoncontext);
                             CommunicationLog cl = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
                             if (cl != null)
                             {
@@ -321,7 +327,7 @@ namespace CommunicationWorkerRole
                         waitingCommLog.ExceptionMessage = waitingCommLog.ExceptionMessage + Environment.NewLine + "Stack trace: " + exc.StackTrace;
                     }
                     SetNextTryDateTime(waitingCommLog);
-                    if (context != null)
+                    if (Commoncontext != null)
                     {
                         communicationLogRep.Update(waitingCommLog);
                         communicationLogRep.SubmitChanges();
@@ -358,7 +364,7 @@ namespace CommunicationWorkerRole
 
                 else
                 {
-                    if (context != null)
+                    if (Commoncontext != null)
                     {
                         StringBuilder sb = new StringBuilder();
                         sb.AppendLine(cl.ExceptionMessage);
@@ -392,7 +398,7 @@ namespace CommunicationWorkerRole
                         cl.ExceptionMessage = cl.ExceptionMessage + Environment.NewLine + "Stack trace: " + exc.StackTrace;
                     }
                     SetNextTryDateTime(cl);
-                    if (context != null)
+                    if (Commoncontext != null)
                     {
                         communicationLogRep.Update(cl);
                         communicationLogRep.SubmitChanges();
@@ -405,7 +411,7 @@ namespace CommunicationWorkerRole
 
          
 
-            CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
+            CommunicationLogRepository commLogrepository = new CommunicationLogRepository(Commoncontext);
             waitingCommLog.CommunicationStatusTypeCode = "F";
             waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
             waitingCommLog.DoneDateUTC = DateTime.UtcNow;
@@ -900,7 +906,7 @@ namespace CommunicationWorkerRole
                         waitingCommLog.ExceptionMessage = waitingCommLog.ExceptionMessage + Environment.NewLine + "Stack trace: " + exc.StackTrace;
                     }
                     SetNextTryDateTime(waitingCommLog);
-                    if (context != null)
+                    if (Commoncontext != null)
                     {
                         communicationLogRep.Update(waitingCommLog);
                         communicationLogRep.SubmitChanges();
@@ -912,80 +918,127 @@ namespace CommunicationWorkerRole
         }
 
         private void SendingSuccessfully(CommunicationLog waitingCommLog,int tenant,string QBOId,string Exception,string Id){
-        
-         CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
-                    waitingCommLog.CommunicationStatusTypeCode = "D";
-                    waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-                    waitingCommLog.DoneDateUTC = DateTime.UtcNow;
-                    waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-                    waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-                    waitingCommLog.ExceptionMessage = Exception;
-                    commLogrepository.Update(waitingCommLog);
-                    commLogrepository.SubmitChanges();
-
-            if (type == "APInvoice" || type == "VendorCredit")
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
-                APInvoiceRepository repository = new APInvoiceRepository(tenant);
-                APInvoice invoice = repository.GetSingleAPInvoice(Id,tenant);
-                invoice.TransferError = null;
-                invoice.TransferStatusCode = "TR";
-                invoice.IsTransferStarted = false;
-                if(QBOId!=null)
-                invoice.ExternalAccountingEntityId = QBOId;
+                CommunicationLogRepository commLogrepository = new CommunicationLogRepository(Commoncontext);
+                waitingCommLog.CommunicationStatusTypeCode = "D";
+                waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                waitingCommLog.DoneDateUTC = DateTime.UtcNow;
+                waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+                waitingCommLog.ExceptionMessage = Exception;
+                commLogrepository.Update(waitingCommLog);
+                commLogrepository.SubmitChanges();
 
-                else if (QBOIDSuccess!= null)
-                    invoice.ExternalAccountingEntityId = QBOIDSuccess;
+                if (type == "APInvoice" || type == "VendorCredit")
+                {
+                    APInvoiceRepository repository = new APInvoiceRepository(tenant);
+                    APInvoice invoice = repository.GetSingleAPInvoice(Id, tenant);
+                    bool WasErrorInTransfer = invoice.TransferStatusCode=="ET"?true:false;
+                    invoice.TransferError = null;
+                    invoice.TransferStatusCode = "TR";
+                    invoice.IsTransferStarted = false;
+                    if (QBOId != null)
+                        invoice.ExternalAccountingEntityId = QBOId;
 
-                repository.Update(invoice);
-                repository.SubmitChanges();
+                    else if (QBOIDSuccess != null)
+                        invoice.ExternalAccountingEntityId = QBOIDSuccess;
+
+                    repository.Update(invoice);
+                    repository.SubmitChanges();
+                    if (WasErrorInTransfer)
+                    {
+                        APInvoicePaymentRepository aPInvoicePaymentRepository = new APInvoicePaymentRepository(tenant);
+
+                        List<APPayment> aRPayments = aPInvoicePaymentRepository.GetAPInvoicePaymentTransferedByInvoiceId(waitingCommLog.EntityId, tenant).ToList();
+
+                        APPaymentRepository paymentRepository = new APPaymentRepository(tenant);
+
+
+                        foreach (APPayment payment in aRPayments)
+                        {
+                            APPaymentHelper service = new APPaymentHelper();
+                            APPaymentQuery PaymentQuery = new APPaymentQuery(paymentRepository);
+                            APPaymentPM paymentPM = PaymentQuery.GetSinglePM(payment.Id, tenant);
+                            service.APPaymentQuickbooksValidating(paymentPM, true, false, payment, this.Invoicecontext, this.Commoncontext, false, true);
+                        }
+
+                    }
+
+
+
+                }
+
+                else if (type == "ARPayment" || type == "ARPaymentVoid")
+                {
+                    ARPaymentRepository repository = new ARPaymentRepository(tenant);
+                    ARPayment payment = repository.GetSingleARPayment(waitingCommLog.EntityId, tenant);
+                    payment.TransferError = null;
+                    payment.TransferStatusCode = "TR";
+                    payment.IsTransferStarted = false;
+                    if (QBOId != null)
+                        payment.ExternalAccountingEntityId = QBOId;
+                    else if (QBOIDSuccess != null)
+                        payment.ExternalAccountingEntityId = QBOIDSuccess;
+                    repository.Update(payment);
+                    repository.SubmitChanges();
+                }
+
+                else if (type == "APPayment")
+                {
+                    APPaymentRepository repository = new APPaymentRepository(tenant);
+                    APPayment payment = repository.GetSingleAPPayment(waitingCommLog.EntityId, tenant);
+                    payment.TransferError = null;
+                    payment.TransferStatusCode = "TR";
+                    if (QBOId != null)
+                        payment.ExternalAccountingEntityId = QBOId;
+                    else if (QBOIDSuccess != null)
+                        payment.ExternalAccountingEntityId = QBOIDSuccess;
+                    repository.Update(payment);
+                    repository.SubmitChanges();
+                }
+
+
+                else
+                {
+                    ARInvoiceRepository repository = new ARInvoiceRepository(tenant);
+                    ARInvoice invoice = repository.GetARInvoiceByInvoiceNumber(tenant, waitingCommLog.EntityReference);
+                    invoice.TransferError = null;
+                    bool WasErrorInTransfer = invoice.TransferStatusCode == "ET" ? true : false;
+                    invoice.TransferStatusCode = "TR";
+                    invoice.IsTransferStarted = false;
+                    if (QBOId != null)
+                        invoice.ExternalAccountingEntityId = QBOId;
+                    else if (QBOIDSuccess != null)
+                        invoice.ExternalAccountingEntityId = QBOIDSuccess;
+                    repository.Update(invoice);
+                    repository.SubmitChanges();
+                    if (WasErrorInTransfer)
+                    {
+                        ARInvoicePaymentRepository aRInvoicePaymentRepository = new ARInvoicePaymentRepository(tenant);
+
+                        List<ARPayment> aRPayments = aRInvoicePaymentRepository.GetARInvoicePaymentTransferedByInvoiceId(waitingCommLog.EntityId, tenant).ToList();
+
+                        ARPaymentRepository paymentRepository = new ARPaymentRepository(tenant);
+
+
+                        foreach (ARPayment payment in aRPayments)
+                        {
+                            ARPaymentHelper service = new ARPaymentHelper();
+                            ARPaymentQuery PaymentQuery = new ARPaymentQuery(paymentRepository);
+                            ARPaymentPM paymentPM = PaymentQuery.GetSinglePM(payment.Id, tenant);
+                            service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.Invoicecontext, this.Commoncontext, false, false, true);
+                        }
+                    }
+
+                }
+
+               
+
+                QBOIDSuccess = null;
+                scope.Complete();
             }
-
-            else if (type == "ARPayment" || type== "ARPaymentVoid")
-            {
-                ARPaymentRepository repository = new ARPaymentRepository(tenant);
-                ARPayment payment = repository.GetSingleARPayment(waitingCommLog.EntityId, tenant);
-                payment.TransferError = null;
-                payment.TransferStatusCode = "TR";
-                payment.IsTransferStarted = false;
-                if (QBOId != null)
-                    payment.ExternalAccountingEntityId = QBOId;
-                else if (QBOIDSuccess != null)
-                    payment.ExternalAccountingEntityId = QBOIDSuccess;
-                repository.Update(payment);
-                repository.SubmitChanges();
-            }
-
-            else if (type == "APPayment")
-            {
-                APPaymentRepository repository = new APPaymentRepository(tenant);
-                APPayment payment = repository.GetSingleAPPayment(waitingCommLog.EntityId, tenant);
-                payment.TransferError = null;
-                payment.TransferStatusCode = "TR";
-                if (QBOId != null)
-                    payment.ExternalAccountingEntityId = QBOId;
-                else if (QBOIDSuccess != null)
-                    payment.ExternalAccountingEntityId = QBOIDSuccess;
-                repository.Update(payment);
-                repository.SubmitChanges();
-            }
-
-         
-            else
-            {
-                ARInvoiceRepository repository = new ARInvoiceRepository(tenant);
-                ARInvoice invoice = repository.GetARInvoiceByInvoiceNumber(tenant, waitingCommLog.EntityReference);
-                invoice.TransferError = null;
-                invoice.TransferStatusCode = "TR";
-                invoice.IsTransferStarted = false;
-                if (QBOId != null)
-                    invoice.ExternalAccountingEntityId = QBOId;
-                else if (QBOIDSuccess != null)
-                    invoice.ExternalAccountingEntityId = QBOIDSuccess;
-                repository.Update(invoice);
-                repository.SubmitChanges();
-            }
-
-            QBOIDSuccess = null;
+          
         }
 
 
@@ -1086,7 +1139,7 @@ namespace CommunicationWorkerRole
                         waitingCommLog.ExceptionMessage = waitingCommLog.ExceptionMessage + Environment.NewLine + "Stack trace: " + exc.StackTrace;
                     }
                     SetNextTryDateTime(waitingCommLog);
-                    if (context != null)
+                    if (Commoncontext != null)
                     {
                         communicationLogRep.Update(waitingCommLog);
                         communicationLogRep.SubmitChanges();
