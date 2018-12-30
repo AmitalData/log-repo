@@ -578,7 +578,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     entityPM.UpdatedByUserId = loggedContact.Id;
                 }                  
                 
-                if (!entityPM.IsHybrid && string.IsNullOrEmpty(entityPM.Code))
+                if (!entityPM.IsHybrid && (string.IsNullOrEmpty(entityPM.Code) || entityPM.Code == "new"))
                 {
                     entityPM.Code = CodeCounter.GetNumber("Customer", tenant).ToString();
                 }
