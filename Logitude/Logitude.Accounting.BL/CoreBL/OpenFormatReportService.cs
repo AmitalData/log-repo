@@ -141,6 +141,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.Reference2.Length > 20) { item.Reference2.Substring(0, 20); }
                     myStringBuilder.Append("a" + item.Reference2.PadLeft(20, '0'));
                 }
+                else
+                {
+                    myStringBuilder.Append(' ', 20);
+                }
 
                 myStringBuilder.Append("a000");
                 if (item.Notes != null)
@@ -168,6 +172,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.GLAccountDisplayNumber.Length > 15) { item.GLAccountDisplayNumber.Substring(0, 15); }
                     myStringBuilder.Append("a" + item.GLAccountDisplayNumber.PadLeft(15, '0'));
                 }
+
+
 
                 if (item.LocalAmountDebit != null)
                 {
