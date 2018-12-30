@@ -143,10 +143,13 @@ namespace Logitude.CustomsMessaging.RequestServices
                 vehicleDetails.vehicleTecnologyType = vehicleTecnologyType;
                 vehicleDetails.vehicleTecnologyTypeSpecified = true;
             }
-            int fuelTypeCode;
-            int.TryParse(_MyVehicle.FuelTypeCode, out fuelTypeCode);
-            vehicleDetails.fuelTypeCode = fuelTypeCode;
-            vehicleDetails.fuelTypeCodeSpecified = fuelTypeCode > 0 ? true : false;
+            if (!string.IsNullOrWhiteSpace(_MyVehicle.FuelTypeCode))
+            {
+                int fuelTypeCode;
+                int.TryParse(_MyVehicle.FuelTypeCode, out fuelTypeCode);
+                vehicleDetails.fuelTypeCode = fuelTypeCode;
+                vehicleDetails.fuelTypeCodeSpecified = true;
+            }
             vehicleDetails.vehicleWindowNumber = _MyVehicle.VehicleWindowNumber;
             //vehicleDetails.richbitOpenDate // not exist in DB
             //vehicleDetails.richbitOpenDateSpecified

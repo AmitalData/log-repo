@@ -8,7 +8,7 @@ import { CourierMasterGeneralTabComponent} from './Components/EditTabs/CourierMa
 import { CourierWorksheetComponent} from './Components/CourierWorkSheet/CourierWorksheetComponent';
 import { GetInternalBankComponent} from './Components/CourierWorkSheet/GetInternalBankComponent';
 import { AddEditMamanStickerComponent } from './Components/MamanSpecialAction/AddEditMamanStickerComponent';
-
+import { AddCourierPendingToUnifreightStatusComponent } from './Components/CourierPendingReason/AddCourierPendingToUnifreightStatusComponent';
 
 
 export const Components =
@@ -23,6 +23,7 @@ export const Components =
         CourierWorksheetComponent,
         GetInternalBankComponent,
         AddEditMamanStickerComponent,
+        AddCourierPendingToUnifreightStatusComponent,
 
     ];
 
@@ -42,6 +43,7 @@ export class ModuleDeclarations {
             case "CourierWorksheetComponent": { myResult = CourierWorksheetComponent; break; }
             case "GetInternalBankComponent": { myResult = GetInternalBankComponent; break; }
             case "AddEditMamanStickerComponent": { myResult = AddEditMamanStickerComponent; break; }
+            case "AddCourierPendingToUnifreightStatusComponent": { myResult = AddCourierPendingToUnifreightStatusComponent; break; }
         }
 
         return myResult;
