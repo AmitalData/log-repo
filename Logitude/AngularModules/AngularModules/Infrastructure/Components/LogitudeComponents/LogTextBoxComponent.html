@@ -83,6 +83,35 @@
         text-align: right;
         padding-right: 6px;
     }
+    .collapse-btn{
+
+        background-image: url('/Images/Icons/collapse.png') !important;
+    }
+    .expand-btn{
+        position: absolute;
+        top: 2px;
+        right: 2px;
+
+        width:20px;
+        height: 20px;
+        cursor: pointer;
+
+        background-color: #fff;
+        background-image: url('/Images/Icons/expand.png');
+        background-position: center;
+        background-repeat:  no-repeat;
+        background-size: 12px;
+
+    }
+    .expand-btn:hover{
+        background-color: #dceeff;
+    }
+    .expand-btn:active{
+        background-color: #cfe0f0;
+
+        top: 1px;
+        right: 1px;
+    }
 </style>
 
 
@@ -96,7 +125,7 @@
          [TopDisplacement]="-95"
          [LeftDisplacement]="30"
          [ComponentType]="'popup'"
-         [PopupWidth]="250" 
+         [PopupWidth]="250"
          [class.FlipImgHoriz]="LayoutDirection == 'rtl'"
          class="ErrorPopUp"
          *ngIf="ShowErrorPopup"
@@ -146,6 +175,9 @@
                               (keydown)="OnKeyDown($event)"
                               [attr.rows]="RowsCount"
                               [id]="InputId" style="box-shadow:none;border:1px solid transparent; font-size:12px; font-family:inherit;" ondrop="return false"></textarea>
+   
+
+                    <div *ngIf="isMouseOver" [class.collapse-btn]="isExpanded" title="Expand" class="expand-btn" (click)="ExpandButtonClicked()"></div>
 
                 </div>
             </td>
