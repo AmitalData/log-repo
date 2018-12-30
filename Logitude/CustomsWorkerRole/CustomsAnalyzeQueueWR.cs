@@ -116,7 +116,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
                 var myClass = this.GetType().Name;
 
-                
+
 
             }
             catch (Exception ex)
@@ -136,8 +136,8 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             return base.OnStart();
         }
 
-        
-        
+
+
 
         public override void WorkOnce()
         {
@@ -169,36 +169,47 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             .Where(r => r.AnalyzeQueueService != AnalyzeQueueServiceEnum.none)
             .ToList();
 
-        while (true)
+            while (true)
             {
 
                 foreach (InterfaceDetails @interface in _CustomsAnalyzeQueueServices)
                 {
-                    try
-                    {
-                        AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
-                        var from = @interface.Partner + "," + @interface.Code;
-                        AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueue(from);
-                        LastActivity = DateTime.UtcNow;
 
-                        if (analyzeQueue != null)
+                    {
+                        try
                         {
-                            var serviceAnalyzer = customsPartnerFtpDetails.GetCustomAnalyzerQueueService(@interface);
-                            //ArtemusAnalyzer analyzer = new Artemus(analyzeQueue, analyzeQueueRepository);
-                            serviceAnalyzer.Run(analyzeQueue, analyzeQueueRepository);
+                            AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+                            var from = @interface.Partner + "," + @interface.Code;
                             
-                            LogDoneItemInMemory();
-                        }
-                        else
-                        {
-                            Thread.Sleep(500);
-                        }
-                    }
+                            LastActivity = DateTime.UtcNow;
+                            while (true)
+                            {
 
-                    catch (Exception e)
-                    {
-                        ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "ArtemusAnalyzerWorkerRole : Run() Method", null);
-                        Thread.Sleep(5000);
+                                AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueue(from);
+                                if (analyzeQueue == null)
+                                {
+                                    break;
+                                }
+                                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                                {
+                                    var serviceAnalyzer = customsPartnerFtpDetails.GetCustomAnalyzerQueueService(@interface);
+                                    //ArtemusAnalyzer analyzer = new Artemus(analyzeQueue, analyzeQueueRepository);
+                                    serviceAnalyzer.Run(analyzeQueue, analyzeQueueRepository);
+                                    scope.Complete();
+                                }
+                                LogDoneItemInMemory();
+                            }
+
+
+                            Thread.Sleep(500);
+
+
+                        }
+                        catch (Exception e)
+                        {
+                            ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "ArtemusAnalyzerWorkerRole : Run() Method", null);
+                            Thread.Sleep(5000);
+                        }
                     }
                 }
 
@@ -212,114 +223,6 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             }
         }
 
-
-
-        public string BuildCommunicationLog(byte[] bytearray, CustomsPartnerFtpPM customsPartnerFtpPM)///using  by SendWEBAPIMessage2MamanWRWR
-        {
-
-
-            ICommonDataContext commonContext = CommonDataContext.GetContext(customsPartnerFtpPM.Tenant);
-            CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
-            DocumentRepository documentRepository = new DocumentRepository(commonContext);
-
-
-
-
-
-
-
-
-            ContactRepository contactRepository = new ContactRepository(customsPartnerFtpPM.Tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(customsPartnerFtpPM.Tenant), customsPartnerFtpPM.Tenant);
-            string loggedContactId = "";
-            if (loggedContact != null)
-            {
-                loggedContactId = loggedContact.Id;
-            }
-
-            //.PostIt("", "F_unitedf", "Unit2019", data);
-            var settings = new Courier2MamanCommSettings()
-            {
-                MessageCode = customsPartnerFtpPM.InterfaceName,
-                Tenant = customsPartnerFtpPM.Tenant,
-                LoggedContactId = loggedContactId
-            };
-            var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
-
-            Document document = new Document()
-            {
-                CreateDate = DateTime.Now,
-                Extension = "TXT",
-                FileSize = bytearray.Length,
-                Tenant = Convert.ToInt32(customsPartnerFtpPM.Tenant),
-                Id = IdCounter.GetNumber("Document", customsPartnerFtpPM.Tenant),
-                HasFile = true,
-                Folder = CustomsPartnerFtpDetails.PartnerCode_Mamam.ToLower(),
-            };
-
-            documentRepository.Add(document);
-            documentRepository.SubmitChanges();
-
-            var def = (new CustomsPartnerFtpDetails()).GetAllInterfaceDetails().First(r => r.Code == customsPartnerFtpPM.InterfaceName);
-            CommunicationLog commLog = new CommunicationLog()
-            {
-                Id = IdCounter.GetNumber("CommunicationLog", customsPartnerFtpPM.Tenant),
-                LastStatusDate = TenantServerConfigration.GetCurrentDateTime(customsPartnerFtpPM.Tenant),
-                LastStatusDateUTC = DateTime.UtcNow,
-                //To = ,
-                From = CustomsPartnerFtpDetails.PartnerCode_Mamam + "," + CustomsPartnerFtpDetails.InterfaceName_ECSTS,
-                InOut = "O",
-                //EntityId = declarationId,
-                //ObjectTableId = objectTableId,
-                Subject = customsPartnerFtpPM.InterfaceName,
-                Tenant = customsPartnerFtpPM.Tenant,
-                CommunicationLogTypeCode = "T",
-                CreateDate = TenantServerConfigration.GetCurrentDateTime(customsPartnerFtpPM.Tenant),
-                CommunicationStatusTypeCode = "W",
-                DocumentId = document.Id,
-                CreateDateUTC = DateTime.UtcNow,
-                CreatedByUserId = loggedContactId,
-                LogSettings = settingsData,
-                QueueName = def.QueueName //SBQueueNames.SendWEBAPIMessage2MamanQ.ToString() ///using  by SendWEBAPIMessage2MamanWR
-            };
-
-            communicationLogRepository.Add(commLog);
-            communicationLogRepository.SubmitChanges();
-
-            Logitude.Server.Tools.BlobFileInfo fileInfo = new BlobFileInfo()
-            {
-                FileName = document.Id,
-                FolderName = document.Folder,
-                Extension = document.Extension,
-                Tenant = customsPartnerFtpPM.Tenant,
-                FileSize = bytearray.Length,
-            };
-
-            Logitude.Server.Tools.StorageService.IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
-            storageservice.Write(bytearray.ToArray(), fileInfo);
-
-            SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, customsPartnerFtpPM.Tenant);
-
-            return commLog.Id;
-
-        }
-
-        private void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant)
-        {
-            try
-            {
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue(queueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
-
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Send FTP CommunicationLog Queue", null, null);
-            }
-        }
     }
-
-
 
 }

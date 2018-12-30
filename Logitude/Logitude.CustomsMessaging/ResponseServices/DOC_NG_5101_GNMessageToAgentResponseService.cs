@@ -26,7 +26,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using UnifreightIIG.Common.MessageLib.Docs;
 using Logitude.Server.Tools.Models;
 using Logitude.Customs.BL.Models;
-
+using Logitude.Customs.BL.Messaging.Customs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {  // moran 6.10.14 - Task 8066 -->
@@ -207,6 +207,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             this._MyDeclarationPM.CourierCustomStatusCode = "2";
                             this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
                             declarationUpdateService.Update(this._MyDeclarationPM, true);
+                            SendDeclarationStatusRequest(this._MyDeclarationPM);
                             break;
                         case 17:
                             notificationDefinitionCode = "5101M";
@@ -349,6 +350,40 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
+        }
+
+        void SendDeclarationStatusRequest(DeclarationPM myDeclarationPM)
+        {
+            var mySBQMessage = new SBQMessageService();
+            var newSearchDeclarationStatusRequestParams = new DeclarationStatusRequestParams()
+            {
+                LoggingEnabled = true,
+                CustomFileNo = myDeclarationPM.CustomFileNo,
+                DeclarationNumber = myDeclarationPM.DeclarationNumber,
+                Tenant = myDeclarationPM.Tenant,
+                RequestName = "Declaration Status (from Message To Agent Response) " + myDeclarationPM.DeclarationNumber,
+                ResponseName = "Declaration Status (from Message To Agent Response) " + myDeclarationPM.DeclarationNumber,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                InterfaceTypeCode = "8250",
+                LoggingEntityId = myDeclarationPM.Id,
+                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                LoggingUserId = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant),
+            };
+
+            try
+            {
+                SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.DeclarationStatusRequestParams>(newSearchDeclarationStatusRequestParams
+                    , false
+                    );
+            }
+            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+            {
+                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8250 RequestInProgress stop create a new one !! ");
+                }
+                throw;
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_ECTHR = "ECTHR";//EC = E-Commerce
         public const string InterfaceName_ECSPCL = "ECSPCL";//EC = E-Commerce
         public const string InterfaceName_ECSTS = "ECSTS";//EC = E-Commerce
+        public const string InterfaceName_ECSTS_Splited = "ECSTS+P";//EC = E-Commerce
         public const string PartnerCode_Mamam = "MAMAN";
         public const string TypeCode_Out = "OUT";
         public const string TypeCode_In = "IN";
@@ -60,10 +61,23 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_Mamam,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                QueueName="AnalyzeQueue",
+                
                 AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilitySpliterService,
-                Subject="Status / Availability Maman"
-            }
+                Subject="Status / Availability Maman Raw"
+            },
+            new InterfaceDetails()
+            {
+                Code = InterfaceName_ECSTS_Splited,
+                Name = "סטטוס/זמינות ממן",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_Mamam,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+                
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilityService,
+                Subject="Status / Availability Maman",
+                ServerInternalDef= true
+            },
+
             };
             ///
 
@@ -76,7 +90,7 @@ namespace Logitude.Customs.BL.CloseTables
             var all = new List<KeyValuePair<string, string>>();
             //all.Add(new KeyValuePair<string, string>("", ""));
 
-            var allInterfaceDetails=GetAllInterfaceDetails();
+            var allInterfaceDetails = GetAllInterfaceDetails().Where(r => !r.ServerInternalDef).ToList();
             allInterfaceDetails.ForEach(r =>
             {
                 all.Add(new KeyValuePair<string, string>(r.Code,
@@ -185,9 +199,10 @@ namespace Logitude.Customs.BL.CloseTables
         public string TypeCode { get; set; }
         public string Partner { get; set; }
         public string ViaMethod { get; set; }
-        public string QueueName { get; set; }
+        //public string QueueName { get; set; }
         public AnalyzeQueueServiceEnum AnalyzeQueueService { get; internal set; }
         public string Subject { get; internal set; }
+        public bool ServerInternalDef { get; set; }
     }
 
 
