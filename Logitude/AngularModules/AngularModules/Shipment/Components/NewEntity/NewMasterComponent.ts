@@ -83,7 +83,7 @@ export class NewMasterComponent extends BaseComponent {
     }
 
     LoadAllowedAirline() {
-        if (SessionLocator.TenantManagementPM.IsRestrictedByAirline) {
+        if (SessionLocator.TenantManagementJS.IsRestrictedByAirline) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageCarrierId)) {
                     if (this.EntityPM.TransportModeId == "A") {

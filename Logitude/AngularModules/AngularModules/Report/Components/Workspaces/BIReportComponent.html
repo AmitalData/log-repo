@@ -48,15 +48,24 @@
                         <div class="ReportsSectionBody">
                             <table>
                                 <tr>
-                                    <td style="width: 1px;">
+                                    <td style="float:left;">
                                         <div *ngFor="let report of ItemsSource">
                                             <table>
                                                 <tr>
-                                                    <td>
+                                                    <td style="min-width: 250px;float:left;">
                                                         <HyperlinkQuery (click)="ViewBIReportClicked(report)">{{report.Name}}</HyperlinkQuery>
                                                     </td>
-                                                    <td style="float:left">
-                                                        <Hyperlink (click)="EditBIReportClicked(report)">Edit</Hyperlink>
+                                                    <td style="width:10px;">
+                                                        <div></div>
+                                                    </td>
+                                                    <td style="width:20px;">
+                                                        <Hyperlink [FontSize]="12" (click)="EditBIReportClicked(report)">Edit</Hyperlink>
+                                                    </td>
+                                                    <td style="width:10px;">
+                                                        <div></div>
+                                                    </td>
+                                                    <td style="width:20px;">
+                                                        <Hyperlink [FontSize]="12" (click)="ExportToExcelClicked(report)">Export</Hyperlink>
                                                     </td>
                                                     <td>
                                                         <div></div>

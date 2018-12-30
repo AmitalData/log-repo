@@ -189,6 +189,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             //updateClass.loadQueries();
                             //updateClass.loadScreens();
                             //updateClass.LoadObjectTableTabs();
+                            updateClass.LoadRolesAndFeatures(0);
                             updateClass.LoadObjectTableHelperControls();
                             updateClass.LoadEntityStatus();
                             updateClass.LoadEventTypes();

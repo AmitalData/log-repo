@@ -15,6 +15,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? RegisterDate { get; set; }
         public DateTime? PaymentDate { get; set; }
         public string PaymentMethodName { get; set; }
+        public string PaymentMethodLocalName { get; set; }
         public string PaidBy { get; set; } // custom
         public string ClientNumber { get; set; }
         public string PaymentCurrencyCode { get; set; }

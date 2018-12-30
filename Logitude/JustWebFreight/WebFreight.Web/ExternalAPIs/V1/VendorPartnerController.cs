@@ -5,6 +5,7 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -63,6 +64,20 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     }
 
                     ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
+                    CardRepository cardRepository = new CardRepository(MyContext);
+
+                    if (!string.IsNullOrEmpty(entity.Code))
+                    {
+                        bool exist = (from a in cardRepository.GetCards(authToken.Tenant)
+                                      where a.PartnerTypeId == "VD" && a.Code == entity.Code && a.Tenant == authToken.Tenant
+                                      select a).Any();
+
+                        if (exist)
+                        {
+                            throw new Exception("Vendor with code " + entity.Code + " already exists");
+                        }
+                    }
+
                     VendorQueryService mappingService = new VendorQueryService(authToken.Tenant);
                     VendorPM entityPM = mappingService.VendorCustomDataMappingAndValidating(entity, authToken.Tenant, computingPartnerCode);
 
@@ -92,9 +107,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         #region GLAccount
                         if (entity.GLAccount != null)
                         {
-                            FullAccountingHelper fullAccountingHelper = new FullAccountingHelper();
-
-                            CardRepository cardRepository = new CardRepository(MyContext);
+                            FullAccountingHelper fullAccountingHelper = new FullAccountingHelper();                            
                             Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(entityPM.Id, authToken.Tenant);
                             if (card != null)
                             {

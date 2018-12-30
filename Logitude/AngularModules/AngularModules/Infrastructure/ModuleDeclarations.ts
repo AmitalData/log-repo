@@ -106,7 +106,8 @@ import {AuditAutomationTabComponent} from './Components/Maintenance/Automation/A
 import {SelectDocumentTypesComponent} from './Components/Maintenance/Automation/SelectDocumentTypesComponent';
 
 import {NewViewComponent} from './Components/NewViewComponent/NewViewComponent';
-import {Export2ExcelControl} from './Components/Export2ExcelControl/Export2ExcelControl';
+import { Export2ExcelControl } from './Components/Export2ExcelControl/Export2ExcelControl';
+import { ExportBI2ExcelControl } from './Components/ExportBI2ExcelControl/ExportBI2ExcelControl';
 import {QueryColumnsEditComponent} from './Components/QueryColumnsComponents/QueryColumnsEditComponent';
 import { btnComponent } from './Components/QueryColumnsComponents/btnComponent';
 import { btnUpdateComponent } from './Components/QueryColumnsComponents/btnUpdateComponent';
@@ -122,6 +123,7 @@ import {LogTabsComponent} from './Components/LogitudeComponents/LogTabsComponent
 import { MenuButtonsComponentLoader } from './Components/LogitudeComponents/MenuButtonsComponent/MenuButtonsComponentLoader';
 import { LogWaterMarkComponent } from './Components/Templates/LogWaterMarkComponent';
 import {DWLogSearchWindowFieldsComponent} from './Components/QueryColumnsComponents/DWLogSearchWindowFieldsComponent';
+import { ChooseUserComponent } from './Components/NewViewComponent/ChooseUserComponent';
 
 
 
@@ -278,6 +280,7 @@ export const Components =
 
         NewViewComponent,
         Export2ExcelControl,
+        ExportBI2ExcelControl,
         QueryColumnsEditComponent,
         btnComponent,
         btnUpdateComponent,
@@ -285,7 +288,7 @@ export const Components =
         NewEntityComponent,
         LogSearchWindowComponent,
         DWLogSearchWindowComponent,
-
+        ChooseUserComponent,
 
         InfrastructureFieldTemplateComponent,
 
@@ -361,6 +364,7 @@ export class ModuleDeclarations {
 
             case 'NewViewComponent': { myResult = NewViewComponent; break; }
             case 'Export2ExcelControl': { myResult = Export2ExcelControl; break; }
+            case 'ExportBI2ExcelControl': { myResult = ExportBI2ExcelControl; break; }
             case 'QueryColumnsEditComponent': { myResult = QueryColumnsEditComponent; break; }
             case 'btnComponent': { myResult = btnComponent; break; }
             case 'btnUpdateComponent': { myResult = btnUpdateComponent; break; }
@@ -370,6 +374,7 @@ export class ModuleDeclarations {
             case 'DWLogSearchWindowComponent': { myResult = DWLogSearchWindowComponent; break; }
             case 'StimulsoftViewerComponent': { myResult = StimulsoftViewerComponent; break; }
             case 'TipsComponent': { myResult = TipsComponent; break; }
+            case 'ChooseUserComponent': { myResult = ChooseUserComponent; break; }
 
             case 'ChooseDatesComponent': { myResult = ChooseDatesComponent; break; }
             case 'InfrastructureFieldTemplateComponent': { myResult = InfrastructureFieldTemplateComponent; break; }
