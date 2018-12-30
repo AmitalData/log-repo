@@ -2325,7 +2325,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.CalculateStatus = false;
 
             this.ComputeShipmentStatus();
-            this.UpdateCustomerWorkingDates();
+            if (!entityPM.IsHybrid)
+            {
+                this.UpdateCustomerWorkingDates();
+            }
+            
 
             if (isNewEntity)
             {

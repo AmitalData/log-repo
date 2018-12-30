@@ -65,7 +65,7 @@ namespace WebFreight.Web
             {
                 string errorMessage = errorInfo.Message;
                 AzureLog.SaveLogsInStorage("SendGrid Page error  " + Environment.NewLine + errorMessage, "E", DateTime.Now, errorInfo.Message, errorInfo.StackTrace, 0, null, null, null);
-                throw;
+                //throw;
             }
         }
 
@@ -107,7 +107,7 @@ namespace WebFreight.Web
             {
                 string errorMessage = errorInfo.Message;
                 AzureLog.SaveLogsInStorage("Send Grid Page error  " + Environment.NewLine + errorMessage, "E", DateTime.Now, errorInfo.Message, errorInfo.StackTrace, 0, null, null, null);
-                throw;
+                //throw;
             }
         }
     }
