@@ -48,7 +48,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
-        public IQueryable<AccountingEntityPM> GetCurrencyPMsByTenant(int tenant)
+        public IQueryable<AccountingEntityPM> GetAccountingEntityPMsByTenant(int tenant)
         {
             IQueryable<AccountingEntity> pocos = repository.GetAccountingEntities();
             IQueryable<AccountingEntityPM> query = from a in pocos

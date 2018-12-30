@@ -299,6 +299,8 @@
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentsPermissionsComponent.html" />
     <Content Include="Images\return.png" />
+    <Content Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookKeysComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\AddEditPrivateLabelsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelLoadComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureUser\Components\EditTabs\UserDistributorComponent.html" />
@@ -566,6 +568,8 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\Components\Workspaces\TasksWorkspaceComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleInfrastructureBusinessProcess.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookKeysComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\ExportBI2ExcelControl\ExportBI2ExcelControl.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWLogSearchWindowComponent.ts" />

@@ -79,14 +79,13 @@
       <ScreenField Column="1" Row="1" ObjectFieldName="&quot;TTY&quot;" ScreenName="Header Screen" />
     </ScreenFields>
   </Screen>
-  <Screen Name="&quot;General Tab Screen&quot;" ObjectTableName="&quot;Participant&quot;" NumberOfColumns="2" NumberOfRows="6" IsReadOnly="false" IsHeaderScreen="false" Code="&quot;Participant.GeneralTabScreen&quot;">
+  <Screen Name="&quot;General Tab Screen&quot;" ObjectTableName="&quot;Participant&quot;" NumberOfColumns="2" NumberOfRows="5" IsReadOnly="false" IsHeaderScreen="false" Code="&quot;Participant.GeneralTabScreen&quot;">
     <ScreenFields>
       <ScreenField Column="0" Row="0" ObjectFieldName="&quot;Code&quot;" ScreenName="General Tab Screen" />
       <ScreenField Column="0" Row="1" ObjectFieldName="&quot;EnglishName&quot;" ScreenName="General Tab Screen" />
       <ScreenField Column="0" Row="2" ObjectFieldName="&quot;LocalName&quot;" ScreenName="General Tab Screen" />
-      <ScreenField Column="0" Row="3" ObjectFieldName="&quot;AirlineTenant&quot;" ScreenName="General Tab Screen" />
-      <ScreenField Column="0" Row="4" ObjectFieldName="&quot;TTY&quot;" ScreenName="General Tab Screen" />
-      <ScreenField Column="0" Row="5" ObjectFieldName="&quot;Website&quot;" ScreenName="General Tab Screen" />
+      <ScreenField Column="0" Row="3" ObjectFieldName="&quot;TTY&quot;" ScreenName="General Tab Screen" />
+      <ScreenField Column="0" Row="4" ObjectFieldName="&quot;Website&quot;" ScreenName="General Tab Screen" />
       <ScreenField Column="1" Row="0" ObjectFieldName="&quot;Registered&quot;" ScreenName="General Tab Screen" />
       <ScreenField Column="1" Row="1" ObjectFieldName="&quot;RegistrationRequested&quot;" ScreenName="General Tab Screen" />
       <ScreenField Column="1" Row="2" ObjectFieldName="&quot;InActive&quot;" ScreenName="General Tab Screen" />

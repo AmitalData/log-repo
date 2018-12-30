@@ -65,6 +65,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private List<ShipmentPayable> allPayables;
         private ShipmentRepository shipmentRepository;
         private ShipmentPayableRepository shipmentPayableRepository;
+        private string QBOAPPaymentId;
+
         public APInvoiceNormalService(IInvoiceContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -330,7 +332,24 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
 
-            this.GetForeignFields();
+
+            if (!String.IsNullOrEmpty(QBOAPPaymentId))
+            {
+
+                APPaymentHelper service = new APPaymentHelper();
+                APPaymentQuery PaymentQuery = new APPaymentQuery(paymentRepository);
+                APPaymentPM paymentPM = PaymentQuery.GetSinglePM(QBOAPPaymentId, tenant);
+                if (paymentPM.TransferStatusCode == "TR")
+                {
+                    APPaymentRepository repository = new APPaymentRepository(tenant);
+                    APPayment payment = repository.GetSingleAPPayment(paymentPM.Id, tenant);
+
+                    service.APPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, false);
+                }
+            }
+
+
+                this.GetForeignFields();
 
             if (!entityPM.IsGeneralInvoice)
             {
@@ -1583,6 +1602,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
 
+            if (this.entityPM.TransferStatusCode == "TR")
+            {
+                QBOAPPaymentId = itemPM.APPaymentId;
+            }         
+
+
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 Tenant = tenant,
@@ -1619,6 +1644,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                 }
             }
+
+
+            if (this.entityPM.TransferStatusCode == "TR")
+            {
+                QBOAPPaymentId = itemPM.APPaymentId;
+            }
+
 
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
