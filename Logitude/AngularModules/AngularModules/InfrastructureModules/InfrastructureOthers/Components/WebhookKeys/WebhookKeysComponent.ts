@@ -6,7 +6,8 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
-import {Validator} from '../../../../Infrastructure/Validators/Validator';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     moduleId: module.id,
@@ -204,5 +205,17 @@ export class WebhookKeysComponent extends BaseComponent {
                 });
             }            
         }
+    }
+
+    TestButtonClicked() {
+        var windowArgs: any = {};
+        windowArgs.AccessKey = this.AccessKey;
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Width = 570;
+        logitudeWindow.Height = 600;
+        logitudeWindow.Title = "WebHook Tester";
+        logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/WebhookKeys/WebhookTesterComponent');
     }
 }
