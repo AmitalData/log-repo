@@ -319,23 +319,45 @@ export class ARInvoiceMenuButtonsHandler {
 
 
     SendToQBO() {
-        if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
-            var myConfirmWindow = new ConfirmWindow();
-            myConfirmWindow.Width = 400;
-            myConfirmWindow.Show("Resend this invoice to QBO?");
-            myConfirmWindow.WindowClosed.subscribe(s => {
-                this.StopFlags();
-                if (myConfirmWindow.Yes) {
-                    this.SendToQBOApproved("Resending Invoice to QBO");
 
+        var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+        invoiceDomainService.getConnectedARPayments(this.EntityPM.Id).subscribe(response => {
+            if (!response.HasError) {
+                if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
+                    var messageText: string = "Resend this invoice to QBO?";
+                    if (response.Result) {
+                        messageText = messageText.concat(" Please note that any connected Transferred payments will be resend after the successful transfer of this invoice");
+                    }
+                    var myConfirmWindow = new ConfirmWindow();
+                    myConfirmWindow.Width = 400;
+                    myConfirmWindow.Show(messageText);
+                    myConfirmWindow.WindowClosed.subscribe(s => {
+                        this.StopFlags();
+                        if (myConfirmWindow.Yes) {
+                            this.SendToQBOApproved("Resending Invoice to QBO");
+
+                        }
+                    });
                 }
-            });
-        }
-
-        else {
-            this.SendToQBOApproved("Sending Invoice to QBO");
-            this.StopFlags();
-        }
+                else {
+                    if (response.Result) {
+                        var messageText: string = "Please note that any connected Transferred payments will be resend after the successful transfer of this invoice";
+                        myConfirmWindow.Width = 400;
+                        myConfirmWindow.Show(messageText);
+                        myConfirmWindow.WindowClosed.subscribe(s => {
+                            this.StopFlags();
+                            if (myConfirmWindow.Yes) {
+                                this.SendToQBOApproved("Sending Invoice to QBO");
+                            }
+                        });
+                    }
+                    else {
+                        this.SendToQBOApproved("Sending Invoice to QBO");
+                    }
+                    this.StopFlags();
+                }
+            }                                           
+        });
     }
 
 
