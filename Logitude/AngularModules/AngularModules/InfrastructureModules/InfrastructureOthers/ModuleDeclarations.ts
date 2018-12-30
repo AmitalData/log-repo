@@ -17,6 +17,7 @@ import {ErrorLogExceptionComponent} from './Components/ErrorLog/ErrorLogExceptio
 import {MoveTypeGeneralTabComponent} from './Components/MoveType/MoveTypeGeneralTabComponent';
 import { NewMoveTypeComponent } from './Components/MoveType/NewMoveTypeComponent';
 import { WebhookKeysComponent } from './Components/WebhookKeys/WebhookKeysComponent';
+import { WebhookTesterComponent } from './Components/WebhookKeys/WebhookTesterComponent';
 
 export const Components =
     [
@@ -39,7 +40,7 @@ export const Components =
         ErrorLogExceptionComponent,
         NewMoveTypeComponent,
         WebhookKeysComponent,
-
+        WebhookTesterComponent,
     ];
 
 export class ModuleDeclarations {
@@ -67,6 +68,7 @@ export class ModuleDeclarations {
             case "ErrorLogExceptionComponent": { myResult = ErrorLogExceptionComponent; break; }
             case "NewMoveTypeComponent": { myResult = NewMoveTypeComponent; break; }
             case "WebhookKeysComponent": { myResult = WebhookKeysComponent; break; }
+            case "WebhookTesterComponent": { myResult = WebhookTesterComponent; break; }
 
 
         }
