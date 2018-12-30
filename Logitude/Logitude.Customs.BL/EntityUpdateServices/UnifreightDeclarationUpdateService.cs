@@ -2425,7 +2425,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 _CCUFILEMPM.SERVICEVALUE = 0;
             }
 
-            var isCancelUpdateExpenses = GetDefault("ISRAEL", "CGO_CUST_EXPENS", "NON", "NON");
+            string isCancelUpdateExpenses = GetDefault("ISRAEL", "CGO_CUST_EXPENS", "NON", "NON");
 
             foreach (var decSupplierInvoiceModifications in decSupplierInvoice.SupplierInvoiceModifications)
             {
