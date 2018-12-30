@@ -77,6 +77,7 @@ export class NewViewComponent {
     public BooleanValues = ["True", "False", "No Filter"];
     public ShareTabIsVisible: boolean = false;
     public IsSharedByMessageVisible: boolean = false;
+    public IsSaveButtonEnabled: boolean = true;
     constructor(fb: FormBuilder, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
         this.serviceArgs.http = ServiceHelper.Http;
@@ -159,8 +160,19 @@ export class NewViewComponent {
                 this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
                 this.SharedByUserName = this.EntityPM.SharedByUserName;
 
-                if (!FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
-                    this.IsSharedByMessageVisible = !AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId);
+                if (this.EntityPM.SharedByUserId != SessionLocator.LoggedUserId && (this.EntityPM.SharedWithAll || this.EntityPM.SharedWithSpecificUsers)) {
+                    this.IsSaveButtonEnabled = false;
+                }
+
+                if (FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
+                    this.IsSharedByMessageVisible = false;
+                }
+
+                else {
+                    if (this.EntityPM.SharedByUserId != SessionLocator.LoggedUserId && (this.EntityPM.SharedWithAll || this.EntityPM.SharedWithSpecificUsers)) {
+                        this.IsSharedByMessageVisible = true;
+                        this.IsSaveButtonEnabled = false;
+                    }
                 }
             }
 
