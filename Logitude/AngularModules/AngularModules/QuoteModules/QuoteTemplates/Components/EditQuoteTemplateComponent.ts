@@ -204,7 +204,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 620;
         logWindow.Height = 400;
-        logWindow.Title = "General";
+        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.General"); 
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/QuoteTemplateGeneralSetting");
 
    

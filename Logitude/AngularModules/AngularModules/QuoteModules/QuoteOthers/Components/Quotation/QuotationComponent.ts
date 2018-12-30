@@ -1075,9 +1075,10 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 800;
         logWindow.Height = 550;
-        logWindow.Title = "New Quote Template";
+
         logWindow.WindowArgs = windowArgs;
         logWindow.IsShowCloseButton = true;
+        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.NewQuoteTemplate"); 
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/AddQuoteTemplateFromLibraryComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
