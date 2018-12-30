@@ -636,7 +636,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             //SecurityUtility.AuthenticationOnTenant(tenant);
             QueryRepository queryRepository = new QueryRepository(0);
             QueryQuery queryQuery = new QueryQuery(queryRepository);
-            var queryFirst = queryQuery.GetQueries(tenant, UserId)
+            var queryFirst = queryQuery.GetQueries_Login(tenant, UserId)
                 //.Where(x => x.ObjectTableId == objecttableid)
                 .OrderBy(d => d.IndexOrder)
                 .ToList(); // .FirstOrDefault();

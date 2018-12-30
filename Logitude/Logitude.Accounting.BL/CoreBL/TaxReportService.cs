@@ -573,18 +573,18 @@ namespace Logitude.Accounting.BL.CoreBL
             myStringBuilder.Append(taxReport.CreateDate.ToString("yyyyMMdd"));
 
             //TotalTaxableOutputAmount
-            myStringBuilder.Append(FormatDecimal(taxReport.TaxableOutputAmount,9, true,true, showLocal));
+            myStringBuilder.Append(FormatDecimal(taxReport.TaxableOutputAmount,11, true,true, showLocal));
 
             //OutputTaxAmount
             myStringBuilder.Append(FormatDecimal(taxReport.OutputTaxAmount, 9, true,true, showLocal));
 
             //TaxableOutputsWithDiffPercent
             myStringBuilder.Append("+");
-            myStringBuilder.Append(FormatDecimal(taxReport.TaxableOutputsWithDiffPercent, 9, false, true, showLocal));
+            myStringBuilder.Append(FormatDecimal(taxReport.TaxableOutputsWithDiffPercent, 11, false, true, showLocal));
 
             //OutputTaxAmountWithDiffPercent
             myStringBuilder.Append("+");
-            myStringBuilder.Append(FormatDecimal(taxReport.OutputTaxAmountWithDiffPercent, 11, showLocalError: showLocal, includeSign:false, truncateDecimal:true));
+            myStringBuilder.Append(FormatDecimal(taxReport.OutputTaxAmountWithDiffPercent, 9, showLocalError: showLocal, includeSign:false, truncateDecimal:true));
 
             //OutputLinesCount
             myStringBuilder.Append(FormatInt(taxReport.OutputLinesCount, 9, showLocal));

@@ -75,7 +75,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 myObjectTableId = objectTable.Id;
             }
         }
-        public void APPaymentQuickbooksValidating(APPaymentPM entityPM, Boolean IsSetApproved, Boolean isNewEntity, APPayment payment, IInvoiceContext invoiceContext, ICommonDataContext CommonContext,bool setCancelApproved)
+        public void APPaymentQuickbooksValidating(APPaymentPM entityPM, Boolean IsSetApproved, Boolean isNewEntity, APPayment payment, IInvoiceContext invoiceContext, ICommonDataContext CommonContext,bool setCancelApproved, bool SystemWorkerRole = false )
         {
             if (IsSetApproved && !entityPM.SetVoided &&setCancelApproved == false)
             {
@@ -102,7 +102,15 @@ namespace Logitude.BL.InvoiceModel.Tools
                             communicationLogRepository = new CommunicationLogRepository(commonContext);
                             GetObjectTableData();
                             ContactRepository contactRepository = new ContactRepository(commonContext);
-                            Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+                            Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact;
+                            if (SystemWorkerRole)
+                            {
+                                loggedContact = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant, true);
+                            }
+                            else
+                            {
+                                loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+                            }
                             LoggedContactId = loggedContact.Id;
                             objectContext = invoiceContext;
                             this.invoicePaymentRepository = new APInvoicePaymentRepository(this.objectContext);

@@ -32,6 +32,7 @@ import {CustomFieldResolverPipe} from './Pipes/CustomFieldResolverPipe';
 import {GeneralSendComponent} from './Components/LogitudeComponents/GeneralSendComponent';
 import {LogLabelComponent} from './Components/LogitudeComponents/LogLabelComponent';
 import {LogTextBoxComponent} from './Components/LogitudeComponents/LogTextBoxComponent';
+import {MultilineTextBoxWindow} from './Components/LogitudeComponents/MultilineTextBoxWindow';
 import {LogTextBoxV2Component} from './Components/LogitudeComponents/LogTextBoxV2Component';
 import {LogLovComponent} from './Components/LogitudeComponents/LogLovComponent';
 import {LogLovV2Component} from './Components/LogitudeComponents/LogLovV2Component';
@@ -105,7 +106,8 @@ import {AuditAutomationTabComponent} from './Components/Maintenance/Automation/A
 import {SelectDocumentTypesComponent} from './Components/Maintenance/Automation/SelectDocumentTypesComponent';
 
 import {NewViewComponent} from './Components/NewViewComponent/NewViewComponent';
-import {Export2ExcelControl} from './Components/Export2ExcelControl/Export2ExcelControl';
+import { Export2ExcelControl } from './Components/Export2ExcelControl/Export2ExcelControl';
+import { ExportBI2ExcelControl } from './Components/ExportBI2ExcelControl/ExportBI2ExcelControl';
 import {QueryColumnsEditComponent} from './Components/QueryColumnsComponents/QueryColumnsEditComponent';
 import { btnComponent } from './Components/QueryColumnsComponents/btnComponent';
 import { btnUpdateComponent } from './Components/QueryColumnsComponents/btnUpdateComponent';
@@ -191,6 +193,7 @@ export const ControlsComponents =
         GeneralSendComponent,
         LogLabelComponent,
         LogTextBoxComponent,
+        MultilineTextBoxWindow,
         LogTextBoxV2Component,
         LogLovComponent,
         LogLovV2Component,
@@ -266,6 +269,7 @@ export const Components =
         LogitudeListBoxComponent,
         GeneralTabComponent,
         GeneratedComponent,
+        MultilineTextBoxWindow,
 
         MainMenuAutomationComponent,
         AutomationsSettingsComponent,
@@ -276,8 +280,9 @@ export const Components =
 
         NewViewComponent,
         Export2ExcelControl,
+        ExportBI2ExcelControl,
         QueryColumnsEditComponent,
-        btnComponent, 
+        btnComponent,
         btnUpdateComponent,
         ToComponent,
         NewEntityComponent,
@@ -359,9 +364,10 @@ export class ModuleDeclarations {
 
             case 'NewViewComponent': { myResult = NewViewComponent; break; }
             case 'Export2ExcelControl': { myResult = Export2ExcelControl; break; }
+            case 'ExportBI2ExcelControl': { myResult = ExportBI2ExcelControl; break; }
             case 'QueryColumnsEditComponent': { myResult = QueryColumnsEditComponent; break; }
             case 'btnComponent': { myResult = btnComponent; break; }
-            case 'btnUpdateComponent': { myResult = btnUpdateComponent; break; }                
+            case 'btnUpdateComponent': { myResult = btnUpdateComponent; break; }
             case 'ToComponent': { myResult = ToComponent; break; }
             case 'NewEntityComponent': { myResult = NewEntityComponent; break; }
             case 'LogSearchWindowComponent': { myResult = LogSearchWindowComponent; break; }
@@ -408,8 +414,9 @@ export class ModuleDeclarations {
             case 'BTELogTabComponent': { myResult = BTELogTabComponent; break; }
             case 'BTEParameterTabComponent': { myResult = BTEParameterTabComponent; break; }
             case 'LastSuccessfulLoginComponent': { myResult = LastSuccessfulLoginComponent; break; }
+            case 'MultilineTextBoxWindow': { myResult = MultilineTextBoxWindow; break; }
 
-                
+
         }
 
         return myResult;

@@ -9,6 +9,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -61,6 +62,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
+
+                    ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
+                    CardRepository cardRepository = new CardRepository(MyContext);
+
                     string computingPartnerCode = "";
                     if (loggedContactInfo != null)
                     {
@@ -93,7 +98,18 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
                     }
 
-                    ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
+                    if (!string.IsNullOrEmpty(entity.Code))
+                    {
+                        bool exist = (from a in cardRepository.GetCards(authToken.Tenant)
+                                      where a.PartnerTypeId == "CS" && a.Code == entity.Code && a.Tenant == authToken.Tenant
+                                      select a).Any();
+
+                        if (exist)
+                        {
+                            throw new Exception("Customer with code " + entity.Code + " already exists");
+                        }
+                    }
+                                        
                     CustomerQueryService mappingService = new CustomerQueryService(authToken.Tenant);
                     CustomerPM entityPM = mappingService.CustomerCustomDataMappingAndValidating(entity, authToken.Tenant, computingPartnerCode);
 
@@ -135,9 +151,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         #region GLAccount
                         if (entity.GLAccount != null)
                         {
-                            FullAccountingHelper fullAccountingHelper = new FullAccountingHelper();
-
-                            CardRepository cardRepository = new CardRepository(MyContext);
+                            FullAccountingHelper fullAccountingHelper = new FullAccountingHelper();                                                        
                             Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(entityPM.Id, authToken.Tenant);
                             if (card != null)
                             {

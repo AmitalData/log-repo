@@ -781,7 +781,7 @@ export class ShipmentTool {
     }
 
     public static IsGLSHK() {
-        if (SessionLocator.TenantManagementPM.AWBMessagesCCSTypeCode == "GLSHK") {
+        if (SessionLocator.TenantManagementJS.AWBMessagesCCSTypeCode == "GLSHK") {
             return true;
         }
 
@@ -792,7 +792,7 @@ export class ShipmentTool {
     public static GetTenantZeroAirlineField(shipmentPM: ShipmentPM) {
         var myResult: string = null;
 
-        if (SessionLocator.TenantManagementPM.AWBMessagesCCSTypeCode == "GLSHK") {
+        if (SessionLocator.TenantManagementJS.AWBMessagesCCSTypeCode == "GLSHK") {
             myResult = shipmentPM.TenantZeroAirlinePIMA;
         }
 
@@ -3220,9 +3220,7 @@ export class AWBHelper {
     public static ValidateAWBCCS(shipmentPM: ShipmentPM) {
         var myResult = new AWBCCSValidator();
 
-        var myTenantManagementPM = SessionLocator.TenantManagementPM;
-
-        if (myTenantManagementPM.AWBMessagesCCSTypeCode == "GLSHK") {
+        if (SessionLocator.TenantManagementJS.AWBMessagesCCSTypeCode == "GLSHK") {
             myResult.FWB = shipmentPM.TenantZeroAirlineGLSHKFWB;
             myResult.FHL = shipmentPM.TenantZeroAirlineGLSHKFHL;
             myResult.FSU = shipmentPM.TenantZeroAirlineGLSHKFSU;
@@ -3235,7 +3233,7 @@ export class AWBHelper {
                 myResult.AirlineFieldErrorMessage = "Airline communication parameter (PIMA) is missing";
             }
 
-            if (AppTool.IsNullOrEmpty(myTenantManagementPM.PIMA)) {
+            if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PIMA)) {
                 myResult.IsValid = false;
                 myResult.TenantManagementFieldHasError = true;
                 myResult.TenantManagementFieldErrorMessage = "Tenant communication parameter (PIMA) is missing";
@@ -3260,7 +3258,7 @@ export class AWBHelper {
                 myResult.AirlineFieldErrorMessage = "This Airline doesn't support transmitting messages";
             }
 
-            if (AppTool.IsNullOrEmpty(myTenantManagementPM.TTY)) {
+            if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TTY)) {
                 myResult.IsValid = false;
                 myResult.TenantManagementFieldHasError = true;
                 myResult.TenantManagementFieldErrorMessage = "Tenant communication parameter (TTY) is missing";

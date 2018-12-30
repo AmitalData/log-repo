@@ -1,12 +1,20 @@
-﻿<table>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
 
     <tr style="height:10px;">
-        <td><div></div></td>
+        <td>
+            <div></div>
+        </td>
     </tr>
 
     <tr>
         <td>
-            <table class="FixedTable">
+            <table class="FixedTable" *ngIf="IsResourcesReady">
 
                 <tr class="FormFieldRow" style="height:100px;">
                     <td style="height: 100px; vertical-align: top;width: 160px;">
@@ -15,14 +23,18 @@
 
                     <td style="width: 400px;height: 100px; vertical-align: top;">
                         <div style="height: 100%; width: 100%;">
-                            <LogTextBox [IsMultiline]="true" [ObjectFieldName]="'SignupRequestRecipients'" [Text]="SignupRequestRecipients"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            <LogTextBox [IsMultiline]="true" [ObjectFieldName]="'SignupRequestRecipients'" [Text]="SignupRequestRecipients" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                         </div>
                     </td>
-                    <td><div></div></td>
+                    <td>
+                        <div></div>
+                    </td>
                 </tr>
 
                 <tr style="height:5px;">
-                    <td colspan="3"><div></div></td>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
                 </tr>
 
                 <tr class="FormFieldRow" style="height:100px;">
@@ -32,13 +44,19 @@
 
                     <td style="height: 100px; vertical-align: top;">
                         <div style="height: 100%; width: 100%;">
-                            <LogTextBox [IsMultiline]="true" [ObjectFieldName]="'LoginPageNotes'" [Text]="LoginPageNotes"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            <LogTextBox [IsMultiline]="true" [ObjectFieldName]="'LoginPageNotes'" [Text]="LoginPageNotes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                         </div>
                     </td>
-                    <td><div></div></td>
+                    <td>
+                        <div></div>
+                    </td>
                 </tr>
 
-                <tr> <td colspan="3"> <div></div></td></tr>
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
 
             </table>
         </td>

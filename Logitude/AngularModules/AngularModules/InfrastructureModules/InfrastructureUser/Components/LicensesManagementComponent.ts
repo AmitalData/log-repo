@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter, OnDestroy}  from '@angular/core';
+import {Component, Output, EventEmitter, OnDestroy}  from '@angular/core';
 import {PackageList} from '../../../Common/EntityLists/PackageList';
 import {UserList} from '../../../Common/EntityLists/UserList';
 import {UserExtendedListService, UserExtendedList} from '../../../Common/Services/ExtendedLists/UserExtendedListService';
@@ -10,7 +10,6 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
-import {Cloner} from '../../../Infrastructure/Utilities/Cloner';
 import {CommonDomainService, UserLicenseUpdateHelper} from '../../../Common/Services/CommonDomainService';
 import {UserExtendedPMService} from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import {TenantManagementLicensePM} from '../../../Infrastructure/EntityPMs/TenantManagementLicensePM';
@@ -135,7 +134,7 @@ export class LicensesManagementComponent implements OnDestroy {
         this.LicensesManagmentsList = [];
 
         var index: number = 0;
-        InfraSettings.TenantManagementPM.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode === b.PackageCode) ? 0 : (a.PackageCode < b.PackageCode) ? -1 : 1 }).forEach(item => {
+        SessionLocator.TenantManagementJS.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode === b.PackageCode) ? 0 : (a.PackageCode < b.PackageCode) ? -1 : 1 }).forEach(item => {
             index++;
 
             if (index <= 10) {
@@ -169,7 +168,7 @@ export class LicensesManagementComponent implements OnDestroy {
         this.DataLoaded = false;
 
         var index: number = 0;
-        InfraSettings.TenantManagementPM.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode === b.PackageCode) ? 0 : (a.PackageCode < b.PackageCode) ? -1 : 1 }).forEach(item => {
+        SessionLocator.TenantManagementJS.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode === b.PackageCode) ? 0 : (a.PackageCode < b.PackageCode) ? -1 : 1 }).forEach(item => {
             index++;
 
             if (index <= 10) {
@@ -241,7 +240,7 @@ export class LicensesManagementComponent implements OnDestroy {
         var errors: string[] = [];
 
         var userLicenses: UserLicensePM[] = this.AllUserLicenses.filter(d => d.PackageCode == myPackageCode);
-        var tenantLicenses: TenantManagementLicensePM = InfraSettings.TenantManagementPM.TenantManagementLicenses.filter(d => d.PackageCode == myPackageCode)[0];
+        var tenantLicenses: TenantManagementLicensePM = SessionLocator.TenantManagementJS.TenantManagementLicenses.filter(d => d.PackageCode == myPackageCode)[0];
 
         var usersCount: number = userLicenses.length;
         var numberOfUsers: number = tenantLicenses.NumberOfUsers;

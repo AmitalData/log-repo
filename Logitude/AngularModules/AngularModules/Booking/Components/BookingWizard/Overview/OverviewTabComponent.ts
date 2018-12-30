@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList} from '@angular/core';
+import {Component, ViewChildren, QueryList} from '@angular/core';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
@@ -508,7 +508,7 @@ export class OverviewTabComponent {
             myResult = false;
         }
         else {
-            if (InfraSettings.TenantManagementPM.AWBMessagesCCSTypeCode == "GLSHK") {
+            if (SessionLocator.TenantManagementJS.AWBMessagesCCSTypeCode == "GLSHK") {
                 if (!this.EntityPM.TenantZeroAirlineGLSHKFSRFSA) {
                     myResult = false;
                 }

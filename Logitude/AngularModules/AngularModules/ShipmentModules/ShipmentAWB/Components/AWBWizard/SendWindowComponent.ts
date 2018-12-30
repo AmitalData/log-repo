@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -626,7 +626,7 @@ export class SendWindowComponent {
         var myResult = false;
 
         if (!this.DemoAreaIsVisible) {
-            if (SessionLocator.TenantManagementPM.IsAWBStockPrepaid) {
+            if (SessionLocator.TenantManagementJS.IsAWBStockPrepaid) {
                 myResult = true;
             }
         }
@@ -636,7 +636,7 @@ export class SendWindowComponent {
     get DemoAreaIsVisible() {
         var myResult = false;
 
-        if (this.Tenant == 65 || SessionLocator.TenantManagementPM.IsEAWBOnlyDemo) {
+        if (this.Tenant == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
             myResult = true;
         }
 

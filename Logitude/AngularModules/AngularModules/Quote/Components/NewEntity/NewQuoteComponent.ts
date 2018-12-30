@@ -83,7 +83,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     }
 
     LoadAllowedAirline() {
-        if (SessionLocator.TenantManagementPM.IsRestrictedByAirline) {
+        if (SessionLocator.TenantManagementJS.IsRestrictedByAirline) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                 if (this.EntityPM.TransportModeId == "A") {
                     this.myPartnersDomainService.GetAllowedAirlineId().subscribe((myResponse: ServiceResponse) => {

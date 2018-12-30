@@ -134,7 +134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "AccessKey",
-					  						OldFieldName =  "HashedPrimaryAccessKey",
+					  						OldFieldName =  "AccessKey",
 					  						ObjectTableName =  "WebhookKeys",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -165,7 +165,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ValidForQuerySection1 =  "WebhookKeys",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "HashedPrimaryAccessKey",
+					  						Code =  "AccessKey",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -188,7 +188,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "HashedPrimaryAccessKey",
+					  						HelpTextCode =  "AccessKey",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -197,7 +197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "PartnerName",
-					  						OldFieldName =  "UsedFor",
+					  						OldFieldName =  "PartnerName",
 					  						ObjectTableName =  "WebhookKeys",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -228,7 +228,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ValidForQuerySection1 =  "WebhookKeys",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "UsedFor",
+					  						Code =  "PartnerName",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -240,7 +240,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						FullFieldLable =  "PartnerName",
 					  						DefaultText =  @"Partner Name",
 					  						ListFieldLable =  "PartnerNameListLable",
-					  						ListLableDefaultText =  @"Used For",
+					  						ListLableDefaultText =  @"Partner Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -250,7 +250,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "UsedFor",
+					  						HelpTextCode =  "PartnerName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -379,7 +379,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "AllowedIPs",
+					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "WebhookKeys",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -410,7 +410,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ValidForQuerySection1 =  "WebhookKeys",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "AllowedIPs",
+					  						Code =  "InActive",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -420,9 +420,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InActive",
-					  						DefaultText =  @"Allowed IPs",
+					  						DefaultText =  @"In Active",
 					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  @"Allowed IPs",
+					  						ListLableDefaultText =  @"In Active",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -432,7 +432,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "AllowedIPs",
+					  						HelpTextCode =  "InActive",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -441,7 +441,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "CreatedByUserName",
-					  						OldFieldName =  "CreatedBy",
+					  						OldFieldName =  "CreatedByUserName",
 					  						ObjectTableName =  "WebhookKeys",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -472,7 +472,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ValidForQuerySection1 =  "WebhookKeys",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "CreatedBy",
+					  						Code =  "CreatedByUserName",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -494,7 +494,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "CreatedBy",
+					  						HelpTextCode =  "CreatedByUserName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -503,7 +503,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "UpdatedByUserName",
-					  						OldFieldName =  "UpdatedBy",
+					  						OldFieldName =  "UpdatedByUserName",
 					  						ObjectTableName =  "WebhookKeys",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -534,7 +534,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ValidForQuerySection1 =  "WebhookKeys",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "UpdatedBy",
+					  						Code =  "UpdatedByUserName",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -556,7 +556,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "UpdatedBy",
+					  						HelpTextCode =  "UpdatedByUserName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -565,7 +565,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "Description",
-					  						OldFieldName =  "maskedPrimaryAccessKey",
+					  						OldFieldName =  "Description",
 					  						ObjectTableName =  "WebhookKeys",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -596,7 +596,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ValidForQuerySection1 =  "WebhookKeys",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "maskedPrimaryAccessKey",
+					  						Code =  "Description",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -618,7 +618,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "maskedPrimaryAccessKey",
+					  						HelpTextCode =  "Description",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -679,7 +679,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 		   Feature WebhookKeysFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature WebhookKeysFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature WebhookKeysFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WebhookKeysFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.PackageFeature", NameTextCodeDefaultText = "WebhookKeys Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature WebhookKeysFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.PackageFeature", NameTextCodeDefaultText = "WebhookKeys Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature WebhookKeysFeature_WebhookKeys = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WebhookKeys", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.WebhookKeys", NameTextCodeDefaultText = @"Webhook Keys" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 

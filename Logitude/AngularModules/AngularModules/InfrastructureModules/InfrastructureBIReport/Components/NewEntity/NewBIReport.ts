@@ -6,6 +6,7 @@ import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArg
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { AppTool, DateTool} from '../../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
@@ -18,18 +19,32 @@ export class NewBIReport extends BaseComponent {
     private myService: BIReportPMService;
     public DataContext: NewBIReport = this;
     public ObjectTableName: string = "BIReport";
+    public IsNewQuery = true;
 
     constructor() {
         super();
         this.EntityPM = new BIReportPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
-        this.TypeCode ="EXL";
+        var todayDate: Date = DateTool.GetCurrentDateAsUtc();
+        this.EntityPM.CreateDate = todayDate;
+        this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
+        this.EntityPM.UpdateDate = todayDate;
+        this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
+        this.EntityPM.TypeCode ="EXL";
         this.myService = new BIReportPMService();
         this.SetUIProperties();
     }
 
     SetUIProperties() {
         this.UIProperties.SetEnabled("TypeCode", this.ObjectTableName, false);
+        this.UIProperties.SetRequired("DWQueryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DWQueryId));
+        if (!AppTool.IsNullOrEmpty(this.DWQueryId)) {
+            this.IsNewQuery = false;
+        }
+        else {
+            this.IsNewQuery = true;
+
+        }
     }
 
 
@@ -71,7 +86,8 @@ export class NewBIReport extends BaseComponent {
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 if (s != null) {
-                    this.DWQueryId = s.Id;
+                    this.EntityPM.DWQueryId = s.ID;
+                    this.SetUIProperties();
                 }
             });
         });
@@ -90,6 +106,9 @@ export class NewBIReport extends BaseComponent {
                 SessionLocator.CurrentSession.StopBusyIndicator();
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
+                }
+                else {
+                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
                 }
             });
         }
