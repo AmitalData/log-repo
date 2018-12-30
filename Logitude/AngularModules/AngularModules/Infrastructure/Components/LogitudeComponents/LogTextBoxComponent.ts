@@ -1,3 +1,5 @@
+import { Args } from './../../../Accounting/Components/Maintenance/AccountingPeriodsComponent';
+import { LogitudeWindow } from './../../../Controls/Windows/LogitudeWindow';
 declare var window: any;
 declare var SelectingElement: any;
 import {Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit, OnDestroy, NgZone, ChangeDetectorRef, ApplicationRef, ViewChild} from '@angular/core';
@@ -147,6 +149,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     IsPasted: boolean = false;
 
     LayoutDirection: string = 'ltr';
+    showLocal: boolean = false;
     IdentityKey: string;
     @Output() OriginalText = new EventEmitter();
 
@@ -156,7 +159,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         this.show = false;
         this.IdentityKey = AppTool.GetNewGuid();
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
-
+        this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
         //SessionLocator.CurrentSession.isShiftClicked = false;
         //SessionLocator.CurrentSession.isTabWithShiftClicked = false;
     }
@@ -1492,9 +1495,71 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     //        setTimeout(() => this.cd.detach(), 1000);
     //    }
     //}
+
+    isMouseOver: boolean = false;
+    isExpanded: boolean = false;
     OnMouseOver() {
+        this.isMouseOver = true;
         if (this.IsDisabled) {
             this.InputDivStyle = { 'border': '1px solid #AAAAAA' };
         }
+    }
+    OnMouseLeave() {
+        this.isMouseOver = false;
+    }
+
+
+    ExpandButtonClicked(){
+
+        this.isExpanded = !this.isExpanded;
+
+        console.log("[ExpandButtonClicked]");
+
+
+      var windowArgs: any = {};
+      windowArgs.ObjectTableName = this.ObjectTableName;
+      windowArgs.ObjectFieldName = this.ObjectFieldName;
+      windowArgs.TextValue = this.TextValue;
+
+        var wind = new LogitudeWindow();
+        wind.IsFullScreen = true;
+        wind.WindowArgs = windowArgs;
+        wind.Title = this.showLocal ? this.ObjectField.FullNameTextCodeLocalDefaultText :  this.ObjectField.FullNameTextCodeDefaultText;
+        wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
+        wind.WindowClosed.subscribe(res=>{
+            console.log("Rsukt--",res);
+            if(res)
+                this.TextValue = res;
+        });
+
+
+
+
+        // if(SessionLocator.CurrentSession.CurrentWindow){
+        //     var wd = document.getElementsByClassName("LogitudeWindow")[0];
+        // }
+
+        // var rect = wd.getBoundingClientRect();
+
+        // var left = rect.left;
+        // var right = rect.right;
+        // var top = rect.top;
+        // var bottom = rect.bottom;
+
+        // this.InputDivStyle =
+        // {
+        //     'z-index': '9999',
+        //     'position': 'fixed',
+        //     'left': left+'px',
+        //     'right': right+'px',
+        //     'top': top+'px',
+        //     'bottom': bottom+'px',
+        //     'width': wd.clientWidth+'px',
+        //     'height': wd.clientHeight+'px',
+
+        // };
+
+
+
     }
 }
