@@ -60,6 +60,9 @@ delete  TextCodes where Code = 'Quote.FollowUpTypeIdHelpText'
 delete  TextCodes where Code = 'Quote.CH.FollowUpDateListLable'
 delete  TextCodes where Code = 'Quote.CH.FollowUpTypeListLable'
 delete  TextCodes where Code = 'Quote.CH.FollowUpNotesListLable'
+delete  TextCodes where Code = 'User.Create DateHelpText'
+delete  TextCodes where Code = 'User.CH.CreateDateListLable'
+
 
 
 
