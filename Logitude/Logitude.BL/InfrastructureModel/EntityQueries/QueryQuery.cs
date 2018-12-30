@@ -247,12 +247,81 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                        SharedByUserId = a.SharedByUserId,
                        SpotlightModeActivated = a.SpotlightModeActivated,
-
-                   }).ToList();          
+                   }).ToList();
             
             return queries;
         }
 
+        public List<QueryPM> GetQueries_Login(int tenant, string userid)
+        {
+            List<QueryPM> queries = (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
+                                     where (a.Tenant == tenant && a.UserId == userid) || a.Tenant == 0 || a.SharedWithAll || a.SharedWithSpecificUsers
+                                     select new QueryPM()
+                                     {
+                                         Code = a.Code,
+                                         DisplayCount = a.DisplayCount,
+                                         Id = a.Id,
+                                         IndexOrder = a.IndexOrder,
+                                         QuerySection = a.QuerySection,
+                                         ObjectTableId = a.ObjectTableId,
+                                         ObjectTableName = a.ObjectTable.Name,
+                                         OriginalQueryId = a.OriginalQueryId,
+                                         SystemLevel = a.SystemLevel,
+                                         Tenant = a.Tenant,
+                                         TenantLevel = a.TenantLevel,
+                                         UserId = a.UserId,
+                                         ObjectTableIsNewWizard = a.ObjectTable.IsNewWizard,
+                                         ObjectTableNewWizardControlName = a.ObjectTable.NewWizardControlName,
+                                         IsAddNewEntityEnabled = a.IsAddNewEntityEnabled,
+                                         QueryGroupCode = a.QueryGroupCode,
+                                         QueryGroupIndexOrder = a.QueryGroup != null ? a.QueryGroup.IndexOrder : 0,
+                                         NameTextCodeId = a.NameTextCodeId,
+                                         NameTextCodeCode = a.NameTextCode == null ? null : a.NameTextCode.Code,
+                                         DefaultSortColumn = a.DefaultSortColumn,
+                                         DefaultSortDirection = a.DefaultSortDirection,
+                                         SpotlightDataTemplate = a.SpotlightDataTemplate,
+                                         Agent = a.Agent,
+                                         Customer = a.Customer,
+                                         Internal = a.Internal,
+                                         FeatureId = a.FeatureId,
+                                         EditWizardName = a.EditWizardName,
+                                         Perspective = a.Perspective,
+                                         IsHiddenFromView = a.IsHiddenFromView,
+                                         IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
+                                         NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
+                                         EditWizardComponentPath = a.EditWizardComponentPath,
+                                         SharedWithAll = a.SharedWithAll,
+                                         SharedWithSpecificUsers = a.SharedWithSpecificUsers,
+                                         SharedByUserId = a.SharedByUserId,
+                                         SpotlightModeActivated = a.SpotlightModeActivated,
+                                     }).ToList();
+
+            List<QueryPM> myResult = new List<QueryPM>();
+            List<SharedUserQuery> sharedUserQueries = repository.context.SharedUserQueries.Where(d => d.Tenant == tenant).ToList();
+
+            foreach (QueryPM item in queries)
+            {
+                if (item.SharedWithSpecificUsers)
+                {
+                    if (sharedUserQueries.Where(d => d.QueryId == item.Id && d.UserId == userid).Any())
+                    {
+                        myResult.Add(item);
+                    }
+                    
+                    else if(item.SharedByUserId == userid)
+                    {
+                        myResult.Add(item);
+                    }
+                }
+
+                else
+                {
+                    myResult.Add(item);
+                }
+            }
+
+            return myResult;
+        }
         public IQueryable<QueryPM> GetQueryPMsByTenantSystemLevel(int tenant)
         {
             List<QueryPM> queries = (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
