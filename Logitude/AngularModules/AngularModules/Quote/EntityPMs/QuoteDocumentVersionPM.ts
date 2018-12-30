@@ -92,7 +92,13 @@ export class QuoteDocumentVersionPM {
     private fileName: string;
     public get FileName() { return this.fileName; }
     public set FileName(newValue: string) { if (this.fileName != newValue) { this.fileName = newValue; this.MarkAsDirty("FileName"); } }
- 
+
+    private displayVersionTypeName: string;
+    public get DisplayVersionTypeName() { return this.displayVersionTypeName; }
+    public set DisplayVersionTypeName(newValue: string) { if (this.displayVersionTypeName != newValue) { this.displayVersionTypeName = newValue;  } }
+
+    
+
     public OldEntityPM: QuoteDocumentVersionPM;
 
     private entityParentPM: any;
