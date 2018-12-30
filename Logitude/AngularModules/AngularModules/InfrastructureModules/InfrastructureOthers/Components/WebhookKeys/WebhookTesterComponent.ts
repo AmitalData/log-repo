@@ -16,11 +16,11 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 export class WebhookTesterComponent extends BaseComponent {
     //public EntityPM: WebhookKeysPM = null;
-    //public ObjectTableName = "WebhookKeys";
+    public ObjectTableName = "WebhookKeys";
     public DataContext = this;
     //public EntityId: string = null;
     //public IsNewEntity: boolean = false;
-    //public ValidationErrorsList: string[] = [];
+    public ValidationErrorsList: string[] = [];
     //public IsEntityReady: boolean = false;
     //public IsResourcesReady: boolean = false;
     private myService: WebhookKeysPMService;

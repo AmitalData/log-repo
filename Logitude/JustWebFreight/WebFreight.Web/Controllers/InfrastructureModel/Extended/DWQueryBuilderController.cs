@@ -198,7 +198,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 }
                 if (!IsClosed)
                 {
-                    WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + ".[Parent Tenant] = " + authToken.Tenant); //authToken.Tenant
+                    if (Tabel != "DIM_Tenants")
+                    {
+                        WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + ".[Parent Tenant] = " + authToken.Tenant); //authToken.Tenant
+                    } 
+                   
                     //if (!string.IsNullOrEmpty(SearchData))
                     //{
                     //    WhereStmt = WhereStmt + (" and " + Field + " like '%" + SearchData + "'");
