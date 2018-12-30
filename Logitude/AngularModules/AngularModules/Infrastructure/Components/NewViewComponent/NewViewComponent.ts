@@ -158,7 +158,10 @@ export class NewViewComponent {
                 this.EntityPM = myResponse.Result;
                 this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
                 this.SharedByUserName = this.EntityPM.SharedByUserName;
-                this.IsSharedByMessageVisible = !AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId);
+
+                if (!FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
+                    this.IsSharedByMessageVisible = !AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId);
+                }
             }
 
             SessionLocator.CurrentSession.StopBusyIndicator();
