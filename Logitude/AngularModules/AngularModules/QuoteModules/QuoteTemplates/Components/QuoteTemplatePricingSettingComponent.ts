@@ -16,7 +16,7 @@ import {QuoteTemplateTextCodeExtendedPMService} from '../../../Quote/Services/Ex
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     selector: 'QuoteTemplatePricingSettingComponent',
     moduleId: module.id,
@@ -113,7 +113,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     }
 
 
-    LoadTextDesgin() {
+    LoadTextDesign() {
         var totalsLabelTextDesignId: string = (this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.TotalsPackagesLabelDesignId : this.QuoteTemplateSettingPM.TotalsContainsersLabelDesignId);
 
         var totalValueTextDesignId = (this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.TotalsPackagesValueDesignId : this.QuoteTemplateSettingPM.TotalsContainsersValueDesignId);
@@ -208,7 +208,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.TableDesignPM = pmResponse.Result;
             }
-            this.LoadTextDesgin();
+            this.LoadTextDesign();
 
         });
     }
@@ -450,7 +450,13 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
 
     get ShowPrice1Label() {
-        return this.QuoteTemplateSectionTypeName == "Packages" ? "Show Units" : "Show Fixed Price"; 
+
+        var showPrice1Label = "";
+        if (this.QuoteTemplateSectionTypeName == "Packages") {
+            showPrice1Label = TextCodeTranslator.Translate("QuoteTemplate.S.ShowUnits"); 
+        } else showPrice1Label = TextCodeTranslator.Translate("QuoteTemplate.S.ShowFixedPrice"); 
+
+        return showPrice1Label;
     }
 
 
@@ -474,10 +480,16 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
 
     get ShowPrice2Label() {
-        return this.QuoteTemplateSectionTypeName == "Packages" ? "Show Unit Price" : "Show Price By Container";
+
+        var showPrice2Label = "";
+        if (this.QuoteTemplateSectionTypeName == "Packages") {
+            showPrice2Label = TextCodeTranslator.Translate("QuoteTemplate.S.ShowUnitPrice");
+        } else showPrice2Label = TextCodeTranslator.Translate("QuoteTemplate.S.ShowPriceByContainer");
+
+        return showPrice2Label;
     }
 
-
+ 
 
     ShowPrice2Key: string = Guid.newGuid();
     get ShowPrice2() {
@@ -721,7 +733,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 930;
         logWindow.Height = 580;
-        logWindow.Title = "Total Per Containers Settings";
+        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.TotalPerContainerSettings")  ;
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/QuoteTemplateTotalPerContainerSetting");
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "Refresh") {
@@ -795,8 +807,9 @@ export class TextCodeData extends BaseComponent {
             if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginalEnglishName)) {
                 if (this.EntityPM.OriginalEnglishName != this.EntityPM.EnglishName) {
                     isShowRestoreOriginalEnglishName = true;
-                    this.ToolTipEnglishNameMessage = "Value edited by user, double click to reset to {" + this.EntityPM.OriginalEnglishName + "}";
-       
+
+                    this.ToolTipEnglishNameMessage = TextCodeTranslator.Translate("QuoteTemplate.M.ValueEditedByUserMessage") + " {" + this.EntityPM.OriginalEnglishName + "}";
+                    
                 }
 
             }

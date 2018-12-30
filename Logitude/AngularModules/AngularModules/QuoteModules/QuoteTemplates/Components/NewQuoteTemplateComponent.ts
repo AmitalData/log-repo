@@ -35,21 +35,31 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     FromAllTenantRadioButton: string;
     CopyRadioButton: string;
     NewRadioButton: string;
-
+    IsReady: boolean = false;
 
 
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     constructor() {
         super();
-        this.EntityPM = this.GetNewInstance();
-        this.quoteTemplateExtendedPMService = new QuoteTemplateExtendedPMService();
-        this.FromAllTenantRadioButton = Guid.newGuid();
-        this.CopyRadioButton = Guid.newGuid();
-        this.NewRadioButton = Guid.newGuid();
 
-        if (SessionLocator.LoggedUserPM.IsCustomerCare) {
-            this.VisibilityRadioFromTenant = true;
-        }
+
+        var _entityResourceService: EntityResourceService = new EntityResourceService();
+        _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe(response => {
+            this.IsReady = true;
+            this.EntityPM = this.GetNewInstance();
+            this.quoteTemplateExtendedPMService = new QuoteTemplateExtendedPMService();
+            this.FromAllTenantRadioButton = Guid.newGuid();
+            this.CopyRadioButton = Guid.newGuid();
+            this.NewRadioButton = Guid.newGuid();
+
+            if (SessionLocator.LoggedUserPM.IsCustomerCare) {
+                this.VisibilityRadioFromTenant = true;
+            }
+  
+        });
+
+
+        
     }
 
     ngOnInit() {
