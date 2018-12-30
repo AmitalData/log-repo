@@ -2424,6 +2424,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 _CCUFILEMPM.SERVICEVALUE = 0;
             }
+
+            string isCancelUpdateExpenses = GetDefault("ISRAEL", "CGO_CUST_EXPENS", "NON", "NON");
+
             foreach (var decSupplierInvoiceModifications in decSupplierInvoice.SupplierInvoiceModifications)
             {
                 switch (decSupplierInvoiceModifications.TypeCode)
@@ -2442,8 +2445,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         _CCUFILEMPM.FEEPLATFORM = _CCUFILEMPM.FEEPLATFORM.GetValueOrDefault() + amountDouble;
                         break;
                     case "160":
-                        amountDouble = Transfer(decSupplierInvoiceModifications.Amount, decSupplierInvoiceModifications.CurrencyTypeCode, "ILS", null);
-                        _CCUFILEMPM.EXPENSEVALUE = _CCUFILEMPM.EXPENSEVALUE.GetValueOrDefault() + amountDouble;
+                        if (isCancelUpdateExpenses != "Y")
+                        {
+                            amountDouble = Transfer(decSupplierInvoiceModifications.Amount, decSupplierInvoiceModifications.CurrencyTypeCode, "ILS", null);
+                            _CCUFILEMPM.EXPENSEVALUE = _CCUFILEMPM.EXPENSEVALUE.GetValueOrDefault() + amountDouble;
+                        }
                         amountDouble = Transfer(decSupplierInvoiceModifications.Amount, decSupplierInvoiceModifications.CurrencyTypeCode, decSupplierInvoice.InvoiceCurrencyTypeCode, null);
                         supplierInvoicePM.CHANGINGVALUE = supplierInvoicePM.CHANGINGVALUE.GetValueOrDefault() + amountDouble;
                         break;
