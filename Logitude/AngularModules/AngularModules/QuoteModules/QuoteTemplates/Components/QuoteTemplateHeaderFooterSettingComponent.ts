@@ -17,7 +17,7 @@ import {FroalaEditorSetting} from '../../../InfrastructureModules/Infrastructure
 import {QuoteTemplateSectionViewModel} from './EditQuoteTemplateComponent';
 import {BorderType} from '../../../Infrastructure/Components/LogitudeCustomComponents/TextDesignComponent';
 import {QuoteTemplateSectionExtendedPMService} from '../../../Quote/Services/ExtendedPMs/QuoteTemplateSectionExtendedPMService';
-
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     selector: 'QuoteTemplateHeaderFooterSettingComponent',
     moduleId: module.id,
@@ -295,7 +295,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
             logWindow.WindowArgs = windowArgs;
             logWindow.Width = 400;
             logWindow.Height = 130;
-            logWindow.Title = "Design Table";
+            logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.DesignTable");
             logWindow.Show("./QuoteModules/QuoteTemplates/Components/AdvanceDesignTableComponent");
             logWindow.WindowClosed.subscribe(($event: any) => {
                 if ($event == "Refresh") {
@@ -324,7 +324,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
         logWindow.Width = 800;
         logWindow.Height = 600;
         logWindow.BottomBorderForTitle = "1px solid LightGray";
-        logWindow.Title = "Edit Area 1";
+        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.Edit" + type); 
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/PageAreaHeaderFooterComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "Refresh") {

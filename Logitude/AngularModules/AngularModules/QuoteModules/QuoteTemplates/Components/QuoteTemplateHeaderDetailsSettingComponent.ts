@@ -409,7 +409,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     }
 
 
-    LoadTextDesgin() {
+    LoadTextDesign() {
 
         var ids: string = "";
         if (this.QuoteTemplateSectionTypeCode == "QD") {
@@ -470,7 +470,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.TableDesignPM = pmResponse.Result;
             }
-            this.LoadTextDesgin();
+            this.LoadTextDesign();
 
         });
     }

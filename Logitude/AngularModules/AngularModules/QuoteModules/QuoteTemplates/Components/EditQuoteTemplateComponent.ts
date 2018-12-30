@@ -1,4 +1,5 @@
 ﻿
+
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuoteTemplatePM} from '../../../Quote/EntityPMs/QuoteTemplatePM';
@@ -215,8 +216,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
         var logWindow = new LogitudeWindow();
         windowArgs.QuoteTemplateId = this.EntityPM.Id;
         windowArgs.QuoteId = this.QuotePM != null ? this.QuotePM.Id : "";
-
-        logWindow.Title = "Preview Template";
+        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.PreviewTemplate");
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 1000;
         logWindow.Height = (window.innerHeight - 130);
@@ -247,26 +247,27 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
             //Pricing Setting
             if (item.QuoteTemplateSectionTypeCode == "PP" || item.QuoteTemplateSectionTypeCode == "PC") {
                 windowArgs.QuoteTemplateSectionTypeName = item.QuoteTemplateSectionTypeCode == "PP" ? "Packages" : "Containers";
-                logWindow.Title = item.QuoteTemplateSectionTypeCode == "PP" ? "Pricing Packages Settings" : "Pricing Containers Settings";
+                logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.Pricing" + windowArgs.QuoteTemplateSectionTypeName.replace(" ", "") + "Settings");
                 windowArgs.QuoteTemplateTextCodePMList = this.QuoteTemplateTextCodeLists;
                 componentPath = "./QuoteModules/QuoteTemplates/Components/QuoteTemplatePricingSettingComponent";
                 logWindow.Width = 950;
                 logWindow.Height = 660;
               
             }
-
+      
             //Page Header && Footer  Setting
             else if (item.QuoteTemplateSectionTypeCode == "PH" || item.QuoteTemplateSectionTypeCode == "PF") {
                 windowArgs.QuoteTemplateSectionTypeName = item.QuoteTemplateSectionTypeCode == "PH" ? "Header" : "Footer";
                 componentPath = "./QuoteModules/QuoteTemplates/Components/QuoteTemplateHeaderFooterSettingComponent";
                 logWindow.Width = (window.innerWidth / 1.476); // 1920/1300
                 logWindow.Height = 600;
-                logWindow.Title = "Page " + windowArgs.QuoteTemplateSectionTypeName + " Settings";
+  
+                logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.Page" + windowArgs.QuoteTemplateSectionTypeName.replace(" ", "") + "Settings");
             }
 
             else if (item.QuoteTemplateSectionTypeCode == "QH" || item.QuoteTemplateSectionTypeCode == "QD") {
                 windowArgs.QuoteTemplateSectionTypeName = item.QuoteTemplateSectionTypeCode == "QH" ? "QuoteHeader" : "QuoteDetails";
-                logWindow.Title = item.QuoteTemplateSectionTypeCode == "QH" ? "Quote Header Settings" : "Quote Details Settings";
+                logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S." + windowArgs.QuoteTemplateSectionTypeName.replace(" ", "") + "Settings");
                 windowArgs.QuoteTemplateSectionTypeCode = item.QuoteTemplateSectionTypeCode;
                 windowArgs.QuoteTemplateTextCodePMList = this.QuoteTemplateTextCodeLists;
                 windowArgs.QuotePM = this.QuotePM;
@@ -330,7 +331,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
         
         logWindow.Width = sendWindowWidth;
         logWindow.Height = sendWindowHeight;
-        logWindow.Title = !item ? "Add Section" : "Edit Section";
+        logWindow.Title = !item ? TextCodeTranslator.Translate("QuoteTemplate.S.AddSection") : TextCodeTranslator.Translate("QuoteTemplate.S.EditSection");
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/AddEditQuoteTemplateSectionComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "Refresh") {
@@ -909,20 +910,29 @@ export class QuoteTemplateSectionViewModel {
     }
 
 
+
     
-    constructor(quoteTemplateSection: QuoteTemplateSectionPM, quotationComponent: QuotationComponent = null ) {
+    ToolTipDisplay: string;
+    DisplayName: string;
+    constructor(quoteTemplateSection: QuoteTemplateSectionPM, quotationComponent: QuotationComponent = null) {
         this.EntityPM = quoteTemplateSection;
         this.quotationComponent = quotationComponent;
-         this.Id = quoteTemplateSection.Id;
-         this.SectionDocId = quoteTemplateSection.SectionDocId;
-         this.QuoteTemplateSectionTypeCode = quoteTemplateSection.QuoteTemplateSectionTypeCode;
-         this.Description = quoteTemplateSection.Description;
-         this.Templatedata = quoteTemplateSection.Templatedata;
-         this.Order = quoteTemplateSection.Order;
-         this.Name = quoteTemplateSection.Name;
-         this.IsCancel = quoteTemplateSection.IsCancel;
-      
-         
+        this.Id = quoteTemplateSection.Id;
+        this.SectionDocId = quoteTemplateSection.SectionDocId;
+        this.QuoteTemplateSectionTypeCode = quoteTemplateSection.QuoteTemplateSectionTypeCode;
+        this.Description = quoteTemplateSection.Description;
+        this.Templatedata = quoteTemplateSection.Templatedata;
+        this.Order = quoteTemplateSection.Order;
+        this.Name = quoteTemplateSection.Name;
+        this.IsCancel = quoteTemplateSection.IsCancel;
+
+        var code = this.EntityPM.QuoteTemplateSectionTypeCode;
+        this.DisplayName = this.EntityPM.Name;
+
+        if (code == "PP" || code == "PC" || code == "PF" || code == "PH" || code == "QH" || code == "QD" || code == "PB") {
+             this.TranslationTextCode(this.EntityPM.QuoteTemplateSectionTypeCode);
+         }
+
          if (quoteTemplateSection.QuoteTemplateSectionTypeCode != "PP" && quoteTemplateSection.QuoteTemplateSectionTypeCode != "PC" && quoteTemplateSection.QuoteTemplateSectionTypeCode != "QH" && quoteTemplateSection.QuoteTemplateSectionTypeCode != "QD" && quoteTemplateSection.QuoteTemplateSectionTypeCode != "PH" && quoteTemplateSection.QuoteTemplateSectionTypeCode != "PF" && quoteTemplateSection.QuoteTemplateSectionTypeCode != "PB") {
 
              this.IsSection = true;
@@ -934,4 +944,48 @@ export class QuoteTemplateSectionViewModel {
 
        
     }
+
+    TranslationTextCode(sectionTypeCode: string) {
+
+        var result = "";
+
+        var textCode: string = "QuoteTemplate.S.";
+        var textCodeToolTip: string = "QuoteTemplate.M.";
+        if (sectionTypeCode == "PP") {
+            textCode += "PricingPackages";
+            textCodeToolTip += "PricingTableDescriptionMessage";
+        }
+        else if (sectionTypeCode == "PC") {
+            textCode += "PricingContainers";
+            textCodeToolTip += "PricingTableDescriptionMessage";
+        }
+        else if (sectionTypeCode == "PF") {
+            textCode += "PageFooter";
+            textCodeToolTip += "PageFooterDescriptionMessage";
+        }
+        else if (sectionTypeCode == "PH") {
+            textCode += "PageHeader";
+            textCodeToolTip += "PageHeaderDescriptionMessage";
+        }
+        else if (sectionTypeCode == "QH") {
+            textCode += "QuoteHeader";
+            textCodeToolTip += "QuoteHeaderDescriptionMessage";
+        }
+        else if (sectionTypeCode == "QD") {
+            textCode += "QuoteDetails";
+            textCodeToolTip += "QuoteDetailsDescriptionMessage";
+        }
+
+        else if (sectionTypeCode == "PB") {
+            textCode = "QuoteTemplate.B.PageBreak";
+        }
+
+        this.DisplayName = TextCodeTranslator.Translate(textCode);
+        this.ToolTipDisplay = TextCodeTranslator.Translate(textCodeToolTip);
+
+        return result; 
+    }
+
+
+
 }

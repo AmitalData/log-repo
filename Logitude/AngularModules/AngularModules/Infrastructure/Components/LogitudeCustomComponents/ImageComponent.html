@@ -34,7 +34,7 @@
                 <div style="vertical-align:central;">
                     <input [attr.id]="ImageFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file" [(ngModel)]="DataImage" (change)="UploadogoFile($event)" style="display:none" class="upload" />
 
-                    <img [style.height]="DefultImageHeight" (click)="OpenUpLoadLogo()" title="Click to add the photo" style="width:auto;  top: 0; left: 0; right: 0;bottom: 0; margin: auto;vertical-align:central;background-color:white;max-width: 295px;max-height: 245px; position: absolute;border:0px solid #ffffff" src="./Images/Icons/CLickToUploadLogo.png" [attr.id]="ImageKey" />
+                    <img [style.height]="DefultImageHeight" (click)="OpenUpLoadLogo()" title="{{'QuoteTemplate.M.Clicktoaddthephoto' | TextCodeTranslationPipe}}"  style="width:auto;  top: 0; left: 0; right: 0;bottom: 0; margin: auto;vertical-align:central;background-color:white;max-width: 295px;max-height: 245px; position: absolute;border:0px solid #ffffff" src="./Images/Icons/CLickToUploadLogo.png" [attr.id]="ImageKey" />
 
 
                     <!--<img title="Click to add the photo" (click)="OpenUpLoadLogo()" style="vertical-align:central;height:245px;width:100%;background-color:white;border:0px solid #ffffff ;cursor: pointer;" src="./Images/Icons/CLickToUploadLogo.png" [attr.id]="ImageKey" />-->

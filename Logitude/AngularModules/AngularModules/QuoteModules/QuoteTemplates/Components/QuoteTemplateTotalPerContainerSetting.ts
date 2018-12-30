@@ -22,6 +22,8 @@ import {QuoteTemplateSettingPMService} from '../../../Quote/Services/StandardPMs
 import {QuoteTemplateTextCodeExtendedPMService} from '../../../Quote/Services/ExtendedPMs/QuoteTemplateTextCodeExtendedPMService';
 import {QuoteTemplateTextDesignExtendedPMService} from '../../../Quote/Services/ExtendedPMs/QuoteTemplateTextDesignExtendedPMService';
 
+
+
 @Component({
     selector: 'QuoteTemplateTotalPerContainerSetting',
     moduleId: module.id,
@@ -149,14 +151,14 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.TableDesignPM = pmResponse.Result;
             }
-            this.LoadTextDesgin();
+            this.LoadTextDesign();
 
         });
     }
 
 
 
-    LoadTextDesgin() {
+    LoadTextDesign() {
        
         var titleTextDesignId: string = this.QuoteTemplateSettingPM.TotalPerContainersAdditionalTextDesignId;
 
