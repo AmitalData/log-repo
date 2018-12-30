@@ -75,7 +75,7 @@ export class NewViewComponent {
     public serviceArgs: ServiceArgs;
     public _http: Http;
     public BooleanValues = ["True", "False", "No Filter"];
-    public ShareTabIsVisible: boolean = true;
+    public ShareTabIsVisible: boolean = false;
     public IsSharedByMessageVisible: boolean = false;
     constructor(fb: FormBuilder, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
@@ -137,6 +137,10 @@ export class NewViewComponent {
         else {
             this.CreateBtnText = TextCodeTranslator.Translate("General.B.Create");
             this.EntityPM = new QueryPM();
+        }
+
+        if (FeatureLocator.HasFeaturePermession("User", "User.Feature.ViewsSharing")) {
+            this.ShareTabIsVisible = true;
         }
 
         this.FillShareValuesList();
