@@ -198,7 +198,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             if (declarationPM.IsCourierDeclaration)
                             {
-                                declarationPM.CourierSuspentionReasonCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
+                                //declarationPM.CourierSuspentionReasonCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
+                                declarationPM.CourierSuspentionCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;//Eitan H 31/12/18
                                 switch (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode)
                                 {
                                     case "3":
