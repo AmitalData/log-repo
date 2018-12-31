@@ -1,5 +1,5 @@
 declare var window: any;
-
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuoteTemplateSectionPM} from '../../../Quote/EntityPMs/QuoteTemplateSectionPM';
@@ -53,7 +53,13 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
 
         if (this.IsNewQuoteTemplateSession) this.QuoteTemplateSectionViewModel = this.GetNewInstance();
         this.Name = this.QuoteTemplateSectionViewModel.Name;
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+
+        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+
+
+
+
+
         var sectionDocId: string = !AppTool.IsNullOrEmpty(this.QuoteTemplateSectionViewModel.EntityPM.SectionDocId) ? this.QuoteTemplateSectionViewModel.EntityPM.SectionDocId : "";
 
         this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.QuoteTemplateSectionViewModel.QuoteTemplateSectionTypeCode, sectionDocId, "", "", "", "", SessionLocator.Tenant).subscribe(res => {
@@ -183,7 +189,11 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
 
             if (this.IsNewQuoteTemplateSession) {
         
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+      
+                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+
+
+
                 this.QuoteTemplateSectionViewModel.Templatedata = quotetemplateSectionBody;
                 this.RefreshSectionToList();
                 this.quoteTemplateSectionPMService.insert(this.QuoteTemplateSectionViewModel.EntityPM).subscribe(res => {
@@ -207,7 +217,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
                 this.QuoteTemplateSectionViewModel.EntityPM.IschangeBodySection = this.QuoteTemplateSectionViewModel.HtmlBody != htmlbody ? true : false;
 
                 if (this.QuoteTemplateSectionViewModel.EntityPM.IsDirty || this.QuoteTemplateSectionViewModel.EntityPM.IschangeBodySection) {
-                    SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                    SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
                     this.QuoteTemplateSectionViewModel.Templatedata = quotetemplateSectionBody;
 

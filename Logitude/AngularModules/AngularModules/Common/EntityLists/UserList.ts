@@ -46,6 +46,7 @@ export class UserList {
 		IsTwoFactorAuthenticationEnabled: boolean;
 		DocumentFilingInbox: string;
 		EmployeeGroupCustomFilter: string;
+		ShowLocalNameInLOV: boolean;
 		GroupId: Array<string>;
 	
 }

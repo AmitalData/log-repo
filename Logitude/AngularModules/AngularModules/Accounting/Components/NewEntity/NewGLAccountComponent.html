@@ -26,7 +26,6 @@
                                             [LookUpTableName]="'ChartOfAccountsType'"
                                             [QueryFilterItems]="ChartOfAccountTypeFilterItems"
                                             [SelectedValue]="ChartOfAccountsTypeCode"
-                                            
                                             [HideColumns]="true">
                                     </LogLov>
                                 </td>
@@ -187,6 +186,20 @@
                                 </td>
                                 <td><div></div></td>
                             </tr>
+
+                            <!-- test: multiline textbox -->
+                            <!-- <tr class="FormFieldRow">
+                                <td style="width: 150px;">
+                                    <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width: 200px;">
+                                    <LogTextBox [IsMultiline]="true" [ObjectFieldName]="'EnglishName'" [InputType]="'text'" [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr> -->
 
                             <tr><td><div></div></td></tr>
                         </table>

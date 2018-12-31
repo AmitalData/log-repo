@@ -184,8 +184,8 @@ namespace WebFreight.Web.Helpers
             {
                 if (customsShipperPM.ValidityStartDate != validityStartDate || customsShipperPM.ValidityEndDate != validityEndDate)
                 {
-                    DateTime currentDate = DateTime.Now;
-                    if (currentDate >= validityStartDate && currentDate < validityEndDate)
+                    DateTime currentDate = DateTime.Now.Date;
+                    if (currentDate >= validityStartDate.Value.Date && currentDate < validityEndDate.Value.Date)
                     {
                         customsShipperPM.ValidityStartDate = validityStartDate;
                         customsShipperPM.ValidityEndDate = validityEndDate;

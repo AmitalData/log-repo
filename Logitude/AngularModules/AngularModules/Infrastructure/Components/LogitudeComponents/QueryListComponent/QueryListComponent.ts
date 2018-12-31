@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 
 import {Component, OnInit, EventEmitter, Output, AfterViewInit, ChangeDetectorRef} from '@angular/core';

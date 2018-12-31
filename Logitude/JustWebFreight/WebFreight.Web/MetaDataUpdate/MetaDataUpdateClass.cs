@@ -62832,19 +62832,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.NewQuote.AddAgent", DefaultText = "Add Agent", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
 
 
-            /* Quotation */
-
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Addtemplatefromlibrary", DefaultText = "Add template from library", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Print", DefaultText = "Print", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Send", DefaultText = "Send", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.UploadQuote", DefaultText = "Upload Quote", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.SendtoCustomer", DefaultText = "Send to Customer", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.SendInternally", DefaultText = "Send Internally", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.View", DefaultText = "View", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Hide", DefaultText = "Hide", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Expand", DefaultText = "Expand", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-
-
             #endregion
 
             #region Messages
@@ -63019,16 +63006,38 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.Details", DefaultText = "Details", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             #endregion
 
+
+
             #region Quotation
 
+            #region Button
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Generate", DefaultText = "Generate", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Upload", DefaultText = "Upload", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.UploadQuote", DefaultText = "Upload Quote", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Print", DefaultText = "Print", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Send", DefaultText = "Send", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.SendtoCustomer", DefaultText = "Send to Customer", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.SendInternally", DefaultText = "Send Internally", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.View", DefaultText = "View", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Hide", DefaultText = "Hide", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Expand", DefaultText = "Expand", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Others
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.S.Generated", DefaultText = "Generated", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.S.Upload", DefaultText = "Upload", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.S.Uploaded", DefaultText = "Uploaded", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.S.Templates", DefaultText = "Templates", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.S.Quotation", DefaultText = "Quotation", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.S.GenerateUpload", DefaultText = "Generate Upload", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.S.Versions", DefaultText = "Versions", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.S.Generated", DefaultText = "Generated", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             #endregion
 
+            #endregion
 
+     
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Routings", DefaultText = "Routings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.DeclineReason", DefaultText = "Decline Reason", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
@@ -64336,9 +64345,17 @@ namespace WebFreight.Web.MetaDataUpdate
         private void LoadTextCodes_QuoteTemplate(Dictionary<string, TextCode> textcodes)
         {
             string objectTableId = ObjectContext.ObjectTables.Where(f => f.Name == "QuoteTemplate" && f.Tenant == 0).FirstOrDefault().Id;
-            
+
+
+
+          
+
+       
+
             #region Others
 
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowTotalPerChargeGroup", DefaultText = "ShowTotalPerChargeGroup", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Search", DefaultText = "Search", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PageHeader", DefaultText = "Page Header", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.QuoteHeader", DefaultText = "Quote Header", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.QuoteIntroduction", DefaultText = "Quote Introduction", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
@@ -64346,30 +64363,50 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PricingPackages", DefaultText = "Pricing Packages", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PricingContainers", DefaultText = "Pricing Containers", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PageFooter", DefaultText = "Page Footer", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.SampleText", DefaultText = "Sample Text", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Sections", DefaultText = "Sections", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Translation", DefaultText = "Translation", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Righttoleft", DefaultText = "Right-to-left", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowLocalLanguage", DefaultText = "Show Local Language", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PricingTableDesign", DefaultText = "Pricing Table Design", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PreviewTemplate", DefaultText = "Preview Template", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.GeneralSettings", DefaultText = "General Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Total", DefaultText = "Total", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Rows", DefaultText = "Rows", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowPageBreakBeforeTable", DefaultText = "Show Page Break Before Table", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.BorderColor", DefaultText = "Border Color", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowFixedPrice", DefaultText = "Show Fixed Price", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowPriceByContainer", DefaultText = "Show Price By Container", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.General", DefaultText = "General", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TotalsDesign", DefaultText = "Totals  Design", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TitleDesign", DefaultText = "Title Design", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PageHeaderSettings", DefaultText = "Page Header Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.QuoteDetailsSettings", DefaultText = "Quote Details Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PricingPackagesSettings", DefaultText = "Pricing Packages Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.QuoteHeaderSettings", DefaultText = "Quote Header Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PageFooterSettings", DefaultText = "Page Footer Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PricingContainersSettings", DefaultText = "Pricing Containers Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.EditSection", DefaultText = "Edit Section", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.AddSection", DefaultText = "Add Section", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.BorderThickness", DefaultText = "Border Thickness", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Column1", DefaultText = "Column 1", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Column2", DefaultText = "Column 2", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Column3", DefaultText = "Column 3", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.None", DefaultText = "None", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Logo", DefaultText = "Logo", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Text", DefaultText = "Text", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ColumnsWidthOptions", DefaultText = "Columns Width Options", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Width", DefaultText = "Width", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Height", DefaultText = "Height", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.BorderType", DefaultText = "Border Type", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.All", DefaultText = "All", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.AvaiLabelFields", DefaultText = "AvaiLabel Fields", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Box", DefaultText = "Box", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.HorizontalOnly", DefaultText = "Horizontal Only", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.VerticalOnly", DefaultText = "Vertical Only", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Cm", DefaultText = "Cm", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Height", DefaultText = "Height", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TextColor", DefaultText = "Text Color", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.BackgroundColor", DefaultText = "Background Color", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.DesignTable", DefaultText = "Design Table", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.BorderThickness", DefaultText = "Border Thickness", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.EditArea1", DefaultText = "Edit Area 1", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.EditArea2", DefaultText = "Edit Area 2", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.EditArea3", DefaultText = "Edit Area 3", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
@@ -64378,8 +64415,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Tablecolumns", DefaultText = "Table columns", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Labels", DefaultText = "Labels", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TableDesign", DefaultText = "Table Design", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.AvaiLabelFields", DefaultText = "AvaiLabel Fields", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ColumnsWidthOptions", DefaultText = "Columns Width Options", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ColumnwidthType", DefaultText = "Column width Type", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Fixed", DefaultText = "Fixed", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Auto", DefaultText = "Auto", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
@@ -64393,12 +64428,9 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.LocalLabel", DefaultText = "Local Label", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Label", DefaultText = "Label", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Value", DefaultText = "Value", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.SampleText", DefaultText = "Sample Text", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Border", DefaultText = "Border", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TitleDesgin", DefaultText = "Title Desgin", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowTitle(GeneralDetails)", DefaultText = "Show Title ( General Details )", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.NewQuoteTemplate", DefaultText = "New Quote Template", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.EditSection", DefaultText = "Edit Section", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Name", DefaultText = "Name", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PricingTable", DefaultText = "Pricing Table", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Totals", DefaultText = "Totals", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
@@ -64419,14 +64451,17 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowTotalInSaleCurrency", DefaultText = "Show Total In Sale Currency", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Header", DefaultText = "Header", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Title", DefaultText = "Title", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.GroupbyDesgin", DefaultText = "Group by Desgin", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.GroupbyDesign", DefaultText = "Group by Design", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TotalPerContainerSettings", DefaultText = "Total Per Container Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TotalPerContainerTable", DefaultText = "Total Per Container Table", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowPageBreakBeforeTable", DefaultText = "Show Page Break Before Table", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TotalPerContainerDesign", DefaultText = "Total Per Container Design", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PageFooterSettings", DefaultText = "Page Footer Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PricingContainersSettings", DefaultText = "Pricing Containers Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Quote", DefaultText = "Quote", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Fields
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.F.Template", DefaultText = "Template", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "F", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.F.LastUpdate", DefaultText = "LastUpdate", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "F", }, TextCodeRepository, textcodes);
             #endregion
 
             #region Button
@@ -64436,21 +64471,26 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.PageBreak", DefaultText = "Page Break", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Edit", DefaultText = "Edit", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Settings", DefaultText = "Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.GeneralSettings", DefaultText = "General Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Preview", DefaultText = "Preview", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Cancel", DefaultText = "Cancel", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Save", DefaultText = "Save", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Close", DefaultText = "Close", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Up", DefaultText = "Up", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Down", DefaultText = "Down", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.New", DefaultText = "New", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Copy", DefaultText = "Copy", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Advanced", DefaultText = "Advanced", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.AddDataField", DefaultText = "Add Data Field", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Next", DefaultText = "Next", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.FromAllTenant", DefaultText = "From All Tenant", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Addtemplatefromlibrary", DefaultText = "Add template from library", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             #endregion
 
             #region Message
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.DeleteSectionConfirmMessage", DefaultText = "Are you sure you want to delete this section", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.Clicktoaddthephoto", DefaultText = "Click to add the photo", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.DeleteSectionConfirmMessage", DefaultText = "Are you sure you want to delete this section?", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.PageHeaderDescriptionMessage", DefaultText = "the header of each page in the quote", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.QuoteHeaderDescriptionMessage", DefaultText = "the header of the quote, displayed in the first page only", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.QuoteDetailsDescriptionMessage", DefaultText = "general details of the quote", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
@@ -64460,7 +64500,18 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.Loading", DefaultText = "Loading...", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             #endregion
 
-     
+    
+            #region Extra
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.NoActiveTemplatesFoundMessage", DefaultText = "No active templates found ", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.ValueEditedByUserMessage", DefaultText = "Value edited by user, double click to reset to", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.M.FileUploadedManuallyMessage", DefaultText = "File uploaded manually, no overview is available.", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.AddNewQuoteTemplateMessage", DefaultText = "Here you can add new Quote template  from Logitude's Quote template list", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.M.HaveAllTheQuoteTemplatesMessage", DefaultText = "You have all the Quote Templates", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+
+            #endregion
+
+
+
 
             ObjectContext.SaveChanges();
         }
