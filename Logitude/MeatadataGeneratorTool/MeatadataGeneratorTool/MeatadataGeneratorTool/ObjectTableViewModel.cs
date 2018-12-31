@@ -21,6 +21,7 @@ using MeatadataGeneratorTool.MenuButtons;
 using MeatadataGeneratorTool.DataContractsModule;
 using MeatadataGeneratorTool.TextCodes;
 using MeatadataGeneratorTool.Features;
+using System.Diagnostics;
 
 namespace MeatadataGeneratorTool
 {
@@ -142,7 +143,9 @@ namespace MeatadataGeneratorTool
 
         public ObjectFieldsControl fieldsControl;
         public ObservableCollection<ObjectFieldsViewModel> DisplayLookUpFieldsList { get; set; }
+        public ObservableCollection<ObjectFieldsViewModel> DisplayLocalLookUpFieldsList { get; set; }
         public ObservableCollection<ObjectFieldsViewModel> ToBeDisplayOnLookUpList { get; set; }
+        public ObservableCollection<ObjectFieldsViewModel> ToBeDisplayOnLookUpLocalList { get; set; }
         public ObservableCollection<Row> rows { get; set; }
         public Dictionary<string, string> FieldsDictionary = new Dictionary<string, string>();
         public ObservableCollection<QueryViewModel> queriesObsList;
@@ -278,7 +281,9 @@ namespace MeatadataGeneratorTool
             //DCFieldsObsList = new ObservableCollection<DataContractFieldViewModel>();
             TempObsList = new ObservableCollection<ObjectFieldsViewModel>();
             DisplayLookUpFieldsList = new ObservableCollection<ObjectFieldsViewModel>();
+            DisplayLocalLookUpFieldsList = new ObservableCollection<ObjectFieldsViewModel>();
             ToBeDisplayOnLookUpList = new ObservableCollection<ObjectFieldsViewModel>();
+            ToBeDisplayOnLookUpLocalList = new ObservableCollection<ObjectFieldsViewModel>();
             ObjectTableTypes = new List<ObjectTableType>() { new ObjectTableType { Code = "MD", Name = "Master Data" }, new ObjectTableType() { Code = "BR", Name = "Business Record" } };
             this.AdditionalTextCodesList = new ObservableCollection<TextCodesViewModel>();
             this.AdditionalFeaturesList = new ObservableCollection<FeaturesViewModel>();
@@ -887,8 +892,9 @@ namespace MeatadataGeneratorTool
         {
 
             DisplayLookUpFieldsList.Clear();
+            DisplayLocalLookUpFieldsList.Clear();
             ToBeDisplayOnLookUpList.Clear();
-
+            ToBeDisplayOnLookUpLocalList.Clear();
             foreach (ObjectFieldsViewModel item in ObsList.Where(d => d.FieldDataType != "LookUp" && d.DisplayOnLookUp))
             {
                 DisplayLookUpFieldsList.Add(item);
@@ -899,9 +905,23 @@ namespace MeatadataGeneratorTool
                 ToBeDisplayOnLookUpList.Add(item);
             }
 
+            foreach (ObjectFieldsViewModel item in ObsList.Where(d => d.FieldDataType != "LookUp" && d.DisplayOnLookUpLocal))
+            {
+                DisplayLocalLookUpFieldsList.Add(item);
+            }
+
+            foreach (ObjectFieldsViewModel item in ObsList.Where(d => d.FieldDataType != "LookUp" && !d.DisplayOnLookUpLocal))
+            {
+                ToBeDisplayOnLookUpLocalList.Add(item);
+            }
+
             DisplayLookUpFieldsList = new ObservableCollection<ObjectFieldsViewModel>(DisplayLookUpFieldsList.OrderBy(c => c.DisplayInLookUpIndex).ToList());
+            DisplayLocalLookUpFieldsList=new ObservableCollection<ObjectFieldsViewModel>(DisplayLocalLookUpFieldsList.OrderBy(c=>c.DisplayInLookUpIndex).ToList());
+
             FirePropertyChanged("DisplayLookUpFieldsList");
+            FirePropertyChanged("DisplayLocalLookUpFieldsList");
             FirePropertyChanged("ToBeDisplayOnLookUpList");
+            FirePropertyChanged("ToBeDisplayOnLookUpLocalList");
         }
 
         public RelayCommand<ObjectFieldsViewModel> LookUpSelectionChanged
@@ -937,7 +957,6 @@ namespace MeatadataGeneratorTool
             FirePropertyChanged("ObsList");
         }
 
-
         public void RemoveFromListMethod(ObjectFieldsViewModel selected)
         {
 
@@ -949,6 +968,59 @@ namespace MeatadataGeneratorTool
 
                 FirePropertyChanged("DisplayLookUpFieldsList");
                 FirePropertyChanged("ToBeDisplayOnLookUpList");
+                FirePropertyChanged("ObsList");
+            }
+        }
+
+        /// <summary>
+        /// to add a display on lookup local 
+        /// </summary>
+        public RelayCommand<ObjectFieldsViewModel> LookUpLocalSelectionChanged
+        {
+            get { return new RelayCommand<ObjectFieldsViewModel>(i => this.LookUpLocalSelectionChangedMethod(i)); }
+            set { }
+        }
+
+        public ObjectFieldsViewModel selectedLocalField;
+        private void LookUpLocalSelectionChangedMethod(ObjectFieldsViewModel item)
+        {
+            selectedLocalField = item;
+            
+           // MessageBox.Show(selectedLocalField.FieldName);
+        }
+
+        public RelayCommand AddToLocalListCommand
+        {
+            get { return new RelayCommand(() => this.AddToLocalListMethod()); }
+        }
+
+
+        private void AddToLocalListMethod()
+        {
+
+            if (selectedLocalField != null)
+            {
+                selectedLocalField.DisplayOnLookUpLocal = true;
+                DisplayLocalLookUpFieldsList.Add(selectedLocalField);
+                ToBeDisplayOnLookUpLocalList.Remove(selectedLocalField);
+            }
+
+            FirePropertyChanged("DisplayLocalLookUpFieldsList");
+            FirePropertyChanged("ToBeDisplayOnLookUpLocalList");
+            FirePropertyChanged("ObsList");
+        }
+
+        public void RemoveFromLocalListMethod(ObjectFieldsViewModel selected)
+        {
+
+            if (selected != null)
+            {
+                selected.DisplayOnLookUpLocal = false;
+                ToBeDisplayOnLookUpLocalList.Add(selected);
+                DisplayLocalLookUpFieldsList.Remove(selected);
+
+                FirePropertyChanged("DisplayLocalLookUpFieldsList");
+                FirePropertyChanged("ToBeDisplayOnLookUpLocalList");
                 FirePropertyChanged("ObsList");
             }
         }
