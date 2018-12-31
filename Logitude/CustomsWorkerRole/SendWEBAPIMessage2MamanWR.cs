@@ -230,9 +230,9 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             {
                 ExceptionHandler.HandleException(exc, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
                 _WaitingCommLog.Retries++;
-                
 
-                
+                _WaitingCommLog.CommunicationStatusTypeCode = "F";
+
                 var s = "ProccessReceivedMessage()Exception:" + exc.Message;
                 _WaitingCommLog.ExceptionMessage = s.Substring(0, Math.Min(7999, s.Length));
                 _CommunicationLogRep.Update(_WaitingCommLog);
