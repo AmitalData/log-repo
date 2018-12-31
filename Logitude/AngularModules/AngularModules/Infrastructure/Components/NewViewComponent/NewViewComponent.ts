@@ -26,8 +26,6 @@ import {ServiceLocator} from '../../Locators/ServiceLocator';
 import { CodeNameClass } from '../../DataContracts/CodeNameClass';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ChooseUserArgs } from '../../../Infrastructure/Components/NewViewComponent/ChooseUserComponent';
-import { UserList } from '../../../Common/EntityLists/UserList';
-import { SharedUserQueryPM } from '../../../Infrastructure/EntityPMs/SharedUserQueryPM';
 import { FeatureLocator } from '../../Utilities/FeatureLocator';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 
@@ -75,8 +73,9 @@ export class NewViewComponent {
     public serviceArgs: ServiceArgs;
     public _http: Http;
     public BooleanValues = ["True", "False", "No Filter"];
-    public ShareTabIsVisible: boolean = true;
+    public ShareTabIsVisible: boolean = false;
     public IsSharedByMessageVisible: boolean = false;
+    public IsSaveButtonEnabled: boolean = false;
     constructor(fb: FormBuilder, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
         this.serviceArgs.http = ServiceHelper.Http;
@@ -139,7 +138,12 @@ export class NewViewComponent {
             this.EntityPM = new QueryPM();
         }
 
+        if (FeatureLocator.HasFeaturePermession("User", "User.Feature.ViewsSharing")) {
+            this.ShareTabIsVisible = true;
+        }
+
         this.FillShareValuesList();
+        this.SetSelectedSharedValue();
         this.Run();
     }
 
@@ -154,7 +158,20 @@ export class NewViewComponent {
                 this.EntityPM = myResponse.Result;
                 this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
                 this.SharedByUserName = this.EntityPM.SharedByUserName;
-                this.IsSharedByMessageVisible = !AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId);
+
+                this.SetSelectedSharedValue();
+
+                var isEditEnabled = true;                
+                if (this.EntityPM.SharedWithAll || this.EntityPM.SharedWithSpecificUsers) {
+                    if (this.EntityPM.SharedByUserId != SessionLocator.LoggedUserId) {
+                        if (!FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
+                            isEditEnabled = false
+                        }
+                    }
+                }
+
+                this.IsSharedByMessageVisible = !isEditEnabled;
+                this.IsSaveButtonEnabled = isEditEnabled;                
             }
 
             SessionLocator.CurrentSession.StopBusyIndicator();
@@ -306,22 +323,23 @@ export class NewViewComponent {
         this.ShareValuesList.push(obj1);
         this.ShareValuesList.push(obj2);
         this.ShareValuesList.push(obj3);
+    }
+    private SetSelectedSharedValue() {
 
         if (this.IsNew) {
             this.shareValueSelectedItem = this.ShareValuesList.filter(d => d.Code == "ALL")[0];
         }
 
         else {
-            var currentQuery: QueryPM = window.Queries.filter(d => d.Id == this.QueryId)[0];
-            if (currentQuery != null) {
+            if (this.EntityPM != null) {
 
-                this.ShareWithUsersCount = currentQuery.SharedUserQueries.length;
+                this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
 
-                if (currentQuery.SharedWithAll) {
+                if (this.EntityPM.SharedWithAll) {
                     this.shareValueSelectedItem = this.ShareValuesList.filter(d => d.Code == "ALL")[0];
                 }
 
-                else if (currentQuery.SharedWithSpecificUsers) {
+                else if (this.EntityPM.SharedWithSpecificUsers) {
                     this.shareValueSelectedItem = this.ShareValuesList.filter(d => d.Code == "SPF")[0];
                     this.IsChooseUsersVisible = true;
                 }
@@ -648,6 +666,9 @@ export class NewViewComponent {
         SessionLocator.CurrentSession.CurrentWindow.Close(this.QueryId);
     }
 
+    DeleteButtonClicked() {
+
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     NEWallFilterFieldsClass: FilterFieldsClass;
     filterFields: FilterFieldsClass;
@@ -959,6 +980,13 @@ export class NewViewComponent {
                             this.EntityPM.SharedWithAll = false;
                             this.EntityPM.SharedWithSpecificUsers = false;
                             this.EntityPM.SharedByUserId = null;
+
+                            if (this.EntityPM.SharedUserQueries != null && this.EntityPM.SharedUserQueries.length > 0) {
+                                for (var i = this.EntityPM.SharedUserQueries.length - 1; i >= 0; i--) {
+                                    var item = this.EntityPM.SharedUserQueries[i];
+                                    this.EntityPM.RemoveSharedUserQueryPM(item);
+                                }
+                            }
                             break;
                         }
                     }
@@ -1175,6 +1203,13 @@ export class NewViewComponent {
                         this.EntityPM.SharedWithAll = false;
                         this.EntityPM.SharedWithSpecificUsers = false;
                         this.EntityPM.SharedByUserId = null;
+
+                        if (this.EntityPM.SharedUserQueries != null && this.EntityPM.SharedUserQueries.length > 0) {
+                            for (var i = this.EntityPM.SharedUserQueries.length - 1; i >= 0; i--) {
+                                var item = this.EntityPM.SharedUserQueries[i];
+                                this.EntityPM.RemoveSharedUserQueryPM(item);
+                            }
+                        }
                         break;
                     }
                 }
@@ -1327,6 +1362,3 @@ export class NewViewComponent {
         });
     }
 }
-
-
-

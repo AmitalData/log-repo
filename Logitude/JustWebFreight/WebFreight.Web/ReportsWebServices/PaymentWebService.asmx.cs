@@ -248,6 +248,12 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
 
+                    // Local Name
+                    if (paymentMethod != null)
+                    {
+                        paymentDataProvider.PaymentMethodLocalName = GetPaymentMethodLocalName(paymentMethod.Code);
+                    }
+
                     // payment status
                     ARPaymentStatus paymentStatus = (from a in invoiceCotnext.ARPaymentStatus
                                                      where a.Code == currentPayment.StatusCode
@@ -441,6 +447,32 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return paymentDataProvider;
+        }
+
+        private string GetPaymentMethodLocalName(string code)
+        {
+            string translation = ""; 
+            if(code == "CH")
+            {
+                translation = "המחאה"; 
+            }
+            else if (code == "CA")
+            {
+                translation = "מזומן";
+            }
+            else if (code == "BT")
+            {
+                translation = "העברה בנקאית";
+            }
+            else if (code == "CC")
+            {
+                translation = "כרטיס אשראי";
+            }
+            else if (code == "FS")
+            {
+                translation = "קיזוז";
+            }
+            return translation;
         }
 
         private void MapPaymentProfact33Fields(ARPayment currentPayment, PaymentDataProvider paymentDataProvider, Tenant tenantSettings, IInvoiceContext invoiceCotnext, Card billToCard)

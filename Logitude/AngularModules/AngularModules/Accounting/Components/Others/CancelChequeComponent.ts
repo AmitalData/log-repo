@@ -72,6 +72,7 @@ export class CancelChequeComponent extends BaseComponent {
             this.entityPM.CancelledDate = new Date();
             this.entityPM.PaymentChequeStatusCode = "4";
             this.entityPM.CancelledByUserId = SessionLocator.LoggedUserId;
+            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
             this.paymentChequePMService.update(this.entityPM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
@@ -82,7 +83,7 @@ export class CancelChequeComponent extends BaseComponent {
                     myJournalExtendedPMService
                         .VoidJournal(this.entityPM.Tenant, this.entityPM.JournalId, "", "", "")
                         .subscribe((res: ServiceResponse) => {
-                           // SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
                             SessionLocator.CurrentSession.StopBusyIndicator();
 
                             if (res.HasError) {

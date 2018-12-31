@@ -34,6 +34,7 @@ export class AddEditAWBStockComponent extends BaseComponent {
             this.EntityPM = new MessagingStockPM();
             this.EntityPM.TenantNumber = windowArgs.FatherComponent.EntityPM.Id;
             this.EntityPM.DummyTenant = SessionLocator.Tenant;
+            this.EntityPM.StockType = "Champ";
         }
 
         else {

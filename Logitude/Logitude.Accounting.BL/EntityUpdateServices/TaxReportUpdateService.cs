@@ -63,9 +63,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 AccountingPeriodQueryService accountingPeriodQueryService = new AccountingPeriodQueryService(entityPM.Tenant);
                 bool exist = repo.CheckIfTaxReportExist(entityPM.TaxReportMonth.Month, entityPM.Year, entityPM.Tenant);
                 bool higherDateReportExist = repo.CheckIfTaxReportWithHigherDateExist(entityPM.TaxReportMonth.Month, entityPM.Year, entityPM.Tenant);
-                List<AccountingPeriodList> accountingPeriods = accountingPeriodQueryService.GetAccountingPeriodListByYearAndType(entityPM.Year, "1", entityPM.Tenant);
+                //List<AccountingPeriodList> accountingPeriods = accountingPeriodQueryService.GetAccountingPeriodListByYearAndType(entityPM.Year, "1", entityPM.Tenant);
                 ContactPM contact = GetLoggedContact(entityPM.Tenant) ?? new ContactPM();
-                var openMonth = accountingPeriods.Where(d => (d.ClosedMonth < entityPM.TaxReportMonth.Month && d.OpenMonth > entityPM.TaxReportMonth.Month) || d.OpenMonth == entityPM.TaxReportMonth.Month ).Any();
+                //var openMonth = accountingPeriods.Where(d => (d.ClosedMonth < entityPM.TaxReportMonth.Month && d.OpenMonth > entityPM.TaxReportMonth.Month) || d.OpenMonth == entityPM.TaxReportMonth.Month ).Any();
 
                 bool showLocals = !contact.DontShowLocal;
                 if (exist == true)
@@ -77,11 +77,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.HigherMonthReport", entityPM.Tenant, showLocals));
                 }
 
-                if (openMonth)
-                {
+                //if (openMonth)
+                //{
 
-                    throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.ReportWithClosedMonth", entityPM.Tenant, showLocals));
-                }
+                //    throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.ReportWithClosedMonth", entityPM.Tenant, showLocals));
+                //}
 
             }
 
