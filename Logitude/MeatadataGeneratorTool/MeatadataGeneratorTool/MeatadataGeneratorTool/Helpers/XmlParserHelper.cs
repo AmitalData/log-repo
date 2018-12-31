@@ -182,6 +182,7 @@ namespace MeatadataGeneratorTool.Helpers
             field.DisplayInSearchWindowListIndex = GetAttributeIntegerValue(fieldNode.Attributes["DisplayInSearchWindowListIndex"]);
             field.DisplayLongName = GetAttributeBoolValue(fieldNode.Attributes["DisplayLongName"]);
             field.DisplayOnLookUp = GetAttributeBoolValue(fieldNode.Attributes["DisplayOnLookUp"]);
+            field.DisplayOnLookUpLocal = GetAttributeBoolValue(fieldNode.Attributes["DisplayOnLookUpLocal"]);
             field.DisplayOnly = GetAttributeBoolValue(fieldNode.Attributes["DisplayOnly"]);
             field.FieldDataType = GetAttributeStringValue(fieldNode.Attributes["FieldsDataType"]);
             if (fieldNode.Attributes["OldFieldDataType"] != null)
