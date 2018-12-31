@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -299,6 +299,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 case "CRCCB":
                 case "OMBC":
                 case "WHL":
+                case "DESCH":
                     return true;
 
                 default:
