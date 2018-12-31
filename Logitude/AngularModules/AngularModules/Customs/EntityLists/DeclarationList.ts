@@ -134,6 +134,8 @@ export class DeclarationList {
 	IsClose: boolean;
 	MamanStatusName: string;
 	AcceptanceStatusName: string;
+	CourierSuspentionCode: string;
+	CourierSuspentionName: string;
 	
 }
  

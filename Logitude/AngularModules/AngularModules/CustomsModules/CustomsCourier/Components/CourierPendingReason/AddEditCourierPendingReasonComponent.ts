@@ -41,22 +41,6 @@ export class AddEditCourierPendingReasonComponent
     _CourierPendingReasonPMService: CourierPendingReasonPMService = new CourierPendingReasonPMService();
     _CourierPendingReasonExtendedListService: CourierPendingReasonExtendedListService = new CourierPendingReasonExtendedListService();
 
-    public Run(UnifreightEntityNumber: string) {
-
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 350;
-        logWindow.Height = 350;
-        logWindow.Title = 'קשר סטטוס לסיבת Pending';
-        logWindow.WindowArgs = {
-            "UnifreightStatusCode": UnifreightEntityNumber,
-            "FromUnifreight": true,
-        };
-        logWindow.ShowCloseButton = true;
-        logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/AddCourierPendingToUnifreightStatusComponent');
-
-
-    }
-
     constructor(public entityArgs: EntityArgs) {
         super();
 
