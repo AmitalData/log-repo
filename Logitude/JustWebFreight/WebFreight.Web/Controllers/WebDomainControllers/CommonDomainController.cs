@@ -1962,19 +1962,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 string result = null;
-                var CachedData = LogitudeCacheManager.ServerCache.GetFromCache("ClientAppStatus_" + authToken.Email);
-                if (CachedData != null)
+                if (LogitudeCacheManager.ServerCache != null)
                 {
-                    var data = JsonConvert.DeserializeObject<StatusData>(CachedData);
-                    if (data != null && data.IsActive == true && data.IsLogged == true && data.IsValidCert == true)
+                    var CachedData = LogitudeCacheManager.ServerCache.GetFromCache("ClientAppStatus_" + authToken.Email);
+                    if (CachedData != null)
                     {
+                        var data = JsonConvert.DeserializeObject<StatusData>(CachedData);
+                        if (data != null && data.IsActive == true && data.IsLogged == true && data.IsValidCert == true)
+                        {
 
-                    }
-                    else // if (data == null || !data.IsActive || !data.IsLogged || !data.IsValidCert)
-                    {
-                        result = "error";
+                        }
+                        else // if (data == null || !data.IsActive || !data.IsLogged || !data.IsValidCert)
+                        {
+                            result = "error";
+                        }
                     }
                 }
+                
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)

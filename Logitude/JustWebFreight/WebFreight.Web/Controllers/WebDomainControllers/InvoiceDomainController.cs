@@ -1419,7 +1419,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 ARPaymentChequeQueryService entityQuery = new ARPaymentChequeQueryService(tenant);
                 ARPaymentChequePM arpaymentCheque = entityQuery.GetSingleByPaymentId(paymentId, tenant);
-                string status = arpaymentCheque!= null ? arpaymentCheque.StatusName : ""; 
+                string status = arpaymentCheque != null ? arpaymentCheque.StatusName : "";
                 return Request.CreateResponse(HttpStatusCode.OK, status);
             }
 
@@ -1458,6 +1458,52 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
                         ARPaymentPM entityPM = paymentQuery.GetSinglePM(paymentId, tenant);
 
+                        Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, entityPM.SATXML);
+
+                        /*
+                         * Catalog EstadoCancelacion
+                           EnProceso  
+                           SinRespuesta
+                           CanceladoSinAceptacion
+                           CanceladoConAceptacion
+                           PlazoVencido
+
+                         * */
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, "");
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+
+        public HttpResponseMessage GetARInvoiceSATCancellationStatus(string invoiceId)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        string loggedUserEmail = authToken.Email;
+                        int tenant = authToken.Tenant;
+
+
+                        ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(tenant);
+                        ARInvoicePM entityPM = invoiceQuery.GetSinglePM(invoiceId, tenant);
+                        Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, entityPM.SATXML);
 
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, "");
@@ -1476,7 +1522,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetARInvoiceSATCancellationStatus(string invoiceId)
+
+        public HttpResponseMessage getConnectedARPayments(string invoiceId)
         {
             if (ModelState.IsValid)
             {
@@ -1488,13 +1535,49 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         string loggedUserEmail = authToken.Email;
                         int tenant = authToken.Tenant;
+                        ARInvoicePaymentRepository aRInvoicePaymentRepository = new ARInvoicePaymentRepository(tenant);
+
+                        List<ARPayment> aRPayments = aRInvoicePaymentRepository.GetARInvoicePaymentTransferedByInvoiceId(invoiceId, tenant).ToList();
+                        bool ExistPayments = aRPayments.Count>0?true:false;
+                       
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, ExistPayments);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
 
 
-                        ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(tenant);
-                        ARInvoicePM entityPM = invoiceQuery.GetSinglePM(invoiceId, tenant);
+
+        public HttpResponseMessage getConnectedAPPayments(string invoiceId)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        string loggedUserEmail = authToken.Email;
+                        int tenant = authToken.Tenant;
+                        APInvoicePaymentRepository aRInvoicePaymentRepository = new APInvoicePaymentRepository(tenant);
+
+                        List<APPayment> aRPayments = aRInvoicePaymentRepository.GetAPInvoicePaymentTransferedByInvoiceId(invoiceId, tenant).ToList();
+                        bool ExistPayments = aRPayments.Count > 0 ? true : false;
 
                         scope.Complete();
-                        return Request.CreateResponse(HttpStatusCode.OK, "");
+                        return Request.CreateResponse(HttpStatusCode.OK, ExistPayments);
                     }
                 }
 

@@ -446,6 +446,8 @@ namespace WebFreight.Web.DataProviders
             public string ARInvoiceField8 { get; set; }
             public string ARInvoiceField9 { get; set; }
             public string ARInvoiceField10 { get; set; }
+
+            public string Salesman { get; set; }
         }
 
         public class InvoiceTotals

@@ -119,6 +119,32 @@ export class APInvoiceMenuButtonsHandler {
                                 }
                                 break;
                             }
+
+
+                        case "SendToQBO":
+                            {
+                                if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
+                                    button.IsHidden = false;
+                                }
+                                else {
+                                    button.IsHidden = true;
+                                }
+                                if (this.EntityPM.TransferStatusCode == "RD" || this.EntityPM.TransferStatusCode == "NR") {
+                                    button.DisplayText = "Send to QBO";
+                                }
+                                else if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
+                                    button.LabelTextCodeCode = null;
+                                    button.DisplayText = "Resend to QBO";
+                                }
+                                if (this.EntityPM.ApprovedDate == null) {
+                                    myButtonIsDisabled = true;
+                                }
+                                else {
+                                    myButtonIsDisabled = false;
+                                }
+
+                                break;
+                            }
                     }
 
                     button.IsDisabled = myButtonIsDisabled;
@@ -173,6 +199,12 @@ export class APInvoiceMenuButtonsHandler {
                         break;
                     }
 
+                case "SendToQBO":
+                    {
+                        this.SendToQBO();
+                        break;
+                    }
+
                 default: {
                     this.StopFlags();
                     break;
@@ -181,6 +213,60 @@ export class APInvoiceMenuButtonsHandler {
 
         }
     }
+
+
+    SendToQBO() {
+        var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+        invoiceDomainService.getConnectedAPPayments(this.EntityPM.Id).subscribe(response => {
+            if (!response.HasError) {
+
+                if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
+                    var messageText: string = "Resend this invoice to QBO?";
+                    if (response.Result) {
+                        messageText = messageText.concat(" Please note that any connected Transferred payments will be resend after the successful transfer of this invoice");
+                    }
+                    var myConfirmWindow = new ConfirmWindow();
+                    myConfirmWindow.Width = 400;
+                    myConfirmWindow.Show(messageText);
+                    myConfirmWindow.WindowClosed.subscribe(s => {
+                        this.StopFlags();
+                        if (myConfirmWindow.Yes) {
+                            this.SendToQBOApproved("Resending Invoice to QBO");
+
+                        }
+                    });
+                }
+
+                else {
+                    if (response.Result) {
+                        var messageText: string = "Please note that any connected Transferred payments will be resend after the successful transfer of this invoice";
+                        myConfirmWindow.Width = 400;
+                        myConfirmWindow.Show(messageText);
+                        myConfirmWindow.WindowClosed.subscribe(s => {
+                            this.StopFlags();
+                            if (myConfirmWindow.Yes) {
+                                this.SendToQBOApproved("Sending Invoice to QBO");
+                            }
+                        });
+                    }
+                    else {
+                        this.SendToQBOApproved("Sending Invoice to QBO");
+                    }
+                    this.StopFlags();
+                }
+            }
+        });
+    }
+
+
+    SendToQBOApproved(Text: string) {
+        this.EntityPM.SetReSendQBO = true;
+        this.EntityPM.SetVoided = false;
+        this.EntityPM.SetApproved = false;
+        this.EntityPM.SetReTransfer = false;
+        this.entityArgs.EditComponent.SaveChanges(Text);
+    }
+
 
     isValid: boolean = false;
     isButtonClicked: boolean = false;
@@ -493,6 +579,7 @@ export class APInvoiceMenuButtonsHandler {
                     this.EntityPM.SetApproved = false;
                     this.EntityPM.SetReTransfer = false;
                     this.EntityPM.SetCancelApproval = false;
+                    this.EntityPM.SetReSendQBO = false;
 
                     this.entityArgs.EditComponent.SaveChanges("Voiding...");
                 }
@@ -512,6 +599,7 @@ export class APInvoiceMenuButtonsHandler {
             this.EntityPM.SetApproved = false;
             this.EntityPM.SetReTransfer = true;
             this.EntityPM.SetCancelApproval = false;
+            this.EntityPM.SetReSendQBO = false;
 
             this.entityArgs.EditComponent.SaveChanges();
         }

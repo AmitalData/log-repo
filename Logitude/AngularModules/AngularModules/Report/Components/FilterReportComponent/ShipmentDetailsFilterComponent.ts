@@ -39,6 +39,7 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
 
 
     RunReport(isloading: boolean) {
+        if (isloading) {
         this.ValidationErrorsList = [];
         if (this.FromDate == null) {
             this.ValidationErrorsList.push("From Date is required");
@@ -52,34 +53,35 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
             this.ValidationErrorsList.push("From Date cannot be greater than To Date");
         }
 
-        if (this.ValidationErrorsList.length == 0) {
-            this.queryFilterItems = new Array<QueryFilterItem>();
+            if (this.ValidationErrorsList.length == 0) {
+                this.queryFilterItems = new Array<QueryFilterItem>();
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "FromDate";
-            this.queryFilterItem.FieldValue = this.FromDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItems.push(this.queryFilterItem);
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "FromDate";
+                this.queryFilterItem.FieldValue = this.FromDate;
+                this.queryFilterItem.FieldDataType = "Date";
+                this.queryFilterItems.push(this.queryFilterItem);
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "ToDate";
-            this.queryFilterItem.FieldValue = this.ToDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItems.push(this.queryFilterItem);
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "ToDate";
+                this.queryFilterItem.FieldValue = this.ToDate;
+                this.queryFilterItem.FieldDataType = "Date";
+                this.queryFilterItems.push(this.queryFilterItem);
 
-            this.reportFliter = new ReportFliter();
-            this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
-            this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-            this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-            this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-            this.reportFliter.NumberOfPage = 1;
-            this.reportFliter.ProcessType = "GenerateReport";
+                this.reportFliter = new ReportFliter();
+                this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+                this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+                this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+                this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+                this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+                this.reportFliter.NumberOfPage = 1;
+                this.reportFliter.ProcessType = "GenerateReport";
 
-            this.ReportsPreview.CleanPartnersObslist();
-            this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
+                this.ReportsPreview.CleanPartnersObslist();
+                this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
+            }
         }
     }
 }

@@ -619,6 +619,7 @@
     <Content Include="images\ApplicationLogo\UnifreightLogo.jpg.jpg" />
     <Content Include="images\ApplicationLogo\UnifreightSmallLogo.png" />
     <Content Include="images\Archive.png" />
+    <Content Include="images\ChangePassword.png" />
     <Content Include="images\ExpandButton.png" />
     <Content Include="images\ExpandButton_2.png" />
     <Content Include="images\FileIcons\Photo.png" />
@@ -645,6 +646,8 @@
     <Content Include="images\Previous.png" />
     <Content Include="images\Recent.png" />
     <Content Include="images\RecentW.png" />
+    <Content Include="images\verified.png" />
+    <Content Include="images\verifiedGreen.png" />
     <Content Include="images\Warning_icon.png" />
     <Content Include="images\icons\ApprovedDocument.png" />
     <Content Include="images\icons\DeniedStamp.png" />
@@ -2168,6 +2171,7 @@
     <Compile Include="Helpers\TFSAnalyzer.cs" />
     <Compile Include="Helpers\TFSParseWebhook.cs" />
     <Compile Include="Helpers\TimeClock\TMClockAnalyze.cs" />
+    <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.BankAccountLite.cs" />
     <Compile Include="LinksGateway.aspx.cs">

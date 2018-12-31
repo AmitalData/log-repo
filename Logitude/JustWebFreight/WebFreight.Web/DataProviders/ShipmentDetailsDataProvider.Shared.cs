@@ -49,6 +49,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? HAWBDate { get; set; }
         public double? GrossWeightKgs { get; set; }
         public double? Volumem3 { get; set; }
+        public int? NumberofPackages { get; set; }
         public double? ChargeableWeightKgs { get; set; }
         public int? TotalPackagesReceived { get; set; }
         public double? CountofTEU { get; set; }
@@ -70,9 +71,9 @@ namespace WebFreight.Web.DataProviders
         public string GoodsReadinessDate { get; set; }
         public string DocumentsReadinessDate { get; set; }
         public DateTime? PickupFromDate { get; set; }
-        public string GroupageDate { get; set; }
-        public string DateonboardOrigin { get; set; }
-        public string Dateofarrivaltoport { get; set; }
+        public DateTime? GroupageDate { get; set; }
+        public DateTime? DateonboardOrigin { get; set; }
+        public DateTime? Dateofarrivaltoport { get; set; }
         public DateTime? ImportDeclarationDate { get; set; }
         public DateTime? CustomsClearanceDate { get; set; }
         public DateTime? DeliveryDate { get; set; }
@@ -100,5 +101,29 @@ namespace WebFreight.Web.DataProviders
         public string Status { get; set; }
         public string Dept { get; set; }
         public string Branch { get; set; }
+
+
+
+        public string ShipmentField1 { get; set; }
+        public string ShipmentField2 { get; set; }
+        public string ShipmentField3 { get; set; }
+        public string ShipmentField4 { get; set; }
+        public string ShipmentField5 { get; set; }
+        public string ShipmentField6 { get; set; }
+        public string ShipmentField7 { get; set; }
+        public string ShipmentField8 { get; set; }
+        public string ShipmentField9 { get; set; }
+        public string ShipmentField10 { get; set; }
+        public string ShipmentField11 { get; set; }
+        public string ShipmentField12 { get; set; }
+        public string ShipmentField13 { get; set; }
+        public string ShipmentField14 { get; set; }
+        public string ShipmentField15 { get; set; }
+        public string ShipmentField16 { get; set; }
+        public string ShipmentField17 { get; set; }
+        public string ShipmentField18 { get; set; }
+        public string ShipmentField19 { get; set; }
+        public string ShipmentField20 { get; set; }
+
     }
 }

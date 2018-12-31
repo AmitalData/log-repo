@@ -778,19 +778,29 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 }
                 if (data != null && !string.IsNullOrEmpty(data.PaymentRequestXML))
                 {
-                    var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(data.PaymentRequestXML);
-                    CustomData.RequestPaymentData = MyPaymentData; 
-                    //var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(data.PaymentRequestXML);
-                    var myId = Path.GetRandomFileName().Replace("&", "").Replace(".", "").Replace("=", "");
-                    //"sum=199.9&supplier=amitaltest&TranzilaPW=4Jwdsb&currency=1&op=1&DCdisable="
-                    string myParams = "sum=" + MyPaymentData.TotalChargesInNIS + "&supplier=amitaltest&TranzilaPW=4Jwdsb&currency=1&op=1&DCdisable=" + myId + "&DclickTK=" + myId;
-                    Dictionary<string, string> dict = GetParamsAsDict(myParams);
-                    string result = "";
-                    var success = GetRequestToken(dict, out result);
-                    if (success)
+                    TenantAdditionalDataRepository TADR = new TenantAdditionalDataRepository(tenant);
+                    var MyAdditionalData = TADR.GetSingleTenantAdditionalData(tenant);
+                    if (MyAdditionalData != null)
                     {
-                        CustomData.PaymentData = ForwardToPaymentLink(result, myParams); 
+                        var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(data.PaymentRequestXML);
+                        CustomData.RequestPaymentData = MyPaymentData;
+                        //var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(data.PaymentRequestXML);
+                        var myId = Path.GetRandomFileName().Replace("&", "").Replace(".", "").Replace("=", "");
+                        //"sum=199.9&supplier=amitaltest&TranzilaPW=4Jwdsb&currency=1&op=1&DCdisable="
+                        var MyConString = MyAdditionalData.PaymentGatewayConnectionString;
+                        MyConString = MyConString.Replace("*sum*", MyPaymentData.TotalChargesInNIS);
+                        MyConString = MyConString.Replace("*DCdisable*", myId);
+                        MyConString = MyConString.Replace("*DclickTK*", myId);
+                        string myParams = MyConString;// "sum=" + MyPaymentData.TotalChargesInNIS + "&supplier=amitaltest&TranzilaPW=4Jwdsb&currency=1&op=1&DCdisable=" + myId + "&DclickTK=" + myId;
+                        Dictionary<string, string> dict = GetParamsAsDict(myParams);
+                        string result = "";
+                        var success = GetRequestToken(dict, out result);
+                        if (success)
+                        {
+                            CustomData.PaymentData = ForwardToPaymentLink(result, myParams);
+                        }
                     }
+                 
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, CustomData);

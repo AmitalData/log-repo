@@ -2522,8 +2522,19 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
+        public IDbSet<PaymentGatewayPartners> PaymentGatewayPartners
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
 
-
-
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
+
+       
+    }
 }

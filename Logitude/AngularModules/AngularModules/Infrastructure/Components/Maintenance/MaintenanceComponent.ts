@@ -91,7 +91,7 @@ export class MaintenanceComponent {
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessQueue") || FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessTeam") ||
-            FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessBusinessRole") || FeatureLocator.HasFeaturePermession("General", "General.Features.Automations")) {
+            FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessBusinessRole")) {
             this.PagesMenu.push(new Menu("BUP", TextCodeTranslator.Translate("General.MC.BusinessProcess")));
         }
     }
@@ -129,14 +129,14 @@ export class MaintenanceComponent {
             }
         });
 
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.Automations")) {
-            var item = new MenusTablePM();
-            item.CategoryTypeCode = "BUP";
-            item.Icon = "Settings"
-            item.Code = "AUTO";
-            item.ObjectTableName = "Automations";
-            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        }
+        //if (FeatureLocator.HasFeaturePermession("General", "General.Features.Automations")) {
+        //    var item = new MenusTablePM();
+        //    item.CategoryTypeCode = "BUP";
+        //    item.Icon = "Settings"
+        //    item.Code = "AUTO";
+        //    item.ObjectTableName = "Automations";
+        //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        //}
 
         this.BuildPersonalSettings();
         this.BuildSystemSettings();

@@ -1804,6 +1804,49 @@ namespace Logitude.XSD.INTTRA.BL
 
                         list.Add(itemDescription);
 
+                        if (myShipmentPackage.IsMultiHarmonize)
+                        {
+                            List<ShipmentPackageHarmonize> iHarmonizes = this.AllHarmonizes.Where(d => d.PackageId == myShipmentPackage.Id).ToList();
+
+                            if (iHarmonizes.Count > 0)
+                            {
+                                string iHarmonizeDescription = null;
+
+                                foreach (ShipmentPackageHarmonize itemHarmonize in iHarmonizes)
+                                {
+                                    if (iHarmonizeDescription == null)
+                                    {
+                                        iHarmonizeDescription = "HS Code: " + itemHarmonize.Harmonize;
+                                    }
+
+                                    else
+                                    {
+                                        iHarmonizeDescription += ", " + itemHarmonize.Harmonize;
+                                    }
+                                }
+
+                                list.Add(new INTTRA_Out.PackageDetailComments()
+                                {
+                                    CommentType = INTTRA_Out.PackageDetailCommentsCommentType.GoodsDescription,
+                                    Value = iHarmonizeDescription,
+                                });
+                            }
+                        }
+
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(myShipmentPackage.Harmonize))
+                            {
+                                string iHarmonizeDescription = "HS Code: " + myShipmentPackage.Harmonize;
+
+                                list.Add(new INTTRA_Out.PackageDetailComments()
+                                {
+                                    CommentType = INTTRA_Out.PackageDetailCommentsCommentType.GoodsDescription,
+                                    Value = iHarmonizeDescription,
+                                });
+                            }
+                        }
+
                         itemGoodsDetails.PackageDetailComments = list.ToArray<INTTRA_Out.PackageDetailComments>();
                     }
 
@@ -2137,9 +2180,11 @@ namespace Logitude.XSD.INTTRA.BL
 
             if (myAddress != null)
             {
+                string iCountryName = null;
+
                 myResult = new INTTRA_Out.AddressInformation()
                 {
-                    AddressLine = this.GetStringList(myAddress.Address1, 4, 35).ToArray<string>(),
+                    //AddressLine = this.GetStringList(myAddress.Address1, 4, 35).ToArray<string>(),
                     City = this.FormatString(myAddress.City, 35),                     
                 };
 
@@ -2159,6 +2204,7 @@ namespace Logitude.XSD.INTTRA.BL
                     if (myCountry != null)
                     {
                         myResult.CountryCode = myCountry.Code;
+                        iCountryName = myCountry.EnglishName;
                     }
                 }
 
@@ -2170,6 +2216,61 @@ namespace Logitude.XSD.INTTRA.BL
                         myResult.StateProvince = this.FormatString(myState.EnglishName, 9);
                     }
                 }
+
+                List<string> AddressLines = new List<string>();
+
+                if (!string.IsNullOrEmpty(myAddress.Address1))
+                {
+                    if (AddressLines.Count < 4)
+                    {
+                        AddressLines.Add(this.FormatString(myAddress.Address1, 35));
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(myAddress.Address2))
+                {
+                    if (AddressLines.Count < 4)
+                    {
+                        AddressLines.Add(this.FormatString(myAddress.Address2, 35));
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(myAddress.City) || !string.IsNullOrEmpty(myAddress.ZipCode))
+                {
+                    if (AddressLines.Count < 4)
+                    {
+                        string iField = myAddress.City;
+
+                        if (!string.IsNullOrEmpty(myAddress.ZipCode))
+                        {
+                            iField += "," + myAddress.ZipCode;
+                        }
+
+                        AddressLines.Add(this.FormatString(iField, 35));
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(iCountryName))
+                {
+                    if (AddressLines.Count < 4)
+                    {
+                        AddressLines.Add(this.FormatString(iCountryName, 35));
+                    }
+                }
+
+
+
+                myResult.AddressLine = AddressLines.ToArray<string>();
+
+
+
+
+
+
+
+                //string iAddressString = this.GetAddress_OneLine(myAddress);
+
+                //myResult.AddressLine = this.GetStringList(iAddressString, 4, 35).ToArray<string>();
             }
 
             return myResult;
@@ -2297,13 +2398,13 @@ namespace Logitude.XSD.INTTRA.BL
 
                     case INTTRAPattern.Text:
                         {
-                            myFormat = @"[^a-zA-Z0-9\-\. ]*";
+                            myFormat = @"[^a-zA-Z0-9\-\,\. ]*";
                             break;
                         }
 
                     default:
                         {
-                            myFormat = @"[^a-zA-Z0-9\-\. ]*";
+                            myFormat = @"[^a-zA-Z0-9\-\,\. ]*";
                             break;
                         }
                 }
@@ -2334,6 +2435,50 @@ namespace Logitude.XSD.INTTRA.BL
             }
 
             return myResult;
+        }
+        private string GetAddress_OneLine(Address address)
+        {
+            string resultAddress = "";
+
+            if (address != null)
+            {
+                resultAddress = address.Address1 != null ? address.Address1 : "";
+
+                if (!string.IsNullOrEmpty(address.Address2))
+                {
+                    resultAddress = resultAddress + ", " + address.Address2;
+                }
+
+                if (!string.IsNullOrEmpty(address.City))
+                {
+                    resultAddress = resultAddress + ", " + address.City;
+                }
+
+                if (address.State != null)
+                {
+                    resultAddress = resultAddress + ", " + (address.State.Code != null ? address.State.Code : "");
+                }
+
+                if (!string.IsNullOrEmpty(address.ZipCode))
+                {
+                    resultAddress = resultAddress + ", " + address.ZipCode;
+                }
+
+                if (address.Country != null)
+                {
+                    if (address.IsLocalLanguage)
+                    {
+                        resultAddress = resultAddress + ", " + address.Country.LocalName;
+                    }
+
+                    else
+                    {
+                        resultAddress = resultAddress + ", " + address.Country.EnglishName;
+                    }
+                }
+            }
+
+            return resultAddress;
         }
 
         public enum INTTRAPattern
