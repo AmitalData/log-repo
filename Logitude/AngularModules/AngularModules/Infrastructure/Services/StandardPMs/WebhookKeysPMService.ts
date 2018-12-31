@@ -85,7 +85,7 @@ export class WebhookKeysPMService {
                     var mappedEntity: WebhookKeysPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
-				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
+				    return this._http.post(this._apiUrl + '/PostWebhookKeys', JSON.stringify(mappedEntity),
                         { headers: authHeader }).map((response) => {
 
                             var pm = response.json();

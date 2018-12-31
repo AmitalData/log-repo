@@ -73,9 +73,9 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
            
         }
 
-         
-		
 
+
+        [ActionName("PostWebhookKeys")]
         public HttpResponseMessage PostWebhookKeys(WebhookKeysPM entityPM)
         {
             if (ModelState.IsValid)
