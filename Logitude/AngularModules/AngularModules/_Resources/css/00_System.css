@@ -1,4 +1,4 @@
-﻿* {
+* {
     margin: 0px;
     border: 0px;
     padding: 0px;
@@ -54,6 +54,11 @@ img {
     vertical-align: middle;
     /*display: block;    
     margin: auto;*/
+}
+
+button {
+    font-size: 11px;
+    color: #45494A;
 }
 
 .LogitudeSmallScrollViewer::-webkit-scrollbar {
