@@ -258,6 +258,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CasualSupplierName = a.CasualSupplierName,
                                                      MamanErrorXml = a.MamanErrorXml,
                                                      ItemsProcessTypesList = a.ItemsProcessTypesList,
+                                                     CourierSuspentionCode = a.CourierSuspentionCode,
+                                                     CourierSuspentionName = a.CourierSuspention != null ? a.CourierSuspention.LocalName : null,
                                                  });
 
 
