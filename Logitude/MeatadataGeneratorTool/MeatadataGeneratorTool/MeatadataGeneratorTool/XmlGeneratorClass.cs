@@ -1088,6 +1088,7 @@ namespace MeatadataGeneratorTool
                 SetAttribute("CopyToDW", f.CopyToDW.ToString().ToLower(), fieldElement, null);
 
                 SetAttribute("DisplayOnLookUp", f.DisplayOnLookUp.ToString().ToLower(), fieldElement, null);
+                SetAttribute("DisplayOnLookUpLocal", f.DisplayOnLookUpLocal.ToString().ToLower(), fieldElement, null);
                 SetAttribute("CanFilter", f.CanFilter.ToString().ToLower(), fieldElement, null);
                 SetAttribute("DisplayOnly", f.DisplayOnly.ToString().ToLower(), fieldElement, null);
                 SetAttribute("SystemRequired", f.SystemRequired.ToString().ToLower(), fieldElement, null);
