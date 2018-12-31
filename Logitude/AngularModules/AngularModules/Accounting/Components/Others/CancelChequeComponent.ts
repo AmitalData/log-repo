@@ -82,7 +82,7 @@ export class CancelChequeComponent extends BaseComponent {
                     myJournalExtendedPMService
                         .VoidJournal(this.entityPM.Tenant, this.entityPM.JournalId, "", "", "")
                         .subscribe((res: ServiceResponse) => {
-                           // SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
                             SessionLocator.CurrentSession.StopBusyIndicator();
 
                             if (res.HasError) {

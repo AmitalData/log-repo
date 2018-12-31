@@ -538,7 +538,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 FileExtension = "txt",
                 SecurityId = "100",
-                FileName = _code,
+                FileName = "BKMVDATA",
             };
 
             byte[] bytearray = Encoding.Unicode.GetBytes(file);
