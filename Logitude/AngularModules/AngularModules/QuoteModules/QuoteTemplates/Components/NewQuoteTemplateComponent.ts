@@ -35,21 +35,31 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     FromAllTenantRadioButton: string;
     CopyRadioButton: string;
     NewRadioButton: string;
-
+    IsReady: boolean = false;
 
 
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     constructor() {
         super();
-        this.EntityPM = this.GetNewInstance();
-        this.quoteTemplateExtendedPMService = new QuoteTemplateExtendedPMService();
-        this.FromAllTenantRadioButton = Guid.newGuid();
-        this.CopyRadioButton = Guid.newGuid();
-        this.NewRadioButton = Guid.newGuid();
 
-        if (SessionLocator.LoggedUserPM.IsCustomerCare) {
-            this.VisibilityRadioFromTenant = true;
-        }
+
+        var _entityResourceService: EntityResourceService = new EntityResourceService();
+        _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe(response => {
+            this.IsReady = true;
+            this.EntityPM = this.GetNewInstance();
+            this.quoteTemplateExtendedPMService = new QuoteTemplateExtendedPMService();
+            this.FromAllTenantRadioButton = Guid.newGuid();
+            this.CopyRadioButton = Guid.newGuid();
+            this.NewRadioButton = Guid.newGuid();
+
+            if (SessionLocator.LoggedUserPM.IsCustomerCare) {
+                this.VisibilityRadioFromTenant = true;
+            }
+  
+        });
+
+
+        
     }
 
     ngOnInit() {
@@ -109,7 +119,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
 
     LoadQuoteTemplateList() {
         this.QuoteTemplateLists = [];
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
         this.quoteTemplateExtendedPMService.GetQuoteTemplateLists(this.AddType, SessionLocator.LoggedUserPM.IsCustomerCare, SessionLocator.Tenant).subscribe(res => {
             SessionLocator.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
@@ -151,7 +161,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     }
 
     CreateNewQuoteTemplate() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
         this.quoteTemplateExtendedPMService.insert(this.EntityPM).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -176,7 +186,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
  
     CopyQuoteTemplatePM() {
      
-        SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
         this.quoteTemplateExtendedPMService.GetCopyQuoteTemplate(this.SelectedQuoteTemplate.Id, this.EntityPM.Name, SessionLocator.LoggedUserId, SessionLocator.Tenant).subscribe(res => {
            
             var pmResponse: ServiceResponse = res;
@@ -213,7 +223,8 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
         logWindow.Height = window.innerHeight - 150;
         logWindow.IsShowCloseButton = true;
         logWindow.DataContext = this;
-        logWindow.StartBusyIndicator("Loading ..");
+
+        logWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/EditQuoteTemplateComponent");
        
     }
