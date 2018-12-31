@@ -928,7 +928,7 @@ export class EditDocumentComponent implements OnInit {
     }
 
 
-    ShowDesginStimul(item: DocumentTypeTemplateViewModel) {
+    ShowDesignStimul(item: DocumentTypeTemplateViewModel) {
 
         var title = "";
         if (item != null) {

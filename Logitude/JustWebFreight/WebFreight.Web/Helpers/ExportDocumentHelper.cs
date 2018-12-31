@@ -524,6 +524,7 @@ namespace WebFreight.Web.Helpers
                 case "CRCCU":
                 case "CRCCM":
                 case "CRCCB":
+                case "DESCH":
                     {
                         theT1 = System.DateTime.Now.Ticks;
                         ShippingDeclarationWebService shippingDeclarationWebService = new ShippingDeclarationWebService();

@@ -345,7 +345,7 @@
                                                 </td>
 
                                                 <td *ngIf="FullAccounting" style="width:150px; left: -10px;">
-                                                    <div></div>
+                                                    <LogLabel [Text]="'Cheque Status'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
@@ -397,8 +397,10 @@
                                                     <LogTextBox [ObjectFieldName]="'Account'" [Text]="Account" [InputType]="'text'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
 
-                                                <td *ngIf="FullAccounting" style="width:150px;" [style.text-align]="isRTL ? 'right' : 'left'" style="font-size:10px;">
-                                                    {{ARPaymentChequeStatus}}
+                                                <td *ngIf="FullAccounting" style="width:150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <div class="MediaFill" style="border: 1px solid #AAAAAA; opacity:0.5;border-radius: 3px;padding-left:10px;padding-right:10px;outline: none;font-size:12px;vertical-align:central;" [ngStyle]="{color: ARPaymentChequeStatusColor}">
+                                                        {{ARPaymentChequeStatus}}
+                                                    </div>
                                                 </td>
 
                                                 <td>
