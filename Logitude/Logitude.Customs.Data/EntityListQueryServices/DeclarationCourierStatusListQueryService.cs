@@ -66,6 +66,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 AcceptanceStatusCode = d.AcceptanceStatusCode,
                                                                 MamanStatusCode = d.MamanStatusCode,
                                                                 MamanErrorXml = d.MamanErrorXml,
+                                                                CourierSuspentionCode = d.CourierSuspentionCode,
+                                                                CourierSuspentionName = d.CourierSuspention != null ? d.CourierSuspention.LocalName : null,
                                                               });
             return query;
 		}

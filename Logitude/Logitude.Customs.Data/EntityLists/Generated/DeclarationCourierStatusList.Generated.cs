@@ -96,6 +96,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string MamanStatusCode  { get; set; }
        [DataMember]
        public string MamanErrorXml  { get; set; }
+       [DataMember]
+       public string CourierSuspentionCode  { get; set; }
+       [DataMember]
+       public string CourierSuspentionName  { get; set; }
    }
 
 }
