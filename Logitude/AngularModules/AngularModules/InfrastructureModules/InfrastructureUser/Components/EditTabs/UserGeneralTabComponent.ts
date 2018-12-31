@@ -158,6 +158,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         this.UIProperties.SetEnabled("InActive", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("LicencedUser", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("IsShowContactDetailsInTheMobileApp", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("ShowLocalNameInLOV", this.ObjectTableName, isEditingEnabled);
     }
 
     public get Email() { return this.EntityPM.Email; }
@@ -306,7 +307,12 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         }
     }
     
-
+    public get ShowLocalNameInLOV () { return this.EntityPM.ShowLocalNameInLOV ; }
+    public set ShowLocalNameInLOV (value: boolean) {
+        if (this.EntityPM.ShowLocalNameInLOV  != value) {
+            this.EntityPM.ShowLocalNameInLOV  = value;
+        }
+    }
 
 
 

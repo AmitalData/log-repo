@@ -270,6 +270,20 @@ namespace MeatadataGeneratorTool
             }
         }
 
+        bool displayOnLookUpLocal;
+        public bool DisplayOnLookUpLocal
+        {
+            get { return displayOnLookUpLocal; }
+            set
+            {
+                displayOnLookUpLocal = value;
+                FirePropertyChanged("DisplayOnLookUpLocal");
+                FirePropertyChanged("DisplayOnLookUpLocalEnabled");
+                FirePropertyChanged("DisplayOnLookUpLocalFontWeight");
+                FirePropertyChanged("DisplayOnLookUpLocalPathVisibility");
+            }
+        }
+
         public bool LookUpDataTypeEnabled
         {
             get
@@ -304,6 +318,34 @@ namespace MeatadataGeneratorTool
             {
                 string result = "Normal";
                 if (DisplayOnLookUp)
+                {
+                    result = "Bold";
+                }
+                return result;
+            }
+            set { }
+        }
+
+        public bool DisplayOnLookUpLocalEnabled
+        {
+            get
+            {
+                bool result = false;
+                if (DisplayOnLookUpLocal)
+                {
+                    result = true;
+                }
+                return result;
+            }
+            set { }
+        }
+
+        public string DisplayOnLookUpLocalFontWeight
+        {
+            get
+            {
+                string result = "Normal";
+                if (DisplayOnLookUpLocal)
                 {
                     result = "Bold";
                 }
@@ -1157,6 +1199,20 @@ namespace MeatadataGeneratorTool
             {
                 Visibility result = Visibility.Collapsed;
                 if (DisplayOnLookUp)
+                {
+                    result = Visibility.Visible;
+                }
+                return result;
+            }
+            set { }
+        }
+
+        public Visibility DisplayOnLookUpLocalPathVisibility
+        {
+            get
+            {
+                Visibility result = Visibility.Collapsed;
+                if (DisplayOnLookUpLocal)
                 {
                     result = Visibility.Visible;
                 }

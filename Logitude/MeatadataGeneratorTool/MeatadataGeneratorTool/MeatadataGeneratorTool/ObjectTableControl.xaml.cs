@@ -97,12 +97,27 @@ namespace MeatadataGeneratorTool
             }
         }
 
-        
-         
+        private void btnRemove_Click_Local(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn.DataContext != null)
+            {
+                ObjectFieldsViewModel selected = btn.DataContext as ObjectFieldsViewModel;
+                ObjectTableViewModel viewModel = this.DataContext as ObjectTableViewModel;
+                if (viewModel != null && selected != null)
+                {
+                    selected.ErrorsVisibility = Visibility.Collapsed;
+                    viewModel.RemoveFromLocalListMethod(selected);
+                }
+            }
+        }
+
+
+
 
         //private void dgLookupFields_Sorting(object sender, DataGridSortingEventArgs e)
         //{
-        
+
         //    int i = 0;
         //    foreach (ObjectFieldsViewModel field in dgLookupFields.Items)
         //    {

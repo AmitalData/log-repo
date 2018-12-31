@@ -72,7 +72,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
       
         if (!FeatureLocator.HasFeaturePermession("QuoteTemplate", "UPDATE")) this.IsDisableEditButton = true;
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading....");
+        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
         this.quoteTemplateExtendedPMService = new QuoteTemplateExtendedPMService();
         this.quoteTemplateTextCodeExtendedPMService = new QuoteTemplateTextCodeExtendedPMService();
         this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();
@@ -204,7 +204,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 620;
         logWindow.Height = 400;
-        logWindow.Title = "General";
+        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.General"); 
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/QuoteTemplateGeneralSetting");
 
    
@@ -489,7 +489,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
                     this.selectQuoteTemplateSection.IsLoaded = true;
                     if (!this.IsLoadPreviewSectionRuning) {
                         this.IsLoadPreviewSectionRuning = true;
-                        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
                     }
                     var quoteId: string = this.QuotePM != null ? this.QuotePM.Id : "";
                     var sectionDocId: string = !AppTool.IsNullOrEmpty(this.selectQuoteTemplateSection.SectionDocId) ? this.selectQuoteTemplateSection.SectionDocId : "";
@@ -543,7 +543,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
    
     AddPageBreakSection() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
         var order: number = 0;
 
@@ -603,8 +603,9 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
     RemoveQuoteTemplateSectionClicked(item: QuoteTemplateSectionViewModel) {
 
+
         var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Are you sure you want to delete this section?");
+        confirmWindow.Show(TextCodeTranslator.Translate("QuoteTemplate.M.DeleteSectionConfirmMessage"));
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 item.IsCancel = true;
@@ -692,7 +693,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
 
         if (this.IsSaveQuoteTemplateSectionRuning || this.IsSaveQuoteTemplateRuning) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Saving....");
+            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
             this.SaveQuoteTemplateSection(quoteTemplateSectionChangedLists);
             this.SaveQuoteTemplate();
         }

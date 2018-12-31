@@ -26,8 +26,6 @@ import {ServiceLocator} from '../../Locators/ServiceLocator';
 import { CodeNameClass } from '../../DataContracts/CodeNameClass';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ChooseUserArgs } from '../../../Infrastructure/Components/NewViewComponent/ChooseUserComponent';
-import { UserList } from '../../../Common/EntityLists/UserList';
-import { SharedUserQueryPM } from '../../../Infrastructure/EntityPMs/SharedUserQueryPM';
 import { FeatureLocator } from '../../Utilities/FeatureLocator';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 
@@ -77,7 +75,7 @@ export class NewViewComponent {
     public BooleanValues = ["True", "False", "No Filter"];
     public ShareTabIsVisible: boolean = false;
     public IsSharedByMessageVisible: boolean = false;
-    public IsSaveButtonEnabled: boolean = true;
+    public IsSaveButtonEnabled: boolean = false;
     constructor(fb: FormBuilder, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
         this.serviceArgs.http = ServiceHelper.Http;
@@ -163,20 +161,17 @@ export class NewViewComponent {
 
                 this.SetSelectedSharedValue();
 
-                if (this.EntityPM.SharedByUserId != SessionLocator.LoggedUserId && (this.EntityPM.SharedWithAll || this.EntityPM.SharedWithSpecificUsers)) {
-                    this.IsSaveButtonEnabled = false;
-                }
-
-                if (FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
-                    this.IsSharedByMessageVisible = false;
-                }
-
-                else {
-                    if (this.EntityPM.SharedByUserId != SessionLocator.LoggedUserId && (this.EntityPM.SharedWithAll || this.EntityPM.SharedWithSpecificUsers)) {
-                        this.IsSharedByMessageVisible = true;
-                        this.IsSaveButtonEnabled = false;
+                var isEditEnabled = true;                
+                if (this.EntityPM.SharedWithAll || this.EntityPM.SharedWithSpecificUsers) {
+                    if (this.EntityPM.SharedByUserId != SessionLocator.LoggedUserId) {
+                        if (!FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
+                            isEditEnabled = false
+                        }
                     }
                 }
+
+                this.IsSharedByMessageVisible = !isEditEnabled;
+                this.IsSaveButtonEnabled = isEditEnabled;                
             }
 
             SessionLocator.CurrentSession.StopBusyIndicator();
@@ -671,6 +666,9 @@ export class NewViewComponent {
         SessionLocator.CurrentSession.CurrentWindow.Close(this.QueryId);
     }
 
+    DeleteButtonClicked() {
+
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     NEWallFilterFieldsClass: FilterFieldsClass;
     filterFields: FilterFieldsClass;
@@ -1364,6 +1362,3 @@ export class NewViewComponent {
         });
     }
 }
-
-
-

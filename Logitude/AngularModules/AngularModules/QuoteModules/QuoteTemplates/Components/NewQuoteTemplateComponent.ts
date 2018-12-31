@@ -119,7 +119,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
 
     LoadQuoteTemplateList() {
         this.QuoteTemplateLists = [];
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
         this.quoteTemplateExtendedPMService.GetQuoteTemplateLists(this.AddType, SessionLocator.LoggedUserPM.IsCustomerCare, SessionLocator.Tenant).subscribe(res => {
             SessionLocator.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
@@ -161,7 +161,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     }
 
     CreateNewQuoteTemplate() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
         this.quoteTemplateExtendedPMService.insert(this.EntityPM).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -186,7 +186,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
  
     CopyQuoteTemplatePM() {
      
-        SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
         this.quoteTemplateExtendedPMService.GetCopyQuoteTemplate(this.SelectedQuoteTemplate.Id, this.EntityPM.Name, SessionLocator.LoggedUserId, SessionLocator.Tenant).subscribe(res => {
            
             var pmResponse: ServiceResponse = res;
@@ -223,7 +223,8 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
         logWindow.Height = window.innerHeight - 150;
         logWindow.IsShowCloseButton = true;
         logWindow.DataContext = this;
-        logWindow.StartBusyIndicator("Loading ..");
+
+        logWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/EditQuoteTemplateComponent");
        
     }

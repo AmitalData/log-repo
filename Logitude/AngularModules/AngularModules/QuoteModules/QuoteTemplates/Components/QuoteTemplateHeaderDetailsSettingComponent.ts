@@ -402,7 +402,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
 
     LoadData() {
     
-       SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
         this.QuoteTemplateTextDesignPMLists = [];
         this.LoadTableDesign();
         this.CustomQuoteFieldList();
@@ -860,7 +860,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
 
         if (this.IsSaveQuoteTemplateTextDesignRuning || this.IsSaveQuoteTemplateTableDesignRuning || this.IsSaveQuoteTemplateTextCodeRuning || this.IsSaveQuoteTemplateObjectField) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
             if (this.QuoteTemplateSettingPM.IsDirty) {
                 this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
@@ -1015,7 +1015,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     }
 
     SaveQuoteTemplateSetting() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
         this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
             this.QuoteTemplateSettingPM.IsDirty = false;
             this.SaveCompleted();
