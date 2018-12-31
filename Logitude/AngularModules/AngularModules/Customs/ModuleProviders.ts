@@ -23,6 +23,8 @@ import { CheckQueueTypeListService } from './Services/StandardLists/CheckQueueTy
 import { CheckRepresentativeTypeListService } from './Services/StandardLists/CheckRepresentativeTypeListService';
 import { CheckTypeLookupListService } from './Services/StandardLists/CheckTypeLookupListService';
 import { CityListService } from './Services/StandardLists/CityListService';
+import { AgentTalkBackTypeListService } from './Services/StandardLists/AgentTalkBackTypeListService';
+
 import { ClaimEntityListService } from './Services/StandardLists/ClaimEntityListService';
 import { ClaimExplanationCodeListService } from './Services/StandardLists/ClaimExplanationCodeListService';
 import { ClaimListService } from './Services/StandardLists/ClaimListService';
@@ -356,6 +358,8 @@ export class ModuleProviders {
             case "CheckRepresentativeTypeListService": { myResult = new CheckRepresentativeTypeListService(); break; }
             case "CheckTypeLookupListService": { myResult = new CheckTypeLookupListService(); break; }
             case "CityListService": { myResult = new CityListService(); break; }
+            case "AgentTalkBackTypeListService": { myResult = new AgentTalkBackTypeListService(); break; }
+                
             case "ClaimEntityListService": { myResult = new ClaimEntityListService(); break; }
             case "ClaimExplanationCodeListService": { myResult = new ClaimExplanationCodeListService(); break; }
             case "ClaimListService": { myResult = new ClaimListService(); break; }
