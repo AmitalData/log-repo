@@ -15,4 +15,3 @@ export class AgentTalkBackTypeList {
 	Inactive: boolean;
 	
 }
- 

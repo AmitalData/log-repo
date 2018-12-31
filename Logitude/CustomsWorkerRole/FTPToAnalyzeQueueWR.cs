@@ -165,7 +165,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 {
 
                     var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(_SeedTenant);
-                    var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(1, ftpIncustomsPartnerFtpDetail.Code /*CustomsPartnerFtpDetails.InterfaceName_ECSPCL*/,
+                    var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(_SeedTenant, ftpIncustomsPartnerFtpDetail.Code /*CustomsPartnerFtpDetails.InterfaceName_ECSPCL*/,
                         ftpIncustomsPartnerFtpDetail.Partner,
                         ftpIncustomsPartnerFtpDetail.TypeCode);
 

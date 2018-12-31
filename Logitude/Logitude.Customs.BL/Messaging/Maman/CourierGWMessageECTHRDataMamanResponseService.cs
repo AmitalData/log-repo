@@ -187,7 +187,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
         {
             
             var responeGWMessageECTHRData = ProxyUtil.JsonConvertDeserializeTyped<GWMessageECTHRData>(webAPIResultString);
-            
+            if (responeGWMessageECTHRData == null)
+            {
+                throw new Exception("(responeGWMessageECTHRData == null)");
+            }
             LogMessagingUtil.Instance.AppendLine($"AnalyzeResponse(ResponseStatusCode={responeGWMessageECTHRData.ResponseStatusCode},{responeGWMessageECTHRData.ResponseStatusMsg})");
             var context = CustomContext.GetContext(settings.Tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);

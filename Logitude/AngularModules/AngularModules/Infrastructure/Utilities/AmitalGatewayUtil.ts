@@ -517,7 +517,7 @@ export class AmitalGatewayUtil {
                                 });
 
                                 //logWindow.Show('./Customs/Components/Declaration/DeclarationPayment/SupplierInvoiceSelectionComponent');
-                                logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/SupplierInvoiceSelectionComponent.');
+                                logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/SupplierInvoiceSelectionComponent');
                             });
                         return;
                     }
