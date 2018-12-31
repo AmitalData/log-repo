@@ -46,8 +46,8 @@ delete QueryColumns WHERE ObjectFieldId = (select id from ObjectFields WHERE Fie
 delete ObjectFields WHERE FieldName = 'FollowUpNotes' and ObjectTableId = (select id from ObjectTables where Name = 'Quote')
 delete TextCodes where Id =(select FullNameTextCodeId from ObjectFields WHERE FieldName = 'FollowUpNotes' and ObjectTableId = (select id from ObjectTables where Name = 'Quote'))
 delete TextCodes where Code = 'QuoteTemplate.S.ShowTotalinLocalCurrency'
-
-
+delete  TextCodes where Code = 'Quote.F.ToPort.Short'
+delete  TextCodes where Code = 'Quote.F.FromPort.Short'
 delete  TextCodes where Code = 'Quote.ShipperContactHelpText'
 delete  TextCodes where Code = 'Quote.F.ShipperContactId.Short'
 delete  TextCodes where Code = 'Quote.FromPortCodeHelpText'
