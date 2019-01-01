@@ -170,8 +170,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append("a" + item.SumOfTaxDeductionLocalAmount.Value.ToString().PadLeft(9, '0'));
 
                 myStringBuilder.Append("00000000");
-
-                string endYearBalance = item.EndYearBalance.ToString();
+              
+                string endYearBalance =  item.EndYearBalance.ToString();
                 if (endYearBalance != null)
                 {
                     if (endYearBalance.Length > 8) endYearBalance = endYearBalance.Substring(0, 8);
