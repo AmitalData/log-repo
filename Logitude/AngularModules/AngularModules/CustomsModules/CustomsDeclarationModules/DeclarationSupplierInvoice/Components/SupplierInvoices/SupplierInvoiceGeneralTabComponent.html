@@ -607,15 +607,12 @@
                 <tr style="padding-top:5px">
                     <td style="width: 80px;" tabindex="-1">
                         <div tabindex="-1" class="ToggleButton" style="float:right">
-
-
-                            <label style="float:right">{{'Customs.Declaration.B.Actions' | TextCodeTranslationPipe}}</label>
-                            <img src="./Images/ToggleIcon.png" style="float:left" />
-                            <div class="ToggleButtonMenu" style="width: 140px;top:21px;text-align:center">
-                                <button (click)="CopyNowClicked()" [disabled]="!IsActionButtonsEnabled">{{'Customs.Declaration.O.CopyNow' |TextCodeTranslationPipe }}</button>
-                                <button (click)="UpdateProcessClicked()" [disabled]="!IsActionButtonsEnabled">{{'Customs.Declaration.O.UpdateProcessCode' |TextCodeTranslationPipe }}</button>
-
-                                <button *ngIf="ikeaFeature" (click)="UpdateCertificatesButtonClicked()" [disabled]="!IsActionButtonsEnabled">{{'Customs.Declaration.O.UpdateCertificates' |TextCodeTranslationPipe }}</button>
+                            <label style="float:right; left:45px">{{'Customs.Declaration.B.Actions' | TextCodeTranslationPipe}}</label>
+                            <img src="./Images/ToggleIcon.png" style="right:65px" />
+                            <div class="ToggleButtonMenu" style="width: 140px;top:21px;text-align:right">
+                                <button (click)="CopyNowClicked()" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{'Customs.Declaration.O.CopyNow' |TextCodeTranslationPipe }}</button>
+                                <button (click)="UpdateProcessClicked()" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{'Customs.Declaration.O.UpdateProcessCode' |TextCodeTranslationPipe }}</button>
+                                <button *ngIf="ikeaFeature" (click)="UpdateCertificatesButtonClicked()" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{'Customs.Declaration.O.UpdateCertificates' |TextCodeTranslationPipe }}</button>
                             </div>
                         </div>
                     </td>

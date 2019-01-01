@@ -223,7 +223,7 @@ export class CourierWorksheetListTemplate {
         }
 
         if (this._CourierWorksheet.CourierCustomStatusCode == "2") {
-          this.SuspentionReasonTip = this._CourierWorksheet.CourierSuspentionReasonName;
+            this.SuspentionReasonTip = this._CourierWorksheet.CourierSuspentionName;
         }
 
         this.SuspentionReasonText = this._CourierWorksheet.CourierCustomStatusName;

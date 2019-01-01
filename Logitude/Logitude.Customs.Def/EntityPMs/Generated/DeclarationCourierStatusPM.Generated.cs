@@ -963,6 +963,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string courierSuspentionCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierSuspentionCode  
+	   {
+	    
+	     get
+		{
+		   return courierSuspentionCode;
+		 }
+		 set
+		 {
+		   if(courierSuspentionCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierSuspentionCode",OldValue=courierSuspentionCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierSuspentionCode=value;
+		   }
+			
+		 }
+	   }
+	  private string courierSuspentionName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierSuspentionName  
+	   {
+	    
+	     get
+		{
+		   return courierSuspentionName;
+		 }
+		 set
+		 {
+		   if(courierSuspentionName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierSuspentionName",OldValue=courierSuspentionName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierSuspentionName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

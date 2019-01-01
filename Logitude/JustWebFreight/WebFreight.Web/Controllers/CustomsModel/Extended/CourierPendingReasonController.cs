@@ -37,6 +37,7 @@ using Logitude.Customs.Data.EntityListQueryServices;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityUpdateServices;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -69,5 +70,33 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
+        public HttpResponseMessage DeleteCourierPendingReasonUnifreightStatus(string courierPendingReasonCode)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+
+                CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(customContext);
+                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingle(courierPendingReasonCode, false,false);
+                courierPendingReasonPM.ChangeSetOp = ChangeSetOperation.Update;
+                courierPendingReasonPM.UnifreightStatusCode = null;
+
+                CourierPendingReasonUpdateService courierPendingReasonUpdateService = new CourierPendingReasonUpdateService(customContext, new Dictionary<string, IContext>(), authToken.Tenant);
+                courierPendingReasonUpdateService.Update(courierPendingReasonPM,true);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

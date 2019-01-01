@@ -229,6 +229,16 @@ export class DeclarationCourierStatusPM {
     public set MamanErrorXml(newValue: string) { if (this.mamanErrorXml != newValue) { this.mamanErrorXml = newValue; this.MarkAsDirty("MamanErrorXml"); } }
        
 	 
+    private courierSuspentionCode: string;
+    public get CourierSuspentionCode() { return this.courierSuspentionCode; }
+    public set CourierSuspentionCode(newValue: string) { if (this.courierSuspentionCode != newValue) { this.courierSuspentionCode = newValue; this.MarkAsDirty("CourierSuspentionCode"); } }
+       
+	 
+    private courierSuspentionName: string;
+    public get CourierSuspentionName() { return this.courierSuspentionName; }
+    public set CourierSuspentionName(newValue: string) { if (this.courierSuspentionName != newValue) { this.courierSuspentionName = newValue; this.MarkAsDirty("CourierSuspentionName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

@@ -13,6 +13,13 @@ import { CourierPendingReasonPMService } from '../../../../Customs/Services/Stan
 import { CourierPendingReasonExtendedListService } from '../../../../Customs/Services/ExtendedLists/CourierPendingReasonExtendedListService';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
+
+
+
+
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+
+
 @Component({
     moduleId: module.id,
     templateUrl: './AddEditCourierPendingReasonComponent.html',

@@ -44,7 +44,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
             var responeECSpclMamanData = ProxyUtil.JsonConvertDeserializeTyped<ECSpclMamanMessage>(webAPIResultString);
 
-
+            if (responeECSpclMamanData == null)
+            {
+                throw new Exception("(responeECSpclMamanData == null)");
+            }
 
 
 

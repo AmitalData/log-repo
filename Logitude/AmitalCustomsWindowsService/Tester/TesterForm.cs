@@ -40,6 +40,7 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("CustomsCommandAnalyzeResponseWR");
             _CBWorkerRole.Items.Add("SendWEBAPIMessage2MamanWR");
             _CBWorkerRole.Items.Add("FTPToAnalyzeQueueWR");
+            _CBWorkerRole.Items.Add("CustomsAnalyzeQueueWR");
 
             Debug.WriteLine("Env:");
             Debug.WriteLine(LogitudeSettings.LogitudeURL);
@@ -214,6 +215,13 @@ namespace AmitalCustomsWindowsService.Tester
                 10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
                     { ServiceStarted = true, };
                     break;
+
+                case "CustomsAnalyzeQueueWR":
+                    d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsAnalyzeQueueWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+                    { ServiceStarted = true, };
+                    break;
+                    
                 default:
                     return;
             }

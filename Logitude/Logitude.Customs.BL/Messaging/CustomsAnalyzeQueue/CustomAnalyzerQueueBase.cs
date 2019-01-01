@@ -1,11 +1,14 @@
 ﻿using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.Def.ClosedTable;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,64 +16,71 @@ using System.Linq;
 
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 {
     public abstract class CustomAnalyzerQueueBase
     {
-        private AnalyzeQueue _AnalyzeQueue;
+        protected AnalyzeQueue _AnalyzeQueue;
         private AnalyzeQueueRepository analyzeQueueRepository;
-        CommunicationLogRepository myCommunicationLogRepository;
-        private MemoryStream myMemoryStream;
-        int Tenant;
+        CommunicationLogRepository _CommunicationLogRepository;
+        
+
         protected InterfaceDetails _InterfaceDetails;
-        int  _SeedTenant=1;
+        private CommunicationLog _CommunicationLog;
+
+        protected StringBuilder _SBLog;
+
+        //int  _SeedTenant=1;
         public CustomAnalyzerQueueBase(InterfaceDetails MyInterfaceDetails)
         {
+            _SBLog = new StringBuilder();
             this._InterfaceDetails = MyInterfaceDetails;
+            
         }
         public void Run(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
-            if (analyzeQueue != null)
-            {
-                throw new Exception("AnalyzeQueue analyzeQueue is must ");
-
-
-            }
-
-            if (String.IsNullOrWhiteSpace(this._AnalyzeQueue.CommunicationLogId))
-            {
-                throw new Exception("this._AnalyzeQueue.CommunicationLogId is null");
-            }
 
 
 
 
 
-            var comm = Communications.GetCommunicationLog(_SeedTenant, this._AnalyzeQueue.CommunicationLogId);
-            if (comm == null)
-            {
-                throw new Exception("Cannnot GetCommunicationLog");
-            }
-            var communicationsData = Communications.GetData(comm); ;
-            if (string.IsNullOrWhiteSpace(communicationsData))
-            {
-                throw new Exception("communicationsData is null");
-            }
 
 
-            this.Tenant = analyzeQueue.Tenant;
-            this._AnalyzeQueue = analyzeQueue;
-            this.analyzeQueueRepository = analyzeQueueRepository;
-            this.myCommunicationLogRepository = new CommunicationLogRepository(this.Tenant);
-        
-        
-      
             try
             {
 
-                
+                this._AnalyzeQueue = analyzeQueue;
+                this.analyzeQueueRepository = analyzeQueueRepository;
+                _CommunicationLogRepository = new CommunicationLogRepository(this._AnalyzeQueue.Tenant);
+                if (analyzeQueue == null)
+                {
+                    throw new Exception("AnalyzeQueue analyzeQueue is must ");
+                }
+                if (String.IsNullOrWhiteSpace(this._AnalyzeQueue.CommunicationLogId))
+                {
+                    throw new Exception("this._AnalyzeQueue.CommunicationLogId is null");
+                }
 
+
+
+
+
+                _CommunicationLog = Communications.GetCommunicationLog(this._AnalyzeQueue.Tenant, this._AnalyzeQueue.CommunicationLogId);
+                if (_CommunicationLog == null)
+                {
+                    throw new Exception("Cannnot GetCommunicationLog");
+                }
+                var communicationsData = Communications.GetData(_CommunicationLog); ;
+                if (string.IsNullOrWhiteSpace(communicationsData))
+                {
+                    throw new Exception("communicationsData is null");
+                }
+
+
+
+                LogMessagingUtil.Instance.Clear();
                 string AnalyzeErrorProblem = this.AnalyzeData(communicationsData);
                 if (String.IsNullOrWhiteSpace(AnalyzeErrorProblem))
                 {
@@ -79,39 +89,61 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 else
                 {
                     //Update analyze queue
-                    AnalyzeFailed();
+                    AnalyzeFailed(AnalyzeErrorProblem);
                 }
             }
 
             catch (Exception ex)
             {
-                _AnalyzeQueue.Status = "F";
-                _AnalyzeQueue.ErrorMessage = "Artemus Analyzer failed: " + ex.Message;
-                _AnalyzeQueue.DoneDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
-                analyzeQueueRepository.Update(_AnalyzeQueue);
-                analyzeQueueRepository.SubmitChanges();
+                AnalyzeFailed(ex.ToString());
 
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "CustomAnalyzerQueueBase : Run() Method", null);
 
             }
         }
 
+        //protected abstract StringBuilder GetStringBuilderLogger();
         protected abstract string AnalyzeData(string communicationsData);
         //public abstract TCustomRequest GetRequest(TRequestParams requestParams);
 
 
         private void AnalyzeDone()
         {
+            var myCommunicationLogRepository = new CommunicationLogRepository(_AnalyzeQueue.Tenant);
+
+            _CommunicationLog.Retries++;
+            _CommunicationLog.CommunicationStatusTypeCode = CommStatusEnum.D.ToString();
+            _CommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
+            _CommunicationLog.Logs = LogMessagingUtil.Instance.ToString().GetLast((8000 - 1));
+            myCommunicationLogRepository.Update(_CommunicationLog);
+            myCommunicationLogRepository.SubmitChanges();
+
+
+
             _AnalyzeQueue.Status = "D";
             _AnalyzeQueue.ErrorMessage = null;
             analyzeQueueRepository.Update(_AnalyzeQueue);
             analyzeQueueRepository.SubmitChanges();
         }
 
-        private void AnalyzeFailed()
+
+
+        private void AnalyzeFailed(string ErrorMessage)
         {
+            if (_CommunicationLog!=null)
+            {
+                _CommunicationLog.Retries++;
+                _CommunicationLog.CommunicationStatusTypeCode = CommStatusEnum.F.ToString();
+                _CommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
+                _CommunicationLogRepository.Update(_CommunicationLog);
+                _CommunicationLogRepository.SubmitChanges();
+
+            }
+
+
+
             _AnalyzeQueue.Status = "F";
-            _AnalyzeQueue.ErrorMessage = "Shipment does not  exist";
+            _AnalyzeQueue.ErrorMessage = ErrorMessage;
             _AnalyzeQueue.DoneDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
             analyzeQueueRepository.Update(_AnalyzeQueue);
             analyzeQueueRepository.SubmitChanges();

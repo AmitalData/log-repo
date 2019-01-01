@@ -171,6 +171,8 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
             listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
+            listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
+            
 
 
 

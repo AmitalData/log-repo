@@ -168,6 +168,10 @@
     <Compile Include="Migrations\201812161346315_AddMigrationClaimSeizureUpdateKey.Designer.cs">
       <DependentUpon>201812161346315_AddMigrationClaimSeizureUpdateKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812310731564_AddMigrationDecCourierSuspention.cs" />
+    <Compile Include="Migrations\201812310731564_AddMigrationDecCourierSuspention.Designer.cs">
+      <DependentUpon>201812310731564_AddMigrationDecCourierSuspention.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -276,6 +280,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812161346315_AddMigrationClaimSeizureUpdateKey.resx">
       <DependentUpon>201812161346315_AddMigrationClaimSeizureUpdateKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812310731564_AddMigrationDecCourierSuspention.resx">
+      <DependentUpon>201812310731564_AddMigrationDecCourierSuspention.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

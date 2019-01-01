@@ -28,6 +28,15 @@ namespace Logitude.SystemLogs
                     DoneItemsInOneHour = parameters.DoneItemsInOneHour,
                     DoneItemsInOneMinute = parameters.DoneItemsInOneMinute,
                 };
+
+
+                //ErrorMessage    "The field BatchServiceCode must be a string or array type with a maximum length of '40'."  string
+                log.BatchServiceCode = log.BatchServiceCode ?? "";
+                if (log.BatchServiceCode.Length > 40)
+                {
+                    log.BatchServiceCode = log.BatchServiceCode.Substring(0, 40);
+                }
+
                 repository.Add(log);
                 repository.SubmitChanges();
             }

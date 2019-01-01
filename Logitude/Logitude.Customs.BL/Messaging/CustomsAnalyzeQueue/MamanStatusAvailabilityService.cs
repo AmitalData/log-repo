@@ -1,4 +1,5 @@
 ﻿using Logitude.Customs.BL.CloseTables;
+using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
         protected override string AnalyzeData(string communicationsData)
         {
+            LogMessagingUtil.Instance.AppendLine("MamanStatusAvailabilityService");
             throw new NotImplementedException();
         }
     }
