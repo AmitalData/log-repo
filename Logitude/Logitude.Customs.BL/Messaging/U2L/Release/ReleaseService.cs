@@ -46,6 +46,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
         private DeclarationPM _MyDeclarationPM;
         private DeclarationPM _MyEntryDeclarationPM;
         private Stopwatch _Stopwatch;
+        private string mode;
 
         public ReleaseService()
             : base(
@@ -68,6 +69,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
 
             DeserilazeObject(xmlLOGIBONDREL);
             AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
+            if (!String.IsNullOrWhiteSpace(MoreParams))
+            {
+                AppendLogLine("MoreParams: " + MoreParams);
+                var unifreightListsParams = UnifreightListsUtil.Deserialize(MoreParams);
+                AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
+                mode = UnifreightListsUtil.GetValue(ref unifreightListsParams, "MODE");
+                AppendLogLine("mode: " + mode);
+            }
 
             //CheckIntegrity();
             AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
@@ -113,8 +123,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
 
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-
-            this._MyDeclarationPM.ProcedureCurrentCode = "4070001";
+            if (mode == "SecondaryEntry")
+            {
+                this._MyDeclarationPM.ProcedureCurrentCode = "7070001";
+            }
+            else
+            {
+                this._MyDeclarationPM.ProcedureCurrentCode = "4070001";
+            }
             this._MyDeclarationPM.IsReleaseFile = true; // moran 14.2.16 - Task 19876
             this._MyDeclarationPM.TaxationDateTime = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeReleaseFile.TaxationDateTime, "LogitudeReleaseFile.TaxationDateTime"); // moran 22.1.17 - AMI-58777
             if (this._MyEntryDeclarationPM != null)
