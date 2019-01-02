@@ -172,6 +172,12 @@
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                    <td *ngIf="IsNewEntity == false" style="width: 57px;">
+                        <button class="GreenButton" (click)="TestButtonClicked()">Run Tester</button>
+                    </td>
                     <td>
                         <div></div>
                     </td>
@@ -191,9 +197,7 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 57px;">
-                        <button class="GreenButton" (click)="TestButtonClicked()">Run Tester</button>
-                    </td>
+
                 </tr>
             </table>
         </td>
