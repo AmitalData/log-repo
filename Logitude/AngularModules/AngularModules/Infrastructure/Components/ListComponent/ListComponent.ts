@@ -670,7 +670,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 800;
         logWindow.Height = 550;
-        logWindow.Title = "New Quote Template";
+        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.NewQuoteTemplate"); 
         logWindow.WindowArgs = windowArgs;
         logWindow.IsShowCloseButton = true;
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/AddQuoteTemplateFromLibraryComponent");

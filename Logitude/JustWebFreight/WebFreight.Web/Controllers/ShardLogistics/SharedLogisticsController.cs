@@ -133,6 +133,10 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             }
             catch (Exception ex)
             {
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("Execution Timeout Expired")) // Added by Rabaia, Temp
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new SharedLogisticsSummary());
+                }
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
@@ -193,6 +197,10 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             }
             catch (Exception ex)
             {
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("Execution Timeout Expired"))// Added by Rabaia, Temp
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new List<LastLoginPartners>());
+                }
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }

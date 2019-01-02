@@ -7,12 +7,12 @@ import {TimeManagementDomainService, TimeManagementAPIHelper, TimeSheetItem, Tim
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {DateTool, AppTool} from '../../../../Infrastructure/Tools';
 import {GroupByPipe} from '../../../../Infrastructure/Pipes/GroupByPipe';
-import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow'; 
+import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
-import {DateTimePipe} from '../../../../Controls/Pipes/DateTimePipe'; 
+import {DateTimePipe} from '../../../../Controls/Pipes/DateTimePipe';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
-import {TMEmployeeTimePM} from '../../../EntityPMs/TMEmployeeTimePM'; 
+import {TMEmployeeTimePM} from '../../../EntityPMs/TMEmployeeTimePM';
 
 @Component({
     selector: 'DailyTimeSheetComponent',
@@ -167,7 +167,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         }
     }
 
-    // Filters 
+    // Filters
     private mySelectedLocationFilter: string = "O";
     get SelectedLocationFilter() { return this.mySelectedLocationFilter; }
     set SelectedLocationFilter(value: string) {
@@ -395,6 +395,9 @@ export class DailyTimeSheetComponent extends BaseComponent {
         logWindow.Show('./TimeManagement/Components/NewEntity/NewLineComponent');
         logWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
     }
+    RefreshButtonClicked(){
+        this.RefreshTab();
+    }
 }
 
 export class ItemSourceItem extends BaseComponent {
@@ -530,7 +533,7 @@ export class ItemSourceItem extends BaseComponent {
     }
 
 
-    private dayDateFormat: string; 
+    private dayDateFormat: string;
     get DayDateFormat() { return this.dayDateFormat; }
     set DayDateFormat(value: string) {
         if (this.dayDateFormat != value) {

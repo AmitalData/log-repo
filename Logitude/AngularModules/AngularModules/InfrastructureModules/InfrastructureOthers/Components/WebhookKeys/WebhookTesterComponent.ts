@@ -34,7 +34,7 @@ export class WebhookTesterComponent extends BaseComponent {
 
     SetWindowArgs(args: any) {
         this.AccessKey = args['AccessKey'];
-        this.PageURL = window.location.href + "WebhooksReceiver.aspx";
+        //this.PageURL = window.location.href + "WebhooksReceiver.aspx";
         this.InitializeComponent();
     }
     SetNewWizardArgs(args: any) {

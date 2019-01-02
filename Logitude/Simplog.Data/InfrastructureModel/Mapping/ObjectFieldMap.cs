@@ -126,8 +126,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DisplayInDocumentReferences).HasColumnName("DisplayInDocumentReferences");
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.CopyToDW).HasColumnName("CopyToDW");
+            this.Property(t => t.DisplayOnLookUpLocal).HasColumnName("DisplayOnLookUpLocal");
 
-            
+
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

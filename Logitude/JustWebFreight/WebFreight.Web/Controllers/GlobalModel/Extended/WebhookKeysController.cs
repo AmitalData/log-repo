@@ -47,7 +47,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
     
     public partial class WebhookKeysController : ApiController
     {
-	   
+        [ActionName("PostPushHookContent")]
         public HttpResponseMessage PostPushHookContent(WebHookTesterData WebHookData)
         {
             if (ModelState.IsValid)
