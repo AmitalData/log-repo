@@ -928,6 +928,11 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.ShowBusyIndicator = false;
     }
 
+    private qID: string;
+    public get QID() { return this.qID; }
+    public set QID(newValue: string) {
+        this.qID = newValue;
+    }
 
     private iD: string;
     public get ID() { return this.iD; }
@@ -970,6 +975,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
                         //}
                         this.ID = myResult.Result.Id;
+                        this.QID = myResult.Result.DWQueryId
                         this.EditButtonClicked();
                         SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator(); 
                     });

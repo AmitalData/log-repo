@@ -35,12 +35,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnCreating(RevaluationPM entityPM, EntityPM entityParentPM)
         {
-            RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(this.MainContext as IAccountingContext);
-            List<RevaluationList> revaluations = revaluationListQueryService.GetOpenRevaluationList(entityPM.Tenant);
-            if (revaluations != null && revaluations.Count > 0)
-            {
-                throw new ApplicationException(TextCodesTranslator.TranslateText("Revaluations.Q.OpenRevaluations", entityPM.Tenant));
-            }
+            //RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(this.MainContext as IAccountingContext);
+            //List<RevaluationList> revaluations = revaluationListQueryService.GetOpenRevaluationList(entityPM.Tenant);
+            //if (revaluations != null && revaluations.Count > 0)
+            //{
+            //    throw new ApplicationException(TextCodesTranslator.TranslateText("Revaluations.Q.OpenRevaluations", entityPM.Tenant));
+            //}
 
             if (String.IsNullOrEmpty(entityPM.Id) || entityPM.Id == "new") entityPM.Id = IdCounter.GetNumber("Revaluation", entityPM.Tenant);
             if (String.IsNullOrEmpty(entityPM.CreatedByUserId) || entityPM.CreatedByUserId == "new")
