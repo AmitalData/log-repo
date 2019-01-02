@@ -68,6 +68,7 @@
                                         <div></div>
                                     </td>
 
+
                                     <!-- Locations Filters -->
                                     <td style="width:70px;">
                                         <LogLabel [Text]="'Location'" [DataContext]="DataContext" [NoObjectField]="true"></LogLabel>
@@ -136,7 +137,7 @@
                                                         <tr>
                                                             <td style="width:100px">
                                                                 <button class="Button" (click)="SearchButtonClicked()">Search</button>
-                                                            </td> 
+                                                            </td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -157,6 +158,12 @@
                                             <tr style="height: 32px;">
                                                 <td>
                                                     <div></div>
+                                                </td>
+
+                                                <td style="width: 30px;">
+                                                        <button class="Button" style="height:25px;width:25px;" (click)="RefreshButtonClicked()">
+                                                            <img class="CenterCenter" style="padding-left:2px;padding-right:2px;" src="./Images/Buttons/Refresh.png" />
+                                                        </button>
                                                 </td>
 
                                                 <td style="width: 90px;">

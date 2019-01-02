@@ -134,6 +134,7 @@ export class NewViewComponent {
         }
 
         else {
+            this.IsSaveButtonEnabled = true;
             this.CreateBtnText = TextCodeTranslator.Translate("General.B.Create");
             this.EntityPM = new QueryPM();
         }
@@ -171,7 +172,9 @@ export class NewViewComponent {
                 }
 
                 this.IsSharedByMessageVisible = !isEditEnabled;
-                this.IsSaveButtonEnabled = isEditEnabled;                
+                this.IsSaveButtonEnabled = isEditEnabled;
+                this.IsbtnUpEnabled = isEditEnabled;
+                this.IsbtnDownEnabled = isEditEnabled;
             }
 
             SessionLocator.CurrentSession.StopBusyIndicator();
@@ -703,7 +706,7 @@ export class NewViewComponent {
             this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
         }
 
-        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenant(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId).subscribe(myResult => {
+        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryID).subscribe(myResult => {
             this.GetFiltersComplete(myResult, QueryID);
         });
 

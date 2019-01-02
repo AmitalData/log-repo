@@ -1509,17 +1509,25 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
 
+
+    get multlineTextBoxLines(){
+        var length = 0;
+        if(this.textValue) length = this.textValue.split(/\r*\n/).length;
+        return  length;
+    }
+
     ExpandButtonClicked(){
-
-        this.isExpanded = !this.isExpanded;
-
         console.log("[ExpandButtonClicked]");
 
+        //this.isExpanded = !this.isExpanded;
 
-      var windowArgs: any = {};
-      windowArgs.ObjectTableName = this.ObjectTableName;
-      windowArgs.ObjectFieldName = this.ObjectFieldName;
-      windowArgs.TextValue = this.TextValue;
+
+
+        // show window
+        var windowArgs: any = {};
+        windowArgs.ObjectTableName = this.ObjectTableName;
+        windowArgs.ObjectFieldName = this.ObjectFieldName;
+        windowArgs.TextValue = this.TextValue;
 
         var wind = new LogitudeWindow();
         wind.IsFullScreen = true;
@@ -1531,7 +1539,6 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             if(res)
                 this.TextValue = res;
         });
-
 
 
 

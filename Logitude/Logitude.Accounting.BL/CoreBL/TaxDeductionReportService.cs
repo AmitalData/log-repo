@@ -83,7 +83,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-                    myStringBuilder.Append('0', 1);
+                    myStringBuilder.Append("a0");
                 }
 
 
@@ -95,7 +95,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 else
                 {
-                    myStringBuilder.Append('0', 9);
+                    myStringBuilder.Append("a");
+
+                   myStringBuilder.Append('0', 9);
                 }
 
 
@@ -163,15 +165,43 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(' ', 13);
                 }
 
-                myStringBuilder.Append("a" + item.SumOfAmountInLocalCurrency.Value.ToString().PadLeft(11, '0'));
+                string totalInLocalCur = item.SumOfAmountInLocalCurrency.Value.ToString();
+                if (totalInLocalCur != null)
+                {
+                    if (totalInLocalCur.Length > 11) totalInLocalCur = totalInLocalCur.Substring(0, 11);
+
+                    myStringBuilder.Append("a" + totalInLocalCur.PadLeft(11, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+
+                  myStringBuilder.Append('0', 11);
+                }
+               // myStringBuilder.Append("a" + item.SumOfAmountInLocalCurrency.Value.ToString().PadLeft(11, '0'));
 
 
 
-                myStringBuilder.Append("a" + item.SumOfTaxDeductionLocalAmount.Value.ToString().PadLeft(9, '0'));
+             //   myStringBuilder.Append("a" + item.SumOfTaxDeductionLocalAmount.Value.ToString().PadLeft(9, '0'));
+
+                string totalTaxInLocalCur = item.SumOfTaxDeductionLocalAmount.Value.ToString();
+                if (totalTaxInLocalCur != null)
+                {
+                    if (totalTaxInLocalCur.Length > 9) totalTaxInLocalCur = totalTaxInLocalCur.Substring(0, 9);
+
+                    myStringBuilder.Append("a" + totalTaxInLocalCur.PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+
+                    myStringBuilder.Append('0', 9);
+                }
+
 
                 myStringBuilder.Append("00000000");
-
-                string endYearBalance = item.EndYearBalance.ToString();
+              
+                string endYearBalance =  item.EndYearBalance.ToString();
                 if (endYearBalance != null)
                 {
                     if (endYearBalance.Length > 8) endYearBalance = endYearBalance.Substring(0, 8);
@@ -208,7 +238,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-
+                    myStringBuilder.Append("a");
                     myStringBuilder.Append(' ', 14);
                 }
                 myStringBuilder.Append(' ', 52);
@@ -221,8 +251,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
+                    myStringBuilder.Append("a");
 
-                    myStringBuilder.Append('0', 2);
+                   myStringBuilder.Append('0', 2);
                 }
                 myStringBuilder.Append("a60");
                 myStringBuilder.Append('\n');
