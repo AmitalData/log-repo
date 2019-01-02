@@ -55,23 +55,23 @@ namespace WebFreight.Web.Helpers
                 importerDepositionAM.CustomerTenant = (int)customerTenant;
 
 
-                string token = string.Empty;
-                APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
-                {
-                    PrimaryKey = "8eb9c6e4-c1ca-43e5-8061-87a7adcdc5f8",
-                    SecondaryKey = "c2dd0ebf-20bf-4d44-916c-7f9000dce4ec"
-                };
-                using (var client = new HttpClient())
-                {
-                    string AuthURI = URI + "APIAuthentication";
-                    var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
-                    var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                    var result = await client.PostAsync(AuthURI, content);
-                    var tempUser = result.Content.ReadAsStringAsync().Result;
-                    ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
-                    token = User.Token;
-                }
-
+                //string token = string.Empty;
+                //APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
+                //{
+                //    PrimaryKey = "8eb9c6e4-c1ca-43e5-8061-87a7adcdc5f8",
+                //    SecondaryKey = "c2dd0ebf-20bf-4d44-916c-7f9000dce4ec"
+                //};
+                //using (var client = new HttpClient())
+                //{
+                //    string AuthURI = URI + "APIAuthentication";
+                //    var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
+                //    var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                //    var result = await client.PostAsync(AuthURI, content);
+                //    var tempUser = result.Content.ReadAsStringAsync().Result;
+                //    ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
+                //    token = User.Token;
+                //}
+                string token = HttpContext.Current.Request.Headers["Token"];
                 if (!string.IsNullOrEmpty(token))
                 {
                     using (var client = new HttpClient())
@@ -118,9 +118,10 @@ namespace WebFreight.Web.Helpers
             CustomsShipperPM customsShipperPM = customsShipperQuery.GetSinglePMByShipperCode(importerDepositionAM.ShipperCode, tenant);
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
             CustomsShipperService customsShipperService = new CustomsShipperService(objectContext, tenant);
-
+            bool isNew = false;
             if (customsShipperPM == null)
             {
+                isNew = true; 
                 customsShipperPM = new CustomsShipperPM();
                 customsShipperPM.Tenant = tenant;
                 customsShipperPM.CustomsShipperCode = importerDepositionAM.ShipperCode;
@@ -156,24 +157,42 @@ namespace WebFreight.Web.Helpers
                 customsShipperPM.Addresses.Add(address);
                 customsShipperService.Create(customsShipperPM);
             }
-
-
             CustomerDepositionRepository customerDepositionRepository = new CustomerDepositionRepository(tenant);
-            CustomerDeposition customerDeposition = new CustomerDeposition()
-            {
-                Id = IdCounter.GetNumber("CustomerDeposition", tenant).ToString(),
-                Tenant = tenant,
-                CustomsShipperId = customsShipperPM.Id,
-                DepositionNumber = importerDepositionAM.DepositionNumber,
-                ValidityStartDate = importerDepositionAM.ValidityStartDate,
-                ValidityEndDate = importerDepositionAM.ValidityEndDate,
-                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-            };
-            customerDepositionRepository.Add(customerDeposition);
-            customerDepositionRepository.SubmitChanges();
+            CustomerDeposition customerDeposition = !isNew ? customerDepositionRepository.GetCustomerDepositionByCustomsShipperIdAndDepositionNumber(customsShipperPM.Id, importerDepositionAM.DepositionNumber, tenant) : null;
 
-            UpdateValidityDate(customsShipperPM, customerDeposition.ValidityStartDate, customerDeposition.ValidityEndDate);
-            if(customsShipperPM.IsChange) customsShipperService.Update(customsShipperPM);
+            if (customerDeposition == null)
+            {
+                customerDeposition = new CustomerDeposition()
+                {
+                    Id = IdCounter.GetNumber("CustomerDeposition", tenant).ToString(),
+                    Tenant = tenant,
+                    CustomsShipperId = customsShipperPM.Id,
+                    DepositionNumber = importerDepositionAM.DepositionNumber,
+                    ValidityStartDate = importerDepositionAM.ValidityStartDate,
+                    ValidityEndDate = importerDepositionAM.ValidityEndDate,
+                    CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                };
+                customerDepositionRepository.Add(customerDeposition);
+                customerDepositionRepository.SubmitChanges();
+            }
+            else
+            {
+                if (customerDeposition.ValidityStartDate != importerDepositionAM.ValidityStartDate || customerDeposition.ValidityEndDate != importerDepositionAM.ValidityEndDate)
+                {
+                    customerDeposition.ValidityStartDate = importerDepositionAM.ValidityStartDate;
+                    customerDeposition.ValidityEndDate = importerDepositionAM.ValidityEndDate;
+                    customerDepositionRepository.Update(customerDeposition);
+                    customerDepositionRepository.SubmitChanges();
+                }
+
+
+            }
+
+            if (!isNew)
+            {
+                UpdateValidityDate(customsShipperPM, customerDeposition.ValidityStartDate, customerDeposition.ValidityEndDate);
+                if (customsShipperPM.IsChange) customsShipperService.Update(customsShipperPM);
+            }
 
 
         }
@@ -215,7 +234,8 @@ namespace WebFreight.Web.Helpers
                 ExpirationDate = DateTime.Now.AddDays(90),
                 Status = "I",
                 Tenant = tenant,
-                
+                Subject = "Importer Deposition Send to cloud"
+
             };
             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
             APILogsService apiLogsService = new APILogsService(webFreightContext, tenant);
@@ -240,9 +260,8 @@ namespace WebFreight.Web.Helpers
             importerDepositionAM.ShipperCountry = importerDepositionPM.ShipperCountry;
             importerDepositionAM.ShipperName = importerDepositionPM.ShipperName;
             importerDepositionAM.ShipperVAT = importerDepositionPM.ShipperVAT;
-            importerDepositionAM.ValidityStartDate = importerDepositionPM.ValidityStartDate;
-            importerDepositionAM.ValidityEndDate = importerDepositionPM.ValidityEndDate;
-
+            importerDepositionAM.ValidityStartDate = importerDepositionPM.ValidityStartDate != null ? importerDepositionPM.ValidityStartDate.Value.Date : importerDepositionPM.ValidityStartDate;
+            importerDepositionAM.ValidityEndDate = importerDepositionPM.ValidityEndDate != null ? importerDepositionPM.ValidityEndDate.Value.Date : importerDepositionPM.ValidityEndDate;
         }
         #endregion 
 

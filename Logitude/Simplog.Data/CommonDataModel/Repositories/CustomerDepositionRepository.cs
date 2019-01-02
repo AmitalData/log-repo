@@ -109,7 +109,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         }
 
-
+        public CustomerDeposition GetCustomerDepositionByCustomsShipperIdAndDepositionNumber(string customsShipperId, string depositionNumber, int tenant)
+        {
+            return (from a in context.CustomerDepositions where a.CustomsShipperId == customsShipperId && a.DepositionNumber == depositionNumber && a.Tenant == tenant select a).FirstOrDefault();
+        }
 
     }
 }
