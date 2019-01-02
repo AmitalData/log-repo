@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {QueryPM} from '../../../../Infrastructure/EntityPMs/QueryPM'; 
 import {LogEvents} from '../../../../Infrastructure/Utilities/LogEvents';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -46,7 +46,7 @@ export class FilterField extends BaseComponent {
         //}
         //SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId
         if (queryId != null && queryId != undefined && queryId != "") {
-            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.IsPredefined == true).filter(d => d.ObjectFieldId == objectField.Id && d.QueryId == queryId)[0];
+            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldId == objectField.Id)[0];
             if (preDefinedFilter != null) {
                 this.AdvancedQueryFilterPM = preDefinedFilter;
                 if (preDefinedFilter.PredefinedValue != null) {
