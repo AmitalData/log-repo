@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using UnifreightIIG.Common.MessageLib.DeclarationDeal;
 using UnifreightIIG.Common.MessageLib.Deficit;
+using Logitude.Customs.BL.Models;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -267,6 +268,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     paymentOrderConnectionTablePM.ConnectedEntityId = _MyDeclarationPM.Id;
                     paymentOrderPM.PaymentOrderConnectionTables.Add(paymentOrderConnectionTablePM);
                 }
+
+                var fUStatusRemarks = "\n" + "סטטוס הוראה: " + paymentOrderPM.PaymentStatusName;
+                if (paymentOrderPM.LastPayDate != null)
+                {
+                    fUStatusRemarks += "\n" + "תאריך אחרון לתשלום: " + ((DateTime)paymentOrderPM.LastPayDate).Date.ToString("dd/MM/yyyy");
+                }
+                fUStatusRemarks += "\n" + "סכום לתשלום: " + paymentOrderPM.TotalSumToPay
+                                 + "\n" + "התהליך היוצר: " + paymentOrderPM.PaymentProcessName;
+                var myInsertEventContextTagModel = new EventContextTagModel() // Indication to Create Unifreight Status "POR"
+                {
+                    CallProccessID = EventContextTagModel.ProccessEnum.TSH_MSG2_PaymentOrderReplyResponseServiceCreate,
+                    EventCode = "POR",
+                    EventRemarks = "הוראת תשלום " + paymentOrderPM.PaymentNumber + " נוצרה",
+                    FUStatusRemarks = "הוראת תשלום " + paymentOrderPM.PaymentNumber + " נוצרה" + fUStatusRemarks,
+                };
+                paymentOrderPM.CurrentContextTag = myInsertEventContextTagModel;
 
                 myPaymentOrderUpdateService.Update(paymentOrderPM, true);
             }
