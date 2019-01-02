@@ -138,7 +138,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (entityPartnerCode != null)
                 {
-                    if (entityPartnerCode.Length > 3) { entityPartnerCode.Substring(0, 3); }
+                    if (entityPartnerCode.Length > 3) { entityPartnerCode= entityPartnerCode.Substring(0, 3); }
                     myStringBuilder.Append("a" + entityPartnerCode.PadLeft(3, '0'));
                 }
                 else
@@ -196,7 +196,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (partnerCode != null)
                 {
-                    if (partnerCode.Length > 3) { partnerCode.Substring(0, 3); }
+                    if (partnerCode.Length > 3) { partnerCode= partnerCode.Substring(0, 3); }
                     myStringBuilder.Append("a" + partnerCode.PadLeft(3, ' '));
                 }
 
