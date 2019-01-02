@@ -6,6 +6,7 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import { BatchTaskExecutionPM } from '../../EntityPMs/BatchTaskExecutionPM';
 import { BatchTaskExecutionListService } from '../../Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionList } from '../../EntityLists/BatchTaskExecutionList';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
     moduleId: module.id,
@@ -90,20 +91,15 @@ export class EraseTenantManagementDataComponent implements OnDestroy {
     }
 
     public IsResponseProgressVisible: boolean = false;
-    CloseResponseProgressClicked() {
-        this.IsResponseProgressVisible = false;       
-
-        if (this.timer) {
-            clearInterval(this.timer);
-        }
-
-        this.IsResponseProgressVisible = false;
+    CloseResponseProgressClicked() {      
+        this.StopTimer();
     }
 
     private batchEntity: BatchTaskExecutionPM;
     private DoDelete(type: string) {
         this.Message = null;
-        
+        this.Retries = 0;
+
         this.myService.DeleteDataForTenant(this.entityId, type).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 var mm: ServiceResponse = response;
@@ -111,24 +107,61 @@ export class EraseTenantManagementDataComponent implements OnDestroy {
 
                 if (this.batchEntity != null) {
                     this.IsResponseProgressVisible = true;
-                    this.timer = setInterval(() => {
-                        this.GetBTE();
-                    }, this.timerInterval);
+                    this.timer = setInterval(() => this.RunTimerFunction(), this.timerSeconds * 1000);
                 }
             }            
         });
     }
 
     // Timer
-    timerInterval: number = 1000;
+    private timerSeconds: number = 1;
     timer: any;
-
-    ngOnDestroy() {
-        if (this.timer) {
-            clearInterval(this.timer);
+    private Retries: number = 0;
+    private IncreaseTimer() {
+        clearTimeout(this.timer);
+        this.timer = setInterval(() => this.RunTimerFunction(), this.timerSeconds * 1000);
+    }
+    private AdjustTimerSpeed() {
+        if (this.Retries <= 60) {
+            if (this.timerSeconds != 1) {
+                this.timerSeconds = 1;
+                this.IncreaseTimer();
+            }
         }
 
+        else if (this.Retries <= 120) {
+            if (this.timerSeconds != 5) {
+                this.timerSeconds = 5;
+                this.IncreaseTimer();
+            }
+        }
+
+        else if (this.Retries <= 180) {
+            if (this.timerSeconds != 60) {
+                this.timerSeconds = 60;
+                this.IncreaseTimer();
+            }
+        }
+
+        else {
+            this.StopTimer();
+        }
+    }
+    private RunTimerFunction() {
+        this.Retries++;
+        this.GetBTE();
+        this.AdjustTimerSpeed();
+    }
+    public StopTimer() {
+        if (this.timer) {
+            clearTimeout(this.timer);
+        }
+        
         this.IsResponseProgressVisible = false;
+    }
+
+    ngOnDestroy() {
+        this.StopTimer();
     }
     
     private bteList: BatchTaskExecutionList;
@@ -166,20 +199,13 @@ export class EraseTenantManagementDataComponent implements OnDestroy {
                         }
                     }
 
-                    if (this.timer) {
-                        clearInterval(this.timer);
-                    }
-
-                    this.IsResponseProgressVisible = false;
+                    this.StopTimer();
                 }
 
                 else if (this.bteList.StatusCode == "F") // F- Failed
                 {
-                    if (this.timer) {
-                        clearInterval(this.timer);
-                    }
-
-                    this.IsResponseProgressVisible = false;
+                    this.StopTimer();
+                    window.Show("Faild: " + this.bteList.ErrorLog);
                 }
             }
         });
