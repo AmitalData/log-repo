@@ -8,9 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Security.Authentication;
 using System.Text;
 using System.Transactions;
 using System.Web;
+using System.Web.Http;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -30,14 +33,16 @@ namespace WebFreight.Web
                         AccessKey = Request.QueryString["AccessKey"];
                         if (string.IsNullOrEmpty(AccessKey))
                         {
-                            throw new Exception("you are not authonticated to call this page.");
+                            //throw new HttpResponseException(HttpStatusCode.Unauthorized);
+                            throw new AuthenticationException ("you are not authonticated to call this page.");
                         }
                     }
                     WebhookKeysRepository webhookKeysRepository = new WebhookKeysRepository();
                     var MyWebHookKey = webhookKeysRepository.GetSingleWebhookKeyByAccessKey(AccessKey);
                     if (MyWebHookKey == null)
                     {
-                        throw new Exception("you are not authonticated to call this page.");
+                        //throw new HttpResponseException(HttpStatusCode.Unauthorized);
+                        throw new AuthenticationException("you are not authonticated to call this page.");
                     }
                     string RecivedString = "";
 
@@ -56,8 +61,8 @@ namespace WebFreight.Web
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                Response.Write(ex.Message);
+                //throw ex;
             }
            
 
