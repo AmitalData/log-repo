@@ -134,6 +134,7 @@ export class NewViewComponent {
         }
 
         else {
+            this.IsSaveButtonEnabled = true;
             this.CreateBtnText = TextCodeTranslator.Translate("General.B.Create");
             this.EntityPM = new QueryPM();
         }
