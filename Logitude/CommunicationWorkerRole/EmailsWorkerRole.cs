@@ -962,6 +962,46 @@ namespace CommunicationWorkerRole
 
         private async void SendCommunicationLogToChampAPI(CommunicationLog waitingCommLog, string xmlfileText)
         {
+            bool isTestingCode = false;
+
+            if (waitingCommLog.CreatedByUserId == "1-77675")
+            {
+                if (waitingCommLog.To != null)
+                {
+                    if (waitingCommLog.To.ToUpper() == "CHAMP")
+                    {
+                        isTestingCode = true;
+                    }
+                }
+            }
+
+            if (isTestingCode)
+            {
+                string iSearchFields = waitingCommLog.SearchFields;
+
+                if (string.IsNullOrEmpty(iSearchFields))
+                {
+                    iSearchFields = "inside SendCommunicationLogToChampAPI";
+                }
+
+                else
+                {
+                    if (!iSearchFields.Contains("inside SendCommunicationLogToChampAPI"))
+                    {
+                        iSearchFields += ",inside SendCommunicationLogToChampAPI";
+                    }
+                }
+
+                if (waitingCommLog.SearchFields != iSearchFields)
+                {
+                    waitingCommLog.SearchFields = iSearchFields;
+
+                    CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
+                    commLogrepository.Update(waitingCommLog);
+                    commLogrepository.SubmitChanges();
+                }
+            }
+
             // https://stackoverflow.com/questions/25352462/how-to-send-xml-content-with-httpclient-postasync
 
             string iSendingURL = "https://community.champ.aero:8444/logitude/test/NO_WAIT";
@@ -989,7 +1029,6 @@ namespace CommunicationWorkerRole
                         waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
 
                         CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
-
                         commLogrepository.Update(waitingCommLog);
                         commLogrepository.SubmitChanges();
                     }
@@ -1002,10 +1041,21 @@ namespace CommunicationWorkerRole
                         waitingCommLog.ExceptionMessage = iResponse.StatusCode.ToString();
 
                         CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
-
                         commLogrepository.Update(waitingCommLog);
                         commLogrepository.SubmitChanges();
                     }
+                }
+
+                else
+                {
+                    waitingCommLog.CommunicationStatusTypeCode = "F";
+                    waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                    waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+                    waitingCommLog.ExceptionMessage = "No Response";
+
+                    CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
+                    commLogrepository.Update(waitingCommLog);
+                    commLogrepository.SubmitChanges();
                 }
             }
         }

@@ -1487,7 +1487,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
 
 
-
         public HttpResponseMessage GetARInvoiceSATCancellationStatus(string invoiceId)
         {
             if (ModelState.IsValid)
@@ -1508,6 +1507,77 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, "");
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+
+        public HttpResponseMessage getConnectedARPayments(string invoiceId)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        string loggedUserEmail = authToken.Email;
+                        int tenant = authToken.Tenant;
+                        ARInvoicePaymentRepository aRInvoicePaymentRepository = new ARInvoicePaymentRepository(tenant);
+
+                        List<ARPayment> aRPayments = aRInvoicePaymentRepository.GetARInvoicePaymentTransferedByInvoiceId(invoiceId, tenant).ToList();
+                        bool ExistPayments = aRPayments.Count>0?true:false;
+                       
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, ExistPayments);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+
+
+        public HttpResponseMessage getConnectedAPPayments(string invoiceId)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        string loggedUserEmail = authToken.Email;
+                        int tenant = authToken.Tenant;
+                        APInvoicePaymentRepository aRInvoicePaymentRepository = new APInvoicePaymentRepository(tenant);
+
+                        List<APPayment> aRPayments = aRInvoicePaymentRepository.GetAPInvoicePaymentTransferedByInvoiceId(invoiceId, tenant).ToList();
+                        bool ExistPayments = aRPayments.Count > 0 ? true : false;
+
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, ExistPayments);
                     }
                 }
 

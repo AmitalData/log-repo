@@ -2033,6 +2033,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.Currency = a.InvoiceCurrencyCode;
                 invoicesRecored.CreateDate = a.CreateDate;
                 invoicesRecored.DueDate = a.DueDate;
+                invoicesRecored.Salesman = a.SalesmanUserName;
 
                 if (localCurrency)
                 {
@@ -11861,8 +11862,28 @@ namespace WebFreight.Web.ReportsWebServices
 
             List<ShipmentDataView> Shipments = shipments.ToList();
 
+
+
             if (Shipments.Count > 0)
             {
+                List<string> valueOfGoodsCurrencyIds = Shipments.GroupBy(d => d.ValueOfGoodsCurrencyId).Select(d => d.FirstOrDefault().ValueOfGoodsCurrencyId).ToList();
+                List<string> departmentIdIds = Shipments.GroupBy(d => d.DepartmentId).Select(d => d.FirstOrDefault().DepartmentId).ToList();
+                List<string> shipmentdelevriesIds = Shipments.Select(d => d.Id).ToList();
+                List<string> FromPartnerCardIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.FromPartnerCardId).ToList();
+                List<string> FromAddressCountryIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.FromAddressCountryId).ToList();
+                List<string> ToPartnerCardIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.ToPartnerCardId).ToList();
+
+                List<Currency> currencyLists = (from d in commonContext.Currencies where valueOfGoodsCurrencyIds.Contains(d.Id) select d).ToList();
+                List<Department> departmentLists = (from d in commonContext.Departments where departmentIdIds.Contains(d.Id) select d).ToList();
+                List<ShipmentPickUpDelivery> shipmentPickUpDeliveriesLists = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d).ToList();
+                List<Address> FromPartnerAddressLists = (from a in commonContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && FromPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
+                List<Country> FromAddressCountryLists = (from record in commonContext.Countries.Include("GlobalZone") where FromAddressCountryIds.Contains(record.Id) && record.Tenant == tenant select record).ToList();
+                List<Address> ToPartnerAddressLists = (from a in commonContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && ToPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
+
+                //(from a in commonContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && FromPortCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
+
+
+
                 totalData.Shipments = new List<ShipmentDetals>();
                 foreach (ShipmentDataView Item in Shipments)
                 {
@@ -11870,22 +11891,23 @@ namespace WebFreight.Web.ReportsWebServices
 
 
 
-                    Currency ValueOfgoodsCurrency = (from d in commonContext.Currencies where d.Id == Item.ValueOfGoodsCurrencyId select d).FirstOrDefault();
-                    Department ShipmentDepartment = (from d in commonContext.Departments where d.Id == Item.DepartmentId select d).FirstOrDefault();
+                    Currency ValueOfgoodsCurrency = currencyLists.Where(d => d.Id == Item.ValueOfGoodsCurrencyId).FirstOrDefault(); // (from d in commonContext.Currencies where d.Id == Item.ValueOfGoodsCurrencyId select d).FirstOrDefault();
+                    Department ShipmentDepartment = departmentLists.Where(d => d.Id == Item.DepartmentId).FirstOrDefault(); // (from d in commonContext.Departments where d.Id == Item.DepartmentId select d).FirstOrDefault();
 
-                    ShipmentPickUpDelivery myLastPickup =
-                    (from d in shipmentsContext.ShipmentPickUpDeliveries
-                     where d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "PICK"
-                     select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                    ShipmentPickUpDelivery myLastPickup = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "PICK").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                    //(from d in shipmentsContext.ShipmentPickUpDeliveries
+                    // where d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "PICK"
+                    // select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
-                    ShipmentPickUpDelivery myLastDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
-                                                             where d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "DELV"
-                                                             select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                    ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                    //(from d in shipmentsContext.ShipmentPickUpDeliveries
+                    //                                         where d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "DELV"
+                    //                                         select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
-                    ShipmentPickUpDelivery myFirstPickup =
-                     (from d in shipmentsContext.ShipmentPickUpDeliveries
-                      where d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "PICK"
-                      select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                    ShipmentPickUpDelivery myFirstPickup = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "PICK").OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                    //(from d in shipmentsContext.ShipmentPickUpDeliveries
+                    //  where d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "PICK"
+                    //  select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
                     ShipmentDetals shipment = new ShipmentDetals();
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
@@ -11900,7 +11922,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 {
                                     if (!string.IsNullOrEmpty(myLastPickup.FromPartnerCardId))
                                     {
-                                        Address myPartnerAddress = addressRepository.GetMainAddressByCardId(myLastPickup.FromPartnerCardId, tenant);
+                                        Address myPartnerAddress = FromPartnerAddressLists.Where(d => d.Id == myLastPickup.FromPartnerCardId).FirstOrDefault();// addressRepository.GetMainAddressByCardId(myLastPickup.FromPartnerCardId, tenant);
                                         if (myPartnerAddress != null)
                                         {
                                             shipment.PickupCity = myPartnerAddress.City;
@@ -11930,8 +11952,9 @@ namespace WebFreight.Web.ReportsWebServices
                             case "CASL":
                                 {
                                     shipment.PickupCity = myLastPickup.FromAddressCity;
-                                    CountryRepository countryRepository = new CountryRepository(tenant);
-                                    Country country = countryRepository.GetSingleCountry(myLastPickup.FromAddressCountryId, tenant);
+                                  //  CountryRepository countryRepository = new CountryRepository(tenant);
+                                    Country country = FromAddressCountryLists.Where(d => d.Id == myLastPickup.FromAddressCountryId).FirstOrDefault();
+                                   // countryRepository.GetSingleCountry(myLastPickup.FromAddressCountryId, tenant);
                                     if (country != null)
                                     {
                                         shipment.PickupCountry = country.EnglishName;
@@ -11955,7 +11978,7 @@ namespace WebFreight.Web.ReportsWebServices
                                         {
                                             shipment.DeliveryToName = myPartner.EnglishName;
 
-                                            Address myPartnerAddress = addressRepository.GetMainAddressByCardId(myLastDelivery.ToPartnerCardId, tenant);
+                                            Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.Id == myLastDelivery.ToPartnerCardId).FirstOrDefault();//addressRepository.GetMainAddressByCardId(myLastDelivery.ToPartnerCardId, tenant);
                                             if (myPartnerAddress != null)
                                             {
                                                 shipment.DeliveryTocity = myPartnerAddress.City;
