@@ -2033,6 +2033,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.Currency = a.InvoiceCurrencyCode;
                 invoicesRecored.CreateDate = a.CreateDate;
                 invoicesRecored.DueDate = a.DueDate;
+                invoicesRecored.Salesman = a.SalesmanUserName;
 
                 if (localCurrency)
                 {
