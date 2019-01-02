@@ -177,7 +177,10 @@
                               [id]="InputId" style="box-shadow:none;border:1px solid transparent; font-size:12px; font-family:inherit;" ondrop="return false"></textarea>
    
 
-                    <div *ngIf="isMouseOver" [class.collapse-btn]="isExpanded" title="Expand" class="expand-btn" (click)="ExpandButtonClicked()"></div>
+                    <div *ngIf="isMouseOver" [class.collapse-btn]="isExpanded"
+                        title="Expand" class="expand-btn"
+                        [style.right]="multlineTextBoxLines > 2 ? '22px' : '2px'"
+                        (click)="ExpandButtonClicked()"></div>
 
                 </div>
             </td>
