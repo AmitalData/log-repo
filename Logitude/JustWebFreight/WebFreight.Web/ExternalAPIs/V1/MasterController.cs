@@ -221,7 +221,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             bool hasOpenReceivables = false;
                             if (entity.Receivables.Count() > 0)
                             {
-                                if(entity.Receivables.Where(p => p.TotalAmount != null && p.TotalAmount != 0).Any())                               
+                                if(entity.Receivables.Where(p => p.Amount != null && p.Amount != 0).Any())                               
                                 {
                                     hasOpenReceivables = true;
                                 }
