@@ -559,12 +559,19 @@ namespace WebFreight.Web.ReportsWebServices
                     int counter = 1;
 
                     string volumeUnitCode = shipment.VolumeUnitCode != null ? shipment.VolumeUnitCode : "";
+                    int? totalQuantity = 0;
+                    double? totalWeight = 0;
+                    double? totalVolume = 0;
 
                     foreach (ShipmentPickUpDeliveryPackage package in packages)
                     {
                         counter++;
                         PackageLine packageline = new PackageLine();
-                        
+
+                        totalQuantity += package.Quantity;
+                        totalWeight += package.Weight;
+                        totalVolume += package.Volume;
+
                         packageline.PackageDescriptionOfGoods = package.Description != null ? package.Description : "";
                         packageline.PackageGrossWeight = package.Weight != null ? (package.Weight.Value.ToString() + " " + shipment.GrossWeightUnitCode) : "";
                         packageline.PackageQuantity = package.Quantity != null ? package.Quantity.Value.ToString() : "";
@@ -618,6 +625,10 @@ namespace WebFreight.Web.ReportsWebServices
 
                         deliveryNotedataprovider.PackagesLines.Add(packageline);
                     }
+
+                    deliveryNotedataprovider.TotalNumberOfPackages = totalQuantity;
+                    deliveryNotedataprovider.TotalGrossWeight = totalWeight;
+                    deliveryNotedataprovider.TotalVolume = totalVolume;
                     #endregion
 
                     #region Document

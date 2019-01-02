@@ -56,7 +56,8 @@ namespace Logitude.BL.InvoiceModel.Tools
         private  IInvoiceContext objectContext;
         private  ARInvoiceTotalVATRepository invoiceTotalVatRepository;
         private  string ExternalCurrencyCode;
-        private  string ExternalTableIdCustomerRef;
+        private string OldTransferStatusCode;
+        private string ExternalTableIdCustomerRef;
         public  string PaymentTermExternalCode = null;
         private  string LoggedContactId { get; set; }
         private  List<string> ExternalChargesTypesCode;
@@ -279,6 +280,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                         if (isReady)
                         {
+                            OldTransferStatusCode = entityPM.TransferStatusCode;
                             entityPM.TransferStatusCode = "IP";
                             entityPM.TransferError = null;
                             Run(entityPM);
@@ -768,7 +770,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 DbQueueService queueservice;
                 queueservice = new DbQueueService();
                 queueservice.InitializeQueue("QBO", 0);
-                Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "Invoice" } };
+                Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "Invoice" },{ "OldTransferStatusCode", OldTransferStatusCode } };
                 queueservice.Send(param);
                 queueservice.Complete();          
                   }
