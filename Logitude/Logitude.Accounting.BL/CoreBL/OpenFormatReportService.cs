@@ -127,7 +127,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.AccountingEntityReference != null)
                 {
                     if (item.AccountingEntityReference.Length > 20) { item.AccountingEntityReference.Substring(0, 20); }
-                    myStringBuilder.Append("a" + item.AccountingEntityReference.PadLeft(20, '0'));
+                    myStringBuilder.Append("a" + item.AccountingEntityReference.PadLeft(20, ' '));
                 }
                 else
                 {
@@ -151,7 +151,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.Reference2 != null)
                 {
                     if (item.Reference2.Length > 20) { item.Reference2.Substring(0, 20); }
-                    myStringBuilder.Append("a" + item.Reference2.PadLeft(20, '0'));
+                    myStringBuilder.Append("a" + item.Reference2.PadLeft(20, ' '));
                 }
                 else
                 {
@@ -182,7 +182,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.GLAccountDisplayNumber != null)
                 {
                     if (item.GLAccountDisplayNumber.Length > 15) { item.GLAccountDisplayNumber.Substring(0, 15); }
-                    myStringBuilder.Append("a" + item.GLAccountDisplayNumber.PadLeft(15, '0'));
+                    myStringBuilder.Append("a" + item.GLAccountDisplayNumber.PadLeft(15, ' '));
                 }
                 else
                 {
@@ -197,7 +197,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (partnerCode != null)
                 {
                     if (partnerCode.Length > 3) { partnerCode.Substring(0, 3); }
-                    myStringBuilder.Append("a" + partnerCode.PadLeft(3, '0'));
+                    myStringBuilder.Append("a" + partnerCode.PadLeft(3, ' '));
                 }
 
                 else
@@ -248,7 +248,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (user.Code != null)
                     {
                         if (user.Code.Length > 8) { user.Code = user.Code.Substring(0, 9); }
-                        myStringBuilder.Append("a" + user.Code.PadLeft(9, '0'));
+                        myStringBuilder.Append("a" + user.Code.PadLeft(9, ' '));
                     }
                     else
                     {
