@@ -214,8 +214,30 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         if (entity.IsAccountingClosed)
                         {
-                            bool hasOpenPayables = entity.Payables.Count > 0;
-                            bool hasOpenReceivables = entity.Receivables.Count > 0;
+                            AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(authToken.Tenant);
+                            AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountingSetting(authToken.Tenant);
+
+                            bool hasOpenPayables = false;
+                            bool hasOpenReceivables = false;
+                            if (entity.Receivables.Count() > 0)
+                            {
+                                if(entity.Receivables.Where(p => p.TotalAmount != null && p.TotalAmount != 0).Any())                               
+                                {
+                                    hasOpenReceivables = true;
+                                }
+                            }
+
+                            if (accountingSetting != null && !accountingSetting.AllowClosureWithoutPayables)
+                            {
+                                if (entity.Payables.Count() > 0)
+                                {
+                                    if (entity.Payables.Where(p => p.Amount != null && p.Amount != 0).Any())
+                                    {
+                                        hasOpenPayables = true;
+                                    }
+                                }
+                            }
+
                             if (hasOpenPayables || hasOpenReceivables)
                             {
                                 throw new ApplicationException("can’t close for accounting if there are any open payables/receivables.");
