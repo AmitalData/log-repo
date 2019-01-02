@@ -55,23 +55,23 @@ namespace WebFreight.Web.Helpers
                 importerDepositionAM.CustomerTenant = (int)customerTenant;
 
 
-                //string token = string.Empty;
-                //APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
-                //{
-                //    PrimaryKey = "8eb9c6e4-c1ca-43e5-8061-87a7adcdc5f8",
-                //    SecondaryKey = "c2dd0ebf-20bf-4d44-916c-7f9000dce4ec"
-                //};
-                //using (var client = new HttpClient())
-                //{
-                //    string AuthURI = URI + "APIAuthentication";
-                //    var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
-                //    var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                //    var result = await client.PostAsync(AuthURI, content);
-                //    var tempUser = result.Content.ReadAsStringAsync().Result;
-                //    ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
-                //    token = User.Token;
-                //}
-                string token = HttpContext.Current.Request.Headers["Token"];
+                string token = string.Empty;
+                APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
+                {
+                    PrimaryKey = "8eb9c6e4-c1ca-43e5-8061-87a7adcdc5f8",
+                    SecondaryKey = "c2dd0ebf-20bf-4d44-916c-7f9000dce4ec"
+                };
+                using (var client = new HttpClient())
+                {
+                    string AuthURI = URI + "APIAuthentication";
+                    var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
+                    var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                    var result = await client.PostAsync(AuthURI, content);
+                    var tempUser = result.Content.ReadAsStringAsync().Result;
+                    ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
+                    token = User.Token;
+                }
+
                 if (!string.IsNullOrEmpty(token))
                 {
                     using (var client = new HttpClient())
