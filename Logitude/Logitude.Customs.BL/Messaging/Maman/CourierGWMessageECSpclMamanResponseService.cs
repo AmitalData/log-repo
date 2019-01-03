@@ -89,13 +89,13 @@ namespace Logitude.Customs.BL.Messaging.Maman
             string cfifilmFUStatus = "";
             switch (responeECSpclMamanData.SpSpclCode)
             {
-                case "2":
+                case "2"://MamanSpecialCode.ReceivingDelayCertificate_DelayIt
                     cfifilmFUStatus = "CDE";
                     break;
-                case "4":
+                case "4"://MamanSpecialCode.StickerPrinting 
                     cfifilmFUStatus = "CLB";
                     break;
-                case "5":
+                case "5"://MamanSpecialCode.PrintDocuments
                     cfifilmFUStatus = "CDO";
                     break;
             }

@@ -28,9 +28,10 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         
 
         protected InterfaceDetails _InterfaceDetails;
-        private CommunicationLog _CommunicationLog;
+        protected CommunicationLog _CommunicationLog;
 
         protected StringBuilder _SBLog;
+        private AnalyzeResultModel _AnalyzeResultModel;
 
         //int  _SeedTenant=1;
         public CustomAnalyzerQueueBase(InterfaceDetails MyInterfaceDetails)
@@ -53,7 +54,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
                 this._AnalyzeQueue = analyzeQueue;
                 this.analyzeQueueRepository = analyzeQueueRepository;
-                _CommunicationLogRepository = new CommunicationLogRepository(this._AnalyzeQueue.Tenant);
+                
                 if (analyzeQueue == null)
                 {
                     throw new Exception("AnalyzeQueue analyzeQueue is must ");
@@ -65,9 +66,9 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
 
 
+                
 
-
-                _CommunicationLog = Communications.GetCommunicationLog(this._AnalyzeQueue.Tenant, this._AnalyzeQueue.CommunicationLogId);
+                _CommunicationLog = Communications.GetCommunicationLog(1, this._AnalyzeQueue.CommunicationLogId);
                 if (_CommunicationLog == null)
                 {
                     throw new Exception("Cannnot GetCommunicationLog");
@@ -81,21 +82,20 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
 
                 LogMessagingUtil.Instance.Clear();
-                string AnalyzeErrorProblem = this.AnalyzeData(communicationsData);
-                if (String.IsNullOrWhiteSpace(AnalyzeErrorProblem))
-                {
-                    AnalyzeDone();
-                }
-                else
-                {
-                    //Update analyze queue
-                    AnalyzeFailed(AnalyzeErrorProblem);
-                }
+                _AnalyzeResultModel = this.AnalyzeData(communicationsData);
+                ;
+                UpdateAnlayzeQ();
             }
 
             catch (Exception ex)
             {
-                AnalyzeFailed(ex.ToString());
+                _AnalyzeResultModel = _AnalyzeResultModel ?? new AnalyzeResultModel()
+                {
+                    ErrorMessage = ex.ToString(),
+                    MyCommStatusEnum = CommStatusEnum.F
+                };
+                UpdateAnlayzeQ();
+                //AnalyzeFailed(ex.ToString());
 
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "CustomAnalyzerQueueBase : Run() Method", null);
 
@@ -103,51 +103,96 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         }
 
         //protected abstract StringBuilder GetStringBuilderLogger();
-        protected abstract string AnalyzeData(string communicationsData);
+        protected abstract AnalyzeResultModel AnalyzeData(string communicationsData);
         //public abstract TCustomRequest GetRequest(TRequestParams requestParams);
 
 
-        private void AnalyzeDone()
+        private void UpdateAnlayzeQ()
         {
-            var myCommunicationLogRepository = new CommunicationLogRepository(_AnalyzeQueue.Tenant);
-
-            _CommunicationLog.Retries++;
-            _CommunicationLog.CommunicationStatusTypeCode = CommStatusEnum.D.ToString();
-            _CommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
-            _CommunicationLog.Logs = LogMessagingUtil.Instance.ToString().GetLast((8000 - 1));
-            myCommunicationLogRepository.Update(_CommunicationLog);
-            myCommunicationLogRepository.SubmitChanges();
-
-
-
-            _AnalyzeQueue.Status = "D";
-            _AnalyzeQueue.ErrorMessage = null;
-            analyzeQueueRepository.Update(_AnalyzeQueue);
-            analyzeQueueRepository.SubmitChanges();
-        }
-
-
-
-        private void AnalyzeFailed(string ErrorMessage)
-        {
-            if (_CommunicationLog!=null)
+            if (_CommunicationLog != null)
             {
-                _CommunicationLog.Retries++;
-                _CommunicationLog.CommunicationStatusTypeCode = CommStatusEnum.F.ToString();
-                _CommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
-                _CommunicationLogRepository.Update(_CommunicationLog);
-                _CommunicationLogRepository.SubmitChanges();
+
+
+                var myCommunicationLogRepository = new CommunicationLogRepository(_CommunicationLog.Tenant);
+                var myCommunicationLog = myCommunicationLogRepository.GetSingleCommunicationLog(_CommunicationLog.Id, _CommunicationLog.Tenant);
+                myCommunicationLog.Retries++;
+                myCommunicationLog.CommunicationStatusTypeCode = _AnalyzeResultModel.MyCommStatusEnum.ToString();
+                myCommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
+                myCommunicationLog.Logs = _AnalyzeResultModel.ErrorMessage ?? "" + Environment.NewLine + LogMessagingUtil.Instance.ToString().GetLast((8000 - 1));
+
+                myCommunicationLog.EntityReference = _AnalyzeResultModel.EntityReference;
+                if (!string.IsNullOrWhiteSpace(_AnalyzeResultModel.EntityID) &&
+                    !string.IsNullOrWhiteSpace(_AnalyzeResultModel.ObjectTableID))
+                {
+
+                    myCommunicationLog.ObjectTableId = _AnalyzeResultModel.ObjectTableID;
+                    myCommunicationLog.EntityId = _AnalyzeResultModel.EntityID;
+                    LogMessagingUtil.Instance.AppendLine($".ObjectTableId = {_AnalyzeResultModel.ObjectTableID}");
+                    LogMessagingUtil.Instance.AppendLine($".EntityId = {_AnalyzeResultModel.EntityID}");
+                    LogMessagingUtil.Instance.AppendLine($".EntityReference = {_AnalyzeResultModel.EntityReference}");
+                    
+
+                }
+                myCommunicationLogRepository.Update(myCommunicationLog);
+                myCommunicationLogRepository.SubmitChanges();
 
             }
+            else
+            {
+                LogMessagingUtil.Instance.AppendLine($"(_CommunicationLog != null)");
+            }
 
-
-
-            _AnalyzeQueue.Status = "F";
-            _AnalyzeQueue.ErrorMessage = ErrorMessage;
-            _AnalyzeQueue.DoneDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
+            _AnalyzeQueue.Status = _AnalyzeResultModel.MyCommStatusEnum.ToString();
+            _AnalyzeQueue.ErrorMessage = _AnalyzeResultModel.ErrorMessage;
             analyzeQueueRepository.Update(_AnalyzeQueue);
             analyzeQueueRepository.SubmitChanges();
         }
+
+
+        //private void AnalyzeDone()
+        //{
+        //    var myCommunicationLogRepository = new CommunicationLogRepository(_AnalyzeQueue.Tenant);
+
+        //    _CommunicationLog.Retries++;
+        //    _CommunicationLog.CommunicationStatusTypeCode = CommStatusEnum.D.ToString();
+        //    _CommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
+        //    _CommunicationLog.Logs = LogMessagingUtil.Instance.ToString().GetLast((8000 - 1));
+        //    myCommunicationLogRepository.Update(_CommunicationLog);
+        //    myCommunicationLogRepository.SubmitChanges();
+
+            
+
+        //    _AnalyzeQueue.Status = "D";
+        //    _AnalyzeQueue.ErrorMessage = null;
+        //    analyzeQueueRepository.Update(_AnalyzeQueue);
+        //    analyzeQueueRepository.SubmitChanges();
+        //}
+
+
+
+        //private void AnalyzeFailed()
+        //{
+        //    if (_CommunicationLog!=null)
+        //    {
+        //        _CommunicationLog.Retries++;
+        //        _CommunicationLog.CommunicationStatusTypeCode = CommStatusEnum.F.ToString();
+        //        _CommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
+        //        _CommunicationLog.Logs = LogMessagingUtil.Instance.ToString().GetLast((8000 - 1));
+        //        _CommunicationLog.ObjectTableId
+        //        _CommunicationLogRepository.Update(_CommunicationLog);
+
+        //        _CommunicationLogRepository.SubmitChanges();
+
+        //    }
+
+
+
+        //    _AnalyzeQueue.Status = "F";
+        //    _AnalyzeQueue.ErrorMessage = ErrorMessage;
+        //    _AnalyzeQueue.DoneDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
+        //    analyzeQueueRepository.Update(_AnalyzeQueue);
+        //    analyzeQueueRepository.SubmitChanges();
+        //}
 #if false
         private void OnCatchAnalyzingError(Exception ex)
         {
@@ -198,5 +243,17 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
 
 #endif
+    }
+    public class AnalyzeResultModel
+    {
+        public AnalyzeResultModel()
+        {
+            MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.D;//default !!
+        }
+        public string ErrorMessage { get; set; }
+        public CommStatusEnum MyCommStatusEnum { get; internal set; }
+        public string EntityID { get; internal set; }
+        public string ObjectTableID { get; internal set; }
+        public string EntityReference { get; internal set; }
     }
 }

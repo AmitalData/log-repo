@@ -103,7 +103,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 HawbExtnd = _CourierMasterPM.HAWB??"",
                 AirlineCode = customsAirline.AirlineCode??"",
                 FltNo = CInt(_CourierMasterPM.FlightNumber),
-                FltDate = _CourierMasterPM.DepartureDate.GetValueOrDefault().Date,// fltdate is not nullable ??
+                //FltDate = _CourierMasterPM.DepartureDate.GetValueOrDefault().Date,// fltdate is not nullable ??
                 LandTime = _CourierMasterPM.EstimatedArrivalDate,// LandTime is not nullable ??
                 DecNoOfPackags = DecNoOfPackags,
                 DecWeight = DecWeight,
@@ -130,6 +130,11 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
 
             };
+
+            if (_CourierMasterPM.DepartureDate.HasValue)
+            {
+                courierHawbMamanModel.FltDate = _CourierMasterPM.DepartureDate.GetValueOrDefault().Date;// fltdate is not nullable ??
+            }
             return courierHawbMamanModel;
         }
         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)

@@ -216,6 +216,16 @@ namespace Logitude.Customs.Data.Repsitories
                   )
                   .FirstOrDefault();
         }
+        public List<string> GetListByCourierHAWB(string CourierHAWB, int tenant)
+        {
+            
+            return
+                  (
+                  from rec in context.Declarations
+                  where rec.CourierHAWB == CourierHAWB && rec.Tenant == tenant
+                  select rec.Id
+                  ).ToList();
+        }
         public string GetConcurrencyGUIDByCustomFileNo(string customFileNo, int tenant)
         {
             if (String.IsNullOrWhiteSpace(customFileNo)) return "";
