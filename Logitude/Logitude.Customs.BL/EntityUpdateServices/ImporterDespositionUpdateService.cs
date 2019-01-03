@@ -26,6 +26,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityPMs.UGenerated;
 using System.Xml.Linq;
+using Logitude.Customs.BL.EntityDataMappings;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -209,7 +210,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     myYCULTASKUpdateService.DontAddTransaction = true;
                     var requestData = "";
                     string importerCode = dirtyImporterDespositionPM.ImporterCode;
-                    if(importerCode == null && dirtyImporterDespositionPM.ImporterlId != null) importerCode = TranslateClient(dirtyImporterDespositionPM.ImporterlId.Substring(0, 9), dirtyImporterDespositionPM.Tenant);
+                    if(importerCode == null && dirtyImporterDespositionPM.ImporterlId != null) importerCode = TranslateClient(dirtyImporterDespositionPM.ImporterlId, dirtyImporterDespositionPM.Tenant);
+                    if(this.Vendor == null && !string.IsNullOrWhiteSpace(dirtyImporterDespositionPM.VendorID))
+                    {
+                        if(this.currentContext == null) this.currentContext = CustomContext.GetContext(dirtyImporterDespositionPM.Tenant);
+                        var myQueryService = new CustomsVendorQueryService(this.currentContext);
+                        var custVendor = myQueryService.GetSingle(dirtyImporterDespositionPM.VendorID, false, true);
+                        if(custVendor != null)
+                        {
+                            this.Vendor = new CustomsVendor();
+                            var mapping = new CustomsVendorDataMapping();
+                            mapping.PMToPOCO(custVendor, this.Vendor);
+                        }
+                    }
                     var XMLData = new XDocument(
                         new XElement("ImporterDepositionPM",
                             new XElement("VendorCode", this.Vendor != null ? this.Vendor.VendorNumber : null),
