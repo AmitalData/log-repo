@@ -45,7 +45,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
 
 
-                bool tryConcurrentKiller = ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
+                bool tryConcurrentKiller = true;/// ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
                     if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(entityPOCO.InterfaceTypeCode))
