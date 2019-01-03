@@ -1342,6 +1342,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                 if (invoiceItem.CARS != null && invoiceItem.CARS.Count() > 0) // moran 14.3.16 - AMI-55746
                 {
                     SupplierInvoiceItemPM.SupplierInvoiceItemVehicles = GetSupplierInvoiceItemVehiclesPM(invoiceItem, SupplierInvoiceItemPM);
+                    SupplierInvoiceItemPM.VehicleStatus = true;
                 }
                 SupplierInvoiceItemPM.ItemCode = invoiceItem.ITEMCODE;
                 SupplierInvoiceItemPM.Tenant = ResolvedTenant();

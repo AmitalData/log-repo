@@ -305,15 +305,21 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
 
-                    if (button.EventCode == "DeclarationClosure") {
-                        if (!this.EntityPM.IsClose) {
+                    if (button.EventCode == "Declaration Closure") {
+                        if (this.EntityPM.IsClose) {
                             button.IsHidden = true;
+                        }
+                        else {
+                            button.IsHidden = false;
                         }
                     }
 
-                    if (button.EventCode == "CancelDeclarationClosure") {
-                        if (this.EntityPM.IsClose) {
+                    if (button.EventCode == "Cancel Declaration Closure") {
+                        if (!this.EntityPM.IsClose) {
                             button.IsHidden = true;
+                        }
+                        else {
+                            button.IsHidden = false;
                         }
                     }
 
@@ -468,12 +474,12 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             this.CourierPendingReasonDeleteMethod();
                             break;
                         }
-                    case "DeclarationClosure":
+                    case "Declaration Closure":
                         {
                             this.DeclarationClosureMethod();
                             break;
                         }
-                    case "CancelDeclarationClosure":
+                    case "Cancel Declaration Closure":
                         {
                             this.CancelDeclarationClosureMethod();
                             break;
