@@ -23,6 +23,7 @@ using System.Xml.Serialization;
 using UnifreightIIG.Common.MessageLib.DeclarationDeal;
 using UnifreightIIG.Common.MessageLib.Deficit;
 using Logitude.Customs.BL.Models;
+using Attachment = UnifreightIIG.Common.MessageLib.Deficit.Attachment;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
