@@ -56,8 +56,9 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
     public class AnalyzeQueueUtil
     {
 
-        public void SaveMessageToAnalyzeQueue(string fileName, byte[] messageData, int tenant, InterfaceDetails defInterfaceDetail)
+        public AnalyzeQueue SaveMessageToAnalyzeQueue(string fileName, byte[] messageData, int tenant, InterfaceDetails defInterfaceDetail)
         {
+            AnalyzeQueue analyzeQueue = null;
             //var defInterfaceDetail = (new CustomsPartnerFtpDetails()).GetAllInterfaceDetails().First(r => r.Code == customsPartnerFtpPM.InterfaceName);
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
@@ -67,7 +68,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 fileName = fileName.Split('/')[fileName.Split('/').Length - 1].ToLower();
                 var analyzeQueueReposiory = new AnalyzeQueueRepository();
 
-                var analyzeQueue = new AnalyzeQueue()
+                analyzeQueue = new AnalyzeQueue()
                 {
                     Subject = defInterfaceDetail.Subject,
                     //fileName.StartsWith("bl") ? "BL Response" : (fileName.StartsWith("voyage") ? "Voyage Response" : "Artemus Response"),
@@ -92,6 +93,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
                 scope.Complete();
             }
+            return analyzeQueue;
         }
 
 
@@ -149,7 +151,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 LastStatusDateUTC = DateTime.UtcNow,
                 //To = ,
-                From = CustomsPartnerFtpDetails.PartnerCode_Mamam + "," + CustomsPartnerFtpDetails.InterfaceName_ECSTS,
+                From = CustomsPartnerFtpDetails.PartnerCode_Mamam + "," + CustomsPartnerFtpDetails.InterfaceName_ECSTB,
                 InOut = "O",
                 //EntityId = declarationId,
                 //ObjectTableId = objectTableId,

@@ -15,8 +15,8 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_SubManifest = "SUBMANIFEST";
         public const string InterfaceName_ECTHR = "ECTHR";//EC = E-Commerce
         public const string InterfaceName_ECSPCL = "ECSPCL";//EC = E-Commerce
-        public const string InterfaceName_ECSTS = "ECSTS";//EC = E-Commerce
-        public const string InterfaceName_ECSTS_Splited = "ECSTS+P";//EC = E-Commerce
+        public const string InterfaceName_ECSTB = "ECSTB";//EC = E-Commerce
+        public const string InterfaceName_ECSTB_Splited = "ECSTB+P";//EC = E-Commerce
         public const string PartnerCode_Mamam = "MAMAN";
         public const string TypeCode_Out = "OUT";
         public const string TypeCode_In = "IN";
@@ -56,7 +56,7 @@ namespace Logitude.Customs.BL.CloseTables
 
             new InterfaceDetails()
             {
-                Code = InterfaceName_ECSTS,
+                Code = InterfaceName_ECSTB,
                 Name = "סטטוס/זמינות ממן",
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_Mamam,
@@ -67,7 +67,7 @@ namespace Logitude.Customs.BL.CloseTables
             },
             new InterfaceDetails()
             {
-                Code = InterfaceName_ECSTS_Splited,
+                Code = InterfaceName_ECSTB_Splited,
                 Name = "סטטוס/זמינות ממן",
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_Mamam,
@@ -128,10 +128,10 @@ namespace Logitude.Customs.BL.CloseTables
                 }
             )));
 
-            all.Add(new KeyValuePair<string, string>(InterfaceName_ECSTS,
+            all.Add(new KeyValuePair<string, string>(InterfaceName_ECSTB,
                 ProxyUtil.JsonConvertSerialize(new InterfaceDetails()
                 {
-                    Code = InterfaceName_ECSTS,
+                    Code = InterfaceName_ECSTB,
                     Name = "סטטוס/זמינות ממן",
                     TypeCode = TypeCode_In,
                     Partner = PartnerCode_Mamam,

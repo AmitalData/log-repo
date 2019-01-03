@@ -272,6 +272,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (String.IsNullOrWhiteSpace(externalDeclarationNumber)) return "";
             return repository.GetIdByExternalDeclarationNumber(externalDeclarationNumber, tenant);
         }
+        public List<string> GetListByCourierHAWB(string CourierHAWB, int tenant)
+        {
+            
+            return repository.GetListByCourierHAWB(CourierHAWB, tenant);
+            
+        }
 
         public List<DeclarationErrorView> GetDeclarationErrors(string declarationId, int tenant, string listVersionId, string courierFilter = "Declaration")
         {
