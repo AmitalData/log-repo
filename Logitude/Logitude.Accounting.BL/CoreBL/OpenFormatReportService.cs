@@ -188,6 +188,28 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     myStringBuilder.Append(' ', 15);
                 }
+
+                if (item.OppositGLAccount != null)
+                {
+                    if (item.OppositGLAccount.Length > 15) { item.OppositGLAccount.Substring(0, 15); }
+                    myStringBuilder.Append("a" + item.OppositGLAccount.PadLeft(15, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append(' ', 15);
+                }
+
+                if(item.LocalAmountDebit == 0)
+                {
+                    myStringBuilder.Append("2");
+                   
+                }
+                else
+                {
+                    myStringBuilder.Append("1");
+                }
+
+
                 CurrencyPM currency = currencyQuery.GetSinglePM(item.CurrencyId, tenant);
 
 
@@ -204,7 +226,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     myStringBuilder.Append(' ', 3);
                 }
-                if (item.LocalAmountDebit != null)
+                if ( item.LocalAmountDebit != 0)
                 {
                     var LocalAmountDebit = "+" + item.LocalAmountDebit;
 
@@ -219,7 +241,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
 
-                if (item.ForeignAmountDebit != null)
+                if (item.ForeignAmountDebit != 0)
                 {
                     var ForeignAmountDebit = "+" + item.ForeignAmountDebit;
 
@@ -421,7 +443,10 @@ namespace Logitude.Accounting.BL.CoreBL
                             myStringBuilder.Append("a" + partnerCode.PadLeft(15, ' '));
                         }
 
-
+                        else
+                        {
+                            myStringBuilder.Append(' ', 15);
+                        }
                     }
                     else
                     {
@@ -431,7 +456,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-                    myStringBuilder.Append(' ', 60);
+                    myStringBuilder.Append(' ', 143);
                 }
 
                 myStringBuilder.Append(' ', 15);
