@@ -188,6 +188,28 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     myStringBuilder.Append(' ', 15);
                 }
+
+                if (item.OppositGLAccount != null)
+                {
+                    if (item.OppositGLAccount.Length > 15) { item.OppositGLAccount.Substring(0, 15); }
+                    myStringBuilder.Append("a" + item.OppositGLAccount.PadLeft(15, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append(' ', 15);
+                }
+
+                if(item.LocalAmountDebit == 0)
+                {
+                    myStringBuilder.Append("2");
+                   
+                }
+                else
+                {
+                    myStringBuilder.Append("1");
+                }
+
+
                 CurrencyPM currency = currencyQuery.GetSinglePM(item.CurrencyId, tenant);
 
 
