@@ -550,7 +550,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                             JournalNumber = j.JournalNumber,
                                                             Notes = a.Notes,
                                                             Reference2 = jl.Reference2,
-
+                                                            OppositGLAccount = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber:null,
                                                         }).ToList();
 
                 //ledgerTransactions = transactions.Select(poco => GetEntityPM(poco)).ToList();
@@ -580,7 +580,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                             JournalNumber = j.JournalNumber,
                                                             Notes = a.Notes,
                                                             Reference2 = jl.Reference2,
-
+                                                            OppositGLAccount = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
                                                         }).ToList();
 
               //  ledgerTransactions = transactions.Select(poco => GetEntityPM(poco)).ToList();

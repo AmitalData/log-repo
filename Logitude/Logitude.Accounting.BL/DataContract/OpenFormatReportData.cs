@@ -36,7 +36,7 @@ namespace Logitude.Accounting.BL.DataContract
         public DateTime CreateDate { get; set; }
         public string CreatedByUser { get; set; }
 
-
+        public string OppositGLAccount { get; set; }
 
 
     }
