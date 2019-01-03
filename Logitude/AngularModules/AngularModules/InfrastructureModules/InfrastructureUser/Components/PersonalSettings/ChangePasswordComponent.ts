@@ -15,7 +15,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 
 
 declare var passtring, PassWordValueTriming, isctype, ClientSideBestPassword, gSimilarityMap, gDictionary, DispPwdStrength, ClientSideStrongPassword, DispPwdStrength, ClientSideMediumPassword, DispPwdStrength, ClientSideWeakPassword: any;
-
+ 
 @Component({
     moduleId: module.id,
     selector: 'ChangePassword',
