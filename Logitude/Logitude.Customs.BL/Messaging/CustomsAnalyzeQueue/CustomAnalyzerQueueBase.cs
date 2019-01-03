@@ -120,14 +120,17 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 myCommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
                 myCommunicationLog.Logs = _AnalyzeResultModel.ErrorMessage ?? "" + Environment.NewLine + LogMessagingUtil.Instance.ToString().GetLast((8000 - 1));
 
+                myCommunicationLog.EntityReference = _AnalyzeResultModel.EntityReference;
                 if (!string.IsNullOrWhiteSpace(_AnalyzeResultModel.EntityID) &&
                     !string.IsNullOrWhiteSpace(_AnalyzeResultModel.ObjectTableID))
                 {
 
                     myCommunicationLog.ObjectTableId = _AnalyzeResultModel.ObjectTableID;
                     myCommunicationLog.EntityId = _AnalyzeResultModel.EntityID;
-                    LogMessagingUtil.Instance.AppendLine($"_CommunicationLog.ObjectTableId = {_AnalyzeResultModel.ObjectTableID}");
-                    LogMessagingUtil.Instance.AppendLine($"_CommunicationLog.EntityId = {_AnalyzeResultModel.EntityID}");
+                    LogMessagingUtil.Instance.AppendLine($".ObjectTableId = {_AnalyzeResultModel.ObjectTableID}");
+                    LogMessagingUtil.Instance.AppendLine($".EntityId = {_AnalyzeResultModel.EntityID}");
+                    LogMessagingUtil.Instance.AppendLine($".EntityReference = {_AnalyzeResultModel.EntityReference}");
+                    
 
                 }
                 myCommunicationLogRepository.Update(myCommunicationLog);
@@ -251,5 +254,6 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         public CommStatusEnum MyCommStatusEnum { get; internal set; }
         public string EntityID { get; internal set; }
         public string ObjectTableID { get; internal set; }
+        public string EntityReference { get; internal set; }
     }
 }

@@ -8,6 +8,7 @@ using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Data;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Models;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -33,112 +34,130 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         protected override AnalyzeResultModel AnalyzeData(string communicationsData)
         {
             var res = new AnalyzeResultModel();
-            res.ObjectTableID = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-            LogMessagingUtil.Instance.AppendLine("MamanStatusAvailabilityService");
-
-            STBMessage mySTBMessage = GetSTBMessage(communicationsData);
-            if (string.IsNullOrWhiteSpace(mySTBMessage.BaldarAwb))
-            {
-                res.ErrorMessage = $"bad communicationsData  mySTBMessage.BaldarAwb is null";
-                res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
-                return res;
-            }
-            
-            //יש לאתר את תיק עמילות לפי מס' ש.מ. בלדר  - BaldarAwb ותאריך שטר מטען בלדר BaldarOpenDate
-            string theDecId = "";
-            var qs = new DeclarationQueryService(_CommunicationLog.Tenant);
-            var idList = qs.GetListByCourierHAWB(mySTBMessage.BaldarAwb, _CommunicationLog.Tenant);
-            LogMessagingUtil.Instance.AppendLine($"qs.GetListByCourierHAWB( {mySTBMessage.BaldarAwb} )  == {idList}");
-            if (idList.Count == 0)
-            {
-                res.ErrorMessage = $"idList.Count ==0  = qs.GetListByCourierHAWB( {mySTBMessage.BaldarAwb} )";
-                res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
-                return res;
-            }
-            else if (idList.Count == 1) {
-                theDecId = idList.First();
-            }
-            else if (idList.Count > 1)
+            try
             {
                 
-                if (string.IsNullOrWhiteSpace(mySTBMessage.BaldarOpenDate))
+                res.ObjectTableID = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                LogMessagingUtil.Instance.AppendLine("MamanStatusAvailabilityService");
+
+                STBMessage mySTBMessage = GetSTBMessage(communicationsData);
+                if (string.IsNullOrWhiteSpace(mySTBMessage.BaldarAwb))
                 {
-                    res.ErrorMessage = $"mySTBMessage.BaldarOpenDate is null  unable to choose what to do ??";
+                    res.ErrorMessage = $"bad communicationsData  mySTBMessage.BaldarAwb is null";
                     res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
-                    res.EntityID = idList.First();
                     return res;
                 }
-                var consignmentQueryService = new ConsignmentQueryService(_CommunicationLog.Tenant);
-                string myDeclarationId= consignmentQueryService.GetDeclarationIdBythirdCargoID(mySTBMessage.BaldarOpenDate, _CommunicationLog.Tenant, idList);
-                if (string.IsNullOrWhiteSpace(myDeclarationId))
-                {
-                    res.ErrorMessage = $"myDeclarationId=GetDeclarationIdBythirdCargoID({mySTBMessage.BaldarOpenDate}) is null  unable to choose what to do ??";
-                    res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
-                    res.EntityID = idList.First();
 
+                //יש לאתר את תיק עמילות לפי מס' ש.מ. בלדר  - BaldarAwb ותאריך שטר מטען בלדר BaldarOpenDate
+                string theDecId = "";
+                var qs = new DeclarationQueryService(_CommunicationLog.Tenant);
+                var idList = qs.GetListByCourierHAWB(mySTBMessage.BaldarAwb, _CommunicationLog.Tenant);
+                LogMessagingUtil.Instance.AppendLine($"qs.GetListByCourierHAWB( {mySTBMessage.BaldarAwb} )  == {idList}");
+                if (idList.Count == 0)
+                {
+                    res.ErrorMessage = $"idList.Count ==0  = qs.GetListByCourierHAWB( {mySTBMessage.BaldarAwb} )";
+                    res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
                     return res;
                 }
-                theDecId = myDeclarationId;
+                else if (idList.Count == 1)
+                {
+                    theDecId = idList.First();
+                }
+                else if (idList.Count > 1)
+                {
+
+                    if (string.IsNullOrWhiteSpace(mySTBMessage.BaldarOpenDate))
+                    {
+                        res.ErrorMessage = $"mySTBMessage.BaldarOpenDate is null  unable to choose what to do ??";
+                        res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
+                        res.EntityID = idList.First();
+                        return res;
+                    }
+                    var consignmentQueryService = new ConsignmentQueryService(_CommunicationLog.Tenant);
+                    string myDeclarationId = consignmentQueryService.GetDeclarationIdBythirdCargoID(mySTBMessage.BaldarOpenDate, _CommunicationLog.Tenant, idList);
+                    if (string.IsNullOrWhiteSpace(myDeclarationId))
+                    {
+                        res.ErrorMessage = $"myDeclarationId=GetDeclarationIdBythirdCargoID({mySTBMessage.BaldarOpenDate}) is null  unable to choose what to do ??";
+                        res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
+                        res.EntityID = idList.First();
+
+                        return res;
+                    }
+                    theDecId = myDeclarationId;
+                }
+
+                if (string.IsNullOrWhiteSpace(theDecId))
+                {
+                    res.ErrorMessage = $"theDecId is null  unable to choose what to do ??";
+                    res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
+                    return res;
+                }
+
+
+                var qsDeclarationQueryService = new DeclarationQueryService(_CommunicationLog.Tenant);
+
+                _DeclarationPM = qsDeclarationQueryService.GetSingle(theDecId, true, false);
+                res.EntityID = theDecId;
+                res.EntityReference = _DeclarationPM.CustomFileNo;
+
+                ContactRepository contactRepository = new ContactRepository(_CommunicationLog.Tenant);
+                var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(_CommunicationLog.Tenant), _CommunicationLog.Tenant);
+                string loggedContactId = "";
+                if (loggedContact != null)
+                {
+                    loggedContactId = loggedContact.Id;
+                }
+                var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
+                switch (mySTBMessage.EventCode)
+                {
+                    case "0001":
+                        {
+                            Update0001(theDecId, mySTBMessage.EventQty);
+                            unifreightFUStatusTaskService.UpsertFUStatusLE2U(_CommunicationLog.Tenant, loggedContactId, new UnifreightFUStatusParam()
+                            {
+                                Entname = "CFIFILEM",
+                                PrimaryNum = _DeclarationPM.CustomFileNo,
+                                Mode = UnifreightEventMode.@new,
+                                StatusCode = "SMG",
+                            });
+                        }
+                        break;
+                    case "0016":
+                        {
+                            unifreightFUStatusTaskService.UpsertFUStatusLE2U(_CommunicationLog.Tenant, loggedContactId, new UnifreightFUStatusParam()
+                            {
+                                Entname = "CFIFILEM",
+                                PrimaryNum = _DeclarationPM.CustomFileNo,
+                                Mode = UnifreightEventMode.@new,
+                                StatusCode = "OMN",
+                            });
+                        }
+                        break;
+                    default:
+                        {
+
+                            res.ErrorMessage = $"EventCode {mySTBMessage.EventCode} not treated ";
+                            LogMessagingUtil.Instance.AppendLine(res.ErrorMessage);
+                            res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.D;
+                        }
+                        break;
+                }
+
+
             }
-
-            if (string.IsNullOrWhiteSpace(theDecId))
-            {
-                res.ErrorMessage = $"theDecId is null  unable to choose what to do ??";
-                res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
-                return res;
-            }
-
-
-            var qsDeclarationQueryService = new DeclarationQueryService(_CommunicationLog.Tenant);
-
-             _DeclarationPM = qsDeclarationQueryService.GetSingle(theDecId,true, false);
-            res.EntityID = theDecId;
             
-            ContactRepository contactRepository = new ContactRepository(_CommunicationLog.Tenant);
-            var loggedContact =contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(_CommunicationLog.Tenant), _CommunicationLog.Tenant);
-            string loggedContactId = "";
-            if (loggedContact != null)
+            catch (BusinessErrorException ee)
             {
-                loggedContactId = loggedContact.Id;
+                res.ErrorMessage = ee.ToString();
+                res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.D;
             }
-            var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
-            switch (mySTBMessage.EventCode)
+            catch (Exception ee)
             {
-                case "0001":
-                    {
-                        Update0001(theDecId, mySTBMessage.EventQty);
-                        unifreightFUStatusTaskService.UpsertFUStatusLE2U(_CommunicationLog.Tenant, loggedContactId, new UnifreightFUStatusParam()
-                        {
-                            Entname = "CFIFILEM",
-                            PrimaryNum = _DeclarationPM.CustomFileNo,
-                            Mode = UnifreightEventMode.@new,
-                            StatusCode = "SMG",
-                        });
-                    }
-                    break;
-                case "0016":
-                    {
-                        unifreightFUStatusTaskService.UpsertFUStatusLE2U(_CommunicationLog.Tenant, loggedContactId, new UnifreightFUStatusParam()
-                        {
-                            Entname = "CFIFILEM",
-                            PrimaryNum = _DeclarationPM.CustomFileNo,
-                            Mode = UnifreightEventMode.@new,
-                            StatusCode = "OMN",
-                        });
-                    }
-                    break;
-                default:
-                    {
-
-                        res.ErrorMessage = $"EventCode {mySTBMessage.EventCode} not treated ";
-                        LogMessagingUtil.Instance.AppendLine(res.ErrorMessage);
-                        res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.D;
-                    }
-                    break;
+                throw;
             }
             return res;
         }
-        void Update0001(string theDecId , int EventQty)
+        void Update0001(string theDecId, int EventQty)
         {
             string AcceptanceStatusCode = "";
             var totPackageQuantity = _DeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages).Sum(p => p.PackageQuantity);
@@ -152,7 +171,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             }
             else
             {
-                throw new Exception("EventQty > totPackageQuantity  ???");
+                LogMessagingUtil.Instance.AppendLine("EventQty > totPackageQuantity  ??? >>throw new Exception- Eitan confirm ?!?!? ");
+                throw new BusinessErrorException("EventQty > totPackageQuantity  ???");
             }
             _DeclarationPM.AcceptanceStatusCode = AcceptanceStatusCode;
             var customContext = CustomContext.GetContext(_CommunicationLog.Tenant);
@@ -165,7 +185,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
             currentDeclarationCourierStatusPM.CourierPaymentStatusCode = "P";
 
-            
+
             var declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), _CommunicationLog.Tenant);
             currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
             declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
@@ -173,7 +193,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
 
         }
-    
+
 
         private static STBMessage GetSTBMessage(string communicationsData)
         {
@@ -234,7 +254,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             mySTBMessage.EventTime = (DateTime)GetXElement(myXElementSTBMessage, "EventTime");//<EventTime>2019-01-01T10:14:35.433269+02:00</EventTime>
             mySTBMessage.EventQty = (int)GetXElement(myXElementSTBMessage, "EventQty");//<EventQty>1298</EventQty>
 
-            
+
             return mySTBMessage;
         }
 
@@ -254,7 +274,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
     }
     class STBMessage
     {
-        
+
         public string BaldarAwb { get; internal set; }
         public string BaldarOpenDate { get; internal set; }
         public string EventCode { get; internal set; }

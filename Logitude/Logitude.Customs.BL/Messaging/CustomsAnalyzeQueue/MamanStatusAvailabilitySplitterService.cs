@@ -33,7 +33,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
         protected override AnalyzeResultModel AnalyzeData(string communicationsData)
         {
-            string courierMasterId = null, objectTableID = null;
+            string courierMasterId = null, objectTableID = null, entityReference=null;
             var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
             var defInterfaceName_ECSTS_Splited = customsPartnerFtpDetails.GetAllInterfaceDetails()
                     .Where(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECSTB_Splited).First();
@@ -124,7 +124,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 {
                     courierMasterId = courierDeclaration.CourierMasterId;
                     objectTableID = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
-
+                    entityReference = courierDeclaration.ExternalDeclarationNumber;
 
 
                 }
@@ -137,6 +137,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.D,
                 EntityID = courierMasterId,
                 ObjectTableID = objectTableID,
+                EntityReference = entityReference,
             };
         }
 
