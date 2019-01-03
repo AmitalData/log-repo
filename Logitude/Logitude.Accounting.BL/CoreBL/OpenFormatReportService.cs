@@ -204,7 +204,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     myStringBuilder.Append(' ', 3);
                 }
-                if (item.LocalAmountDebit != null)
+                if ( item.LocalAmountDebit != 0)
                 {
                     var LocalAmountDebit = "+" + item.LocalAmountDebit;
 
