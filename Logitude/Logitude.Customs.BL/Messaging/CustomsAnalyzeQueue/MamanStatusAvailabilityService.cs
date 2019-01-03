@@ -91,7 +91,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
             var qsDeclarationQueryService = new DeclarationQueryService(_CommunicationLog.Tenant);
 
-             _DeclarationPM = qsDeclarationQueryService.GetSingle(theDecId, false, false);
+             _DeclarationPM = qsDeclarationQueryService.GetSingle(theDecId,true, false);
             res.EntityID = theDecId;
             
             ContactRepository contactRepository = new ContactRepository(_CommunicationLog.Tenant);
