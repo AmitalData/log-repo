@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.Data;
+﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -8,6 +9,7 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,10 +58,261 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 item.DepositId = entityPM.Id;
             }
 
+            CreateJournal(entityPM, entityPM.Tenant);
+
             // Activity log
-            this.LogActivity(entityPM);
+            LogActivity(entityPM);
          
         }
+
+        #region Logic
+        void CreateJournal(BankDepositPM entityPM, int tenant)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+
+
+            CashBookQueryService cashBookQueryService = new CashBookQueryService(entityPM.Tenant);
+            CashBookPM cashBook = cashBookQueryService.GetSingle(entityPM.CashBookId, true, false);
+
+            //dates
+            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            entityPM.UpdateDate = todayDateTime;
+
+            //showlocal
+            bool showLocal = false;
+            ContactPM user = GetLoggedContact(entityPM.Tenant);
+            if (user != null)
+                showLocal = !user.DontShowLocal;
+
+
+            ARPaymentChequeQueryService arpChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
+
+
+            if (entityPM.ForeignAmount > cashBook.TotalAmount)
+            {
+                throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.DepositAmountmustbelessthanCashbook", 0, showLocal));
+            }
+
+            BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(entityPM.Tenant);
+            BankAccountPM bankAccount = bankAccountQueryService.GetSingle(entityPM.DepositBankAccountId, true, false);
+
+            if (cashBook != null)
+            {
+                cashBook.ChangeSetOp = ChangeSetOperation.Update;
+            }
+
+            // 1- Creating a New Journal
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(entityPM.Tenant);
+            GLAccountPM gLAccount;
+            JournalPM newJournal = new JournalPM();
+            newJournal.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+            newJournal.Tenant = entityPM.Tenant;
+            newJournal.CreateDate = DateTime.Now;
+            newJournal.CreatedByUserId = entityPM.CreatedByUserId;
+            newJournal.UpdateDate = DateTime.Now;
+            newJournal.UpdatedByUserId = entityPM.UpdatedByUserId;
+            newJournal.AccountingDate = entityPM.AccountingDate;
+            newJournal.TypeCode = "0"; //Manual
+            newJournal.StatusCode = "2"; // Approved
+            newJournal.AccountingEntityId = entityPM.Id;
+            newJournal.AccountingEntityReference = entityPM.DepositNumber.ToString();
+            newJournal.ExternalNo = null;
+            newJournal.ApproveDate = entityPM.CreateDate;
+            newJournal.ApprovedByUserId = entityPM.CreatedByUserId;
+
+
+            if (entityPM.IsCashDeposit)
+            {
+                newJournal.AccountingEntityCode = "7"; // Cash Deposit
+            }
+            else
+            {
+                newJournal.AccountingEntityCode = "6"; // Cheque Deposit
+            }
+
+            int LineNumber = 0;
+
+
+            //Creating JournalLines for Cashbook Crediting
+            if (entityPM.IsCashDeposit)  //Cash Deposit
+            {
+
+                LineNumber++;
+                JournalLinePM newCreditJournalLine = new JournalLinePM();
+                newCreditJournalLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                newCreditJournalLine.Tenant = newJournal.Tenant;
+                newCreditJournalLine.Line = LineNumber;
+                newCreditJournalLine.ActionCode = "1"; //Credit
+                newCreditJournalLine.DueDate = entityPM.CreateDate;
+                newCreditJournalLine.LocalAmount = entityPM.LocalDepositAmount;
+                newCreditJournalLine.ForeignAmount = entityPM.ForeignAmount;
+                newCreditJournalLine.CurrencyId = entityPM.DepositCurrencyId;
+                newCreditJournalLine.DocumentDate = entityPM.CreateDate;
+                newCreditJournalLine.AccountingDate = entityPM.AccountingDate;
+                newCreditJournalLine.ExchangeRate = entityPM.LocalDepositAmount / entityPM.ForeignAmount;
+
+                newCreditJournalLine.CreditAccountId = cashBook.AccountId;
+                gLAccount = gLAccountQueryService.GetSingle(cashBook.AccountId, false, true);
+                if ((gLAccount != null) && (gLAccount.ControlAccountId != null))
+                {
+                    newCreditJournalLine.CreditControlAccountId = gLAccount.ControlAccountId;
+                }
+
+                newCreditJournalLine.Reference1 = entityPM.DepositNumber.ToString();
+
+
+                newJournal.JournalLines.Add(newCreditJournalLine);
+
+            }
+            else
+            {
+                foreach (BankDepositLinePM item in entityPM.BankDepositLines)
+                {
+                    CashBookLinePM cashBookLine = cashBook.CashBookLines.Where(d => d.ARPChequeId == item.ARPaymentChequeId).FirstOrDefault();
+                    ARPaymentChequePM cheque = arpChequeQueryService.GetSingle(item.ARPaymentChequeId, false, false);
+
+                    if (cashBook != null)
+                    {
+                        if (cashBookLine != null)
+                        {
+                            cashBookLine.IsDeposited = true;
+                            cashBookLine.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                    }
+
+                    LineNumber++;
+                    JournalLinePM newCreditJournalLine = new JournalLinePM();
+                    newCreditJournalLine.ChangeSetOp = ChangeSetOperation.Insert;
+                    newCreditJournalLine.Tenant = newJournal.Tenant;
+                    newCreditJournalLine.Line = LineNumber;
+                    newCreditJournalLine.ActionCode = "1"; //Credit
+                    newCreditJournalLine.DueDate = cheque.ValueDate;
+                    newCreditJournalLine.LocalAmount = item.LocalAmount;
+                    newCreditJournalLine.ForeignAmount = item.ForeignAmount;
+                    newCreditJournalLine.CurrencyId = entityPM.DepositCurrencyId;
+                    newCreditJournalLine.DocumentDate = cheque.ValueDate;
+                    newCreditJournalLine.AccountingDate = entityPM.AccountingDate;
+                    newCreditJournalLine.ExchangeRate = cheque.LocalAmount / cheque.ForeignAmount;
+
+                    newCreditJournalLine.CreditAccountId = cashBook.AccountId;
+                    gLAccount = gLAccountQueryService.GetSingle(cashBook.AccountId, false, true);
+                    if ((gLAccount != null) && (gLAccount.ControlAccountId != null))
+                    {
+                        newCreditJournalLine.CreditControlAccountId = gLAccount.ControlAccountId;
+                    }
+
+                    newCreditJournalLine.Reference1 = cheque.ChequeNumber;
+                    newCreditJournalLine.Reference2 = entityPM.DepositNumber.ToString();
+
+
+                    newJournal.JournalLines.Add(newCreditJournalLine);
+
+                    if (cheque != null)
+                    {
+                        cheque.StatusCode = (cheque.ValueDate > todayDateTime ? "2" : "3");  // 2-In Bank , 3-In Bank Account
+                        cheque.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        var myChequeUpdateService = new ARPaymentChequeUpdateService(_MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        myChequeUpdateService.Update(cheque, true);
+                    }
+                }
+            }
+
+
+            //Creating JournalLines For Bank Debiting
+            if (entityPM.IsCashDeposit)  //Cash Deposit
+            {
+
+                LineNumber++;
+                JournalLinePM newDebitJournalLine = new JournalLinePM();
+                newDebitJournalLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                newDebitJournalLine.Tenant = newJournal.Tenant;
+                newDebitJournalLine.Line = LineNumber;
+                newDebitJournalLine.ActionCode = "2"; //Debit
+                newDebitJournalLine.DocumentDate = entityPM.CreateDate;
+                newDebitJournalLine.AccountingDate = entityPM.AccountingDate;
+
+                newDebitJournalLine.DebitAccountId = bankAccount.GLAccountId;
+                gLAccount = gLAccountQueryService.GetSingle(bankAccount.GLAccountId, false, true); ///??????
+                if ((gLAccount != null) && (gLAccount.ControlAccountId != null))
+                {
+                    newDebitJournalLine.DebitControlAccountId = gLAccount.ControlAccountId;
+                }
+
+                newDebitJournalLine.DueDate = entityPM.CreateDate;
+                newDebitJournalLine.LocalAmount = entityPM.LocalDepositAmount;
+                newDebitJournalLine.ForeignAmount = entityPM.ForeignAmount;
+                newDebitJournalLine.CurrencyId = entityPM.DepositCurrencyId;
+                newDebitJournalLine.ExchangeRate = entityPM.LocalDepositAmount / entityPM.ForeignAmount;
+                newDebitJournalLine.Reference1 = entityPM.DepositNumber.ToString();
+
+                newJournal.JournalLines.Add(newDebitJournalLine);
+
+            }
+            else  //Deffe Deposit
+            {
+                foreach (BankDepositLinePM item in entityPM.BankDepositLines)
+                {
+                    ARPaymentChequePM cheque = arpChequeQueryService.GetSingle(item.ARPaymentChequeId, false, false);
+
+                    LineNumber++;
+                    JournalLinePM newDebitJournalLine = new JournalLinePM();
+                    newDebitJournalLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                    newDebitJournalLine.Tenant = newJournal.Tenant;
+                    newDebitJournalLine.Line = LineNumber;
+                    newDebitJournalLine.ActionCode = "2"; //Debit
+                    newDebitJournalLine.DueDate = cheque.ValueDate;
+                    newDebitJournalLine.LocalAmount = item.LocalAmount;
+                    newDebitJournalLine.ForeignAmount = item.ForeignAmount;
+                    newDebitJournalLine.CurrencyId = entityPM.DepositCurrencyId;
+                    newDebitJournalLine.DocumentDate = cheque.ValueDate;
+                    newDebitJournalLine.AccountingDate = entityPM.AccountingDate;
+                    newDebitJournalLine.Reference1 = cheque.ChequeNumber;
+                    newDebitJournalLine.Reference2 = entityPM.DepositNumber.ToString();
+                    newDebitJournalLine.ExchangeRate = cheque.LocalAmount / cheque.ForeignAmount;
+
+                    if (cheque.ValueDate <= todayDateTime)
+                    {
+                        newDebitJournalLine.DebitAccountId = bankAccount.GLAccountId;
+                    }
+                    else
+                    {
+                        newDebitJournalLine.DebitAccountId = bankAccount.DeferredGLAccountId;
+                    }
+
+                    gLAccount = gLAccountQueryService.GetSingle(newDebitJournalLine.DebitAccountId, false, true);
+                    if ((gLAccount != null) && (gLAccount.ControlAccountId != null))
+                    {
+                        newDebitJournalLine.DebitControlAccountId = gLAccount.ControlAccountId;
+                    }
+
+                    newJournal.JournalLines.Add(newDebitJournalLine);
+
+                    if (cheque != null)
+                    {
+                        cheque.StatusCode = (cheque.ValueDate > todayDateTime ? "2" : "3");  // 2-In Bank , 3-In Bank Account
+                        cheque.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        var myChequeUpdateService = new ARPaymentChequeUpdateService(_MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        myChequeUpdateService.Update(cheque, true);
+                    }
+                }
+            }
+            var myJournalUpdateService = new JournalUpdateService(_MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            myJournalUpdateService.Update(newJournal, true);
+
+
+            if (cashBook != null)
+            {
+                // update cashbook total sum
+                cashBook.TotalAmount = cashBook.TotalAmount - Math.Round(entityPM.ForeignAmount, 2); //- entityPM.LocalDepositAmount;
+
+                var myCashBookUpdateService = new CashBookUpdateService(_MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                myCashBookUpdateService.Update(cashBook, true);
+            }
+
+        }
+        #endregion
+
+        #region Others functions
 
         public virtual DateTime GetCurrentDateTime(int tenant)
         {
@@ -111,6 +364,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", myLoggedUser.Id);
             }
         }
+
+        #endregion
 
     }
 
