@@ -306,14 +306,20 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
 
                     if (button.EventCode == "Declaration Closure") {
-                        if (!this.EntityPM.IsClose) {
+                        if (this.EntityPM.IsClose) {
                             button.IsHidden = true;
+                        }
+                        else {
+                            button.IsHidden = false;
                         }
                     }
 
                     if (button.EventCode == "Cancel Declaration Closure") {
-                        if (this.EntityPM.IsClose) {
+                        if (!this.EntityPM.IsClose) {
                             button.IsHidden = true;
+                        }
+                        else {
+                            button.IsHidden = false;
                         }
                     }
 
