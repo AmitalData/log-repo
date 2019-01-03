@@ -354,8 +354,6 @@ export class BankAccountToRefundComponent
         currRequestParams.RequestVIA = customSendOptionsArgs.RequestVIA;
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.LoggingEntityId = this.declarationId;
-        currRequestParams.LoggingObjectTableId = "Customs.Declaration";
 
         currRequestParams.FileType = "2";//this.FileTypeCode;
         currRequestParams.FileNumber = this.FileNumber;
