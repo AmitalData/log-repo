@@ -530,7 +530,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 transactions = (from a in context.LedgerTransactions
                                                join g in context.GLAccounts on a.AccountId equals g.Id
                                                         join j in context.Journals on a.JournalId equals j.Id
-                                                        join jl in context.JournalLines on j.Id equals jl.JournalId
+                                                     
                                                         where a.DueDate >= fromDate && a.DueDate <= toDate && a.Tenant == tenant
                                                         select  new B100Data()
                                                         {
@@ -549,7 +549,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                             JournalLineNumber = a.JournalLineNumber,
                                                             JournalNumber = j.JournalNumber,
                                                             Notes = a.Notes,
-                                                            Reference2 = jl.Reference2,
+                                                            Reference2 = a.Reference2,
                                                             OppositGLAccount = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber:null,
                                                         }).ToList();
 
@@ -560,7 +560,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                  transactions = (from a in context.LedgerTransactions
                                                join g in context.GLAccounts on a.AccountId equals g.Id
                                                join j in context.Journals on a.JournalId equals j.Id
-                                                        join jl in context.JournalLines on j.Id equals jl.JournalId
+                                                     
                                                         where a.AccountingDate >= fromDate && a.AccountingDate <= toDate && a.Tenant == tenant
                                                         select new B100Data()
                                                         {
@@ -579,7 +579,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                             JournalLineNumber = a.JournalLineNumber,
                                                             JournalNumber = j.JournalNumber,
                                                             Notes = a.Notes,
-                                                            Reference2 = jl.Reference2,
+                                                            Reference2 = a.Reference2,
                                                             OppositGLAccount = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
                                                         }).ToList();
 
