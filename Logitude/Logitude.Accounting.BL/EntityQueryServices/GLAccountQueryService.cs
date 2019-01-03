@@ -22,6 +22,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.BL.CoreBL.Reports;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -784,7 +785,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(context, LTBFilter);
                         ledgerTransactionBalanceService.Run();
                        
-                        byVendorList.EndYearBalance = ledgerTransactionBalanceService.Response.EndBalanceLocal != null ? ledgerTransactionBalanceService.Response.EndBalanceLocal :0 ;
+                        byVendorList.EndYearBalance = Math.Round( (ledgerTransactionBalanceService.Response.EndBalanceLocal != null ? ledgerTransactionBalanceService.Response.EndBalanceLocal :0).Value,0 );
                         
                       
                     }
@@ -803,8 +804,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         byVendorList.IsInternationlPartner = selectedVendor.IsInternationalPartner;
                     byVendorList.VendorLocalName = selectedVendor.LocalName;
                 }
-                byVendorList.SumOfAmountInLocalCurrency = item.AmountInLocalCurrency;
-                byVendorList.SumOfTaxDeductionLocalAmount = item.TaxDeductionLocalAmount;
+                byVendorList.SumOfAmountInLocalCurrency = Math.Round(item.AmountInLocalCurrency.Value,0);
+                byVendorList.SumOfTaxDeductionLocalAmount = Math.Round(item.TaxDeductionLocalAmount.Value,0);
 
 
               
@@ -822,11 +823,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 ByMonthList byMonthList = new ByMonthList()
                 {
                     Month = month,
-                    TotalVendors = DBVendorsList.Where(d => d.RigesterDate.Value.Month == month).Count(),
-                    TotalPaymentsWithoutDivided = DBVendorsList.Where(d => d.RigesterDate.Value.Month == month && d.DeductionFileTypeCode != "18").Sum(d => d.AmountInLocalCurrency),
-                    TotalDeductionsWithoutDivided = DBVendorsList.Where(d => d.RigesterDate.Value.Month == month && d.DeductionFileTypeCode != "18").Sum(d => d.TaxDeductionLocalAmount),
-                    TotalDivided = DBVendorsList.Where(d => d.RigesterDate.Value.Month == month && d.DeductionFileTypeCode == "18").Sum(d => d.AmountInLocalCurrency),
-                    TotalDeductionsFromDivided = DBVendorsList.Where(d => d.RigesterDate.Value.Month == month && d.DeductionFileTypeCode == "18").Sum(d => d.TaxDeductionLocalAmount),
+                    TotalVendors =  DBVendorsList.Where(d => d.RigesterDate.Value.Month == month).Count(),
+                    TotalPaymentsWithoutDivided = Math.Round(DBVendorsList.Where(d => d.RigesterDate.Value.Month == month && d.DeductionFileTypeCode != "18").Sum(d => d.AmountInLocalCurrency).Value,0),
+                    TotalDeductionsWithoutDivided = Math.Round( DBVendorsList.Where(d => d.RigesterDate.Value.Month == month && d.DeductionFileTypeCode != "18").Sum(d => d.TaxDeductionLocalAmount).Value,0),
+                    TotalDivided = Math.Round(DBVendorsList.Where(d => d.RigesterDate.Value.Month == month && d.DeductionFileTypeCode == "18").Sum(d => d.AmountInLocalCurrency).Value,0),
+                    TotalDeductionsFromDivided = Math.Round(DBVendorsList.Where(d => d.RigesterDate.Value.Month == month && d.DeductionFileTypeCode == "18").Sum(d => d.TaxDeductionLocalAmount).Value,0),
                     ReportMonth = month + "." + reportYear,
                 };
 
@@ -844,17 +845,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             {
                 DeductionFileNumber = setting.DeductionFileNumber,
                 CompanyName = tenantPM.Company,
-                TotalDeductions = taxDeduction.ByVendorList.Sum(d => d.SumOfTaxDeductionLocalAmount),
-                TotalPayments = taxDeduction.ByVendorList.Sum(d => d.SumOfAmountInLocalCurrency),
+                TotalDeductions = Math.Round(taxDeduction.ByVendorList.Sum(d => d.SumOfTaxDeductionLocalAmount).Value,0),
+                TotalPayments = Math.Round(taxDeduction.ByVendorList.Sum(d => d.SumOfAmountInLocalCurrency).Value,0),
             };
             taxDeduction.TotalForCompany = new List<TotalForCompany>();
             taxDeduction.TotalForCompany.Add(companyTotal);
             taxDeduction.VendorsCount = DBVendorsList.GroupBy(d=> d.VendorId).Count();
-            taxDeduction.TotalAmountInLocalCurrency = DBVendorsList.Sum(d => d.AmountInLocalCurrency);
-            taxDeduction.TotalDeductionInLocalCurrency = DBVendorsList.Sum(d => d.TaxDeductionLocalAmount);
-            taxDeduction.TotalAmountInLocalCurrency08 = DBVendorsList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.AmountInLocalCurrency);
-            taxDeduction.TotalTaxDeductionInLocalCurrency08 = DBVendorsList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.TaxDeductionLocalAmount);
-            taxDeduction.TotalEndBalance = DBVendorsList.Sum(d => d.EndYearBalance);
+            taxDeduction.TotalAmountInLocalCurrency = Math.Round(DBVendorsList.Sum(d => d.AmountInLocalCurrency).Value,0);
+            taxDeduction.TotalDeductionInLocalCurrency = Math.Round(DBVendorsList.Sum(d => d.TaxDeductionLocalAmount).Value,0);
+            taxDeduction.TotalAmountInLocalCurrency08 = Math.Round(DBVendorsList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.AmountInLocalCurrency).Value,0);
+            taxDeduction.TotalTaxDeductionInLocalCurrency08 = Math.Round(DBVendorsList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.TaxDeductionLocalAmount).Value,0);
+            taxDeduction.TotalEndBalance = Math.Round(DBVendorsList.Sum(d => d.EndYearBalance).Value,0);
             return taxDeduction;
 
 
