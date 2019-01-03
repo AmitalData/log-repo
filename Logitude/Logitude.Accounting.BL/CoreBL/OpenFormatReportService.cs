@@ -219,7 +219,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
 
-                if (item.ForeignAmountDebit != null)
+                if (item.ForeignAmountDebit != 0)
                 {
                     var ForeignAmountDebit = "+" + item.ForeignAmountDebit;
 
@@ -421,7 +421,10 @@ namespace Logitude.Accounting.BL.CoreBL
                             myStringBuilder.Append("a" + partnerCode.PadLeft(15, ' '));
                         }
 
-
+                        else
+                        {
+                            myStringBuilder.Append(' ', 15);
+                        }
                     }
                     else
                     {
@@ -431,7 +434,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-                    myStringBuilder.Append(' ', 60);
+                    myStringBuilder.Append(' ', 143);
                 }
 
                 myStringBuilder.Append(' ', 15);

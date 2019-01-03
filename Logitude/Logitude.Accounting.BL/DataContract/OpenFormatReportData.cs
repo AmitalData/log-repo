@@ -31,8 +31,8 @@ namespace Logitude.Accounting.BL.DataContract
         public decimal LocalAmountDebit { get; set; }
         public string CurrencyId { get; set; }
         public decimal LocalAmountCredit { get; set; }
-        public decimal? ForeignAmountDebit { get; set; }
-        public decimal? ForeignAmountCredit { get; set; }
+        public decimal ForeignAmountDebit { get; set; }
+        public decimal ForeignAmountCredit { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreatedByUser { get; set; }
 
