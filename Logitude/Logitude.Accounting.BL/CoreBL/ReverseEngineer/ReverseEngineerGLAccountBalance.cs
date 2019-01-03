@@ -20,7 +20,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private readonly string const_DifftotBalanceInLocalCurrencyMinusaccBalanceInLocalCurrency= "Diff = tot.BalanceInLocalCurrency-acc.BalanceInLocalCurrency";
         private readonly string const_ThereIsntAnyGLAccountTotalByMonths= "There Isn't Any GLAccountTotalByMonths";
 
-        public ReverseEngineerGLAccountBalance(DateTime seedDate, int currTenant)
+        public ReverseEngineerGLAccountBalance(int currTenant)
         {
             // TODO: Complete member initialization
 

@@ -10,10 +10,15 @@ using Logitude.UnitTest.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using System.Linq;
+using Logitude.Server.Tools;
+using Logitude.BL.Interfaces;
+using Logitude.BL.Security;
+using Microsoft.Practices.Unity;
+
 namespace Logitude.UnitTest.Accounting.UniTests
 {
     [TestClass]
-    public class BankAccountValidateUpdateServiceUnitTest
+    public class BankAccountValidateUpdateServiceUnitTest:TestBase
     {
         [TestMethod]
         public void ValidateBankAccountExist_BankAccountExists_ReturnsValidationMessage()
@@ -1120,12 +1125,15 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
         private ContactPM GetLoggedContactInstance()
         {
-            string expectedLoggedUserId = "myUser";
-            ContactPM loggedcontact = new ContactPM()
-            {
-                Id = expectedLoggedUserId,
-                DontShowLocal = true,
-            };
+
+            ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "MockLoggedContactUtil", new ParameterOverride("", 1)) as ILoggedContactUtil;
+            ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(1);
+            //string expectedLoggedUserId = "myUser";
+            //ContactPM loggedcontact = new ContactPM()
+            //{
+            //    Id = expectedLoggedUserId,
+            //    DontShowLocal = true,
+            //};
 
             return loggedcontact;
         }

@@ -28,8 +28,12 @@
 
                                         <table>
                                             <tr>
-                                                <td><label>Activity Status</label></td>
-                                                <td><a style="font-size:x-small;float:right;margin-right:5px;text-decoration:underline" (click)="MoreDetails()">More Details</a></td>
+                                                <td>
+                                                    <label>Activity Status</label>
+                                                </td>
+                                                <td>
+                                                    <a style="font-size:x-small;float:right;margin-right:5px;text-decoration:underline" (click)="MoreDetails()">More Details</a>
+                                                </td>
                                                 <td style="width:5px"></td>
                                             </tr>
                                         </table>
@@ -63,7 +67,10 @@
                                                             <td style="width:120px">
                                                                 <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityFromDate" [ObjectTableName]="'Shipment'" [HideColumns]="true" [ObjectFieldName]="'ActivityFromDate'" [DataContext]="DataContext"></LogDatePicker>
                                                             </td>
-                                                            <td></td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
 
                                                             <td style="width:50px">Show:</td>
                                                             <td style="width:130px">
@@ -84,7 +91,7 @@
 
                                                 </td>
                                             </tr>
-                                                                                </table>
+                                        </table>
                                     </td>
                                 </tr>
 
@@ -121,7 +128,9 @@
 
                                         <table>
                                             <tr>
-                                                <td><label>Actual Vs Potential</label></td>
+                                                <td>
+                                                    <label>Actual Vs Potential</label>
+                                                </td>
 
                                                 <td></td>
 
@@ -167,7 +176,9 @@
                             <table>
                                 <tr class="SectionHeader">
                                     <td>
-                                        <div><label>Money Information</label></div>
+                                        <div>
+                                            <label>Money Information</label>
+                                        </div>
                                     </td>
                                 </tr>
 
@@ -175,7 +186,9 @@
                                     <td>
                                         <table>
                                             <tr>
-                                                <td style="height:10px"><div style="height:10px"></div></td>
+                                                <td style="height:10px">
+                                                    <div style="height:10px"></div>
+                                                </td>
                                             </tr>
                                             <tr style="height:1px">
                                                 <td style="vertical-align:top;height:1px">
@@ -245,7 +258,8 @@
                                                         <tr style="height:1px">
                                                             <td style="position:center;text-align:center;align-items:center;align-content:center;align-self:center">
 
-                                                                <label style="font-size:large;text-decoration:underline" class="QueryLink" (click)="ShowARPayments()"> {{ARPayments | NumbersPipe:'N2'}} </label><label style="color:grey;margin-left:auto">{{CurrencyCodeLocal}}</label>
+                                                                <label style="font-size:large;text-decoration:underline" class="QueryLink" (click)="ShowARPayments()"> {{ARPayments | NumbersPipe:'N2'}} </label>
+                                                                <label style="color:grey;margin-left:auto">{{CurrencyCodeLocal}}</label>
 
                                                                 <IconButton [Name]="'Add'" [IsSmall]="true" [Top]="'3px'" style="margin-left:4px;margin-top:2px;display:inline-block;vertical-align:central" (click)="NewARPayment()"></IconButton>
 

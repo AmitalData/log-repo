@@ -35,52 +35,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         protected override void OnCreating(BankDepositPM entityPM, EntityPM entityParentPM)
         {
-            ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-            ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("BankDeposit", 0, true);
 
-            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-
-            if (entityPM.Id == null || entityPM.Id == "") entityPM.Id = IdCounter.GetNumber("BankDeposit", entityPM.Tenant);
+            BankDepositOnCreatingService bankDepositOnCreatingService = new BankDepositOnCreatingService(currentContext);
+            bankDepositOnCreatingService.OnCreating(entityPM);
 
 
-            entityPM.UpdateDate = todayDateTime;
-            entityPM.CreateDate = todayDateTime;
-
-            ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
-            ContactRepository contactRep = new ContactRepository(commonContext);
-            string email = "";
-            if (AuthenticationUtil.IsAuthenticatedUserExists())
-            {
-                email = AuthenticationUtil.GetAuthenticatedUser();
-            }
-            else
-            {
-                email = "system@tenant" + entityPM.Tenant + ".com";
-            }
-            string myLoggedUserId = null;
-            Contact contact = contactRep.GetSingleContactByEmail(email, entityPM.Tenant);
-            if (contact != null)
-            {
-                myLoggedUserId = contact.Id;
-            }
-            entityPM.UpdatedByUserId = myLoggedUserId;
-            entityPM.CreatedByUserId = myLoggedUserId;
-
-            //entityPM.SearchFields = entityPM.CashBookName + "," + entityPM.DepositNumber + "," + entityPM.JournalNumber + "," + entityPM.DepositCurrencyCode;
-            
-
-            if (entityPM.DepositNumber == 0) entityPM.DepositNumber = CodeCounter.GetNumber("BankDeposit.DepositNumber", entityPM.Tenant);
-
-            foreach (BankDepositLinePM item in entityPM.BankDepositLines)
-            {
-                item.DepositId = entityPM.Id;
-            }
-            
-
-            if (myLoggedUserId != null)
-            {
-                ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", myLoggedUserId);
-            }
+           
         }
 
         protected override void OnUpdating(BankDepositPM entityPM)

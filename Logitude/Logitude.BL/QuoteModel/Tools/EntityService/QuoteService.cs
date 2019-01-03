@@ -918,11 +918,31 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                 this.CreateQuoteFollowUp(itemPM);
                                 followUpRepository.SubmitChanges();
 
+                                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                {
+                                    Tenant = tenant,
+                                    EventTypeCode = "QFCR",
+                                    UserId = this.loggedContact.Id,
+                                    EntityId = this.entityPM.Id,
+                                    ObjectTableName = "Quote",
+                                    Notes = itemPM.EventTypeFollowUpName,
+                                });
+
                                 if (itemPM.Done)
                                 {
                                     itemPM.Deleted = true;
                                     FollowUp follow = followUpRepository.GetSingleFollowUp(itemPM.Id, tenant);
                                     doneFollowUps.Add(follow);
+
+                                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                    {
+                                        Tenant = tenant,
+                                        EventTypeCode = "QFCM",
+                                        UserId = this.loggedContact.Id,
+                                        EntityId = this.entityPM.Id,
+                                        ObjectTableName = "Quote",
+                                        Notes = itemPM.EventTypeFollowUpName,
+                                    });
                                 }
 
                                 break;
@@ -961,6 +981,16 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                         this.DeleteQuoteFollowUp(itemPM);
                         followUpRepository.SubmitChanges();
+
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            Tenant = tenant,
+                            EventTypeCode = "QFCM",
+                            UserId = this.loggedContact.Id,
+                            EntityId = this.entityPM.Id,
+                            ObjectTableName = "Quote",
+                            Notes = itemPM.EventTypeFollowUpName,
+                        });
                     }
 
                     else

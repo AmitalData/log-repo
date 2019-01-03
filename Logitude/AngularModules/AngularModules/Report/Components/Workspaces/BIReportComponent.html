@@ -1,0 +1,89 @@
+<style type="text/css">
+    .ReportsSectionHead {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+    }
+
+    .ReportsSection:not(:first-child) {
+        margin-top: 10px;
+    }
+</style>
+
+
+<table>
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 300px;">
+                        <SearchBox (TextChanged)="SearchTextChanged($event)"></SearchBox>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <button style="width:120px;float:left;" class="Button" (click)="NewBIReportButtonClicked()">New BI Report</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr style="vertical-align:top;">
+        <td>
+            <div class="MediaFill">
+                <ScrollViewer>
+                    <div class="ReportsSection">
+                        <div class="ReportsSectionHead">BI Reports</div>
+                        <div class="ReportsSectionBody">
+                            <table>
+                                <tr>
+                                    <td style="float:left;">
+                                        <div *ngFor="let report of ItemsSource">
+                                            <table>
+                                                <tr>
+                                                    <td style="min-width: 250px;float:left;">
+                                                        <HyperlinkQuery (click)="ViewBIReportClicked(report)">{{report.Name}}</HyperlinkQuery>
+                                                    </td>
+                                                    <td style="width:10px;">
+                                                        <div></div>
+                                                    </td>
+                                                    <td style="width:20px;">
+                                                        <Hyperlink [FontSize]="12" (click)="EditBIReportClicked(report)">Edit</Hyperlink>
+                                                    </td>
+                                                    <td style="width:10px;">
+                                                        <div></div>
+                                                    </td>
+                                                    <td style="width:20px;">
+                                                        <Hyperlink [FontSize]="12" (click)="ExportToExcelClicked(report)">Export</Hyperlink>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </ScrollViewer>
+            </div>
+        </td>
+    </tr>
+
+</table>

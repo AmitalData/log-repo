@@ -49,7 +49,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string DocumentFilingInbox { get; set; }
 
         public string EmployeeGroupCustomFilter { get; set; }
-
+        public bool ShowLocalNameInLOV { get; set; }
         private List<string> groupId = new List<string>();
         public List<string> GroupId 
         {

@@ -112,8 +112,48 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return CustomerDepositionLists;
         }
 
-    
 
+        
+        public List<CustomerDepositionList> GetCustomerDepositionListsByCustomsShipperId(string customsShipperId, int tenant)
+        {
+            List<CustomerDepositionList> customerDepositionLists = (from a in repository.context.CustomerDepositions
+                                                                         where a.Tenant == tenant && a.CustomsShipperId == customsShipperId
+                                                                         select new CustomerDepositionList()
+                                                                         {
+                                                                             Tenant = a.Tenant,
+                                                                             Id = a.Id,
+                                                                             CustomsShipperId = a.CustomsShipperId,
+                                                                             DepositionNumber = a.DepositionNumber,
+                                                                             ValidityStartDate = a.ValidityStartDate,
+                                                                             ValidityEndDate = a.ValidityEndDate,
+                                                                             CreateDate = a.CreateDate,
+                                                                         }).OrderByDescending(d=>d.ValidityStartDate).ToList();
+
+            foreach (CustomerDepositionList item in customerDepositionLists)
+            {
+                string color = "Green";
+
+                if (item.ValidityEndDate!=null)
+                {
+                    var todayDate = DateTime.Now;
+
+                    if (item.ValidityEndDate <= todayDate)
+                    {
+                        color = "Red";
+                    }
+                    else if (todayDate.AddDays(30) > item.ValidityEndDate)
+                    {
+                        color = "Orange"; 
+                    }
+                }
+
+                item.ValidityEndDateColor = color;
+
+            }
+            
+
+            return customerDepositionLists;
+        }
 
     }
 }

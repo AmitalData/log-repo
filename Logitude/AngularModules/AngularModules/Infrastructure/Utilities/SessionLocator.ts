@@ -1,19 +1,16 @@
 import {ViewContainerRef} from '@angular/core';
 import {UserPM} from '../../Common/EntityPMs/UserPM';
 import {TenantPM} from '../../Common/EntityPMs/TenantPM';
-import {TenantManagementPM} from '../EntityPMs/TenantManagementPM';
 import {SessionComponent} from "../Components/Session/SessionComponent";
 import {AccountingSettingPM} from '../../Common/EntityPMs/AccountingSettingPM';
-import {CustomsInterfaceSettingPM} from '../../Common/EntityPMs/CustomsInterfaceSettingPM';
-import {AccountingSystemPM} from '../../Common/EntityPMs/AccountingSystemPM';
 import {VATTypesGroupPM} from '../../Common/EntityPMs/VATTypesGroupPM';
 import {HomeComponent} from "../Components/HomeComponent/HomeComponent";
 import {ExternalParams} from './ExternalParams';
 import { LocalStorageManager } from './LocalStorageManager';
 import { SignalRChannelService } from '../Services/SignalRServices/SignalRChannelService';
 import {SATInterfaceSettingPM} from '../../Invoice/EntityPMs/SATInterfaceSettingPM';
-import { AmitalGatewayUtil } from './AmitalGatewayUtil'
-import {Http, Headers, Response} from '@angular/http';
+import {Http} from '@angular/http';
+import { TenantManagementJS } from '../DataContracts/TenantManagementJS';
 
 export class SessionLocator {
     public static Http: Http;    
@@ -39,7 +36,7 @@ export class SessionLocator {
     public static UserIcons: { [UserId: string]: Array<string>; } = {};    
     public static BlockType: string = null;
     public static TenantPM: TenantPM;
-    public static TenantManagementPM: TenantManagementPM;
+    public static TenantManagementJS: TenantManagementJS;
     public static AccountingSettingPM: AccountingSettingPM;
     public static AllVatTypesGroups: VATTypesGroupPM[] = [];    
     public static AccountingSystemPM: any;

@@ -438,7 +438,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     }
                 }
 
-                if (!string.IsNullOrEmpty(objectFieldDetails.ListFieldLable) && (objectFieldDetails.DisplayInList || objectFieldDetails.DisplayInSearchWindowList || objectFieldDetails.DisplayOnLookUp))
+                if (!string.IsNullOrEmpty(objectFieldDetails.ListFieldLable) && (objectFieldDetails.DisplayInList || objectFieldDetails.DisplayInSearchWindowList || objectFieldDetails.DisplayOnLookUp || objectFieldDetails.DisplayOnLookUpLocal))
                 {
                     if (!tenantZeroTextCodes.Keys.Contains(objectFieldDetails.ObjectTableName + ".CH." + objectFieldDetails.ListFieldLable))
                     {
@@ -471,6 +471,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.ControlField3 = objectFieldDetails.ControlField3;
                 newObjectField.DataTypeCode = objectFieldDetails.FieldsDataType;
                 newObjectField.DisplayOnLookUp = objectFieldDetails.DisplayOnLookUp;
+                newObjectField.DisplayOnLookUpLocal = objectFieldDetails.DisplayOnLookUpLocal;
                 newObjectField.FullNameTextCodeId = objectFieldTextCode.Id;
                 newObjectField.FieldName = objectFieldDetails.FieldName;
                 newObjectField.Code = objectFieldDetails.Code;
@@ -628,6 +629,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.AutomaticField = objectFieldDetails.AutomaticField;
                 updatedObjectField.UniqueField = objectFieldDetails.UniqueField;
                 updatedObjectField.DisplayOnLookUp = objectFieldDetails.DisplayOnLookUp;
+                updatedObjectField.DisplayOnLookUpLocal = objectFieldDetails.DisplayOnLookUpLocal;
                 updatedObjectField.DisplayInSearchWindowFiltersIndex = objectFieldDetails.DisplayInSearchWindowFiltersIndex;
                 updatedObjectField.DisplayInSearchWindowListIndex = objectFieldDetails.DisplayInSearchWindowListIndex;
                 updatedObjectField.IsMulti = objectFieldDetails.IsMulti;
@@ -812,7 +814,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     }
                 }
 
-                if (objectFieldDetails.ListFieldLable != null && (objectFieldDetails.DisplayInList || objectFieldDetails.DisplayOnLookUp || objectFieldDetails.DisplayInSearchWindowList))
+                if (objectFieldDetails.ListFieldLable != null && (objectFieldDetails.DisplayInList || objectFieldDetails.DisplayOnLookUp || objectFieldDetails.DisplayOnLookUpLocal || objectFieldDetails.DisplayInSearchWindowList))
                 {
 
                     if (tenantZeroTextCodes.Keys.Contains(objectFieldDetails.ObjectTableName + ".CH." + objectFieldDetails.ListFieldLable + objectFieldDetails.Tenant + objectFieldDetails.ObjectTableId))

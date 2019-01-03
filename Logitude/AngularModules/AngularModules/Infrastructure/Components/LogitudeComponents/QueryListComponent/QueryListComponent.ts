@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 
 import {Component, OnInit, EventEmitter, Output, AfterViewInit, ChangeDetectorRef} from '@angular/core';
@@ -443,7 +443,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
                         this.myAdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
                     }
                     this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
-                    this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenant(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId).subscribe(myResult => {
+                    this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, Item.Id).subscribe(myResult => {
                         if (myResult == null) {
                             this.AdvancedQueryFilterPMs = [];
                         }

@@ -54,6 +54,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     get IsNegativeAmountEnabled() { return this.EnableNegativeOffsetARPayments == true && this.AccountingPaymentMethodCode == "FS" ? true : false; }
     public isRTL: boolean = false;
     public ARPaymentChequeStatus = "";
+    public ARPaymentChequeStatusColor = "black";
 
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
         super();
@@ -81,14 +82,14 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.DisplaySATSettings = true;
         }
 
-        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARPaymentEditExchangeRate")) {
+        if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
-
+        
         this.SetUIProperties();
         this.ComputeRelativeRateDate();
         this.Listen();
-
+        this.CheckARPaymentCashBook();
         if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
             this.LoadCurrencyRates();
         }
@@ -208,10 +209,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, true);
             }
         }
-
-    }
-
-  
+    } 
     
     SetUIProperties_Invoices() {
         if (!this.IsScreenEnabled) {
@@ -242,17 +240,19 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
 
         else {
-            this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, true);
-            this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, true);
+            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARPaymentEditExchangeRate")) {
+                this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, true);
+                this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, true);
 
-            if (this.EntityPM.PaymentInvoices.length > 0) {
-                this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
-            }
+                if (this.EntityPM.PaymentInvoices.length > 0) {
+                    this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+                    this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
+                }
 
-            if (this.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId) {
-                this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
+                if (this.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId) {
+                    this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+                    this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
+                }
             }
         }
     }
@@ -264,6 +264,15 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
             service.GetStatusOfARPaymentCheques(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse != null && !myResponse.HasError) {
                     this.ARPaymentChequeStatus = myResponse.Result;
+                    if (this.ARPaymentChequeStatus == "בקופה" || this.ARPaymentChequeStatus == "משמרת" || this.ARPaymentChequeStatus == "הופקד- טרם נפרע") {
+                        this.ARPaymentChequeStatusColor = "orange";
+                    }
+                    else if (this.ARPaymentChequeStatus == "הוחזר ללקוח") {
+                        this.ARPaymentChequeStatusColor = "red";
+                    }
+                    else if (this.ARPaymentChequeStatus == "נפרע") {
+                        this.ARPaymentChequeStatusColor = "green";
+                    }
                 }
             });
         }
@@ -941,7 +950,9 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
                             this.BranchGLAccountNumber = data.AccountNumber;
                             this.BranchGLAccountId = data.AccountId;
                             this.IsCashBookValid = true;
-                            this.EntityPM.CashbookId = data.Id;
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.CashbookId)) {
+                                this.EntityPM.CashbookId = data.Id;
+                            }
                             this.UIProperties.SetValidity("BranchId", this.ObjectTableName, true, "");
                         }
                         else {

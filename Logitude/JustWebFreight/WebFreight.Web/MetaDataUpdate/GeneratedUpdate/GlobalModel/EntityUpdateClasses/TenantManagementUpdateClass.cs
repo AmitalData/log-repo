@@ -3098,130 +3098,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "FWBVersion",
-					  						OldFieldName =  "FWBVersion",
-					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  3,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "FWBVersion",
-					  						ListPropertyPath =  "FWBVersion",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "TenantManagement",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						Code =  "FWBVersion",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "FWBVersion",
-					  						DefaultText =  @"FWB Version",
-					  						ListFieldLable =  "FWBVersionListLable",
-					  						ListLableDefaultText =  @"FWBVersion",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						HelpTextCode =  "FWBVersion",
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "FHLVersion",
-					  						OldFieldName =  "FHLVersion",
-					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  3,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "FHLVersion",
-					  						ListPropertyPath =  "FHLVersion",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "TenantManagement",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						Code =  "FHLVersion",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "FHLVersion",
-					  						DefaultText =  @"FHL Version",
-					  						ListFieldLable =  "FHLVersionListLable",
-					  						ListLableDefaultText =  @"FHLVersion",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						HelpTextCode =  "FHLVersion",
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
 					 						FieldName =  "IsSystemSupportEnabled",
 					  						OldFieldName =  "IsSystemSupportEnabled",
 					  						ObjectTableName =  "TenantManagement",
@@ -7338,12 +7214,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsINTTRAOnlyDemo",
+					  						OldFieldName =  "IsINTTRAOnlyDemo",
+					  						ObjectTableName =  "TenantManagement",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsINTTRAOnlyDemo",
+					  						ListPropertyPath =  "IsINTTRAOnlyDemo",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "TenantManagement",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsINTTRAOnlyDemo",
+					  						DefaultText =  @"Is INTTRA only Demo",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup TenantManagementQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TNTS", Name = "Tenants" }, queryGroupRepository);
 						QueryGroup TenantManagementQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "678c", Name = " Query Group" }, queryGroupRepository);
@@ -7375,7 +7307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_0.Id, Code = "All Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 0, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_0.Id, Code = "All Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 0, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -7403,7 +7335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
   
 	      
 
-			  Query InactiveTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_1.Id, Code = "Inactive Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 1, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query InactiveTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_1.Id, Code = "Inactive Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 1, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn InactiveTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -7434,7 +7366,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
   
 	      
 
-			  Query TrialTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_2.Id, Code = "Trial Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 2, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_2.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query TrialTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_2.Id, Code = "Trial Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 2, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_2.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn TrialTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -7459,7 +7391,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
   
 	      
 
-			  Query PayingTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_3.Id, Code = "Paying Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 3, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_3.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query PayingTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_3.Id, Code = "Paying Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 3, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_3.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn PayingTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -7484,7 +7416,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
   
 	      
 
-			  Query NotRecuringTenantsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_4.Id, Code = "Not Recuring Tenants",  QueryGroupCode = "TNTS", IndexOrder = 4, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_4.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query NotRecuringTenantsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_4.Id, Code = "Not Recuring Tenants",  QueryGroupCode = "TNTS", IndexOrder = 4, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_4.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn NotRecuringTenantsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -7568,24 +7500,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   Feature TenantManagementConnectedAirlinesFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONNECTEDAIRLINES", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.ConnectedAirlines", NameTextCodeDefaultText = "Connected Airlines", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGGC",HtmlComponentName = "TenantManagementGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/TenantManagementGeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.EditTenantManagementControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGGC",HtmlComponentName = "TenantManagementGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/TenantManagementGeneralTabComponent", FeatureId = TenantManagementGeneralFeature_TH0.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.EditTenantManagementControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGCH",HtmlComponentName = "CCSSettingsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/CCSSettingsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "CCSSettings" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementChampTabControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.CCSSettings" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGCH",HtmlComponentName = "CCSSettingsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/CCSSettingsTabComponent", FeatureId = TenantManagementCCSSettingsFeature_TH1.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementChampTabControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementCCSSettingsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGST",HtmlComponentName = "TenantManagementStatisticsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/TenantManagementStatisticsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "STATISTICS" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementStatisticsControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.Statistics" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGST",HtmlComponentName = "TenantManagementStatisticsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/TenantManagementStatisticsTabComponent", FeatureId = TenantManagementStatisticsFeature_TH2.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementStatisticsControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementStatisticsTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGMS",HtmlComponentName = "",HtmlComponentUrl = "./ShipmentModules/ShipmentStock/Components/Maintenance/TenantManagementAWBStockTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "AWB.MESSAGING.STOCK" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementAWBMessagingStockControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.AWBMessagingStock" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGMS",HtmlComponentName = "",HtmlComponentUrl = "./ShipmentModules/ShipmentStock/Components/Maintenance/TenantManagementAWBStockTabComponent", FeatureId = TenantManagementAWBMessagingStockFeature_TH3.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementAWBMessagingStockControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementAWBMessagingStockTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGSU",HtmlComponentName = "SupportTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/SupportTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "Support" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.SupportTabControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.Support" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGSU",HtmlComponentName = "SupportTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/SupportTabComponent", FeatureId = TenantManagementSupportFeature_TH4.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.SupportTabControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementSupportTextCode_TH4.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGBR",HtmlComponentName = "BrandingTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/BrandingTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "Branding" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.Branding" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGBR",HtmlComponentName = "BrandingTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/BrandingTabComponent", FeatureId = TenantManagementBrandingFeature_TH5.Id, ControlPath = "", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementBrandingTextCode_TH5.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TenantManagementEventsFeature_TH6.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementEventsTextCode_TH6.Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGCA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "CONNECTEDAIRLINES" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementConnectedAirlinesControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.ConnectedAirlines" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGCA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TenantManagementConnectedAirlinesFeature_TH7.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementConnectedAirlinesControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementConnectedAirlinesTextCode_TH7.Id, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -7919,7 +7851,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable TenantManagementObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantManagement" && d.Tenant == 0).FirstOrDefault();       
     
 			   Feature TenantManagementFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TenantManagement.Action.EraseData", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.EraseData", NameTextCodeDefaultText = "Erase Data", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

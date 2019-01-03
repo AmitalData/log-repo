@@ -72,6 +72,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //   Debit Customer Credit Cashbook - See here
             //   Refresh the page
 
+            bool isValid = CheckCheque(arpChequeId, tenant);
+            if (!isValid) return;
 
             if (returnType == "Cashbook")
             {
@@ -83,13 +85,43 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //
             else if (returnType == "Customer")
             {
-                ReturnChequeToCustomer(bankDepositId, arpChequeId, notes, tenant);
+                throw new ApplicationException("Cannot return cheque to customer right now!"); // due to a task for that
+                //ReturnChequeToCustomer(bankDepositId, arpChequeId, notes, tenant);
             }
 
 
 
 
+
+
         }
+
+        private bool CheckCheque(string arpChequeId, int tenant)
+        {
+            bool isValid = true;
+            bool showLocal = false;
+
+            //show local 
+            ContactPM loggedContact = GetLoggedContact(tenant);
+            if(loggedContact != null) showLocal = !loggedContact.DontShowLocal;
+
+            //get cheque
+            ARPaymentChequeQueryService aRPaymentChequeQuery = new ARPaymentChequeQueryService(tenant);
+            ARPaymentChequePM cheque = aRPaymentChequeQuery.GetSingle(arpChequeId, false, false);
+            if(cheque != null)
+            {
+
+                // Check reedemed cheuqe , Task 44667: Deposits: New validation before out of deposit action
+                if (cheque.StatusCode == "6") // 6- redemmed
+                {
+                    isValid = false;
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.RedeemedChequeMSG", tenant, showLocal));
+                }
+            }
+
+            return isValid;
+        }
+
         private void ReturnChequeToCashbook(string bankDepositId, string arpChequeId, string notes, int tenant)
         {
             if (bankDepositId == null || arpChequeId == null) throw new ApplicationException("Some fields are missing! check bankDepositId, arpChequeId");
@@ -581,6 +613,19 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             journalUpdateService.Update(journalPM, true);
         }
 
+        public void CancelDeposit(string bankDepositId, int tenant)
+        {
+
+            if (bankDepositId == null) throw new ApplicationException("No bankDepositId to cancel!!!");
+
+            //get entity
+            BankDepositPM depositPM = GetSingle(bankDepositId, true, false);
+
+            //update
+            depositPM.ChangeSetOp = ChangeSetOperation.Update;
+            BankDepositUpdateService depositUpdateService = new BankDepositUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            depositUpdateService.Update(depositPM, true);
+        }
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
 

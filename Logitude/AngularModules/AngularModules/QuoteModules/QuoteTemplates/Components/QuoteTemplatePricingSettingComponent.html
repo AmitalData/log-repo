@@ -9,7 +9,7 @@
                         <ul style="margin-left: 2px;">
                             <li [class.Selected]="SelectedTabCode == 'PRT'" (click)="SelectedTabCode = 'PRT'" style="margin-left:2px;">
                                 <div style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
-                                    <span>Pricing Table</span>
+                                    <span>{{'QuoteTemplate.S.PricingTable' | TextCodeTranslationPipe}}</span>
                                 </div>
                             </li>
 
@@ -17,7 +17,7 @@
                                 <div class="InnerChild" style="color:black;width:150px">
 
                                     <div style="width:150px;text-align:left;font-size:11px;color:black" class="InnerChild">
-                                        <span>Pricing Table Design</span>
+                                        <span>{{'QuoteTemplate.S.PricingTableDesign' | TextCodeTranslationPipe}}</span>
                                     </div>
                                 </div>
                             </li>
@@ -56,7 +56,7 @@
                                                                             <table>
                                                                                 <tr>
                                                                                     <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                                    <td style="width:50px;"><div style="width:50px;font-size:14px;color:gray">Pricing Table</div></td>
+                                                                                    <td style="width:50px;"><div style="width:50px;font-size:14px;color:gray">{{'QuoteTemplate.S.PricingTable' | TextCodeTranslationPipe}}</div></td>
                                                                                     <td></td>
 
                                                                                 </tr>
@@ -83,7 +83,7 @@
                                                                                 <td>
                                                                                     <div class="CheckBox">
                                                                                         <input [(ngModel)]="ShowTitlePricing" class="LeftCenter" style="text-align:center" [attr.id]="ShowTitlePricingKey" type="checkbox" />
-                                                                                        <label style="color:black;margin-top:-3px" class="LeftCenter" [attr.for]="ShowTitlePricingKey">Show Title</label>
+                                                                                        <label style="color:black;margin-top:-3px" class="LeftCenter" [attr.for]="ShowTitlePricingKey">{{'QuoteTemplate.S.ShowTitle' | TextCodeTranslationPipe}} </label>
                                                                                     </div>
                                                                                 </td>
 
@@ -95,7 +95,7 @@
                                                                                 <td>
                                                                                     <div class="CheckBox">
                                                                                         <input [(ngModel)]="ShowPricesTable" class="LeftCenter" style="text-align:center" [attr.id]="ShowPricesTableKey" type="checkbox" />
-                                                                                        <label style="color:black" class="LeftCenter" [attr.for]="ShowPricesTableKey">Show Prices Table</label>
+                                                                                        <label style="color:black" class="LeftCenter" [attr.for]="ShowPricesTableKey">{{'QuoteTemplate.S.ShowPricesTable' | TextCodeTranslationPipe}}</label>
                                                                                     </div>
                                                                                 </td>
 
@@ -116,7 +116,7 @@
                                                                                                         <td>
                                                                                                             <div class="CheckBox">
                                                                                                                 <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowChargeCode" class="LeftCenter" style="text-align:center" [attr.id]="ShowChargeCodeKey" type="checkbox" />
-                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowChargeCodeKey">Show Charge Code</label>
+                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowChargeCodeKey">{{'QuoteTemplate.S.ShowChargeCode' | TextCodeTranslationPipe}}</label>
                                                                                                             </div>
                                                                                                         </td>
 
@@ -128,7 +128,7 @@
                                                                                                         <td>
                                                                                                             <div class="CheckBox">
                                                                                                                 <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowChargeName" class="LeftCenter" style="text-align:center" [attr.id]="ShowChargeNameKey" type="checkbox" />
-                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowChargeNameKey">Show Charge Name</label>
+                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowChargeNameKey">{{'QuoteTemplate.S.ShowChargeName' | TextCodeTranslationPipe}} </label>
                                                                                                             </div>
                                                                                                         </td>
 
@@ -142,7 +142,7 @@
                                                                                                         <td>
                                                                                                             <div class="CheckBox">
                                                                                                                 <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowMeasurement" class="LeftCenter" style="text-align:center" [attr.id]="ShowMeasurementKey" type="checkbox" />
-                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowMeasurementKey">Show Measurement</label>
+                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowMeasurementKey">{{'QuoteTemplate.S.ShowMeasurement' | TextCodeTranslationPipe}}</label>
                                                                                                             </div>
                                                                                                         </td>
 
@@ -184,7 +184,7 @@
                                                                                                         <td>
                                                                                                             <div class="CheckBox">
                                                                                                                 <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowSaleCurrencyColumn" class="LeftCenter" style="text-align:center" [attr.id]="ShowSaleCurrencyColumnKey" type="checkbox" />
-                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowSaleCurrencyColumnKey">Show Sale Currency Column</label>
+                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowSaleCurrencyColumnKey">{{'QuoteTemplate.S.ShowSaleCurrencyColumn' | TextCodeTranslationPipe}} </label>
                                                                                                             </div>
                                                                                                         </td>
                                                                                                     </tr>
@@ -196,7 +196,7 @@
                                                                                                         <td>
                                                                                                             <div class="CheckBox">
                                                                                                                 <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowLocalCurrencyColumn" class="LeftCenter" style="text-align:center" [attr.id]="ShowLocalCurrencyColumnKey" type="checkbox" />
-                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowLocalCurrencyColumnKey">Show Local Currency Column</label>
+                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowLocalCurrencyColumnKey">{{'QuoteTemplate.S.ShowLocalCurrencyColumn' | TextCodeTranslationPipe}} </label>
                                                                                                             </div>
                                                                                                         </td>
 
@@ -209,7 +209,7 @@
                                                                                                         <td>
                                                                                                             <div class="CheckBox">
                                                                                                                 <input [disabled]="!ShowPricesTable"  [(ngModel)]="ShowChargeDescription"  class="LeftCenter" style="text-align:center" [attr.id]="ShowChargeDescriptionKey" type="checkbox" />
-                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowChargeDescriptionKey">Show Charge Description</label>
+                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowChargeDescriptionKey">{{'QuoteTemplate.S.ShowChargeDescription' | TextCodeTranslationPipe}}</label>
                                                                                                             </div>
                                                                                                         </td>
 
@@ -222,7 +222,7 @@
                                                                                                         <td>
                                                                                                             <div class="CheckBox">
                                                                                                                 <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowChargeNoteColumn" class="LeftCenter" style="text-align:center" [attr.id]="ShowChargeNoteColumnKey" type="checkbox" />
-                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowChargeNoteColumnKey">Show Charge Note</label>
+                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowChargeNoteColumnKey">{{'QuoteTemplate.S.ShowChargeNote' | TextCodeTranslationPipe}}</label>
                                                                                                             </div>
 
                                                                                                          
@@ -236,7 +236,7 @@
                                                                                                         <td>
                                                                                                             <div class="CheckBox">
                                                                                                                 <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowSaleMaxMinAmountColumn" class="LeftCenter" style="text-align:center" [attr.id]="ShowSaleMaxMinAmountColumnKey" type="checkbox" />
-                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowSaleMaxMinAmountColumnKey">Show Sale Min/Max</label>
+                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowSaleMaxMinAmountColumnKey">{{'QuoteTemplate.S.ShowSaleMinMax' | TextCodeTranslationPipe}} </label>
                                                                                                             </div>
 
 
@@ -265,7 +265,7 @@
                                                                                 <td>
                                                                                     <div class="CheckBox">
                                                                                         <input [(ngModel)]="SplitChargesbyGroups" class="LeftCenter" style="text-align:center" [attr.id]="SplitChargesbyGroupsKey" type="checkbox" />
-                                                                                        <label style="color:black" class="LeftCenter" [attr.for]="SplitChargesbyGroupsKey">Split by charge group</label>
+                                                                                        <label style="color:black" class="LeftCenter" [attr.for]="SplitChargesbyGroupsKey">{{'QuoteTemplate.S.Splitbychargegroup' | TextCodeTranslationPipe}} </label>
                                                                                     </div>
                                                                                 </td>
 
@@ -283,7 +283,7 @@
                                                                                             <td >
                                                                                                 <div *ngIf="SplitChargesbyGroups" class="CheckBox">
                                                                                                     <input  [disabled]="!ShowSaleCurrencyColumn" [(ngModel)]="ShowTotalPerChargeGroup" class="LeftCenter" style="text-align:center" [attr.id]="ShowTotalPerChargeGroupKey" type="checkbox" />
-                                                                                                    <label style="color:black" class="LeftCenter" [attr.for]="ShowTotalPerChargeGroupKey">Show Total Per Charge Group</label>
+                                                                                                    <label style="color:black" class="LeftCenter" [attr.for]="ShowTotalPerChargeGroupKey">{{'QuoteTemplate.S.ShowTotalPerChargeGroup' | TextCodeTranslationPipe}} </label>
                                                                                                 </div>
                                                                                             </td>
 
@@ -333,7 +333,7 @@
                                                                             <table>
                                                                                 <tr>
                                                                                     <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                                    <td style="width:50px;"><div style="width:50px;">Totals</div></td>
+                                                                                    <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.Totals' | TextCodeTranslationPipe}}</div></td>
                                                                                     <td></td>
                                                                                 </tr>
                                                                             </table>
@@ -351,7 +351,7 @@
                                                                                 <td>
                                                                                     <div class="CheckBox">
                                                                                         <input [(ngModel)]="ShowTotalInLocalCurrency" class="LeftCenter" style="text-align:center" [attr.id]="ShowTotalInLocalCurrencyKey" type="checkbox" />
-                                                                                        <label style="color:black" class="LeftCenter" [attr.for]="ShowTotalInLocalCurrencyKey">Show Total In Local Currency</label>
+                                                                                        <label style="color:black" class="LeftCenter" [attr.for]="ShowTotalInLocalCurrencyKey">{{'QuoteTemplate.S.ShowTotalInLocalCurrency' | TextCodeTranslationPipe}} </label>
                                                                                     </div>
                                                                                 </td>
 
@@ -363,7 +363,7 @@
                                                                                 <td>
                                                                                     <div class="CheckBox">
                                                                                         <input [(ngModel)]="ShowTotalInSaleCurrency" class="LeftCenter" style="text-align:center" [attr.id]="ShowTotalInSaleCurrencyKey" type="checkbox" />
-                                                                                        <label style="color:black" class="LeftCenter" [attr.for]="ShowTotalInSaleCurrencyKey">Show Total In Sale Currency</label>
+                                                                                        <label style="color:black" class="LeftCenter" [attr.for]="ShowTotalInSaleCurrencyKey">{{'QuoteTemplate.S.ShowTotalInSaleCurrency' | TextCodeTranslationPipe}}</label>
                                                                                     </div>
                                                                                 </td>
 
@@ -412,7 +412,7 @@
                                                                             <table>
                                                                                 <tr>
                                                                                     <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                                    <td style="width:50px;"><div style="width:50px;font-size:14px;color:gray">Quote Labels</div></td>
+                                                                                    <td style="width:50px;"><div style="width:50px;font-size:14px;color:gray">{{'QuoteTemplate.S.QuoteLabels' | TextCodeTranslationPipe}} </div></td>
                                                                                     <td></td>
 
                                                                                 </tr>
@@ -434,7 +434,7 @@
 
 
 
-                                                                                <log-column [width]="'255'" [header]="'English Label'">
+                                                                                <log-column [width]="'255'" [header]="'QuoteTemplate.S.EnglishLabel' | TextCodeTranslationPipe">
                                                                                     <log-cell-template template="let item" #logcelltemplate>
 
                                                                                         <table>
@@ -474,7 +474,7 @@
 
 
 
-                                                                                <log-column [width]="'255'" [header]="'Local Label'">
+                                                                                <log-column [width]="'255'" [header]="'QuoteTemplate.S.LocalLabel' | TextCodeTranslationPipe"  >
                                                                                     <log-cell-template template="let item" #logcelltemplate>
 
 
@@ -532,7 +532,7 @@
                                                 <!--Totals-->
                                                 <tr *ngIf="QuoteTemplateSettingPM && QuoteTemplateSettingPM.TotalPerContainersTableDesignId && QuoteTemplateSectionTypeName!='Packages'" style="height:80px">
                                                     <td style="vertical-align:central;height:90px">
-                                                   <a class="Link" style="margin-left:10px;font-size:13px;" (click)="ShowTotalPerContainer()">Total Per Container Settings</a>
+                                                   <a class="Link" style="margin-left:10px;font-size:13px;" (click)="ShowTotalPerContainer()">{{'QuoteTemplate.S.TotalPerContainerSettings' | TextCodeTranslationPipe}} </a>
                                                     </td>
                                                 </tr>
 
@@ -582,7 +582,7 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                        <td style="width:50px;"><div style="width:50px;">Table Design</div></td>
+                                                                        <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.TableDesign' | TextCodeTranslationPipe}} </div></td>
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>
@@ -652,7 +652,7 @@
                                                                             <table>
                                                                                 <tr>
                                                                                     <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                                    <td style="width:50px;"><div style="width:50px;">Group by Desgin</div></td>
+                                                                                    <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.GroupbyDesign' | TextCodeTranslationPipe}} </div></td>
                                                                                     <td></td>
                                                                                 </tr>
                                                                             </table>
@@ -708,7 +708,7 @@
                                                                             <table>
                                                                                 <tr>
                                                                                     <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                                    <td style="width:50px;"><div style="width:50px;">Totals Desgin</div></td>
+                                                                                    <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.TotalsDesign' | TextCodeTranslationPipe}} </div></td>
                                                                                     <td></td>
                                                                                 </tr>
                                                                             </table>
@@ -784,7 +784,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        <button class="Button" (click)="CloseButtonClicked()">{{'QuoteTemplate.B.Cancel' | TextCodeTranslationPipe}} </button>
                     </td>
 
                     <td style="width: 5px;">
@@ -792,7 +792,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()">Save</button>
+                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
                     </td>
                 </tr>
             </table>

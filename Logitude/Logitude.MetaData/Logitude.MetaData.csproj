@@ -378,6 +378,9 @@
     <None Include="EntityFiles\GlobalModel\AnalyzeQueue.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\GlobalModel\WebhookKeys.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\GlobalModel\ApiCredintials.lxml" />
     <None Include="EntityFiles\GlobalModel\AWBMessagesCCSType.lxml" />
     <None Include="EntityFiles\GlobalModel\BatchServicesDefinition.lxml">
@@ -403,7 +406,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\GlobalModel\TenantType.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\APILogs.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\APILogs.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\InfrastructureModel\BusinessHour.lxml" />
     <None Include="EntityFiles\InfrastructureModel\BusinessHoursHoliday.lxml">
       <SubType>Designer</SubType>

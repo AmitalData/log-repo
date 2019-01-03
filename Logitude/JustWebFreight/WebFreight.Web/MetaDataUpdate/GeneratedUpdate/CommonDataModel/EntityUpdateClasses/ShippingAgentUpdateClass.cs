@@ -115,6 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ClientModuleName =  "Common",
 			      				    NewWizardComponentPath =  "./CommonModules/CommonPartners/Components/NewEntity/NewShippingAgentComponent",
 			      				    Code =  "SAGT",
+			      				    DescriptionDefaultText =  "Add and manage information about shipping agents in your country that handle shipments at ports on behalf of ocean carriers. Specify communication, address and billing details, and create list of contacts.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

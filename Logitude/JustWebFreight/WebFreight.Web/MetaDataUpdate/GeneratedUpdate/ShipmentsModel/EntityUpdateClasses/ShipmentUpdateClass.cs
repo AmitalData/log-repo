@@ -9886,7 +9886,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BookingConfirmationNumber",
-					  						DefaultText =  @"Confirmation",
+					  						DefaultText =  @"Booking Conf #",
 					  						ListFieldLable =  "BookingConfirmationNumberListLable",
 					  						ListLableDefaultText =  @"Booking Conf #",
 					  						IsMaxLength =  false,
@@ -10074,7 +10074,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FreightPrepaidCollectId",
-					  						DefaultText =  @"Freight PC",
+					  						DefaultText =  @"Freight P/C",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -10138,7 +10138,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OtherPrepaidCollectId",
-					  						DefaultText =  @"Other PC",
+					  						DefaultText =  @"Other P/C",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -35960,7 +35960,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ShipmentQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "SHIP", Name = "Queries" }, queryGroupRepository);
 						QueryGroup ShipmentQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "SFLU", Name = "Follow Ups" }, queryGroupRepository);
@@ -36044,7 +36044,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_0.Id, Code = "Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 0, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query ShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_0.Id, Code = "Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 0, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36075,7 +36075,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query MastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_1.Id, Code = "Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 1, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query MastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_1.Id, Code = "Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 1, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MastersQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36106,7 +36106,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query OpenReceivablesShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_2.Id, Code = "Open Receivables Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 2, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_2.Id, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query OpenReceivablesShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_2.Id, Code = "Open Receivables Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 2, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_2.Id, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn OpenReceivablesShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenReceivablesShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36137,7 +36137,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query OpenPayablesMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_3.Id, Code = "Open Payables Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 3, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_3.Id, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query OpenPayablesMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_3.Id, Code = "Open Payables Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 3, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_3.Id, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn OpenPayablesMastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPayablesMastersQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36169,7 +36169,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	      
 
 			  Query ExpectedDeparturesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_4.Id, Code = "Expected Departures",  EditWizardName = "Simplog.ShipmentLib.Views.AWBWizardEditControl",
-			   QueryGroupCode = "SHIP", IndexOrder = 4, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_4.Id, DefaultSortName = "MainCarriageETD", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "SHIP", IndexOrder = 4, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_4.Id, DefaultSortName = "MainCarriageETD", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ExpectedDeparturesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpectedDeparturesQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "FWBStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36205,7 +36205,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	      
 
 			  Query AirlinesUpdatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_5.Id, Code = "Airlines Updates",  EditWizardName = "Simplog.ShipmentLib.Views.AWBWizardEditControl",
-			   QueryGroupCode = "SHIP", IndexOrder = 5, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_5.Id, DefaultSortName = "CarrierLastStatusDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "SHIP", IndexOrder = 5, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_5.Id, DefaultSortName = "CarrierLastStatusDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AirlinesUpdatesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesUpdatesQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "CarrierLastStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36240,7 +36240,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query AllFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_6.Id, Code = "All Follow Ups",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SFLU", IndexOrder = 6, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "ShipmentFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_6.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_6.Id, Code = "All Follow Ups",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SFLU", IndexOrder = 6, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "ShipmentFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_6.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllFollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36273,7 +36273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query MyFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_7.Id, Code = "My Follow Ups",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SFLU", IndexOrder = 7, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "ShipmentFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_7.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query MyFollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_7.Id, Code = "My Follow Ups",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SFLU", IndexOrder = 7, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "ShipmentFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_7.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MyFollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 30 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36306,7 +36306,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query AllShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_8.Id, Code = "All Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 8, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_8.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_8.Id, Code = "All Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 8, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_8.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36337,7 +36337,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query AllMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_9.Id, Code = "All Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 9, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_9.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllMastersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_9.Id, Code = "All Masters",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 9, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_9.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllMastersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36368,7 +36368,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query ImportShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_10.Id, Code = "ImportShipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 10, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_10.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query ImportShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_10.Id, Code = "ImportShipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 10, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_10.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ImportShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36399,7 +36399,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query CancelledShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_11.Id, Code = "Cancelled Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 11, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_11.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query CancelledShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_11.Id, Code = "Cancelled Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 11, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_11.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CancelledShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36431,7 +36431,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	      
 
 			  Query SentFSRQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_12.Id, Code = "SentFSR",  EditWizardName = "Simplog.ShipmentLib.Views.AWBWizardEditControl",
-			   QueryGroupCode = "SHIP", IndexOrder = 12, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_12.Id, DefaultSortName = "LastFSRStatusRequestDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "SHIP", IndexOrder = 12, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_12.Id, DefaultSortName = "LastFSRStatusRequestDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn SentFSRQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentFSRQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36452,7 +36452,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query CustomerShipmentActualDataQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_13.Id, Code = "CustomerShipmentActualData",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 13, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_13.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query CustomerShipmentActualDataQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_13.Id, Code = "CustomerShipmentActualData",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 13, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_13.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CustomerShipmentActualDataQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerShipmentActualDataQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36485,7 +36485,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query CreditLimitBlockedShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_14.Id, Code = "CreditLimitBlockedShipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 14, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_14.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query CreditLimitBlockedShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_14.Id, Code = "CreditLimitBlockedShipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 14, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_14.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CreditLimitBlockedShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreditLimitBlockedShipmentsQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36516,7 +36516,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query ExpDepNotTransmittedQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_15.Id, Code = "ExpDepNotTransmitted",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 15, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_15.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query ExpDepNotTransmittedQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_15.Id, Code = "ExpDepNotTransmitted",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 15, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_15.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ExpDepNotTransmittedQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpDepNotTransmittedQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36547,7 +36547,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query ShippingInstructionsLast7DaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_16.Id, Code = "ShippingInstructionsLast7Days",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 16, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_16.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query ShippingInstructionsLast7DaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_16.Id, Code = "ShippingInstructionsLast7Days",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 16, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_16.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ShippingInstructionsLast7DaysQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippingInstructionsLast7DaysQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRASIStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36576,7 +36576,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query ContainerStatusLast7DaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_17.Id, Code = "ContainerStatusLast7Days",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 17, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_17.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query ContainerStatusLast7DaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_17.Id, Code = "ContainerStatusLast7Days",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 17, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_17.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ContainerStatusLast7DaysQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerStatusLast7DaysQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRALastStatusDate" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -36778,116 +36778,116 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   Feature ShipmentGeneralFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentCustomsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Customs", DefaultText = "Customs",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentCustomsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Customs", NameTextCodeDefaultText = "Customs", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentCustomsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Customs", DefaultText = "Customs",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentCustomsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Customs", NameTextCodeDefaultText = "Customs", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentOrdersTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Orders", DefaultText = "Orders",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentOrdersFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ORDERS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Orders", NameTextCodeDefaultText = "Orders", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentOrdersTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Orders", DefaultText = "Orders",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentOrdersFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ORDERS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Orders", NameTextCodeDefaultText = "Orders", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentPartnersTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Partners", DefaultText = "Partners",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentPartnersFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PARTNERS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Partners", NameTextCodeDefaultText = "Partners", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentPartnersTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Partners", DefaultText = "Partners",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentPartnersFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PARTNERS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Partners", NameTextCodeDefaultText = "Partners", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentPackagesTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Packages", DefaultText = "Packages",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentPackagesFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PACKAGES", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Packages", NameTextCodeDefaultText = "Packages", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentPackagesTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Packages", DefaultText = "Packages",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentPackagesFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PACKAGES", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Packages", NameTextCodeDefaultText = "Packages", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentRoutingsTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Routings", DefaultText = "Routings",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentRoutingsFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ROUTINGS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Routings", NameTextCodeDefaultText = "Routings", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentRoutingsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Routings", DefaultText = "Routings",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentRoutingsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ROUTINGS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Routings", NameTextCodeDefaultText = "Routings", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentPayablesTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Payables", DefaultText = "Payables",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentPayablesFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYABLES", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Payables", NameTextCodeDefaultText = "Payables", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentPayablesTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Payables", DefaultText = "Payables",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentPayablesFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYABLES", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Payables", NameTextCodeDefaultText = "Payables", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentReceivablesTextCode_TH9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Receivables", DefaultText = "Receivables",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentReceivablesFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RECEIVABLES", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Receivables", NameTextCodeDefaultText = "Receivables", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentReceivablesTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Receivables", DefaultText = "Receivables",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentReceivablesFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RECEIVABLES", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Receivables", NameTextCodeDefaultText = "Receivables", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentDocsOutTextCode_TH10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentDocsOutFeature_TH10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSOUT", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.DocsOut", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentDocsOutTextCode_TH9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentDocsOutFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSOUT", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.DocsOut", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentDocsInTextCode_TH11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentDocsInFeature_TH11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentDocsInTextCode_TH10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentDocsInFeature_TH10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentConnectedEntitiesTextCode_TH12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Connections", DefaultText = "Connected Entities",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentConnectedEntitiesFeature_TH12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONNECTIONS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Connections", NameTextCodeDefaultText = "Connected Entities", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentConnectedEntitiesTextCode_TH11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Connections", DefaultText = "Connected Entities",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentConnectedEntitiesFeature_TH11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONNECTIONS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Connections", NameTextCodeDefaultText = "Connected Entities", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentCommunicationTextCode_TH13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Communications", DefaultText = "Communication",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentCommunicationFeature_TH13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATIONS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Communications", NameTextCodeDefaultText = "Communication", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentCommunicationTextCode_TH12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Communications", DefaultText = "Communication",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentCommunicationFeature_TH12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATIONS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Communications", NameTextCodeDefaultText = "Communication", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentAuditTextCode_TH14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Audit", DefaultText = "Audit",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentAuditFeature_TH14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUDIT", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Audit", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentAuditTextCode_TH13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Audit", DefaultText = "Audit",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentAuditFeature_TH13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUDIT", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Audit", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentEventsTextCode_TH15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentEventsFeature_TH15 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentEventsTextCode_TH14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentEventsFeature_TH14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentMasterTextCode_TH16 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Master", DefaultText = "Master",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentMasterFeature_TH16 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MASTER", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Master", NameTextCodeDefaultText = "Master", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentShipmentsTextCode_TH15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Consolidation", DefaultText = "Shipments",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentShipmentsFeature_TH15 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONSOLIDATION", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Consolidation", NameTextCodeDefaultText = "Consolidation", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentShipmentsTextCode_TH17 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Consolidation", DefaultText = "Shipments",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentShipmentsFeature_TH17 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONSOLIDATION", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Consolidation", NameTextCodeDefaultText = "Consolidation", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentCustomsFileTextCode_TH16 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.CustomsFile", DefaultText = "Customs File",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentCustomsFileFeature_TH16 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSFILE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.CustomsFile", NameTextCodeDefaultText = "Customs File", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentFreightFilesTextCode_TH18 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.FreightFiles", DefaultText = "Freight Files",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentFreightFilesFeature_TH18 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FREIGHTFILES", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.FreightFiles", NameTextCodeDefaultText = "Freight Files", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentFreightFilesTextCode_TH17 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.FreightFiles", DefaultText = "Freight Files",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentFreightFilesFeature_TH17 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FREIGHTFILES", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.FreightFiles", NameTextCodeDefaultText = "Freight Files", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode ShipmentCustomsFileTextCode_TH19 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.CustomsFile", DefaultText = "Customs File",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShipmentCustomsFileFeature_TH19 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSFILE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.CustomsFile", NameTextCodeDefaultText = "Customs File", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShipmentMasterTextCode_TH18 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.TH.Master", DefaultText = "Master",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentMasterFeature_TH18 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MASTER", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Master", NameTextCodeDefaultText = "Master", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHOV",HtmlComponentName = "OverviewTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Overview/OverviewTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "OVERVIEW" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.ShipmentLib.Views.ShipmentOverview.ShipmentOverviewControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.Overview" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHOV",HtmlComponentName = "OverviewTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Overview/OverviewTabComponent", FeatureId = ShipmentOverviewFeature_TH0.Id, ControlPath = "Simplog.ShipmentLib.Views.ShipmentOverview.ShipmentOverviewControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentOverviewTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MHGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentGeneralFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentGeneralTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCT",HtmlComponentName = "CustomsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Customs/CustomsTabComponent", FeatureId = ShipmentCustomsFeature_TH2.Id, ControlPath = "Simplog.ShipmentLib.Views.Customs.CustomsTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCustomsTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCT",HtmlComponentName = "CustomsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Customs/CustomsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "CUSTOMS" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.ShipmentLib.Views.Customs.CustomsTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.Customs" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHOR",HtmlComponentName = "OrdersTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Orders/OrdersTabComponent", FeatureId = ShipmentOrdersFeature_TH3.Id, ControlPath = "Simplog.ShipmentLib.Views.Orders.OrdersUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentOrdersTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHOR",HtmlComponentName = "OrdersTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Orders/OrdersTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "ORDERS" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.ShipmentLib.Views.Orders.OrdersUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.Orders" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPA",HtmlComponentName = "PartnersTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Partners/PartnersTabComponent", FeatureId = ShipmentPartnersFeature_TH4.Id, ControlPath = "Simplog.ShipmentLib.Views.Partners.PartnersControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentPartnersTextCode_TH4.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPA",HtmlComponentName = "PartnersTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Partners/PartnersTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "PARTNERS" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.ShipmentLib.Views.Partners.PartnersControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.Partners" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPK",HtmlComponentName = "PackagesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentPackages/Components/Packages/PackagesTabComponent", FeatureId = ShipmentPackagesFeature_TH5.Id, ControlPath = "Simplog.ShipmentLib.Views.Packages.PackagesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentPackagesTextCode_TH5.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPK",HtmlComponentName = "PackagesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentPackages/Components/Packages/PackagesTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "PACKAGES" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.ShipmentLib.Views.Packages.PackagesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.Packages" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHRT",HtmlComponentName = "RoutingsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentRouting/Components/Routings/RoutingsTabComponent", FeatureId = ShipmentRoutingsFeature_TH6.Id, ControlPath = "Simplog.ShipmentLib.Views.Routings.RoutingsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentRoutingsTextCode_TH6.Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHRT",HtmlComponentName = "RoutingsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentRouting/Components/Routings/RoutingsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "ROUTINGS" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.ShipmentLib.Views.Routings.RoutingsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.Routings" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPY",HtmlComponentName = "PayablesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Payables/PayablesTabComponent", FeatureId = ShipmentPayablesFeature_TH7.Id, ControlPath = "Simplog.ShipmentLib.Views.Payables.PayablesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentPayablesTextCode_TH7.Id, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHPY",HtmlComponentName = "PayablesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Payables/PayablesTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "PAYABLES" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.ShipmentLib.Views.Payables.PayablesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.Payables" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHRE",HtmlComponentName = "ReceivablesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Receivables/ReceivablesTabComponent", FeatureId = ShipmentReceivablesFeature_TH8.Id, ControlPath = "Simplog.ShipmentLib.Views.Receivables.ReceivablesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentReceivablesTextCode_TH8.Id, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHRE",HtmlComponentName = "ReceivablesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Receivables/ReceivablesTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "RECEIVABLES" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.ShipmentLib.Views.Receivables.ReceivablesUserControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.Receivables" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHDO",HtmlComponentName = "ShipmentDocsOutTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/DocsOut/ShipmentDocsOutTabComponent", FeatureId = ShipmentDocsOutFeature_TH9.Id, ControlPath = "Simplog.ShipmentLib.Views.Documents.ShipmentDocOutControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentDocsOutTextCode_TH9.Id, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHDO",HtmlComponentName = "ShipmentDocsOutTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/DocsOut/ShipmentDocsOutTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "DOCSOUT" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.ShipmentLib.Views.Documents.ShipmentDocOutControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.DocsOut" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHDI",HtmlComponentName = "ShipmentDocsInTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/DocsIn/ShipmentDocsInTabComponent", FeatureId = ShipmentDocsInFeature_TH10.Id, ControlPath = "Simplog.ShipmentLib.Views.Documents.ShipmentDocInControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentDocsInTextCode_TH10.Id, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHDI",HtmlComponentName = "ShipmentDocsInTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/DocsIn/ShipmentDocsInTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.ShipmentLib.Views.Documents.ShipmentDocInControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCN",HtmlComponentName = "ConnectionsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Connections/ConnectionsTabComponent", FeatureId = ShipmentConnectedEntitiesFeature_TH11.Id, ControlPath = "Simplog.ShipmentLib.Views.ShipmentConnections.ShipmentConnectionsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentConnectedEntitiesTextCode_TH11.Id, Tenant = 0, IndexOrder = 11 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCN",HtmlComponentName = "ConnectionsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Connections/ConnectionsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "CONNECTIONS" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.ShipmentLib.Views.ShipmentConnections.ShipmentConnectionsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.Connections" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 11 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentCommunicationFeature_TH12.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCommunicationTextCode_TH12.Id, Tenant = 0, IndexOrder = 12 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "COMMUNICATIONS" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.Communications" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 12 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHAU",HtmlComponentName = "ShipmentAuditTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Audit/ShipmentAuditTabComponent", FeatureId = ShipmentAuditFeature_TH13.Id, ControlPath = "./ShipmentModules/ShipmentTabs/Components/Audit/ShipmentAuditTabComponent", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentAuditTextCode_TH13.Id, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHAU",HtmlComponentName = "ShipmentAuditTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Audit/ShipmentAuditTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "AUDIT" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "./ShipmentModules/ShipmentTabs/Components/Audit/ShipmentAuditTabComponent", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.Audit" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentEventsFeature_TH14.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentEventsTextCode_TH14.Id, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCO",HtmlComponentName = "ShipmentsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Shipments/ShipmentsTabComponent", FeatureId = ShipmentShipmentsFeature_TH15.Id, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.Consolidation.ConsolidationControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentShipmentsTextCode_TH15.Id, Tenant = 0, IndexOrder = 15 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHMS",HtmlComponentName = "MasterTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Master/MasterTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "MASTER" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterTab.MasterTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.Master" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 15 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCF",HtmlComponentName = "CustomsFileTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/CustomsFile/CustomsFileTabComponent", FeatureId = ShipmentCustomsFileFeature_TH16.Id, ControlPath = "Simplog.ShipmentLib.Views.CustomsLib.CustomsFileTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentCustomsFileTextCode_TH16.Id, Tenant = 0, IndexOrder = 16 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCO",HtmlComponentName = "ShipmentsTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Shipments/ShipmentsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "CONSOLIDATION" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.Consolidation.ConsolidationControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.Consolidation" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 15 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHFF",HtmlComponentName = "FreightFilesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/FreightFiles/FreightFilesTabComponent", FeatureId = ShipmentFreightFilesFeature_TH17.Id, ControlPath = "Simplog.ShipmentLib.Views.CustomsLib.FreightFilesTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentFreightFilesTextCode_TH17.Id, Tenant = 0, IndexOrder = 17 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHFF",HtmlComponentName = "FreightFilesTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/FreightFiles/FreightFilesTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "FREIGHTFILES" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.ShipmentLib.Views.CustomsLib.FreightFilesTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.FreightFiles" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 16 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHMS",HtmlComponentName = "MasterTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/Master/MasterTabComponent", FeatureId = ShipmentMasterFeature_TH18.Id, ControlPath = "Simplog.ShipmentLib.Views.MasterLib.MasterTab.MasterTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentMasterTextCode_TH18.Id, Tenant = 0, IndexOrder = 18 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHCF",HtmlComponentName = "CustomsFileTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentTabs/Components/CustomsFile/CustomsFileTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "CUSTOMSFILE" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.ShipmentLib.Views.CustomsLib.CustomsFileTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Shipment.TH.CustomsFile" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 16 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MHGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentGeneralFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShipmentObjectTable.Id, TabNameTextCodeId = ShipmentGeneralTextCode_TH1.Id, Tenant = 0, IndexOrder = 19 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -36897,7 +36897,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		   Feature ShipmentFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ShipmentFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ShipmentFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ShipmentFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.PackageFeature", NameTextCodeDefaultText = "Shipment Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature ShipmentFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.PackageFeature", NameTextCodeDefaultText = "Shipment Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature ShipmentFeature_CSPV = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CSPV", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.CSPV", NameTextCodeDefaultText = @"Allow user to control the spotlight per view" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -38824,23 +38830,77 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "SFCR",
+                EnglishName =  "Follow up Created",
+                LocalName =  "Follow up Created",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ShipmentObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "SFCM",
+                EnglishName =  "Follow up Completed",
+                LocalName =  "Follow up Completed",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ShipmentObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "DOUP",
+                EnglishName =  "Document Uploaded",
+                LocalName =  "Document Uploaded",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ShipmentObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable ShipmentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Shipment" && d.Tenant == 0).FirstOrDefault(); 			   Feature ShipmentFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPERATIONALCLOSE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.OperationalClose", NameTextCodeDefaultText = "Shipment Operational close", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   ObjectTable ShipmentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Shipment" && d.Tenant == 0).FirstOrDefault(); 			   Feature ShipmentFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPERATIONALCLOSE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.OperationalClose", NameTextCodeDefaultText = "Shipment Operational close", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGCLOSE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.AccountingClose", NameTextCodeDefaultText = "Shipment Accounting close", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPERATIONALREOPEN", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.OperationalReopen", NameTextCodeDefaultText = "Shipment Operational Reopen", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGREOPEN", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.AccoutingReopen", NameTextCodeDefaultText = "Shipment Accounting Reopen", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB04 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONVERTHOUSETODIRECT", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConvertHouseToDirect", NameTextCodeDefaultText = "Convert From House To Direct", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONVERTDIRECTTOHOUSE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConvertDirectToHouse", NameTextCodeDefaultText = "Convert From Direct To House", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COPY", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Copy", NameTextCodeDefaultText = "Copy Shipment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPERATIONALREOPEN", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.OperationalReopen", NameTextCodeDefaultText = "Shipment Operational Reopen", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGREOPEN", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.AccoutingReopen", NameTextCodeDefaultText = "Shipment Accounting Reopen", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB04 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONVERTHOUSETODIRECT", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConvertHouseToDirect", NameTextCodeDefaultText = "Convert From House To Direct", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONVERTDIRECTTOHOUSE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConvertDirectToHouse", NameTextCodeDefaultText = "Convert From Direct To House", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COPY", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Copy", NameTextCodeDefaultText = "Copy Shipment", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDRESPONSE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendResponse", NameTextCodeDefaultText = "Send Response", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CANCEL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Cancel", NameTextCodeDefaultText = "Cancel Shipment", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REACTIVATE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Reactivate", NameTextCodeDefaultText = "Reactivate Shipment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB010 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXCEPTIONRESOLVED", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ExceptionResolved", NameTextCodeDefaultText = "Exception Resolved", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REACTIVATE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Reactivate", NameTextCodeDefaultText = "Reactivate Shipment", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB010 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXCEPTIONRESOLVED", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ExceptionResolved", NameTextCodeDefaultText = "Exception Resolved", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB011 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONVERTTOCUSTOMFILE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConvertToCustomFile", NameTextCodeDefaultText = "Convert To Custom File", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB012 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SplitShipment", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SplitShipment", NameTextCodeDefaultText = "Split Shipment", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               

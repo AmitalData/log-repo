@@ -26,6 +26,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { RecoCallback } from '../../DataContracts/RecoCallback';
 
 
 class LineModel extends BaseComponent {
@@ -217,6 +218,7 @@ class LineModel extends BaseComponent {
     get OpenAmountCurrencyId() { return this.LedgerTransactionPM.OpenAmountCurrencyId; }
     get SourceTypeCode() { return this.LedgerTransactionPM.SourceTypeCode; }
     get SourceNumber() { return this.LedgerTransactionPM.SourceNumber; }
+    get GroupNumber() { return this.LedgerTransactionPM.GroupHash; }
 
     //#endregion
 
@@ -281,6 +283,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     public ColumnsReady: EventEmitter<any> = new EventEmitter();
     public MarkIsChecked: EventEmitter<any> = new EventEmitter();
 
+    public recoCallback: RecoCallback;
     public lastGroupNumber: number;
     public lastColorOperation: boolean = false;
     //public SelectedLines: LineModel[] = [];
@@ -500,28 +503,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             return;
         }
 
-        if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
-            //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
-            //this.AdjustButton();
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Width = 390;
-
-
-            confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-
-
-                    this.AdjustWithNewJournalScreen();
-
-                } else if (confirmWindow.No) {
-
-                }
-            });
-            return;
-        }
         //else if (!this.IsEntityValid) {
-        else if (this.SelectedLines.Collection.find(d => d.isLineValid == false )) {
+        if (this.SelectedLines.Collection.find(d => d.isLineValid == false )) {
 
 
             //errors.push("Check amount!");
@@ -530,8 +513,30 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             //Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         }
 
+
+
+
         this.ValidationErrorsList = errors;
-        if (this.ValidationErrorsList.length == 0) {
+        if (this.ValidationErrorsList.length == 0)
+        {
+
+            //Adjust
+            if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
+                //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
+                //this.AdjustButton();
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 390;
+                confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        this.AdjustWithNewJournalScreen();
+                    } else if (confirmWindow.No) {
+                    }
+                });
+                return;
+            }
+            //
+
             SessionLocator.CurrentSession.StartBusyIndicatorSaving();
             var entity = this.CreateReconciliation();
             this.SubmitChanges(entity);
@@ -1036,8 +1041,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             newLine.TransactionId = selectedTransaction.Id;
             newLine.ReconciliationAmount = selectedTransaction.AmountToReconcile;
             newLine.IsPartial = selectedTransaction.IsPartial;
-
-            //newLine.GroupNumber = selectedTransaction.GroupHash;
+            newLine.GroupNumber = selectedTransaction.GroupHash;
 
             newEntity.ReconciliationLines.push(newLine);
         }
@@ -1047,7 +1051,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         this._ReconciliationExtendedPMService.insert(entity).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
-            var entity = mm.Result;
+            var _callback:RecoCallback = mm.Result;
             if (!mm.HasError) {
 
                 //var windowArgs: any = {};
@@ -1074,8 +1078,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
                 //    }, 5000);
 
                 //});
-                this.RecoPM = entity;
+
+                if(_callback){
+                    this.RecoPM = _callback.reconciliationPM;
+                }
+
+                this.recoCallback = _callback;
                 this.ShowSuccessAlert();
+
 
                 SessionLocator.CurrentSession.StopBusyIndicator();
 

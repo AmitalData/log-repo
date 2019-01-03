@@ -122,6 +122,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public bool IsINTTRAStockPrepaid { get; set; }
 
         public string PackageCodeSearchField { get; set; }
+        public bool IsINTTRAOnlyDemo { get; set; }
 
     }
 }

@@ -154,6 +154,34 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             return Request.CreateResponse(HttpStatusCode.OK, extDocPM);
 
         }
+        public HttpResponseMessage GetCreateDocumentShipmentEvent( string entityId, string objectTableName, string Notes)
+        {
+            string token = System.Web.HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            UserRepository userRepository = new UserRepository(authToken.Tenant);
+
+            User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, authToken.Email, authToken.Tenant, true);
+            if (!string.IsNullOrEmpty(Notes))
+            {
+                if (Notes.Contains('.'))
+                {
+                    Notes = Notes.Split('.')[0];
+                }
+            }
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = authToken.Tenant,
+                    EventTypeCode = "DOUP",
+                    UserId = loggedUser.Id,
+                    EntityId = entityId,
+                    ObjectTableName = "Shipment",
+                    Notes = Notes,
+                });
+        
+            return Request.CreateResponse(HttpStatusCode.OK, true);
+
+        }
 
 
         public HttpResponseMessage GetFileSizeAndUnit(int? fileBytes)

@@ -38,7 +38,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<CustomsShipperList> GetIQueryableEntityList(IQueryable<CustomsShipper> iQueryable)
         {
-            IQueryable<CustomsShipperList> result = from a in iQueryable
+            IQueryable<CustomsShipperList> result = from a in iQueryable.Include("Card")
                                                         select new CustomsShipperList()
                                                         {
                                                             Tenant = a.Tenant,
@@ -47,9 +47,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             ValidDepositionNumber = a.ValidDepositionNumber,
                                                             ValidityStartDate = a.ValidityStartDate,
                                                             ValidityEndDate = a.ValidityEndDate,
-                                                            FutureDepositionExist = a.FutureDepositionExist,
-
-
+                                                            EnglishName = a.Card!=null?a.Card.EnglishName:null,
+                                                            ShipperVAT = a.Card != null ? a.Card.VatNumber : null,
+                                                            SearchFields =a.SearchFields,
                                                         };
 
 
@@ -70,18 +70,87 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                ValidDepositionNumber = a.ValidDepositionNumber,
                                                ValidityStartDate = a.ValidityStartDate,
                                                ValidityEndDate = a.ValidityEndDate,
-                                               FutureDepositionExist = a.FutureDepositionExist,
+                                               SearchFields = a.SearchFields,
+
                                            }).FirstOrDefault();
+
+            if (entity != null)
+            {
+                CardQuery cardQuery = new CardQuery(tenant);
+                CardList card = cardQuery.GetCardListForCustomsShipperById(entity.Id, tenant);
+                if (card != null)
+                {
+                    entity.EnglishName = card.EnglishName;
+                    entity.ShipperVAT = card.VatNumber;
+                    entity.CountryId = card.CountryId;
+                    entity.CountryCode = card.CountryCode;
+                    entity.CountryName = card.CountryName;
+                    entity.LocalName = card.LocalName;
+                    entity.Code = card.Code;
+                    entity.CreatedByUserId = card.CreatedByUserId;
+                    entity.UpdatedByUserId = card.UpdatedByUserId;
+                    entity.CreateDate = card.CreateDate;
+                    entity.UpdateDate = card.UpdateDate;
+
+                }
+            }
 
 
 
             return entity;
         }
 
+        public CustomsShipperPM GetSinglePMByShipperCode(string shipperCode, int tenant)
+        {
+            CustomsShipperPM entity = (from a in repository.context.CustomsShippers
+                                       where a.Tenant == tenant
+                                       && a.CustomsShipperCode == shipperCode
+                                       select new CustomsShipperPM()
+                                       {
+                                           Tenant = a.Tenant,
+                                           Id = a.Id,
+                                           CustomsShipperCode = a.CustomsShipperCode,
+                                           ValidDepositionNumber = a.ValidDepositionNumber,
+                                           ValidityStartDate = a.ValidityStartDate,
+                                           ValidityEndDate = a.ValidityEndDate,
+                                           SearchFields = a.SearchFields,
+
+                                       }).FirstOrDefault();
+
+            if (entity != null)
+            {
+                CardQuery cardQuery = new CardQuery(tenant);
+                CardList card = cardQuery.GetCardListForCustomsShipperById(entity.Id, tenant);
+                if (card != null)
+                {
+                    entity.EnglishName = card.EnglishName;
+                    entity.ShipperVAT = card.VatNumber;
+                    entity.CountryId = card.CountryId;
+                    entity.CountryCode = card.CountryCode;
+                    entity.CountryName = card.CountryName;
+                    entity.LocalName = card.LocalName;
+                    entity.Code = card.Code;
+                    entity.CreatedByUserId = card.CreatedByUserId;
+                    entity.UpdatedByUserId = card.UpdatedByUserId;
+                    entity.CreateDate = card.CreateDate;
+                    entity.UpdateDate = card.UpdateDate;
+
+                }
+            }
+
+            return entity;
+        }
+
+
+
+
+
+
+
         public IQueryable<CustomsShipperPM> GetCustomsShipperPMsByTenant(int tenant)
         {
             IQueryable<CustomsShipperPM> CustomsShipperPMs = from a in repository.context.CustomsShippers
-                                                                     where a.Tenant == tenant
+                                                             where a.Tenant == tenant
                                                                      select new CustomsShipperPM()
                                                                      {
                                                                          Tenant = a.Tenant,
@@ -90,7 +159,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                          ValidDepositionNumber = a.ValidDepositionNumber,
                                                                          ValidityStartDate = a.ValidityStartDate,
                                                                          ValidityEndDate = a.ValidityEndDate,
-                                                                         FutureDepositionExist = a.FutureDepositionExist,
+                                                                         SearchFields = a.SearchFields,
+
+
                                                                      };
             return CustomsShipperPMs;
         }
@@ -107,51 +178,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                              ValidDepositionNumber = a.ValidDepositionNumber,
                                                                              ValidityStartDate = a.ValidityStartDate,
                                                                              ValidityEndDate = a.ValidityEndDate,
-                                                                             FutureDepositionExist = a.FutureDepositionExist,
+                                                                             SearchFields = a.SearchFields,
+
                                                                          };
             return CustomsShipperLists;
         }
 
 
-        public CustomsShipperPM GetSinglePMByShipperCode(string shipperCode, int tenant)
-        {
-            CustomsShipperPM entity = (from a in repository.context.CustomsShippers
-                                       where a.Tenant == tenant
-                                       && a.CustomsShipperCode == shipperCode
-                                       select new CustomsShipperPM()
-                                       {
-                                           Tenant = a.Tenant,
-                                           Id = a.Id,
-                                           CustomsShipperCode = a.CustomsShipperCode,
-                                           ValidDepositionNumber = a.ValidDepositionNumber,
-                                           ValidityStartDate = a.ValidityStartDate,
-                                           ValidityEndDate = a.ValidityEndDate,
-                                           FutureDepositionExist = a.FutureDepositionExist,
-                                       }).FirstOrDefault();
-
-            if (entity != null)
-            {
-                CardQuery cardQuery = new CardQuery(tenant);
-                CardPM card =  cardQuery.GetSinglePM(entity.Id, tenant);
-                if (card != null)
-                {
-                    entity.EnglishName = card.EnglishName;
-                    entity.ShipperVAT = card.VatNumber;
-                    entity.CountryId = card.CountryId;
-                    entity.CountryCode = card.CountryCode;
-                    entity.CountryName = card.CountryName;
-                    entity.LocalName = card.LocalName;
-                    entity.Code = card.Code;
-                    entity.CreatedByUserId = card.CreatedByUserId;
-                    entity.UpdatedByUserId = card.UpdatedByUserId;
-                    entity.CreateDate = card.CreateDate;
-                    entity.UpdateDate = card.UpdateDate;
-                   
-                }
-            }
-
-            return entity;
-        }
+      
 
     }
 }

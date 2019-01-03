@@ -122,6 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    CodeField =  "Code",
 			      				    NameField =  "EnglishName",
 			      				    ClientModuleName =  "Common",
+			      				    DescriptionDefaultText =  "Maintain the details of the types of packages you service – cartons, pallets, containers, etc.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

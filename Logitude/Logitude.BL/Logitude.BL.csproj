@@ -327,6 +327,7 @@
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\WeightUnitStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CodePropertiesMapping\IncotermCodePropertiesMapping.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AgentSharedManifestCustomFilter.cs" />
+    <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\WarehouseCustomFilter.cs" />
     <Compile Include="CommonDataModel\DataContracts\ShipmentPickUpDeliverySL.cs" />
     <Compile Include="CommonDataModel\DataContracts\UsersByTenantData.cs" />
@@ -387,6 +388,11 @@
     <Compile Include="GlobalModel\CloseTables\EnumGenerated\PaymentMethodStruct.Generated.cs" />
     <Compile Include="GlobalModel\CloseTables\EnumGenerated\RecurringPeriodStruct.Generated.cs" />
     <Compile Include="GlobalModel\CloseTables\EnumGenerated\TenantTypeStruct.Generated.cs" />
+    <Compile Include="GlobalModel\EntityLists\WebhookKeysList.cs" />
+    <Compile Include="GlobalModel\EntityPMs\WebhookKeysPM.cs" />
+    <Compile Include="GlobalModel\EntityQueries\WebhookKeysQuery.cs" />
+    <Compile Include="GlobalModel\Tools\DataMapping\WebhookKeysMapping.cs" />
+    <Compile Include="GlobalModel\Tools\EntityService\WebhookKeysService.cs" />
     <Compile Include="Helpers\FullAccountingHelper.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\ObjectTable.cs" />
     <Compile Include="CommonDataModel\APIDataContract\PackageType.Generated.cs" />
@@ -1547,6 +1553,7 @@
     <Compile Include="InfrastructureModel\EntityPMs\SharedLogisticsInvitationStatusPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\SharedLogisticsUpdatePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\SharedLogisticsUpdateStatusPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\SharedUserQueryPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\TaskSchedulerHistoryPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\TasksSchedulerPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\TenantSettingPM.cs" />
@@ -1569,6 +1576,7 @@
     <Compile Include="InfrastructureModel\EntityQueries\DWQueryFilterQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DWSubQueryQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DWQueryQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\SharedUserQueryQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\TaskSchedulerHistoryQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\TasksSchedulerQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\QueueMessageMoreDetailsQuery.cs" />
@@ -1627,6 +1635,7 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\DWQueryFilterMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DWSubQueryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DWQueryMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\SharedUserQueryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\VolumeUnitMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\TransportModeMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DirectionMapping.cs" />
@@ -1678,6 +1687,7 @@
     <Compile Include="InfrastructureModel\Tools\EntityService\DWQueryFilterService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DWSubQueryService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DWQueryService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\SharedUserQueryService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\VolumeUnitService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\TransportModeService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DirectionService.cs" />
@@ -1783,6 +1793,7 @@
     <Compile Include="InfrastructureModel\Tools\Validating\TipsVisibilityValidating.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\TipValidating.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\TraceEventValidating.cs" />
+    <Compile Include="Interfaces\ILoggedContactUtil.cs" />
     <Compile Include="Interfaces\IQuoteTemplateReportHelper.cs" />
     <Compile Include="Interfaces\IRulesValidator.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARInvoice.Generated.cs" />
@@ -2177,6 +2188,7 @@
     <Compile Include="QuoteModel\Tools\TraceEvents\QuoteTracing.QuoteStage.cs" />
     <Compile Include="QuoteModel\Tools\Validating\QuotetValidating.cs" />
     <Compile Include="Security\AutenticationException.cs" />
+    <Compile Include="Security\LoggedContactUtil.cs" />
     <Compile Include="Security\SecurityUtility.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\AirPackage.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Commodity.Generated.cs" />

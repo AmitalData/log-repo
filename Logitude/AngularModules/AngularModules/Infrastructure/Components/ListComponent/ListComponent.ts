@@ -620,6 +620,14 @@ export class ListComponent implements OnInit, AfterViewInit {
 
 
     }
+    IsShowNewDepositionFormLink: boolean;
+    NewDepositionFormClcik() {
+
+        var link = "https://forms.gov.il/globaldata/getsequence/getHtmlForm.aspx?formType=SOVE01_hasava@taxes.gov.il";
+        var win = window.open(link, '_blank');
+        win.focus();
+    }
+
 
 
     IsShowAddFromLibraryLink: boolean;
@@ -662,7 +670,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 800;
         logWindow.Height = 550;
-        logWindow.Title = "New Quote Template";
+        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.NewQuoteTemplate"); 
         logWindow.WindowArgs = windowArgs;
         logWindow.IsShowCloseButton = true;
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/AddQuoteTemplateFromLibraryComponent");
@@ -1139,7 +1147,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
 
             this.GetQueryColumns(this.SelectedQuery.Id, this.UserId);
-        }
+        }   
         //if (!AppTool.IsNullOrEmpty(this.SelectedQuery.SpotlightDataTemplate)) {
         //    this.EnableSpotLight = true;
         //    //this.CD.detectChanges();
@@ -2229,6 +2237,13 @@ export class ListComponent implements OnInit, AfterViewInit {
                     case "AgentSharedManifest":
                         {
                             isVisible = false;
+                            break;
+                        }
+
+                    case "CustomsShipper":
+                        {
+                            isVisible = false;
+                            this.IsShowNewDepositionFormLink = true;
                             break;
                         }
 

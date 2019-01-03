@@ -545,7 +545,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup InboundEmailQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "IEHI", Name = "Inbound Email Additional Info" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -560,7 +560,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query InboundEmailsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InboundEmailTextCode_0.Id, Code = "InboundEmails",  QueryGroupCode = "IEHI", IndexOrder = 0, Tenant = 0, ObjectTableId = InboundEmailObjectTable.Id, QuerySection = "InboundEmail", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InboundEmailFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			  Query InboundEmailsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InboundEmailTextCode_0.Id, Code = "InboundEmails",  QueryGroupCode = "IEHI", IndexOrder = 0, Tenant = 0, ObjectTableId = InboundEmailObjectTable.Id, QuerySection = "InboundEmail", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InboundEmailFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn InboundEmailsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InboundEmailsQuery.Id, IndexOrder = 0, ObjectFieldId = InboundEmailObjectFields.Where(d => d.FieldName == "Tenant" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -585,10 +585,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   Feature InboundEmailGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InboundEmail.Tab.General", ObjectTableId = InboundEmailObjectTable.Id, Tenant = 0, NameTextCodeCode = "InboundEmail.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IEFG",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/InboundEmailGeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "InboundEmail.Tab.General" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().Id, ControlPath = "Logitude.CRM.Views.Tabs.InboundEmail.InboundEmailInfoTab", ObjectTableId = InboundEmailObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "InboundEmail.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IEFG",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMTickets/Components/EditTabs/InboundEmailGeneralTabComponent", FeatureId = InboundEmailGeneralFeature_TH0.Id, ControlPath = "Logitude.CRM.Views.Tabs.InboundEmail.InboundEmailInfoTab", ObjectTableId = InboundEmailObjectTable.Id, TabNameTextCodeId = InboundEmailGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

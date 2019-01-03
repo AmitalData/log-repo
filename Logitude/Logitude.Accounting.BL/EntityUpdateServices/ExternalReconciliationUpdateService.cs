@@ -50,7 +50,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 line.ReconciliationId = entityPM.Id;
                 ledgerIds.Add(line.LedgerTransactionId);
             }
-         
 
 
             base.OnCreating(entityPM, entityParentPM);
@@ -65,6 +64,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 LedgerTransactionUpdateService transactionService = new LedgerTransactionUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
                 ReconcileExternalPageLineUpdateService pageLineService = new ReconcileExternalPageLineUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
                 ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
+                BankDepositQueryService bankDepositQueryService = new BankDepositQueryService(entityPM.Tenant);
+                PaymentChequeQueryService paymentChequeQuery  = new PaymentChequeQueryService(entityPM.Tenant);
 
                 List<string> LedgerTransactionIds = EntityPM.ExternalReconciliationLines.Where(d => d.LedgerTransactionId != null).Select(d=>d.LedgerTransactionId).ToList();
                 List<string> PageLineIds = EntityPM.ExternalReconciliationLines.Where(d => d.ExternalPageLineId != null).Select(d => d.ExternalPageLineId).ToList();
@@ -72,12 +73,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 List<LedgerTransactionPM> LedgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(LedgerTransactionIds, entityPM.Tenant);
                 List<ReconcileExternalPageLinePM> PageLines = pageLineQuery.GetPageLinesPMsByIdList(PageLineIds, entityPM.Tenant);
 
-                BankDepositQueryService bankDepositQueryService = new BankDepositQueryService(entityPM.Tenant);
+
                 foreach (var transactionPM in LedgerTransactions)
                 {
                     transactionPM.ChangeSetOp = ChangeSetOperation.Update;
                     transactionPM.IsExternalReconcile = true;
-                    if (transactionPM.SourceTypeCode == "6")
+                    if (transactionPM.SourceTypeCode == "6") // 6- Cheque Deposit
                     {
                         List<ARPaymentChequePM> aRPaymentChequePMs = bankDepositQueryService.GetListByPaymentId(transactionPM.SourceId, entityPM.Tenant);
                         ARPaymentChequePM aRPaymentCheque = aRPaymentChequePMs.Where(a => a.ChequeNumber == transactionPM.Reference1).FirstOrDefault();
@@ -87,6 +88,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
                          aRPaymentChequeUpdateService.Update(aRPaymentCheque, true);
                         
+                    }
+                    else if (transactionPM.SourceTypeCode == "9") // 9- Payment Cheque
+                    {
+                        PaymentChequePM chequePM = paymentChequeQuery.GetSingle(transactionPM.SourceId, false, false);
+
+                        chequePM.PaymentChequeStatusCode = "3"; // 3- Redeemed
+                        chequePM.ChangeSetOp = ChangeSetOperation.Update;
+                        PaymentChequeUpdateService paymentChequeUpdateService = new PaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
+                        paymentChequeUpdateService.Update(chequePM, true);
+
                     }
                     transactionService.Update(transactionPM, false);
                 }
@@ -116,6 +127,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 // Update for each bank transaction(In table ReconcileExternalPageLines): IsReconciled=False
                 UpdateBankPages(entityPM);
 
+                // change payment cheque status
+                LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
+                PaymentChequeQueryService paymentChequeQuery = new PaymentChequeQueryService(entityPM.Tenant);
+                List<string> LedgerTransactionIds = entityPM.ExternalReconciliationLines.Where(d => d.LedgerTransactionId != null).Select(d => d.LedgerTransactionId).ToList();
+                List<LedgerTransactionPM> LedgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(LedgerTransactionIds, entityPM.Tenant);
+                foreach (var transactionPM in LedgerTransactions)
+                {
+                    if (transactionPM.SourceTypeCode == "9") // 9- Payment Cheque
+                    {
+                        PaymentChequePM chequePM = paymentChequeQuery.GetSingle(transactionPM.SourceId, false, false);
+                        chequePM.PaymentChequeStatusCode = "2"; // 2- Approved
+                        chequePM.ChangeSetOp = ChangeSetOperation.Update;
+                        PaymentChequeUpdateService paymentChequeUpdateService = new PaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
+                        paymentChequeUpdateService.Update(chequePM, true);
+                    }
+                }
 
             }
 

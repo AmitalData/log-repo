@@ -208,7 +208,7 @@ namespace Logitude.Accounting.BL.Utils
 
         public virtual string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
         {
-            return TranslateTextsClass.Translate(textCodeCode, tenant); //, getLocalDefaultText);
+            return TranslateTextsClass.Translate(textCodeCode, tenant,getLocalDefaultText); //, getLocalDefaultText);
         }
 
 

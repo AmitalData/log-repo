@@ -57,6 +57,7 @@ namespace Logitude.BL.InvoiceModel.Tools
         private  string myCommunicationLogId;
         private  string AccountingSystemCode;
         private List<APInvoiceLinePM> lines;
+        private string OldTransferStatusCode;
         private void GetObjectTableData()
         {
             ObjectTableRepository myObjectTabelRepository = new ObjectTableRepository(tenant);
@@ -119,6 +120,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                         string CurrencyError = "";
                         string paymentTermError = "Payment Term: " + entityPM.PaymentTermName + ". External ID is missing"; // 
                         string vatError = "";
+                        string InvoiceLengthError = "Due to QBO limitation, invoices with a number that exceeds 21 characters can't be transmitted";
+
 
                         CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(tenant);
                         IQueryable<CardExternalCodeByCurrency> iQueryable_CardExternals = cardExternalCodeByCurrencyRepository.GetCardExternalCodeByCurrenciesByTenant(tenant);
@@ -192,6 +195,13 @@ namespace Logitude.BL.InvoiceModel.Tools
                             }
                         }
 
+                        if (entityPM.InvoiceNumber.Length > 21)
+                        {
+                            isReady = false;
+                            myError = string.IsNullOrEmpty(myError) ? InvoiceLengthError : myError + ";" + InvoiceLengthError;
+
+                        }
+
 
 
                         if (isNewEntity)
@@ -252,6 +262,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                         if (isReady)
                         {
+                            OldTransferStatusCode = entityPM.TransferStatusCode;
                             entityPM.TransferStatusCode = "IP";
                             entityPM.TransferError = null;
                             Run(entityPM);
@@ -500,7 +511,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 DbQueueService queueservice;
                 queueservice = new DbQueueService();
                 queueservice.InitializeQueue("QBO", 0);
-                Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "APInvoice" } };
+                Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "APInvoice" }, { "OldTransferStatusCode", OldTransferStatusCode } };
                 queueservice.Send(param);
                 queueservice.Complete();           
                 APInvoiceRepository repository = new APInvoiceRepository(tenant);

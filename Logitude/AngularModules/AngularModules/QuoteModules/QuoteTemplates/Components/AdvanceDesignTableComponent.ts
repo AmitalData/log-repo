@@ -7,7 +7,7 @@ import {QuoteTemplateSettingPMService} from '../../../Quote/Services/StandardPMs
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {AppTool} from '../../../Infrastructure/Tools';
-
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     selector: 'AdvanceDesignTableComponent',
     moduleId: module.id,
@@ -94,7 +94,7 @@ export class AdvanceDesignTableComponent extends BaseComponent implements OnInit
         }
 
         if (this.QuoteTemplateSettingPM.IsDirty) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
             this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
                 SessionLocator.CurrentSession.StopBusyIndicator();
                 this.QuoteTemplateSettingPM.IsDirty = false;

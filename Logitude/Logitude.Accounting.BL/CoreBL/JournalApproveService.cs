@@ -206,7 +206,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     //{
                     this.Exec_usp_AccountingStreaming(myLedgerTransactionsWithCounters, allGLAccountTotalByMonths.ToList());
                     //CreateReconcileFromStorno(myLedgerTransactionsWithCounters);
-                    var myCreateAutoReconcileWhileStreamingService = new CreateAutoReconcileWhileStreamingService();
+                    ICreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService = new CreateAutoReconcileWhileStreamingService();
                     myCreateAutoReconcileWhileStreamingService.MustInit(_AccountingContext, _JournalPM, myLedgerTransactionsWithCounters);
                     myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming();
                     if (myCreateAutoReconcileWhileStreamingService.ReconciliationList != null &&
@@ -273,7 +273,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
-        private void UpdateJournalWithReconcileNumber(CreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService)
+        private void UpdateJournalWithReconcileNumber(ICreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService)
         {
             if (
                                         this._JournalPM.AccountingEntityCode == "10"// - Reconciliation

@@ -25,9 +25,12 @@ export class ReportComponent {
 
     constructor(private entityResourceService: EntityResourceService) {
         this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
-
         this.LoadData();
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+    }
+
+    InitComponent() {
+
     }
 
     private groupList: ReportGroupList[];

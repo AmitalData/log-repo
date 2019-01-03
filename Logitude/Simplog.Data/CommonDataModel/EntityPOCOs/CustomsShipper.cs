@@ -18,9 +18,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ValidDepositionNumber { get; set; }
         public DateTime? ValidityStartDate { get; set; }
         public DateTime? ValidityEndDate { get; set; }
-        public bool FutureDepositionExist { get; set; }
+        public string SearchFields { get; set; }
         public virtual Card Card { get; set; }
-
+ 
     }
 
 

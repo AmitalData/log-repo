@@ -75,7 +75,7 @@ namespace Simplog.Data.ShipmentsModel
             Database.SetInitializer<ShipmentsContext>(null);
             //string databasename = DatabaseInitializer.GetDatabaseName();
             //Database.DefaultConnectionFactory.CreateConnection(databasename);
-
+            modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
             modelBuilder.Configurations.Add(new Accounts1Map());

@@ -31,11 +31,17 @@ namespace Logitude.WarehouseLib.BL.DataContracts
             public string ShipperId { get; set; }
             public string ConsigneeId { get; set; }
             public string DirectionId { get; set; }
-            public string GrossWeight { get; set; }
-
+            public decimal? GrossWeight { get; set; }
+            public decimal? Volume { get; set; }
+            public int Quantity { get; set; }
+      
            public string ShipmentNumber { get; set; }
            public string InternalNotes { get; set; }
            public string SpecialInstructions { get; set; }
+
+
+
+
 
 
     }
