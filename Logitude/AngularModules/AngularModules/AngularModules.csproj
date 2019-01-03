@@ -231,6 +231,8 @@
     <Content Include="Images\arrow_right_w.png" />
     <Content Include="Images\Flags\--.png" />
     <Content Include="Images\Flags\XK.png" />
+    <Content Include="Images\Icons\collapse.png" />
+    <Content Include="Images\Icons\expand.png" />
     <Content Include="Images\Icons\Share.png" />
     <Content Include="Images\Menu\Deposition.png" />
     <Content Include="Images\Menu\Deposition.Selected.png" />

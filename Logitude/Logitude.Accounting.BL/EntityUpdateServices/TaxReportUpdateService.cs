@@ -124,9 +124,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPOCO.IsCancelled == false && entityPM.IsCancelled == true)
             {
                 // canceled!!
-                entityPM.StatusCode = "C"; // C- Cancelled מבוטל
+                CancelTaxReport(entityPM);
+                return;
             }
-
             if(entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 // recalculate totals
@@ -152,6 +152,42 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
             base.OnUpdating(entityPM, entityPOCO);
+        }
+
+        private void CancelTaxReport(TaxReportPM entityPM)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+            JournalQueryService journalQuery = new JournalQueryService(EntityPM.Tenant);
+            TaxReportLineQueryService reportLineQuery = new TaxReportLineQueryService(entityPM.Tenant);
+            TaxReportQueryService reportQuery = new TaxReportQueryService(entityPM.Tenant);
+            JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(entityPM.Tenant);
+            JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+
+
+            // set status calcelled
+            entityPM.StatusCode = "C"; // C- Cancelled מבוטל
+
+
+            // Update lines Journals
+            List<TaxReportLine> lines = reportQuery.GetReportLines(entityPM.Id, entityPM.Tenant).ToList();
+            foreach (TaxReportLine line in lines)
+            {
+                JournalPM journalPM = journalQuery.GetSingle(line.JournalId, false, false);
+                if (journalPM != null)
+                {
+                    JournalAdditionalDataPM _journalAdPM = additionalDataQueryService.GetSingle(journalPM.Id, false, false);
+
+                    if (_journalAdPM != null)
+                    {
+                        _journalAdPM.TaxReportTransmitStatusCode = null;
+                        _journalAdPM.TaxReportId = null;
+                        _journalAdPM.ChangeSetOp = ChangeSetOperation.Update;
+                        journalAdditionalDataUpdateService.Update(_journalAdPM, true);
+                    }
+                }
+
+            }
+
         }
 
         protected override void Trace(TaxReportPM entityPM, TaxReport entityPOCO, string changesXml)
