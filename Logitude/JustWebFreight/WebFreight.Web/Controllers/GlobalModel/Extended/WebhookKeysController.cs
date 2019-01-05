@@ -40,6 +40,7 @@ using Logitude.BL.GlobalModel.EntityLists;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.Tools.EntityService;
 using WebFreight.Web.DataContracts;
+using System.Security.Authentication;
 
 namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
 { 
@@ -47,7 +48,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
     
     public partial class WebhookKeysController : ApiController
     {
-	   
+        [ActionName("PostPushHookContent")]
         public HttpResponseMessage PostPushHookContent(WebHookTesterData WebHookData)
         {
             if (ModelState.IsValid)
@@ -99,11 +100,15 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                     reader.Close();
                     dataStream.Close();
                     response.Close();
+                    if (responseFromServer == "you are not authonticated to call this page.")
+                    {
+                        throw new AuthenticationException("you are not authonticated to call this page.");
+                    }
                     return Request.CreateResponse(HttpStatusCode.OK, "Sent Successfully");
                 }
 
                 catch (Exception ex)
-                {
+                { 
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
                 }
             }

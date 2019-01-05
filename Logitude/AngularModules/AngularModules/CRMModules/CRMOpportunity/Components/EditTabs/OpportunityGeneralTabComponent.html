@@ -1,4 +1,5 @@
-﻿<style type="text/css">
+
+<style type="text/css">
     .NoteItemBox {
         height: 80px;
         padding: 5px;
@@ -33,10 +34,6 @@
     }
 </style>
 
-
-
-
-
 <div class="TabHolder">
     <table>
 
@@ -44,7 +41,7 @@
             <td>
                 <ScrollViewer>
                     <table>
-                       
+
                         <tr class="FormFieldRow">
                             <td>
                                 <table>
@@ -92,10 +89,11 @@
                                                 <tr>
                                                     <td style="width:640px">
                                                         <LogTextBox [ObjectFieldName]="'Subject'" [ObjectTableName]="ObjectTableName" [Text]="Subject" [InputType]="'ntext'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-
                                                     </td>
 
-                                                    <td></td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -126,13 +124,14 @@
                                                                             [HideAdd]="true"
                                                                             [HideEdit]="true"
                                                                             [HideColumns]="true"
-                                                                            [RunToggleMode]="true"
-                                                                            >
+                                                                            [RunToggleMode]="true">
                                                                     </LogLov>
-
                                                                 </td>
                                                                 <td style="width:36px"></td>
-                                                                <td ></td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
 
 
 
@@ -268,10 +267,9 @@
                                                                             [DataContext]="DataContext"
                                                                             [LookUpTableName]="'Card'"
                                                                             [SelectedValue]="LeadPartnerId"
-                                                                            [HideColumns]="false"   
+                                                                            [HideColumns]="false"
                                                                             [HideAddLink]="true"
-                                                                            [HideAdd]="true"
-                                                                            >
+                                                                            [HideAdd]="true">
                                                                     </LogLov>
                                                                 </td>
                                                                 <td style="width:18px"></td>
@@ -334,7 +332,7 @@
 
 
 
-                                               
+
 
 
 
@@ -353,7 +351,9 @@
                                                     <td style="width:30px;padding-top:140px"></td>
                                                     <td>
                                                         <table>
-                                                            <tr style="height:5px"><td></td></tr>
+                                                            <tr style="height:5px">
+                                                                <td></td>
+                                                            </tr>
                                                             <tr class="FormFieldRow">
                                                                 <td style="width:150px">
                                                                     <LogLabel [ObjectFieldName]="'EstimatedClosingDate'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
@@ -367,7 +367,9 @@
                                                                                                [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                                                             </td>
 
-                                                                            <td></td>
+                                                                            <td>
+                                                                                <div></div>
+                                                                            </td>
                                                                         </tr>
                                                                     </table>
 
@@ -393,7 +395,9 @@
                                                                                 </LogLov>
                                                                             </td>
 
-                                                                            <td></td>
+                                                                            <td>
+                                                                                <div></div>
+                                                                            </td>
                                                                         </tr>
                                                                     </table>
 

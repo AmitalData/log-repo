@@ -31,7 +31,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public double? UnitPrice { get; set; }
     
-    public double? TotalAmount { get; set; }
+    public double? Amount { get; set; }
     
     public Currency Currency { get; set; }
     

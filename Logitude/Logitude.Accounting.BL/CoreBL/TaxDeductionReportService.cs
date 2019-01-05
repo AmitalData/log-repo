@@ -83,7 +83,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-                    myStringBuilder.Append('0', 1);
+                    myStringBuilder.Append("a0");
                 }
 
 
@@ -95,7 +95,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 else
                 {
-                    myStringBuilder.Append('0', 9);
+                    myStringBuilder.Append("a");
+
+                   myStringBuilder.Append('0', 9);
                 }
 
 
@@ -163,15 +165,43 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(' ', 13);
                 }
 
-                myStringBuilder.Append("a" + item.SumOfAmountInLocalCurrency.Value.ToString().PadLeft(11, '0'));
+                string totalInLocalCur = item.SumOfAmountInLocalCurrency.Value.ToString();
+                if (totalInLocalCur != null)
+                {
+                    if (totalInLocalCur.Length > 11) totalInLocalCur = totalInLocalCur.Substring(0, 11);
+
+                    myStringBuilder.Append("a" + totalInLocalCur.PadLeft(11, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+
+                  myStringBuilder.Append('0', 11);
+                }
+               // myStringBuilder.Append("a" + item.SumOfAmountInLocalCurrency.Value.ToString().PadLeft(11, '0'));
 
 
 
-                myStringBuilder.Append("a" + item.SumOfTaxDeductionLocalAmount.Value.ToString().PadLeft(9, '0'));
+             //   myStringBuilder.Append("a" + item.SumOfTaxDeductionLocalAmount.Value.ToString().PadLeft(9, '0'));
+
+                string totalTaxInLocalCur = item.SumOfTaxDeductionLocalAmount.Value.ToString();
+                if (totalTaxInLocalCur != null)
+                {
+                    if (totalTaxInLocalCur.Length > 9) totalTaxInLocalCur = totalTaxInLocalCur.Substring(0, 9);
+
+                    myStringBuilder.Append("a" + totalTaxInLocalCur.PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+
+                    myStringBuilder.Append('0', 9);
+                }
+
 
                 myStringBuilder.Append("00000000");
-
-                string endYearBalance = item.EndYearBalance.ToString();
+              
+                string endYearBalance =  item.EndYearBalance.ToString();
                 if (endYearBalance != null)
                 {
                     if (endYearBalance.Length > 8) endYearBalance = endYearBalance.Substring(0, 8);
@@ -208,7 +238,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-
+                    myStringBuilder.Append("a");
                     myStringBuilder.Append(' ', 14);
                 }
                 myStringBuilder.Append(' ', 52);
@@ -221,8 +251,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
+                    myStringBuilder.Append("a");
 
-                    myStringBuilder.Append('0', 2);
+                   myStringBuilder.Append('0', 2);
                 }
                 myStringBuilder.Append("a60");
                 myStringBuilder.Append('\n');
@@ -427,23 +458,24 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
 
-
-                if (item.TotalPaymentsWithoutDivided != null)
+                string TotalPaymentsWithoutDivided = item.TotalPaymentsWithoutDivided.ToString();
+                if (TotalPaymentsWithoutDivided != null)
                 {
-                    if (item.TotalPaymentsWithoutDivided.Value.ToString().Length > 12) item.TotalPaymentsWithoutDivided.Value.ToString().Substring(0, 12);
+                    if (TotalPaymentsWithoutDivided.Length > 12) TotalPaymentsWithoutDivided= TotalPaymentsWithoutDivided.Substring(0, 12);
 
-                    myStringBuilder.Append("a" + item.TotalPaymentsWithoutDivided.Value.ToString().PadLeft(12, '0'));
+                    myStringBuilder.Append("a" + TotalPaymentsWithoutDivided.PadLeft(12, '0'));
                 }
                 else
                 {
 
                     myStringBuilder.Append('0', 12);
                 }
-                if (item.TotalDeductionsWithoutDivided != null)
+                string TotalDeductionsWithoutDivided = item.TotalDeductionsWithoutDivided.ToString();
+                if (TotalDeductionsWithoutDivided != null)
                 {
-                    if (item.TotalDeductionsWithoutDivided.Value.ToString().Length > 12) item.TotalDeductionsWithoutDivided.Value.ToString().Substring(0, 12);
+                    if (TotalDeductionsWithoutDivided.Length > 12) TotalDeductionsWithoutDivided= TotalDeductionsWithoutDivided.Substring(0, 12);
 
-                    myStringBuilder.Append("a" + item.TotalDeductionsWithoutDivided.Value.ToString().PadLeft(12, '0'));
+                    myStringBuilder.Append("a" + TotalDeductionsWithoutDivided.PadLeft(12, '0'));
                 }
 
                 else
@@ -454,22 +486,25 @@ namespace Logitude.Accounting.BL.CoreBL
                 //myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfAmountInLocalCurrency));
                 //myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
                 myStringBuilder.Append('0', 12);
-                if (item.TotalDivided != null)
+                string TotalDivided = item.TotalDivided.ToString();
+                if (TotalDivided  != null)
                 {
-                    if (item.TotalDivided.Value.ToString().Length > 12) item.TotalDivided.Value.ToString().Substring(0, 12);
+                    if (TotalDivided.Length > 12) TotalDivided= TotalDivided.Substring(0, 12);
 
-                    myStringBuilder.Append("a" + item.TotalDivided.Value.ToString().PadLeft(12, '0'));
+                    myStringBuilder.Append("a" + TotalDivided.PadLeft(12, '0'));
                 }
                 else
                 {
 
                     myStringBuilder.Append('0', 12);
                 }
-                if (item.TotalDeductionsFromDivided != null)
-                {
-                    if (item.TotalDeductionsFromDivided.Value.ToString().Length > 12) item.TotalDeductionsFromDivided.Value.ToString().Substring(0, 12);
 
-                    myStringBuilder.Append("a" + item.TotalDeductionsFromDivided.Value.ToString().PadLeft(12, '0'));
+                string TotalDeductionsFromDivided = item.TotalDeductionsFromDivided.ToString();
+                if (TotalDeductionsFromDivided  != null)
+                {
+                    if (TotalDeductionsFromDivided.Length > 12) TotalDeductionsFromDivided= TotalDeductionsFromDivided.Substring(0, 12);
+
+                    myStringBuilder.Append("a" + TotalDeductionsFromDivided.PadLeft(12, '0'));
                 }
                 else
                 {

@@ -86,7 +86,7 @@ export class NewBIReport extends BaseComponent {
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 if (s != null) {
-                    this.EntityPM.DWQueryId = s.ID;
+                    this.EntityPM.DWQueryId = s.QID;
                     this.SetUIProperties();
                 }
             });

@@ -315,7 +315,10 @@
                                                                             </tr>
                                                                         
                                                                             <tr style="height:60px;">
-                                                                                <td style="vertical-align:top;">
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                        <td style="vertical-align:top;">
                                                                                 
                                                                                 <div id="PasswordMustHaveArea" style="vertical-align:top;text-align:left;margin-top:-15px">
                                                                                     <div style="font-size:13px;font-family:'Arial'">Your Password must have : </div>
@@ -354,6 +357,19 @@
                                                                            
                                                                                 </td>
 
+                                                                                            <td style="width:90px">
+                                                                                    <p id="busyIndicator" style="display: none; text-align: left;margin-top:10px;">
+                                                                                        <img width="40" height="40" src="images/LoginScreen/indicator.gif" alt='loading' />
+                                                                                    </p>
+
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+
+
+                                                                            
+
 
                                                                             </tr>
 
@@ -373,9 +389,6 @@
                                                                                         <a id="BackToLogin" style=" font-size: 12px;margin-top:5px;margin-left:15px; font-family: Arial; vertical-align: central; display: none;text-decoration:underline" href="login.aspx">Back to login page</a>
                                                                                     </p>
 
-                                                                                    <p id="busyIndicator" style="display: none; text-align: center;margin-top:-45px;margin-left:50px">
-                                                                                        <img width="40" height="40" src="images/LoginScreen/indicator.gif" alt='loading' />
-                                                                                    </p>
                                                                                 </td>
 
                                                                             </tr>

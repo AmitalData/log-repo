@@ -34,7 +34,9 @@ export class WebhookTesterComponent extends BaseComponent {
 
     SetWindowArgs(args: any) {
         this.AccessKey = args['AccessKey'];
-        this.PageURL = window.location.href + "WebhooksReceiver.aspx";
+        //var test = 'https://system.logitudeworld.com/Angular18123111/index.html';
+        var MyURL = window.location.href.split('Angular')[0];
+        this.PageURL = MyURL + "WebhooksReceiver.aspx";
         this.InitializeComponent();
     }
     SetNewWizardArgs(args: any) {
@@ -122,7 +124,10 @@ export class WebhookTesterComponent extends BaseComponent {
     private messageWindow: MessageWindow = new MessageWindow();
     OkButtonClicked() {
         SessionLocator.CurrentSession.StartBusyIndicatorCreating();
-
+        if (AppTool.IsNullOrEmpty(this.PageURL) || AppTool.IsNullOrEmpty(this.ContentToPush)) {
+            this.ValidationErrorsList.push("Both URL and Content Fields Are Required .");
+            return;
+        }
         var DataToPush = { URL: this.PageURL, Operation: this.Operation, AccessKey: this.AccessKey, ContentToPush: this.ContentToPush };
         this.myService.PushHookContent(DataToPush).subscribe((myResponse: ServiceResponse) => {
 

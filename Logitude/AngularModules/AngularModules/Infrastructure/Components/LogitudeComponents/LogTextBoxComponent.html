@@ -85,7 +85,7 @@
     }
     .collapse-btn{
 
-        background-image: url('/Images/Icons/collapse.png') !important;
+        background-image: url('Images/Icons/collapse.png') !important;
     }
     .expand-btn{
         position: absolute;
@@ -97,7 +97,7 @@
         cursor: pointer;
 
         background-color: #fff;
-        background-image: url('/Images/Icons/expand.png');
+        background-image: url('Images/Icons/expand.png');
         background-position: center;
         background-repeat:  no-repeat;
         background-size: 12px;
@@ -187,7 +187,10 @@
                                ondrop="return false"
                                (paste)="OnPaste($event)"></textarea>
 
-                    <div *ngIf="isMouseOver" [class.collapse-btn]="isExpanded" title="Expand" class="expand-btn" (click)="ExpandButtonClicked()"></div>
+                    <div *ngIf="isMouseOver" [class.collapse-btn]="isExpanded"
+                        class="expand-btn"
+                        [style.right]="multlineTextBoxLines > 2 ? '22px' : '2px'"
+                        (click)="ExpandButtonClicked()"></div>
 
                 </div>
             </td>

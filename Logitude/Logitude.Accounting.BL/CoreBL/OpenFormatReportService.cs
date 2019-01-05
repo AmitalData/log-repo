@@ -127,7 +127,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.AccountingEntityReference != null)
                 {
                     if (item.AccountingEntityReference.Length > 20) { item.AccountingEntityReference.Substring(0, 20); }
-                    myStringBuilder.Append("a" + item.AccountingEntityReference.PadLeft(20, '0'));
+                    myStringBuilder.Append("a" + item.AccountingEntityReference.PadLeft(20, ' '));
                 }
                 else
                 {
@@ -138,7 +138,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (entityPartnerCode != null)
                 {
-                    if (entityPartnerCode.Length > 3) { entityPartnerCode.Substring(0, 3); }
+                    if (entityPartnerCode.Length > 3) { entityPartnerCode= entityPartnerCode.Substring(0, 3); }
                     myStringBuilder.Append("a" + entityPartnerCode.PadLeft(3, '0'));
                 }
                 else
@@ -151,7 +151,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.Reference2 != null)
                 {
                     if (item.Reference2.Length > 20) { item.Reference2.Substring(0, 20); }
-                    myStringBuilder.Append("a" + item.Reference2.PadLeft(20, '0'));
+                    myStringBuilder.Append("a" + item.Reference2.PadLeft(20, ' '));
                 }
                 else
                 {
@@ -182,12 +182,34 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.GLAccountDisplayNumber != null)
                 {
                     if (item.GLAccountDisplayNumber.Length > 15) { item.GLAccountDisplayNumber.Substring(0, 15); }
-                    myStringBuilder.Append("a" + item.GLAccountDisplayNumber.PadLeft(15, '0'));
+                    myStringBuilder.Append("a" + item.GLAccountDisplayNumber.PadLeft(15, ' '));
                 }
                 else
                 {
                     myStringBuilder.Append(' ', 15);
                 }
+
+                if (item.OppositGLAccount != null)
+                {
+                    if (item.OppositGLAccount.Length > 15) { item.OppositGLAccount.Substring(0, 15); }
+                    myStringBuilder.Append("a" + item.OppositGLAccount.PadLeft(15, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append(' ', 15);
+                }
+
+                if(item.LocalAmountDebit == 0)
+                {
+                    myStringBuilder.Append("2");
+                   
+                }
+                else
+                {
+                    myStringBuilder.Append("1");
+                }
+
+
                 CurrencyPM currency = currencyQuery.GetSinglePM(item.CurrencyId, tenant);
 
 
@@ -196,15 +218,15 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (partnerCode != null)
                 {
-                    if (partnerCode.Length > 3) { partnerCode.Substring(0, 3); }
-                    myStringBuilder.Append("a" + partnerCode.PadLeft(3, '0'));
+                    if (partnerCode.Length > 3) { partnerCode= partnerCode.Substring(0, 3); }
+                    myStringBuilder.Append("a" + partnerCode.PadLeft(3, ' '));
                 }
 
                 else
                 {
                     myStringBuilder.Append(' ', 3);
                 }
-                if (item.LocalAmountDebit != null)
+                if ( item.LocalAmountDebit != 0)
                 {
                     var LocalAmountDebit = "+" + item.LocalAmountDebit;
 
@@ -219,7 +241,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
 
-                if (item.ForeignAmountDebit != null)
+                if (item.ForeignAmountDebit != 0)
                 {
                     var ForeignAmountDebit = "+" + item.ForeignAmountDebit;
 
@@ -248,7 +270,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (user.Code != null)
                     {
                         if (user.Code.Length > 8) { user.Code = user.Code.Substring(0, 9); }
-                        myStringBuilder.Append("a" + user.Code.PadLeft(9, '0'));
+                        myStringBuilder.Append("a" + user.Code.PadLeft(9, ' '));
                     }
                     else
                     {
@@ -316,7 +338,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.DisplayNumber != null)
                 {
                     if (item.DisplayNumber.Length > 15) { item.DisplayNumber.Substring(0, 15); }
-                    myStringBuilder.Append(item.DisplayNumber.PadLeft(15, '0'));
+                    myStringBuilder.Append(item.DisplayNumber.PadLeft(15, ' '));
                 }
                 else
                 {
@@ -325,20 +347,20 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.LocalName != null)
                 {
                     if (item.LocalName.Length > 50) { item.LocalName.Substring(0, 50); }
-                    myStringBuilder.Append("a" + item.LocalName.PadLeft(50, '0'));
+                    myStringBuilder.Append("a" + item.LocalName.PadLeft(50, ' '));
                 }
                 else
                 {
                     if (item.EnglishName != null)
                     {
                         if (item.EnglishName.Length > 50) { item.EnglishName.Substring(0, 50); }
-                        myStringBuilder.Append("a" + item.EnglishName.PadLeft(50, '0'));
+                        myStringBuilder.Append("a" + item.EnglishName.PadLeft(50, ' '));
                     }
                 }
                 if (item.ChartOfAccountsCode != null)
                 {
                     if (item.ChartOfAccountsCode.Length > 15) { item.ChartOfAccountsCode.Substring(0, 15); }
-                    myStringBuilder.Append("a" + item.ChartOfAccountsCode.PadLeft(15, '0'));
+                    myStringBuilder.Append("a" + item.ChartOfAccountsCode.PadLeft(15, ' '));
                 }
                 else
                 {
@@ -347,7 +369,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.ChartOfAccountsName != null)
                 {
                     if (item.ChartOfAccountsName.Length > 30) { item.ChartOfAccountsName.Substring(0, 30); }
-                    myStringBuilder.Append("a" + item.ChartOfAccountsName.PadLeft(30, '0'));
+                    myStringBuilder.Append("a" + item.ChartOfAccountsName.PadLeft(30, ' '));
                 }
                 else
                 {
@@ -373,11 +395,11 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.Address1 != null)
                     {
                         if (item.Address1.Length > 50) { item.Address1.Substring(0, 50); }
-                        myStringBuilder.Append(item.Address1.PadLeft(50, '0'));
+                        myStringBuilder.Append(item.Address1.PadLeft(50, ' '));
                         if (address != null && address.Length > 51)
                         {
                             item.Address2 = address.Substring(51, 60);
-                            myStringBuilder.Append("a" + item.Address1.PadLeft(10, '0'));
+                            myStringBuilder.Append("a" + item.Address1.PadLeft(10, ' '));
                         }
                     }
                     else
@@ -387,7 +409,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.City != null)
                     {
                         if (item.City.Length > 30) { item.City.Substring(0, 30); }
-                        myStringBuilder.Append("a" + item.City.PadLeft(30, '0'));
+                        myStringBuilder.Append("a" + item.City.PadLeft(30, ' '));
                     }
                     else
                     {
@@ -396,7 +418,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.ZipCode != null)
                     {
                         if (item.ZipCode.Length > 8) { item.ZipCode.Substring(0, 8); }
-                        myStringBuilder.Append("a" + item.ZipCode.PadLeft(8, '0'));
+                        myStringBuilder.Append("a" + item.ZipCode.PadLeft(8, ' '));
                     }
                     else
                     {
@@ -405,7 +427,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.CountryName != null)
                     {
                         if (item.CountryName.Length > 30) { item.CountryName.Substring(0, 30); }
-                        myStringBuilder.Append("a" + item.CountryName.PadLeft(30, '0'));
+                        myStringBuilder.Append("a" + item.CountryName.PadLeft(30, ' '));
                     }
                     else
                     {
@@ -418,10 +440,13 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (partnerCode != null)
                         {
                             if (partnerCode.Length > 15) { partnerCode.Substring(0, 15); }
-                            myStringBuilder.Append("a" + partnerCode.PadLeft(15, '0'));
+                            myStringBuilder.Append("a" + partnerCode.PadLeft(15, ' '));
                         }
 
-
+                        else
+                        {
+                            myStringBuilder.Append(' ', 15);
+                        }
                     }
                     else
                     {
@@ -431,7 +456,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-                    myStringBuilder.Append(' ', 60);
+                    myStringBuilder.Append(' ', 143);
                 }
 
                 myStringBuilder.Append(' ', 15);
@@ -500,7 +525,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.CurrencyCode != null)
                     {
                         if (item.CurrencyCode.Length > 3) { item.CurrencyCode.Substring(0, 3); }
-                        myStringBuilder.Append("a" + item.CurrencyCode.PadLeft(3, '0'));
+                        myStringBuilder.Append("a" + item.CurrencyCode.PadLeft(3, ' '));
                     }
                     else
                     {
