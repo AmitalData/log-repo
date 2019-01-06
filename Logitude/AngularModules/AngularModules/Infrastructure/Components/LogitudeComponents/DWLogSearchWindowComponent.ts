@@ -1,4 +1,3 @@
-/// <reference path="../../../commonmodules/commonothers/components/dwquerybuilder/dwquerybuildercomponent.ts" />
 declare var window: any;
 declare var System: any;
 import {Component, OnInit, OnDestroy, Input, Output, EventEmitter, AfterViewInit} from '@angular/core';
