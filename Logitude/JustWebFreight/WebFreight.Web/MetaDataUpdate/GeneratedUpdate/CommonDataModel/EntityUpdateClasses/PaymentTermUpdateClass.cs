@@ -126,9 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
 			      				    SearchFields =  "PaymentTerm,PaymentTerms,,Id,",
-                CodeField = "Code",
-                NameField = "EnglishName",
-
+			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
