@@ -1239,7 +1239,7 @@ namespace Logitude.Customs.Def.ClosedTable
             {
                 Code = "8374",
                 InOut = InOutEnum.I.ToString(),
-                Description = "מסר בקשה לפיצול מטען",
+                Description = "משוב לפיצול מטען",
                 DcaPrefixName = "SendMN_MSG8374_CargoSplitRequestFeedBack_Message_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
