@@ -1,9 +1,9 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { CustomMessageWrapperComponent} from '../../../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
+import { CustomMessageWrapperComponent } from '../../../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { AppTool, DateTool } from '../../../../../../Infrastructure/Tools';
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from '../../../../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
 import { CustomSendOptionsArgs } from '../../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
-import { CustomMessageProgressComponent } from '../../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';import { EntityArgs } from '../../../../../../Infrastructure/DataContracts/EntityArgs';
+import { CustomMessageProgressComponent } from '../../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent'; import { EntityArgs } from '../../../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -55,8 +55,8 @@ export class BankAccountToRefundComponent
 
         if (!AppTool.IsNullOrEmpty(entityArgs)) {
             this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response: any) => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.Deposit").subscribe((response: any) => {
-                            this.LoadBanks();
+                this.EntityResourceService.getEntityResourceByTableName("Customs.Deposit").subscribe((response: any) => {
+                    this.LoadBanks();
                 });
             });
         }
@@ -102,10 +102,10 @@ export class BankAccountToRefundComponent
             this.RequestParams.FileNumber = value;
         }
         if (value) {
-            this.UIProperties.SetRequired("FileNumber", null, false);
+            this.UIProperties.SetRequired("FileNumber", this.ObjectTableName, false);
         }
         else {
-            this.UIProperties.SetRequired("FileNumber", null, true);
+            this.UIProperties.SetRequired("FileNumber", this.ObjectTableName, true);
         }
     }
 
@@ -231,12 +231,18 @@ export class BankAccountToRefundComponent
             return;
         }
 
+        this.InternalBankId = null;
+        this.SelectedBankIndex = null;
+        this.BankCode = null;
+        this.AccountBranch = null;
+        this.AccountNumber = null;
+        this.AccountCurrency = null;
+
         switch (this.CountryCode) {
             case "IL": // Israel
                 this.SetIsraelBankFieldsEnabled();
                 break;
             default: // Foreign
-                this.InternalBankId = null;
                 this.SetIsraelBankFieldsDisabled();
                 break;
         }
@@ -244,13 +250,15 @@ export class BankAccountToRefundComponent
 
     SetIsraelBankFieldsDisabled() {
         this.IsraelBankFieldsEnabled = false;
-        this.UIProperties.SetEnabled("InternalBankId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("InternalBankId", null, false);
+        this.UIProperties.SetEnabled("AccountCurrency", null, true);
         this.UIProperties.SetRequired("AccountCurrency", null, true);
     }
 
     SetIsraelBankFieldsEnabled() {
         this.IsraelBankFieldsEnabled = true;
-        this.UIProperties.SetEnabled("InternalBankId", this.ObjectTableName, true);
+        this.UIProperties.SetEnabled("InternalBankId", null, true);
+        this.UIProperties.SetEnabled("AccountCurrency", null, false);
         this.UIProperties.SetRequired("AccountCurrency", null, false);
     }
 
@@ -355,20 +363,20 @@ export class BankAccountToRefundComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
         currRequestParams.Tenant = SessionLocator.Tenant;
 
-        currRequestParams.FileType = "2";//this.FileTypeCode;
+        currRequestParams.FileType = this.FileTypeCode;
         currRequestParams.FileNumber = this.FileNumber;
         currRequestParams.Numeral = this.Numeral;
         currRequestParams.IdentifierType = this.IdentifierType;
         currRequestParams.IdentifierCode = this.IdentifierCode;
         currRequestParams.CountryCode = this.CountryCode;
         currRequestParams.BankCode = this.BankCode;
-        currRequestParams.AccountBranch = this.AccountBranch;       
+        currRequestParams.AccountBranch = this.AccountBranch;
         currRequestParams.AccountNumber = this.AccountNumber;
         currRequestParams.AccountCurrency = this.AccountCurrency;
 
         CustomMessageProgressComponent
             .ShowProgressBar(currRequestParams.PBId,
-            "שליחת בקשה להחזר פקדון", true)
+                "שליחת בקשה להחזר פקדון", true)
             .then((res) => {
                 this.ResponseData = res;
                 this.OnMassageDisplayMethod();
