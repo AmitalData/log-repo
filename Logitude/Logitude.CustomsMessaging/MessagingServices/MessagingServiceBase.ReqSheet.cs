@@ -911,7 +911,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
 
                 var res = AnalyzeCore(requestParams, customsResponse, false);
-                bool tryConcurrentKiller = ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
+                bool tryConcurrentKiller = true;//ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
                     CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentKey(requestParams);
@@ -952,7 +952,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 //var communicationLogStep = _CustomsRequestsSheetService.GetCommunicationLogStep();
                 //communicationLogStep.Retries>0
 
-                bool tryConcurrentKiller = ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
+                bool tryConcurrentKiller = true;//ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
                     if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
@@ -1171,7 +1171,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
             }
 
-            bool tryConcurrentKiller = ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
+            bool tryConcurrentKiller = true;//ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
             if (tryConcurrentKiller)
             {
                 if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
@@ -1800,7 +1800,7 @@ Exception:" + ee.Message
             {
 
 
-                bool tryConcurrentKiller = ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
+                bool tryConcurrentKiller = true;//ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
                     var requestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>();
