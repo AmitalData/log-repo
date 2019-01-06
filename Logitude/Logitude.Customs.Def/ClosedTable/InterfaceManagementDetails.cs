@@ -1224,8 +1224,24 @@ namespace Logitude.Customs.Def.ClosedTable
                 Code = "8370",
                 InOut = InOutEnum.O.ToString(),
                 Description = "מסר בקשה לפיצול מטען",
-                DcaPrefixName = "SendMN_MSG8374_CargoSplitRequestFeedBack_Message_Out",
+                DcaPrefixName = "",
                 DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = 5,
+                AllowRestore = true,
+                //NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "8374",
+                //      NeedSignature = false,
+            });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "8374",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מסר בקשה לפיצול מטען",
+                DcaPrefixName = "SendMN_MSG8374_CargoSplitRequestFeedBack_Message_Out.",
+                DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
                 AllowRestore = true,
                 //NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
@@ -2432,6 +2448,10 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = "",
                 //  NeedSignature = false
             });
+
+
+
+
             //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
             var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();
             var myRequestCode = pm.ResponseInterfaceCode;
