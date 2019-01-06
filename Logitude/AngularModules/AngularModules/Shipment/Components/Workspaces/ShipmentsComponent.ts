@@ -99,7 +99,7 @@ export class ShipmentsComponent {
         this.IsQueryVisible_EAWBGroup = FeatureLocator.HasFeaturePermession("Shipment", "EXPECTEDDEPATURE") || FeatureLocator.HasFeaturePermession("Shipment", "AIRLINESUPDATES") ? true : false;
         this.IsQueryVisible_ExpectedDepartures = FeatureLocator.HasFeaturePermession("Shipment", "EXPECTEDDEPATURE") ? true : false;
         this.IsQueryVisible_AirlinesUpdates = FeatureLocator.HasFeaturePermession("Shipment", "AIRLINESUPDATES") ? true : false;
-        this.IsMessagingStockVisible = SessionLocator.TenantManagementPM.IsAWBStockPrepaid;
+        this.IsMessagingStockVisible = SessionLocator.TenantManagementJS.IsAWBStockPrepaid;
 
         // Others
         this.IsQueryVisible_AllFollowUps = FeatureLocator.HasFeaturePermession("Shipment", "ALLFOLLOWUPS") ? true : false;

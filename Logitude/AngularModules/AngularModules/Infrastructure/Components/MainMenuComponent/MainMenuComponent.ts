@@ -52,6 +52,7 @@ export class MainMenuComponent {
 
         window.MenusTables.filter(f => f.MenuTypeCode.toUpperCase() == "MAIN").forEach((item) => {
 
+       
             var isAddingItem = false;
 
             if (item.FeatureId == null) {
@@ -63,11 +64,7 @@ export class MainMenuComponent {
                     isAddingItem = true;
                 }
             }
-
-            //if (item.TextCode == "General.MH.GettingStarted") {
-            //    isAddingItem = true;
-            //}
-
+         
             if (isAddingItem) {
                 var menuItem: MainMenuItem = new MainMenuItem(item.TextCode, AppTool.GetMainMenuIconCode(item.TextCode));
                 menuItem.IndexOfOrder = item.IndexOfOrder;
@@ -506,6 +503,29 @@ export class MainMenuComponent {
                         myComponentPath = "./InfrastructureModules/InfrastructureBusinessProcess/Components/Workspaces/TasksWorkspaceComponent";
                         break;
                     }
+
+                    case "General.MH.Depositions": {
+                        ServiceLocator.SendTotangoUserActivity("Customs Shipper", "List View");
+                        var listArgs = new ListComponentArgs();
+                        listArgs.QueryCode = "AllDepositionsQuery";
+                        listArgs.ObjectTableName = "CustomsShipper";
+                        listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
+                        listArgs.HideBackButton = true;
+                        this._entityResourceService.getEntityResourceByTableName("CustomsShipper", 0).subscribe(response => {
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    cmpRef.instance.ComponentRef = cmpRef;
+                                    cmpRef.instance.Run(listArgs);
+                                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                    this.ChangeSessionHeader(this.SelectedMenu);
+                                    this.isChangingSelected = false;
+                                    // this.pointerEvents = 'all';
+                                });
+                        });
+                        break;
+                    }
+
+
 
                     default: {
                         if (this.SelectedMenu.ObjectTableName) {

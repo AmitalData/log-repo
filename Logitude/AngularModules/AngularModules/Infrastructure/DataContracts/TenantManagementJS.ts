@@ -1,0 +1,52 @@
+import { TenantManagementLicensePM } from '../EntityPMs/TenantManagementLicensePM';
+
+export class TenantManagementJS {
+    public Id: number;
+    public Name: string;
+    public PackageCode: string;
+    public PackageName: string;
+    public TTY: string;
+    public PIMA: string;
+    public AWBMessagesCCSTypeCode: string;
+    public IsAWBStockPrepaid: boolean;
+    public TrialStartDate: Date;
+    public TrialEndDate: Date;
+    public PaidUntilDate: Date;
+    public PrivateLabelId: string;
+    public PaymentFailure: boolean;
+    public SuspendDate: Date;
+    public IsTrial: boolean;
+    public IsRecurring: boolean;
+    public IsEAWBOnlyDemo: boolean;
+    public IsRestrictedByAirline: boolean;
+    public IsCargonautEnabled: boolean;
+    public IsDEXXConnectionEnabled: boolean;
+    public ManageLicencesPerUser: boolean;
+    public ChangeHeaderColor: boolean;
+    public TrailDaysLeft: number;
+    public PaidDaysLeft: number;
+    public SuspendDaysLeft: number;
+    public NumberOfUsers: number;
+    public BluesnapContractId: string;
+    public BluesnapAccount: string;
+    public ManagesRegisteredAgent: boolean;
+    public IsINTTRAOnlyDemo: boolean;
+    public IsMultiPackage: boolean;
+    public TemporalPackageCode: string;
+    public PackagesCodes_PK: Array<string> = [];
+    public PackagesCodes_BS: Array<string> = [];
+
+    private tenantManagementLicenses: TenantManagementLicensePM[];
+    get TenantManagementLicenses() {
+        if (this.tenantManagementLicenses == null) {
+            this.tenantManagementLicenses = [];
+        }
+
+        return this.tenantManagementLicenses;
+    }
+    set TenantManagementLicenses(newValue: TenantManagementLicensePM[]) {
+        if (this.tenantManagementLicenses != newValue) {
+            this.tenantManagementLicenses = newValue;
+        }
+    }
+}

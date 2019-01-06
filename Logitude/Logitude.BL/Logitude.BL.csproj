@@ -327,6 +327,7 @@
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\WeightUnitStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CodePropertiesMapping\IncotermCodePropertiesMapping.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AgentSharedManifestCustomFilter.cs" />
+    <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\WarehouseCustomFilter.cs" />
     <Compile Include="CommonDataModel\DataContracts\ShipmentPickUpDeliverySL.cs" />
     <Compile Include="CommonDataModel\DataContracts\UsersByTenantData.cs" />
@@ -387,6 +388,11 @@
     <Compile Include="GlobalModel\CloseTables\EnumGenerated\PaymentMethodStruct.Generated.cs" />
     <Compile Include="GlobalModel\CloseTables\EnumGenerated\RecurringPeriodStruct.Generated.cs" />
     <Compile Include="GlobalModel\CloseTables\EnumGenerated\TenantTypeStruct.Generated.cs" />
+    <Compile Include="GlobalModel\EntityLists\WebhookKeysList.cs" />
+    <Compile Include="GlobalModel\EntityPMs\WebhookKeysPM.cs" />
+    <Compile Include="GlobalModel\EntityQueries\WebhookKeysQuery.cs" />
+    <Compile Include="GlobalModel\Tools\DataMapping\WebhookKeysMapping.cs" />
+    <Compile Include="GlobalModel\Tools\EntityService\WebhookKeysService.cs" />
     <Compile Include="Helpers\FullAccountingHelper.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\ObjectTable.cs" />
     <Compile Include="CommonDataModel\APIDataContract\PackageType.Generated.cs" />

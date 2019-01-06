@@ -982,6 +982,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\CommunicationLogStepController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ComputingPartnerViewsExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\AgentSharedDocumentExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\CustomerDepositionExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\DocumentFilingBackupBatchExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\HybridTenantStateExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ImporterDepositionController.cs" />
@@ -1516,6 +1517,7 @@
     <Compile Include="Controllers\GlobalModel\Extended\BatchServicesDefinitionExtendedController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\SystemMetadataLastUpdateController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\DocumentTypeMetaDataController.cs" />
+    <Compile Include="Controllers\GlobalModel\Extended\WebhookKeysController.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\AnalyzeQueueViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\ApiCredintialsViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\AWBMessagesCCSTypeViewsController.Generated.cs" />
@@ -1527,10 +1529,12 @@
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\RecurringPeriodViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\TenantManagmentPrivateLabelsViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\TenantTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\ListControllers\WebhookKeysViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\AnalyzeQueueController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\ApiCredintialsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\BatchServicesDefinitionController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\BluesnapContractController.Generated.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\PMControllers\WebhookKeysController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BusinessRoleExtendedViewsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\CustomPickListExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DWQueryBuilderController.cs" />
@@ -1815,6 +1819,7 @@
     <Compile Include="CustomWebServices\BL\XLSExport\MasavPaymentsToAgentProvider.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\XLSExportService.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\XLSExportBase.cs" />
+    <Compile Include="DataContracts\WebHookTesterData.cs" />
     <Compile Include="DataContracts\CommunicationLogSettings.cs" />
     <Compile Include="DataContracts\AgentSharedManifestsSummaryClass.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.AccumalationState.cs" />
@@ -2509,6 +2514,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\TenantManagementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\TenantManagmentPrivateLabelsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\TenantTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\WebhookKeysUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\GlobalModelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\APILogsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\BusinessHoursHolidayUpdateClass.cs" />

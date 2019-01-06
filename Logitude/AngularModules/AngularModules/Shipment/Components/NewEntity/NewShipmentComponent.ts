@@ -113,7 +113,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
         this.myShippingLineService = new ShippingLinePMService();
     }
     LoadAllowedAirline() {
-        if (SessionLocator.TenantManagementPM.IsRestrictedByAirline) {
+        if (SessionLocator.TenantManagementJS.IsRestrictedByAirline) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageCarrierId)) {
                     if (this.EntityPM.TransportModeId == "A") {

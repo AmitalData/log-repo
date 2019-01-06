@@ -10,7 +10,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
   public  class WebhookKeys
     {
         [Key]
-        public long Id { get; set; }
+        public string Id { get; set; }
         public string AccessKey { get; set; }
         public int Tenant { get; set; }
         public string PartnerName { get; set; }

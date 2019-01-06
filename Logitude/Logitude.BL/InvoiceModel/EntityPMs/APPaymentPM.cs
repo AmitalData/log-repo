@@ -83,6 +83,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string UpdatedByUserId { get; set; }
         public string CreditCardTypeId { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? FirstApproveDate { get; set; }
+
         private List<APPaymentInvoicePM> paymentInvoices;
         [Include]
         [Composition]

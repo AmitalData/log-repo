@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, ViewContainerRef, OnInit, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AdvancedQueryFilterPM} from '../../../Infrastructure/EntityPMs/AdvancedQueryFilterPM';
@@ -219,7 +219,7 @@ export class AdvanceSearchComponent implements OnInit {
                 this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
             }
 
-            this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenant(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId).subscribe(myResult => {
+        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryID).subscribe(myResult => {
                 if (myResult == null) {
                     this.AdvancedQueryFilterPMs = [];
                 }

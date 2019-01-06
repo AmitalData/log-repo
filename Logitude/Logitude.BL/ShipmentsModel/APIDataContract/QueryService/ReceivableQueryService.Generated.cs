@@ -62,7 +62,7 @@ using Simplog.Data.ShipmentsModel;
 				   
 				   temp.Quantity = item.Quantity;
 				   temp.UnitPrice = item.UnitPrice;
-				   temp.TotalAmount = item.TotalAmount;			  
+				   temp.Amount = item.TotalAmount;			  
 				   if(item.CurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService2 = new CurrencyQueryService(Tenant);
@@ -136,7 +136,7 @@ using Simplog.Data.ShipmentsModel;
 					
 					temp.Quantity = item.Quantity;
 					temp.UnitPrice = item.UnitPrice;
-					temp.TotalAmount = item.TotalAmount;					CurrencyQueryService CurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					temp.TotalAmount = item.Amount;					CurrencyQueryService CurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(item.Currency != null)
 					{
 						var myCurrencyPM = CurrencyCurrencyService.CurrencyDataMappingAndValidatin(item.Currency,Tenant,ComputingPartnerName);

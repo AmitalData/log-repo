@@ -129,14 +129,14 @@ export class MaintenanceComponent {
             }
         });
 
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.Automations")) {
-            var item = new MenusTablePM();
-            item.CategoryTypeCode = "BUP";
-            item.Icon = "Settings"
-            item.Code = "AUTO";
-            item.ObjectTableName = "Automations";
-            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        }
+        //if (FeatureLocator.HasFeaturePermession("General", "General.Features.Automations")) {
+        //    var item = new MenusTablePM();
+        //    item.CategoryTypeCode = "BUP";
+        //    item.Icon = "Settings"
+        //    item.Code = "AUTO";
+        //    item.ObjectTableName = "Automations";
+        //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        //}
 
         this.BuildPersonalSettings();
         this.BuildSystemSettings();
@@ -315,6 +315,15 @@ export class MaintenanceComponent {
                 item.Code = "APIC";
                 item.ObjectTableName = "ApiCredintials";
                 item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "ApiCredintials")[0].Id
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
+            if (FeatureLocator.HasFeaturePermession("WebhookKeys", "WebhookKeys")) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CMS";
+                item.Icon = "List"
+                item.Code = "WHKS";
+                item.ObjectTableName = "WebhookKeys";
+                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "WebhookKeys")[0].Id
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
             if (FeatureLocator.HasFeaturePermession("APILogs", "APILogs")) {
@@ -726,8 +735,8 @@ export class MaintenanceComponent {
                 }
                 case "CHPA": {
                     var logitudeWindow = new LogitudeWindow();
-                    logitudeWindow.Width = 800;
-                    logitudeWindow.Height = 550;
+                    logitudeWindow.Width = 600;
+                    logitudeWindow.Height = 400;
                     logitudeWindow.Title = "Change User Password";
                     this._entityResourceService.getEntityResourceByTableName("User").subscribe(response => {
                         logitudeWindow.DataContext = this;

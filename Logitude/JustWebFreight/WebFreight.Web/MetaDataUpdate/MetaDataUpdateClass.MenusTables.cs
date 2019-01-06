@@ -126,6 +126,9 @@ namespace WebFreight.Web.MetaDataUpdate
 
             Feature sharedShipmentsFeature = tenantFeatures.Where(d => d.Code == "SHAREDSHIPMENTS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature sharedInvoicesFeature = tenantFeatures.Where(d => d.Code == "SHAREDINVOICES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+
+
+            Feature depositionFeature = tenantFeatures.Where(d => d.Code == "DEPOSITIONS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             #endregion
 
             #region Main Menus
@@ -157,6 +160,10 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "SSHT", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 28, CategoryTypeCode = null, TextCode = "General.MH.Shipments", Icon = "OperationsPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Shipment").FirstOrDefault().Id, FeatureId = sharedShipmentsFeature.Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "SINV", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 29, CategoryTypeCode = null, TextCode = "General.MH.Invoices", Icon = "AccountingPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "ARInvoice").FirstOrDefault().Id, FeatureId = sharedInvoicesFeature.Id }, MenusTablesRepository, tenantMenusTables);
+
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "DEPO", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 30, CategoryTypeCode = null, TextCode = "General.MH.Depositions", Icon = "DepositionsPath", FeatureId = depositionFeature.Id }, MenusTablesRepository, tenantMenusTables);
+
+
 
             #endregion
 

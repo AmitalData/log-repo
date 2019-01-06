@@ -190,7 +190,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(Tabel, authToken.Tenant);
                 bool IsClosed = dWObjectTablePM.IsClosed;
                 string WhereStmt = " where " + Field + " is not null";
-                string PagingString = " ORDER BY " + Field + " OFFSET " + filters.PageIndex + " ROWS FETCH NEXT " + filters.PageSize + " ROWS ONLY";
+                string PagingString = " ORDER BY " + Field;//+ " OFFSET " + filters.PageIndex + " ROWS FETCH NEXT " + filters.PageSize + " ROWS ONLY";
 
                 if (!string.IsNullOrEmpty(SearchData))
                 {
@@ -198,7 +198,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 }
                 if (!IsClosed)
                 {
-                    WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + ".[Parent Tenant] = " + authToken.Tenant); //authToken.Tenant
+                    if (Tabel != "DIM_Tenants")
+                    {
+                        WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + ".[Parent Tenant] = " + authToken.Tenant); //authToken.Tenant
+                    } 
+                   
                     //if (!string.IsNullOrEmpty(SearchData))
                     //{
                     //    WhereStmt = WhereStmt + (" and " + Field + " like '%" + SearchData + "'");

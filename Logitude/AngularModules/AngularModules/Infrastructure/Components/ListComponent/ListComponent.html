@@ -188,6 +188,15 @@
                       <button [disabled]="IsNewEntityButtonDisabled" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="AddNewEntity()">{{NewEntityButtonLabel}}</button>
                     </td>
 
+
+                      <td style="width: 5px;" *ngIf="ObjectTableName == 'CustomsShipper' && IsShowNewDepositionFormLink">
+                          <div></div>
+                      </td>
+                      <td style="width: 1px;" *ngIf="ObjectTableName == 'CustomsShipper' && IsShowNewDepositionFormLink">
+                          <p (click)="NewDepositionFormClcik()" class="CustomLink" style="font-size:12px;width:130px;vertical-align:central">New Deposition Form</p>
+                      </td>
+
+
                     <td style="width: 5px;">
                       <div></div>
                     </td>
@@ -213,7 +222,8 @@
                     </td>
 
                     <td *ngIf="IsShowAddQuoteTemplateFromLibraryLink" style="width: 175px; vertical-align: middle;">
-                      <p (click)="LinkAddQuoteTemplateFromLibraryClcik()" class="CustomLink" style="font-size:12px;width:173px;vertical-align:central">Add templates from library</p>
+                      <p (click)="LinkAddQuoteTemplateFromLibraryClcik()" class="CustomLink" style="font-size:12px;width:173px;vertical-align:central">{{'QuoteTemplate.B.Addtemplatefromlibrary' | TextCodeTranslationPipe}}
+                        </p>
                     </td>
 
                     <td *ngIf="!IsShowTipArea && IsShowTipIcon" style="width: 30px; vertical-align: central;">

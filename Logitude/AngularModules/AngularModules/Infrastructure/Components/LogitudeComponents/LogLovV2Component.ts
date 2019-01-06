@@ -39,6 +39,7 @@ declare var logLoveReturnWhich, Selection: any;
 import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
 import {PartnerTypeList} from '../../../Common/EntityLists/PartnerTypeList';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
+import { SessionInfo } from '../../Utilities/SessionInfo';
 
 @Component({
     selector: 'LogLov',
@@ -609,7 +610,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                                 lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName)>-1);
                             }
                             else {
-                                lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
+                                if(!SessionInfo.LoggedUserPM.ShowLocalNameInLOV){
+                                    lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
+                                    }
+                                    else{
+                                        lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUpLocal && d.ObjectTableId == this.LookUpTable.Id);
+                                    }
                             }
                             if (!this.DisplayFieldsFromList) {
                                 lookupFields = lookupFields.sort((a, b) => { return a.DisplayInLookUpIndex - b.DisplayInLookUpIndex });
@@ -1988,7 +1994,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName)>-1);
             }
             else {
+                if(!SessionInfo.LoggedUserPM.ShowLocalNameInLOV){
                 lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
+                }
+                else{
+                    lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUpLocal && d.ObjectTableId == this.LookUpTable.Id);
+                }
             }
             if (!this.DisplayFieldsFromList) {
                 lookupFields = lookupFields.sort((a, b) => { return a.DisplayInLookUpIndex - b.DisplayInLookUpIndex });

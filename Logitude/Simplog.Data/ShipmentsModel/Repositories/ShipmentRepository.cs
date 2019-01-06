@@ -336,6 +336,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             {
                 result = (from f in result where f.CustomerId == customerid select f);
             }
+            else
+            {
+                result = (from f in result where f.CustomerId !=null select f);
+            }
             if (!string.IsNullOrEmpty(directionId))
             {
                 result = (from f in result where f.DirectionId == directionId select f);
@@ -379,6 +383,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             if (!string.IsNullOrEmpty(customerid))
             {
                 result = (from f in result where f.CustomerId == customerid select f);
+            }
+            else
+            {
+                result = (from f in result where f.CustomerId !=null select f);
             }
 
             return result;

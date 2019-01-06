@@ -1,3 +1,4 @@
+/// <reference path="../../../commonmodules/commonothers/components/dwquerybuilder/dwquerybuildercomponent.ts" />
 declare var window: any;
 declare var System: any;
 import {Component, OnInit, OnDestroy, Input, Output, EventEmitter, AfterViewInit} from '@angular/core';
@@ -28,8 +29,10 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import { NewEntityArgs} from '../../Args';
 import {ImportEntityArgs} from '../../../Common/Components/Maintenance/TenantImportComponent';
 import {CachedDataManager} from '../../Utilities/CachedDataManager';
-
-
+import {MultSelectValue} from '../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent';
+import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import {ComponentArgs} from '../../../Infrastructure/DataContracts/ComponentArgs';
+import {ParameterComponentArgs} from '../../../Infrastructure/DataContracts/ParameterComponentArgs';
 @Component({
     moduleId: module.id,
 
@@ -42,7 +45,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
     @Output() SearchFieldchangeevent = new EventEmitter();
     @Output() ItemSelected = new EventEmitter();
-    
+   
     private _entityListService: EntityListService
     private entityPMService: EntityPMService
     public SearchText: string = "Search";
@@ -82,18 +85,79 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     DisplayFieldsFromList: string = null;
     PseventRowSelectEventSub: any;
 
+    SecondListHeaderItems: string[] = [];
+    SecondListValueItems: MultSelectValue[] = [];
+    private ViewModel: any;
+
     constructor() {
         super();
         this._entityListService = new EntityListService;
         this.entityPMService = new EntityPMService;
         this.TenantPM = InfraSettings.TenantPM;
-        //SessionLocator.CurrentSession.SubscriptionAdd(
+
+       
+
         this.PseventRowSelectEventSub=  SessionLocator.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
                 if (res == this.ObjectTableName) {
                     this.preventSelect = true;
                 }
-            })
-        //);
+        })
+
+
+        SessionLocator.CurrentSession.SessionEvent.subscribe((res) => {
+
+            if (res && res.ComponentName == "DWLogSearchAddFieldsComponent" && res.IsFirstRequest && res.Item) {
+                var item = res.Item;
+                var s = item.Field1;
+                res.IsFirstRequest = false;
+                var newItem = new MultSelectValue();
+                var key = "";
+                var i = 0;
+
+                if (!AppTool.IsNullOrEmpty(SessionLocator.CurrentSession.Sessionkey)) {
+                    if (ComponentArgs && ComponentArgs.ComponentLists) {
+                        var sessionkey: string = SessionLocator.CurrentSession.Sessionkey + "DWLogSearchWindow";
+                        var Component = ComponentArgs.ComponentLists.filter(d => d.key == sessionkey)[0];
+                        if (Component) {
+                            var myComponent = Component.Component;
+                            if (myComponent) {
+                                myComponent.SecondListHeaderItems.forEach((field) => {
+                                    if (i != 0) key = i.toString();
+                                    newItem["Value" + key] = item["Field" + key];
+                                    i += 1;
+                                });
+
+                                myComponent.SecondListValueItems.push(newItem);
+                            }
+                        }
+                    }
+                }
+
+
+
+
+
+
+
+
+
+
+            }
+
+
+        });
+
+   
+    }
+
+    RemoveItemFromSecondList(item:any) {
+        if (item != null) {
+            var index = this.SecondListValueItems.indexOf(item);
+            if (index > -1) {
+                this.SecondListValueItems.splice(index, 1);
+
+            }
+        }
     }
 
     ngOnInit() {
@@ -108,11 +172,30 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     } 
 
     SetWindowArgs(args: CustomEntityArgs) {
+        if (AppTool.IsNullOrEmpty(SessionLocator.CurrentSession.Sessionkey)) {
+            SessionLocator.CurrentSession.Sessionkey = Guid.newGuid();
+        }
+
+        ComponentArgs.AddComponent(new ParameterComponentArgs(SessionLocator.CurrentSession.Sessionkey + "DWLogSearchWindow", this));
+
         this.ObjectTableName = args.ObjectTableName; // lookup table
         this.ObjectFieldName = args.DisplayFieldsFromList;
         this.LOVAdditionalColumns = args.LOVAdditionalColumns;
+        this.ViewModel = args.DataContext; 
+
+        if (this.ViewModel) {
+            this.SecondListValueItems = this.ViewModel.MultSelectValueLists;
+        }
+      
+
+
+        if (!this.SecondListValueItems) {
+            this.SecondListValueItems = [];
+        }
+
         this.Args = args;
-       
+        this.BuildSecondListHeader();
+     
     }
 
     BuildColumns() {
@@ -126,7 +209,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
             FieldName: 'Field', 
             DataTypeCode: 'text',
             Display: this.ObjectFieldName.replace('[', '').replace(']',''),
-            Styles: { width: '250px' },  
+            Styles: { width: '150px' },  
             IsCustomTemplate: true,
             HtmlListComponentName: 'DWLogSearchWindowFieldsComponent',
             HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/DWLogSearchWindowFieldsComponent',
@@ -146,6 +229,17 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
                 index++;
             });
         }
+
+        this.columns.push({
+            FieldName: "Add",
+            DataTypeCode: 'String',
+            Display: '',
+            IsCustomTemplate: true,
+            Styles: { width: '40px' },
+            HtmlListComponentName: 'DWLogSearchAddFieldsComponent',
+            HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/DWLogSearchAddFieldsComponent',
+        });
+
    
     }
 
@@ -223,7 +317,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
                 var entityList = $event.rowData;
                 var selectedEntity = $event.rowData["Field"];
                 
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit(selectedEntity);
+               // SessionLocator.CurrentSession.CloseCurrentWindowEmit(selectedEntity);
             }
         }
         else {
@@ -233,8 +327,38 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
     CloseButtonClicked() {
         //SessionLocator.CurrentSession.CloseCurrentWindow();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(null);
+        var textValue = "";
+        this.SecondListValueItems.forEach((field) => {
+            if (field["Value"]) {
+                if (textValue) textValue += ",";
+                textValue += field["Value"];
+            }
+        
+        });
 
+        if (this.ViewModel) {
+            this.ViewModel.MultSelectValueLists = this.SecondListValueItems;
+        }
+        SessionLocator.CurrentSession.CloseCurrentWindowEmit(textValue);
+
+
+       // SessionLocator.CurrentSession.CloseCurrentWindowEmit(null);
+
+    }
+
+
+    BuildSecondListHeader() {
+
+        this.SecondListHeaderItems.push(this.ObjectFieldName.replace('[', '').replace(']', ''));
+        var additionalColumns = [];
+        if (this.LOVAdditionalColumns) {
+            additionalColumns = this.LOVAdditionalColumns.split(',');
+        }
+        if (additionalColumns.length > 0) {
+            additionalColumns.forEach((field) => {
+                this.SecondListHeaderItems.push(field.replace('[', '').replace(']', ''));
+            });
+        }
     }
 
 }
@@ -264,7 +388,7 @@ export class CustomEntityArgs {
     public IsEditDisabled: boolean = true;
     public DisplayFieldsFromList: string = null;
     public HideEdit: boolean;
-    
+    public DataContext: any;
 }
 export class AddEntityArgs {
     public EntityPM: any;

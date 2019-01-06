@@ -1648,11 +1648,31 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 this.CreateShipmentFollowUp(itemPM);
                                 followUpRepository.SubmitChanges();
 
+                                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                {
+                                    Tenant = tenant,
+                                    EventTypeCode = "SFCR",
+                                    UserId = this.loggedContact.Id,
+                                    EntityId = this.entityPM.Id,
+                                    ObjectTableName = "Shipment",
+                                    Notes = itemPM.EventTypeFollowUpName,
+                                });
+
                                 if (itemPM.Done)
                                 {
                                     itemPM.Deleted = true;
                                     FollowUp follow = followUpRepository.GetSingleFollowUp(itemPM.Id, tenant);
                                     doneFollowUps.Add(follow);
+
+                                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                    {
+                                        Tenant = tenant,
+                                        EventTypeCode = "SFCM",
+                                        UserId = this.loggedContact.Id,
+                                        EntityId = this.entityPM.Id,
+                                        ObjectTableName = "Shipment",
+                                        Notes = itemPM.EventTypeFollowUpName,
+                                    });
                                 }
 
                                 break;
@@ -1697,6 +1717,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         this.DeleteShipmentFollowUp(itemPM);
                         followUpRepository.SubmitChanges();
+
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            Tenant = tenant,
+                            EventTypeCode = "SFCM",
+                            UserId = this.loggedContact.Id,
+                            EntityId = this.entityPM.Id,
+                            ObjectTableName = "Shipment",
+                            Notes = itemPM.EventTypeFollowUpName,
+                        });
                     }
 
                     else
@@ -2325,7 +2355,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.CalculateStatus = false;
 
             this.ComputeShipmentStatus();
-            this.UpdateCustomerWorkingDates();
+            if (!entityPM.IsHybrid)
+            {
+                this.UpdateCustomerWorkingDates();
+            }
+            
 
             if (isNewEntity)
             {

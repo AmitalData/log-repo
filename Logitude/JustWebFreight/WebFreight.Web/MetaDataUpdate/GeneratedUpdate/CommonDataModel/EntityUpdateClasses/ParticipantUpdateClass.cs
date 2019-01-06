@@ -2292,7 +2292,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	   		  
 	      
 
-	         Screen ParticipantGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Participant.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ParticipantObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen ParticipantGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Participant.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ParticipantObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
             ScreenField ParticipantParticipantGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = ParticipantGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
@@ -2300,17 +2300,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
          
             ScreenField ParticipantParticipantGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = ParticipantGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ParticipantParticipantGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "AirlineTenant").FirstOrDefault().Id, ScreenId = ParticipantGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ParticipantParticipantGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "TTY").FirstOrDefault().Id, ScreenId = ParticipantGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ParticipantParticipantGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "TTY").FirstOrDefault().Id, ScreenId = ParticipantGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ParticipantParticipantGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().Id, ScreenId = ParticipantGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ParticipantParticipantGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().Id, ScreenId = ParticipantGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ParticipantParticipantGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "Registered").FirstOrDefault().Id, ScreenId = ParticipantGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ParticipantParticipantGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "Registered").FirstOrDefault().Id, ScreenId = ParticipantGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ParticipantParticipantGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "RegistrationRequested").FirstOrDefault().Id, ScreenId = ParticipantGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ParticipantParticipantGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "RegistrationRequested").FirstOrDefault().Id, ScreenId = ParticipantGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ParticipantParticipantGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = ParticipantGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ParticipantParticipantGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = ParticipantObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = ParticipantGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 

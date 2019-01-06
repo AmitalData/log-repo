@@ -531,7 +531,7 @@ namespace Logitude.XSD.INTTRA.BL
                         DateTime = new INTTRA.DateTime()
                         {
                             DateType = INTTRA.DateTimeDateType.Document,
-                            Value = this.DataContext.XMLCreateDate,
+                            Value = this.DataContext.XMLCreateDate_Long,
                         },
 
                         Instructions = this.DemoBodyInstructions.ToArray(),
@@ -577,7 +577,7 @@ namespace Logitude.XSD.INTTRA.BL
                         DateTime = new INTTRA.DateTime()
                         {
                             DateType = INTTRA.DateTimeDateType.StatusChange,
-                            Value = this.DataContext.XMLCreateDate,
+                            Value = this.DataContext.XMLCreateDate_Long,
                         },
 
                         Instructions = this.DemoBodyInstructions.ToArray(),
@@ -763,14 +763,14 @@ namespace Logitude.XSD.INTTRA.BL
                                     Value = this.DataContext.FromPortCountry.Code + this.DataContext.FromPort.Code,
                                 },
 
-                                LocationName = this.DataContext.FromPort.EnglishName,
+                                LocationName = this.DataContext.FromPort.Code,
 
                                 LocationCountry = this.DataContext.FromPortCountry.Code,
 
                                 DateTime = new INTTRA_Status.LocationTypeDateTime()
                                 {
                                     DateType = INTTRA_Status.DateTimeType1DateType.StatusChange,
-                                    Value = this.DataContext.XMLCreateDate,
+                                    Value = this.DataContext.XMLCreateDate_Long,
                                 },
                             },
                         },
@@ -791,6 +791,10 @@ namespace Logitude.XSD.INTTRA.BL
                                     Value = "1234567",
                                 }
                             },
+
+                            TransportStage = INTTRA_Status.TransportationDetailsTypeTransportStage.Main,
+                            TransportMode = INTTRA_Status.TransportationDetailsTypeTransportMode.Maritime,
+                            TransportModeSpecified = true,
                         },
 
                         Parties = new INTTRA_Status.PartiesType1()
@@ -805,7 +809,7 @@ namespace Logitude.XSD.INTTRA.BL
                                 }
                             },
                         },
-                    },                    
+                    },
                 },
             };
 
@@ -946,7 +950,12 @@ namespace Logitude.XSD.INTTRA.BL
             Type myType = myRequest.GetType();
             MemoryStream myMemoryStream = new MemoryStream();
             XmlSerializer ser = new XmlSerializer(myType);
+
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+
+            // this will remove the namespaces
+            // <Message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            ns.Add("", "");
 
             XmlWriterSettings settings = new XmlWriterSettings()
             {

@@ -7,9 +7,92 @@
 
     <tr>
         <td>
-            <div class="FillParent">
-              
-            </div>
+            <table>
+
+                <!-- Name -->
+                <tr class="FormFieldRow">
+                    <td style="width:153px;">
+                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width:260px;">
+                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Description -->
+                <tr class="FormFieldRow">
+                    <td style="vertical-align:top;">
+                        <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td style="width:260px;height:85px;">
+                                    <div class="MediaFill">
+                                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- TypeCode-->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'TypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'TypeCode'"
+                                [SelectedValue]="TypeCode"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'BIReportsType'" [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- DWQueryId -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'DWQueryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td *ngIf="IsNewQuery" style="width: 57px;">
+                                    <button class="Button" (click)="ShowQueryBuilderClicked()">Build Query</button>
+                                </td>
+                                <td *ngIf="!IsNewQuery" s style="width: 57px;">
+                                    <button class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
         </td>
     </tr>
 

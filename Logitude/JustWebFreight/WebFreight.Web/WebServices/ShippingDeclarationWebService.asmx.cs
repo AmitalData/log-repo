@@ -2812,6 +2812,7 @@ namespace WebFreight.Web.WebServices
                     packageline.Reference1 = package.Reference1;
                     packageline.Reference2 = package.Reference2;
                     packageline.Reference3 = package.Reference3;
+                    packageline.Reference4 = package.Reference4;
                     packageline.CommodityNumber = package.CommodityNumber;
 
                     if (myDataProvider.HasAttachmentList == "True")
