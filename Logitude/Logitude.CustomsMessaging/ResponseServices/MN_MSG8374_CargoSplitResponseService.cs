@@ -171,7 +171,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myDecCargoSplitCargoIdentifierPM.CargoIdentifierKey1 = item.cargoIdentifierKey1;
                             myDecCargoSplitCargoIdentifierPM.CargoIdentifierKey2 = item.cargoIdentifierKey2;
                             myDecCargoSplitCargoIdentifierPM.CargoIdentifierKey3 = item.cargoIdentifierKey3;
-                            myDecCargoSplitCargoIdentifierPM.ChangeSetOp = ChangeSetOperation.Update;
+                            myDecCargoSplitCargoIdentifierPM.ChangeSetOp = ChangeSetOperation.Insert;
                             myDecCargoSplitCargoIdentifierPMList.Add(myDecCargoSplitCargoIdentifierPM);
 
                         }
