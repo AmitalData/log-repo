@@ -122,7 +122,7 @@ namespace WebFreight.Web
                 }
                 if (errorInfo.Message == "Invalid Token1")
                 {
-                    throw errorInfo;
+                    //throw errorInfo;
                 }
                 string errorMessage = errorInfo.Message;
                 AzureLog.SaveLogsInStorage("TFS Page error  " + Environment.NewLine + errorMessage, "E", DateTime.Now, errorInfo.Message, errorInfo.StackTrace, 0, null, null, null);
@@ -190,7 +190,7 @@ namespace WebFreight.Web
                     Console.WriteLine(vssex.Message);
                     string errorMessage = vssex.Message;
                     AzureLog.SaveLogsInStorage("VssServiceException connection Problem   " + Environment.NewLine + errorMessage, "E", DateTime.Now, vssex.Message, vssex.StackTrace, 0, null, null, null);
-                    throw;
+                    //throw;
                 }
             }
 
