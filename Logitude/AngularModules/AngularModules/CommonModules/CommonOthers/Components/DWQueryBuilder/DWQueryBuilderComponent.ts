@@ -695,8 +695,15 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         OperationSimpol = " <= @@ ";
                     }
 
-                    this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + OperationSimpol.replace("@@", filter.TextValue) + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
-
+                    if (filter.Operation.Code == filter.IsNullOp.Code) {
+                        this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is null or " + (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " = '' " + " " + AndOr + " ";
+                    }
+                    else if (filter.Operation.Code == filter.IsNotNullOp.Code) {
+                        this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is not null and " + (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " <> '' " + " " + AndOr + " ";
+                    }
+                    else {
+                        this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + OperationSimpol.replace("@@", filter.TextValue) + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
+                    }
                 }
                 else {
                     //if (this.WhereStmt == " where  ( ") {
@@ -1571,8 +1578,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
     greaterThanOrEqualOp: ObjectFieldOperator = new ObjectFieldOperator("GreaterThanOrEqual", "Greater Than Or Equal");
     lessThanOrEqualOp: ObjectFieldOperator = new ObjectFieldOperator("LessThanOrEqual", "Less Than Or Equal");
     BetweenOp: ObjectFieldOperator = new ObjectFieldOperator("Between", "Between");
-    IsNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNull", "Is Null");
-    IsNotNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNotNull", "Is Not Null");
+    IsNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNull", "Is Empty");
+    IsNotNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNotNull", "Has Value");
 
 }
 
