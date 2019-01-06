@@ -1255,7 +1255,7 @@ namespace Logitude.Customs.Def.ClosedTable
             {
                 Code = "2753",
                 InOut = InOutEnum.I.ToString(),
-                Description = "השלמת פרטי החזרת פקדון",
+                Description = "השלמת פרטי החזר פקדון",
                 DcaPrefixName = "SendDEPO_MSG2753_DepositBankAccountToRefundUpdateRequest_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
