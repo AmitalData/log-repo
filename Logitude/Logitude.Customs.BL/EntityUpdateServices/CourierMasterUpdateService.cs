@@ -139,7 +139,41 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.ShortHAWB = entityPM.ShortHAWB.Substring(start);
                 }
             }
+
+            if(entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                CourierMasterPM dbOccCourierMasterPM = GetDBEntity(entityPM.Id, entityPM.Tenant);
+
+                if(entityPM.OriginPortCode != dbOccCourierMasterPM.OriginPortCode ||
+                    entityPM.MAWB != dbOccCourierMasterPM.MAWB ||
+                    entityPM.MAWBTypeCode != dbOccCourierMasterPM.MAWBTypeCode ||
+                    entityPM.AirlineId != dbOccCourierMasterPM.AirlineId ||
+                    entityPM.WeightValueCode != dbOccCourierMasterPM.WeightValueCode)
+                {
+                    CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(entityPM.Tenant);
+                    List <string> declarations = courierDeclarationRepository.GetCourierConnectedDeclaratinsList(entityPM.Id, entityPM.Tenant);
+                    foreach (var declarationId in declarations)
+                    {
+                        var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                        declarationQueryService.LoadSupplierInvoicesWithItems = false;
+                        var myDBEntity = declarationQueryService.GetSingle(declarationId, false, false);
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(myDBEntity);
+                        declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
+                    }
+                }
+            }
+
             base.OnUpdating(entityPM, entityPOCO);
+        }
+
+        private CourierMasterPM GetDBEntity(string dirtyCourierMasterId, int tenant)
+        {
+
+            var courierMasterQueryService = new CourierMasterQueryService(tenant);
+            var myDBEntity = courierMasterQueryService.GetSingle(dirtyCourierMasterId, false, false);
+            return myDBEntity ?? new CourierMasterPM();
+
         }
 
         protected override void Trace(CourierMasterPM entityPM, CourierMaster entityPOCO, string changesXml)
