@@ -56,16 +56,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string requestFileNumber = string.Concat(customResponse.TapagIdentifier.fileNumber, "-", customResponse.TapagIdentifier.numeral);
             string tapagId = tapagConnectionTableQueryService.GetTapagIdByRequestFileNumber(requestFileNumber, this._MyTenant);
 
+            this.MyRequestSheetParam = new RequestSheetParam();
+
+            if (String.IsNullOrWhiteSpace(tapagId))
+            {
+                this.MyResponseData = new INF_MSG_GenericResponseData()
+                {
+                    Succeeded = true,
+                    HasException = true,
+                    UserMessage = "Can not find tapag file (not exist in connection table) " + "fileNumber=" + customResponse.TapagIdentifier.fileNumber + "Numeral=" + customResponse.TapagIdentifier.numeral,
+                };
+                LogMessagingUtil.Instance.AppendLine("Can not find tapag file (not exist in connection table) " + "fileNumber=" + customResponse.TapagIdentifier.fileNumber + "Numeral=" + customResponse.TapagIdentifier.numeral);
+                return;
+            }
+
             if (!String.IsNullOrWhiteSpace(tapagId))
             {
                 notificationDescription = "בקשה להשלמת פרטי החזר פקדון תיק תפ\"ג" + requestFileNumber;
-            }
-
-
-
-            this.MyRequestSheetParam = new RequestSheetParam();
-            if (!String.IsNullOrWhiteSpace(tapagId))
-            {
                 var depositId = depositQueryService.GetDepositIdByTapagNumber(tapagId, this._MyTenant);
                 if (depositId != null) this._MyDepositPM = depositQueryService.GetSingle(depositId, true, false);
 
