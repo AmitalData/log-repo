@@ -546,12 +546,17 @@
                                                                     </table>
                                                                 </div>
 
-                                                                <div class="SimpleGridViewBody" style="bottom:25px;">
+                                                                <div class="SimpleGridViewBody"><!--style="bottom:25px;height: Calc(100% - 25px);"-->
                                                                     <table *ngIf="SampleData.length > 0">
                                                                         <tr class="SimpleGridViewRow" *ngFor="let item of SampleData;">
 
                                                                             <td *ngFor="let Column of SelectedFieldsDataSource; let i=index;" class="CellStretched  TextTrimming" style="width: 100px; max-width: 100px;min-width:100px;padding-left: 4px;">
-                                                                                {{item[Column.DisplayName.replace('[', '').replace(']','')]}}
+                                                                                <div *ngIf="Column.IsMeasurement == false">
+                                                                                    {{item[Column.DisplayName.replace('[', '').replace(']','')]}}
+                                                                                </div>
+                                                                                <div *ngIf="Column.IsMeasurement == true" style="text-align:right;padding-right:4px;">
+                                                                                    {{item[Column.DisplayName.replace('[', '').replace(']','')] | NumbersPipe:'N2'}}
+                                                                                </div>
                                                                             </td>
                                                                             <td style="width:100%;"></td>
 
