@@ -1224,7 +1224,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Code = "8370",
                 InOut = InOutEnum.O.ToString(),
                 Description = "מסר בקשה לפיצול מטען",
-                DcaPrefixName = "",
+                DcaPrefixName = "SendMN_MSG8374_CargoSplitRequestFeedBack_Message_Out",
                 DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
                 DefaultPriority = 5,
                 AllowRestore = true,
