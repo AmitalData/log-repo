@@ -651,6 +651,7 @@ namespace MeatadataGeneratorTool.Helpers
             if (fieldNode.Attributes["FeatureTextCodeCode"] != null)
             {
                 tab.FeatureTextCodeCode = GetAttributeStringValue(fieldNode.Attributes["FeatureTextCodeCode"]);
+                tab.HasGeneralFeature = tab.FeatureTextCodeCode.Split('.')[0] == "General" ? true : false;
             }
             if (fieldNode.Attributes["FeatureDefaultText"] != null)
             {
