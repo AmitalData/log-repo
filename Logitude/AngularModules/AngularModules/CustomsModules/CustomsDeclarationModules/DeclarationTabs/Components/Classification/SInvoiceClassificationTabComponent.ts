@@ -604,8 +604,8 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(value)) {
             this.OriginCountryName = value.LocalName;
             if (!AppTool.IsNullOrEmpty(this.ItemCode) && this.Parent.IsCountryPURForItems) {
-              //var itemCodeDetails = this.Parent.AddEditSupplierInvoiceDUMMYManager.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-              var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+                //var itemCodeDetails = this.Parent.AddEditSupplierInvoiceDUMMYManager.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+                var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponent(this.ItemCode);/*ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0]*/;
                 if (itemCodeDetails != null) {
                     itemCodeDetails.OriginCountryCode = value.Code;
                     itemCodeDetails.OriginCountryName = value.LocalName;
@@ -618,7 +618,7 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
             this.OriginCountryCode = null;
             if (!AppTool.IsNullOrEmpty(this.ItemCode) && this.Parent.IsCountryPURForItems) {
                 //var itemCodeDetails = this.Parent.AddEditSupplierInvoiceDUMMYManager.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-              var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+                var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponent(this.ItemCode);//ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
                 if (itemCodeDetails != null) {
                     itemCodeDetails.OriginCountryCode = null;
                     itemCodeDetails.OriginCountryName = null;
@@ -847,7 +847,7 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
 
             if (!AppTool.IsNullOrEmpty(this.ItemCode)) {
               //var itemCodeDetails = this.Parent.AddEditSupplierInvoiceDUMMYManager.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-              var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+                var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponent(this.ItemCode);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
               
                 if (itemCodeDetails == null) {
                     var originCountryCode: string = null;
@@ -857,7 +857,7 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
                         originCountryName = this.OriginCountryName;
                     }
                   //this.Parent.AddEditSupplierInvoiceDUMMYManager.ItemCode_LocalCache.push(new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, null));
-                  GITITEMCacheService.Instance.ItemCode_LocalCache.push(
+                  GITITEMCacheService.Instance.AddItemCodeComponent(/*ItemCode_LocalCache.push(*/
                     new ItemCodeComponent(
                       this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, null,
                       this.Parent.declarationPM.CustomerCode));
@@ -960,7 +960,7 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
         }
 
         if (!AppTool.IsNullOrEmpty(this.ItemCode)) {
-          var itemCodeDetails = /*this.Parent.AddEditSupplierInvoiceDUMMYManager*/GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+            var itemCodeDetails = /*this.Parent.AddEditSupplierInvoiceDUMMYManager*/GITITEMCacheService.Instance.FirstItemCodeComponent(this.ItemCode);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
           
             if (itemCodeDetails != null) {
                 itemCodeDetails.OriginCountryCode = this.OriginCountryCode != null ? this.OriginCountryCode : this.customsCountry != null ? this.customsCountry.Code : null;
