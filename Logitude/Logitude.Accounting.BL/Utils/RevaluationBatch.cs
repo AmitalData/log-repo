@@ -249,6 +249,7 @@ namespace Logitude.Accounting.BL.Utils
                                 AccountingDate = revaluationDate,
                                 Tenant = gLAccountPM.Tenant,
                                 DebitAccountId = gLAccountPM.Id,
+                                CreditAccountId = diffAccountId,
                                 // DebitControlAccountId = gLAccountPM.ControlAccountId,
                                 DocumentDate = revaluationDate,
                                 DueDate = revaluationDate,
