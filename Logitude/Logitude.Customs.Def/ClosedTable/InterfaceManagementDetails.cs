@@ -1251,6 +1251,22 @@ namespace Logitude.Customs.Def.ClosedTable
                 //      NeedSignature = false,
             });
 
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2753",
+                InOut = InOutEnum.I.ToString(),
+                Description = "השלמת פרטי החזרת פקדון",
+                DcaPrefixName = "SendDEPO_MSG2753_DepositBankAccountToRefundUpdateRequest_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                //NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //      NeedSignature = false,
+            });
+            
             //all.Add(new InterfaceManagementDetails()
             //{
             //    Code = "9000",
