@@ -436,6 +436,39 @@
         text-align: left !important;
     }
 
+    .FiltersMenu li {
+        float: right !important;
+        border-width: 1px 1px 1px 0px !important;
+    }
+
+        .FiltersMenu li:first-child {
+            border-radius: 0px 3px 3px 0px !important;
+        }
+
+        .FiltersMenu li:last-child {
+            border-radius: 3px 0px 0px 3px !important;
+            border-left: 1px solid #6A8299 !important;
+        }
+
+        .FiltersMenu li:active:not(.SelectedFilter) {
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c4c6c6+0,dbdbdb+19,bcbec0+79,a2a4a5+100 */
+            background: #c4c6c6; /* Old browsers */
+            background: -moz-linear-gradient(top, #c4c6c6 0%, #dbdbdb 19%, #bcbec0 79%, #a2a4a5 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #c4c6c6 0%,#dbdbdb 19%,#bcbec0 79%,#a2a4a5 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #c4c6c6 0%,#dbdbdb 19%,#bcbec0 79%,#a2a4a5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c4c6c6', endColorstr='#a2a4a5',GradientType=0 ); /* IE6-9 */
+        }
+
+        .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+    }
+
 </style>
 <div style="width:100%;height:100%" *ngIf="DataContext">
 
@@ -671,9 +704,26 @@
 
                             <!-- Footer -->
                             <div class="LogLOVFooter" [style.text-align]="LayoutDirection=='rtl' ? 'left' : 'right'" *ngIf="ShowAddLink || ShowSearchButton">
+                                    <div *ngIf="ShowLanguageFilter" style="display:inline-block; float:left;">
+                                            <ul class="FiltersMenu">
+                                             <li id="All" style="width: 50px; height: 22px;"
+                                                 [class.SelectedFilter]="LanguageFilterValue == 'L'" (click)="SwitchBetweenLocalAndEng('L')" class="noselect">
+                                                 <!-- {{'Customs.Declaration.O.Digital' | TextCodeTranslationPipe}} -->
+                                                 Local
+                                             </li>
+                                             <li id="Errors" style="width: 50px; height: 22px;"
+                                                 [class.SelectedFilter]="LanguageFilterValue == 'E'" (click)="SwitchBetweenLocalAndEng('E')" class="noselect">
+                                                 <!-- {{'Customs.Declaration.O.Manual' | TextCodeTranslationPipe}} -->
+                                                 English
+                                             </li>
+                                            
+                                            </ul>
+                                         </div>
                                 <a href="javascript:;" *ngIf="ShowAddLink" (click)="OnAddValue()">{{'General.B.Add' | TextCodeTranslationPipe}}</a>
                                 <a href="javascript:;" *ngIf="ShowSearchButton" (click)="SearchButtonClicked()"
                                    style="margin-left: 8px;">{{'General.O.ViewAll' | TextCodeTranslationPipe}}</a>
+                                
+
                             </div>
 
 

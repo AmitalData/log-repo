@@ -603,88 +603,15 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                                     }
                                 }
                             }
-                            
-                            var lookupFields: any[];
-                            if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
-                                var fields: string[] = this.DisplayFieldsFromList.split(',');
-                                lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName)>-1);
-                            }
-                            else {
-                                if(!SessionInfo.LoggedUserPM.ShowLocalNameInLOV){
-                                    lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
-                                    }
-                                    else{
-                                        lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUpLocal && d.ObjectTableId == this.LookUpTable.Id);
-                                    }
-                            }
-                            if (!this.DisplayFieldsFromList) {
-                                lookupFields = lookupFields.sort((a, b) => { return a.DisplayInLookUpIndex - b.DisplayInLookUpIndex });
-                            }
 
-                            for (var i = 0; i < lookupFields.length; i++) {
-                                //this.Widths.push(this.DropDownWidth / lookupFields.length);
-                                this.MinWidths.push(TextCodeTranslator.Translate(lookupFields[i].ListTextCodeCode).length * 8 + 6);
+                            // drow columns
+                            var lang='E';
+                            if(SessionInfo.LoggedUserPM.ShowLocalNameInLOV){
+                                lang='L';
+                                this.ShowLanguageFilter=true;
                             }
-                            //var dropdownWidth = lookupFields.length * 120 + 20;
-                            //this.DropPopUpStyle = { width: dropdownWidth.toString() + 'px' };
-                            var additionalCols = lookupFields.filter(d => d.DisplayInLookUpIndex > 1);
-                            if (lookupFields.length == 1) {
-                                this.DisplayHeader = false;
-                            }
-                            else if (!this.IsAllDataVisible) {
-                                this.DisplayHeader = true;
-                          }
-                          if (!this.ShowAddLink && !this.ShowSearchButton) {
-                            if (this.DisplayHeader) {
-                              this.DropDownHeight = 278;
-                            }
-                            else {
-                              this.DropDownHeight = 260;
-                            }
-                          }
-                            this.IsReady = true;
-                            for (var i = 0; i < lookupFields.length; i++) {
-                                var width: number = 100;
-                                if (lookupFields[i].DisplayInLookupColumnSize) {
-                                    width = lookupFields[i].DisplayInLookupColumnSize;
-                                }
-                                else {
-                                    if (lookupFields[i].DisplayInLookUpIndex == 0) {
-                                        if (!additionalCols || additionalCols.length == 0 || additionalCols.length == 1) {
-                                            width = 120;
-                                        }
-                                        else {
-                                            width = 70;
-                                        }
-                                    }
-                                    if (lookupFields[i].DisplayInLookUpIndex == 1) {
-                                        if (!additionalCols || additionalCols.length == 0 || additionalCols.length == 1) {
-                                            width = 120;
-                                        }
-                                        else {
-                                            width = 100;
-                                        }
-                                    }
-
-                                    if (lookupFields[i].DisplayInLookUpIndex > 1) {
-                                        if (additionalCols.length == 1) {
-                                            width = 85;
-                                        }
-                                        if (additionalCols.length > 1) {
-                                            width = (400 - 170) / additionalCols.length;
-                                        }
-                                    }
-
-                                }
-
-                                this.headerColumns.push({
-                                    Display: TextCodeTranslator.Translate(lookupFields[i].ListTextCodeCode),
-                                    Width: width,
-                                    Field: lookupFields[i].FieldName,
-                                    Index: lookupFields[i].DisplayInLookUpIndex,
-                                });
-                                this.dataColumns.push({ Field: lookupFields[i].FieldName });
-                            }
+                            this.LanguageFilterValue=lang;
+                            this.DrawColumns();
 
 
                             if (this.ObjectTable) {
@@ -875,6 +802,97 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (!objectFieldAvailable && !this.NoObjectField) {
             console.warn(this.ObjectFieldName + " LOV has no object field!");
         }
+    }
+    DrawColumns(){
+        var lookupFields: any[];
+        this.headerColumns=[];
+        this.dataColumns=[];
+                            if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
+                                var fields: string[] = this.DisplayFieldsFromList.split(',');
+                                lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName)>-1);
+                            }
+                            else {
+                                //if(!SessionInfo.LoggedUserPM.ShowLocalNameInLOV){
+                                    if(this.LanguageFilterValue=='E'){
+                                    lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
+                                    }
+                                    else{
+                                        lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUpLocal && d.ObjectTableId == this.LookUpTable.Id);
+                                        if(lookupFields.length==0){
+                                            console.warn("There is no Fields defined as display in lookup local");
+                                            this.ShowLanguageFilter=false;
+                                            lookupFields=window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
+                                        }
+                                    }
+                            }
+                            if (!this.DisplayFieldsFromList) {
+                                lookupFields = lookupFields.sort((a, b) => { return a.DisplayInLookUpIndex - b.DisplayInLookUpIndex });
+                            }
+
+                            for (var i = 0; i < lookupFields.length; i++) {
+                                //this.Widths.push(this.DropDownWidth / lookupFields.length);
+                                this.MinWidths.push(TextCodeTranslator.Translate(lookupFields[i].ListTextCodeCode).length * 8 + 6);
+                            }
+                            //var dropdownWidth = lookupFields.length * 120 + 20;
+                            //this.DropPopUpStyle = { width: dropdownWidth.toString() + 'px' };
+                            var additionalCols = lookupFields.filter(d => d.DisplayInLookUpIndex > 1);
+                            if (lookupFields.length == 1) {
+                                this.DisplayHeader = false;
+                            }
+                            else if (!this.IsAllDataVisible) {
+                                this.DisplayHeader = true;
+                          }
+                          if (!this.ShowAddLink && !this.ShowSearchButton) {
+                            if (this.DisplayHeader) {
+                              this.DropDownHeight = 278;
+                            }
+                            else {
+                              this.DropDownHeight = 260;
+                            }
+                          }
+                            this.IsReady = true;
+                            for (var i = 0; i < lookupFields.length; i++) {
+                                var width: number = 100;
+                                if (lookupFields[i].DisplayInLookupColumnSize) {
+                                    width = lookupFields[i].DisplayInLookupColumnSize;
+                                }
+                                else {
+                                    if (lookupFields[i].DisplayInLookUpIndex == 0) {
+                                        if (!additionalCols || additionalCols.length == 0 || additionalCols.length == 1) {
+                                            width = 120;
+                                        }
+                                        else {
+                                            width = 70;
+                                        }
+                                    }
+                                    if (lookupFields[i].DisplayInLookUpIndex == 1) {
+                                        if (!additionalCols || additionalCols.length == 0 || additionalCols.length == 1) {
+                                            width = 120;
+                                        }
+                                        else {
+                                            width = 100;
+                                        }
+                                    }
+
+                                    if (lookupFields[i].DisplayInLookUpIndex > 1) {
+                                        if (additionalCols.length == 1) {
+                                            width = 85;
+                                        }
+                                        if (additionalCols.length > 1) {
+                                            width = (400 - 170) / additionalCols.length;
+                                        }
+                                    }
+
+                                }
+
+                                this.headerColumns.push({
+                                    Display: TextCodeTranslator.Translate(lookupFields[i].ListTextCodeCode),
+                                    Width: width,
+                                    Field: lookupFields[i].FieldName,
+                                    Index: lookupFields[i].DisplayInLookUpIndex,
+                                });
+                                this.dataColumns.push({ Field: lookupFields[i].FieldName });
+                            }
     }
     SetIsDisabled() {
         this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
@@ -1994,11 +2012,17 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName)>-1);
             }
             else {
-                if(!SessionInfo.LoggedUserPM.ShowLocalNameInLOV){
+                //if(!SessionInfo.LoggedUserPM.ShowLocalNameInLOV){
+                if(this.LanguageFilterValue=='E'){
                 lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
                 }
                 else{
                     lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUpLocal && d.ObjectTableId == this.LookUpTable.Id);
+                    if(lookupFields.length==0){
+                        console.warn("There is no Fields defined as display in lookup local");
+                        this.ShowLanguageFilter=false;
+                        lookupFields=window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
+                    }
                 }
             }
             if (!this.DisplayFieldsFromList) {
@@ -2938,6 +2962,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         else {
             this.RunNewGenaricEntity();
         }
+    }
+    LanguageFilterValue:string;
+    ShowLanguageFilter:boolean=false;
+    SwitchBetweenLocalAndEng(lang:string){
+        this.LanguageFilterValue=lang;
+        this.DrawColumns();
     }
 }
 
