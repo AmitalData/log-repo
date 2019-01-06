@@ -14,6 +14,7 @@ using WebFreight.Web.DataProviders;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 {
@@ -23,6 +24,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private DateTime? FromDate = null;
         private DateTime? ToDate = null;
         private bool IsLocalCurrency = false;
+        private string SelectedCurrencyId = null;
         private string SelectedCurrencyCode = null;
         private bool IncludeDraftInvoices = false;
         private bool IncludeEstimations = false;
@@ -61,6 +63,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             QueryFilterItem filterItem_IncludeEstimations = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeEstimations").FirstOrDefault();
             QueryFilterItem filterItem_SplitByCharges = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "SplitByCharges").FirstOrDefault();
             QueryFilterItem filterItem_IsByCreateDate = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByCreateDate").FirstOrDefault();
+
 
             if (filterItem_FromDate != null)
             {
@@ -520,6 +523,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 }
                 #endregion
 
+                Currency SelectedCurrency = allCurrencies.Where(d => d.Code == this.SelectedCurrencyCode).FirstOrDefault();
+                if(SelectedCurrency != null)
+                {
+                    this.SelectedCurrencyId = SelectedCurrency.Id;
+                }
+
                 foreach (ShipmentDataView myShipment in allShipments)
                 {
                     Branch myBranch = null;
@@ -666,8 +675,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.Payables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
                                 myRecord.InvoiceNumber = invoice.InvoiceNumber;
                                 myRecord.InvoiceDate = invoice.InvoiceDate;
-                                myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
-                                myRecord.AccountedPayables = myRecord.Payables;
+                                myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;                                
 
                                 if (myCurrency != null)
                                 {
@@ -676,7 +684,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                                 myRecord.AccountedPayables = myRecord.Payables;
                                 myRecord.AccountedPayablesCurrencyCode = myRecord.InvoiceCurrencyCode;
-                                myRecord.AccountedPayablesCurrencyRate = myRecord.InvoiceCurrencyRate;                               
+
+                                if (this.SelectedCurrencyId == invoice.InvoiceCurrencyId)
+                                {
+                                    myRecord.AccountedPayablesCurrencyRate = 1;
+                                }
+
+                                else if (this.IsLocalCurrency)
+                                {
+                                    myRecord.AccountedPayablesCurrencyRate = myRecord.InvoiceCurrencyRate;
+                                }
+
+                                else
+                                {
+                                    myRecord.AccountedPayablesCurrencyRate = myRecord.AccountedPayables / invoice.AmountInInvoiceCurrency;
+                                    myRecord.AccountedPayablesCurrencyRate = MethodHelper.Round(myRecord.AccountedPayablesCurrencyRate, 2);
+                                }
 
                                 if (myCard != null)
                                 {
@@ -749,7 +772,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                                 myRecord.AccountedReceivables = myRecord.Receivables;
                                 myRecord.AccountedReceivablesCurrencyCode = myRecord.InvoiceCurrencyCode;
-                                myRecord.AccountedReceivablesCurrencyRate = myRecord.InvoiceCurrencyRate;
+
+                                if (this.SelectedCurrencyId == invoice.InvoiceCurrencyId)
+                                {
+                                    myRecord.AccountedReceivablesCurrencyRate = 1;
+                                }
+
+                                else if (this.IsLocalCurrency)
+                                {
+                                    myRecord.AccountedReceivablesCurrencyRate = myRecord.InvoiceCurrencyRate;
+                                }
+
+                                else
+                                {
+                                    myRecord.AccountedReceivablesCurrencyRate =  myRecord.AccountedReceivables / invoice.AmountInInvoiceCurrency;
+                                    myRecord.AccountedReceivablesCurrencyRate = MethodHelper.Round(myRecord.AccountedReceivablesCurrencyRate, 2);
+                                }
 
                                 if (myCard != null)
                                 {
