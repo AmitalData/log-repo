@@ -79,7 +79,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate,
                     };
 
-                    DateTime statusDateTime = customResponse.GeneralData.releaseDate.GetValueOrDefault();
+                    DateTime statusDateTime = customResponse.GeneralData.releaseDate;
                     if (statusDateTime == null)
                     {
                         statusDateTime = customResponse.RequestContentHeader.TransmitionDateTime;
@@ -204,12 +204,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if(customResponse.GeneralData != null)
                 {
                     MyResponseData.governmentProcedureType = customResponse.GeneralData.governmentProcedureType.ToString();
-                    MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.GetValueOrDefault().Date.ToString("dd/MM/yyyy");
-                    //if (customResponse.GeneralData.releaseDate.TimeOfDay.Hours != 0)
-                    //{
-                    //    MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.TimeOfDay.ToString("hh:mm") + "   " + MyResponseData.releaseDate;
-                    //}
-                    if(customResponse.GeneralData.dealValueNISSpecified)MyResponseData.dealValueNIS = customResponse.GeneralData.dealValueNIS.ToString();
+                    if(customResponse.GeneralData.releaseDate != null)
+                    {
+                        MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.Date.ToString("dd/MM/yyyy");
+                        if (customResponse.GeneralData.releaseDate.TimeOfDay.Hours != 0)
+                        {
+                            MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.TimeOfDay.ToString("hh:mm") + "   " + MyResponseData.releaseDate;
+                        }
+                    }
+
+                    if (customResponse.GeneralData.dealValueNISSpecified)MyResponseData.dealValueNIS = customResponse.GeneralData.dealValueNIS.ToString();
                     //if (customResponse.GeneralData.CifValueNisSpecified) MyResponseData.CifValueNis = customResponse.GeneralData.CifValueNis.ToString();
                     //if (customResponse.GeneralData.ExchangeRateSpecified) MyResponseData.ExchangeRate = customResponse.GeneralData.ExchangeRate.ToString();
                 }
