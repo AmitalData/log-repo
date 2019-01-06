@@ -40,7 +40,7 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
 import {PartnerTypeList} from '../../../Common/EntityLists/PartnerTypeList';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import {DWQueryBuilderService} from '../../Services/ExtendedPMs/DWQueryBuilderService';
-
+import {MultSelectValue} from '../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent';
 @Component({
     selector: 'DWLov',
     moduleId: module.id,
@@ -770,7 +770,7 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
         args.ObjectTableName = this.ObjectTableName;
         args.DisplayFieldsFromList = this.ObjectFieldName;
         args.LOVAdditionalColumns = this.LOVAdditionalColumns;
-        
+        args.DataContext = this.DataContext;
         //args.IsAllDataVisible = this.IsAllDataVisible;
         //args.ShowInActive = this.ShowInActive;
         //args.PartnerTypes = this.PartnerTypes;
@@ -786,12 +786,24 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
         //    tablename = "Partners";
 
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 800;
+        logitudeWindow.Width = 900;
         logitudeWindow.Height = 600;
         logitudeWindow.WindowArgs = args;
+
+
         logitudeWindow.Title = this.ObjectTableName + " Search";
         logitudeWindow.Show('./Infrastructure/Components/LogitudeComponents/DWLogSearchWindowComponent');
-        logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnSearchWindowClosed($event));
+
+        logitudeWindow.WindowClosed.subscribe(($event) => {
+            this.OnSearchWindowClosed($event);
+            //var newItem = new MultSelectValue();
+            //newItem.Value = "test";
+            //newItem.Value1 = "test1";
+            //if (!this.DataContext.MultSelectValueLists) this.DataContext.MultSelectValueLists = [];
+            //this.DataContext.MultSelectValueLists.push(newItem);
+      
+        });
+
 
     }
 

@@ -143,6 +143,21 @@ namespace MeatadataGeneratorTool.TabsModule
             }
         }
 
+
+        private bool hasGeneralFeature;
+        public bool HasGeneralFeature
+        {
+            get
+            {
+                return hasGeneralFeature;
+            }
+            set
+            {
+                hasGeneralFeature = value;
+                FirePropertyChanged("HasGeneralFeature");
+            }
+        }
+
         private int indexOrder;
         public int IndexOrder
         {

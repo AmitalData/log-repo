@@ -657,6 +657,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         }
                         else {
                             OperationSimpol = " = '@@' ";
+                            //abed
                         }
                     }
                     else if (filter.Operation.Code == filter.notEqualsOp.Code) {
@@ -665,6 +666,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         }
                         else {
                             OperationSimpol = " <> '@@' ";
+
+                            //abed
                         }                       
                     }
                     else if (filter.Operation.Code == filter.startsWithOp.Code) {
@@ -928,6 +931,11 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.ShowBusyIndicator = false;
     }
 
+    private qID: string;
+    public get QID() { return this.qID; }
+    public set QID(newValue: string) {
+        this.qID = newValue;
+    }
 
     private iD: string;
     public get ID() { return this.iD; }
@@ -970,6 +978,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
                         //}
                         this.ID = myResult.Result.Id;
+                        this.QID = myResult.Result.DWQueryId
                         this.EditButtonClicked();
                         SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator(); 
                     });
@@ -1090,6 +1099,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             //}
             if (field.FilterItems.length == 0) {
                 view.TextValue = field.TextValue;
+                view.MultSelectValueLists = field.MultSelectValueLists;
                 view.Operation = new ObjectFieldOperator(field.OperationCode, field.OperationName);
                 MyFilter.FilterItems.push(view);
             }
@@ -1148,7 +1158,6 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     Items: any[] = [];
     FilterItems: DWObjectFieldsDetails[] = [];
-
     private lOVAdditionalColumns: string;
     public get LOVAdditionalColumns() { return this.lOVAdditionalColumns; }
     public set LOVAdditionalColumns(newValue: string) { this.lOVAdditionalColumns = newValue; }
@@ -1273,6 +1282,18 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.textValue = newValue;
         this.MyParentClass.SaveChanges();
     }
+
+    private multSelectValueLists: any;
+    public get MultSelectValueLists() {
+        return this.multSelectValueLists;
+    }
+    public set MultSelectValueLists(newValue: any) {
+        this.multSelectValueLists = newValue;
+        this.MyParentClass.SaveChanges();
+    }
+
+
+
 
     private operationName: string;
     public get OperationName() { return this.operationName; }
@@ -1454,6 +1475,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     FieldValueChanged(DWObjectField: DWObjectFieldsDetails) {
         //this.MyParentClass = ParentClass;
         this.TextValue = "";
+        this.MultSelectValueLists = [];
         this.Name = DWObjectField.Name;
         this.Code = DWObjectField.Code;
         this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
@@ -1604,6 +1626,14 @@ export class DWFieldsGroup {
         }
     }
 }
+
+
+export class MultSelectValue {
+    Name: string;
+    Value: string;
+
+}
+
 //export class GroupItem {
 
 //    FilterItems: DWObjectFieldsDetails[] = [];

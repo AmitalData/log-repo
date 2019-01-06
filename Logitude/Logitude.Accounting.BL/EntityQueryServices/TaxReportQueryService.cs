@@ -46,6 +46,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return count;
         }
 
+        public IQueryable<TaxReportLine> GetReportLines(string taxReportId, int tenant)
+        {
+            IQueryable<TaxReportLine> query = (from a in context.TaxReportLines
+                    where a.TaxReportId == taxReportId && a.Tenant == tenant
+                    select a);
+            return query;
+        }
+
 
     }
 
