@@ -42,6 +42,9 @@ namespace AmitalCustomsWindowsService.Tester
 
             Debug.WriteLine("Env:");
             Debug.WriteLine(LogitudeSettings.LogitudeURL);
+            var pmCustomsSetting= Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(1);
+            var jsonSetting=ProxyUtil.JsonConvertSerialize(pmCustomsSetting);
+            Debug.WriteLine(jsonSetting);
             ///customsMessagingSheetWRToolStripMenuItem_Click(this, null);
         }
 
