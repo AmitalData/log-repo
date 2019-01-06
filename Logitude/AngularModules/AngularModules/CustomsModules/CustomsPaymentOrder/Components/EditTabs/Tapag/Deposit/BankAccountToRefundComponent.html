@@ -19,7 +19,6 @@
                                                     </td>
                                                     <td style="width: 120px;">
                                                         <LogLov [ObjectFieldName]="'FileTypeCode'"
-                                                                [ObjectTableName]="'Customs.TPGFileType'"
                                                                 [DataContext]="DataContext"
                                                                 [LookUpTableName]="'Customs.TPGFileType'"
                                                                 [HideColumns]="true"
@@ -36,7 +35,6 @@
                                                     </td>
                                                     <td style="width: 120px;">
                                                         <LogLov [ObjectFieldName]="'CountryCode'"
-                                                                [ObjectTableName]="'Customs.CustomsCountry'"
                                                                 [DataContext]="DataContext"
                                                                 [LookUpTableName]="'Customs.CustomsCountry'"
                                                                 [HideColumns]="true"
@@ -62,7 +60,6 @@
                                                     <td style="width: 120px; ">
                                                         <LogLabel [NoObjectField]="true"
                                                                   [ObjectFieldName]="'InternalBankId'"
-                                                                  [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"
                                                                   [TextCode]="'Customs.PaymentQuery.O.InternalBankId'"></LogLabel>
                                                     </td>
@@ -120,16 +117,15 @@
                                                         <LogLabel [ObjectFieldName]="'AccountBranch'" [DataContext]="DataContext" [TextCode]="'Customs.BankAccountToRefundQuery.O.BankBranch'"></LogLabel>
                                                     </td>
                                                     <td style="width: 120px;">
-                                                        <LogTextBox *ngIf="CountryCode != 'IL'" 
+                                                        <LogTextBox *ngIf="CountryCode != 'IL'"
                                                                     [ObjectFieldName]="'AccountBranch'"
                                                                     [DataContext]="DataContext"
                                                                     [HideColumns]="true"
                                                                     [AddCommasToNumbers]="false"
                                                                     [Text]="AccountBranch"></LogTextBox>
 
-                                                        <LogLov *ngIf="CountryCode == 'IL'" 
+                                                        <LogLov *ngIf="CountryCode == 'IL'"
                                                                 [ObjectFieldName]="'AccountBranch'"
-                                                                [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext"
                                                                 [LookUpTableName]="'Customs.CustomsBranch'"
                                                                 [SelectedValue]="AccountBranch"
@@ -170,10 +166,10 @@
                                                     <td style="width: 10px;"><div></div></td>
 
                                                     <td style="width: 100px;">
-                                                        <LogLabel *ngIf="CountryCode != 'IL'" [ObjectFieldName]="'AccountCurrency'" [DataContext]="DataContext" [TextCode]="'Customs.BankAccountToRefundQuery.O.AccountCurrency'"></LogLabel>
+                                                        <LogLabel [ObjectFieldName]="'AccountCurrency'" [DataContext]="DataContext" [TextCode]="'Customs.BankAccountToRefundQuery.O.AccountCurrency'"></LogLabel>
                                                     </td>
                                                     <td style="width: 120px;">
-                                                        <LogLov *ngIf="CountryCode != 'IL'" [ObjectFieldName]="'AccountCurrency'"
+                                                        <LogLov [ObjectFieldName]="'AccountCurrency'"
                                                                 [DataContext]="DataContext"
                                                                 [LookUpTableName]="'Customs.CurrencyType'"
                                                                 [SelectedValue]="AccountCurrency"
