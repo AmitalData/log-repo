@@ -51,9 +51,17 @@ namespace Logitude.CustomsMessaging.RequestServices
                 int codeBank;
                 int.TryParse(requestParams.BankCode, out codeBank);
                 myTPG_NG_2018_MSG4_BankAccountToRefundUpdateReplay.ClaimRefundMethod.AccountDetails.codeBank = codeBank;
-                int bankBranch;
-                int.TryParse(requestParams.AccountBranch, out bankBranch);
-                myTPG_NG_2018_MSG4_BankAccountToRefundUpdateReplay.ClaimRefundMethod.AccountDetails.accountBranch = bankBranch;
+                if (!string.IsNullOrWhiteSpace(requestParams.AccountBranch))
+                {
+                    int branch = 0;
+                    if (requestParams.AccountBranch.Contains(","))
+                    {
+                        string[] branchArray = requestParams.AccountBranch.Split(',');
+                        requestParams.AccountBranch = branchArray[0];
+                    }
+                    int.TryParse(requestParams.AccountBranch, out branch);
+                    myTPG_NG_2018_MSG4_BankAccountToRefundUpdateReplay.ClaimRefundMethod.AccountDetails.accountBranch = branch;
+                }
                 myTPG_NG_2018_MSG4_BankAccountToRefundUpdateReplay.ClaimRefundMethod.AccountDetails.accountNumber = requestParams.AccountNumber;
             }
             else
