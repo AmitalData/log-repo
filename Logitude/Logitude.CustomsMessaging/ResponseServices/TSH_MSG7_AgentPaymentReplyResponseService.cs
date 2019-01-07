@@ -19,7 +19,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.AgentPaymentReplyServiceReference;
-using Logitude.BL.Security;
 using Logitude.Server.Tools.Utils;
 
 namespace Logitude.CustomsMessaging.ResponseServices
@@ -29,7 +28,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
     {
 
         private PaymentOrderPM _PaymentOrderPM;
-        private bool _UNIQUEFILINGPOFeatureExist;
+
+        public bool _UNIQUEFILINGPOFeatureExist { get; private set; }
 
         public override INF_MSG_GenericResponseData GetResponse(TSH_MSG7_AgentPaymentReply customResponse, GenericRequestParams requestParams)
         {
@@ -40,8 +40,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             //Analyze message 3052- Answer to the agent request for changing existing payment
 
+
             //אם ה Feature מוגדר, אז יש לתייק את המסמך שהגיע כחלק מהמסר, כאשר לפני כן יש לנסות לאתר אם כבר קיים מסמך כזה ואז רק ליצור גרסה חדשה.
             _UNIQUEFILINGPOFeatureExist = ProxyUtil.SecurityUtilityCheckFeature("Customs.PaymentOrder", "", requestParams.Tenant);///
+
             ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
             var paymentOrderQueryService = new PaymentOrderQueryService(dbContext);
             var PaymentOrderUpdateService = new PaymentOrderUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
@@ -81,12 +83,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (_PaymentOrderPM == null)
             {
                 this.MyResponseData = new INF_MSG_GenericResponseData()
-                 {
-                     Succeeded = false,
-                     ApplicationID = requestParams.AppicationId,
-                     HasException = true,
-                     UserMessage = "Cann't find Payment Order" + requestParams.AppicationId,
-                 };
+                {
+                    Succeeded = false,
+                    ApplicationID = requestParams.AppicationId,
+                    HasException = true,
+                    UserMessage = "Cann't find Payment Order" + requestParams.AppicationId,
+                };
                 LogMessagingUtil.Instance.AppendLine("Cann't find Payment Order " + customResponse.AgentPaymentReply.paymentID);
                 return; //if not found exit  
             }
@@ -222,20 +224,60 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 PaymentOrderUpdateService.Update(_PaymentOrderPM, true);
             }
-
-            if (!string.IsNullOrWhiteSpace(declarationId))
+            bool task44020 = true;
+            if (!task44020)
             {
-                byte[] fileData = null;
+                if (!string.IsNullOrWhiteSpace(declarationId))
+                {
+                    UpdatePaymentDocument(declarationId, requestParams.Tenant, requestParams.LoggingUserId);
+                }
+            }
+            else
+            {
+                DeclarationPM myDeclarationPM = null;
+                var myDeclarationQueryService = new DeclarationQueryService(requestParams.Tenant);
+                if (!string.IsNullOrWhiteSpace(declarationId))
+                {
+                    myDeclarationPM = myDeclarationQueryService.GetSingle(declarationId, false, false);
+                }
+
+                var myAnalyzePaymentDocumentManager = new AnalyzePaymentDocumentManager(null, _PaymentOrderPM, myDeclarationPM);
+                
+
+                bool AttachmentExistInGDMFILING = true;
                 if (_UNIQUEFILINGPOFeatureExist)
                 {
-                    var DummyTesterAttachment = new UnifreightIIG.Common.AgentPaymentRequestServiceReference.Attachment()
-                    {
-                        content = System.Text.Encoding.UTF8.GetBytes(customResponse.PrintedPaymentForm.PrintedPaymentForm)
-                    };
-                    fileData = DummyTesterAttachment.content;
+                    myAnalyzePaymentDocumentManager.AnalyzePaymentDocument(
+                        new UnifreightIIG.Common.AgentPaymentRequestServiceReference.Attachment()
+                        {
+                            content = System.Text.Encoding.UTF8.GetBytes(customResponse.PrintedPaymentForm.PrintedPaymentForm),
+                            fileName = "",
+                        }, requestParams);
                 }
-            
-                UpdatePaymentDocument(declarationId, requestParams.Tenant, requestParams.LoggingUserId, fileData);
+                else
+                {
+                    
+                    DocumentsFilingPM documentsFilingPM = myAnalyzePaymentDocumentManager.GetDocumentsFiling(requestParams);
+                    if (documentsFilingPM==null)
+                    {
+                        // eitan : if get first time Attach add contents
+                        myAnalyzePaymentDocumentManager.CreatePaymentDocument(new UnifreightIIG.Common.AgentPaymentRequestServiceReference.Attachment()
+                        {
+                            content = System.Text.Encoding.UTF8.GetBytes(customResponse.PrintedPaymentForm.PrintedPaymentForm),
+                            fileName = "",
+                        }, requestParams);
+                    }
+                    else
+                    {
+                        //CreateUnfreigtFiling()
+                        // eitan : if already have filing - update metadata !!
+                        myAnalyzePaymentDocumentManager.UpdatePaymentDocument(documentsFilingPM, new UnifreightIIG.Common.AgentPaymentRequestServiceReference.Attachment()
+                        {
+                            content = null,
+                            fileName = "",
+                        }, requestParams);
+                    }
+                }
             }
 
             this.MyResponseData = new INF_MSG_GenericResponseData()
@@ -256,7 +298,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private void UpdatePaymentDocument(string DeclarationId, int Tenant, string LoggedUserId, byte[] fileData)
+        private void UpdatePaymentDocument(string DeclarationId, int Tenant, string LoggedUserId)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(Tenant);
             var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, Tenant);
@@ -273,10 +315,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
                 documentsFilingPM.ExternalEntityReference = _PaymentOrderPM.AccountingCustomFile;
 
-                documentsFilingService.Update(documentsFilingPM, fileData, LoggedUserId);
+                documentsFilingService.Update(documentsFilingPM, null, LoggedUserId);
                 LogMessagingUtil.Instance.AppendLine("Connect payment document " + documentsFilingPM.Code + " to AccountingCustomFile" + _PaymentOrderPM.AccountingCustomFile);
             }
-            
+
         }
     }
 }

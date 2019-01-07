@@ -318,11 +318,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             _PaymentOrderPM.CustomsRequestsSheetId = requestParams.CustomsRequestsSheetId;
             paymentOrderUpdateService.Update(_PaymentOrderPM, true);
-            
 
-            // Add Document- Printed Payment Form
-            AnalyzePaymentDocument(customResponse.PaymentOrderReply.PrintedPaymentForm, requestParams);
-
+            bool useTheAnalyzePaymentDocumentManager = false;//due not tested 4 now 
+            if (useTheAnalyzePaymentDocumentManager)
+            {
+                var myAnalyzePaymentDocumentManager = new AnalyzePaymentDocumentManager(_CommonContext , _PaymentOrderPM, _DeclarationPM);
+                myAnalyzePaymentDocumentManager.AnalyzePaymentDocument(customResponse.PaymentOrderReply.PrintedPaymentForm, requestParams);
+            }
+            else
+            {
+                // Add Document- Printed Payment Form
+                AnalyzePaymentDocument(customResponse.PaymentOrderReply.PrintedPaymentForm, requestParams);
+            }
             //this.MyResponseData = new INF_MSG_GenericResponseData()
             this.MyResponseData = new PaymentOrderReplyResponseData()
             {
@@ -748,6 +755,151 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     paymentOrderConnectionTableUpdateService.Update(paymentItem, false);
                 }
             }
+        }
+    }
+
+    public class AnalyzePaymentDocumentManager
+    {
+        private ICommonDataContext _CommonContext;
+        private PaymentOrderPM _PaymentOrderPM;
+        private DeclarationPM _DeclarationPM;
+        private string _ReturnMessage;
+        public AnalyzePaymentDocumentManager(ICommonDataContext CommonContext, PaymentOrderPM PaymentOrderPM, DeclarationPM DeclarationPM)
+        {
+            _PaymentOrderPM = PaymentOrderPM;
+            _DeclarationPM = DeclarationPM;
+            _CommonContext = CommonContext ?? CommonDataContext.GetContext(_PaymentOrderPM.Tenant);
+
+        }
+        public void AnalyzePaymentDocument(Attachment attachment, RequestParamsBase requestParams)
+        {
+
+            if (attachment == null)
+            {
+                return;
+            }
+            //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
+            DocumentsFilingPM documentsFilingPM = GetDocumentsFiling(requestParams);
+
+            if (documentsFilingPM == null)
+            {
+                CreatePaymentDocument(attachment, requestParams);
+            }
+            else
+            {
+                UpdatePaymentDocument(documentsFilingPM, attachment, requestParams);
+            }
+        }
+
+        public DocumentsFilingPM GetDocumentsFiling(RequestParamsBase requestParams)
+        {
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
+            var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
+            var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
+            DocumentsFilingPM documentsFilingPM = null;
+
+
+
+            //Check if file already exists
+            string objectTableId = "";
+            string entityId = "";
+            string childEntityId = "";
+            if (_DeclarationPM != null) // If the Payment order is connected to Declaration
+            {
+                objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                entityId = _DeclarationPM.Id;
+                childEntityId = _PaymentOrderPM.Id;
+            }
+            else
+            {
+                objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
+                entityId = _PaymentOrderPM.Id;
+            }
+            var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("POR", _PaymentOrderPM.Tenant);
+            var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(entityId, childEntityId, objectTableId, "I", requestParams.Tenant);
+
+            foreach (var documentItem in documentsFilingPMList)
+            {
+                if (documentType != null) //Yuval Chalup 14.10.2015 TASK-16973 (Add only the IF)
+                {
+                    if (documentItem.DocumentTypeId == documentType.Id)
+                    {
+                        documentsFilingPM = documentItem;
+                        break;
+                    }
+                }
+            }
+
+            return documentsFilingPM;
+        }
+
+        public void UpdatePaymentDocument(DocumentsFilingPM documentsFilingPM, Attachment attachment, RequestParamsBase requestParams)
+        {
+            //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
+            var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
+            var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
+            string logMessage = "";
+
+            documentsFilingService.OnlyIfChangeUpdateAndAddVersion = true;
+
+            documentsFilingService.Update(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
+
+            if (_DeclarationPM != null)
+            {
+                logMessage = " -For declaration " + _DeclarationPM.DeclarationNumber;
+            }
+            LogMessagingUtil.Instance.AppendLine("File document " + documentsFilingPM.Code + logMessage);
+            _ReturnMessage = string.Concat(_ReturnMessage, " ועודכן מסמך ", documentsFilingPM.Code);
+        }
+
+        public void CreatePaymentDocument(Attachment attachment, RequestParamsBase requestParams)
+        {
+            //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
+            var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
+            var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
+            string logMessage = "";
+
+            var documentsFilingPM = new DocumentsFilingPM();
+            documentsFilingPM.Tenant = _PaymentOrderPM.Tenant;
+            var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("POR", _PaymentOrderPM.Tenant);
+            //<--- Yuval Chalup 14.10.2015 TASK-16973
+            if (documentType == null)
+            {
+                LogMessagingUtil.Instance.AppendLine("Did not create DocumentsFiling - Could not find DocumentType POR in DB");
+                _ReturnMessage = string.Concat(_ReturnMessage, "Did not create DocumentsFiling - Could not find DocumentType POR in DB");
+            }
+            //Yuval Chalup 14.10.2015 TASK-16973 --->
+            documentsFilingPM.DocumentTypeId = documentType.Id;
+            if (_DeclarationPM != null)
+            {
+                documentsFilingPM.EntityId = _DeclarationPM.Id;
+                documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
+                documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
+                documentsFilingPM.ExternalEntityReference = _DeclarationPM.CustomFileNo;
+                logMessage = " -For declaration " + _DeclarationPM.DeclarationNumber;
+            }
+            else
+            {
+                documentsFilingPM.EntityId = _PaymentOrderPM.Id;
+                documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
+            }
+
+            documentsFilingPM.ChildEntityReference = _PaymentOrderPM.PaymentNumber;
+            documentsFilingPM.CreatedByUserId = requestParams.LoggingUserId;
+            documentsFilingPM.OwnerId = requestParams.LoggingUserId;
+            documentsFilingPM.UpdatedByUserId = requestParams.LoggingUserId;
+            documentsFilingPM.ReceivedByUserId = requestParams.LoggingUserId;
+            documentsFilingPM.DirectionCode = "I";
+            documentsFilingPM.Description = "הוראת תשלום " + _PaymentOrderPM.PaymentNumber;
+            documentsFilingPM.ExternalEntityName = "CFIFILEM";
+            documentsFilingPM.FileExtension = "PDF";
+
+            documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
+            LogMessagingUtil.Instance.AppendLine("File document " + documentsFilingPM.Code + logMessage);
+            _ReturnMessage = string.Concat(_ReturnMessage, " ונוצר מסמך ", documentsFilingPM.Code);
         }
     }
 }
