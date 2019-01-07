@@ -270,10 +270,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     else
                     {
                         //CreateUnfreigtFiling()
-                        // eitan : if already have filing - update metadata !!
+                        // eitan : if already have filing - update metadata only !!
                         myAnalyzePaymentDocumentManager.UpdatePaymentDocument(documentsFilingPM, new UnifreightIIG.Common.AgentPaymentRequestServiceReference.Attachment()
                         {
-                            content = null,
+                            content = null,//do not send data only if _UNIQUEFILINGPOFeatureExist !!
                             fileName = "",
                         }, requestParams);
                     }
