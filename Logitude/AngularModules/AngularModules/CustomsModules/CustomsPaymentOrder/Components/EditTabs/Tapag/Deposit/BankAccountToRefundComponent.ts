@@ -373,6 +373,7 @@ export class BankAccountToRefundComponent
         currRequestParams.AccountBranch = this.AccountBranch;
         currRequestParams.AccountNumber = this.AccountNumber;
         currRequestParams.AccountCurrency = this.AccountCurrency;
+        currRequestParams.DeclarationId = this.declarationId;
 
         CustomMessageProgressComponent
             .ShowProgressBar(currRequestParams.PBId,
