@@ -45,15 +45,19 @@
                                             <td style="width: 110px;">
                                                 <LogLabel [ObjectFieldName]="'DecisionNote'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
-                                            <td style="width: 150px;">
+                                            <td colspan="3" style="width: 430px;">
                                                 <LogTextBox [ObjectFieldName]="'DecisionNote'" [ObjectTableName]="ObjectTableName" [Text]="DecisionNote"
                                                             [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                             </td>
 
+                                            <td><div></div></td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
                                             <td style="width: 130px;">
                                                 <div style="margin-right:10px; vertical-align:middle;" [style.text-align]="'right'" class="Label MultiLinesText">{{'Customs.ClaimsRelatedEntity.F.EilatVatRefoundDecision' | TextCodeTranslationPipe }}:</div>
                                             </td>
-                                            <td style="width: 150px;">
+                                            <td colspan="3" style="width: 430px;">
                                                 <LogTextBox [ObjectFieldName]="'EilatVatRefoundDecision'" [ObjectTableName]="ObjectTableName" [Text]="EilatVatRefoundDecision"
                                                             [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                             </td>
