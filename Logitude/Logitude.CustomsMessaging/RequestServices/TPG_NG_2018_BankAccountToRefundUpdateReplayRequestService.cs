@@ -80,10 +80,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = "בקשה להחזר פיקדון  " + requestParams.FileNumber;
             this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Deposit");
-            if (requestParams.LoggingObjectTableId == "Customs.Declaration" && !string.IsNullOrEmpty(requestParams.LoggingEntityId))
+            if (!string.IsNullOrEmpty(requestParams.DeclarationId))
             {
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId;
+                this.MyRequestSheetParam.EntityId1 = requestParams.DeclarationId;
             }
 
             return myTPG_NG_2018_MSG4_BankAccountToRefundUpdateReplay;
