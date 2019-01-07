@@ -121,7 +121,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 if (reqSheetDetails != null)
                 {
                     ///Task 40564: טיפול בשליחת בקשות בו זמנית CALL#311773
-                    bool tryConcurrentKiller = ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
+                    bool tryConcurrentKiller = true; //ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                     if (tryConcurrentKiller) 
                     {
                         if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))

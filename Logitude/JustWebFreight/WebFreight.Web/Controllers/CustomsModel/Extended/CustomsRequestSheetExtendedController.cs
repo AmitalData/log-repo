@@ -206,7 +206,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                                 CustomsRequestsSheetPM currententityPm = customsRequestsSheetQuery.GetSingle(dummyPM.Id, false, false);
 
-                                bool tryConcurrentKiller = ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
+                                bool tryConcurrentKiller = true;// ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                                 if (tryConcurrentKiller)
                                 {
                                     if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(currententityPm.InterfaceTypeCode))

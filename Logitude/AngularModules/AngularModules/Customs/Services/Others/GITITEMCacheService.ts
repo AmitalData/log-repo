@@ -32,13 +32,21 @@ export class GITITEMCacheService {
     public IsUnitPURForItems: boolean = false;
 
   private _ItemCode_LocalCache: ItemCodeComponent[];
-  public get ItemCode_LocalCache(): ItemCodeComponent[] {
+  /*public*/private get ItemCode_LocalCache(): ItemCodeComponent[] {
     return this._ItemCode_LocalCache;
   }
   //public set ItemCode_LocalCache(value: ItemCodeComponent[]) {
   //  this._ItemCode_LocalCache = value;
   //}
 
+    FirstItemCodeComponent(itemCode) {
+        var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == itemCode)[0];
+        return itemCodeDetails;
+    }
+    AddItemCodeComponent(ItemCodeComponent) {
+        GITITEMCacheService.Instance.ItemCode_LocalCache.push(ItemCodeComponent);
+    }
+                                        
     //public const  ToChangeRow ="ToChangeRow"
     OnItemCodeAdd(mySupplierInvoiceItemPM, itemCodeDetails): Promise<OnItemCodeAddResult> {
         //ToChangeRowTrue_ToChangeDBFalse

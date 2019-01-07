@@ -79,7 +79,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate,
                     };
 
-                    DateTime statusDateTime = customResponse.GeneralData.releaseDate;
+                    DateTime statusDateTime = customResponse.GeneralData.releaseDate.GetValueOrDefault();
                     if (statusDateTime == null)
                     {
                         statusDateTime = customResponse.RequestContentHeader.TransmitionDateTime;
@@ -89,7 +89,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         case 1: // released
                             LogMessagingUtil.Instance.AppendLine("released");
                             //hataraDate = customResponse.GeneralData.releaseDate;
-                            declarationPM.HatraDate = customResponse.GeneralData.releaseDate; //Yuval Chalup 17.01.2018 - Update date from response
+                            declarationPM.HatraDate = customResponse.GeneralData.releaseDate.GetValueOrDefault(); //Yuval Chalup 17.01.2018 - Update date from response
                             myEventContextTagModel.EventCode = "RSG";
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "7";
@@ -204,14 +204,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if(customResponse.GeneralData != null)
                 {
                     MyResponseData.governmentProcedureType = customResponse.GeneralData.governmentProcedureType.ToString();
-                    MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.Date.ToString("dd/MM/yyyy");
-                    //if (customResponse.GeneralData.releaseDate.TimeOfDay.Hours != 0)
-                    //{
-                    //    MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.TimeOfDay.ToString("hh:mm") + "   " + MyResponseData.releaseDate;
-                    //}
-                    if(customResponse.GeneralData.dealValueNISSpecified)MyResponseData.dealValueNIS = customResponse.GeneralData.dealValueNIS.ToString();
-                    //if (customResponse.GeneralData.CifValueNisSpecified) MyResponseData.CifValueNis = customResponse.GeneralData.CifValueNis.ToString();
-                    //if (customResponse.GeneralData.ExchangeRateSpecified) MyResponseData.ExchangeRate = customResponse.GeneralData.ExchangeRate.ToString();
+                    if(customResponse.GeneralData.releaseDate != null)
+                    {
+                        MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.GetValueOrDefault().Date.ToString("dd/MM/yyyy");
+                        if (customResponse.GeneralData.releaseDate.GetValueOrDefault().TimeOfDay.Hours != 0)
+                        {
+                            MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.GetValueOrDefault().TimeOfDay.ToString("hh:mm") + "   " + MyResponseData.releaseDate;
+                        }
+                    }
+
+                    if (customResponse.GeneralData.dealValueNISSpecified)MyResponseData.dealValueNIS = customResponse.GeneralData.dealValueNIS.ToString();
+                    if (customResponse.GeneralData.CifValueNisSpecified) MyResponseData.CifValueNis = customResponse.GeneralData.CifValueNis.ToString();
+                    if (customResponse.GeneralData.ExchangeRate > 0) MyResponseData.ExchangeRate = customResponse.GeneralData.ExchangeRate.ToString();
                 }
                 if (customResponse.Consignment != null && customResponse.Consignment[0] != null)
                 {

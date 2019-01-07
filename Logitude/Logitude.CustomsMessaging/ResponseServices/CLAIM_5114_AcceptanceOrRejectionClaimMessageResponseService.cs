@@ -50,6 +50,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 ClaimsRelatedEntityPM claimsRelatedEntityPM = claimsRelatedEntityQueryService.GetRelatedEntityByTapagNumber(claimsRelatedEntityItem.TPGIdentifier.fileNumber.ToString(), claimsRelatedEntityItem.TPGIdentifier.numeral, requestParams.Tenant);
                 if (claimsRelatedEntityPM != null)
                 {
+                    LogMessagingUtil.Instance.AppendLine("Analyze Acceptance Or Rejection Claim Message for Claim Id:" + claimsRelatedEntityPM.ClaimId);
                     ClaimPM claimPM = claimQueryService.GetSingle(claimsRelatedEntityPM.ClaimId, false, true);
 
                     userMessage = userMessage + " " + claimsRelatedEntityItem.TPGIdentifier.fileNumber;
@@ -97,6 +98,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
 
                     myClaimsRelatedEntityUpdateService.Update(claimsRelatedEntityPM,true);
+                }
+                else
+                {
+                    LogMessagingUtil.Instance.AppendLine("Can not find Claim by- fileNumber:" + claimsRelatedEntityItem.TPGIdentifier.fileNumber.ToString() + " numeral:" + claimsRelatedEntityItem.TPGIdentifier.numeral);
                 }
             }
 
