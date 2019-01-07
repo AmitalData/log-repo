@@ -102,10 +102,10 @@ export class BankAccountToRefundComponent
             this.RequestParams.FileNumber = value;
         }
         if (value) {
-            this.UIProperties.SetRequired("FileNumber", this.ObjectTableName, false);
+            this.UIProperties.SetRequired("FileNumber", null, false);
         }
         else {
-            this.UIProperties.SetRequired("FileNumber", this.ObjectTableName, true);
+            this.UIProperties.SetRequired("FileNumber", null, true);
         }
     }
 
