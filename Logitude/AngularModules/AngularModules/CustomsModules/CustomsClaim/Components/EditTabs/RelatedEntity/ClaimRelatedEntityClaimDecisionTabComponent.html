@@ -125,7 +125,7 @@
 
                                                         <!-- SeizureMethodCode -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntitiesSeizure.F.SeizureMethodCode' | TextCodeTranslationPipe"
-                                                                    [width]="'140'" [Alignment]="'right'" [binding]="'SeizureMethodCode'">
+                                                                    [width]="'140'" [Alignment]="'right'" [binding]="'SeizureMethodName'">
                                                             <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.SeizureMethodName}}</span>
