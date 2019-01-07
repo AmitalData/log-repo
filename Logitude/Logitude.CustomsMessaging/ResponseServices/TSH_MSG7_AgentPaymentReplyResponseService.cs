@@ -19,6 +19,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.AgentPaymentReplyServiceReference;
+using Logitude.BL.Security;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -27,6 +29,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
     {
 
         private PaymentOrderPM _PaymentOrderPM;
+        private bool _UNIQUEFILINGPOFeatureExist;
 
         public override INF_MSG_GenericResponseData GetResponse(TSH_MSG7_AgentPaymentReply customResponse, GenericRequestParams requestParams)
         {
@@ -36,6 +39,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(TSH_MSG7_AgentPaymentReply customResponse, GenericRequestParams requestParams)
         {
             //Analyze message 3052- Answer to the agent request for changing existing payment
+
+            //אם ה Feature מוגדר, אז יש לתייק את המסמך שהגיע כחלק מהמסר, כאשר לפני כן יש לנסות לאתר אם כבר קיים מסמך כזה ואז רק ליצור גרסה חדשה.
+            _UNIQUEFILINGPOFeatureExist = ProxyUtil.SecurityUtilityCheckFeature("Customs.PaymentOrder", "", requestParams.Tenant);///
             ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
             var paymentOrderQueryService = new PaymentOrderQueryService(dbContext);
             var PaymentOrderUpdateService = new PaymentOrderUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
@@ -219,7 +225,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (!string.IsNullOrWhiteSpace(declarationId))
             {
-                UpdatePaymentDocument(declarationId, requestParams.Tenant, requestParams.LoggingUserId);
+                byte[] fileData = null;
+                if (_UNIQUEFILINGPOFeatureExist)
+                {
+                    var DummyTesterAttachment = new UnifreightIIG.Common.AgentPaymentRequestServiceReference.Attachment()
+                    {
+                        content = System.Text.Encoding.UTF8.GetBytes(customResponse.PrintedPaymentForm.PrintedPaymentForm)
+                    };
+                    fileData = DummyTesterAttachment.content;
+                }
+            
+                UpdatePaymentDocument(declarationId, requestParams.Tenant, requestParams.LoggingUserId, fileData);
             }
 
             this.MyResponseData = new INF_MSG_GenericResponseData()
@@ -240,7 +256,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private void UpdatePaymentDocument(string DeclarationId, int Tenant, string LoggedUserId)
+        private void UpdatePaymentDocument(string DeclarationId, int Tenant, string LoggedUserId, byte[] fileData)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(Tenant);
             var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, Tenant);
@@ -257,7 +273,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
                 documentsFilingPM.ExternalEntityReference = _PaymentOrderPM.AccountingCustomFile;
 
-                documentsFilingService.Update(documentsFilingPM, null, LoggedUserId);
+                documentsFilingService.Update(documentsFilingPM, fileData, LoggedUserId);
                 LogMessagingUtil.Instance.AppendLine("Connect payment document " + documentsFilingPM.Code + " to AccountingCustomFile" + _PaymentOrderPM.AccountingCustomFile);
             }
             
