@@ -230,8 +230,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             new XElement("VendorCountry", this.Vendor != null ? this.Vendor.CountryCode : null),
                             new XElement("VendorVAT", this.Vendor != null ? this.Vendor.VATNumber : null),
                             new XElement("DepositionNumber", dirtyImporterDespositionPM.DepositionNumber),
-                            new XElement("ValidityStartDate", dirtyImporterDespositionPM.StartDate != null ? dirtyImporterDespositionPM.StartDate.Value.Date.ToString("dd.MM.yy") : null),
-                            new XElement("ValidityEndDate", dirtyImporterDespositionPM.EndDate != null ? dirtyImporterDespositionPM.EndDate.Value.Date.ToString("dd.MM.yy") : null),
+                            new XElement("ValidityStartDate", dirtyImporterDespositionPM.StartDate != null ? dirtyImporterDespositionPM.StartDate.Value.ToString("o") : null),
+                            new XElement("ValidityEndDate", dirtyImporterDespositionPM.EndDate != null ? dirtyImporterDespositionPM.EndDate.Value.ToString("o") : null),
                             new XElement("ImporterVat", importerCode)
                             )
                             );
