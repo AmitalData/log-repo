@@ -152,14 +152,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(entityPM.Tenant);
                     List <string> declarations = courierDeclarationRepository.GetCourierConnectedDeclaratinsList(entityPM.Id, entityPM.Tenant);
-                    foreach (var declarationId in declarations)
+                    if (declarations != null)
                     {
-                        var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-                        declarationQueryService.LoadSupplierInvoicesWithItems = false;
-                        var myDBEntity = declarationQueryService.GetSingle(declarationId, false, false);
+                        DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                        DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(myDBEntity);
-                        declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
+                        foreach (var declarationId in declarations)
+                        {
+                            declarationQueryService.LoadSupplierInvoicesWithItems = false;
+                            var myDBEntity = declarationQueryService.GetSingle(declarationId, false, false);
+                            DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(myDBEntity);
+                            declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
+                        }
                     }
                 }
             }

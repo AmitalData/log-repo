@@ -23,6 +23,7 @@ using System.Xml.Serialization;
 using UnifreightIIG.Common.MessageLib.DeclarationDeal;
 using UnifreightIIG.Common.MessageLib.Deficit;
 using Logitude.Customs.BL.Models;
+using Attachment = UnifreightIIG.Common.MessageLib.Deficit.Attachment;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -270,7 +271,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
                 var fUStatusRemarks = "\n" + "סטטוס הוראה: " + paymentOrderPM.PaymentStatusName;
-                if(paymentOrderPM.LastPayDate != null)
+                if (paymentOrderPM.LastPayDate != null)
                 {
                     fUStatusRemarks += "\n" + "תאריך אחרון לתשלום: " + ((DateTime)paymentOrderPM.LastPayDate).Date.ToString("dd/MM/yyyy");
                 }

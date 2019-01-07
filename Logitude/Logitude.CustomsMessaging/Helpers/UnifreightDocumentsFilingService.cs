@@ -55,7 +55,7 @@ namespace Logitude.CustomsMessaging.Helpers
                         EXTENSION = lstGDMFILEVER.EXTENSION,
                     };
                 }
-                if (OnlyIfChangeUpdateAndAddVersion && fileData!=null)
+                if (OnlyIfChangeUpdateAndAddVersion && fileData!=null && base.MyUniFileVerM!=null)
                 {
                     if (MD5HashUtil.GetMD5Hash(fileData)== base.MyUniFileVerM.MD5HASH)
                     {

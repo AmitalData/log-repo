@@ -1,9 +1,9 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { CustomMessageWrapperComponent} from '../../../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
+import { CustomMessageWrapperComponent } from '../../../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { AppTool, DateTool } from '../../../../../../Infrastructure/Tools';
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from '../../../../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
 import { CustomSendOptionsArgs } from '../../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
-import { CustomMessageProgressComponent } from '../../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';import { EntityArgs } from '../../../../../../Infrastructure/DataContracts/EntityArgs';
+import { CustomMessageProgressComponent } from '../../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent'; import { EntityArgs } from '../../../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -55,8 +55,8 @@ export class BankAccountToRefundComponent
 
         if (!AppTool.IsNullOrEmpty(entityArgs)) {
             this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response: any) => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.Deposit").subscribe((response: any) => {
-                            this.LoadBanks();
+                this.EntityResourceService.getEntityResourceByTableName("Customs.Deposit").subscribe((response: any) => {
+                    this.LoadBanks();
                 });
             });
         }
@@ -370,13 +370,13 @@ export class BankAccountToRefundComponent
         currRequestParams.IdentifierCode = this.IdentifierCode;
         currRequestParams.CountryCode = this.CountryCode;
         currRequestParams.BankCode = this.BankCode;
-        currRequestParams.AccountBranch = this.AccountBranch;       
+        currRequestParams.AccountBranch = this.AccountBranch;
         currRequestParams.AccountNumber = this.AccountNumber;
         currRequestParams.AccountCurrency = this.AccountCurrency;
 
         CustomMessageProgressComponent
             .ShowProgressBar(currRequestParams.PBId,
-            "שליחת בקשה להחזר פקדון", true)
+                "שליחת בקשה להחזר פקדון", true)
             .then((res) => {
                 this.ResponseData = res;
                 this.OnMassageDisplayMethod();

@@ -23,6 +23,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
     {
         public override void Update(VE_MSG032_ImporterPeriodicDeclarationReplyMessage customResponse, GenericRequestParams requestParams)
         {
+
+            this.MyResponseData = this.MyResponseData ?? new INF_MSG_GenericResponseData();
             //Analyze Message 3700 - Reply To Importer Declaration (DCA)
             ICustomContext commonContext = CustomContext.GetContext(requestParams.Tenant);
             var importerDespositionQueryService = new ImporterDespositionQueryService(requestParams.Tenant);
