@@ -250,8 +250,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     }
                     if (!string.IsNullOrWhiteSpace(countryCode)) this._MyDeclarationPM.Consignments[0].OriginCountryCode = countryCode;
                 }
-                this._MyDeclarationPM.Consignments[0].StorageSiteCode = TranslateDeliverySite(_LogitudeReleaseFile.WarehouseId);
-
+                if (mode == "SecondaryEntry")
+                {
+                    this._MyDeclarationPM.Consignments[0].ReceiverWarehouseCode = TranslateReceiverWarehouse(_LogitudeReleaseFile.WarehouseId);
+                }
+                else
+                {
+                    this._MyDeclarationPM.Consignments[0].StorageSiteCode = TranslateDeliverySite(_LogitudeReleaseFile.WarehouseId);
+                }
 
                 if (this._LogitudeReleaseFile.PACKAGES != null && this._LogitudeReleaseFile.PACKAGES.Count() > 0)
                 {
@@ -540,7 +546,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
         {
             if (String.IsNullOrWhiteSpace(amitalDeliverySiteCode))
             {
-                AppendLogLine("amitalDepartmentCode is null");
+                AppendLogLine("amitalDeliverySiteCode is null");
                 return null;
             }
             var deliverySiteType = new DeliverySiteTypeRepository(ResolvedTenant());
@@ -552,6 +558,25 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
             }
             AppendLogLine("amitalDeliverySiteCode = " + amitalDeliverySiteCode + " Translated to " + myDeliverySite.Code);
             return myDeliverySite.Code;
+        }
+
+
+        private string TranslateReceiverWarehouse(string amitalReceiverWarehouseCode)
+        {
+            if (String.IsNullOrWhiteSpace(amitalReceiverWarehouseCode))
+            {
+                AppendLogLine("amitalReceiverWarehouseCode is null");
+                return null;
+            }
+            var registeredWarehouseSiteType = new RegisteredWarehouseSiteTypeRepository(ResolvedTenant());
+            var myRegisteredWarehouseSite = registeredWarehouseSiteType.GetSingle(amitalReceiverWarehouseCode);
+            if (myRegisteredWarehouseSite == null)
+            {
+                AppendLogLine("amitalReceiverWarehouseCode = " + amitalReceiverWarehouseCode + " could not translate to Logitude Id");
+                return null;
+            }
+            AppendLogLine("amitalReceiverWarehouseCode = " + amitalReceiverWarehouseCode + " Translated to " + myRegisteredWarehouseSite.Code);
+            return myRegisteredWarehouseSite.Code;
         }
 
         private string TranslateMeasurmentUnit(string amitalMeasurmentUnitCode)

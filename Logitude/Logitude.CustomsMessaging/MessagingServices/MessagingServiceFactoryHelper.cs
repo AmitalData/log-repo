@@ -411,6 +411,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             DCAInCLAIM_5114_AcceptanceOrRejectionClaimMessageMessagingServices>
                             ((new DCAInCLAIM_5114_AcceptanceOrRejectionClaimMessageMessagingServices()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                            DCAInDEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestMessagingServices>
+                            ((new DCAInDEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestMessagingServices()).MainInterfaceCode);
 
         }
         public static void InitContainer()
