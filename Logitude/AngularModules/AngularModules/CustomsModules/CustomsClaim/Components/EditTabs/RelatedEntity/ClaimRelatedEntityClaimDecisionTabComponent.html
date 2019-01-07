@@ -45,21 +45,17 @@
                                             <td style="width: 110px;">
                                                 <LogLabel [ObjectFieldName]="'DecisionNote'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
-                                            <td style="width: 410px;" colspan="3" class="TextTrimming">
+                                            <td rowspan="2" style="width: 150px; vertical-align: top;padding-top: 2px;">
                                                 <LogTextBox [ObjectFieldName]="'DecisionNote'" [ObjectTableName]="ObjectTableName" [Text]="DecisionNote"
-                                                            [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                            [HideColumns]="true" [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
                                             </td>
 
-                                            <td><div></div></td>
-                                        </tr>
-
-                                        <tr class="FormFieldRow">
                                             <td style="width: 110px;">
                                                 <div style="margin-right:10px; vertical-align:middle;" [style.text-align]="'right'" class="Label MultiLinesText">{{'Customs.ClaimsRelatedEntity.F.EilatVatRefoundDecision' | TextCodeTranslationPipe }}:</div>
                                             </td>
-                                            <td style="width: 410px;" colspan="3" class="TextTrimming">
+                                            <td rowspan="2" style="width: 150px; vertical-align: top;padding-top: 2px;">
                                                 <LogTextBox [ObjectFieldName]="'EilatVatRefoundDecision'" [ObjectTableName]="ObjectTableName" [Text]="EilatVatRefoundDecision"
-                                                            [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                            [HideColumns]="true" [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
                                             </td>
 
                                             <td><div></div></td>
