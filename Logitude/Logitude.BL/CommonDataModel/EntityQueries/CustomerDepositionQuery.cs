@@ -127,7 +127,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                              ValidityStartDate = a.ValidityStartDate,
                                                                              ValidityEndDate = a.ValidityEndDate,
                                                                              CreateDate = a.CreateDate,
-                                                                         }).ToList();
+                                                                         }).OrderByDescending(d=>d.ValidityStartDate).ToList();
 
             foreach (CustomerDepositionList item in customerDepositionLists)
             {

@@ -51,11 +51,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CustomsShipperCode);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.EnglishName);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ShipperVAT);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ValidDepositionNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.LocalName);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityCard.CityName);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityCard.CountryName);
 
             if (mySearchFields.Length > 1000)
             {

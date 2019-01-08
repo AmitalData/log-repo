@@ -231,6 +231,8 @@
     <Content Include="Images\arrow_right_w.png" />
     <Content Include="Images\Flags\--.png" />
     <Content Include="Images\Flags\XK.png" />
+    <Content Include="Images\Icons\collapse.png" />
+    <Content Include="Images\Icons\expand.png" />
     <Content Include="Images\Icons\Share.png" />
     <Content Include="Images\Menu\Deposition.png" />
     <Content Include="Images\Menu\Deposition.Selected.png" />
@@ -596,6 +598,7 @@
     <TypeScriptCompile Include="Infrastructure\Components\MenuButtons\AnalyzeQueueMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\NewViewComponent\ChooseUserComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\btnUpdateComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchAddFieldsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomatedBackup.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationCondition.ts" />
@@ -664,6 +667,7 @@
     <Content Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.html" />
     <Content Include="Infrastructure\Components\NewViewComponent\ChooseUserComponent.html" />
     <Content Include="Infrastructure\Components\QueryColumnsComponents\btnUpdateComponent.html" />
+    <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchAddFieldsComponent.html" />
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARGeneralInvoiceLineComponent.html" />

@@ -690,8 +690,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable CustomsShipperObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsShipper" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable CustomsShipperObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsShipper" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CustomsShipperGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsShipper.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = CustomsShipperObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature CustomsShipperGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsShipper.Tab.General", ObjectTableId = CustomsShipperObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsShipperFeatures.CSGE", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

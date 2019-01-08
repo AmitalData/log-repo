@@ -657,6 +657,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         }
                         else {
                             OperationSimpol = " = '@@' ";
+                            //abed
                         }
                     }
                     else if (filter.Operation.Code == filter.notEqualsOp.Code) {
@@ -665,6 +666,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         }
                         else {
                             OperationSimpol = " <> '@@' ";
+
+                            //abed
                         }                       
                     }
                     else if (filter.Operation.Code == filter.startsWithOp.Code) {
@@ -692,8 +695,15 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         OperationSimpol = " <= @@ ";
                     }
 
-                    this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + OperationSimpol.replace("@@", filter.TextValue) + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
-
+                    if (filter.Operation.Code == filter.IsNullOp.Code) {
+                        this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is null or " + (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " = '' " + " " + AndOr + " ";
+                    }
+                    else if (filter.Operation.Code == filter.IsNotNullOp.Code) {
+                        this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is not null and " + (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " <> '' " + " " + AndOr + " ";
+                    }
+                    else {
+                        this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + OperationSimpol.replace("@@", filter.TextValue) + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
+                    }
                 }
                 else {
                     //if (this.WhereStmt == " where  ( ") {
@@ -928,6 +938,11 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.ShowBusyIndicator = false;
     }
 
+    private qID: string;
+    public get QID() { return this.qID; }
+    public set QID(newValue: string) {
+        this.qID = newValue;
+    }
 
     private iD: string;
     public get ID() { return this.iD; }
@@ -970,6 +985,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
                         //}
                         this.ID = myResult.Result.Id;
+                        this.QID = myResult.Result.DWQueryId
                         this.EditButtonClicked();
                         SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator(); 
                     });
@@ -1090,6 +1106,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             //}
             if (field.FilterItems.length == 0) {
                 view.TextValue = field.TextValue;
+                view.MultSelectValueLists = field.MultSelectValueLists;
                 view.Operation = new ObjectFieldOperator(field.OperationCode, field.OperationName);
                 MyFilter.FilterItems.push(view);
             }
@@ -1148,7 +1165,6 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     Items: any[] = [];
     FilterItems: DWObjectFieldsDetails[] = [];
-
     private lOVAdditionalColumns: string;
     public get LOVAdditionalColumns() { return this.lOVAdditionalColumns; }
     public set LOVAdditionalColumns(newValue: string) { this.lOVAdditionalColumns = newValue; }
@@ -1273,6 +1289,18 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.textValue = newValue;
         this.MyParentClass.SaveChanges();
     }
+
+    private multSelectValueLists: any;
+    public get MultSelectValueLists() {
+        return this.multSelectValueLists;
+    }
+    public set MultSelectValueLists(newValue: any) {
+        this.multSelectValueLists = newValue;
+        this.MyParentClass.SaveChanges();
+    }
+
+
+
 
     private operationName: string;
     public get OperationName() { return this.operationName; }
@@ -1454,6 +1482,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     FieldValueChanged(DWObjectField: DWObjectFieldsDetails) {
         //this.MyParentClass = ParentClass;
         this.TextValue = "";
+        this.MultSelectValueLists = [];
         this.Name = DWObjectField.Name;
         this.Code = DWObjectField.Code;
         this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
@@ -1549,8 +1578,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
     greaterThanOrEqualOp: ObjectFieldOperator = new ObjectFieldOperator("GreaterThanOrEqual", "Greater Than Or Equal");
     lessThanOrEqualOp: ObjectFieldOperator = new ObjectFieldOperator("LessThanOrEqual", "Less Than Or Equal");
     BetweenOp: ObjectFieldOperator = new ObjectFieldOperator("Between", "Between");
-    IsNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNull", "Is Null");
-    IsNotNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNotNull", "Is Not Null");
+    IsNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNull", "Is Empty");
+    IsNotNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNotNull", "Has Value");
 
 }
 
@@ -1604,6 +1633,14 @@ export class DWFieldsGroup {
         }
     }
 }
+
+
+export class MultSelectValue {
+    Name: string;
+    Value: string;
+
+}
+
 //export class GroupItem {
 
 //    FilterItems: DWObjectFieldsDetails[] = [];

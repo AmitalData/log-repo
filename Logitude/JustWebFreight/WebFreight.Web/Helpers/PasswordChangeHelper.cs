@@ -85,6 +85,15 @@ namespace WebFreight.Web.Helpers
 
         public void ValidationPassword(string email, string newPassword, string currentPassword = null, bool checkCurrentPassword = false)
         {
+            if (string.IsNullOrEmpty(newPassword))
+            {
+                throw new Exception(TextCodesTranslator.TranslateText("User.M.PasswordCantBeEmpty", 0));
+            }
+
+            ValidatePasswordComplexitySeries(newPassword);
+            ValidateStrongPassword(newPassword);
+
+
             if (checkCurrentPassword)
             {
                 if (string.IsNullOrEmpty(currentPassword)) throw new Exception("Current Password can't be empty!");
@@ -93,42 +102,53 @@ namespace WebFreight.Web.Helpers
                 if (!result) throw new Exception(TextCodesTranslator.TranslateText("User.M.CurrentPasswordDoesntMatchYourInput", 0));
             }
 
-            if (string.IsNullOrEmpty(newPassword)) throw new Exception("New Password can't be empty!");
-            if (newPassword.Length < 8) throw new Exception(TextCodesTranslator.TranslateText("User.M.PasswordsMinimumLengthIs8Characters", 0));
-            //if (newPassword.Length > 16) throw new Exception(TextCodesTranslator.TranslateText("User.M.PasswordsMaximumLlengthIs16Characters", 0));
 
-            if (string.IsNullOrEmpty(currentPassword))
+            if (!string.IsNullOrEmpty(currentPassword))
             {
                 if (newPassword == currentPassword) throw new Exception(TextCodesTranslator.TranslateText("User.M.NewPasswordCantBeSameAsCurrentOne", 0));
             }
-
-            ValidatePasswordComplexitySeries(newPassword);
-            ValidateStrongPassword(newPassword);
 
         }
 
 
         private void ValidateStrongPassword(string password)
         {
-            var hasNumber = new Regex(@"[0-9]+");
-            var hasUpperChar = new Regex(@"[A-Z]+");
-            var hasMiniMaxChars = new Regex(@".{8,15}");
-            var hasLowerChar = new Regex(@"[a-z]+");
-            var hasSymbols = new Regex(@"[!@#$%^&*()_+=\[{\]};:<>|./?,-]");
-
-            int i = 0;
-            if (hasLowerChar.IsMatch(password)) i += 1;
-            if (hasUpperChar.IsMatch(password)) i += 1;
-            if (hasNumber.IsMatch(password)) i += 1;
-            if (hasSymbols.IsMatch(password)) i += 1;
-
-            if (i < 3)
+            if (!this.IsContainsLowerUpperCase(password))
             {
-                throw new Exception("Password is not strong enough. Please use at least three of the four characters types possible.");
+                throw new Exception("Your password must include an uppercase and lowercase letter.");
+            }
+
+            if (!this.IsContainsNumber(password))
+            {
+
+                throw new Exception("Your password must include a number.");
+            }
+            if (password.Length < 8)
+            {
+                throw new Exception(TextCodesTranslator.TranslateText("User.M.PasswordsMinimumLengthIs8Characters", 0));
             }
 
         }
 
+        private bool IsContainsLowerUpperCase(string str)
+        {
+            bool result = false;
+
+            bool isLower = str.ToArray().Where(d => char.IsLower(d)).Any();
+            bool isUpper = str.ToArray().Where(d => char.IsUpper(d)).Any();
+
+            if (isLower && isUpper) result = true;
+            return result;
+
+        }
+
+        private bool IsContainsNumber(string str)
+        {
+            bool isNumber = str.ToArray().Where(d => char.IsNumber(d)).Any();
+
+            return isNumber;
+
+        }
         public void ValidatePasswordComplexitySeries(string password)
         {
             bool result = false;

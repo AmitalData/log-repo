@@ -418,8 +418,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable CustomerSizeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerSize" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable CustomerSizeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerSize" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CustomerSizeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature CustomerSizeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomerSize.Tab.General", ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerSize.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

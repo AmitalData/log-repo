@@ -45,6 +45,7 @@ export class CardList {
 		SharedLogisticsInvitationStatusName: string;
 		LastLoginDate: Date;
 		AirlineAccountNumber: string;
+		TenantZeroUpdated: boolean;
 		ContactId: string;
 		MainAddressId: string;
 		PickAddressId: string;

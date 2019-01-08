@@ -801,8 +801,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable ExternalReconciliationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ExternalReconciliation" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable ExternalReconciliationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ExternalReconciliation" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode ExternalReconciliationDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ExternalReconciliationDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalReconciliation.Tab.Details", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
