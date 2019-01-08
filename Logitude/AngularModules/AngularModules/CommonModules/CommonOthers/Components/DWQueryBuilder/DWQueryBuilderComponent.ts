@@ -704,6 +704,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         OperationSimpol = " <= @@ ";
                     }
 
+
+       
                     if (filter.Operation.Code == filter.IsNullOp.Code) {
                         this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is null or " + (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " = '' " + " " + AndOr + " ";
                     }
@@ -711,7 +713,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is not null and " + (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " <> '' " + " " + AndOr + " ";
                     }
                     else {
-                        this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + OperationSimpol.replace("@@", filter.TextValue) + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
+                        var operation = !isHaveMultiSelect ? OperationSimpol.replace("@@", filter.TextValue) : OperationSimpol;
+                        this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + operation + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
                     }
                 }
                 else {
@@ -800,7 +803,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.IsPreview = false;
         var SelectStmt = "Select ";
         var GroupByStmt = " group by ";
-        //var WhereStmt = " Where ";
+        //var Wheremt = " Where ";
         this.WhereStmt = " where ";
         var HasMeasurement: boolean = false;
         var FromTables = [];
@@ -1396,8 +1399,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
                 if (AppTool.IsNullOrEmpty(this.operation)) {
                     this.operation = new ObjectFieldOperator("Equals", "Equals to");
                 }
-                this.OperationCode = "StartsWith";
-                this.OperationName = "Starts With";
+                this.OperationCode = "Equals";
+                this.OperationName = "Equals to";
                 return this.operation;
             }
         }
@@ -1424,6 +1427,12 @@ export class DWObjectFieldsDetails extends BaseComponent {
     }
 
     OperationValueChanged(operation) {
+
+        if (this.Operation.Code == this.IsNullOp.Code || this.Operation.Code == this.IsNotNullOp.Code) {
+            this.TextValue = "";
+            this.MultSelectValueLists = [];
+        }
+
         this.Operation = operation;
         if (operation.Code == this.IsNullOp.Code || operation.Code == this.IsNotNullOp.Code) {
             this.TextValue = operation.Code;
@@ -1557,6 +1566,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
         this.IsMeasurement = DWObjectField.IsMeasurement;
         this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
+        this.LOVAdditionalColumns = DWObjectField.LOVAdditionalColumns;
         if (this.DWObjectTableCode.indexOf("DIM_") != -1) {
             this.ParentDataTypeCode = "LookUp";
             this.ParentDimTabelName = DWObjectField.DWObjectTableCode;
@@ -1568,6 +1578,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         //this.ParentDataTypeCode = DWObjectField.DataTypeCode;
 
         this.Operators = this.GetFieldOperators(this);
+
         if ((this.ParentDataTypeCode == "Text" || this.ParentDataTypeCode == "nText")) {
             this.Operation = new ObjectFieldOperator("StartsWith", "Starts With");
         }

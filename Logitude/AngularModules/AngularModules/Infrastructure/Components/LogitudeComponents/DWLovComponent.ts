@@ -795,13 +795,9 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
         logitudeWindow.Show('./Infrastructure/Components/LogitudeComponents/DWLogSearchWindowComponent');
 
         logitudeWindow.WindowClosed.subscribe(($event) => {
-            this.OnSearchWindowClosed($event);
-            //var newItem = new MultSelectValue();
-            //newItem.Value = "test";
-            //newItem.Value1 = "test1";
-            //if (!this.DataContext.MultSelectValueLists) this.DataContext.MultSelectValueLists = [];
-            //this.DataContext.MultSelectValueLists.push(newItem);
-      
+            if ($event != "Cancel") {
+                this.OnSearchWindowClosed($event);
+            }
         });
 
 
