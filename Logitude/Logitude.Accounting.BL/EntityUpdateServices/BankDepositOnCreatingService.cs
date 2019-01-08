@@ -211,7 +211,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         cheque.StatusCode = (cheque.ValueDate > todayDateTime ? "2" : "3");  // 2-In Bank , 3-In Bank Account
                         cheque.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                        var myChequeUpdateService = new ARPaymentChequeUpdateService(_MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        var myChequeUpdateService = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         myChequeUpdateService.Update(cheque, true);
                     }
                 }
@@ -291,12 +291,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         cheque.StatusCode = (cheque.ValueDate > todayDateTime ? "2" : "3");  // 2-In Bank , 3-In Bank Account
                         cheque.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                        var myChequeUpdateService = new ARPaymentChequeUpdateService(_MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        var myChequeUpdateService = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         myChequeUpdateService.Update(cheque, true);
                     }
                 }
             }
-            var myJournalUpdateService = new JournalUpdateService(_MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            var myJournalUpdateService = new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
             myJournalUpdateService.Update(newJournal, true);
 
 
@@ -305,7 +305,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 // update cashbook total sum
                 cashBook.TotalAmount = cashBook.TotalAmount - Math.Round(entityPM.ForeignAmount, 2); //- entityPM.LocalDepositAmount;
 
-                var myCashBookUpdateService = new CashBookUpdateService(_MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                var myCashBookUpdateService = new CashBookUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                 myCashBookUpdateService.Update(cashBook, true);
             }
 
