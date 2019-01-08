@@ -59,7 +59,7 @@
                     </td>
 
                     <td style="width: 1px;">
-                        <CheckBox [IsChecked]="IncludeDraftInvoices" (Checked)="IncludeDraftInvoices = $event" [Text]="'Include Draft invoices'"></CheckBox>
+                        <CheckBox [IsChecked]="IncludeDraftInvoices" (Checked)="IncludeDraftInvoices = $event" [Text]="'Include Draft Invoices'"></CheckBox>
                     </td>
 
                     <td style="width: 10px;">
@@ -67,12 +67,17 @@
                     </td>
 
                     <td style="width: 1px;">
-                        <CheckBox [IsChecked]="IncludeEstimations" (Checked)="IncludeEstimations = $event" [Text]="'Include estimations'"></CheckBox>
+                        <CheckBox [IsChecked]="IncludeEstimations" (Checked)="IncludeEstimations = $event" [Text]="'Include Estimations'"></CheckBox>
                     </td>
 
-                    <!--<td style="width: 1px; padding-left: 10px;">
-                        <CheckBox [IsChecked]="SplitByCharges" (Checked)="SplitByCharges = $event" [Text]="'Split By Charges'"></CheckBox>
-                    </td>-->
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 1px;">
+                        <CheckBox [IsChecked]="IncludeCancelledShipments" (Checked)="IncludeCancelledShipments = $event" [Text]="'Include Cancelled Shipments'"></CheckBox>
+                    </td>
+
                     <td style="width:10px"><div></div></td>
                     <td style="width: 90px;">
                         <button class="GreenButton" (click)="RunButtonClicked()">Run Report</button>
