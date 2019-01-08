@@ -110,6 +110,16 @@ export class PaymentTermPM {
     public set CurrentMonth(newValue: boolean) { if (this.currentMonth != newValue) { this.currentMonth = newValue; this.MarkAsDirty("CurrentMonth"); } }
        
 	 
+    private calculatedLocalName: string;
+    public get CalculatedLocalName() { return this.calculatedLocalName; }
+    public set CalculatedLocalName(newValue: string) { if (this.calculatedLocalName != newValue) { this.calculatedLocalName = newValue; this.MarkAsDirty("CalculatedLocalName"); } }
+       
+	 
+    private calculatedEnglishName: string;
+    public get CalculatedEnglishName() { return this.calculatedEnglishName; }
+    public set CalculatedEnglishName(newValue: string) { if (this.calculatedEnglishName != newValue) { this.calculatedEnglishName = newValue; this.MarkAsDirty("CalculatedEnglishName"); } }
+       
+	 
     private fromDateTypeCode: string;
     public get FromDateTypeCode() { return this.fromDateTypeCode; }
     public set FromDateTypeCode(newValue: string) { if (this.fromDateTypeCode != newValue) { this.fromDateTypeCode = newValue; this.MarkAsDirty("FromDateTypeCode"); } }

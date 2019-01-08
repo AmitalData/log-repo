@@ -385,7 +385,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query allcategories5Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = Category5TextCode_0.Id, Code = "allcategories5",  QueryGroupCode = "0283", IndexOrder = 0, Tenant = 0, ObjectTableId = Category5ObjectTable.Id, QuerySection = "Category5", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = Category5Feature_0.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query allcategories5Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = Category5TextCode_0.Id, Code = "allcategories5",  QueryGroupCode = "0283", IndexOrder = 0, Tenant = 0, ObjectTableId = Category5ObjectTable.Id, QuerySection = "Category5", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = Category5Feature_0.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn allcategories5QueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allcategories5Query.Id, IndexOrder = 0, ObjectFieldId = Category5ObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == Category5ObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -427,8 +427,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable Category5ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Category5" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable Category5ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Category5" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode Category5GeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Category5.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = Category5ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature Category5GeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category5.Tab.General", ObjectTableId = Category5ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category5.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

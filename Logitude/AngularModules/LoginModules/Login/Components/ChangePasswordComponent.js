@@ -12,26 +12,16 @@ var core_1 = require('@angular/core');
 var LoginService_1 = require('../LoginService');
 var SessionInfo_1 = require('../SessionInfo');
 var PasswordChangeService_1 = require('../PasswordChangeService');
-var Tools_1 = require('../Utilities/Tools');
 var ChangePasswordComponent = (function () {
     function ChangePasswordComponent(_passwordChangeService, _loginService) {
         this._passwordChangeService = _passwordChangeService;
         this._loginService = _loginService;
         this.HasErrors = false;
         this.ErrorMessage = null;
-        this.strongPassword = false;
         this.IsResetPasswordViaEmail = false;
-        this.PdwcheckmsgKey = Tools_1.Tools.newGuid();
-        this.SMKey = Tools_1.Tools.newGuid();
-        this.Pdwcheckmsg0DivId = this.PdwcheckmsgKey + "0";
-        this.Pdwcheckmsg1DivId = this.PdwcheckmsgKey + "1";
-        this.Pdwcheckmsg2DivId = this.PdwcheckmsgKey + "2";
-        this.Pdwcheckmsg3DivId = this.PdwcheckmsgKey + "3";
-        this.Pdwcheckmsg4DivId = this.PdwcheckmsgKey + "4";
-        this.idSM1HtmlId = this.SMKey + "1";
-        this.idSM2HtmlId = this.SMKey + "2";
-        this.idSM3HtmlId = this.SMKey + "3";
-        this.idSM4HtmlId = this.SMKey + "4";
+        this.PasswordLenghtImg = "./Images/ChangePassword/verified.png";
+        this.PasswordContainsCharactersImg = "./Images/ChangePassword/verified.png";
+        this.PasswordContainsNumberImg = "./Images/ChangePassword/verified.png";
         this.email = window.sessionStorage.getItem("email");
         this.requestNumber = window.sessionStorage.getItem("requestNumber");
         this.ResetPWD = window.sessionStorage.getItem("ResetPWD");
@@ -46,75 +36,76 @@ var ChangePasswordComponent = (function () {
     };
     ChangePasswordComponent.prototype.SubmitBtnClicked = function () {
         var _this = this;
+        this.email = "hamodi@fnarsoft.com";
         if (!this.email) {
             this.HasErrors = true;
             this.ErrorMessage = "Your email is empty.";
-            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.PasswordsMaximumLlengthIs16Characters"));
             return;
         }
-        this.ErrorMessage = this.PasswordValidation();
-        if (this.ErrorMessage) {
-            this.HasErrors = true;
-            return;
-        }
-        if (!this.NewPassword || this.NewPassword.length < 8) {
-            this.HasErrors = true;
-            this.ErrorMessage = "Your password length must be more than 8 characters.";
-            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.PasswordsMinimumLengthIs8Characters"));
-            return;
-        }
-        if (this.NewPassword.length > 16) {
-            this.HasErrors = true;
-            this.ErrorMessage = "Your password length must be less than 16 characters.";
-            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.PasswordsMaximumLlengthIs16Characters"));
-            return;
-        }
-        if (this.NewPassword) {
-            if (!this.IsResetPasswordViaEmail) {
-                if (!this.CurrentPassword) {
-                    this.HasErrors = true;
-                    this.ErrorMessage = "Current Password can't be empty!";
-                    return;
-                }
-            }
-            if (this.NewPassword == this.RetypePassword) {
-                if (!this.strongPassword) {
-                    this.HasErrors = true;
-                    this.ErrorMessage = "Your password is invalid.";
-                }
-                else {
-                    if (this.CurrentPassword) {
-                        var changePasswordParameter = new LoginService_1.ChangePasswordParameter();
-                        changePasswordParameter.CurrentPassword = this.CurrentPassword;
-                        changePasswordParameter.Email = this.email;
-                        this._loginService.CheckUserPassword(changePasswordParameter).subscribe(function (res) {
-                            if (!res) {
-                                _this.ErrorMessage = "The current password is wrong!";
-                                _this.HasErrors = true;
-                            }
-                            else {
-                                if (_this.CurrentPassword == _this.NewPassword) {
-                                    _this.ErrorMessage = "New password can't be the same as the current password";
-                                    _this.HasErrors = true;
-                                }
-                                else
-                                    _this.ChangePassword();
-                            }
-                        });
-                    }
-                    else
-                        this.ChangePassword();
-                }
-            }
-            else {
+        if (this.NewPassword == this.RetypePassword) {
+            if (!this.NewPassword) {
+                this.ErrorMessage = "Confirm your password";
                 this.HasErrors = true;
-                this.ErrorMessage = "Passwords are not mached!";
+                return;
+            }
+            this.ErrorMessage = this.PasswordValidation();
+            if (this.ErrorMessage) {
+                this.HasErrors = true;
+                return;
+            }
+            if (!this.IsContainsLowerUpperCase(this.NewPassword)) {
+                this.ErrorMessage = "Your password must include an uppercase and lowercase letter.";
+                this.HasErrors = true;
+                return;
+            }
+            if (!this.IsContainsNumber(this.NewPassword)) {
+                this.ErrorMessage = "Your password must include a number.";
+                this.HasErrors = true;
+                return;
+            }
+            if (this.NewPassword.length < 8) {
+                this.ErrorMessage = "Your password must be at least 8 characters.";
+                this.HasErrors = true;
+                return;
             }
         }
         else {
+            this.ErrorMessage = "The passwords you entered do not match.";
             this.HasErrors = true;
-            this.ErrorMessage = "Password Cant Be Empty!";
+            return;
         }
+        if (!this.IsResetPasswordViaEmail) {
+            if (!this.CurrentPassword) {
+                this.HasErrors = true;
+                this.ErrorMessage = "Current Password can't be empty!";
+                return;
+            }
+            else if (this.CurrentPassword == this.NewPassword) {
+                this.ErrorMessage = "New password can't be the same as the current password";
+                this.HasErrors = true;
+            }
+        }
+        if (this.CurrentPassword) {
+            var changePasswordParameter = new LoginService_1.ChangePasswordParameter();
+            changePasswordParameter.CurrentPassword = this.CurrentPassword;
+            changePasswordParameter.Email = this.email;
+            this._loginService.CheckUserPassword(changePasswordParameter).subscribe(function (res) {
+                if (!res) {
+                    _this.ErrorMessage = "The current password is wrong!";
+                    _this.HasErrors = true;
+                }
+                else {
+                    if (_this.CurrentPassword == _this.NewPassword) {
+                        _this.ErrorMessage = "New password can't be the same as the current password";
+                        _this.HasErrors = true;
+                    }
+                    else
+                        _this.ChangePassword();
+                }
+            });
+        }
+        else
+            this.ChangePassword();
     };
     ChangePasswordComponent.prototype.PasswordValidation = function () {
         var _this = this;
@@ -147,14 +138,15 @@ var ChangePasswordComponent = (function () {
                 return messageError;
             }
         }
-        // contain series(5 letters / numbers)
-        if (this.IsPasswordContainsSeries(this.NewPassword)) {
-            messageError = "Password should not contain series (4 letters/numbers)";
+        var seriesMessage = this.IsPasswordContainsSeries(this.NewPassword);
+        if (seriesMessage) {
+            messageError = seriesMessage;
             return messageError;
         }
         return "";
     };
     ChangePasswordComponent.prototype.IsPasswordContainsSeries = function (password) {
+        var messageError = "";
         var result = false;
         if (password)
             password = password.toUpperCase();
@@ -171,9 +163,14 @@ var ChangePasswordComponent = (function () {
         result = this.IsSeries(passwordNumnberList, "+");
         if (!result)
             result = this.IsSeries(passwordNumnberList, "-");
-        if (!result)
+        if (result)
+            messageError = "Password should not contain more than 3 following characters";
+        if (!result) {
             result = this.IsSeries(passwordNumnberList, "Same");
-        return result;
+            if (result)
+                messageError = "Password should not contain more than 3 consecutive repeating characters";
+        }
+        return messageError;
         //return result;
     };
     ChangePasswordComponent.prototype.IsSeries = function (passwordNumnberList, operatorCode) {
@@ -251,24 +248,41 @@ var ChangePasswordComponent = (function () {
             PassWordValueTriming(passtringstring);
         }
     };
-    ChangePasswordComponent.prototype.EvalPwdStrength = function (sP, pdwcheckmsgKey, sMKey) {
-        this.strongPassword = false;
-        if (ClientSideBestPassword(sP, gSimilarityMap, gDictionary)) {
-            DispPwdStrength(4, 'pwdCheckCase4', pdwcheckmsgKey, sMKey);
-            this.strongPassword = true;
-        }
-        else if (ClientSideStrongPassword(sP, gSimilarityMap, gDictionary)) {
-            DispPwdStrength(3, 'pwdCheckCase3', pdwcheckmsgKey, sMKey);
-            this.strongPassword = true;
-        }
-        else if (ClientSideMediumPassword(sP, gSimilarityMap, gDictionary)) {
-            DispPwdStrength(2, 'pwdCheckCase2', pdwcheckmsgKey, sMKey);
-        }
-        else if (ClientSideWeakPassword(sP, gSimilarityMap, gDictionary)) {
-            DispPwdStrength(1, 'pwdCheckCase1', pdwcheckmsgKey, sMKey);
-        }
-        else {
-            DispPwdStrength(0, 'pwdCheckCase0', pdwcheckmsgKey, sMKey);
+    ChangePasswordComponent.prototype.IsContainsLowerUpperCase = function (str) {
+        return str.match(/[a-z]/) && str.match(/[A-Z]/);
+    };
+    ChangePasswordComponent.prototype.IsContainsNumber = function (str) {
+        var regex = /\d/g;
+        return regex.test(str);
+    };
+    ChangePasswordComponent.prototype.Passwordkeyup = function (passtring) {
+        this.HasErrors = false;
+        document.getElementById("PasswordLenghtDiv").style.color = "gray";
+        document.getElementById("PasswordContainsCharactersDiv").style.color = "gray";
+        document.getElementById("PasswordContainsNumberDiv").style.color = "gray";
+        this.PasswordLenghtImg = "./Images/ChangePassword/verified.png";
+        this.PasswordContainsCharactersImg = "./Images/ChangePassword/verified.png";
+        this.PasswordContainsNumberImg = "./Images/ChangePassword/verified.png";
+        if (passtring) {
+            if (passtring.length >= 8) {
+                document.getElementById("PasswordLenghtDiv").style.color = "green";
+                this.PasswordLenghtImg = "./Images/ChangePassword/verifiedGreen.png";
+            }
+            if (this.IsContainsLowerUpperCase(passtring)) {
+                document.getElementById("PasswordContainsCharactersDiv").style.color = "green";
+                this.PasswordContainsCharactersImg = "./Images/ChangePassword/verifiedGreen.png";
+            }
+            if (this.IsContainsNumber(passtring)) {
+                document.getElementById("PasswordContainsNumberDiv").style.color = "green";
+                this.PasswordContainsNumberImg = "./Images/ChangePassword/verifiedGreen.png";
+            }
+            var errorMessage = this.PasswordValidation();
+            this.ErrorMessage = errorMessage;
+            if (errorMessage) {
+                this.HasErrors = true;
+            }
+            else
+                this.HasErrors = false;
         }
     };
     ChangePasswordComponent.prototype.capLock = function (e) {

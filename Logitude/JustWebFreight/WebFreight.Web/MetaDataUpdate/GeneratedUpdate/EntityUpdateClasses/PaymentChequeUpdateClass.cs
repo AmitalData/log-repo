@@ -2698,7 +2698,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllPaymentChequesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentChequeTextCode_0.Id, Code = "AllPaymentCheques",  QueryGroupCode = "d25b", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentChequeObjectTable.Id, QuerySection = "PaymentCheque", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentChequeFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query AllPaymentChequesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentChequeTextCode_0.Id, Code = "AllPaymentCheques",  QueryGroupCode = "d25b", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentChequeObjectTable.Id, QuerySection = "PaymentCheque", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentChequeFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllPaymentChequesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id, IndexOrder = 0, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == PaymentChequeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -2742,8 +2742,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable PaymentChequeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PaymentCheque" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable PaymentChequeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PaymentCheque" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode PaymentChequeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentCheque.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature PaymentChequeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentCheque.Tab.General", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

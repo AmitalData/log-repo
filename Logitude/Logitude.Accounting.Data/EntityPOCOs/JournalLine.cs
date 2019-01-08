@@ -83,6 +83,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public decimal? ExternalOpenAmount { get; set; }
         [Column("ExternalReconcileNumber")]
 	    public string ExternalReconcileNumber { get; set; }
+        [Column("IsExternalReconcile")]
+	    public bool? IsExternalReconcile { get; set; }
     }
 }
 	 

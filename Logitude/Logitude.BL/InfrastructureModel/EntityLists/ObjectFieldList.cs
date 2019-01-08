@@ -70,6 +70,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string ListTextCodeCode { get; set; }
         public string Code { get; set; }
         public bool CopyToDW { get; set; }
-        
+        public bool DisplayOnLookUpLocal { get; set; }
+
     }
 }
