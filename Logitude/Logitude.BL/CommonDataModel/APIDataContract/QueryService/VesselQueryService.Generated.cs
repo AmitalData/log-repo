@@ -113,6 +113,8 @@ using Simplog.Data.CommonDataModel;
 					} 
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
+                        if(string.IsNullOrEmpty(ComputingPartnerName))
+                            throw new ApplicationException("ComputingPartnerCode is required");
 						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
 						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"Vessel");
 					    if(string.IsNullOrEmpty(MyCode))
