@@ -1151,7 +1151,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllRevaluationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RevaluationTextCode_0.Id, Code = "AllRevaluations",  QueryGroupCode = "026a", IndexOrder = 0, Tenant = 0, ObjectTableId = RevaluationObjectTable.Id, QuerySection = "Revaluation", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RevaluationFeature_0.Id, DefaultSortName = "RevaluationNumber", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query AllRevaluationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RevaluationTextCode_0.Id, Code = "AllRevaluations",  QueryGroupCode = "026a", IndexOrder = 0, Tenant = 0, ObjectTableId = RevaluationObjectTable.Id, QuerySection = "Revaluation", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RevaluationFeature_0.Id, DefaultSortName = "RevaluationNumber", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllRevaluationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRevaluationsQuery.Id, IndexOrder = 0, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "RevaluationNumber" && d.ObjectTableId == RevaluationObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1191,8 +1191,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable RevaluationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Revaluation" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable RevaluationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Revaluation" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode RevaluationDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature RevaluationDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Revaluation.Tab.Details", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
