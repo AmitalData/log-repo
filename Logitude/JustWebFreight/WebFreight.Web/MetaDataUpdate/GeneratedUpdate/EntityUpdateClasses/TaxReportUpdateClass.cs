@@ -1961,7 +1961,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ALLTAXREPORTSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaxReportTextCode_0.Id, Code = "ALLTAXREPORTS",  QueryGroupCode = "97c2", IndexOrder = 0, Tenant = 0, ObjectTableId = TaxReportObjectTable.Id, QuerySection = "TaxReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TaxReportFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query ALLTAXREPORTSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaxReportTextCode_0.Id, Code = "ALLTAXREPORTS",  QueryGroupCode = "97c2", IndexOrder = 0, Tenant = 0, ObjectTableId = TaxReportObjectTable.Id, QuerySection = "TaxReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TaxReportFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ALLTAXREPORTSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXREPORTSQuery.Id, IndexOrder = 0, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "TaxReportMonth" && d.ObjectTableId == TaxReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1993,8 +1993,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable TaxReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxReport" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable TaxReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxReport" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TaxReportDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature TaxReportDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxReport.Tab.Details", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReportFeatures.TRDT", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
