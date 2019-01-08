@@ -340,7 +340,7 @@ export class NewViewComponent {
     private SetSelectedSharedValue() {
 
         if (this.IsNew) {
-            this.shareValueSelectedItem = this.ShareValuesList.filter(d => d.Code == "ALL")[0];
+            this.shareValueSelectedItem = this.ShareValuesList.filter(d => d.Code == "NON")[0];
         }
 
         else {
