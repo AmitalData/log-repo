@@ -190,6 +190,10 @@
     <Compile Include="Migrations\201811060825038_missingCustoms-MM.Designer.cs">
       <DependentUpon>201811060825038_missingCustoms-MM.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901071344200_newcusotmsmigrations.cs" />
+    <Compile Include="Migrations\201901071344200_newcusotmsmigrations.Designer.cs">
+      <DependentUpon>201901071344200_newcusotmsmigrations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -276,6 +280,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811060825038_missingCustoms-MM.resx">
       <DependentUpon>201811060825038_missingCustoms-MM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901071344200_newcusotmsmigrations.resx">
+      <DependentUpon>201901071344200_newcusotmsmigrations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
