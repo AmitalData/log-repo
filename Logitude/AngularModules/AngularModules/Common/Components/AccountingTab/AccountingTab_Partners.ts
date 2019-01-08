@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -23,6 +23,10 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
             if (SessionLocator.AccountingSystemPM.Code == "GI" || SessionLocator.AccountingSystemPM.Code == "AI") {
                 this.IsExternalByProductsVisible = true;
             }
+        }
+
+        if (this.ObjectTableName == "Customer") {
+            this.UIProperties.SetVisibility("PayablesAccountingCard", this.ObjectTableName, false);
         }
 
         this.Listen();
