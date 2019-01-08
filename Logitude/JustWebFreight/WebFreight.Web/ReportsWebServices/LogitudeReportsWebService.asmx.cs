@@ -9422,6 +9422,7 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<TMProject> allProjects = (from d in myContext.TMProjects where d.Tenant == tenant select d);
             IQueryable<TMEmployeeTime> iQueryable = (from d in myContext.TMEmployeeTimes where d.Tenant == tenant select d);
             CardRepository cardRep = new CardRepository(tenant);
+            ContactRepository contactRep = new ContactRepository(tenant);
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
@@ -9733,7 +9734,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 timSheetItem_Detailed.CustomerName = card.EnglishName;
                             }
 
-                            var owner = cardRep.GetSingleCard(project.OwnerId, tenant);
+                            var owner = contactRep.GetSingleContact(project.OwnerId, tenant);
                             if (owner != null)
                             {
                                 timSheetItem_Detailed.OwnerName = owner.EnglishName;
