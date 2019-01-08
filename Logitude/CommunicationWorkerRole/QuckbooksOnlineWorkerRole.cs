@@ -54,6 +54,7 @@ namespace CommunicationWorkerRole
         private string type;
         private string QBOIDSuccess = null;
         private string APInvoiceId = null;
+        private string OldTransferStatusCode;
         public override void Run()
         {
             while (IsRunning)
@@ -72,6 +73,12 @@ namespace CommunicationWorkerRole
                             string communicationLogId = response.MessageValues["QuickbooksOnline"].ToString();
                             type = response.MessageValues["type"].ToString();
                             int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
+                            if (!response.MessageValues.ContainsKey("OldTransferStatusCode"))
+                            {
+                                OldTransferStatusCode = null;
+                            }
+                            else 
+                            OldTransferStatusCode = response.MessageValues["OldTransferStatusCode"];
                             Commoncontext = CommonDataContext.GetContext(tenant);
                             Invoicecontext = InvoiceContext.GetContext(tenant);
                             CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(Commoncontext);
@@ -490,6 +497,10 @@ namespace CommunicationWorkerRole
                 Payment final = service.Update(myResult[0]) as Payment;
                 SendingSuccessfully(waitingCommLog, tenant, final.Id,null,null);                
             }
+            else
+            {
+                throw new Exception("Failed to Send");
+            }
 
         }
 
@@ -505,6 +516,10 @@ namespace CommunicationWorkerRole
                 myResult[0].Line = payment.Line==null ? new List<Line>().ToArray():payment.Line;
                 BillPayment final = service.Update(myResult[0]) as BillPayment;
                 SendingSuccessfully(waitingCommLog, tenant, final.Id, null,null);
+            }
+            else
+            {
+                throw new Exception("Failed to Send");
             }
 
         }
@@ -934,7 +949,7 @@ namespace CommunicationWorkerRole
                 {
                     APInvoiceRepository repository = new APInvoiceRepository(tenant);
                     APInvoice invoice = repository.GetSingleAPInvoice(Id, tenant);
-                    bool WasErrorInTransfer = invoice.TransferStatusCode=="ET"?true:false;
+                    bool WasErrorInTransfer = OldTransferStatusCode == "ET"?true:false;
                     invoice.TransferError = null;
                     invoice.TransferStatusCode = "TR";
                     invoice.IsTransferStarted = false;
@@ -1004,7 +1019,7 @@ namespace CommunicationWorkerRole
                     ARInvoiceRepository repository = new ARInvoiceRepository(tenant);
                     ARInvoice invoice = repository.GetARInvoiceByInvoiceNumber(tenant, waitingCommLog.EntityReference);
                     invoice.TransferError = null;
-                    bool WasErrorInTransfer = invoice.TransferStatusCode == "ET" ? true : false;
+                    bool WasErrorInTransfer = OldTransferStatusCode == "ET" ? true : false;
                     invoice.TransferStatusCode = "TR";
                     invoice.IsTransferStarted = false;
                     if (QBOId != null)

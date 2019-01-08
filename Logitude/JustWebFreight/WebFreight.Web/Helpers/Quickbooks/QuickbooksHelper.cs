@@ -86,8 +86,8 @@ namespace WebFreight.Web.Helpers.Quickbooks
             }
 
             catch (Exception ex)
-            {            
-                return null;
+            {
+                throw new ApplicationException(ex.ToString());
             }
 
 
