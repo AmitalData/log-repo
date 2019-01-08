@@ -2354,11 +2354,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.IsRemovingStackEvents = false;
             entityPM.CalculateStatus = false;
 
-            this.ComputeShipmentStatus();
-            if (!entityPM.IsHybrid)
-            {
-                this.UpdateCustomerWorkingDates();
-            }
+            this.ComputeShipmentStatus();            
+            this.UpdateCustomerWorkingDates();            
             
 
             if (isNewEntity)
@@ -6292,17 +6289,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         Customer customer = customerRepository.GetSingleCustomerWithCardOnly(this.entityPoco.CustomerId, tenant, false);
                         if (customer != null)
                         {
-                            List<Shipment> shipments = this.objectContext.Shipments.Where(d => d.CustomerId == customer.Id && d.Id != this.entityPoco.Id).ToList();
-                            if (shipments.Count > 0)
+                            Shipment shipment = this.objectContext.Shipments.Where(d => d.CustomerId == customer.Id && d.Id != this.entityPoco.Id).OrderByDescending(s => s.CreateDateTime).FirstOrDefault();
+                            if (shipment != null)
                             {
-                                Shipment shipment = shipments.OrderByDescending(s => s.CreateDateTime).FirstOrDefault();
-
-                                if (shipment != null)
-                                {
-                                    customer.LastShipmentDate = shipment.CreateDateTime;
-                                    customerRepository.Update(customer);
-                                    customerRepository.SubmitChanges();
-                                }
+                                customer.LastShipmentDate = shipment.CreateDateTime;
+                                customerRepository.Update(customer);
+                                customerRepository.SubmitChanges();
                             }
                         }
                     }                    

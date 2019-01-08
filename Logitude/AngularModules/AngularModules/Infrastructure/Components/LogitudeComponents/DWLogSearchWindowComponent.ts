@@ -28,10 +28,12 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import { NewEntityArgs} from '../../Args';
 import {ImportEntityArgs} from '../../../Common/Components/Maintenance/TenantImportComponent';
 import {CachedDataManager} from '../../Utilities/CachedDataManager';
-import {MultSelectValue} from '../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent';
+import {MultSelectValue, FieldDetails} from '../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ComponentArgs} from '../../../Infrastructure/DataContracts/ComponentArgs';
 import {ParameterComponentArgs} from '../../../Infrastructure/DataContracts/ParameterComponentArgs';
+;
+
 @Component({
     moduleId: module.id,
 
@@ -107,9 +109,9 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
             if (res && res.ComponentName == "DWLogSearchAddFieldsComponent" && res.IsFirstRequest && res.Item) {
                 var item = res.Item;
-                var s = item.Field1;
                 res.IsFirstRequest = false;
                 var newItem = new MultSelectValue();
+              
                 var key = "";
                 var i = 0;
 
@@ -122,7 +124,10 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
                             if (myComponent) {
                                 myComponent.SecondListHeaderItems.forEach((field) => {
                                     if (i != 0) key = i.toString();
-                                    newItem["Value" + key] = item["Field" + key];
+                                    var fieldDetails: FieldDetails = new FieldDetails();
+                                    fieldDetails.Column = field;
+                                    fieldDetails.Row = item["Field" + key];
+                                    newItem["Value" + key] = fieldDetails;
                                     i += 1;
                                 });
 
@@ -179,15 +184,13 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
         this.ObjectTableName = args.ObjectTableName; // lookup table
         this.ObjectFieldName = args.DisplayFieldsFromList;
-        this.LOVAdditionalColumns = args.LOVAdditionalColumns;
+        this.LOVAdditionalColumns = args.LOVAdditionalColumns;//"[Partner Type]";//;
         this.ViewModel = args.DataContext; 
 
         if (this.ViewModel) {
             this.SecondListValueItems = this.ViewModel.MultSelectValueLists;
         }
       
-
-
         if (!this.SecondListValueItems) {
             this.SecondListValueItems = [];
         }
@@ -330,7 +333,10 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         this.SecondListValueItems.forEach((field) => {
             if (field["Value"]) {
                 if (textValue) textValue += ",";
-                textValue += field["Value"];
+                var rowValues: any = field["Value"];
+
+                if (rowValues ) textValue += rowValues.Row;
+          
             }
         
         });
@@ -348,6 +354,8 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
     BuildSecondListHeader() {
 
+        var test: MultSelectValue[] = [];
+
         this.SecondListHeaderItems.push(this.ObjectFieldName.replace('[', '').replace(']', ''));
         var additionalColumns = [];
         if (this.LOVAdditionalColumns) {
@@ -358,6 +366,19 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
                 this.SecondListHeaderItems.push(field.replace('[', '').replace(']', ''));
             });
         }
+        //if (this.ViewModel.MultSelectValueLists) {
+        
+        //    this.ViewModel.MultSelectValueLists.forEach((field) => {
+        //        var test = this.SecondListHeaderItems.filter(d => d == field.Value)[0];
+        //        if (!test) {
+        //            this.SecondListHeaderItems.push(field.Name);
+        //        }
+           
+        //    });
+        //}
+
+
+
     }
 
 }

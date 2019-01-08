@@ -112,6 +112,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     decimal CumulativeLocalAmount = this.Response.StartBalanceLocal.GetValueOrDefault();
                     //if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod)
                     //{
+                    MyBlance myBlance = GetStartBalanceOfCurrPage(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
+                    CumulativeLocalAmount += myBlance.SumLocalAmount;
+                    CumulativeForeignAmount += myBlance.SumForeignAmount;
+
+
                     list.ForEach(rec =>
                     {
                         decimal LocalAmountDebit = rec.LocalAmountDebit;
@@ -132,6 +137,50 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 Response.MyLedgerTransactionList = list;
             }
 
+        }
+
+        private MyBlance GetStartBalanceOfCurrPage(IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId)
+        {
+            MyBlance myBlance = new MyBlance() { SumForeignAmount = 0, SumLocalAmount = 0 };
+            if (_Param.PageStartAtRecordIndex > 0)
+            {
+                var qgGperiod = QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId
+                                    .Take(_Param.PageStartAtRecordIndex)
+                                    .GroupBy(r => r);
+
+
+                IQueryable<MyBlance> qMyBlance = null;
+
+                if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod.GetValueOrDefault())
+                {
+
+                    qMyBlance = qgGperiod.Select(g => new MyBlance()
+                    {
+
+                        SumLocalAmount = g.Sum(rec => rec.LocalAmountDebit - rec.LocalAmountCredit),
+                        SumForeignAmount = g.Sum(rec => rec.ForeignAmountDebit - rec.ForeignAmountCredit),
+
+                    });
+                    
+                }
+                else
+                {
+                    qMyBlance = qgGperiod.Select(g => new MyBlance()
+                    {
+
+                        SumLocalAmount = g.Sum(rec => rec.LocalAmountDebit - rec.LocalAmountCredit),
+                        SumForeignAmount = 0,
+
+                    });
+                }
+                myBlance = qMyBlance.GroupBy(g => g).Select(g => new MyBlance()
+                {
+                    SumLocalAmount = g.Sum(r => r.SumLocalAmount),
+                    SumForeignAmount = g.Sum(r => r.SumForeignAmount),
+                }).First();
+            }
+
+            return myBlance;
         }
 
         private IQueryable<Data.EntityPOCOs.LedgerTransaction> GetQOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId(DateTime? maxCreateDate, LedgerTransactionRepository ledgerTransactionRepository)
@@ -527,6 +576,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public LedgerTransactionBalanceResponse Response { get; set; }
     }
 
+    class MyBlance
+    {
+        public decimal SumLocalAmount { get; internal set; }
+        public decimal SumForeignAmount { get; internal set; }
+    }
 
-    
+
 }
