@@ -234,6 +234,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             else
             {
+             
                 DeclarationPM myDeclarationPM = null;
                 var myDeclarationQueryService = new DeclarationQueryService(requestParams.Tenant);
                 if (!string.IsNullOrWhiteSpace(declarationId))
@@ -247,6 +248,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 bool AttachmentExistInGDMFILING = true;
                 if (_UNIQUEFILINGPOFeatureExist)
                 {
+                    LogMessagingUtil.Instance.AppendLine("_UNIQUEFILINGPOFeatureExist  AnalyzePaymentDocument");
                     myAnalyzePaymentDocumentManager.AnalyzePaymentDocument(
                         customResponse.PrintedPaymentForm.PrintedPaymentForm.content
                         , requestParams);
@@ -258,6 +260,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (documentsFilingPM==null)
                     {
                         // eitan : if get first time Attach add contents
+                        LogMessagingUtil.Instance.AppendLine("UNIQUEFILINGPOFeature not Exist  but get first time Attach add contents ");
                         myAnalyzePaymentDocumentManager.CreatePaymentDocument(
                             customResponse.PrintedPaymentForm.PrintedPaymentForm.content
                             , requestParams);
@@ -266,6 +269,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         //CreateUnfreigtFiling()
                         // eitan : if already have filing - update metadata only !!
+                        LogMessagingUtil.Instance.AppendLine("UNIQUEFILINGPOFeature not Exist  update metadata only !!");
+
                         myAnalyzePaymentDocumentManager.UpdatePaymentDocument(documentsFilingPM, 
                             /*content =*/ null,//do not send data only if _UNIQUEFILINGPOFeatureExist !!
                             requestParams);
