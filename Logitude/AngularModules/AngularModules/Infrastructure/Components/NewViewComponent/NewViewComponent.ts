@@ -994,6 +994,32 @@ export class NewViewComponent {
                         }
                     }
                 }
+
+
+                var spotlightTemplate: string = "";
+                if (this.EntityPM.SpotlightModeActivated) {
+                    if (this.SpotlightFeatureEnabled) {
+                        switch (this.EntityPM.ObjectTableName) {
+                            case "Shipment": {
+                                spotlightTemplate = "ShipmentSpotlightDataTemplate";
+                                break;
+                            }
+                            case "Master": {
+                                spotlightTemplate = "MasterSpotlightDataTemplate";
+                                break;
+                            }
+
+                            case "ARInvoice": {
+                                spotlightTemplate = "ARInvoiceSpotlightDataTemplate";
+                                break;
+                            }
+                        }
+                        this.EntityPM.SpotlightDataTemplate = spotlightTemplate;
+                    }
+                }
+                else {
+                    this.EntityPM.SpotlightDataTemplate = null;
+                }
                 
                 myService.setServiceArgs(this.serviceArgs);
                 textCodesService.setServiceArgs(this.serviceArgs);
@@ -1228,6 +1254,8 @@ export class NewViewComponent {
                     window.TextCodesTranslations.push(res);
                     window.TranslationsCache.push(res);
                     this.UpdateColumnsAndFilters();
+                    window.Queries.filter(x => x.Id == this.QueryId)[0] = this.EntityPM;
+
                     //window.Queries.push(myResult.Result);
                 });
                 }
@@ -1238,6 +1266,8 @@ export class NewViewComponent {
                         //window.TextCodesTranslations.push(res);
                         //window.TranslationsCache.push(res);
                         this.UpdateColumnsAndFilters();
+                        window.Queries.filter(x => x.Id == this.QueryId)[0] = this.EntityPM;
+
                     });
                 }
 

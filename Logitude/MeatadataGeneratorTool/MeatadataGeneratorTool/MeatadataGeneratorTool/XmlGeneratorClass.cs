@@ -1528,8 +1528,12 @@ namespace MeatadataGeneratorTool
                 {
                     SetAttribute("FeatureDefaultText", GetStringValue(f.FeatureDefaultText), TabElement, null);
                 }
+
+
                 SetAttribute("IsPackagable", f.IsPackagable.ToString().ToLower(), TabElement, null);
                 SetAttribute("IsSpellChecked", f.IsSpellChecked.ToString().ToLower(), TabElement, null);
+                SetAttribute("HasGeneralFeature", f.HasGeneralFeature.ToString().ToLower(), TabElement, null);
+
             }
 
             #endregion

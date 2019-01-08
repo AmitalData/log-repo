@@ -8,6 +8,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     moduleId: module.id,
@@ -20,6 +21,7 @@ export class WebhookKeysComponent extends BaseComponent {
     public DataContext = this;
     public EntityId: string = null;
     public IsNewEntity: boolean = false;
+    public ShowTesterButton: boolean = false;
     public ValidationErrorsList: string[] = [];
     public IsEntityReady: boolean = false;
     public IsResourcesReady: boolean = false;
@@ -40,8 +42,11 @@ export class WebhookKeysComponent extends BaseComponent {
         this.InitializeComponent();
     }
     InitializeComponent() {
+        if (FeatureLocator.HasFeaturePermession("WebhookKeys", "WebhookKeysTester")) {
+            this.ShowTesterButton = true;
+        }
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
-
+            //WebhookKeysTester
             this.IsResourcesReady = true;
 
             if (this.IsNewEntity) {
