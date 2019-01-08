@@ -12345,7 +12345,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             #region CustomsDeclaration Queries
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.DeclarationQuery", DefaultText = "All Declarations", LocalDefaultText = "כל ההצהרות", ObjectTableId = CustomsDeclarationTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.DeclarationWithoutReleaseQuery", DefaultText = "Declarations Without Release", LocalDefaultText = "הצהרות ללא התרה", ObjectTableId = CustomsDeclarationTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.DeclarationWithoutReleaseQuery", DefaultText = "Open Declarations", LocalDefaultText = "הצהרות פתוחות", ObjectTableId = CustomsDeclarationTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.DeclaratioInConstraintQuery", DefaultText = "Declarations in Constraint", LocalDefaultText = " אילוצים ללא תשובה", ObjectTableId = CustomsDeclarationTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.PaidDeclarationWithoutReleaseQuery", DefaultText = "Paid Declarations Without Release", LocalDefaultText = "הגשות ללא תשובה", ObjectTableId = CustomsDeclarationTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
 
