@@ -8,6 +8,8 @@ using WebFreight.Web.Security;
 using WebFreight.Web.SystemLogsModel.EntityList;
 using WebFreight.Web.SystemLogsModel.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Data.Helpers;
+using WebFreight.Web.DataContracts;
 
 namespace WebFreight.Web.SystemLogsModel.Queries
 {
@@ -86,5 +88,37 @@ namespace WebFreight.Web.SystemLogsModel.Queries
                                                   };
             return result;
         }
+
+        public IQueryable<LastLoginPartners> GetlastMonthLoginPartners(int tenant)
+        {
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime lastMonthDate = todayDate.AddDays(-30);
+
+            IQueryable<LastLoginPartners> lastLoginPartners = from a in repository.GetContactActivityLogs(tenant)
+                                                              where a.Tenant == tenant && a.IsSharedLogisticsContact
+                                                              && a.Activity == "Customer Access" && a.LogDateTime >= lastMonthDate
+                                                              orderby a.LogDateTime descending
+                                                              group a by new { a.CardId, a.ContactId, a.Via }
+                                                              into g
+                                                             
+                                                              select new LastLoginPartners()
+                                                              {
+                                                                  CardId = g.Key.CardId,
+                                                                  ContactId = g.Key.ContactId,
+                                                                  Via = g.Key.Via,
+                                                                  LogDateTime = g.FirstOrDefault().LogDateTime,
+
+                                                              };
+            return lastLoginPartners;
+        }
+
+
+
+
+
+
+
+
+
     }
 }
