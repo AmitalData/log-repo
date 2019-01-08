@@ -225,10 +225,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     var XMLData = new XDocument(
                         new XElement("ImporterDepositionPM",
-                            new XElement("VendorCode", this.Vendor != null ? this.Vendor.VendorNumber : null),
-                            new XElement("VendorName", this.Vendor != null ? this.Vendor.VendorName : null),
-                            new XElement("VendorCountry", this.Vendor != null ? this.Vendor.CountryCode : null),
-                            new XElement("VendorVAT", this.Vendor != null ? this.Vendor.VATNumber : null),
+                            new XElement("ShipperCode", this.Vendor != null ? this.Vendor.VendorNumber : null),
+                            new XElement("ShipperName", this.Vendor != null ? this.Vendor.VendorName : null),
+                            new XElement("ShipperCountry", this.Vendor != null ? this.Vendor.CountryCode : null),
+                            new XElement("ShipperVAT", this.Vendor != null ? this.Vendor.VATNumber : null),
                             new XElement("DepositionNumber", dirtyImporterDespositionPM.DepositionNumber),
                             new XElement("ValidityStartDate", dirtyImporterDespositionPM.StartDate != null ? dirtyImporterDespositionPM.StartDate.Value.ToString("o") : null),
                             new XElement("ValidityEndDate", dirtyImporterDespositionPM.EndDate != null ? dirtyImporterDespositionPM.EndDate.Value.ToString("o") : null),
