@@ -246,6 +246,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         args.IsNew = true;
         args.WINumber = item.WINumber;
         args.ProjectId = item.ProjectId;
+        args.SprintId = item.SprintId;
         args.Description = item.Description;
         logWindow.WindowArgs = args;
         logWindow.Show('./TimeManagement/Components/NewEntity/NewLineComponent');
