@@ -42,7 +42,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
             //אם ה Feature מוגדר, אז יש לתייק את המסמך שהגיע כחלק מהמסר, כאשר לפני כן יש לנסות לאתר אם כבר קיים מסמך כזה ואז רק ליצור גרסה חדשה.
-            _UNIQUEFILINGPOFeatureExist = ProxyUtil.SecurityUtilityCheckFeature("Customs.PaymentOrder", "", requestParams.Tenant);///
+            _UNIQUEFILINGPOFeatureExist = ProxyUtil.SecurityUtilityCheckFeature("Customs.PaymentOrder", "UNIQUEFILINGPO", requestParams.Tenant);///
 
             ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
             var paymentOrderQueryService = new PaymentOrderQueryService(dbContext);
