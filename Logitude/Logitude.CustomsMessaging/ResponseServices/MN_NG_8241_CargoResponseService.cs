@@ -233,9 +233,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             _MyDeclarationPM.Consignments[0].StorageSiteCode = customResponse.Cargo.CargoAdditionalData.First().acceptedArrivalSiteID;
                             _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update; 
                         }
-                        if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].LoadingPortCode))
+                        if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].LoadingPortCode) && !String.IsNullOrWhiteSpace(customResponse.Cargo.CargoAdditionalData.First().LoadingSite))
                         {
-                            _MyDeclarationPM.Consignments[0].LoadingPortCode = customResponse.Cargo.CargoAdditionalData.First().LoadingSite;
+                            _MyDeclarationPM.Consignments[0].LoadingPortCode = customResponse.Cargo.CargoAdditionalData.First().LoadingSite.Substring(0,5);
                             _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
                         }
                         //If there are NO packages OR If there is one DUMMY package (without wight, quantity and pack type)
