@@ -15,7 +15,7 @@ import { DWSubQueryPMService } from '../../../../Infrastructure/Services/Standar
 import { DWSubQueryPM } from '../../../../Infrastructure/EntityPMs/DWSubQueryPM';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DWObjectTableListService } from '../../../../Infrastructure/Services/StandardLists/DWObjectTableListService';
-
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     moduleId: module.id,
@@ -73,7 +73,13 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this._DWQueryBuilderService = new DWQueryBuilderService();
         this._DWSubQueryPMService = new DWSubQueryPMService();
         this._DWObjectTableListService = new DWObjectTableListService();
+        if (SessionLocator.CurrentSession == null) {
+            this.SearchFieldsId = "SearchFields_-1_-1";
+        }
 
+        else {
+            this.SearchFieldsId = "DWQueryBuilderSearchFields_" + SessionLocator.CurrentSession.GetNewId("DWQueryBuilderSearchFields");
+        }
         this._DWObjectTableListService.getAll().subscribe(myResult => {
             this.AllTables = myResult.Result;
             this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
@@ -188,11 +194,18 @@ export class DWQueryBuilderComponent extends BaseComponent {
     }
 
     FillPlaceHolder() {
-        //var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
-        //temp.placeholder = TextCodeTranslator.Translate("General.O.Search");
-        //temp.style.background = "url(Images/Search.png) no-repeat scroll";
-        //temp.style.backgroundPosition = "right center";
-        //temp.style.paddingRight = "30px";
+        var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
+        temp.placeholder = TextCodeTranslator.Translate("General.O.Search");
+        temp.style.background = "url(Images/Search.png) no-repeat scroll";
+        temp.style.backgroundPosition = "right center";
+        temp.style.paddingRight = "30px";
+    }
+
+    OnDeleteValue() {
+        var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
+        temp.value = null;
+        this.SearchText = null;
+        temp.focus();
     }
 
     Run() {
@@ -1598,6 +1611,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.MyParentClass.DeleteField(this, this.MyParentClass.SelectedFiltersDataSource);
         //var temp = this.MyParentClass.SelectedFieldsDataSource;
     }
+
 
     list: ObjectFieldOperator[];
     private GetFieldOperators(field: DWObjectFieldsDetails) {

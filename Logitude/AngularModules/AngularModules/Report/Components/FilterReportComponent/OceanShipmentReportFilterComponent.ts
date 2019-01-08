@@ -1,16 +1,9 @@
-﻿declare var System: any;
-declare var window: any;
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {Component, OnInit, Output, ElementRef}  from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
-import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
-import {ParticipantList} from '../../EntityLists/ParticipantList';
-import {CodeNameClass} from './CodeNameClass';
+import {Component}  from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 
@@ -23,8 +16,17 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 
 export class OceanShipmentReportFilterComponent extends BaseComponent   {
     public ReportsPreview: ReportsPreviewComponent;
-    public AllId: string = "";
-    public FCL: string = "";
+    queryFilterItems: QueryFilterItem[];
+    public CustomerId = null;
+    queryFilterItem: QueryFilterItem;
+    public ObjectTableName: string = "Report";
+    public DataContext: OceanShipmentReportFilterComponent = this;
+    constructor() {
+        super();
+        this.ShipmentTypeRadioId = Guid.newGuid();
+    }
+
+    
     public ShipmentTypeRadioId: string = "";
     public IsDomestic: boolean = false;
     public IsExport: boolean = false;
@@ -34,12 +36,8 @@ export class OceanShipmentReportFilterComponent extends BaseComponent   {
     ToDate: Date;
     FromDate: Date;
     public currentDirectionId: string;
-    public SelectedCurrency: string = "USD,profit";
-    public IsFcl: boolean = false;
-    public IsAll: boolean = true;
-    public shipmentType: string;
+    public SelectedCurrency: string = "USD,profit";  
     public InActive: boolean = false;
-
 
     public ShipmentTypeRadio: string = "All";
     SetShipmentTypeRadio(value: string) {
@@ -47,66 +45,31 @@ export class OceanShipmentReportFilterComponent extends BaseComponent   {
             this.ShipmentTypeRadio = value;
         }
     }
-
-
-    //public get ShipmentType() {
-
-    //    if (this.IsFcl)
-    //        return "FCLD";
-    //    else
-    //        return "";
-
-
-    //}
-
-    allClicked() {
-
-        this.IsAll = true;
-        this.IsFcl = false;
-    }
-    fclClicked() {
-        this.IsAll = false;
-        this.IsFcl = true;
-
-    }
+    
     public get CurrentDirectionId() {
-
         var s: string = "";
-        if (this.IsImport) { s = s + "I"; }
+        if (this.IsImport) {
+            s = s + "I";
+        }
+
         if (this.IsExport) {
             s = s + ",E";
         }
-        if (this.IsDomestic) { s = s + ",D" }
+
+        if (this.IsDomestic) {
+            s = s + ",D"
+        }
+
         return s;
-
     }
-
-    public myForm: FormGroup;
-    queryFilterItems: QueryFilterItem[];
-    public CustomerId = null;
-    queryFilterItem: QueryFilterItem;
-    public ObjectTableName: string = "Report";
-    public DataContext: OceanShipmentReportFilterComponent = this;
-    constructor(fb: FormBuilder) {
-        super();
-        this.myForm = fb.group({});
-        this.AllId = Guid.newGuid();
-        this.FCL = Guid.newGuid();
-        this.ShipmentTypeRadioId = Guid.newGuid();
-    }
-
-
+    
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
 
         var month = new Date().getMonth();
         var Year = new Date().getFullYear();
         var daysofmonth = this.daysInMonth(new Date());
-
-
         this.FromDate = this.SetDate(Year, month - 1, 1);
-
-
         this.ToDate = this.SetDate(Year, month, daysofmonth);
     }
 
@@ -117,42 +80,12 @@ export class OceanShipmentReportFilterComponent extends BaseComponent   {
         }
 
     }
-
-    //ngOnInit() {
-
-    //    if (!this.ReportsPreview.FilterConrolHeight) {
-    //        this.ReportsPreview.SetFilterCotrolHeight(75);
-    //    }
-    //    else {
-
-
-    //        var month = new Date().getMonth();
-    //        var Year = new Date().getFullYear();
-    //        var daysofmonth = this.daysInMonth(new Date());
-
-
-    //        this.FromDate = this.SetDate(Year, month - 1, 1);
-
-
-    //        this.ToDate = this.SetDate(Year, month, daysofmonth);
-    //    }
-    //}
-
-
-
-
-
-
-
+    
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }
 
-
-
     RunReport(isloading: boolean) {
-
-
         this.queryFilterItems = new Array<QueryFilterItem>();
 
         if (this.FromDate) {
