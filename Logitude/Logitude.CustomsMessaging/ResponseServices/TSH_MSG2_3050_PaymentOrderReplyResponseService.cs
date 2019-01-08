@@ -323,7 +323,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (useTheAnalyzePaymentDocumentManager)
             {
                 var myAnalyzePaymentDocumentManager = new AnalyzePaymentDocumentManager(_CommonContext , _PaymentOrderPM, _DeclarationPM);
-                myAnalyzePaymentDocumentManager.AnalyzePaymentDocument(customResponse.PaymentOrderReply.PrintedPaymentForm, requestParams);
+                myAnalyzePaymentDocumentManager.AnalyzePaymentDocument(customResponse.PaymentOrderReply.PrintedPaymentForm.content, requestParams);
             }
             else
             {
@@ -771,10 +771,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             _CommonContext = CommonContext ?? CommonDataContext.GetContext(_PaymentOrderPM.Tenant);
 
         }
-        public void AnalyzePaymentDocument(Attachment attachment, RequestParamsBase requestParams)
+        public void AnalyzePaymentDocument(/*Attachment attachment*/byte[] content, RequestParamsBase requestParams)
         {
 
-            if (attachment == null)
+            if (/*attachment*/content == null)
             {
                 return;
             }
@@ -783,11 +783,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (documentsFilingPM == null)
             {
-                CreatePaymentDocument(attachment, requestParams);
+                CreatePaymentDocument(/*attachment*/content, requestParams);
             }
             else
             {
-                UpdatePaymentDocument(documentsFilingPM, attachment, requestParams);
+                UpdatePaymentDocument(documentsFilingPM, /*attachment*/content, requestParams);
             }
         }
 
@@ -833,7 +833,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return documentsFilingPM;
         }
 
-        public void UpdatePaymentDocument(DocumentsFilingPM documentsFilingPM, Attachment attachment, RequestParamsBase requestParams)
+        public void UpdatePaymentDocument(DocumentsFilingPM documentsFilingPM, /*Attachment attachment*/byte[] content, RequestParamsBase requestParams)
         {
             //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
             var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
@@ -843,7 +843,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             documentsFilingService.OnlyIfChangeUpdateAndAddVersion = true;
 
-            documentsFilingService.Update(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
+            documentsFilingService.Update(documentsFilingPM, /*attachment.*/content, requestParams.LoggingUserId);
 
             if (_DeclarationPM != null)
             {
@@ -853,7 +853,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             _ReturnMessage = string.Concat(_ReturnMessage, " ועודכן מסמך ", documentsFilingPM.Code);
         }
 
-        public void CreatePaymentDocument(Attachment attachment, RequestParamsBase requestParams)
+        public void CreatePaymentDocument(/*Attachment attachment*/byte[] content, RequestParamsBase requestParams)
         {
             //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
             var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
@@ -897,7 +897,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.ExternalEntityName = "CFIFILEM";
             documentsFilingPM.FileExtension = "PDF";
 
-            documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
+            documentsFilingService.Create(documentsFilingPM, /*attachment.*/content, requestParams.LoggingUserId);
             LogMessagingUtil.Instance.AppendLine("File document " + documentsFilingPM.Code + logMessage);
             _ReturnMessage = string.Concat(_ReturnMessage, " ונוצר מסמך ", documentsFilingPM.Code);
         }

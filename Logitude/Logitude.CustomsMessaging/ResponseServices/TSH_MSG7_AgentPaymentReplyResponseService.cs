@@ -248,11 +248,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (_UNIQUEFILINGPOFeatureExist)
                 {
                     myAnalyzePaymentDocumentManager.AnalyzePaymentDocument(
-                        new UnifreightIIG.Common.AgentPaymentRequestServiceReference.Attachment()
-                        {
-                            content = System.Text.Encoding.UTF8.GetBytes(customResponse.PrintedPaymentForm.PrintedPaymentForm),
-                            fileName = "",
-                        }, requestParams);
+                        customResponse.PrintedPaymentForm.PrintedPaymentForm.content
+                        , requestParams);
                 }
                 else
                 {
@@ -261,21 +258,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (documentsFilingPM==null)
                     {
                         // eitan : if get first time Attach add contents
-                        myAnalyzePaymentDocumentManager.CreatePaymentDocument(new UnifreightIIG.Common.AgentPaymentRequestServiceReference.Attachment()
-                        {
-                            content = System.Text.Encoding.UTF8.GetBytes(customResponse.PrintedPaymentForm.PrintedPaymentForm),
-                            fileName = "",
-                        }, requestParams);
+                        myAnalyzePaymentDocumentManager.CreatePaymentDocument(
+                            customResponse.PrintedPaymentForm.PrintedPaymentForm.content
+                            , requestParams);
                     }
                     else
                     {
                         //CreateUnfreigtFiling()
                         // eitan : if already have filing - update metadata only !!
-                        myAnalyzePaymentDocumentManager.UpdatePaymentDocument(documentsFilingPM, new UnifreightIIG.Common.AgentPaymentRequestServiceReference.Attachment()
-                        {
-                            content = null,//do not send data only if _UNIQUEFILINGPOFeatureExist !!
-                            fileName = "",
-                        }, requestParams);
+                        myAnalyzePaymentDocumentManager.UpdatePaymentDocument(documentsFilingPM, 
+                            /*content =*/ null,//do not send data only if _UNIQUEFILINGPOFeatureExist !!
+                            requestParams);
                     }
                 }
             }
