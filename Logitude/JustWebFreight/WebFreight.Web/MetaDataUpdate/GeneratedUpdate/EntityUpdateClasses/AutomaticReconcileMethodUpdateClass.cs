@@ -804,7 +804,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AutomaticReconcileMethodsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AutomaticReconcileMethodTextCode_0.Id, Code = "Automatic Reconcile Methods",  QueryGroupCode = "ARCM", IndexOrder = 0, Tenant = 0, ObjectTableId = AutomaticReconcileMethodObjectTable.Id, QuerySection = "AutomaticReconcileMethod", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AutomaticReconcileMethodFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AutomaticReconcileMethodsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AutomaticReconcileMethodTextCode_0.Id, Code = "Automatic Reconcile Methods",  QueryGroupCode = "ARCM", IndexOrder = 0, Tenant = 0, ObjectTableId = AutomaticReconcileMethodObjectTable.Id, QuerySection = "AutomaticReconcileMethod", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AutomaticReconcileMethodFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AutomaticReconcileMethodsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id, IndexOrder = 0, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 73 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -848,8 +848,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable AutomaticReconcileMethodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AutomaticReconcileMethod" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable AutomaticReconcileMethodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AutomaticReconcileMethod" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode AutomaticReconcileMethodGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AutomaticReconcileMethod.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = AutomaticReconcileMethodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature AutomaticReconcileMethodGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AutomaticReconcileMethod.Tab.General", ObjectTableId = AutomaticReconcileMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutomaticReconcileMethod.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

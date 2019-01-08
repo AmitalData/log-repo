@@ -773,7 +773,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //truncate
             if (truncateDecimal)
             {
-                number = Math.Truncate(number.Value);
+                number = Math.Round(number.Value);
             }
 
             //big size

@@ -202,6 +202,11 @@ export class JournalLinePM {
     public set ExternalReconcileNumber(newValue: string) { if (this.externalReconcileNumber != newValue) { this.externalReconcileNumber = newValue; this.MarkAsDirty("ExternalReconcileNumber"); } }
        
 	 
+    private isExternalReconcile: boolean;
+    public get IsExternalReconcile() { return this.isExternalReconcile; }
+    public set IsExternalReconcile(newValue: boolean) { if (this.isExternalReconcile != newValue) { this.isExternalReconcile = newValue; this.MarkAsDirty("IsExternalReconcile"); } }
+       
+	 
 
     public OldEntityPM: JournalLinePM;
 	

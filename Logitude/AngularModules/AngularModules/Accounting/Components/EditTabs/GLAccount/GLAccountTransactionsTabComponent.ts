@@ -424,7 +424,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             filters.AdditionalFilters.push(this.searchFieldFilter);
         }
 
-        filters.PageSize = 30;
+        filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetAll = false;
         filters.GetCount = true;

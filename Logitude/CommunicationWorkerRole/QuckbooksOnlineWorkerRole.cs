@@ -73,7 +73,12 @@ namespace CommunicationWorkerRole
                             string communicationLogId = response.MessageValues["QuickbooksOnline"].ToString();
                             type = response.MessageValues["type"].ToString();
                             int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
-                            OldTransferStatusCode = response.MessageValues["OldTransferStatusCode"].ToString();
+                            if (response.MessageValues.ContainsKey("OldTransferStatusCode"))
+                            {
+                                OldTransferStatusCode = null;
+                            }
+                            else 
+                            OldTransferStatusCode = response.MessageValues["OldTransferStatusCode"];
                             Commoncontext = CommonDataContext.GetContext(tenant);
                             Invoicecontext = InvoiceContext.GetContext(tenant);
                             CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(Commoncontext);

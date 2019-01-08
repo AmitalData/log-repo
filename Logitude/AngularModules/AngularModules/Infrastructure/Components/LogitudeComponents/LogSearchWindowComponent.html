@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .SystemDefaultsBox {
         width: 100%;
@@ -31,7 +31,10 @@
                         <SearchTextBox [ObjectTableName]="ParentTableName"
                                        (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                     </td>
-                    <td> </td>
+
+                    <td>
+                        <div></div>
+                    </td>
                 </tr>
 
                 <tr style="height:10px"></tr>
@@ -71,7 +74,7 @@
                                                             </td>
 
                                                             <!-- Add Toggle -->
-                                                            <td style="width: 1px;" *ngIf="!IsAddDisabled && IsAddToggleVisible" >
+                                                            <td style="width: 1px;" *ngIf="!IsAddDisabled && IsAddToggleVisible">
                                                                 <div tabindex="0" class="ToggleButton" style="width:34px;float:right;">
                                                                     <table>
                                                                         <tr>

@@ -28,15 +28,15 @@ namespace Logitude.Accounting.BL.DataContract
         public DateTime AccountingDate { get; set; }
         public DateTime DocumentDate { get; set; }
         public string GLAccountDisplayNumber { get; set; }
-        public decimal? LocalAmountDebit { get; set; }
+        public decimal LocalAmountDebit { get; set; }
         public string CurrencyId { get; set; }
-        public decimal? LocalAmountCredit { get; set; }
-        public decimal? ForeignAmountDebit { get; set; }
-        public decimal? ForeignAmountCredit { get; set; }
+        public decimal LocalAmountCredit { get; set; }
+        public decimal ForeignAmountDebit { get; set; }
+        public decimal ForeignAmountCredit { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreatedByUser { get; set; }
 
-
+        public string OppositGLAccount { get; set; }
 
 
     }

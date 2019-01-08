@@ -685,6 +685,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 		   Feature WebhookKeysFeature_WebhookKeys = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WebhookKeys", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.WebhookKeys", NameTextCodeDefaultText = @"Webhook Keys" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
+		   Feature WebhookKeysFeature_WebhookKeysTester = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WebhookKeysTester", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeys.Features.WebhookKeysTester", NameTextCodeDefaultText = @"Webhook Keys Tester" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
    
 	    
 		}

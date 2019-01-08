@@ -7348,8 +7348,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable ARInvoiceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ARInvoice" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable ARInvoiceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ARInvoice" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode ARInvoiceDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ARInvoiceDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -7368,7 +7369,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  
                  
 			   TextCode ARInvoiceTransferDetailsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.TH.Accounting", DefaultText = "Transfer Details",LocalDefaultText = "נתוני העברה", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ARInvoiceTransferDetailsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature GeneralTransferDetailsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode ARInvoicePaymentsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.TH.ARPayments", DefaultText = "Payments",LocalDefaultText = "תשלומים", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
@@ -7394,7 +7395,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "INDI",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/ARInvoice/Components/EditTabs/ARInvoiceDocsInTabComponent", FeatureId = ARInvoiceDocsInFeature_TH3.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.ARInvoiceTabs.ARInvoiceDocsInControl", ObjectTableId = ARInvoiceObjectTable.Id, TabNameTextCodeId = ARInvoiceDocsInTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "INAC",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/ARInvoice/Components/EditTabs/ARInvoiceTransferTabComponent", FeatureId = ARInvoiceTransferDetailsFeature_TH4.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.ARInvoiceTabs.ARTransferTabControl", ObjectTableId = ARInvoiceObjectTable.Id, TabNameTextCodeId = ARInvoiceTransferDetailsTextCode_TH4.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "INAC",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/ARInvoice/Components/EditTabs/ARInvoiceTransferTabComponent", FeatureId = GeneralTransferDetailsFeature_TH4.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.ARInvoiceTabs.ARTransferTabControl", ObjectTableId = ARInvoiceObjectTable.Id, TabNameTextCodeId = ARInvoiceTransferDetailsTextCode_TH4.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "INRC",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/ARInvoice/Components/EditTabs/ARInvoicePaymentsTabComponent", FeatureId = ARInvoicePaymentsFeature_TH5.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.ARInvoiceTabs.ARPaymentsTabControl", ObjectTableId = ARInvoiceObjectTable.Id, TabNameTextCodeId = ARInvoicePaymentsTextCode_TH5.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
