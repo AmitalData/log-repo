@@ -68,5 +68,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public string MaterialDescription { get; set; }
     
     public string CommodityNumber { get; set; }
+
+    public  string  ComputingPartnerCode { get; set; }
+
     }
 } 

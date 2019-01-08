@@ -25,7 +25,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
 
        public string maskedPrimaryAccessKey { get; set; }
        public string maskedSeconderyAccessKey { get; set; }
-        public string ComputingPartnerId { get; set; }
+        //public string ComputingPartnerId { get; set; }
 
     }
 }

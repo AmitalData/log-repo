@@ -42,5 +42,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
 	[XmlAttribute]
     public string ExternalId { get; set; }
+
+    public  string  ComputingPartnerCode { get; set; }
+
     }
 } 

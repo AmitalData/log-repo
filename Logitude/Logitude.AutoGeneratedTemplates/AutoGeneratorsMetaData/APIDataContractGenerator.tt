@@ -502,6 +502,9 @@ namespace <#= NSString #>.<#=DCVersion#>
 		 {
 			 WritemyProperty(field);
 		 } #>
+
+    public  string  ComputingPartnerCode { get; set; }
+
     }
 } <#+
     
@@ -549,7 +552,7 @@ private string GetmyPropertyName(dynamic property)
 
 <#+
 
-  private string GetmyDataType(dynamic field,bool isListClass = false)
+  private string GetmyDataType(dynamic field)
         {
 			
 			string typecode = ((XElement)field).Attributes().Where(a => a.Name == "FieldsDataType").FirstOrDefault().Value.Trim('"');

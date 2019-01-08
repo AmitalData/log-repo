@@ -28,5 +28,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     public string LocalName { get; set; }
     
     public int Days { get; set; }
+
+    public  string  ComputingPartnerCode { get; set; }
+
     }
 } 
