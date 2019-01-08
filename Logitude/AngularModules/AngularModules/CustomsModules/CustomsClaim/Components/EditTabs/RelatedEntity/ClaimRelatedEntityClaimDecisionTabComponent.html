@@ -42,24 +42,20 @@
                                         </tr>
 
                                         <tr class="FormFieldRow">
-                                            <td style="width: 110px;">
-                                                <LogLabel [ObjectFieldName]="'DecisionNote'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <td style="width: 110px; vertical-align:top;">
+                                                <div style="margin-right:10px; vertical-align:top;" [style.text-align]="'right'" class="Label MultiLinesText">{{'Customs.ClaimsRelatedEntity.F.DecisionNote' | TextCodeTranslationPipe }}:</div>
                                             </td>
-                                            <td style="width: 410px;" colspan="3" class="TextTrimming">
+                                            <td style="width: 150px; vertical-align: top;padding-top: 2px;">
                                                 <LogTextBox [ObjectFieldName]="'DecisionNote'" [ObjectTableName]="ObjectTableName" [Text]="DecisionNote"
-                                                            [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                            [HideColumns]="true" [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
                                             </td>
 
-                                            <td><div></div></td>
-                                        </tr>
-
-                                        <tr class="FormFieldRow">
-                                            <td style="width: 110px;">
-                                                <div style="margin-right:10px; vertical-align:middle;" [style.text-align]="'right'" class="Label MultiLinesText">{{'Customs.ClaimsRelatedEntity.F.EilatVatRefoundDecision' | TextCodeTranslationPipe }}:</div>
+                                            <td style="width: 110px;vertical-align:top;">
+                                                <div style="margin-right:10px; vertical-align:top;" [style.text-align]="'right'" class="Label MultiLinesText">{{'Customs.ClaimsRelatedEntity.F.EilatVatRefoundDecision' | TextCodeTranslationPipe }}:</div>
                                             </td>
-                                            <td style="width: 410px;" colspan="3" class="TextTrimming">
+                                            <td style="width: 150px; vertical-align: top;padding-top: 2px; ">
                                                 <LogTextBox [ObjectFieldName]="'EilatVatRefoundDecision'" [ObjectTableName]="ObjectTableName" [Text]="EilatVatRefoundDecision"
-                                                            [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                            [HideColumns]="true" [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
                                             </td>
 
                                             <td><div></div></td>
@@ -125,7 +121,7 @@
 
                                                         <!-- SeizureMethodCode -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntitiesSeizure.F.SeizureMethodCode' | TextCodeTranslationPipe"
-                                                                    [width]="'140'" [Alignment]="'right'" [binding]="'SeizureMethodCode'">
+                                                                    [width]="'140'" [Alignment]="'right'" [binding]="'SeizureMethodName'">
                                                             <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.SeizureMethodName}}</span>

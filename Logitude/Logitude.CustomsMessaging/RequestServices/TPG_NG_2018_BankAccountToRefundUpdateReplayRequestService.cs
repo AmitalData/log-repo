@@ -51,9 +51,17 @@ namespace Logitude.CustomsMessaging.RequestServices
                 int codeBank;
                 int.TryParse(requestParams.BankCode, out codeBank);
                 myTPG_NG_2018_MSG4_BankAccountToRefundUpdateReplay.ClaimRefundMethod.AccountDetails.codeBank = codeBank;
-                int bankBranch;
-                int.TryParse(requestParams.AccountBranch, out bankBranch);
-                myTPG_NG_2018_MSG4_BankAccountToRefundUpdateReplay.ClaimRefundMethod.AccountDetails.accountBranch = bankBranch;
+                if (!string.IsNullOrWhiteSpace(requestParams.AccountBranch))
+                {
+                    int branch = 0;
+                    if (requestParams.AccountBranch.Contains(","))
+                    {
+                        string[] branchArray = requestParams.AccountBranch.Split(',');
+                        requestParams.AccountBranch = branchArray[0];
+                    }
+                    int.TryParse(requestParams.AccountBranch, out branch);
+                    myTPG_NG_2018_MSG4_BankAccountToRefundUpdateReplay.ClaimRefundMethod.AccountDetails.accountBranch = branch;
+                }
                 myTPG_NG_2018_MSG4_BankAccountToRefundUpdateReplay.ClaimRefundMethod.AccountDetails.accountNumber = requestParams.AccountNumber;
             }
             else
@@ -72,10 +80,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = "בקשה להחזר פיקדון  " + requestParams.FileNumber;
             this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Deposit");
-            if (requestParams.LoggingObjectTableId == "Customs.Declaration" && !string.IsNullOrEmpty(requestParams.LoggingEntityId))
+            if (!string.IsNullOrEmpty(requestParams.DeclarationId))
             {
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId;
+                this.MyRequestSheetParam.EntityId1 = requestParams.DeclarationId;
             }
 
             return myTPG_NG_2018_MSG4_BankAccountToRefundUpdateReplay;

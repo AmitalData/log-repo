@@ -1053,7 +1053,7 @@ export class MapPendingReasonCodeData {
             "FromUnifreight": true,
         };
         logWindow.ShowCloseButton = true;
-        logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/AddEditCourierPendingReasonComponent');
+        logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/AddCourierPendingToUnifreightStatusComponent');
         logWindow.WindowClosed.subscribe(($event1: any) => {
             AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
         });
