@@ -1876,8 +1876,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<CardList> GetCardListsByCardIds(List<string> CardIds, int tenant)
         {
-            List<CardList> Cards = (from a in repository.context.Cards
-                                    where CardIds.Contains(a.Id) && a.Tenant == tenant
+            List<CardList> Cards = (from a in repository.context.Cards.Include("PartnerType")
+                                    where CardIds.Contains(a.Id) && a.Tenant == tenant 
                                     select new CardList()
                                     {
 
@@ -1885,6 +1885,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         Tenant = a.Tenant,
                                         EnglishName = a.EnglishName,
                                         Code = a.Code,
+                                        PartnerTypeName = a.PartnerType!=null ? a.PartnerType.Name: "",
                                         
                                     }).ToList();
             return Cards;
