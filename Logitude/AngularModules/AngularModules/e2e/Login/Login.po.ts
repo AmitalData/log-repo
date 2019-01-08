@@ -15,7 +15,7 @@ export class LoginComp {
     browser.ignoreSynchronization = true;
     this.Helper.WaitByIdAndFill('Email','razan@razancompany.com' );
 
-    this.Helper.WaitByIdAndFill('Password','!R123456' );
+    this.Helper.WaitByIdAndFill('Password','!R123j456' );
     this.Helper.ButtonClick('cmdLogin');
 
 
