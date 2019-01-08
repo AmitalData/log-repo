@@ -73,7 +73,7 @@ namespace CommunicationWorkerRole
                             string communicationLogId = response.MessageValues["QuickbooksOnline"].ToString();
                             type = response.MessageValues["type"].ToString();
                             int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
-                            if (response.MessageValues.ContainsKey("OldTransferStatusCode"))
+                            if (!response.MessageValues.ContainsKey("OldTransferStatusCode"))
                             {
                                 OldTransferStatusCode = null;
                             }
@@ -497,6 +497,10 @@ namespace CommunicationWorkerRole
                 Payment final = service.Update(myResult[0]) as Payment;
                 SendingSuccessfully(waitingCommLog, tenant, final.Id,null,null);                
             }
+            else
+            {
+                throw new Exception("Failed to Send");
+            }
 
         }
 
@@ -512,6 +516,10 @@ namespace CommunicationWorkerRole
                 myResult[0].Line = payment.Line==null ? new List<Line>().ToArray():payment.Line;
                 BillPayment final = service.Update(myResult[0]) as BillPayment;
                 SendingSuccessfully(waitingCommLog, tenant, final.Id, null,null);
+            }
+            else
+            {
+                throw new Exception("Failed to Send");
             }
 
         }
