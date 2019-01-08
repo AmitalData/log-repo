@@ -14893,8 +14893,12 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature CustomsDeclarationFeature46 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COLLATERAL", Packagable = true, ObjectTableId = CustomsDeclarationObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Declaration.Features.Collateral", NameTextCodeDefaultText = "Collateral", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             Feature CustomsDeclarationFeature47 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONCLASSIFICATION", Packagable = true, ObjectTableId = CustomsDeclarationObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Declaration.Features.Classification", NameTextCodeDefaultText = "Declaration Classification", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            
+#if notpaymentOrderFeature19
 
+
+            //Add new Feature, If the Feature is set Fill The Attachment in the interface , search & update the existing document in a new version (don't create 2 docs) 
+            //Feature CustomsDeclarationFeature48 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYMENTREPLYPRINTEDFORMNV", Packagable = true, ObjectTableId = paymentOrderObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Declaration.Features.PaymentReplyPrintedFormNV", NameTextCodeDefaultText = "Payment Reply Printed Form New Ver.", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+#endif
             #endregion
 
             #region Claim

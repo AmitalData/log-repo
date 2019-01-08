@@ -136,7 +136,7 @@ namespace WebFreight.Web
                           return amitalRestrictOwnerService;
                       };
                 }
-
+                
                 LogitudeSettings.HandleDbExceptionInject = ExceptionHandler.HandleDbException;
                 LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject = MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
 
@@ -148,7 +148,7 @@ namespace WebFreight.Web
                     
                 };
                 InjectionUtil.Init(createAmitalRestrictOwnerModelService, getTenantFromToken, SecurityUtility.CheckContactFeature, () => (new ByteCompressorUtil()) as IByteCompressorUtil, new IISManager());
-
+                ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
 
 
 

@@ -127,6 +127,7 @@ namespace AmitalCustomsWindowsService
                 CustomsWorkerRole.CustomsWorkerEntryPoint.StartStatic(false, BuildObjectTablesZipFilesDataAction, prodInfo, SecurityUtility.CheckContactFeature);
 
                 InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null);
+                ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
                 Simplog.Server.Infrastructure.LogitudeSettings.HandleLogMe("StartStatic", false, "", DateTime.MaxValue);
 
                 CustomsRegistrations.Register();
