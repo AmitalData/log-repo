@@ -81,6 +81,14 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
         }
     }
 
+    private includeCancelledShipments: boolean = false;
+    public get IncludeCancelledShipments() { return this.includeCancelledShipments; }
+    public set IncludeCancelledShipments(value: boolean) {
+        if (this.includeCancelledShipments != value) {
+            this.includeCancelledShipments = value;
+        }
+    }
+
     private splitByCharges: boolean = false;
     public get SplitByCharges() { return this.splitByCharges; }
     public set SplitByCharges(value: boolean) {
@@ -110,6 +118,7 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
             myFilterItems.push(new QueryFilterItem("IncludeEstimations", this.IncludeEstimations));
             myFilterItems.push(new QueryFilterItem("SplitByCharges", this.SplitByCharges));
             myFilterItems.push(new QueryFilterItem("IsByCreateDate", this.IsByCreateDate));
+            myFilterItems.push(new QueryFilterItem("IncludeCancelledShipments", this.IncludeCancelledShipments));
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;

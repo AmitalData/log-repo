@@ -401,7 +401,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query JournalActionTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = JournalActionTypeTextCode_0.Id, Code = "Journal Action Types",  QueryGroupCode = "JACT", IndexOrder = 0, Tenant = 0, ObjectTableId = JournalActionTypeObjectTable.Id, QuerySection = "JournalActionType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = JournalActionTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query JournalActionTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = JournalActionTypeTextCode_0.Id, Code = "Journal Action Types",  QueryGroupCode = "JACT", IndexOrder = 0, Tenant = 0, ObjectTableId = JournalActionTypeObjectTable.Id, QuerySection = "JournalActionType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = JournalActionTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn JournalActionTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = JournalActionTypesQuery.Id, IndexOrder = 0, ObjectFieldId = JournalActionTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == JournalActionTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 73 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -419,8 +419,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable JournalActionTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "JournalActionType" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable JournalActionTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "JournalActionType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode JournalActionTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalActionType.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = JournalActionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature JournalActionTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = JournalActionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "JournalActionType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
