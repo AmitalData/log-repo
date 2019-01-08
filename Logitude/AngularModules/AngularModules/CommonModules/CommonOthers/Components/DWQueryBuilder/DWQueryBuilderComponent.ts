@@ -752,9 +752,10 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
         var result = operationSimpol;
         if (textValue) {
-            var values: string[] = textValue.toString().split(',');
+            var values: string[] = textValue.toString().split(';');
             if (values.length > 0) {
                 values.forEach((item) => {
+                   
                     if (item) {
                         result += (item + "','");
                     }
@@ -1368,8 +1369,10 @@ export class DWObjectFieldsDetails extends BaseComponent {
         return this.textValue;
     }
     public set TextValue(newValue: any) {
-        this.textValue = newValue;
-        this.MyParentClass.SaveChanges();
+        if (this.textValue != newValue) {
+            this.textValue = newValue;
+            this.MyParentClass.SaveChanges();
+        }
     }
 
     private multSelectValueLists: MultSelectValue[];
@@ -1378,7 +1381,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     }
     public set MultSelectValueLists(newValue: MultSelectValue[]) {
         this.multSelectValueLists = newValue;
-        this.MyParentClass.SaveChanges();
+       // this.MyParentClass.SaveChanges();
     }
 
 

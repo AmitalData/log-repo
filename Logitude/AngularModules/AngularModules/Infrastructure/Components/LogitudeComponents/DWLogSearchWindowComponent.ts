@@ -415,7 +415,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         if (multSelectValueLists) {
             multSelectValueLists.forEach((field) => {
                 if (field["Value"]) {
-                    if (textValue) textValue += ",";
+                    if (textValue) textValue += ";";
                     var rowValues: any = field["Value"];
 
                     if (rowValues) textValue += rowValues.Row;
@@ -424,6 +424,11 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
             });
         }
+
+        textValue += "@@";
+        textValue = textValue.replace(";@@","");
+        textValue = textValue.replace("@@", "");
+
         return textValue;
     }
 

@@ -203,37 +203,22 @@
                                                                                                                             <td>
                                                                                                                                 <table>
                                                                                                                                     <tr style="height:35px;" >
-
-
-                                                                                                                                        <!--FieldName-->
                                                                                                                                         <td class="GridViewCell" style="width: 40px; min-width: 40px; max-width: 40px; position: relative;">
-                                                                                                                                            
-                                                                                                                                           <!-- <img class="CenterCenter" (click)="RemoveItemFromSecondList(item)" style="cursor:pointer;" src="./_Resources/Images/Icons/All/BlueDeleteIcon.png" />-->
                                                                                                                                             <img class="CenterCenter" (click)="RemoveItemFromSecondList(item)" style="cursor:pointer;height:22px;width:21px" src="./_Resources/Images/Icons/Followups/DeleteFollowup.png" />
-
-
-                                                  
                                                                                                                                         </td>
-                                                                                                                                        <td *ngIf="item.Value" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;">{{item.Value.Row}}</td>
-                                                                                                                                        <td *ngIf="item.Value1" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;">{{item.Value1.Row}}</td>
-                                                                                                                                        <td *ngIf="item.Value2" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;">{{item.Value2.Row}}</td>
-                                                                                                                                        <td *ngIf="item.Value3" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;">{{item.Value3.Row}}</td>
-                                                                                                                                        <td *ngIf="item.Value4" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;">{{item.Value4.Row}}</td>
-                                                                                                                                        <td *ngIf="item.Value5" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;">{{item.Value5.Row}}</td>
-                                                                                                                                        <td *ngIf="item.Value6" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;">{{item.Value6.Row}}</td>
-                                                                                                                                        <td *ngIf="item.Value7" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;">{{item.Value7.Row}}</td>
-                                                                                                                                        <td *ngIf="item.Value8" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;">{{item.Value8.Row}}</td>
-                                                                                                                                        <td *ngIf="item.Value9" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;">{{item.Value9.Row}}</td>
-                                                                                                                                        <td *ngIf="item.Value10" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;">{{item.Value10.Row}}</td>
-                                                                                                                                            
-                                                                                                                                        <!--MultSelectValueLists-->
-
-                                                                                                                                     
+                                                                                                                                        <td *ngIf="item.Value" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;"><span style="margin-left:5px">{{item.Value.Row}}</span></td>
+                                                                                                                                        <td *ngIf="item.Value1" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;"><span style="margin-left:5px">{{item.Value1.Row}}</span></td>
+                                                                                                                                        <td *ngIf="item.Value2" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;"><span style="margin-left:5px">{{item.Value2.Row}}</span></td>
+                                                                                                                                        <td *ngIf="item.Value3" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;"><span style="margin-left:5px">{{item.Value3.Row}}</span></td>
+                                                                                                                                        <td *ngIf="item.Value4" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;"><span style="margin-left:5px">{{item.Value4.Row}}</span></td>
+                                                                                                                                        <td *ngIf="item.Value5" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;"><span style="margin-left:5px">{{item.Value5.Row}}</span></td>
+                                                                                                                                        <td *ngIf="item.Value6" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;"><span style="margin-left:5px">{{item.Value6.Row}}</span></td>
+                                                                                                                                        <td *ngIf="item.Value7" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;"><span style="margin-left:5px">{{item.Value7.Row}}</span></td>
+                                                                                                                                        <td *ngIf="item.Value8" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;"><span style="margin-left:5px">{{item.Value8.Row}}</span></td>
+                                                                                                                                        <td *ngIf="item.Value9" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;"><span style="margin-left:5px">{{item.Value9.Row}}</span></td>
+                                                                                                                                        <td *ngIf="item.Value10" class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;"><span style="margin-left:5px">{{item.Value10.Row}}</span></td>
                                                                                                                                         <td class="GridViewCell" style="width: 100%; min-width: 100%; max-width: 100%; position: relative;"><div></div></td>
-
-
-                                                                       
-
+                                                                                                                                    
                                                                                                                                     </tr>
                                                                                                                                     <tr><td colspan="4"></td></tr>
                                                                                                                                 </table>

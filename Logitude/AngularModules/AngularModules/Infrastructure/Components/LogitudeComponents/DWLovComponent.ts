@@ -111,7 +111,7 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
     ToolTipId: string;
     LogLOVControlClass: string;
     DisplayHeader: boolean;
-    SearchTextNgModel: string;
+  
     counterId: number;
     public IsReady: boolean = false
     @Output() ValueChanged = new EventEmitter();
@@ -130,6 +130,36 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
             //this.ValueChanged.emit(this.SelectedValue);
         }
     }
+
+
+
+    DisplayTextNgModel: string;
+
+    private  searchTextNgModel:string = "";
+    public get SearchTextNgModel() {
+        return this.searchTextNgModel;
+    }
+    public set SearchTextNgModel(newValue: any) {
+        if (this.searchTextNgModel != newValue) {
+            this.searchTextNgModel = newValue;
+            this.DisplayTextNgModel = "";
+            if (this.searchTextNgModel) {
+                this.searchTextNgModel.split(";").forEach((item) => {
+                    this.DisplayTextNgModel += (item + "; ");
+                });
+
+                this.DisplayTextNgModel += "@@";
+                this.DisplayTextNgModel = this.DisplayTextNgModel.replace("; @@", "").replace("@@","");
+            }
+         
+        }
+    }
+
+
+
+
+
+
     @Input() RunToggleMode: boolean;
     @Input() AutoCompleteSearchWindow: boolean;
     @Input() ForceShowAddLink: boolean;
