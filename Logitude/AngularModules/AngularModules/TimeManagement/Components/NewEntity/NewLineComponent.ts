@@ -73,6 +73,7 @@ export class NewLineComponent extends BaseComponent {
                 this.DateOfWorkDateFormat = this.ApplyTimeFormat(this.DateOfWorkMinutes);
                 this.DateOfWork = args.DateOfWork;
                 this.DateOfWorkDate.Date = this.DateOfWork;
+                this.SprintId = args.SprintId;
             }
         }
     }
