@@ -18,6 +18,8 @@ using UnifreightIIG.Common.MessageLib.DeclarationDeal;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Server.Tools.Utils;
 using System.Configuration;
+using Logitude.AmitalMessaging.Utils;
+using Logitude.Customs.BL.Messaging.Maman;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -113,6 +115,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             //hataraDate = declarationPM.HatraDate; Yuval Chalup 17.01.2018 Remarked - Do NOT change date
                             MyRequestSheetParam.RequestDescription = "הודעה מוקדמת לסוכן מכס: " + declarationPM.CustomFileNo;
                             declarationPM.CourierCustomStatusCode = "1";
+                            Send2470ToMaman(declarationPM,customResponse, requestParams);
                             break;
                         case 14: // Release When Arrived
                             LogMessagingUtil.Instance.AppendLine("Release When Arrived");
@@ -167,6 +170,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     disposableToken.Dispose();
                 }
             }
+        }
+
+        private void Send2470ToMaman(DeclarationPM declarationPM, DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, GenericRequestParams requestParams)
+        {
+            LogMessagingUtil.Instance.AppendLine("הגדרת ברירת מחדל חדשה ביוניפרייט ברמת מערכת עמילות כפתור בלדרות: שליחה של מסר הודעה מוקדמת לממן עם אופציות .");
+            LogMessagingUtil.Instance.AppendLine("כן / לא");
+            var customsResponseXml = XmlGenericUtil<DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage>.SerializeObject(customResponse);
+            var customsResponseBytes = System.Text.UTF8Encoding.UTF8.GetBytes(customsResponseXml);
+            var myFTPOutMaman2470ReleaseGoodService = new FTPOutMaman2470ReleaseGoodService();
+            myFTPOutMaman2470ReleaseGoodService
+                .BuildCommunicationLog(customsResponseBytes, requestParams.Tenant, declarationPM.Id, requestParams.DCAFileName, false);
+
         }
 
         private void GetResponseData(ReleaseGoodsResponseData myResponseData, DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, DeclarationPM declarationPM)

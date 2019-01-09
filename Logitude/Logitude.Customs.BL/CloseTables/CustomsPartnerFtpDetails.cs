@@ -17,6 +17,7 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_ECSPCL = "ECSPCL";//EC = E-Commerce
         public const string InterfaceName_ECSTB = "ECSTB";//EC = E-Commerce
         public const string InterfaceName_ECSTB_Splited = "ECSTB+P";//EC = E-Commerce
+        public const string InterfaceName_Ftp2Maman2470 = "ECM2470";//EC = E-Commerce 2 maman 2470
         public const string PartnerCode_Mamam = "MAMAN";
         public const string TypeCode_Out = "OUT";
         public const string TypeCode_In = "IN";
@@ -77,6 +78,19 @@ namespace Logitude.Customs.BL.CloseTables
                 Subject="Status / Availability Maman",
                 ServerInternalDef= true
             },
+            new InterfaceDetails()
+            {
+                Code = InterfaceName_Ftp2Maman2470,
+                Name = "מסר 2470",
+                TypeCode = TypeCode_Out,
+                Partner = PartnerCode_Mamam,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+
+                //AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilityService,
+                Subject="2470 to Maman",
+                
+            },
+            
 
             };
             ///
