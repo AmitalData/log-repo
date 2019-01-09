@@ -172,6 +172,10 @@
     <Compile Include="Migrations\201812310731564_AddMigrationDecCourierSuspention.Designer.cs">
       <DependentUpon>201812310731564_AddMigrationDecCourierSuspention.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901091013411_AddMigrationRefundCustomerActivityType.cs" />
+    <Compile Include="Migrations\201901091013411_AddMigrationRefundCustomerActivityType.Designer.cs">
+      <DependentUpon>201901091013411_AddMigrationRefundCustomerActivityType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -283,6 +287,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812310731564_AddMigrationDecCourierSuspention.resx">
       <DependentUpon>201812310731564_AddMigrationDecCourierSuspention.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901091013411_AddMigrationRefundCustomerActivityType.resx">
+      <DependentUpon>201901091013411_AddMigrationRefundCustomerActivityType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
