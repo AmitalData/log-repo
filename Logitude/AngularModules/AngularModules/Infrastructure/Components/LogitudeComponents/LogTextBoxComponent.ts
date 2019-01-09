@@ -1544,6 +1544,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             console.log("Rsukt--",res);
             if(res)
                 this.TextValue = res;
+                this.TextValueChanges(this.TextValue);
         });
 
 
