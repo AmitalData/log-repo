@@ -192,15 +192,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public HashSet<string> GetAllIdAccountsTypeCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5, string gLAccountType,
     bool IncludeChildAccounts)
         {
-            var allIdAccounts = new List<string>() { GLAccountId };
+            List<String> allIdAccounts = new List<string>() { GLAccountId };
             if (!String.IsNullOrWhiteSpace(cat1) || !String.IsNullOrWhiteSpace(cat2) || !String.IsNullOrWhiteSpace(cat3) || !String.IsNullOrWhiteSpace(cat4) || !String.IsNullOrWhiteSpace(cat5) || !String.IsNullOrWhiteSpace(gLAccountType))
             {
-                var catAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType)
+                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType)
                     .ToList();
             }
-            if (IncludeChildAccounts)
+
+            if (IncludeChildAccounts && allIdAccounts != null && allIdAccounts.Count > 0)
             {
-                var ChildAccounts = repository.GetChildAccounts(GLAccountId, tenant)
+                List<String> ChildAccounts = repository.GetChildAccountsList(allIdAccounts, tenant)
                 .Select(ca => ca.Id).ToList();
                 allIdAccounts.AddRange(ChildAccounts);
             }
@@ -863,64 +864,61 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public List<B110Data> GetB110sForGLAccounts(int tenant)
         {
+           
             List<B110Data> b110s = new List<B110Data>();
-            List<GLAccountPM> glaccounts = (from a in context.GLAccounts
-                                            join c in context.ChartOfAccounts on a.ChartOfAccountsId equals c.Id
+            //List<GLAccountPM> glaccounts = (from a in context.GLAccounts
+            //                                join c in context.ChartOfAccounts on a.ChartOfAccountsId equals c.Id
 
-                                            where a.Inactive == false && a.Tenant == tenant
-                                            select new GLAccountPM()
-                                            {
-                                                Id = a.Id,
-                                                Tenant = a.Tenant,
-                                                ChartOfAccountsCode = c.Code,
-                                                DisplayNumber = a.DisplayNumber,
-                                                LocalName = a.LocalName,
-                                                EnglishName = a.EnglishName,
-                                                ChartOfAccountsName = c.LocalName,
-                                                AccountTypeCode = a.AccountTypeCode,
-                                                IsMultiCurrency = a.IsMultiCurrency,
-                                                CurrencyId = a.CurrencyId,
-                                                CurrencyCode = a.Currency.Code
-                                            }).ToList();
+            //                                where a.Inactive == false && a.Tenant == tenant
+            //                                select new GLAccountPM()
+            //                                {
+            //                                    Id = a.Id,
+            //                                    Tenant = a.Tenant,
+            //                                    ChartOfAccountsCode = c.Code,
+            //                                    DisplayNumber = a.DisplayNumber,
+            //                                    LocalName = a.LocalName,
+            //                                    EnglishName = a.EnglishName,
+            //                                    ChartOfAccountsName = c.LocalName,
+            //                                    AccountTypeCode = a.AccountTypeCode,
+            //                                    IsMultiCurrency = a.IsMultiCurrency,
+            //                                    CurrencyId = a.CurrencyId,
+            //                                    CurrencyCode = a.Currency.Code
+            //                                }).ToList();
 
             
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-            List<AddressData> addresses = (from a in commonDataContext.Cards
-                                         join d in commonDataContext.Addresses on a.Id equals d.CardId
-                                         join dt in commonDataContext.AddressTypes on d.AddressTypeId equals dt.Id
-                                         where a.Tenant == tenant
-                                         select new AddressData()
-                                         {
-                                             GLAccountId = a.GLAccountId,
-                                            CardId= a.Id,
-                                            AddressType = dt.Id,
-                                            VatNumber = a.VatNumber,
-                                            CountryCode = a.CountryCode,
-                                            City = a.CityName,
-                                            CountryName = a.CountryName,
-                                            Address1 = d.Address1,
-                                            ZipCode = a.ZipCode,
-                                         }).ToList();
+            //ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+            //List<AddressData> addresses = (from a in commonDataContext.Cards
+            //                             join d in commonDataContext.Addresses on a.Id equals d.CardId
+            //                             join dt in commonDataContext.AddressTypes on d.AddressTypeId equals dt.Id
+            //                             where a.Tenant == tenant
+            //                             select new AddressData()
+            //                             {
+            //                                 GLAccountId = a.GLAccountId,
+            //                                CardId= a.Id,
+            //                                AddressType = dt.Id,
+            //                                VatNumber = a.VatNumber,
+            //                                CountryCode = a.CountryCode,
+            //                                City = a.CityName,
+            //                                CountryName = a.CountryName,
+            //                                Address1 = d.Address1,
+            //                                ZipCode = a.ZipCode,
+            //                             }).ToList();
+            
 
-            b110s = (from a in glaccounts
-                                    join d in addresses on a.Id equals d.GLAccountId 
-                                    select new B110Data()
+            b110s = (from a in context.GLAccounts
+                     join c in context.ChartOfAccounts on a.ChartOfAccountsId equals c.Id
+
+                     where a.Inactive == false && a.Tenant == tenant
+
+                     select new B110Data()
                                     {
-                                        ChartOfAccountsCode =a.ChartOfAccountsCode,
+                                        ChartOfAccountsCode =c.Code,
                                         DisplayNumber = a.DisplayNumber,
                                         LocalName = a.LocalName,
                                         EnglishName = a.EnglishName,
-                                        ChartOfAccountsName = a.ChartOfAccountsName,
+                                        ChartOfAccountsName = c.LocalName,
                                         AccountTypeCode = a.AccountTypeCode,
                                         GLAccountId = a.Id,
-                                        CardId = a.Id,
-                                        AddressType = d.AddressType,
-                                        VatNumber = a.VatNumber,
-                                        CountryCode = d.CountryCode,
-                                        City = d.City,
-                                        CountryName = d.CountryName,
-                                        Address1 = d.Address1,
-                                        ZipCode = d.ZipCode,
                                         IsMultiCurrency = a.IsMultiCurrency,
                                         CurrecnyId = a.CurrencyId
 

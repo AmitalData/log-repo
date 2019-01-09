@@ -213,6 +213,7 @@
                                     <td style="height:23px;width:100%">
                                         <div style="width:100%;height:100%;">
                                             <input type="text" [id]="SearchFieldsId" placeholder="{{'General.O.Search' | TextCodeTranslationPipe}}" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [(ngModel)]="SearchText" style="background-color:white;background: url(Images/Search.png) no-repeat scroll;background-position: right center;padding-right:30px;width:100%;height:100%;"><br>
+                                            <img *ngIf="SearchText" class="DeleteButton" [className]="'RightCenter'" style="display:inline-block;margin-right: 5px;" src="Images/RedX.png" (click)="OnDeleteValue()" />
                                         </div>
                                     </td>
                                 </tr>

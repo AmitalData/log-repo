@@ -31,6 +31,13 @@ namespace Logitude.Accounting.Data.Repositories
              select a).ToList();
         }
 
+        public List<GLAccount> GetChildAccountsList(List<String> gLAccountIdList, int tenant)
+        {
+            return (from a in context.GLAccounts
+                    where a.Tenant == tenant && gLAccountIdList.Any(b => a.ParentAccountId == b)
+                    select a).ToList();
+        }
+
         public GLAccount GetGLAccountByIdTenant(string GLAccountId, int tenant)
         {
             return (from a in context.GLAccounts
@@ -203,8 +210,8 @@ namespace Logitude.Accounting.Data.Repositories
         {
             return
             this
-                .GetByAcountIdTypeCategories(tenant, AccountId,
-            Category1, Category2, Category3, Category4, Category5, gLAccountType)
+                .GetByAcountIdTypeCategories(tenant, AccountId, gLAccountType,
+            Category1, Category2, Category3, Category4, Category5)
             .Select(a => a.Id);
 
         }

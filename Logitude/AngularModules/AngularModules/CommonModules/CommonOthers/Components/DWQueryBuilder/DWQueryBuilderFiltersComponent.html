@@ -35,7 +35,8 @@
     }
 
     .Filters {
-        display: inline-block;
+        /*display: inline-block;*/
+        display:table-cell;
         border-left: 1px solid gray;
     }
 
@@ -44,6 +45,8 @@
         min-height: 20px;
         margin: 5px;
         display: inline-block;
+        /*display: table-cell;
+        vertical-align: middle;*/
     }
 
     .OperatorItem {
@@ -204,9 +207,12 @@
     </div>
     <div class="GroupItem" *ngIf="item.IsGroup == true">
         <div class="OperatorItem">
-            <div class="Operator">
-                <ComboBox *ngIf="item" (SelectedItemChanged)="item.AndOrOpsChanged($event)" [ItemsSource]="AndOrOps" [SelectedItem]="item.AndOr"></ComboBox>
+            <div style="display: table-cell;vertical-align: middle;">
+                <div class="Operator">
+                    <ComboBox *ngIf="item" (SelectedItemChanged)="item.AndOrOpsChanged($event)" [ItemsSource]="AndOrOps" [SelectedItem]="item.AndOr"></ComboBox>
+                </div>
             </div>
+            
             <div class="Filters">
                 <div class="FilterItem">
                     <table style="height:22px;" *ngIf="item.IsGroup == false">

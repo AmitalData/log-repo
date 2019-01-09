@@ -180,7 +180,7 @@
 
                         <td>
                             <div *ngIf="IsSharedByMessageVisible" class="OrangeInfo">
-                                This view has been shared by {{SharedByUserName}}. You can’t edit it
+                                You have no permission to edit this view.
                             </div>
                         </td>
                     </tr>
@@ -559,18 +559,42 @@
                         <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'SHR'" [style.float]="RTL == true ? 'right' : 'left'">
                             <div class="LocationDirective" LocationDirective Code="SHR">
                                 <table style="margin: 7px 20px 7px 7px;">
+                                    <tr style="height:5px;">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height:1px;" *ngIf="IsSharedByVisible">
+                                        <td style="font-size:13px; font-family:Arial; font-style:italic;">
+                                            Shared by: {{SharedByUserName}} ({{SharedByUserEmail}})
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height:5px;" *ngIf="IsSharedByVisible">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
                                     <tr class="FormFieldRow">
-                                        <td style="width:100px" class="Label">Share with:</td>
-                                        <td style="width:150px;">
-                                            <ComboBox [ItemsSource]="ShareValuesList" [SelectedItem]="ShareValueSelectedItem" [Binding]="'Name'" (SelectedItemChanged)="ShareValueSelectedItem = $event"></ComboBox>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="width:100px" class="Label">Share with:</td>
+                                                    <td style="width:150px;">
+                                                        <ComboBox [ItemsSource]="ShareValuesList" [SelectedItem]="ShareValueSelectedItem" [Binding]="'Name'" (SelectedItemChanged)="ShareValueSelectedItem = $event"></ComboBox>
+                                                    </td>
+                                                    <td style="width:30px;" *ngIf="IsChooseUsersVisible">
+                                                        <Hyperlink style="margin-left:5px;" (click)="ChooseUsers()" [FontSize]="12" [Text]="'Choose'"></Hyperlink>
+                                                    </td>
+                                                    <td *ngIf="IsChooseUsersVisible">
+                                                        <div style="margin-left:5px;color: #1E8DC4">( {{ShareWithUsersCount}} selected )</div>
+                                                    </td>
+                                                    <td><div></div></td>
+                                                </tr>
+                                            </table>
                                         </td>
-                                        <td style="width:30px;" *ngIf="IsChooseUsersVisible">
-                                            <Hyperlink style="margin-left:5px;" (click)="ChooseUsers()" [FontSize]="12" [Text]="'Choose'"></Hyperlink>
-                                        </td>
-                                        <td *ngIf="IsChooseUsersVisible">
-                                            <div style="margin-left:5px;color: #1E8DC4">( {{ShareWithUsersCount}} selected )</div>
-                                        </td>
-                                        <td><div></div></td>
                                     </tr>
 
                                     <tr>

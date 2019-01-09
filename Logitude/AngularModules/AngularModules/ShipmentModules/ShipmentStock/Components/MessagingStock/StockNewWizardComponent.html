@@ -44,7 +44,7 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <ComboBox [ItemsSource]="TenantsList" [Binding]="'Name'" (SelectedItemChanged)="SelectedItemChanged($event)"></ComboBox>
+                                                    <ComboBox [ItemsSource]="TenantsList" [Binding]="'Name'" [SelectedItem]="SelectedTenantItem" (SelectedItemChanged)="SelectedItemChanged($event)" [IsDisabled]="!StockType"></ComboBox>
                                                 </td>
 
                                                 <td style="width: 36px;">

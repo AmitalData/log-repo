@@ -90,7 +90,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  true,
-			      				    IsNewWizard =  false,
+			      				    IsNewWizard =  true,
 			      				    LookUp1 =  "Id",
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
@@ -113,6 +113,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Shipper",
+			      				    NewButtonLocalDefaultText =  "New Deposition Form",
+			      				    NewButtonDefaultText =  "New Deposition Form",
 			      				    Code =  "3852",
 			      				    Name =  "CustomsShipper",
 			      				    GenerateDomainService =  false,
@@ -144,6 +146,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -201,6 +204,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -258,6 +262,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -315,6 +320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -372,6 +378,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -429,6 +436,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -486,6 +494,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -543,6 +552,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -614,7 +624,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllDepositionsQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsShipperTextCode_0.Id, Code = "AllDepositionsQuery",  QueryGroupCode = "3852", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsShipperObjectTable.Id, QuerySection = "CustomsShipper", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsShipperFeature_0.Id, DefaultSortName = "ValidityStartDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllDepositionsQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsShipperTextCode_0.Id, Code = "AllDepositionsQuery",  QueryGroupCode = "3852", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsShipperObjectTable.Id, QuerySection = "CustomsShipper", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsShipperFeature_0.Id, DefaultSortName = "ValidityStartDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllDepositionsQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "CustomsShipperCode" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -630,7 +640,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query EndsNext30DaysQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsShipperTextCode_1.Id, Code = "EndsNext30DaysQuery",  QueryGroupCode = "3852", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomsShipperObjectTable.Id, QuerySection = "CustomsShipper", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsShipperFeature_1.Id, DefaultSortName = "ValidityStartDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query EndsNext30DaysQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsShipperTextCode_1.Id, Code = "EndsNext30DaysQuery",  QueryGroupCode = "3852", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomsShipperObjectTable.Id, QuerySection = "CustomsShipper", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsShipperFeature_1.Id, DefaultSortName = "ValidityStartDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn EndsNext30DaysQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "CustomsShipperCode" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -649,7 +659,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query InValidDepositionsQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsShipperTextCode_2.Id, Code = "InValidDepositionsQuery",  QueryGroupCode = "3852", IndexOrder = 2, Tenant = 0, ObjectTableId = CustomsShipperObjectTable.Id, QuerySection = "CustomsShipper", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsShipperFeature_2.Id, DefaultSortName = "ValidityStartDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query InValidDepositionsQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsShipperTextCode_2.Id, Code = "InValidDepositionsQuery",  QueryGroupCode = "3852", IndexOrder = 2, Tenant = 0, ObjectTableId = CustomsShipperObjectTable.Id, QuerySection = "CustomsShipper", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsShipperFeature_2.Id, DefaultSortName = "ValidityStartDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn InValidDepositionsQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "CustomsShipperCode" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
