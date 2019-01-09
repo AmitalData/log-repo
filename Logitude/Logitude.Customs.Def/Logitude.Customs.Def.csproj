@@ -317,6 +317,7 @@
     <Compile Include="EntityPMs\Generated\ProductNameTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PropertiesDetailsHistoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RansomViolationTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\RefundCustomerActivityTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RegisteredWarehouseSiteTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequestStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequiredGuaranteeTypePM.Generated.cs" />
