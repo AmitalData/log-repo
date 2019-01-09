@@ -1188,15 +1188,24 @@ function BuildPackagesTabPageViewModel(shipment) {
             imgTemplate += "</div>";
 
             if (IsLCLShipment(shipment)) {
-                PackagesGridColumns.push({ title: "Package Type", field: "Type" });
+               
+
+                if (shipment.Tenant == 1495) {
+                    PackagesGridColumns.push({ title: "Package Type", field: "Type", width: "150px" });
+                }
+
+                else {
+                    PackagesGridColumns.push({ title: "Package Type", field: "Type" });
+                }
+
                 PackagesGridColumns.push({ title: "Packages", field: "Quantity", width: 70, template: "<div class='k-numeric'>#= Quantity #</div>" });
 
                 if (shipment.Tenant == 1495) {
                     PackagesGridColumns.push({ title: "Commodity Code", field: "CommodityCode", width: "120px" });
-                    PackagesGridColumns.push({ title: "Commodity Name", field: "CommodityName", width: "120px" });
+                    PackagesGridColumns.push({ title: "Commodity Name", field: "CommodityName" });
                 }
 
-                PackagesGridColumns.push({ title: "Container #", field: "ContainerNumber" });
+                PackagesGridColumns.push({ title: "Container #", field: "ContainerNumber", width: "140px" });
                 PackagesGridColumns.push({ title: VolumeTitle, field: "Volume", width: "100px", template: "<div class='k-numeric'>#= Volume #</div>" });
                 //PackagesGridColumns.push({ title: VolumetricTitle, field: "VolumetricWeight", width: "150px", template: "<div class='k-numeric'>#= VolumetricWeight #</div>" });
                 PackagesGridColumns.push({ title: GrossTitle, field: "GrossWeight", width: "120px", template: "<div class='k-numeric'>#= GrossWeight #</div>" });

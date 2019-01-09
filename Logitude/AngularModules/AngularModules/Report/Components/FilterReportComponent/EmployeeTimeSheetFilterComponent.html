@@ -1,4 +1,4 @@
-﻿<table style="height:75px;width:100%;">
+<table style="height:75px;width:100%;">
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -22,6 +22,11 @@
                         </LogLov>
                     </td>
                     <td style="width:20px;"><div style="width:20px"></div></td>
+                    <td style="width:100px;"><div style="width:80px;">Time Required:</div></td>
+                    <td style="width:120px;">
+                        <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'TimeRequired'" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                    <td style="width:20px;"><div style="width:20px"></div></td>
                     <td style="width:200px;">
                         <table>
                             <tr>
@@ -29,7 +34,7 @@
                                 <td style="width:120px;">
                                     <div style="width:120px;">
                                         <LogDatePicker [ObjectFieldName]="'FromDate'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
-                                     </div>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
