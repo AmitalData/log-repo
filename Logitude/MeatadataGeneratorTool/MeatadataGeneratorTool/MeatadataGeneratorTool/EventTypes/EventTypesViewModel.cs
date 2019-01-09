@@ -332,6 +332,9 @@ namespace MeatadataGeneratorTool.EventTypes
         {
             get
             {
+				if (string.IsNullOrEmpty(entityStatusCode))
+					return null;
+
                 return entityStatusCode;
             }
 
