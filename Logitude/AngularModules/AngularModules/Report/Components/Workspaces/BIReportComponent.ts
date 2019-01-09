@@ -60,7 +60,7 @@ export class BIReportComponent {
     }
 
     public NewBIReportButtonClicked() {
-        var windowTitle = "New BI eport";
+        var windowTitle = "New BI Report";
         var logWindow = new LogitudeWindow();
         logWindow.Width = 750;
         logWindow.Height = 600;
