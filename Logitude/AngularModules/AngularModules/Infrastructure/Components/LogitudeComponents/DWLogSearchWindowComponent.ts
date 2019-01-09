@@ -28,7 +28,7 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import { NewEntityArgs} from '../../Args';
 import {ImportEntityArgs} from '../../../Common/Components/Maintenance/TenantImportComponent';
 import {CachedDataManager} from '../../Utilities/CachedDataManager';
-import {MultSelectValue, FieldDetails} from '../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent';
+import {MultiSelectedValue, ValueDetails} from '../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ComponentArgs} from '../../../Infrastructure/DataContracts/ComponentArgs';
 import {ParameterComponentArgs} from '../../../Infrastructure/DataContracts/ParameterComponentArgs';
@@ -87,8 +87,8 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     PseventRowSelectEventSub: any;
 
     SecondListHeaderItems: string[] = [];
-    SecondListValueItems: MultSelectValue[] = [];
-    MultSelectValueLists: MultSelectValue[] = [];
+    SecondListValueItems: MultiSelectedValue[] = [];
+    MultiSelectedValueLists: MultiSelectedValue[] = [];
     private ViewModel: any;
 
     constructor() {
@@ -97,7 +97,8 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         this.entityPMService = new EntityPMService;
         this.TenantPM = InfraSettings.TenantPM;
 
-       
+
+
 
         this.PseventRowSelectEventSub=  SessionLocator.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
                 if (res == this.ObjectTableName) {
@@ -111,7 +112,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
             if (res && res.ComponentName == "DWLogSearchAddFieldsComponent" && res.IsFirstRequest && res.Item) {
                 var item = res.Item;
                 res.IsFirstRequest = false;
-                var newItem = new MultSelectValue();
+                var newItem = new MultiSelectedValue();
               
                 var key = "";
                 var i = 0;
@@ -125,10 +126,10 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
                             if (myComponent) {
                                 myComponent.SecondListHeaderItems.forEach((field) => {
                                     if (i != 0) key = i.toString();
-                                    var fieldDetails: FieldDetails = new FieldDetails();
-                                    fieldDetails.Column = field;
-                                    fieldDetails.Row = item["Field" + key];
-                                    newItem["Value" + key] = fieldDetails;
+                                    var valueDetails: ValueDetails = new ValueDetails();
+                                    valueDetails.Header = field;
+                                    valueDetails.Row = item["Field" + key];
+                                    newItem["Value" + key] = valueDetails;
                                     i += 1;
                                 });
 
@@ -164,27 +165,60 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
             SessionLocator.CurrentSession.Sessionkey = Guid.newGuid();
         }
 
+
         ComponentArgs.AddComponent(new ParameterComponentArgs(SessionLocator.CurrentSession.Sessionkey + "DWLogSearchWindow", this));
 
         this.ObjectTableName = args.ObjectTableName; // lookup table
         this.ObjectFieldName = args.DisplayFieldsFromList;
-        this.LOVAdditionalColumns = args.LOVAdditionalColumns;//"[Partner Type]";//;
+        this.LOVAdditionalColumns = this.BuildAdditionalColumns(args.LOVAdditionalColumns);
         this.ViewModel = args.DataContext; 
 
         if (this.ViewModel) {
-            this.MultSelectValueLists = this.ViewModel.MultSelectValueLists;
-        }
-      
-        if (!this.MultSelectValueLists) {
-            this.MultSelectValueLists = [];
+            this.MultiSelectedValueLists = this.ViewModel.MultiSelectedValueLists;
         }
 
+        if (!this.MultiSelectedValueLists) {
+            this.MultiSelectedValueLists = [];
+        }
+
+        this.SecondListHeaderItems = [];
+        this.SecondListValueItems = [];
+
         this.Args = args;
+
+        
         this.BuildSecondListHeader();
         this.BuildSecondListValues();
 
+    }
 
-     
+
+    BuildAdditionalColumns(columns:string) {
+        var result = "";
+        if (columns) {
+            var headerLists: string[]= [];
+            var additionalColumns = columns.split(',');
+            if (additionalColumns.length > 0) {
+                additionalColumns.forEach((field) => {
+                    if (field != this.ObjectFieldName) {
+                        if (!headerLists.filter(d => d == field)[0]) {
+                            headerLists.push(field);
+                        }
+                    }
+                });
+
+                headerLists.forEach((field) => {
+                    result += field + ",";
+                });
+
+                result += "@";
+                result = result.replace(",@", "").replace("@","");
+
+            }
+        }
+
+        return result;
+
     }
 
     BuildColumns() {
@@ -323,7 +357,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         var textValue = this.GetTextValue(this.SecondListValueItems);
     
         if (this.ViewModel) {
-            this.ViewModel.MultSelectValueLists = this.SecondListValueItems;
+            this.ViewModel.MultiSelectedValueLists = this.SecondListValueItems;
         }
         SessionLocator.CurrentSession.CloseCurrentWindowEmit(textValue);
 
@@ -332,7 +366,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     
     BuildSecondListHeader() {
 
-        var test: MultSelectValue[] = [];
+        var test: MultiSelectedValue[] = [];
 
         if (this.ObjectFieldName) {
             this.SecondListHeaderItems.push(this.ObjectFieldName.replace('[', '').replace(']', ''));
@@ -341,23 +375,23 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         var additionalColumns = [];
         if (this.LOVAdditionalColumns) {
             additionalColumns = this.LOVAdditionalColumns.split(',');
-        }
-        if (additionalColumns.length > 0) {
-            additionalColumns.forEach((field) => {
-                this.SecondListHeaderItems.push(field.replace('[', '').replace(']', ''));
-            });
-        }
+            if (additionalColumns.length > 0) {
+                additionalColumns.forEach((field) => {
+                    this.SecondListHeaderItems.push(field.replace('[', '').replace(']', ''));
+                });
+            }
 
-        if (this.MultSelectValueLists && this.MultSelectValueLists.length >0) {
-            var items = this.MultSelectValueLists[0];
+        }
+        
+
+        if (this.MultiSelectedValueLists && this.MultiSelectedValueLists.length >0) {
+            var items = this.MultiSelectedValueLists[0];
             var i = "";
             var j = 0;
             while (items["Value" + i]) {
-
-                var headerName = items["Value" + i].Column;
-                var field = this.SecondListHeaderItems.filter(d => d == headerName)[0];
-                if (!field) {
-                    this.SecondListHeaderItems.push(headerName);
+                var columnName = items["Value" + i].Header;
+                if (!this.SecondListHeaderItems.filter(d => d == columnName)[0]) {
+                    this.SecondListHeaderItems.push(columnName);
                 }
 
                 j += 1;
@@ -375,31 +409,32 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     BuildSecondListValues() {
         this.SecondListValueItems = [];
 
-        this.MultSelectValueLists.forEach((item) => {
-            var multSelectValue: MultSelectValue = new MultSelectValue();
+        this.MultiSelectedValueLists.forEach((item) => {
+            var multiSelectedValue: MultiSelectedValue = new MultiSelectedValue();
             var i = "";
             var j = 0;
             this.SecondListHeaderItems.forEach((header) => {
-                var fieldDetails: FieldDetails = new FieldDetails();
-                fieldDetails.Column = header;
-                fieldDetails.Row = this.ResolveValue(item, header);
-                multSelectValue["Value" + i] = fieldDetails;
+                var valueDetails: ValueDetails = new ValueDetails();
+                valueDetails.Header = header;
+                valueDetails.Row = this.ResolveValue(item, header);
+                multiSelectedValue["Value" + i] = valueDetails;
 
                 j += 1;
                 i = j.toString();
             });
-            this.SecondListValueItems.push(multSelectValue);
+            this.SecondListValueItems.push(multiSelectedValue);
 
         });
     }
 
-    ResolveValue(Values: MultSelectValue, header: string) {
+    ResolveValue(Values: MultiSelectedValue, header: string) {
         var i = "";
         var j = 0;
         var result = "";
         while (Values["Value" + i]) {
-            if (Values["Value" + i].Column == header) {
+            if (Values["Value" + i].Header == header) {
                 result = Values["Value" + i].Row;
+                return result;
             }
 
             j += 1;
@@ -410,10 +445,10 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         return result;
     }
 
-    GetTextValue(multSelectValueLists: MultSelectValue[] ) {
+    GetTextValue(multiSelectedValueLists: MultiSelectedValue[] ) {
         var textValue = "";
-        if (multSelectValueLists) {
-            multSelectValueLists.forEach((field) => {
+        if (multiSelectedValueLists) {
+            multiSelectedValueLists.forEach((field) => {
                 if (field["Value"]) {
                     if (textValue) textValue += ";";
                     var rowValues: any = field["Value"];
