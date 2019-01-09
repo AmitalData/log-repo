@@ -1534,7 +1534,9 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         windowArgs.TextValue = this.TextValue;
 
         var wind = new LogitudeWindow();
-        wind.IsFullScreen = true;
+        // wind.IsFullScreen = true;
+        wind.Width = 960;
+        wind.Height = 570;
         wind.WindowArgs = windowArgs;
         wind.Title = this.showLocal ? this.ObjectField.FullNameTextCodeLocalDefaultText :  this.ObjectField.FullNameTextCodeDefaultText;
         wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
