@@ -175,6 +175,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\PendingErrorPlaceDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PointerLevelDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ProcessingReasonDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\RefundCustomerActivityTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SeizureFactorTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SeizureMethodTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SiteTypeDetails.Generated.cs" />
@@ -221,6 +222,7 @@
     <Compile Include="CloseTables\EnumGenerated\PendingErrorPlaceStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\PointerLevelStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ProcessingReasonStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\RefundCustomerActivityTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\SeizureFactorTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\SeizureMethodTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\SiteTypeStruct.Generated.cs" />
@@ -610,6 +612,7 @@
     <Compile Include="EntityDataMappings\Generated\ProductNameTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PropertiesDetailsHistoryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RansomViolationTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RefundCustomerActivityTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RegisteredWarehouseSiteTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RequestStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RequiredGuaranteeTypeDataMapping.Generated.cs" />
@@ -746,6 +749,7 @@
     <Compile Include="EntityDataMappings\ProductNameTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PropertiesDetailsHistoryDataMapping.cs" />
     <Compile Include="EntityDataMappings\RansomViolationTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RefundCustomerActivityTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\RegisteredWarehouseSiteTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\RequestStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\RequiredGuaranteeTypeDataMapping.cs" />
@@ -877,6 +881,7 @@
     <Compile Include="EntityQueryServices\Generated\MAWBTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PendingErrorPlaceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PointerLevelQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RefundCustomerActivityTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SeizureFactorTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SeizureMethodTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SplitOrMergeReasonQueryService.Generated.cs" />
@@ -1277,6 +1282,7 @@
     <Compile Include="EntityUpdateServices\Generated\MAWBTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PendingErrorPlaceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PointerLevelUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\RefundCustomerActivityTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SeizureFactorTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SeizureMethodTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SplitOrMergeReasonUpdateService.Generated.cs" />
@@ -1679,6 +1685,7 @@
     <Compile Include="Messaging\Maman\CourierGWMessageECSpclMamanRequestService.cs" />
     <Compile Include="Messaging\Maman\CourierGWMessageECTHRDataMamanRequestService.cs" />
     <Compile Include="Messaging\Maman\CourierMasterMamanService.cs" />
+    <Compile Include="Messaging\Maman\FTPOutMaman2470ReleaseGoodService.cs" />
     <Compile Include="Messaging\Maman\FTPOutMamanSubManifestService.cs" />
     <Compile Include="Messaging\Maman\WebAPISendMessage2MamanService.cs" />
     <Compile Include="Messaging\Maman\CourierGWMessageECSpclMamanResponseService.cs" />
