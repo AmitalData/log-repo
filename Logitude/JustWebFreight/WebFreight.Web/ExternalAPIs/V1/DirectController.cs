@@ -90,9 +90,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
                         string computingPartnerCode = "";
-                        if (loggedContactInfo != null)
+                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                         {
-                            computingPartnerCode = loggedContactInfo.ComputingPartnerCode;
+                            computingPartnerCode = entity.ComputingPartnerCode;//loggedContactInfo.ComputingPartnerCode;
                         }
 
                         if (entity.Receivables != null && entity.Receivables.Count > 0)

@@ -94,5 +94,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public List<Receivable> Receivables { get; set; }
     
     public List<Payable> Payables { get; set; }
+
+    public  string  ComputingPartnerCode { get; set; }
+
     }
 } 

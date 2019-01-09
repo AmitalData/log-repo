@@ -288,6 +288,10 @@
     <Compile Include="Migrations\201812260848362_ChangeWebHookIdToString_Rabaia.Designer.cs">
       <DependentUpon>201812260848362_ChangeWebHookIdToString_Rabaia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901080726292_ApiCredintials_removing_ComputingPartnerId.cs" />
+    <Compile Include="Migrations\201901080726292_ApiCredintials_removing_ComputingPartnerId.Designer.cs">
+      <DependentUpon>201901080726292_ApiCredintials_removing_ComputingPartnerId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -357,6 +361,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812260848362_ChangeWebHookIdToString_Rabaia.resx">
       <DependentUpon>201812260848362_ChangeWebHookIdToString_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901080726292_ApiCredintials_removing_ComputingPartnerId.resx">
+      <DependentUpon>201901080726292_ApiCredintials_removing_ComputingPartnerId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
