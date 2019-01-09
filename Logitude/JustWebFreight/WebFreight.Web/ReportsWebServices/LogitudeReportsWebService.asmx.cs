@@ -9310,9 +9310,12 @@ namespace WebFreight.Web.ReportsWebServices
                 double timeFromClock = 0;
                 foreach (var day in officeDays)
                 {
-                    DateTime? entry = day.EntryTime != null ? day.EntryTime : day.RecordedEntryTime;
-                    DateTime? exit = day.ExitTime != null ? day.ExitTime : day.RecordedExitTime;
-                    timeFromClock += Math.Round((exit.Value - entry.Value).TotalHours, 2);
+                    DateTime? entry = (day != null && day.EntryTime != null) ? day.EntryTime : day.RecordedEntryTime;
+                    DateTime? exit = (day != null && day.ExitTime != null) ? day.ExitTime : day.RecordedExitTime;
+                    if (entry != null && exit != null)
+                    {
+                        timeFromClock += Math.Round((exit.Value - entry.Value).TotalHours, 2);
+                    }
                 }
                 timeFromClock_Total += timeFromClock;
                 timSheetItem.TimeFromClock = DateFormat(timeFromClock);

@@ -25,7 +25,6 @@ export class OceanShipmentReportFilterComponent extends BaseComponent   {
         super();
         this.ShipmentTypeRadioId = Guid.newGuid();
     }
-
     
     public ShipmentTypeRadioId: string = "";
     public IsDomestic: boolean = false;

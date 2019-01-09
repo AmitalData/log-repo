@@ -1232,7 +1232,7 @@ private void WriteAddEventTypeMethod(XElement entity,XElement EventType,string T
 #>
                 ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id,
 <#+
-				  if(!(string.IsNullOrEmpty(statusCode)))
+				  if(statusCode != null && !(string.IsNullOrEmpty(statusCode.Trim('"'))))
 				  {
 #>
                 EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == <#= statusCode #>).FirstOrDefault().Id,

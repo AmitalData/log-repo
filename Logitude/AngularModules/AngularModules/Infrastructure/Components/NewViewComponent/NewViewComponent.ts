@@ -76,6 +76,7 @@ export class NewViewComponent {
     public ShareTabIsVisible: boolean = false;
     public IsSharedByMessageVisible: boolean = false;
     public IsSaveButtonEnabled: boolean = false;
+    public IsSharedByVisible: boolean = false;
     constructor(fb: FormBuilder, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
         this.serviceArgs.http = ServiceHelper.Http;
@@ -159,6 +160,7 @@ export class NewViewComponent {
                 this.EntityPM = myResponse.Result;
                 this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
                 this.SharedByUserName = this.EntityPM.SharedByUserName;
+                this.SharedByUserEmail = this.EntityPM.SharedByUserEmail;
 
                 this.SetSelectedSharedValue();
 
@@ -175,6 +177,10 @@ export class NewViewComponent {
                 this.IsSaveButtonEnabled = isEditEnabled;
                 this.IsbtnUpEnabled = isEditEnabled;
                 this.IsbtnDownEnabled = isEditEnabled;
+
+                if (!AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId) && this.EntityPM.SharedByUserId != SessionLocator.LoggedUserId) {
+                    this.IsSharedByVisible = true;
+                }
 
                 if (FeatureLocator.HasFeaturePermession("Shipment", "CSPV") && (this.EntityPM.ObjectTableName == "Shipment" || this.EntityPM.ObjectTableName == "Master")) {
                     this.SpotlightFeatureEnabled = true;
@@ -381,6 +387,7 @@ export class NewViewComponent {
 
     public ShareWithUsersCount: number;
     public SharedByUserName: string;
+    public SharedByUserEmail: string;
     ChooseUsers() {
         var args = new ChooseUserArgs();
         args.MyQuery = this.EntityPM;
