@@ -130,6 +130,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     return;
                 }
 
+                if(this.MyRequestSheetParam == null)this.MyRequestSheetParam = new RequestSheetParam();
+                this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId;
+                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.DeclarationCargoSplit");
 
                 succeeded = true;
                 applicationId = customResponse.ResponseContentHeader.ApplicationID.ToString();
@@ -268,10 +271,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
             notificationStatusCode = status;
-            this.MyRequestSheetParam = new RequestSheetParam();
+            
             this.MyRequestSheetParam.RequestDescription = notificationDescription;
 
-            if (!string.IsNullOrWhiteSpace(customResponse.ResponseContentHeader.Remark))
+            if (!string.IsNullOrEmpty(_DeclarationCargoSplitPM.DeclarationId))
+            {
+                this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                this.MyRequestSheetParam.EntityId2 = _DeclarationCargoSplitPM.DeclarationId;
+            }
+
+                if (!string.IsNullOrWhiteSpace(customResponse.ResponseContentHeader.Remark))
             {
                 notificationDescription = notificationDescription + "\n" + customResponse.ResponseContentHeader.Remark;
             }
@@ -283,8 +292,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 DoUpdateNotification(notificationDefinitionCode, _DeclarationCargoSplitPM.Tenant, customResponse.ResponseContentHeader.Remark, notificationDescription, assigneToNotificationTypeCode, declaration);
             }
 
-            this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId;
-            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.DeclarationCargoSplit");
             this.MyRequestSheetParam.CustomFileNo = customsFileNo;
 
             if (!string.IsNullOrWhiteSpace(customsFileNo))
