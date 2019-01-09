@@ -69,7 +69,8 @@ namespace Logitude.Accounting.BL.DataContract
         public bool? IsMultiCurrency { get; set; }
         public string CurrecnyId { get; set; }
         public decimal? OpeningBalanceInForegnCurrency { get; set; }
-       
+        public decimal? TotalDebitInForeignCurrency { get; set; }
+        public decimal? TotalCreditInForeignCurrency { get; set; }
 
 
 

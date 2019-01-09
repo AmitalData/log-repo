@@ -1155,7 +1155,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             //}
             if (field.FilterItems.length == 0) {
                 view.TextValue = field.TextValue;
-                view.MultSelectValueLists = this.MapMultSelectValueLists(field.MultSelectValueLists);
+                view.MultiSelectedValueLists = this.MapMultiSelectedValueLists(field.MultiSelectedValueLists);
                 view.Operation = new ObjectFieldOperator(field.OperationCode, field.OperationName);
                 MyFilter.FilterItems.push(view);
             }
@@ -1184,18 +1184,18 @@ export class DWQueryBuilderComponent extends BaseComponent {
     }
 
 
-    MapMultSelectValueLists(lists: MultSelectValue[]) {
-        var result: MultSelectValue[] = [];
+    MapMultiSelectedValueLists(lists: MultiSelectedValue[]) {
+        var result: MultiSelectedValue[] = [];
         if (lists) {
             lists.forEach((field) => {
-                var item: MultSelectValue = new MultSelectValue();
+                var item: MultiSelectedValue = new MultiSelectedValue();
                 var i = "";
                 var j = 0;
                 while (field["Value" + i]) {
-                    var fieldDetails: FieldDetails = new FieldDetails();
-                    fieldDetails.Column = field["Value" + i].Column;
-                    fieldDetails.Row = field["Value" + i].Row;
-                    item["Value" + i] = fieldDetails;
+                    var valueDetails: ValueDetails = new ValueDetails();
+                    valueDetails.Header = field["Value" + i].Header;
+                    valueDetails.Row = field["Value" + i].Row;
+                    item["Value" + i] = valueDetails;
                     j += 1;
                     i = j.toString();
 
@@ -1375,13 +1375,13 @@ export class DWObjectFieldsDetails extends BaseComponent {
         }
     }
 
-    private multSelectValueLists: MultSelectValue[];
-    public get MultSelectValueLists() {
-        return this.multSelectValueLists;
+    private multiSelectedValueLists: MultiSelectedValue[];
+    public get MultiSelectedValueLists() {
+        return this.multiSelectedValueLists;
     }
-    public set MultSelectValueLists(newValue: MultSelectValue[]) {
-        this.multSelectValueLists = newValue;
-       // this.MyParentClass.SaveChanges();
+    public set MultiSelectedValueLists(newValue: MultiSelectedValue[]) {
+        this.multiSelectedValueLists = newValue;
+
     }
 
 
@@ -1446,7 +1446,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
         if (this.Operation.Code == this.IsNullOp.Code || this.Operation.Code == this.IsNotNullOp.Code) {
             this.TextValue = "";
-            this.MultSelectValueLists = [];
+            this.MultiSelectedValueLists = [];
         }
 
         this.Operation = operation;
@@ -1572,7 +1572,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     FieldValueChanged(DWObjectField: DWObjectFieldsDetails) {
         //this.MyParentClass = ParentClass;
         this.TextValue = "";
-        this.MultSelectValueLists = [];
+        this.MultiSelectedValueLists = [];
         this.Name = DWObjectField.Name;
         this.Code = DWObjectField.Code;
         this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
@@ -1728,24 +1728,24 @@ export class DWFieldsGroup {
 }
 
 
-export class MultSelectValue {
+export class MultiSelectedValue {
 
-    public  Value: FieldDetails;
-    public  Value1: FieldDetails;
-    public   Value2: FieldDetails;
-    public   Value3: FieldDetails;
-    public   Value4: FieldDetails;
-    public  Value5: FieldDetails;
-    public  Value6: FieldDetails;
-    public  Value7: FieldDetails;
-    public Value8: FieldDetails;
-    public   Value9: FieldDetails;
-    public  Value10: FieldDetails;
+    public  Value: ValueDetails;
+    public  Value1: ValueDetails;
+    public   Value2: ValueDetails;
+    public   Value3: ValueDetails;
+    public   Value4: ValueDetails;
+    public  Value5: ValueDetails;
+    public  Value6: ValueDetails;
+    public  Value7: ValueDetails;
+    public Value8: ValueDetails;
+    public   Value9: ValueDetails;
+    public  Value10: ValueDetails;
 
 }
 
-export class FieldDetails {
-   public Column: string;
+export class ValueDetails {
+    public Header: string;
    public  Row: string;
 }
 //export class GroupItem {
