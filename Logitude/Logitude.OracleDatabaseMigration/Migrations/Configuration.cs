@@ -34,7 +34,6 @@
                 //"User Id=aminetpre_MAIN;  Password=aminetpre_MAIN;Direct=True;Data Source=10.10.10.72;port=1521;sid=amital"
                 "User Id=couriernet_main;  Password=couriernet_main;Direct=True;Data Source=Univ58;port=1521;sid=amital"
 
-
                 );
 
 

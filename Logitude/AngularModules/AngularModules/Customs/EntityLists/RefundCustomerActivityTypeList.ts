@@ -6,7 +6,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class AgentTalkBackTypeList {
+export class RefundCustomerActivityTypeList {
    
 	Code: string;
 	EnglishName: string;
