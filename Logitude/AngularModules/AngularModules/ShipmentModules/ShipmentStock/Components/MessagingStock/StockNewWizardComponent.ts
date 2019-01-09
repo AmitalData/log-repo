@@ -64,8 +64,8 @@ export class StockNewWizardComponent extends BaseComponent {
         this.UIProperties.SetRequired("TenantNumber", this.ObjectTableName, this.SelectedTenantItem == null ? true : false);
     }
 
-    private SelectedTenantItem: CodeNameClass = null;
-    private SelectedStockTypeItem: CodeNameClass = null;
+    public SelectedTenantItem: CodeNameClass = null;
+    public SelectedStockTypeItem: CodeNameClass = null;
     SelectedItemChanged(item: CodeNameClass) {
         if (this.SelectedTenantItem != item) {
             this.SelectedTenantItem = item;
