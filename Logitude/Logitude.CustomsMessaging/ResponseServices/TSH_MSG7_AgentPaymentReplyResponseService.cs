@@ -41,6 +41,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //Analyze message 3052- Answer to the agent request for changing existing payment
 
 
+            customResponse.PrintedPaymentForm = customResponse.PrintedPaymentForm ?? new TSH_MSG7_AgentPaymentReplyPrintedPaymentForm();//compatibility backward
+
             //אם ה Feature מוגדר, אז יש לתייק את המסמך שהגיע כחלק מהמסר, כאשר לפני כן יש לנסות לאתר אם כבר קיים מסמך כזה ואז רק ליצור גרסה חדשה.
             _UNIQUEFILINGPOFeatureExist = ProxyUtil.SecurityUtilityCheckFeature("Customs.PaymentOrder", "UNIQUEFILINGPO", requestParams.Tenant);///
 
@@ -243,6 +245,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
                 var myAnalyzePaymentDocumentManager = new AnalyzePaymentDocumentManager(null, _PaymentOrderPM, myDeclarationPM);
+
+
                 
 
                 bool AttachmentExistInGDMFILING = true;
