@@ -414,7 +414,7 @@ new XElement("FileStreamError",
 
         public HttpResponseMessage GetLast2755ResponseDataAsFileStream(string customFileNo, int tenant)//AMI-66312 - שליחת מסר תשובה של מסר הגשה במקום של טיוטה אחרונה
         {
-            //http://192.116.221.103:572/api/Declarartion/GetLast2755ResponseDataAsFileStream?customFileNo=51340159&tenant=1
+            //http://192.116.221.103:572/NextProd572/api/Declarartion/GetLast2755ResponseDataAsFileStream?customFileNo=51340159&tenant=1
             string responseDataDocumentId = "NaN";
             string declarationVersionId = "NaN";
             string Status = "Error";
