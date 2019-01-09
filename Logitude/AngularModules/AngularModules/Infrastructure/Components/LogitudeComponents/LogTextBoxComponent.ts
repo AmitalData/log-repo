@@ -153,11 +153,15 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     IdentityKey: string;
     @Output() OriginalText = new EventEmitter();
 
+    public isRTL: boolean = false;
+
+
     @Input() DebounceTime: number;
     constructor(private ngzone: NgZone, private cd: ChangeDetectorRef,
         private appref: ApplicationRef) {
         this.show = false;
         this.IdentityKey = AppTool.GetNewGuid();
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
         //SessionLocator.CurrentSession.isShiftClicked = false;
