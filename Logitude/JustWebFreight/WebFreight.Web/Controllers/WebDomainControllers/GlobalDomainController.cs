@@ -40,25 +40,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 IGlobalContext objectContext = GlobalContext.GetContext();
-                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository(objectContext);
-                GlobalTenantRepository globalTenantsRepository = new GlobalTenantRepository(objectContext);
 
-                List<TenantManagementList> myResult = new List<TenantManagementList>();
-                IQueryable<TenantManagement> iQueryable1 = tenantManagementRepository.GetAWBStockPrepaidTenants();
-                IQueryable<GlobalTenant> iQueryable2 = globalTenantsRepository.GetAllGlobalTenant().Where(d => d.IsActive);
-
-                foreach (TenantManagement item in iQueryable1)
-                {
-                    if (iQueryable2.Where(d => d.Id == item.Id).Any())
-                    {
-                        myResult.Add(new TenantManagementList()
-                        {
-                            Id = item.Id,
-                            Name = item.Name,
-                            PackageCode = item.PackageCode,
-                        });
-                    }
-                }
+                List<TenantManagementList> myResult = (from d in objectContext.TenantManagements.Include("GlobalTenant")
+                                                        where
+                                                        (d.IsAWBStockPrepaid || d.IsINTTRAStockPrepaid)
+                                                        &&
+                                                        (d.GlobalTenant != null && d.GlobalTenant.IsActive)
+                                                        select new TenantManagementList()
+                                                        {
+                                                            Id = d.Id,
+                                                            Name = d.Name,
+                                                            PackageCode = d.PackageCode,
+                                                            IsAWBStockPrepaid = d.IsAWBStockPrepaid,
+                                                            IsINTTRAStockPrepaid = d.IsINTTRAStockPrepaid,
+                                                        }).ToList();
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }

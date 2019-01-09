@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {GlobalDomainService} from '../../../../Common/Services/GlobalDomainService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
@@ -45,6 +44,7 @@ export class StockNewWizardComponent extends BaseComponent {
     }
 
     private myDomainService: GlobalDomainService;
+    private LoadedTenantsList: any[] = [];
     private LoadAWBTenants() {
         this.TenantsList = [];
 
@@ -54,9 +54,7 @@ export class StockNewWizardComponent extends BaseComponent {
 
         this.myDomainService.GetMessagingStockTenantsList(InfraSettings.TenantPM.Id).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
-                myResponse.Result.forEach(item => {
-                    this.TenantsList.push(new CodeNameClass(item.Id, item.Name));
-                });
+                this.LoadedTenantsList = myResponse.Result;
             }
         });
     }
@@ -96,10 +94,27 @@ export class StockNewWizardComponent extends BaseComponent {
     }
 
     get StockType() { return this.EntityPM.StockType; }
-    set StockType(newValue: string) {
-        if (this.EntityPM.StockType != newValue) {
-            this.EntityPM.StockType = newValue;
+    set StockType(value: string) {
+        if (this.EntityPM.StockType != value) {
+            this.EntityPM.StockType = value;
             this.SetUIProperties();
+
+            this.TenantsList = [];
+            this.SelectedItemChanged(null);
+
+            this.LoadedTenantsList.forEach(item => {
+                if (value == "Champ") {
+                    if (item.IsAWBStockPrepaid) {
+                        this.TenantsList.push(new CodeNameClass(item.Id, item.Name));
+                    }
+                }
+
+                else {
+                    if (item.IsINTTRAStockPrepaid) {
+                        this.TenantsList.push(new CodeNameClass(item.Id, item.Name));
+                    }
+                }                
+            });
         }
     }
 
