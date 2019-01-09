@@ -904,67 +904,69 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
     }
 
     ChooseEntity(arg: string) {
-        if (this.IsLogBox || SessionLocator.PrivateLableSettings) {
-            this.ChooseForwarderShipment();
-        }
-        else {
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 800;
-            logWindow.Height = 570;
-            var args: any = {};
-
-            if (arg == "house") {
-                logWindow.Title = "Houses Search";
-                args.EntityObjectTableName = "House";
-                args.EntityId = this.EntityId;
+        if (this.SelectedFilingInbox != null) {
+            if (this.IsLogBox || SessionLocator.PrivateLableSettings) {
+                this.ChooseForwarderShipment();
             }
             else {
-                if (this.EntityObjectTableName == "Shipment" || this.EntityObjectTableName == "Master") {
-                    logWindow.Title = "Shipments Search";
+                var logWindow = new LogitudeWindow();
+                logWindow.Width = 800;
+                logWindow.Height = 570;
+                var args: any = {};
+
+                if (arg == "house") {
+                    logWindow.Title = "Houses Search";
+                    args.EntityObjectTableName = "House";
+                    args.EntityId = this.EntityId;
                 }
                 else {
-                    logWindow.Title = "Quotes Search";
+                    if (this.EntityObjectTableName == "Shipment" || this.EntityObjectTableName == "Master") {
+                        logWindow.Title = "Shipments Search";
+                    }
+                    else {
+                        logWindow.Title = "Quotes Search";
+                    }
+
+                    args.EntityObjectTableName = this.EntityObjectTableName;
                 }
 
-                args.EntityObjectTableName = this.EntityObjectTableName;
-            }
+                if (arg == "house" && this.IsHouseDisabled) {
 
-            if (arg == "house" && this.IsHouseDisabled) {
-
-            } else {
-                logWindow.WindowArgs = args;
-                logWindow.Show('./CommonModules/CommonFilingInbox/Components/ChooseEntityComponent');
-                logWindow.ComponentLoaded.subscribe(s => {
-                    logWindow.WindowClosed.subscribe(d => {
-                        var entityList = null;
-                        if (s.EntityObjectTableName == "Shipment" || s.EntityObjectTableName == "Master" || s.EntityObjectTableName == "House") {
-                            entityList = s.SelectedShipment;
-                        }
-                        else {
-                            entityList = s.SelectedQuote;
-                        }
-                        if (entityList != null) {
-                            if (s.EntityObjectTableName == "Master") {
-                                this.Customer = entityList.AgentName;
+                } else {
+                    logWindow.WindowArgs = args;
+                    logWindow.Show('./CommonModules/CommonFilingInbox/Components/ChooseEntityComponent');
+                    logWindow.ComponentLoaded.subscribe(s => {
+                        logWindow.WindowClosed.subscribe(d => {
+                            var entityList = null;
+                            if (s.EntityObjectTableName == "Shipment" || s.EntityObjectTableName == "Master" || s.EntityObjectTableName == "House") {
+                                entityList = s.SelectedShipment;
                             }
                             else {
-                                this.Customer = entityList.CustomerName;
+                                entityList = s.SelectedQuote;
                             }
+                            if (entityList != null) {
+                                if (s.EntityObjectTableName == "Master") {
+                                    this.Customer = entityList.AgentName;
+                                }
+                                else {
+                                    this.Customer = entityList.CustomerName;
+                                }
 
-                            this.Route = entityList.Routing;
-                            if (s.EntityObjectTableName == "House") {
-                                this.SelectedAttachment.HouseNumber = entityList.ShipmentNumber;
+                                this.Route = entityList.Routing;
+                                if (s.EntityObjectTableName == "House") {
+                                    this.SelectedAttachment.HouseNumber = entityList.ShipmentNumber;
+                                }
+                                else if (s.EntityObjectTableName == "Shipment" || s.EntityObjectTableName == "Master") {
+                                    this.EntityNumber = entityList.ShipmentNumber;
+                                }
+                                else {
+                                    this.EntityNumber = entityList.QuoteNumber;
+                                }
+                                this.EntityId = entityList.Id;
                             }
-                            else if (s.EntityObjectTableName == "Shipment" || s.EntityObjectTableName == "Master") {
-                                this.EntityNumber = entityList.ShipmentNumber;
-                            }
-                            else {
-                                this.EntityNumber = entityList.QuoteNumber;
-                            }
-                            this.EntityId = entityList.Id;
-                        }
+                        });
                     });
-                });
+                }
             }
         }
     }
