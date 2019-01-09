@@ -557,11 +557,11 @@ namespace WebFreight.Web
                     
                                     }
 
-                                    ContactPasswordRepository contactPasswordRep = new ContactPasswordRepository();
-                                    ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(authToken.Email);
-                                    if (contactPassword.Password == authToken.Password)
-                                    {
-                                        HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
+									//ContactPasswordRepository contactPasswordRep = new ContactPasswordRepository();
+									//ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(authToken.Email);
+									if (GetContactPasswordFromCache(authToken.Email) == authToken.Password)
+									{
+										HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
                                     }
                                 }
 
@@ -612,7 +612,37 @@ namespace WebFreight.Web
             }
         }
 
-        protected void Application_Error(object sender, EventArgs e)
+		private string GetContactPasswordFromCache(string email)
+		{
+			ContactPasswordRepository contactPasswordRep = new ContactPasswordRepository();
+
+			string cahce_key = "ContactPassword_" + email;
+			if (CacheManager.CacheWrapper != null)
+			{
+				if (CacheManager.CacheWrapper.Get(cahce_key) == null)
+				{
+					ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(email);
+					if (CacheManager.CacheWrapper.Get(cahce_key) == null && contactPassword != null)
+					{
+						CacheManager.CacheWrapper.Insert(cahce_key, contactPassword.Password, null, DateTime.UtcNow.AddMinutes(5), TimeSpan.Zero);
+						return contactPassword.Password;
+					}
+				}
+				else
+				{
+					return (string)CacheManager.CacheWrapper.Get(cahce_key);
+				}
+			}
+			else
+			{
+				ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(email);
+				return contactPassword.Password;
+			}
+
+			return null;
+		}
+
+		protected void Application_Error(object sender, EventArgs e)
         {
 
         }

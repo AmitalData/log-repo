@@ -23,5 +23,7 @@ export class PaymentTermList {
 		ExternalId: string;
 		CurrentMonth: boolean;
 		FromDateTypeCode: string;
+		CalculatedLocalName: string;
+		CalculatedEnglishName: string;
 	
 }

@@ -192,15 +192,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public HashSet<string> GetAllIdAccountsTypeCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5, string gLAccountType,
     bool IncludeChildAccounts)
         {
-            var allIdAccounts = new List<string>() { GLAccountId };
+            List<String> allIdAccounts = new List<string>() { GLAccountId };
             if (!String.IsNullOrWhiteSpace(cat1) || !String.IsNullOrWhiteSpace(cat2) || !String.IsNullOrWhiteSpace(cat3) || !String.IsNullOrWhiteSpace(cat4) || !String.IsNullOrWhiteSpace(cat5) || !String.IsNullOrWhiteSpace(gLAccountType))
             {
-                var catAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType)
+                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType)
                     .ToList();
             }
-            if (IncludeChildAccounts)
+
+            if (IncludeChildAccounts && allIdAccounts != null && allIdAccounts.Count > 0)
             {
-                var ChildAccounts = repository.GetChildAccounts(GLAccountId, tenant)
+                List<String> ChildAccounts = repository.GetChildAccountsList(allIdAccounts, tenant)
                 .Select(ca => ca.Id).ToList();
                 allIdAccounts.AddRange(ChildAccounts);
             }

@@ -385,7 +385,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query allcategories4Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = Category4TextCode_0.Id, Code = "allcategories4",  QueryGroupCode = "6cbf", IndexOrder = 0, Tenant = 0, ObjectTableId = Category4ObjectTable.Id, QuerySection = "Category4", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = Category4Feature_0.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query allcategories4Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = Category4TextCode_0.Id, Code = "allcategories4",  QueryGroupCode = "6cbf", IndexOrder = 0, Tenant = 0, ObjectTableId = Category4ObjectTable.Id, QuerySection = "Category4", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = Category4Feature_0.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn allcategories4QueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allcategories4Query.Id, IndexOrder = 0, ObjectFieldId = Category4ObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == Category4ObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -427,8 +427,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable Category4ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Category4" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable Category4ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Category4" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode Category4GeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Category4.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = Category4ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature Category4GeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category4.Tab.General", ObjectTableId = Category4ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category4.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

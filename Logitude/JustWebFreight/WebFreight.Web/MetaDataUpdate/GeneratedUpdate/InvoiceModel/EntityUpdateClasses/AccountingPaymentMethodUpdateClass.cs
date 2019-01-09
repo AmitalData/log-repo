@@ -729,8 +729,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable AccountingPaymentMethodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingPaymentMethod" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable AccountingPaymentMethodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingPaymentMethod" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode AccountingPaymentMethodGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPaymentMethod.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = AccountingPaymentMethodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature AccountingPaymentMethodGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPaymentMethod.Tab.General", ObjectTableId = AccountingPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPaymentMethod.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
