@@ -510,6 +510,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new RansomViolationTypeMap());
 	
+            modelBuilder.Configurations.Add(new RefundCustomerActivityTypeMap());
+	
             modelBuilder.Configurations.Add(new RegisteredWarehouseSiteTypeMap());
 	
             modelBuilder.Configurations.Add(new RequestStatusMap());
@@ -2389,6 +2391,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<RansomViolationType> RansomViolationTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes 
 	 {
 	      get; set;
 	 

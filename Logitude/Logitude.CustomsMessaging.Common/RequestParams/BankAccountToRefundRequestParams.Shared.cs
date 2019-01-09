@@ -20,5 +20,6 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string AccountBranch { get; set; }
         public string AccountNumber { get; set; }
         public string AccountCurrency { get; set; }
+        public string DeclarationId { get; set; }
     }
 }

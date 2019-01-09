@@ -1,4 +1,4 @@
-﻿import {RequestParamsBase} from './RequestParamsBase';
+import {RequestParamsBase} from './RequestParamsBase';
 
 export class BankAccountToRefundRequestParams extends RequestParamsBase {
 
@@ -13,5 +13,6 @@ export class BankAccountToRefundRequestParams extends RequestParamsBase {
     public AccountBranch: string;
     public AccountNumber: string;
     public AccountCurrency: string;
+    public DeclarationId: string;
 }
 

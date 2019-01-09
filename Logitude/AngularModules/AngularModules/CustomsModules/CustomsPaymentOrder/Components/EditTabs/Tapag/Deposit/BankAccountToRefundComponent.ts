@@ -102,10 +102,10 @@ export class BankAccountToRefundComponent
             this.RequestParams.FileNumber = value;
         }
         if (value) {
-            this.UIProperties.SetRequired("FileNumber", this.ObjectTableName, false);
+            this.UIProperties.SetRequired("FileNumber", null, false);
         }
         else {
-            this.UIProperties.SetRequired("FileNumber", this.ObjectTableName, true);
+            this.UIProperties.SetRequired("FileNumber", null, true);
         }
     }
 
@@ -301,7 +301,7 @@ export class BankAccountToRefundComponent
 
         if (AppTool.IsNullOrEmpty(this.RequestParams.FileType)) {
             var msg = TextCodeTranslator.Translate("Customs.BankAccountToRefundQuery.O.FileTypeMandatory");
-            //this.ValidationErrorsList.push(msg);
+            this.ValidationErrorsList.push(msg);
         }
 
         if (AppTool.IsNullOrEmpty(this.RequestParams.FileNumber)) {
@@ -373,6 +373,7 @@ export class BankAccountToRefundComponent
         currRequestParams.AccountBranch = this.AccountBranch;
         currRequestParams.AccountNumber = this.AccountNumber;
         currRequestParams.AccountCurrency = this.AccountCurrency;
+        currRequestParams.DeclarationId = this.declarationId;
 
         CustomMessageProgressComponent
             .ShowProgressBar(currRequestParams.PBId,

@@ -1,4 +1,5 @@
 ﻿using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Server.Tools.ExternalServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace WebFreight.Web.CustomWebServices
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
             try
             {
                 bool forcePersonalSign = false;
@@ -26,7 +27,12 @@ namespace WebFreight.Web.CustomWebServices
                 //please forcePersonalSign !!! in create URL !!!
                 Logitude.Customs.BL.Messaging.Customs.SignQueue.Instance.Add(tenant, SignByPersonalID, CustomsRequestsSheetId, InterfaceTypeCode, SignQueueBy);
             }
-                 
+            catch
+            {
+                bool forceReconnect = true;
+                SignatureHubClient.Instance.WakeUp(forceReconnect);
+                throw;
+            }
             finally
             {
                 SignQueue.Instance.RefreshDb();

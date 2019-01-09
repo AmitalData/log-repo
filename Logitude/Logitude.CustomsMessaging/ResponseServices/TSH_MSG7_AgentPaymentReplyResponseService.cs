@@ -19,6 +19,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.AgentPaymentReplyServiceReference;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -28,6 +29,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private PaymentOrderPM _PaymentOrderPM;
 
+        public bool _UNIQUEFILINGPOFeatureExist { get; private set; }
+
         public override INF_MSG_GenericResponseData GetResponse(TSH_MSG7_AgentPaymentReply customResponse, GenericRequestParams requestParams)
         {
             return this.MyResponseData;
@@ -36,6 +39,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(TSH_MSG7_AgentPaymentReply customResponse, GenericRequestParams requestParams)
         {
             //Analyze message 3052- Answer to the agent request for changing existing payment
+
+
+            customResponse.PrintedPaymentForm = customResponse.PrintedPaymentForm ?? new TSH_MSG7_AgentPaymentReplyPrintedPaymentForm();//compatibility backward
+
+            //אם ה Feature מוגדר, אז יש לתייק את המסמך שהגיע כחלק מהמסר, כאשר לפני כן יש לנסות לאתר אם כבר קיים מסמך כזה ואז רק ליצור גרסה חדשה.
+            _UNIQUEFILINGPOFeatureExist = ProxyUtil.SecurityUtilityCheckFeature("Customs.PaymentOrder", "UNIQUEFILINGPO", requestParams.Tenant);///
+
             ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
             var paymentOrderQueryService = new PaymentOrderQueryService(dbContext);
             var PaymentOrderUpdateService = new PaymentOrderUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
@@ -75,12 +85,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (_PaymentOrderPM == null)
             {
                 this.MyResponseData = new INF_MSG_GenericResponseData()
-                 {
-                     Succeeded = false,
-                     ApplicationID = requestParams.AppicationId,
-                     HasException = true,
-                     UserMessage = "Cann't find Payment Order" + requestParams.AppicationId,
-                 };
+                {
+                    Succeeded = false,
+                    ApplicationID = requestParams.AppicationId,
+                    HasException = true,
+                    UserMessage = "Cann't find Payment Order" + requestParams.AppicationId,
+                };
                 LogMessagingUtil.Instance.AppendLine("Cann't find Payment Order " + customResponse.AgentPaymentReply.paymentID);
                 return; //if not found exit  
             }
@@ -216,10 +226,60 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 PaymentOrderUpdateService.Update(_PaymentOrderPM, true);
             }
-
-            if (!string.IsNullOrWhiteSpace(declarationId))
+            bool task44020 = true;
+            if (!task44020)
             {
-                UpdatePaymentDocument(declarationId, requestParams.Tenant, requestParams.LoggingUserId);
+                if (!string.IsNullOrWhiteSpace(declarationId))
+                {
+                    UpdatePaymentDocument(declarationId, requestParams.Tenant, requestParams.LoggingUserId);
+                }
+            }
+            else
+            {
+             
+                DeclarationPM myDeclarationPM = null;
+                var myDeclarationQueryService = new DeclarationQueryService(requestParams.Tenant);
+                if (!string.IsNullOrWhiteSpace(declarationId))
+                {
+                    myDeclarationPM = myDeclarationQueryService.GetSingle(declarationId, false, false);
+                }
+
+                var myAnalyzePaymentDocumentManager = new AnalyzePaymentDocumentManager(null, _PaymentOrderPM, myDeclarationPM);
+
+
+                
+
+                bool AttachmentExistInGDMFILING = true;
+                if (_UNIQUEFILINGPOFeatureExist)
+                {
+                    LogMessagingUtil.Instance.AppendLine("_UNIQUEFILINGPOFeatureExist  AnalyzePaymentDocument");
+                    myAnalyzePaymentDocumentManager.AnalyzePaymentDocument(
+                        customResponse.PrintedPaymentForm.PrintedPaymentForm.content
+                        , requestParams);
+                }
+                else
+                {
+                    
+                    DocumentsFilingPM documentsFilingPM = myAnalyzePaymentDocumentManager.GetDocumentsFiling(requestParams);
+                    if (documentsFilingPM==null)
+                    {
+                        // eitan : if get first time Attach add contents
+                        LogMessagingUtil.Instance.AppendLine("UNIQUEFILINGPOFeature not Exist  but get first time Attach add contents ");
+                        myAnalyzePaymentDocumentManager.CreatePaymentDocument(
+                            customResponse.PrintedPaymentForm.PrintedPaymentForm.content
+                            , requestParams);
+                    }
+                    else
+                    {
+                        //CreateUnfreigtFiling()
+                        // eitan : if already have filing - update metadata only !!
+                        LogMessagingUtil.Instance.AppendLine("UNIQUEFILINGPOFeature not Exist  update metadata only !!");
+
+                        myAnalyzePaymentDocumentManager.UpdatePaymentDocument(documentsFilingPM, 
+                            /*content =*/ null,//do not send data only if _UNIQUEFILINGPOFeatureExist !!
+                            requestParams);
+                    }
+                }
             }
 
             this.MyResponseData = new INF_MSG_GenericResponseData()
@@ -260,7 +320,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 documentsFilingService.Update(documentsFilingPM, null, LoggedUserId);
                 LogMessagingUtil.Instance.AppendLine("Connect payment document " + documentsFilingPM.Code + " to AccountingCustomFile" + _PaymentOrderPM.AccountingCustomFile);
             }
-            
+
         }
     }
 }

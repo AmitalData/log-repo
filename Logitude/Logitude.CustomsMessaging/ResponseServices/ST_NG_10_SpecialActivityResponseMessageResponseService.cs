@@ -44,8 +44,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (customResponse.SpecialActivityRequestMessage != null && customResponse.SpecialActivityRequestMessage.General.cargoIdentifier != null)
             {
                 var myConsignmentQueryService = new ConsignmentQueryService(dbContext);
+                var myDeclarationQueryService = new DeclarationQueryService(dbContext);//Eitan H 6/1/2019 Task 46867
                 var cargoIdentifier = customResponse.SpecialActivityRequestMessage.General.cargoIdentifier;
                 string myDeclaration = myConsignmentQueryService.GetDeclarationIdByConsignmentCargoId(cargoIdentifier.cargoIdentifierKey1, cargoIdentifier.cargoIdentifierKey2, cargoIdentifier.cargoIdentifierKey3, requestParams.Tenant);
+                if (string.IsNullOrWhiteSpace(myDeclaration))//Eitan H 6/1/2019 Task 46867
+                {
+                    if(cargoIdentifier.cargoIdentifierType == '8')
+                    {
+                        _MyDeclarationPM = myDeclarationQueryService.GetSingleDeclarationByNumber(cargoIdentifier.cargoIdentifierKey1, requestParams.Tenant);
+                        if(_MyDeclarationPM != null)
+                        {
+                            myDeclaration = _MyDeclarationPM.Id;
+                        }
+                    }
+                }
                 if (!string.IsNullOrWhiteSpace(myDeclaration))
                 {
                     string description = "מספר בקשה " + customResponse.SpecialActivityResponseMessage.specialActivityRequestNumber + "\n"
@@ -74,8 +86,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             break;
                     }
 
-                    var myDeclarationQueryService = new DeclarationQueryService(dbContext);
-                    _MyDeclarationPM = myDeclarationQueryService.GetSingle(myDeclaration,false,false);
+                    //var myDeclarationQueryService = new DeclarationQueryService(dbContext);//Eitan H 6/1/2019 Task 46867
+                    if (_MyDeclarationPM == null)
+                    {
+                        _MyDeclarationPM = myDeclarationQueryService.GetSingle(myDeclaration, false, false);
+                    }
 
                     UpdateNotification(myDeclaration, notificationDefinitionCode, description, requestParams.Tenant);
                 }
