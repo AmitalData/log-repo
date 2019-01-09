@@ -519,6 +519,7 @@
     <Content Include="Main Branch\2018\12 - 2018\Day 27  [Ayman] 04  Fill Tenants Event.sql" />
     <Content Include="Main Branch\2018\12 - 2018\Day 30  [Maheera] Delete Features of General AP Invoice.sql" />
     <Content Include="Main Branch\2018\12 - 2018\Day 30  [Abed] Fix wrong text codes.sql" />
+    <Content Include="Main Branch\2019\01 - 2019\Day 08 [Islam] delete wrong query columns.sql" />
     <Content Include="Main Branch\2019\01 - 2019\Day 02 [Samar] set computing partners for objecttable.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />

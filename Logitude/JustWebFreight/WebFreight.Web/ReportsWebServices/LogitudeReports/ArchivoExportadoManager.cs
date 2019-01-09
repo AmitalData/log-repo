@@ -730,7 +730,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                                 else
                                 {
-                                    myRecord.AccountedPayablesCurrencyRate = myRecord.AccountedPayables / invoice.AmountInInvoiceCurrency;
+                                    myRecord.AccountedPayablesCurrencyRate = (1 / invoice.ProfitCurrencyExchangeRate) * myRecord.InvoiceCurrencyRate;
                                     myRecord.AccountedPayablesCurrencyRate = MethodHelper.Round(myRecord.AccountedPayablesCurrencyRate, 2);
                                 }
 
@@ -818,7 +818,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                                 else
                                 {
-                                    myRecord.AccountedReceivablesCurrencyRate =  myRecord.AccountedReceivables / invoice.AmountInInvoiceCurrency;
+                                    myRecord.AccountedReceivablesCurrencyRate = (1 / invoice.ProfitCurrencyExchangeRate) * myRecord.InvoiceCurrencyRate;
                                     myRecord.AccountedReceivablesCurrencyRate = MethodHelper.Round(myRecord.AccountedReceivablesCurrencyRate, 2);
                                 }
 

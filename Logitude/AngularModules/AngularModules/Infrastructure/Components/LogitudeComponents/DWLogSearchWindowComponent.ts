@@ -88,6 +88,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
     SecondListHeaderItems: string[] = [];
     SecondListValueItems: MultSelectValue[] = [];
+    MultSelectValueLists: MultSelectValue[] = [];
     private ViewModel: any;
 
     constructor() {
@@ -137,15 +138,6 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
                     }
                 }
 
-
-
-
-
-
-
-
-
-
             }
 
 
@@ -154,15 +146,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
    
     }
 
-    RemoveItemFromSecondList(item:any) {
-        if (item != null) {
-            var index = this.SecondListValueItems.indexOf(item);
-            if (index > -1) {
-                this.SecondListValueItems.splice(index, 1);
-
-            }
-        }
-    }
+   
 
     ngOnInit() {
         //this.ParentTableName = this.GetObjectTableName(this.ObjectTableName);
@@ -188,15 +172,18 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         this.ViewModel = args.DataContext; 
 
         if (this.ViewModel) {
-            this.SecondListValueItems = this.ViewModel.MultSelectValueLists;
+            this.MultSelectValueLists = this.ViewModel.MultSelectValueLists;
         }
       
-        if (!this.SecondListValueItems) {
-            this.SecondListValueItems = [];
+        if (!this.MultSelectValueLists) {
+            this.MultSelectValueLists = [];
         }
 
         this.Args = args;
         this.BuildSecondListHeader();
+        this.BuildSecondListValues();
+
+
      
     }
 
@@ -211,7 +198,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
             FieldName: 'Field', 
             DataTypeCode: 'text',
             Display: this.ObjectFieldName.replace('[', '').replace(']',''),
-            Styles: { width: '150px' },  
+            Styles: { width: '120px' },  
             IsCustomTemplate: true,
             HtmlListComponentName: 'DWLogSearchWindowFieldsComponent',
             HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/DWLogSearchWindowFieldsComponent',
@@ -223,7 +210,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
                     FieldName: 'Field' + index,
                     DataTypeCode: 'text',
                     Display: field.replace('[', '').replace(']', ''),
-                    Styles: { width: '150px' },
+                    Styles: { width: '120px' },
                     IsCustomTemplate: true,
                     HtmlListComponentName: 'DWLogSearchWindowFieldsComponent',
                     HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/DWLogSearchWindowFieldsComponent',
@@ -244,7 +231,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
    
     }
-
+    
     TextChanged(searchtext) {
         if (searchtext != null && searchtext != undefined) {
             this.searchFields = searchtext;
@@ -327,36 +314,30 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         }
     }
 
-    CloseButtonClicked() {
-        //SessionLocator.CurrentSession.CloseCurrentWindow();
-        var textValue = "";
-        this.SecondListValueItems.forEach((field) => {
-            if (field["Value"]) {
-                if (textValue) textValue += ",";
-                var rowValues: any = field["Value"];
+    CancelButtonClicked() {
+        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+    }
 
-                if (rowValues ) textValue += rowValues.Row;
-          
-            }
-        
-        });
+    OkButtonClicked() {
 
+        var textValue = this.GetTextValue(this.SecondListValueItems);
+    
         if (this.ViewModel) {
             this.ViewModel.MultSelectValueLists = this.SecondListValueItems;
         }
         SessionLocator.CurrentSession.CloseCurrentWindowEmit(textValue);
 
-
-       // SessionLocator.CurrentSession.CloseCurrentWindowEmit(null);
-
     }
 
-
+    
     BuildSecondListHeader() {
 
         var test: MultSelectValue[] = [];
 
-        this.SecondListHeaderItems.push(this.ObjectFieldName.replace('[', '').replace(']', ''));
+        if (this.ObjectFieldName) {
+            this.SecondListHeaderItems.push(this.ObjectFieldName.replace('[', '').replace(']', ''));
+        }
+
         var additionalColumns = [];
         if (this.LOVAdditionalColumns) {
             additionalColumns = this.LOVAdditionalColumns.split(',');
@@ -366,19 +347,99 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
                 this.SecondListHeaderItems.push(field.replace('[', '').replace(']', ''));
             });
         }
-        //if (this.ViewModel.MultSelectValueLists) {
-        
-        //    this.ViewModel.MultSelectValueLists.forEach((field) => {
-        //        var test = this.SecondListHeaderItems.filter(d => d == field.Value)[0];
-        //        if (!test) {
-        //            this.SecondListHeaderItems.push(field.Name);
-        //        }
+
+        if (this.MultSelectValueLists && this.MultSelectValueLists.length >0) {
+            var items = this.MultSelectValueLists[0];
+            var i = "";
+            var j = 0;
+            while (items["Value" + i]) {
+
+                var headerName = items["Value" + i].Column;
+                var field = this.SecondListHeaderItems.filter(d => d == headerName)[0];
+                if (!field) {
+                    this.SecondListHeaderItems.push(headerName);
+                }
+
+                j += 1;
+                i = j.toString();
+
+            }
+
            
-        //    });
-        //}
+        }
 
 
 
+    }
+
+    BuildSecondListValues() {
+        this.SecondListValueItems = [];
+
+        this.MultSelectValueLists.forEach((item) => {
+            var multSelectValue: MultSelectValue = new MultSelectValue();
+            var i = "";
+            var j = 0;
+            this.SecondListHeaderItems.forEach((header) => {
+                var fieldDetails: FieldDetails = new FieldDetails();
+                fieldDetails.Column = header;
+                fieldDetails.Row = this.ResolveValue(item, header);
+                multSelectValue["Value" + i] = fieldDetails;
+
+                j += 1;
+                i = j.toString();
+            });
+            this.SecondListValueItems.push(multSelectValue);
+
+        });
+    }
+
+    ResolveValue(Values: MultSelectValue, header: string) {
+        var i = "";
+        var j = 0;
+        var result = "";
+        while (Values["Value" + i]) {
+            if (Values["Value" + i].Column == header) {
+                result = Values["Value" + i].Row;
+            }
+
+            j += 1;
+            i = j.toString();
+
+        }
+
+        return result;
+    }
+
+    GetTextValue(multSelectValueLists: MultSelectValue[] ) {
+        var textValue = "";
+        if (multSelectValueLists) {
+            multSelectValueLists.forEach((field) => {
+                if (field["Value"]) {
+                    if (textValue) textValue += ";";
+                    var rowValues: any = field["Value"];
+
+                    if (rowValues) textValue += rowValues.Row;
+
+                }
+
+            });
+        }
+
+        textValue += "@@";
+        textValue = textValue.replace(";@@","");
+        textValue = textValue.replace("@@", "");
+
+        return textValue;
+    }
+
+    RemoveItemFromSecondList(item: any) {
+        if (item != null) {
+            var index = this.SecondListValueItems.indexOf(item);
+            if (index > -1) {
+                this.SecondListValueItems.splice(index, 1);
+
+            }
+        }
     }
 
 }

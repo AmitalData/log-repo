@@ -38,5 +38,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     public GLAccount GLAccount { get; set; }
     
     public string Code { get; set; }
+
+    public  string  ComputingPartnerCode { get; set; }
+
     }
 } 

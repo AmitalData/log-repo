@@ -40,5 +40,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public double? Volume { get; set; }
     
     public double? VolumetricWeight { get; set; }
+
+    public  string  ComputingPartnerCode { get; set; }
+
     }
 } 

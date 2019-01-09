@@ -29,5 +29,8 @@ namespace Logitude.BL.QuoteModel.APIDataContract.ApiV1
     public string Name { get; set; }
     
     public int Rank { get; set; }
+
+    public  string  ComputingPartnerCode { get; set; }
+
     }
 } 
