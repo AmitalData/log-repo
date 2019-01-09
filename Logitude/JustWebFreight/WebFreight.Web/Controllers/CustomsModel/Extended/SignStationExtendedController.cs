@@ -98,7 +98,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 }
 
                 entityLists = GetList(skip, take, sortingCol, sortingDir, entityLists);
-
+                //entityLists.Add(new SignStationList() { MachineName = "itzik" });
 
                 response.Result = entityLists;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

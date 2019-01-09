@@ -1075,6 +1075,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public void AddToTasksQueue(DocumentsFilingPM extDocPM, bool isnew, string loggedUserId)
         {
+
+
             if (!string.IsNullOrWhiteSpace(this.MetaDataVersionValue))
             {
                 DocumentsFilingMetaDataValueQuery.UpSert(extDocPM, "VER", this.MetaDataVersionValue);
@@ -1218,7 +1220,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                 task2logParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue2Tasks);
                                 Communications.AddCommunicationLog(task2logParams);
                             }
-
+                            LogMessagingUtil.Instance.AppendLine("AddToTasksQueue (DocumentsFilingService)");
+                            
                             // AzureLog.SaveLogsInStorage("After adding document filing queue (Id:" + extDocPM.Id + ",Tenant:" + extDocPM.Tenant + ")", "L", DateTime.Now, "", "", 0, loggedUserId, loggedUserId, null);
                         }
                         catch (Exception ex)
