@@ -540,10 +540,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append(' ', 15);
                 TrailReportM trailReportM = null;
-                //if (result.ContainsKey(item.GLAccountId))
-                //{
-                //    trailReportM =  result[item.GLAccountId];
-                //}
+                if (result.ContainsKey(item.GLAccountId))
+                {
+                    trailReportM = result[item.GLAccountId];
+                }
                 if (trailReportM != null)
                 {
                     item.OpeningBalance = trailReportM.LocalOpenBalance;
