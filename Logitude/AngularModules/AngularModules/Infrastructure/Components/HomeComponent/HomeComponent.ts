@@ -857,8 +857,8 @@ export class HomeComponent {
         if (!SessionLocator.CurrentSession.IsOpenChangePasswordWindowFromSetting) {
             SessionLocator.CurrentSession.IsOpenChangePasswordWindowFromSetting = true;
             var logWindow = new LogitudeWindow();
-            logWindow.Width = 800;
-            logWindow.Height = 550;
+                logWindow.Width = 600;
+                logWindow.Height = 400;
             logWindow.Title = "Change User Password";
             this._entityResourceService.getEntityResourceByTableName("User").subscribe(response => {
                 logWindow.DataContext = this;

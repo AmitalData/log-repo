@@ -497,7 +497,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query BankCodesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankCodeTextCode_0.Id, Code = "BankCodes",  QueryGroupCode = "99b6", IndexOrder = 0, Tenant = 0, ObjectTableId = BankCodeObjectTable.Id, QuerySection = "BankCode", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankCodeFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query BankCodesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankCodeTextCode_0.Id, Code = "BankCodes",  QueryGroupCode = "99b6", IndexOrder = 0, Tenant = 0, ObjectTableId = BankCodeObjectTable.Id, QuerySection = "BankCode", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankCodeFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn BankCodesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankCodesQuery.Id, IndexOrder = 0, ObjectFieldId = BankCodeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == BankCodeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -545,8 +545,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable BankCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankCode" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable BankCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankCode" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode BankCodeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankCode.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = BankCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature BankCodeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankCode.Tab.General", ObjectTableId = BankCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankCode.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

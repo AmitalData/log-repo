@@ -29,5 +29,8 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
     public string MoveTypeEnglishName { get; set; }
     
     public string MoveTypeLocalName { get; set; }
+
+    public  string  ComputingPartnerCode { get; set; }
+
     }
 } 

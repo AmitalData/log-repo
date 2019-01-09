@@ -2706,8 +2706,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable ShippingLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShippingLine" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable ShippingLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShippingLine" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode ShippingLineGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ShippingLineGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -2718,7 +2719,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
                  
 			   TextCode ShippingLineAccountingTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShippingLineAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode ShippingLineINTTRATextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.INTTRA", DefaultText = "INTTRA",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
@@ -2748,7 +2749,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SLBL",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShippingLineBillingFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = ShippingLineObjectTable.Id, TabNameTextCodeId = ShippingLineBillingTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SLAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = ShippingLineAccountingFeature_TH2.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.ShippingLineAccountingTabControl", ObjectTableId = ShippingLineObjectTable.Id, TabNameTextCodeId = ShippingLineAccountingTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SLAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = GeneralAccountingFeature_TH2.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.ShippingLineAccountingTabControl", ObjectTableId = ShippingLineObjectTable.Id, TabNameTextCodeId = ShippingLineAccountingTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "INTT",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/ShippingLine/ShippingLineInttraTabComponent", FeatureId = ShippingLineINTTRAFeature_TH3.Id, ControlPath = "NoTab", ObjectTableId = ShippingLineObjectTable.Id, TabNameTextCodeId = ShippingLineINTTRATextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    

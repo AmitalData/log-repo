@@ -2629,15 +2629,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable ChargesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChargesType" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable ChargesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChargesType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode ChargesTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.TH.EditChargesType", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ChargesTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChargesType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode ChargesTypeAccountingTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ChargesTypeAccountingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature GeneralAccountingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode ChargesTypeEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
@@ -2649,7 +2650,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CHGC",HtmlComponentName = "ChargesTypeGeneralTabComponent",HtmlComponentUrl = "./Common/Components/Maintenance/ChargesType/ChargesTypeGeneralTabComponent", FeatureId = ChargesTypeGeneralFeature_TH0.Id, ControlPath = "Simplog.FreightLib.Views.ChargesTypes.EditChargesTypeControl", ObjectTableId = ChargesTypeObjectTable.Id, TabNameTextCodeId = ChargesTypeGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CHAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = ChargesTypeAccountingFeature_TH1.Id, ControlPath = "Simplog.FreightLib.Views.ChargesTypes.AccountingTabControl", ObjectTableId = ChargesTypeObjectTable.Id, TabNameTextCodeId = ChargesTypeAccountingTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CHAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = GeneralAccountingFeature_TH1.Id, ControlPath = "Simplog.FreightLib.Views.ChargesTypes.AccountingTabControl", ObjectTableId = ChargesTypeObjectTable.Id, TabNameTextCodeId = ChargesTypeAccountingTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ChargesTypeEventsFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ChargesTypeObjectTable.Id, TabNameTextCodeId = ChargesTypeEventsTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    

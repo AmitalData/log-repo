@@ -76,5 +76,8 @@ namespace Logitude.BL.QuoteModel.APIDataContract.ApiV1
     public double? SaleMaxAmount { get; set; }
     
     public double? SaleMinAmount { get; set; }
+
+    public  string  ComputingPartnerCode { get; set; }
+
     }
 } 

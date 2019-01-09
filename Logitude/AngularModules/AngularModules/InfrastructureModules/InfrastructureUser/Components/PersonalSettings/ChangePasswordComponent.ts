@@ -13,9 +13,9 @@ import {ChangePasswordParameter} from '../../../../Infrastructure/DataContracts/
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 
 
-
+ 
 declare var passtring, PassWordValueTriming, isctype, ClientSideBestPassword, gSimilarityMap, gDictionary, DispPwdStrength, ClientSideStrongPassword, DispPwdStrength, ClientSideMediumPassword, DispPwdStrength, ClientSideWeakPassword: any;
-
+ 
 @Component({
     moduleId: module.id,
     selector: 'ChangePassword',
@@ -25,41 +25,31 @@ declare var passtring, PassWordValueTriming, isctype, ClientSideBestPassword, gS
 })
 export class ChangePasswordComponent implements OnInit {
 
-    IsShowVerifypassError: boolean;
+
     CurrentPassword: string;
     NewPassword: string;
     RetypePassword: string;
     strongPassword: boolean = false;
-    Pdwcheckmsg0DivId: string;
-    Pdwcheckmsg1DivId: string;
-    Pdwcheckmsg2DivId: string;
-    Pdwcheckmsg3DivId: string;
-    Pdwcheckmsg4DivId: string;
 
-    idSM1HtmlId: string;
-    idSM2HtmlId: string;
-    idSM3HtmlId: string;
-    idSM4HtmlId: string;
 
-    PdwcheckmsgKey: string;
-    SMKey: string;
+
+
+
+
+
+
+
+
+    PasswordLenghtImg: string;
+    PasswordContainsCharactersImg: string;
+    PasswordContainsNumberImg: string;
+
+
     constructor(public _passwordChangeService: PasswordChangeService) {
-
-        this.PdwcheckmsgKey = Guid.newGuid();
-        this.SMKey = Guid.newGuid();
-        this.Pdwcheckmsg0DivId = this.PdwcheckmsgKey + "0";
-        this.Pdwcheckmsg1DivId = this.PdwcheckmsgKey + "1";
-        this.Pdwcheckmsg2DivId = this.PdwcheckmsgKey + "2";
-        this.Pdwcheckmsg3DivId = this.PdwcheckmsgKey + "3";
-        this.Pdwcheckmsg4DivId = this.PdwcheckmsgKey + "4";
-
-
-        this.idSM1HtmlId = this.SMKey + "1";
-        this.idSM2HtmlId = this.SMKey + "2";
-        this.idSM3HtmlId = this.SMKey + "3";
-        this.idSM4HtmlId = this.SMKey + "4";
-
-
+    
+        this.PasswordLenghtImg = "./_Resources/Images/Icons/ChangePassword/verified.png"
+        this.PasswordContainsCharactersImg = "./_Resources/Images/Icons/ChangePassword/verified.png"
+        this.PasswordContainsNumberImg = "./_Resources/Images/Icons/ChangePassword/verified.png"
     }
 
     ngOnInit(
@@ -93,78 +83,105 @@ export class ChangePasswordComponent implements OnInit {
 
 
 
-
-    SaveButtonClicked() {
-
-        this.IsShowVerifypassError = false;
+    Validation() {
         this.ValidationErrorsList = [];
 
- 
-        this.PasswordValidation ();
+        if (this.NewPassword == this.RetypePassword) {
 
-        if (this.ValidationErrorsList.length > 0) {
-            return;
-        }
-        
-        if (!AppTool.IsNullOrEmpty(this.CurrentPassword)) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            if (!this.NewPassword) {
+                this.ValidationErrorsList.push("Confirm your password");
+                return;
+            }
 
-            var changePasswordParameter: ChangePasswordParameter = new ChangePasswordParameter();
-            changePasswordParameter.ContactId = SessionInfo.LoggedUserPM.Id;
-            changePasswordParameter.CurrentPassword = this.CurrentPassword;
-            changePasswordParameter.Email = SessionInfo.LoggedUserPM.Email;
+            this.PasswordValidation();
 
-            this._passwordChangeService.CheckUserPassword(changePasswordParameter).subscribe(res => {
-
-                var pmResponse: ServiceResponse = res;
-                if (!pmResponse.HasError) {
-                    var myResult = pmResponse.Result;
-                    if (myResult) {
-
-                        if (this.CurrentPassword == this.NewPassword) {
-                            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                            this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.NewPasswordCantBeSameAsCurrentOne"));
-                        } else this.ChangePassword();
-
-                       
-
-                    } else {
-
-                        this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.CurrentPasswordDoesntMatchYourInput"));
-
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                    }
-
-                }
+            if (this.ValidationErrorsList.length > 0) {
+                return;
+            }
 
 
+            if (!this.IsContainsLowerUpperCase(this.NewPassword)) {
+                this.ValidationErrorsList.push("Your password must include an uppercase and lowercase letter.");
+                return;
+            }
 
-            });
+            if (!this.IsContainsNumber(this.NewPassword)) {
+                this.ValidationErrorsList.push("Your password must include a number.");
+
+                return;
+            }
+            if (this.NewPassword.length < 8) {
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.PasswordsMinimumLengthIs8Characters"));
+                return;
+            }
         }
         else {
 
-            this.ValidationErrorsList.push("Current Password can't be empty!");
+            this.ValidationErrorsList.push("The passwords you entered do not match.");
+            return;
         }
 
+        if (this.ValidationErrorsList.length == 0) {
+
+            if (!AppTool.IsNullOrEmpty(this.CurrentPassword)) {
+                if (this.NewPassword == this.CurrentPassword) {
+                    this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.NewPasswordCantBeSameAsCurrentOne"));
+                    return ;
+                }
+            } else {
+
+                this.ValidationErrorsList.push("Current Password can't be empty!");
+                return;
+            }
+
+        }
+
+    }
+    SaveButtonClicked() {
+        this.Validation();
+
+        if (this.ValidationErrorsList.length == 0) {
+
+                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+
+                var changePasswordParameter: ChangePasswordParameter = new ChangePasswordParameter();
+                changePasswordParameter.ContactId = SessionInfo.LoggedUserPM.Id;
+                changePasswordParameter.CurrentPassword = this.CurrentPassword;
+                changePasswordParameter.Email = SessionInfo.LoggedUserPM.Email;
+
+                this._passwordChangeService.CheckUserPassword(changePasswordParameter).subscribe(res => {
+
+                    var pmResponse: ServiceResponse = res;
+                    if (!pmResponse.HasError) {
+                        var myResult = pmResponse.Result;
+                        if (myResult) {
+
+                            if (this.CurrentPassword == this.NewPassword) {
+                                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                                this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.NewPasswordCantBeSameAsCurrentOne"));
+                            } else this.ChangePassword();
+
+
+
+                        } else {
+
+                            this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.CurrentPasswordDoesntMatchYourInput"));
+
+                            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        }
+
+                    }
+
+
+
+                });
+            
+         
+        }
     }
 
     PasswordValidation() {
         var isvalidPass: boolean = true;
-        if (this.NewPassword.length < 8) {
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.PasswordsMinimumLengthIs8Characters"));
-            isvalidPass = false;
-        }
-
-        if (this.NewPassword.length > 16) {
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.PasswordsMaximumLlengthIs16Characters"));
-            isvalidPass = false;
-        }
-
-        if (!this.strongPassword && isvalidPass) {
-
-            this.ValidationErrorsList.push("Password is not strong enough. Please use at least three of the four characters types possible.");
-        }
-
 
         var userName = SessionInfo.LoggedUserPM.EnglishName.split(' ');
         var email = SessionInfo.LoggedUserPM.Email;
@@ -189,7 +206,7 @@ export class ChangePasswordComponent implements OnInit {
         }
 
 
-        //Password Contains User Email
+   
         var ContainsEmail = false;
         if (this.NewPassword.toLowerCase().indexOf(email.toLowerCase()) > -1) {
             ContainsEmail = true;
@@ -234,60 +251,38 @@ export class ChangePasswordComponent implements OnInit {
 
     ChangePassword() {
 
-        if (this.NewPassword) {
-
-            if (this.NewPassword == this.RetypePassword) {
-              
-                    var changePasswordParameter: ChangePasswordParameter = new ChangePasswordParameter();
-                    changePasswordParameter.Email = SessionInfo.LoggedUserPM.Email;
-                    changePasswordParameter.NewPassword = this.NewPassword;
-                    changePasswordParameter.CurrentPassword = this.CurrentPassword;
+        var changePasswordParameter: ChangePasswordParameter = new ChangePasswordParameter();
+        changePasswordParameter.Email = SessionInfo.LoggedUserPM.Email;
+        changePasswordParameter.NewPassword = this.NewPassword;
+        changePasswordParameter.CurrentPassword = this.CurrentPassword;
 
 
-                    this._passwordChangeService.ChangeUserPassword(changePasswordParameter).subscribe(res => {
-
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-
-                        var pmResponse: ServiceResponse = res;
-                        if (!pmResponse.HasError) {
-                            var myResult = pmResponse.Result;
-                            if (myResult) {
-                                this.CancelButtonClicked();
-                            }
-                            else {
-                                this.ValidationErrorsList.push("Changing password failed!");
-                            }
-                        } else {
-                            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
-
-                                var messageWindow: MessageWindow = new MessageWindow();
-                                messageWindow.Title = "Logitude Message";
-                                messageWindow.Show(pmResponse.ErrorsArray[0]);
-
-                            }
-
-                        }
-
-
-                    });
-
-                
-
-            }
-
-            else {
-                this.IsShowVerifypassError = true;
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-            }
-
-        }
-        else {
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.PasswordCantBeEmpty"));
-
+        this._passwordChangeService.ChangeUserPassword(changePasswordParameter).subscribe(res => {
 
             SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
 
-        }
+            var pmResponse: ServiceResponse = res;
+            if (!pmResponse.HasError) {
+                var myResult = pmResponse.Result;
+                if (myResult) {
+                    this.CancelButtonClicked();
+                }
+                else {
+                    this.ValidationErrorsList.push("Changing password failed!");
+                }
+            } else {
+                if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+
+                    var messageWindow: MessageWindow = new MessageWindow();
+                    messageWindow.Title = "Logitude Message";
+                    messageWindow.Show(pmResponse.ErrorsArray[0]);
+
+                }
+
+            }
+
+
+        });
 
     }
 
@@ -305,27 +300,7 @@ export class ChangePasswordComponent implements OnInit {
 
 
 
-    EvalPwdStrength(sP: string, pdwcheckmsgKey: string, sMKey: string) {
 
-        this.strongPassword = false;
-        if (ClientSideBestPassword(sP, gSimilarityMap, gDictionary)) {
-            DispPwdStrength(4, 'pwdCheckCase4', pdwcheckmsgKey, sMKey);
-            this.strongPassword = true;
-        }
-        else if (ClientSideStrongPassword(sP, gSimilarityMap, gDictionary)) {
-            DispPwdStrength(3, 'pwdCheckCase3', pdwcheckmsgKey, sMKey);
-            this.strongPassword = true;
-        }
-        else if (ClientSideMediumPassword(sP, gSimilarityMap, gDictionary)) {
-            DispPwdStrength(2, 'pwdCheckCase2', pdwcheckmsgKey, sMKey);
-        }
-        else if (ClientSideWeakPassword(sP, gSimilarityMap, gDictionary)) {
-            DispPwdStrength(1, 'pwdCheckCase1', pdwcheckmsgKey, sMKey);
-        }
-        else {
-            DispPwdStrength(0, 'pwdCheckCase0', pdwcheckmsgKey, sMKey);
-        }
-    }
 
 
     capLock(e: any) {
@@ -435,6 +410,56 @@ export class ChangePasswordComponent implements OnInit {
         });
 
         return result;
+    }
+
+
+    IsContainsLowerUpperCase(str) {
+        return str.match(/[a-z]/) && str.match(/[A-Z]/);
+    }
+
+    IsContainsNumber(str) {
+        var regex = /\d/g;
+        return regex.test(str);
+    }
+
+
+
+    Passwordkeyup(passtring) {
+
+    this.ValidationErrorsList = [];
+
+        document.getElementById("PasswordLenghtDiv").style.color = "gray";
+        document.getElementById("PasswordContainsCharactersDiv").style.color = "gray";
+        document.getElementById("PasswordContainsNumberDiv").style.color = "gray";
+
+        this.PasswordLenghtImg = "./_Resources/Images/Icons/ChangePassword/verified.png"
+        this.PasswordContainsCharactersImg = "./_Resources/Images/Icons/ChangePassword/verified.png"
+        this.PasswordContainsNumberImg = "./_Resources/Images/Icons/ChangePassword/verified.png"
+
+        if (passtring) {
+
+            if (passtring.length >= 8) {
+                document.getElementById("PasswordLenghtDiv").style.color = "green";
+                this.PasswordLenghtImg = "./_Resources/Images/Icons/ChangePassword/verifiedGreen.png"
+
+            }
+
+            if (this.IsContainsLowerUpperCase(passtring)) {
+                document.getElementById("PasswordContainsCharactersDiv").style.color = "green";
+                this.PasswordContainsCharactersImg = "./_Resources/Images/Icons/ChangePassword/verifiedGreen.png"
+            }
+
+            if (this.IsContainsNumber(passtring)) {
+                document.getElementById("PasswordContainsNumberDiv").style.color = "green";
+                this.PasswordContainsNumberImg = "./_Resources/Images/Icons/ChangePassword/verifiedGreen.png"
+            }
+
+
+           this.PasswordValidation();
+
+
+
+        }
     }
 }
 

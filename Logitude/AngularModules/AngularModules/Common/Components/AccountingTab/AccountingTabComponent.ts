@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -110,7 +110,7 @@ export class AccountingTabComponent implements OnInit {
     LoadComponent() {
         var myComponentPath: string = null;
 
-        if (this.isFullAccounting) {
+        if (this.isFullAccounting && this.ObjectTableName != 'ChargesType') {
             myComponentPath = "./Common/Components/AccountingTab/AccountingTab_Full";
         }
 

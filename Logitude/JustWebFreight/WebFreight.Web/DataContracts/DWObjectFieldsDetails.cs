@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace WebFreight.Web.DataContracts
@@ -34,13 +35,55 @@ namespace WebFreight.Web.DataContracts
         public string OperationCode { get; set; }
         public string OperationName { get; set; }
         public string AndOr { get; set; }
-         
+
+        [DataMember]
+        public List<MultSelectValue> MultSelectValueLists{ get; set; }
+
     }
 
     public class ObjectFieldOperator
     {
+        
         public string Code { get; set; }
+     
         public string Name { get; set; }
+    }
+    [DataContract(Namespace = "")]
+    public class MultSelectValue
+    {
+        [DataMember]
+        public FieldDetails Value { get; set; }
+        [DataMember]
+        public FieldDetails Value1 { get; set; }
+        [DataMember]
+        public FieldDetails Value2 { get; set; }
+        [DataMember]
+        public FieldDetails Value3 { get; set; }
+        [DataMember]
+        public FieldDetails Value4 { get; set; }
+        [DataMember]
+        public FieldDetails Value5 { get; set; }
+        [DataMember]
+        public FieldDetails Value6 { get; set; }
+        [DataMember]
+        public FieldDetails Value7 { get; set; }
+        [DataMember]
+        public FieldDetails Value8 { get; set; }
+        [DataMember]
+        public FieldDetails Value9 { get; set; }
+        [DataMember]
+        public FieldDetails Value10 { get; set; }
+
+
+    }
+
+    [DataContract(Namespace = "")]
+    public class FieldDetails
+    {
+        [DataMember]
+        public string Column { get; set; }
+        [DataMember]
+        public string Row { get; set; }
     }
 
 }

@@ -117,6 +117,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 itemPOCO.ProjectId = itemChanged.ProjectId;
                                 itemPOCO.Description = itemChanged.Description;
                                 itemPOCO.WINumber = itemChanged.WINumber;
+                                itemPOCO.LocationCode = itemChanged.LocationCode;
                                 //repository.Update(itemPOCO);
                                 itemPOCO.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                                 service.Update(itemPOCO, true);
@@ -134,6 +135,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     itemPOCO.SprintId = itemChanged.SprintId;
                                     itemPOCO.ProjectId = itemChanged.ProjectId;
                                     itemPOCO.DateOfWork = itemChanged.DateOfWork;
+                                    itemPOCO.LocationCode = itemChanged.LocationCode;
                                     //repository.Update(itemPOCO);
 
                                     itemPOCO.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
