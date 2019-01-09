@@ -58,14 +58,31 @@
                         </td>
                     </tr>
  
-                    <!-- Fields  line1  :שם לקוח//ספק//תנאי מכר  -->
+                    <!-- Fields  line1  :סוג תהליך//ספק//מספר יבואן  -->
                     <tr>
                         <td style="width: 700px;">
                             <table style="table-layout: fixed;">
                                 <!-- Filters Fields with horizantal tabs-->
                                 <tr style="height: 28px;">
 
+                                    <!-- GovernmentProcedureType -->
+                                    <td style="width: 115px;">
+                                        <LogLabel [ObjectFieldName]="'ProcedureCurrentCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 100px;">
+                                        <LogLov [ObjectFieldName]="'ProcedureCurrentCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [HideColumns]="true"
+                                                [LookUpTableName]="'Customs.GovernmentProcedureType'"
+                                                [ManipulateData]="true"
+                                                [QueryFilterItems]="PreceduralFilterItems"
+                                                [SelectedValue]="ProcedureCurrentCode">
+                                        </LogLov>
+                                    </td>
 
+                                    <td style="width: 10px;"><div></div></td>
 
                                     <!-- CasualSupplierName -->
                                     <td style="width: 130px;">
@@ -86,42 +103,22 @@
 
                                     <td style="width: 10px;"><div></div></td>
 
-                                    <!-- IncotermCode -->
-                                    <td style="width: 150px;">
-                                        <LogLabel [ObjectFieldName]="'IncotermCode'" [ObjectTableName]="'Customs.SupplierInvoice'"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td style="width: 160px;">
-                                        <LogLov [ObjectFieldName]="'IncotermCode'"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [LookUpTableName]="'Customs.TermsOfSaleType'"
-                                                [HideColumns]="true"
-                                                [SelectedValue]="IncotermCode">
-
-                                        </LogLov>
-                                    </td>
-
-
-                                    <td style="width: 10px;"><div></div></td>
-
 
                                     <!-- ImporterCode -->
                                     <!--<td style="width: 115px;">
-        <LogLabel [ObjectFieldName]="'ImporterCode'"
-                  [ObjectTableName]="ObjectTableName"
-                  [Text]="'שם לקוח'"
-                  [DataContext]="DataContext"></LogLabel>
-    </td>
-    <td style="width: 100px;">
-        <LogTextBox [ObjectFieldName]="'CalculatedImporterName'" [ObjectTableName]="ObjectTableName"
-                    [HideColumns]="true"
-                    [DataContext]="DataContext"
-                    [Text]="CalculatedImporterName"></LogTextBox>
+            <LogLabel [ObjectFieldName]="'ImporterCode'"
+                      [ObjectTableName]="ObjectTableName"
+                      [Text]="'שם לקוח'"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td style="width: 100px;">
+            <LogTextBox [ObjectFieldName]="'CalculatedImporterName'" [ObjectTableName]="ObjectTableName"
+                        [HideColumns]="true"
+                        [DataContext]="DataContext"
+                        [Text]="CalculatedImporterName"></LogTextBox>
 
 
-    </td>-->
+        </td>-->
 
                                     <td style="width: 115px;">
                                         <LogLabel [ObjectFieldName]="'ImporterCode'" [ObjectTableName]="ObjectTableName"
@@ -145,7 +142,7 @@
 
                                     <td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditImporter()" [IsEnabled]="!IsDisplayOnly"></IconButton></td>
                                     <!--<td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Search'" (click)="SearchImporter('Importer', $event)" [IsEnabled]="!IsDisplayOnly"></IconButton></td>-->
-                                    
+
                                     <td style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 5px;">
                                         <div style="color: #646464; font-size: 11px;">{{CalculatedImporterName}}</div>
                                     </td>
@@ -156,28 +153,8 @@
                                 </tr>
 
 
-                                <!--line 2 :ח.פ //כמות//ערך במטבע מקורי-->
+                                <!--line 2 :ערך סחורה //ערך סחורה בדולר//הובלה-->
                                 <tr style="height: 28px;">
-
-
-
-                                    <!-- _PackageQuantity.ConsignmentPackages -->
-                                    <td style="width: 130px;">
-                                        <LogLabel [ObjectFieldName]="'PackageQuantity'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [Text]="'כמות'"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td style="width: 105px;" tabindex="2">
-                                        <LogTextBox [ObjectFieldName]="'_PackageQuantity'"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [Text]="_PackageQuantity"
-                                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-
-                                    </td>
-                                    <td style="width: 10px;"><div></div></td>
-
-
 
                                     <!-- InvoiceAmount -->
                                     <td style="width: 150px;">
@@ -192,6 +169,26 @@
                                                     [Text]="_InvoiceAmount"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+
+                                    </td>
+
+                                    <td style="width: 10px;"><div></div></td>
+
+                                    <!-- TotalInvoiceAmountInUSD -->
+                                    <td style="width: 150px;">
+                                        <LogLabel [ObjectFieldName]="'TotalInvoiceAmountInUSD'"
+                                                  [ObjectTableName]="'Customs.SupplierInvoice'"
+                                                  [Text]="'ערך סחורה בUsd'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 160px;">
+                                        <LogTextBox [FocusOnMe]="'true'"
+                                                    [ObjectFieldName]="'TotalInvoiceAmountInUSD'"
+                                                    [Text]="TotalInvoiceAmountInUSD"
+                                                    [InputType]="'double'" [DataContext]="DataContext"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [HideColumns]="true"></LogTextBox>
 
                                     </td>
 
@@ -221,30 +218,42 @@
 
 
 
-                                <!--LINE 3 :סוג תהליך//משקל//ערך $-->
+                                <!--LINE 3 :תנאי מכר//כמות//משקל -->
                                 <tr style="height: 28px;">
 
-
-                                    <!-- GovernmentProcedureType -->
-                                    <td style="width: 115px;">
-                                        <LogLabel [ObjectFieldName]="'ProcedureCurrentCode'" [ObjectTableName]="ObjectTableName"
+                                    <!-- IncotermCode -->
+                                    <td style="width: 150px;">
+                                        <LogLabel [ObjectFieldName]="'IncotermCode'" [ObjectTableName]="'Customs.SupplierInvoice'"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
-                                    <td style="width: 100px;">
-                                        <LogLov [ObjectFieldName]="'ProcedureCurrentCode'"
+
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'IncotermCode'"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.TermsOfSaleType'"
                                                 [HideColumns]="true"
-                                                [LookUpTableName]="'Customs.GovernmentProcedureType'"
-                                                [ManipulateData]="true"
-                                                [QueryFilterItems]="PreceduralFilterItems"
-                                                [SelectedValue]="ProcedureCurrentCode">
+                                                [SelectedValue]="IncotermCode">
+
                                         </LogLov>
                                     </td>
 
+                                    <td style="width: 10px;"><div></div></td>
 
+                                    <!-- _PackageQuantity.ConsignmentPackages -->
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'PackageQuantity'"
+                                                  [ObjectTableName]="ObjectTableName"
+                                                  [Text]="'כמות'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 105px;" tabindex="2">
+                                        <LogTextBox [ObjectFieldName]="'_PackageQuantity'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [Text]="_PackageQuantity"
+                                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
 
-
+                                    </td>
                                     <td style="width: 10px;"><div></div></td>
 
                                     <!-- GrossMassMeasure -->
@@ -255,33 +264,12 @@
                                     </td>
                                     <td style="width: 105px;" tabindex="2">
 
-                                        <LogTextBox [FocusOnMe]="'true'" 
+                                        <LogTextBox [FocusOnMe]="'true'"
                                                     [ObjectFieldName]="'GrossMassMeasure'"
                                                     [Text]="GrossMassMeasure"
                                                     [DataContext]="DataContext"
                                                     [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                     </td>
-
-                                    <td style="width: 10px;"><div></div></td>
-
-                                    <!-- TotalInvoiceAmountInUSD -->
-                                    <td style="width: 150px;">
-                                        <LogLabel [ObjectFieldName]="'TotalInvoiceAmountInUSD'" 
-                                                  [ObjectTableName]="'Customs.SupplierInvoice'"
-                                                  [Text]="'ערך סחורה בUsd'"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td style="width: 160px;">
-                                        <LogTextBox [FocusOnMe]="'true'" 
-                                                    [ObjectFieldName]="'TotalInvoiceAmountInUSD'" 
-                                                    [Text]="TotalInvoiceAmountInUSD"
-                                                    [InputType]="'double'" [DataContext]="DataContext"
-                                                    [ObjectTableName]="ObjectTableName" 
-                                                    [HideColumns]="true"></LogTextBox>
-                                        
-                                    </td>
-
 
                                     <td><div></div></td>
 
@@ -290,7 +278,7 @@
 
 
 
-                                <tr  style="height: 28px;">
+                                <tr style="height: 28px;">
 
 
                                     <!-- CargoDescription -->
@@ -300,15 +288,13 @@
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td rowspan="2" colspan="4" style="vertical-align: top;padding-top: 2px;">
-<!--<td rowspan="2" colspan="5" style="vertical-align: top;padding-top: 2px;">-->
-                                        <LogTextBox 
-                                                    [ObjectFieldName]="'CargoDescription'" 
+                                        <!--<td rowspan="2" colspan="5" style="vertical-align: top;padding-top: 2px;">-->
+                                        <LogTextBox [ObjectFieldName]="'CargoDescription'"
                                                     [ObjectTableName]="'Customs.Consignment'"
                                                     [HideColumns]="true"
-                                                    [IsMultiline]="true" 
+                                                    [IsMultiline]="true"
                                                     [DataContext]="DataContext"
-                                                    [Text]="CargoDescription" 
-                                                    ></LogTextBox>
+                                                    [Text]="CargoDescription"></LogTextBox>
                                     </td>
 
 
