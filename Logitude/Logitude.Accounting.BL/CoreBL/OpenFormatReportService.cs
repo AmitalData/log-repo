@@ -540,10 +540,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append(' ', 15);
                 TrailReportM trailReportM = null;
-                //if (result.ContainsKey(item.GLAccountId))
-                //{
-                //    trailReportM =  result[item.GLAccountId];
-                //}
+                if (result.ContainsKey(item.GLAccountId))
+                {
+                    trailReportM = result[item.GLAccountId];
+                }
                 if (trailReportM != null)
                 {
                     item.OpeningBalance = trailReportM.LocalOpenBalance;
@@ -601,6 +601,28 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         myStringBuilder.Append('0', 15);
                     }
+
+                    item.TotalDebitInForeignCurrency = trailReportM != null ? trailReportM.ForeignDebit : null;
+                    if (item.TotalDebitInForeignCurrency != null)
+                    {
+                        if (item.TotalDebitInForeignCurrency.ToString().Length > 15) { item.TotalDebitInForeignCurrency.ToString().Substring(0, 15); }
+                        myStringBuilder.Append("a" + item.TotalDebitInForeignCurrency.ToString().PadLeft(15, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append('0', 15);
+                    }
+
+                    item.TotalCreditInForeignCurrency = trailReportM != null ? trailReportM.ForeignCredit : null;
+                    if (item.TotalCreditInForeignCurrency != null)
+                    {
+                        if (item.TotalCreditInForeignCurrency.ToString().Length > 15) { item.TotalCreditInForeignCurrency.ToString().Substring(0, 15); }
+                        myStringBuilder.Append("a" + item.TotalCreditInForeignCurrency.ToString().PadLeft(15, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append('0', 15);
+                    }
                     if (item.CurrencyCode != null)
                     {
                         if (item.CurrencyCode.Length > 3) { item.CurrencyCode.Substring(0, 3); }
@@ -613,7 +635,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-                    myStringBuilder.Append(' ', 18);
+                    myStringBuilder.Append(' ', 48);
                 }
 
                 myStringBuilder.Append(' ', 16);
