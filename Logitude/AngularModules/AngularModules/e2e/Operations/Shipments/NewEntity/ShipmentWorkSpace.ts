@@ -43,7 +43,8 @@ export class ShipmentWorkSpace {
 
 
   CreateShipment(LogitudeShipType: string, Direction: string, TransportMode: string, ShipmentType: string) {
-
+    this.DirectShipment.CreateAndCloseNewShipment();
+    
     if (LogitudeShipType == 'D') {
       if (TransportMode == 'A' && ShipmentType == '') {
         var shipperRef1 = this.GeneralFunction.RandomNum();
