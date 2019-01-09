@@ -901,6 +901,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<MamanSpecialAction> MamanSpecialAction { get; set; }
         public IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatus { get; set; }
         public IDbSet<DeclarationMamanSpecialAction> PendingDeclarationMamanSpecialActionErrorPlace { get; set; }
+        public IDbSet<RefundCustomerActivityType> RefundCustomerActivityType { get; set; }
 
         #endregion
 
@@ -3905,6 +3906,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new MamanSpecialActionMap());
             modelBuilder.Configurations.Add(new MamanSpecialActionStatusMap());
             modelBuilder.Configurations.Add(new DeclarationMamanSpecialActionMap());
+            modelBuilder.Configurations.Add(new RefundCustomerActivityTypeMap());
 
             #endregion
 
