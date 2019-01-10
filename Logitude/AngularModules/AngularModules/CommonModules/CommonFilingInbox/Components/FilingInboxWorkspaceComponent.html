@@ -377,7 +377,7 @@
                                                                                 <tr class="FormFieldRow">
                                                                                     <td style="width:230px;">
                                                                                         <div *ngIf="EntityObjectTableName =='Shipment'">
-                                                                                            <QuickSearchTextBox [IsItemSelected]="IsItemSelected" (OnTextChanged)="IsItemSelected = $event" [Area]="'FilingInbox'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="230" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity(null)" [Watermark]="' '" [DisplayText]="EntityNumber">
+                                                                                            <QuickSearchTextBox [IsDisabled]="SelectedFilingInbox == null" [IsItemSelected]="IsItemSelected" (OnTextChanged)="IsItemSelected = $event" [Area]="'FilingInbox'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="230" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity(null)" [Watermark]="' '" [DisplayText]="EntityNumber">
                                                                                                 <ul>
                                                                                                     <li class="LogitudeQuickSearchItem" style="height:25px;" *ngFor="let item of QuickSearchItems" (mousedown)="QuickSearchTextChanged(item)">
                                                                                                         <table>
@@ -421,7 +421,7 @@
                                                                                             </QuickSearchTextBox>
                                                                                         </div>
                                                                                         <div *ngIf="EntityObjectTableName=='Master'">
-                                                                                            <QuickSearchTextBox [IsItemSelected]="IsItemSelected" (OnTextChanged)="IsItemSelected = $event" [Area]="'FilingInbox'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="230" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity(null)" [Watermark]="' '" [DisplayText]="EntityNumber">
+                                                                                            <QuickSearchTextBox [IsDisabled]="SelectedFilingInbox == null" [IsItemSelected]="IsItemSelected" (OnTextChanged)="IsItemSelected = $event" [Area]="'FilingInbox'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="230" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity(null)" [Watermark]="' '" [DisplayText]="EntityNumber">
                                                                                                 <ul>
                                                                                                     <li class="LogitudeQuickSearchItem" style="height:25px;" *ngFor="let item of QuickSearchItems" (mousedown)="QuickSearchTextChanged(item)">
                                                                                                         <table>
@@ -465,7 +465,7 @@
                                                                                             </QuickSearchTextBox>
                                                                                         </div>
                                                                                         <div *ngIf="EntityObjectTableName =='Quote'">
-                                                                                            <QuickSearchTextBox [IsItemSelected]="IsItemSelected" (OnTextChanged)="IsItemSelected = $event" [Area]="'FilingInbox'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="230" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity(null)" [Watermark]="' '" [DisplayText]="EntityNumber">
+                                                                                            <QuickSearchTextBox [IsDisabled]="SelectedFilingInbox == null" [IsItemSelected]="IsItemSelected" (OnTextChanged)="IsItemSelected = $event" [Area]="'FilingInbox'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="230" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity(null)" [Watermark]="' '" [DisplayText]="EntityNumber">
                                                                                                 <ul>
                                                                                                     <li class="LogitudeQuickSearchItem" style="height:25px;" *ngFor="let item of QuickSearchItems" (mousedown)="QuickSearchTextChanged(item)">
                                                                                                         <table>
@@ -533,7 +533,7 @@
                                                                                                 </td>
 
                                                                                                 <td *ngIf="EntityObjectTableName =='Shipment' && IsNewShipmentVisible" style="text-align:left;width: 85px;">
-                                                                                                    <button class="Button" (click)="NewShipmentClicked()">New Shipment</button>
+                                                                                                    <button [disabled]="SelectedFilingInbox == null" class="Button" (click)="NewShipmentClicked()">New Shipment</button>
                                                                                                 </td>
                                                                                                 <td>
                                                                                                     <div></div>
@@ -875,7 +875,7 @@
                                                                                 </tr>
                                                                                 <tr style="vertical-align:top;">
                                                                                     <td>
-                                                                                        <div *ngIf="IsPDF && !IsMailBody" style="width:100%;height:100%;" >
+                                                                                        <div *ngIf="IsPDF && !IsMailBody" style="width:100%;height:100%;">
                                                                                             <iframe id="pdfQuoteViewerFrame" name="pdfQuoteViewerFrame" [src]="IFrameURI | SafePipe" style="width:100%;height:100%">Loading...</iframe>
                                                                                         </div>
                                                                                         <div *ngIf="!IsPDF && !IsMailBody" style="text-align:center;">
@@ -892,11 +892,12 @@
                                                                                                 </tr>
                                                                                             </table>
                                                                                         </div>
+                                                                                        
                                                                                         <div class="MediaFill" style="vertical-align:top;" [hidden]="!IsMailBody">
                                                                                             <table [hidden]="!IsSetHtml">
                                                                                                 <tr style="height:100%;vertical-align:top;text-align:left;">
                                                                                                     <td>
-                                                                                                        <div class="MediaFill" style="vertical-align:top;"  [attr.id]="PreviewDivId"></div>
+                                                                                                        <div class="MediaFill" style="vertical-align:top;" [attr.id]="PreviewDivId"></div>
                                                                                                     </td>
                                                                                                 </tr>
                                                                                             </table>
@@ -929,6 +930,19 @@
                                                                     </td>
                                                                 </tr>
 
+                                                                <tr *ngIf="SelectedFilingInbox== null" >
+                                                                    <td>
+                                                                        <div style="text-align:center;">
+                                                                            <table>
+                                                                                <tr style="height:1px;">
+                                                                                    <td>
+                                                                                        Please select an email to start the filing process
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
                                                                 <tr style="height:3px;">
                                                                     <td>
                                                                         <div></div>

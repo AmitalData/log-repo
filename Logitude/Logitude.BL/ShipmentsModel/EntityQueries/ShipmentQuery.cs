@@ -1736,6 +1736,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.IsMultipleCommodities = shipment.IsMultipleCommodities;
             shipmentPM.AMSBL = shipment.AMSBL;
             shipmentPM.MoveTypeId = shipment.MoveTypeId;
+            shipmentPM.HasContainerException = shipment.HasContainerException;
 
             if (shipment.MoveTypeId != null)
             {

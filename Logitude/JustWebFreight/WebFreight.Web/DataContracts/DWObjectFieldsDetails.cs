@@ -35,55 +35,59 @@ namespace WebFreight.Web.DataContracts
         public string OperationCode { get; set; }
         public string OperationName { get; set; }
         public string AndOr { get; set; }
+        public bool IsSetDefaults { get; set; }
+        public bool IsMandatoryFilter { get; set; }
+        public string FilterType { get; set; }
+        
 
-        [DataMember]
-        public List<MultSelectValue> MultSelectValueLists{ get; set; }
+        public List<MultiSelectedValue> MultiSelectedValueLists { get; set; }
+      
+    }
+
+
+    public class MultiSelectedValue
+    {
+
+        public ValueDetails Value { get; set; }
+
+        public ValueDetails Value1 { get; set; }
+
+        public ValueDetails Value2 { get; set; }
+
+        public ValueDetails Value3 { get; set; }
+
+        public ValueDetails Value4 { get; set; }
+
+        public ValueDetails Value5 { get; set; }
+
+        public ValueDetails Value6 { get; set; }
+
+        public ValueDetails Value7 { get; set; }
+
+        public ValueDetails Value8 { get; set; }
+
+        public ValueDetails Value9 { get; set; }
+
+        public ValueDetails Value10 { get; set; }
+
 
     }
+
+
+    public class ValueDetails
+    {
+        public string Header { get; set; }
+        public string Row { get; set; }
+    }
+
+
 
     public class ObjectFieldOperator
     {
-        
+
         public string Code { get; set; }
-     
+
         public string Name { get; set; }
-    }
-    [DataContract(Namespace = "")]
-    public class MultSelectValue
-    {
-        [DataMember]
-        public FieldDetails Value { get; set; }
-        [DataMember]
-        public FieldDetails Value1 { get; set; }
-        [DataMember]
-        public FieldDetails Value2 { get; set; }
-        [DataMember]
-        public FieldDetails Value3 { get; set; }
-        [DataMember]
-        public FieldDetails Value4 { get; set; }
-        [DataMember]
-        public FieldDetails Value5 { get; set; }
-        [DataMember]
-        public FieldDetails Value6 { get; set; }
-        [DataMember]
-        public FieldDetails Value7 { get; set; }
-        [DataMember]
-        public FieldDetails Value8 { get; set; }
-        [DataMember]
-        public FieldDetails Value9 { get; set; }
-        [DataMember]
-        public FieldDetails Value10 { get; set; }
-
-
-    }
-
-    [DataContract(Namespace = "")]
-    public class FieldDetails
-    {
-        [DataMember]
-        public string Column { get; set; }
-        [DataMember]
-        public string Row { get; set; }
     }
 
 }

@@ -48,7 +48,7 @@ namespace WebFreight.Web.DataProviders
         public string Bank { get; set; }
         public string Branch { get; set; }
         public string Account { get; set; }
-
+        public string VATNumber { get; set; }
         public string CustomerField1 { get; set; }
         public string CustomerField2 { get; set; }
         public string CustomerField3 { get; set; }
