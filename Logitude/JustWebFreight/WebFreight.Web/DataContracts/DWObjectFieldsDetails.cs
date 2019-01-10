@@ -35,6 +35,10 @@ namespace WebFreight.Web.DataContracts
         public string OperationCode { get; set; }
         public string OperationName { get; set; }
         public string AndOr { get; set; }
+        public bool IsSetDefaults { get; set; }
+        public bool IsMandatoryFilter { get; set; }
+        public string FilterType { get; set; }
+        
 
         [DataMember]
         public List<MultSelectValue> MultSelectValueLists{ get; set; }
