@@ -139,7 +139,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     !string.IsNullOrWhiteSpace(entityPM.DocumentRemarks) &&
                     entityPM.DocumentRemarks.Contains(LoadTestSendMessageToQueue) &&
                         entityPM.DocumentVersion == entityPOCO.DocumentVersion + 1);
-
                 TrySendMessageToQueue(entityPM, forceDueLoadTest);
                 base.OnUpdating(entityPM, entityPOCO);
                 if (entityPM.DocumentStatusCode == "7")
@@ -431,12 +430,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     return send;
                 }
-
                 if (!string.IsNullOrWhiteSpace(entityPM.CollateralId))
                 {
                     sendWithCustomsDocId = true;
                 }
-
                 if (!String.IsNullOrWhiteSpace(entityPM.CustomsDocId) && !sendWithCustomsDocId)
                 {
                     //ALREADY SEND TO MEHES AND RECIVE REF :entityPM.CustomsDocId
