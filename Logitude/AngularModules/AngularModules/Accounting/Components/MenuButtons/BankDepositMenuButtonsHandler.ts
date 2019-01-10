@@ -39,7 +39,39 @@ export class BankDepositMenuButtonsHandler {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
+
+
+        this.Listen();
     }
+
+    private LoadCompletedEvent: any = null;
+    Listen() {
+
+
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
+
+            if (this.LoadCompletedEvent == null) {
+                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        console.log("Entity Reloaded");
+                    }
+                });
+            }
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         if (this.EntityPM != null) {
@@ -159,6 +191,7 @@ export class BankDepositMenuButtonsHandler {
 
                         var mm: ServiceResponse = myResult;
                         if (!mm.HasError) {
+                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
                         }
                         else {
