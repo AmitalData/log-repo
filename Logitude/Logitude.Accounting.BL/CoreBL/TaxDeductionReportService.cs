@@ -521,7 +521,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-            DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, taxDeductionReportPM);
+            DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, setting.DeductionFileNumber, taxDeductionReportPM);
 
             return docOut;
 
@@ -574,7 +574,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        private static DocumentsFilingPM CreateDocumnetFiling(StringBuilder lines, TaxDeductionReportPM taxDeductionReport, bool isFromWR = false)
+        private static DocumentsFilingPM CreateDocumnetFiling(StringBuilder lines,string DeductionFileNumber, TaxDeductionReportPM taxDeductionReport, bool isFromWR = false)
         {
             // prepare file string
             string file = string.Join(Environment.NewLine, lines);
@@ -595,7 +595,7 @@ namespace Logitude.Accounting.BL.CoreBL
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("TDR856", tenant);
 
             string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
-            string name = "A856." + tenantPM.VatNumber + "." + taxDeductionReport.TaxYear.ToString().Substring(1, 3);
+            string name = "A856." + DeductionFileNumber + "." + taxDeductionReport.TaxYear.ToString().Substring(1, 3);
             DocumentsFilingPM document = new DocumentsFilingPM()
             {
                 Description = "TDR856 Text File",
