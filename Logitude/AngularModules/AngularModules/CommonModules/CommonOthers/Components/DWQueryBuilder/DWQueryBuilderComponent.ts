@@ -1243,9 +1243,17 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
             this.IsMeasurement = DWObjectField.IsMeasurement;
             this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
-            this.FilterType = DWObjectField.FilterType;
-            this.IsSetDefaults = DWObjectField.IsSetDefaults;
-            this.IsMandatoryFilter = DWObjectField.IsMandatoryFilter;
+            if (DWObjectField.FilterType) {
+                this.FilterType = DWObjectField.FilterType;
+            }
+            if (DWObjectField.IsSetDefaults) {
+                this.IsSetDefaults = DWObjectField.IsSetDefaults;
+            }
+            if (DWObjectField.IsMandatoryFilter) {
+                this.IsMandatoryFilter = DWObjectField.IsMandatoryFilter;
+            }
+            
+           
             //this.Name = DWObjectField.Name;
         }
 
@@ -1467,7 +1475,14 @@ export class DWObjectFieldsDetails extends BaseComponent {
     }
 
     OpenFilterSettings() {
+        var windowArgs: any = {};
+        windowArgs.IsMandatoryFilter = this.IsMandatoryFilter;
+        windowArgs.IsSetDefaults = this.IsSetDefaults;
+
+        
+       
         var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = windowArgs;
         logWindow.Width = 500;
         logWindow.Height = 260;
         logWindow.Title = "Ask User Settings";
@@ -1475,18 +1490,20 @@ export class DWObjectFieldsDetails extends BaseComponent {
         //logWindow.IsShowCloseButton = true;
         logWindow.Show('./CommonModules/CommonOthers/Components/DWQueryBuilder/DWFilterSettings');
         logWindow.WindowClosed.subscribe(($event: string) => {
-            var MySettings = $event.split(',');
-            if (MySettings[0] == "true") {
-                this.IsMandatoryFilter = true;
-            }
-            else {
-                this.IsMandatoryFilter = false;
-            }
-            if (MySettings[1] == "true") {
-                this.IsSetDefaults = true;
-            }
-            else {
-                this.IsSetDefaults = false;
+            if ($event) {
+                var MySettings = $event.split(',');
+                if (MySettings[0] == "true") {
+                    this.IsMandatoryFilter = true;
+                }
+                else {
+                    this.IsMandatoryFilter = false;
+                }
+                if (MySettings[1] == "true") {
+                    this.IsSetDefaults = true;
+                }
+                else {
+                    this.IsSetDefaults = false;
+                }
             }
         });
     }
