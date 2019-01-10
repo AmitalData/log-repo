@@ -82,7 +82,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         Succeeded = true,
                         HasException = true,
-                        UserMessage = "Can not find tapag file (not exist in connection table) " + "fileNumber=" + customResponse.TapagIdentifier.fileNumber + "Numeral=" + customResponse.TapagIdentifier.numeral,
+                        UserMessage = "Can not find deposit file (not exist in connection table) " + "fileNumber=" + customResponse.TapagIdentifier.fileNumber + "Numeral=" + customResponse.TapagIdentifier.numeral,
                     };
                     LogMessagingUtil.Instance.AppendLine("Can not find tapag file (not exist in connection table) " + "fileNumber=" + customResponse.TapagIdentifier.fileNumber + "Numeral=" + customResponse.TapagIdentifier.numeral);
                     return;
