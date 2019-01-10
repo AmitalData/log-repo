@@ -34,6 +34,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.BL.TraceEvents;
 
+
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class SupplierInvoiceUpdateService : EntityUpdateService<SupplierInvoice, SupplierInvoicePM, EntityPM>
@@ -161,6 +162,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnUpdating(SupplierInvoicePM entityPM)
         {
 
+            
+
             _Context = CustomContext.GetContext(entityPM.Tenant);
 
             //var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
@@ -175,10 +178,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //}
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
             DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
+            
             if (declarationPM != null && declarationPM.IsConnectedToUnifreight)
             {
                 base.OnUpdating(entityPM);
                 SupplierInvoicePM dbOccSupplierInvoicePM = GetDBEntity(entityPM);
+                var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
+                unifreightFUStatusTaskService.DeleteINAFUStatus(declarationPM);
+
                 if (dbOccSupplierInvoicePM != null && dbOccSupplierInvoicePM.IsValueForCustomsOnly != entityPM.IsValueForCustomsOnly)
                 {
                     string xml_status = "new";
@@ -239,6 +246,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             this.SetDeclarationChanged(entityPM);
             this.UpdateDeclarationPlatformFeeAndPrimaryInvoice(entityPM);
         }
+
+     
 
         private SupplierInvoicePM GetDBEntity(SupplierInvoicePM dirtySupplierInvoicePM)
         {
