@@ -152,8 +152,6 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new LedgerTransactionMap());
 	
-            modelBuilder.Configurations.Add(new OpenFormatDateTypeMap());
-	
             modelBuilder.Configurations.Add(new OpenFormatReportMap());
 	
             modelBuilder.Configurations.Add(new OpenFormatReportStatusMap());
@@ -820,12 +818,6 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<LedgerTransaction> LedgerTransactions 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<OpenFormatDateType> OpenFormatDateTypes 
 	 {
 	      get; set;
 	 

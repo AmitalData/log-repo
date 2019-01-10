@@ -418,6 +418,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.AdditionalChargesId = entityPM.AdditionalChargesId;
             entityPoco.FreightPayerId = entityPM.FreightPayerId;
             entityPoco.FreightPayerAddressId = entityPM.FreightPayerAddressId;
+            entityPoco.HasContainerException = entityPM.HasContainerException;
 
             // No need to map these fields
             // they are computed via PROCEDURE

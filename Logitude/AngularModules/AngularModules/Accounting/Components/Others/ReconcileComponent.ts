@@ -495,7 +495,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         }
 
         //multiple payment check
-        var paymentsCount = this.SelectedLines.Collection.filter(d=>d.SourceTypeCode == "3" || d.SourceTypeCode == "2" ).length;
+        var paymentsCount = this.SelectedLines.Collection.filter(d=>d.SourceTypeCode == "3" || d.SourceTypeCode == "5" ).length;
         if (paymentsCount > 1)
         {
             errors.push(TextCodeTranslator.Translate("Accounting.O.CantIncludeTwoOrMorePayment"));
