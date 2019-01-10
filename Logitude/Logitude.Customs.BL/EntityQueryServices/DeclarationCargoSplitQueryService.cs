@@ -52,11 +52,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
             List<DeclarationCargoSplitPM> DeclarationCargoSplitList = new List<DeclarationCargoSplitPM>();
             if (DeclarationCargoSplits != null)
             {
+                /*
                 foreach (var DeclarationCargoSplitItem in DeclarationCargoSplits)
                 {
                     DeclarationCargoSplitPM DeclarationCargoSplitPM = this.GetSingle(DeclarationCargoSplitItem.Id,true,false);
                     DeclarationCargoSplitList.Add(DeclarationCargoSplitPM);
                 }
+                */
+                var pocos = DeclarationCargoSplits.ToList();
+                var pmList = pocos.Select(poco => this.GetEntityPM(poco, true, new DeclarationCargoSplitKeys() { Id = poco.Id } ))
+                   .ToList();
+                DeclarationCargoSplitList = pmList;
             }
 
 
