@@ -1,4 +1,4 @@
-﻿import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
+import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
 import {TransportsFilter} from '../../../../Controls/TransportsFilter';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -61,14 +61,31 @@ export class EditLogBoxShipmentComponent extends BaseComponent implements OnInit
             this.EntityPm = args.EntityPm; 
         }
     }
- 
 
-     
+    CustomerReferenceChanged: boolean = false;
+    
     public get CustomerReference2() { return this.EntityPm.CustomerReference2 }
-    public set CustomerReference2(newValue: string) { this.EntityPm.CustomerReference2 = newValue; }
+    public set CustomerReference2(newValue: string) {
+        if (this.EntityPm.CustomerReference2 != newValue) {
+            this.EntityPm.CustomerReference2 = newValue;
+            this.CustomerReferenceChanged = true;
+        }
+        else {
+            this.CustomerReferenceChanged = false;
+        }
+    }
 
     public get SendUpdatesToAgentEnabled() { return this.EntityPm.SendUpdatesToAgentEnabled }
-    public set SendUpdatesToAgentEnabled(newValue: boolean) { this.EntityPm.SendUpdatesToAgentEnabled = newValue; }
+    public set SendUpdatesToAgentEnabled(newValue: boolean) {
+        
+        if (this.EntityPm.SendUpdatesToAgentEnabled != newValue) {
+            this.EntityPm.SendUpdatesToAgentEnabled = newValue;
+            this.CustomerReferenceChanged = true;
+        }
+        else {
+            this.CustomerReferenceChanged = false;
+        }
+    }
     
      
     SaveChanges() {
@@ -80,13 +97,12 @@ export class EditLogBoxShipmentComponent extends BaseComponent implements OnInit
         //if (AppTool.IsNullOrEmpty(this.CustomerReference2)) {
         //    this.ValidationErrorsList.push(msg.replace("%FieldName", "My Reference"));
         //}
-        //if (this.ValidationErrorsList.length == 0 && !AppTool.IsNullOrEmpty(this.CustomerReference2)) {
+        if (this.CustomerReferenceChanged == true) {
             this.SaveData();
-        //}
-        //else {
-        //    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-        //    SessionLocator.CurrentSession.CloseCurrentWindow();
-        //}
+        }
+        else { 
+            SessionLocator.CurrentSession.CloseCurrentWindow();
+        }
 
     }
 
@@ -136,4 +152,3 @@ export class EditLogBoxShipmentComponent extends BaseComponent implements OnInit
     } 
 
 }
- 
