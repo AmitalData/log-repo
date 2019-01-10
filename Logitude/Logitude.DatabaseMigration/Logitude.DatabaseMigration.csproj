@@ -482,6 +482,10 @@
     <Compile Include="Migrations\201901100753027_JLIsExtReconcileNull2.Designer.cs">
       <DependentUpon>201901100753027_JLIsExtReconcileNull2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901101033050_DeleteOpenFormatDateTypeMigration.cs" />
+    <Compile Include="Migrations\201901101033050_DeleteOpenFormatDateTypeMigration.Designer.cs">
+      <DependentUpon>201901101033050_DeleteOpenFormatDateTypeMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -781,6 +785,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901100753027_JLIsExtReconcileNull2.resx">
       <DependentUpon>201901100753027_JLIsExtReconcileNull2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901101033050_DeleteOpenFormatDateTypeMigration.resx">
+      <DependentUpon>201901101033050_DeleteOpenFormatDateTypeMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

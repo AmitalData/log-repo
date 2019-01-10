@@ -330,12 +330,10 @@
     <TypeScriptCompile Include="Accounting\EntityLists\OpenFormatReportList.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMCustomCode\OpenFormatReportPMCustomCode.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\JournalAdditionalDataPM.ts" />
-    <TypeScriptCompile Include="Accounting\EntityPMs\OpenFormatDateTypePM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\OpenFormatReportPM.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedLists\TaxReportLineExtendedListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\TaxDeductionReportExtendedPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\JournalAdditionalDataListService.ts" />
-    <TypeScriptCompile Include="Accounting\Services\StandardLists\OpenFormatDateTypeListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\OpenFormatReportListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\JournalAdditionalDataPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
