@@ -434,6 +434,42 @@ export class ShipmentPackagePM {
     public get IsMultiHarmonize() { return this.isMultiHarmonize; }
     public set IsMultiHarmonize(newValue: boolean) { if (this.isMultiHarmonize != newValue) { this.isMultiHarmonize = newValue; this.MarkAsDirty("IsMultiHarmonize"); } }
 
+    private eTD: Date;
+    public get ETD() { return this.eTD; }
+    public set ETD(newValue: Date) {
+        if (this.eTD != newValue) {
+            this.eTD = newValue;
+            this.MarkAsDirty("ETD");
+        }
+    }
+
+    private eTA: Date;
+    public get ETA() { return this.eTA; }
+    public set ETA(newValue: Date) {
+        if (this.eTA != newValue) {
+            this.eTA = newValue;
+            this.MarkAsDirty("ETA");
+        }
+    }
+
+    private routing: string;
+    public get Routing() { return this.routing; }
+    public set Routing(newValue: string) {
+        if (this.routing != newValue) {
+            this.routing = newValue;
+            this.MarkAsDirty("Routing");
+        }
+    }
+
+    private voyageTripNumber: string;
+    public get VoyageTripNumber() { return this.voyageTripNumber; }
+    public set VoyageTripNumber(newValue: string) {
+        if (this.voyageTripNumber != newValue) {
+            this.voyageTripNumber = newValue;
+            this.MarkAsDirty("VoyageTripNumber");
+        }
+    }
+
 	private insideShipmentPackages: InsideShipmentPackagePM[];
     get  InsideShipmentPackages() {
         if (this.insideShipmentPackages == null) {
@@ -622,4 +658,4 @@ export class ShipmentPackagePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

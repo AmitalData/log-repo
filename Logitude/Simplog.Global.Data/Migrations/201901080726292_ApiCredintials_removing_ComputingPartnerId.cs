@@ -8,9 +8,9 @@ namespace Simplog.Global.Data.Migrations
         public override void Up()
         {
             DropColumn("dbo.ApiCredintials", "ComputingPartnerId");
-            Sql(@"
-delete from ObjectFields where FieldName = 'ComputingPartnerId' and ObjectTableId in (select Id from ObjectTables where Name = 'ApiCredintials')
-delete from TextCodes where Code like '%.Computing%' and ObjectTableId in (select Id from ObjectTables where Name = 'ApiCredintials')");
+//            Sql(@"
+//delete from ObjectFields where FieldName = 'ComputingPartnerId' and ObjectTableId in (select Id from ObjectTables where Name = 'ApiCredintials')
+//delete from TextCodes where Code like '%.Computing%' and ObjectTableId in (select Id from ObjectTables where Name = 'ApiCredintials')");
         }
         
         public override void Down()

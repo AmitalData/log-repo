@@ -66,46 +66,60 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
 
         #region Logic
+        //
+        // Create journal and its lines for cashbook and bank
         void CreateJournal(BankDepositPM entityPM, int tenant)
         {
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-
-
             CashBookQueryService cashBookQueryService = new CashBookQueryService(entityPM.Tenant);
+            
+            // 1- Creating a New Journal
+            JournalPM newJournal = new JournalPM();
+            InitJournal(entityPM, ref newJournal);
+
+            // 2- Get cashbook and Validate
             CashBookPM cashBook = cashBookQueryService.GetSingle(entityPM.CashBookId, true, false);
-
-            //dates
-            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-            entityPM.UpdateDate = todayDateTime;
-
-            //showlocal
-            bool showLocal = false;
-            ContactPM user = GetLoggedContact(entityPM.Tenant);
-            if (user != null)
-                showLocal = !user.DontShowLocal;
-
-
-            ARPaymentChequeQueryService arpChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
-
-
             if (entityPM.ForeignAmount > cashBook.TotalAmount)
             {
+                //showlocal
+                bool showLocal = false;
+                ContactPM user = GetLoggedContact(entityPM.Tenant);
+                if (user != null)
+                    showLocal = !user.DontShowLocal;
+
                 throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.DepositAmountmustbelessthanCashbook", 0, showLocal));
             }
 
-            BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(entityPM.Tenant);
-            BankAccountPM bankAccount = bankAccountQueryService.GetSingle(entityPM.DepositBankAccountId, true, false);
 
+            // 3- Creating JournalLines for Cashbook Crediting
+            int LineNumber = 0;
+            CreateCreditJournalLines(entityPM, LineNumber, cashBook, newJournal);
+
+
+            // 4- Creating JournalLines For Bank Debiting
+            CreateDebitJournalLines(entityPM, LineNumber, cashBook, newJournal);
+
+            // 5- Save Journal
+            var myJournalUpdateService = new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            myJournalUpdateService.Update(newJournal, true);
+
+            // 6- Update Cashbook
             if (cashBook != null)
             {
                 cashBook.ChangeSetOp = ChangeSetOperation.Update;
+
+                // update cashbook total sum
+                cashBook.TotalAmount = cashBook.TotalAmount - Math.Round(entityPM.ForeignAmount, 2); //- entityPM.LocalDepositAmount;
+
+                var myCashBookUpdateService = new CashBookUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                myCashBookUpdateService.Update(cashBook, true);
             }
 
-            // 1- Creating a New Journal
-            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(entityPM.Tenant);
-            GLAccountPM gLAccount;
-            JournalPM newJournal = new JournalPM();
-            newJournal.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+        }
+        
+        void InitJournal(BankDepositPM entityPM, ref JournalPM newJournal)
+        {
+            newJournal.ChangeSetOp = ChangeSetOperation.Insert;
             newJournal.Tenant = entityPM.Tenant;
             newJournal.CreateDate = DateTime.Now;
             newJournal.CreatedByUserId = entityPM.CreatedByUserId;
@@ -129,11 +143,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 newJournal.AccountingEntityCode = "6"; // Cheque Deposit
             }
+        }
+        void CreateCreditJournalLines(BankDepositPM entityPM,int LineNumber, CashBookPM cashBook, JournalPM newJournal)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 
-            int LineNumber = 0;
+            ARPaymentChequeQueryService arpChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(entityPM.Tenant);
+            GLAccountPM gLAccount;
 
-
-            //Creating JournalLines for Cashbook Crediting
             if (entityPM.IsCashDeposit)  //Cash Deposit
             {
 
@@ -216,9 +235,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                 }
             }
+        }
+        void CreateDebitJournalLines(BankDepositPM entityPM, int LineNumber, CashBookPM cashBook, JournalPM newJournal)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+
+            ARPaymentChequeQueryService arpChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(entityPM.Tenant);
+            GLAccountPM gLAccount;
+            BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(entityPM.Tenant);
+            BankAccountPM bankAccount = bankAccountQueryService.GetSingle(entityPM.DepositBankAccountId, true, false);
 
 
-            //Creating JournalLines For Bank Debiting
             if (entityPM.IsCashDeposit)  //Cash Deposit
             {
 
@@ -296,19 +325,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                 }
             }
-            var myJournalUpdateService = new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            myJournalUpdateService.Update(newJournal, true);
-
-
-            if (cashBook != null)
-            {
-                // update cashbook total sum
-                cashBook.TotalAmount = cashBook.TotalAmount - Math.Round(entityPM.ForeignAmount, 2); //- entityPM.LocalDepositAmount;
-
-                var myCashBookUpdateService = new CashBookUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                myCashBookUpdateService.Update(cashBook, true);
-            }
-
         }
         #endregion
 

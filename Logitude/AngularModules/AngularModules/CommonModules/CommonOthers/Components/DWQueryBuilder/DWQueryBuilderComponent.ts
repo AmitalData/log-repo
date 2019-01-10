@@ -14,6 +14,7 @@ import { DWQueryData } from '../../../../Common/DataContracts/DWQueryData';
 import { DWSubQueryPMService } from '../../../../Infrastructure/Services/StandardPMs/DWSubQueryPMService';
 import { DWSubQueryPM } from '../../../../Infrastructure/EntityPMs/DWSubQueryPM';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { DWObjectTableListService } from '../../../../Infrastructure/Services/StandardLists/DWObjectTableListService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
@@ -194,11 +195,13 @@ export class DWQueryBuilderComponent extends BaseComponent {
     }
 
     FillPlaceHolder() {
-        var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
-        temp.placeholder = TextCodeTranslator.Translate("General.O.Search");
-        temp.style.background = "url(Images/Search.png) no-repeat scroll";
-        temp.style.backgroundPosition = "right center";
-        temp.style.paddingRight = "30px";
+        if (!this.SearchText) {
+            var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
+            temp.placeholder = TextCodeTranslator.Translate("General.O.Search");
+            temp.style.background = "url(Images/Search.png) no-repeat scroll";
+            temp.style.backgroundPosition = "right center";
+            temp.style.paddingRight = "30px";
+        }
     }
 
     OnDeleteValue() {
@@ -1155,7 +1158,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             //}
             if (field.FilterItems.length == 0) {
                 view.TextValue = field.TextValue;
-                view.MultSelectValueLists = this.MapMultSelectValueLists(field.MultSelectValueLists);
+                view.MultiSelectedValueLists = this.MapMultiSelectedValueLists(field.MultiSelectedValueLists);
                 view.Operation = new ObjectFieldOperator(field.OperationCode, field.OperationName);
                 MyFilter.FilterItems.push(view);
             }
@@ -1184,18 +1187,18 @@ export class DWQueryBuilderComponent extends BaseComponent {
     }
 
 
-    MapMultSelectValueLists(lists: MultSelectValue[]) {
-        var result: MultSelectValue[] = [];
+    MapMultiSelectedValueLists(lists: MultiSelectedValue[]) {
+        var result: MultiSelectedValue[] = [];
         if (lists) {
             lists.forEach((field) => {
-                var item: MultSelectValue = new MultSelectValue();
+                var item: MultiSelectedValue = new MultiSelectedValue();
                 var i = "";
                 var j = 0;
                 while (field["Value" + i]) {
-                    var fieldDetails: FieldDetails = new FieldDetails();
-                    fieldDetails.Column = field["Value" + i].Column;
-                    fieldDetails.Row = field["Value" + i].Row;
-                    item["Value" + i] = fieldDetails;
+                    var valueDetails: ValueDetails = new ValueDetails();
+                    valueDetails.Header = field["Value" + i].Header;
+                    valueDetails.Row = field["Value" + i].Row;
+                    item["Value" + i] = valueDetails;
                     j += 1;
                     i = j.toString();
 
@@ -1240,6 +1243,9 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
             this.IsMeasurement = DWObjectField.IsMeasurement;
             this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
+            this.FilterType = DWObjectField.FilterType;
+            this.IsSetDefaults = DWObjectField.IsSetDefaults;
+            this.IsMandatoryFilter = DWObjectField.IsMandatoryFilter;
             //this.Name = DWObjectField.Name;
         }
 
@@ -1375,13 +1381,13 @@ export class DWObjectFieldsDetails extends BaseComponent {
         }
     }
 
-    private multSelectValueLists: MultSelectValue[];
-    public get MultSelectValueLists() {
-        return this.multSelectValueLists;
+    private multiSelectedValueLists: MultiSelectedValue[];
+    public get MultiSelectedValueLists() {
+        return this.multiSelectedValueLists;
     }
-    public set MultSelectValueLists(newValue: MultSelectValue[]) {
-        this.multSelectValueLists = newValue;
-       // this.MyParentClass.SaveChanges();
+    public set MultiSelectedValueLists(newValue: MultiSelectedValue[]) {
+        this.multiSelectedValueLists = newValue;
+
     }
 
 
@@ -1442,11 +1448,54 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.MyParentClass.SaveChanges();
     }
 
+    private filterType: string = "Fixed Filter";
+    public get FilterType() { return this.filterType; }
+    public set FilterType(newValue: string) { this.filterType = newValue; }
+
+    private isSetDefaults: boolean = false;
+    public get IsSetDefaults() { return this.isSetDefaults; }
+    public set IsSetDefaults(newValue: boolean) { if (this.isSetDefaults != newValue) { this.isSetDefaults = newValue; } }
+
+    private isMandatoryFilter: boolean = false;
+    public get IsMandatoryFilter() { return this.isMandatoryFilter; }
+    public set IsMandatoryFilter(newValue: boolean) { if (this.isMandatoryFilter != newValue) { this.isMandatoryFilter = newValue; } }
+    //IsMandatoryFilter: boolean = false;
+    //IsSetDefaults: boolean = false;
+
+    FilterTypeChanged(Value) {
+        this.FilterType = Value;
+    }
+
+    OpenFilterSettings() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 260;
+        logWindow.Title = "Ask User Settings";
+        //logWindow.DataContext = this;
+        //logWindow.IsShowCloseButton = true;
+        logWindow.Show('./CommonModules/CommonOthers/Components/DWQueryBuilder/DWFilterSettings');
+        logWindow.WindowClosed.subscribe(($event: string) => {
+            var MySettings = $event.split(',');
+            if (MySettings[0] == "true") {
+                this.IsMandatoryFilter = true;
+            }
+            else {
+                this.IsMandatoryFilter = false;
+            }
+            if (MySettings[1] == "true") {
+                this.IsSetDefaults = true;
+            }
+            else {
+                this.IsSetDefaults = false;
+            }
+        });
+    }
+
     OperationValueChanged(operation) {
 
         if (this.Operation.Code == this.IsNullOp.Code || this.Operation.Code == this.IsNotNullOp.Code) {
             this.TextValue = "";
-            this.MultSelectValueLists = [];
+            this.MultiSelectedValueLists = [];
         }
 
         this.Operation = operation;
@@ -1572,7 +1621,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     FieldValueChanged(DWObjectField: DWObjectFieldsDetails) {
         //this.MyParentClass = ParentClass;
         this.TextValue = "";
-        this.MultSelectValueLists = [];
+        this.MultiSelectedValueLists = [];
         this.Name = DWObjectField.Name;
         this.Code = DWObjectField.Code;
         this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
@@ -1728,24 +1777,24 @@ export class DWFieldsGroup {
 }
 
 
-export class MultSelectValue {
+export class MultiSelectedValue {
 
-    public  Value: FieldDetails;
-    public  Value1: FieldDetails;
-    public   Value2: FieldDetails;
-    public   Value3: FieldDetails;
-    public   Value4: FieldDetails;
-    public  Value5: FieldDetails;
-    public  Value6: FieldDetails;
-    public  Value7: FieldDetails;
-    public Value8: FieldDetails;
-    public   Value9: FieldDetails;
-    public  Value10: FieldDetails;
+    public  Value: ValueDetails;
+    public  Value1: ValueDetails;
+    public   Value2: ValueDetails;
+    public   Value3: ValueDetails;
+    public   Value4: ValueDetails;
+    public  Value5: ValueDetails;
+    public  Value6: ValueDetails;
+    public  Value7: ValueDetails;
+    public Value8: ValueDetails;
+    public   Value9: ValueDetails;
+    public  Value10: ValueDetails;
 
 }
 
-export class FieldDetails {
-   public Column: string;
+export class ValueDetails {
+    public Header: string;
    public  Row: string;
 }
 //export class GroupItem {

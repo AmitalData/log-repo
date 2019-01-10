@@ -224,7 +224,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     iQueryable = iQueryable.Where(d => d.EmployeeUserId == employeeUserId);
                 }
 
-                if (!string.IsNullOrEmpty(locationCode))
+                if (!string.IsNullOrEmpty(locationCode) && locationCode != "A")
                 {
                     iQueryable = iQueryable.Where(d => d.LocationCode == locationCode);
                 }
@@ -324,7 +324,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 iQueryable = iQueryable.Where(d => d.EmployeeUserId == employeeUserId);
             }
-            if (!string.IsNullOrEmpty(locationCode))
+            if (!string.IsNullOrEmpty(locationCode) && locationCode != "A")
             {
                 iQueryable = iQueryable.Where(d => d.LocationCode == locationCode);
             }
@@ -690,7 +690,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     iQueryable = iQueryable.Where(d => d.EmployeeUserId == employeeUserId);
                 }
 
-                if (!string.IsNullOrEmpty(locationCode))
+                if (!string.IsNullOrEmpty(locationCode) && locationCode != "A")
                 {
                     iQueryable = iQueryable.Where(d => d.LocationCode == locationCode);
                 }

@@ -2,6 +2,7 @@
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -288,6 +289,17 @@ namespace Logitude.Accounting.BL.CoreBL
 
             //B110
 
+
+            AddressQuery addressQuery = new AddressQuery(tenant);
+            CardQuery cardQuery = new CardQuery(tenant);
+            List<CardList> cardPMs = cardQuery.GetCardPMsByTenant(tenant).ToList() ;
+            List<string> cardIds = cardQuery.GetCardIdsByTenant(tenant);
+
+
+            List<AddressList> addreses = addressQuery.GetAddressesByCardIds(cardIds,tenant);
+
+
+
             var trailReportParam = new TrailReportParam()
             {
                 Tenant = tenant,
@@ -314,7 +326,7 @@ namespace Logitude.Accounting.BL.CoreBL
             foreach (B110Data item in b110Data)
             {
                 counter++;
-
+                CardList card = cardPMs.Where(d => d.GLAccountId == item.GLAccountId).FirstOrDefault();
                 myStringBuilder.Append("B110");
 
                 if (counter.ToString().Length > 9)
@@ -375,83 +387,150 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     myStringBuilder.Append(' ', 30);
                 }
-                if (item.AccountTypeCode == "2" || item.AccountTypeCode == "3")
+                if (card != null && ( item.AccountTypeCode == "2" || item.AccountTypeCode == "3"))
                 {
-                    string address = null;
-                    var billingaddress = b110Data.Where(d => d.GLAccountId == item.GLAccountId && item.AddressType == "B").FirstOrDefault();
-                    if (billingaddress != null)
-                    {
-                        address = billingaddress.Address1;
-                    }
-                    if (address == null)
-                    {
-                        var mainaddress = b110Data.Where(d => d.GLAccountId == item.GLAccountId && item.AddressType == "M").FirstOrDefault();
-                        if (mainaddress != null)
-                        {
-                            address = mainaddress.Address1;
-                            item.Address1 = address;
-                        }
-                    }
-                    if (item.Address1 != null)
-                    {
-                        if (item.Address1.Length > 50) { item.Address1.Substring(0, 50); }
-                        myStringBuilder.Append(item.Address1.PadLeft(50, ' '));
-                        if (address != null && address.Length > 51)
-                        {
-                            item.Address2 = address.Substring(51, 60);
-                            myStringBuilder.Append("a" + item.Address1.PadLeft(10, ' '));
-                        }
-                    }
-                    else
-                    {
-                        myStringBuilder.Append(' ', 60);
-                    }
-                    if (item.City != null)
-                    {
-                        if (item.City.Length > 30) { item.City.Substring(0, 30); }
-                        myStringBuilder.Append("a" + item.City.PadLeft(30, ' '));
-                    }
-                    else
-                    {
-                        myStringBuilder.Append(' ', 30);
-                    }
-                    if (item.ZipCode != null)
-                    {
-                        if (item.ZipCode.Length > 8) { item.ZipCode.Substring(0, 8); }
-                        myStringBuilder.Append("a" + item.ZipCode.PadLeft(8, ' '));
-                    }
-                    else
-                    {
-                        myStringBuilder.Append(' ', 8);
-                    }
-                    if (item.CountryName != null)
-                    {
-                        if (item.CountryName.Length > 30) { item.CountryName.Substring(0, 30); }
-                        myStringBuilder.Append("a" + item.CountryName.PadLeft(30, ' '));
-                    }
-                    else
-                    {
-                        myStringBuilder.Append(' ', 30);
-                    }
-                    if (item.CountryCode != null)
-                    {
-                        var partnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(item.CountryCode, "Cust", "Country");
 
-                        if (partnerCode != null)
+
+                  
+
+                        string address = null;
+                        var billingaddress = addreses.Where(d => d.CardId == card.Id && d.AddressTypeId == "B").FirstOrDefault();
+                        if (billingaddress != null)
                         {
-                            if (partnerCode.Length > 15) { partnerCode.Substring(0, 15); }
-                            myStringBuilder.Append("a" + partnerCode.PadLeft(15, ' '));
+                            address = billingaddress.Address1;
+                            if (item.Address1 != null)
+                            {
+                                if (item.Address1.Length > 50) { item.Address1.Substring(0, 50); }
+                                myStringBuilder.Append(item.Address1.PadLeft(50, ' '));
+                                if (address != null && address.Length > 51)
+                                {
+                                    item.Address2 = address.Substring(51, 60);
+                                    myStringBuilder.Append("a" + item.Address1.PadLeft(10, ' '));
+                                }
+                            }
+                            else
+                            {
+                                myStringBuilder.Append(' ', 60);
+                            }
+                            if (billingaddress.City != null)
+                            {
+                                if (billingaddress.City.Length > 30) { billingaddress.City = billingaddress.City.Substring(0, 30); }
+                                myStringBuilder.Append("a" + billingaddress.City.PadLeft(30, ' '));
+                            }
+                            else
+                            {
+                                myStringBuilder.Append(' ', 30);
+                            }
+                            if (billingaddress.ZipCode != null)
+                            {
+                                if (billingaddress.ZipCode.Length > 8) { billingaddress.ZipCode.Substring(0, 8); }
+                                myStringBuilder.Append("a" + billingaddress.ZipCode.PadLeft(8, ' '));
+                            }
+                            else
+                            {
+                                myStringBuilder.Append(' ', 8);
+                            }
+                            if (billingaddress.CountryName != null)
+                            {
+                                if (billingaddress.CountryName.Length > 30) { billingaddress.CountryName.Substring(0, 30); }
+                                myStringBuilder.Append("a" + billingaddress.CountryName.PadLeft(30, ' '));
+                            }
+                            else
+                            {
+                                myStringBuilder.Append(' ', 30);
+                            }
+                            if (billingaddress.CountryCode != null)
+                            {
+                                var partnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(billingaddress.CountryCode, "Cust", "Country");
+
+                                if (partnerCode != null)
+                                {
+                                    if (partnerCode.Length > 15) { partnerCode.Substring(0, 15); }
+                                    myStringBuilder.Append("a" + partnerCode.PadLeft(15, ' '));
+                                }
+
+                                else
+                                {
+                                    myStringBuilder.Append(' ', 15);
+                                }
+                            }
+                            else
+                            {
+                                myStringBuilder.Append(' ', 15);
+                            }
+                        }
+                        if (address == null)
+                        {
+                            var mainaddress = addreses.Where(d => d.CardId == card.Id && d.AddressTypeId == "M").FirstOrDefault();
+                            if (mainaddress != null)
+                            {
+                                address = mainaddress.Address1;
+                                item.Address1 = address;
+                                if (item.Address1 != null)
+                                {
+                                    if (item.Address1.Length > 50) { item.Address1.Substring(0, 50); }
+                                    myStringBuilder.Append(item.Address1.PadLeft(50, ' '));
+                                    if (address != null && address.Length > 51)
+                                    {
+                                        item.Address2 = address.Substring(51, 60);
+                                        myStringBuilder.Append("a" + item.Address1.PadLeft(10, ' '));
+                                    }
+                                }
+                                else
+                                {
+                                    myStringBuilder.Append(' ', 60);
+                                }
+                                if (mainaddress.City != null)
+                                {
+                                    if (mainaddress.City.Length > 30) { mainaddress.City = mainaddress.City.Substring(0, 30); }
+                                    myStringBuilder.Append("a" + mainaddress.City.PadLeft(30, ' '));
+                                }
+                                else
+                                {
+                                    myStringBuilder.Append(' ', 30);
+                                }
+                                if (mainaddress.ZipCode != null)
+                                {
+                                    if (mainaddress.ZipCode.Length > 8) { mainaddress.ZipCode.Substring(0, 8); }
+                                    myStringBuilder.Append("a" + mainaddress.ZipCode.PadLeft(8, ' '));
+                                }
+                                else
+                                {
+                                    myStringBuilder.Append(' ', 8);
+                                }
+                                if (mainaddress.CountryName != null)
+                                {
+                                    if (mainaddress.CountryName.Length > 30) { mainaddress.CountryName.Substring(0, 30); }
+                                    myStringBuilder.Append("a" + mainaddress.CountryName.PadLeft(30, ' '));
+                                }
+                                else
+                                {
+                                    myStringBuilder.Append(' ', 30);
+                                }
+                                if (mainaddress.CountryCode != null)
+                                {
+                                    var partnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(mainaddress.CountryCode, "Cust", "Country");
+
+                                    if (partnerCode != null)
+                                    {
+                                        if (partnerCode.Length > 15) { partnerCode.Substring(0, 15); }
+                                        myStringBuilder.Append("a" + partnerCode.PadLeft(15, ' '));
+                                    }
+
+                                    else
+                                    {
+                                        myStringBuilder.Append(' ', 15);
+                                    }
+                                }
+                                else
+                                {
+                                    myStringBuilder.Append(' ', 15);
+                                }
+                            }
                         }
 
-                        else
-                        {
-                            myStringBuilder.Append(' ', 15);
-                        }
-                    }
-                    else
-                    {
-                        myStringBuilder.Append(' ', 15);
-                    }
+
+                   
 
                 }
                 else
@@ -461,10 +540,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append(' ', 15);
                 TrailReportM trailReportM = null;
-                //if (result.ContainsKey(item.GLAccountId))
-                //{
-                //    trailReportM =  result[item.GLAccountId];
-                //}
+                if (result.ContainsKey(item.GLAccountId))
+                {
+                    trailReportM = result[item.GLAccountId];
+                }
                 if (trailReportM != null)
                 {
                     item.OpeningBalance = trailReportM.LocalOpenBalance;
@@ -499,10 +578,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                 }
                 myStringBuilder.Append("a0000");
-                if (item.VatNumber != null)
+                if (card != null && card.VatNumber != null)
                 {
-                    if (item.VatNumber.Length > 9) { item.VatNumber.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.VatNumber.PadLeft(9, '0'));
+                    if (card.VatNumber.Length > 9) { card.VatNumber.Substring(0, 9); }
+                    myStringBuilder.Append("a" + card.VatNumber.PadLeft(9, '0'));
                 }
                 else
                 {
@@ -522,6 +601,28 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         myStringBuilder.Append('0', 15);
                     }
+
+                    item.TotalDebitInForeignCurrency = trailReportM != null ? trailReportM.ForeignDebit : null;
+                    if (item.TotalDebitInForeignCurrency != null)
+                    {
+                        if (item.TotalDebitInForeignCurrency.ToString().Length > 15) { item.TotalDebitInForeignCurrency.ToString().Substring(0, 15); }
+                        myStringBuilder.Append("a" + item.TotalDebitInForeignCurrency.ToString().PadLeft(15, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append('0', 15);
+                    }
+
+                    item.TotalCreditInForeignCurrency = trailReportM != null ? trailReportM.ForeignCredit : null;
+                    if (item.TotalCreditInForeignCurrency != null)
+                    {
+                        if (item.TotalCreditInForeignCurrency.ToString().Length > 15) { item.TotalCreditInForeignCurrency.ToString().Substring(0, 15); }
+                        myStringBuilder.Append("a" + item.TotalCreditInForeignCurrency.ToString().PadLeft(15, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append('0', 15);
+                    }
                     if (item.CurrencyCode != null)
                     {
                         if (item.CurrencyCode.Length > 3) { item.CurrencyCode.Substring(0, 3); }
@@ -534,7 +635,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-                    myStringBuilder.Append(' ', 18);
+                    myStringBuilder.Append(' ', 48);
                 }
 
                 myStringBuilder.Append(' ', 16);
