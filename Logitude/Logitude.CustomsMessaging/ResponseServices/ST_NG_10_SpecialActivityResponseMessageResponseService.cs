@@ -49,8 +49,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 string myDeclaration = myConsignmentQueryService.GetDeclarationIdByConsignmentCargoId(cargoIdentifier.cargoIdentifierKey1, cargoIdentifier.cargoIdentifierKey2, cargoIdentifier.cargoIdentifierKey3, requestParams.Tenant);
                 if (string.IsNullOrWhiteSpace(myDeclaration))//Eitan H 6/1/2019 Task 46867
                 {
-                    LogMessagingUtil.Instance.AppendLine("Declaration wasn't found by cargoIdentifierKeys");
-                    if (cargoIdentifier.cargoIdentifierType == '8')
+                    LogMessagingUtil.Instance.AppendLine("Declaration wasn't found by cargoIdentifierKeys (cargoIdentifierType is " + cargoIdentifier.cargoIdentifierType + ")");
+                    if (cargoIdentifier.cargoIdentifierType == 8)
                     {
                         LogMessagingUtil.Instance.AppendLine("GetSingleDeclarationByNumber" + cargoIdentifier.cargoIdentifierKey1);
                         _MyDeclarationPM = myDeclarationQueryService.GetSingleDeclarationByNumber(cargoIdentifier.cargoIdentifierKey1, requestParams.Tenant);
