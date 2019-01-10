@@ -136,6 +136,8 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public string FromPartnerId  { get; set; }
        [DataMember]
        public string ToPartnerId  { get; set; }
+       [DataMember]
+       public string ChargeableWeightUnitCode  { get; set; }
    }
 
 }

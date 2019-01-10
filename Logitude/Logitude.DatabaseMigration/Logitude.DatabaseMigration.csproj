@@ -474,6 +474,14 @@
     <Compile Include="Migrations\201901080552530_JLIsExternalReconcile.Designer.cs">
       <DependentUpon>201901080552530_JLIsExternalReconcile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901100656219_AbedAddVolumetricWeighFieldToWarehouseEntryAndReleasePackage.cs" />
+    <Compile Include="Migrations\201901100656219_AbedAddVolumetricWeighFieldToWarehouseEntryAndReleasePackage.Designer.cs">
+      <DependentUpon>201901100656219_AbedAddVolumetricWeighFieldToWarehouseEntryAndReleasePackage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901101120433_AbedAddVolumetricVolumetricWeightUnitCodeFieldToWarehouseEntryAndRelease.cs" />
+    <Compile Include="Migrations\201901101120433_AbedAddVolumetricVolumetricWeightUnitCodeFieldToWarehouseEntryAndRelease.Designer.cs">
+      <DependentUpon>201901101120433_AbedAddVolumetricVolumetricWeightUnitCodeFieldToWarehouseEntryAndRelease.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -767,6 +775,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901080552530_JLIsExternalReconcile.resx">
       <DependentUpon>201901080552530_JLIsExternalReconcile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901100656219_AbedAddVolumetricWeighFieldToWarehouseEntryAndReleasePackage.resx">
+      <DependentUpon>201901100656219_AbedAddVolumetricWeighFieldToWarehouseEntryAndReleasePackage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901101120433_AbedAddVolumetricVolumetricWeightUnitCodeFieldToWarehouseEntryAndRelease.resx">
+      <DependentUpon>201901101120433_AbedAddVolumetricVolumetricWeightUnitCodeFieldToWarehouseEntryAndRelease.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
