@@ -84,5 +84,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public int Tenant { get; set; }
     
     public bool IsMultiCurrency { get; set; }
+
+    public  string  ComputingPartnerCode { get; set; }
+
     }
 } 

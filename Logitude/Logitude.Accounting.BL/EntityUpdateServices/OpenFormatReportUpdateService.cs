@@ -77,6 +77,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
                 entityPM.StatusTypeCode = "2";
+                entityPM.ChangeSetOp = ChangeSetOperation.Update;
+                this.Update(entityPM, true);
+              
+
                 queueservice.Send(new Dictionary<string, string>()
                 {
                     { "BatchTaskExecutionId", taskExe.Id },

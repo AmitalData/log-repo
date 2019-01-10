@@ -14,8 +14,9 @@ import { DWQueryData } from '../../../../Common/DataContracts/DWQueryData';
 import { DWSubQueryPMService } from '../../../../Infrastructure/Services/StandardPMs/DWSubQueryPMService';
 import { DWSubQueryPM } from '../../../../Infrastructure/EntityPMs/DWSubQueryPM';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { DWObjectTableListService } from '../../../../Infrastructure/Services/StandardLists/DWObjectTableListService';
-
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     moduleId: module.id,
@@ -73,7 +74,13 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this._DWQueryBuilderService = new DWQueryBuilderService();
         this._DWSubQueryPMService = new DWSubQueryPMService();
         this._DWObjectTableListService = new DWObjectTableListService();
+        if (SessionLocator.CurrentSession == null) {
+            this.SearchFieldsId = "SearchFields_-1_-1";
+        }
 
+        else {
+            this.SearchFieldsId = "DWQueryBuilderSearchFields_" + SessionLocator.CurrentSession.GetNewId("DWQueryBuilderSearchFields");
+        }
         this._DWObjectTableListService.getAll().subscribe(myResult => {
             this.AllTables = myResult.Result;
             this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
@@ -188,11 +195,20 @@ export class DWQueryBuilderComponent extends BaseComponent {
     }
 
     FillPlaceHolder() {
-        //var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
-        //temp.placeholder = TextCodeTranslator.Translate("General.O.Search");
-        //temp.style.background = "url(Images/Search.png) no-repeat scroll";
-        //temp.style.backgroundPosition = "right center";
-        //temp.style.paddingRight = "30px";
+        if (!this.SearchText) {
+            var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
+            temp.placeholder = TextCodeTranslator.Translate("General.O.Search");
+            temp.style.background = "url(Images/Search.png) no-repeat scroll";
+            temp.style.backgroundPosition = "right center";
+            temp.style.paddingRight = "30px";
+        }
+    }
+
+    OnDeleteValue() {
+        var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
+        temp.value = null;
+        this.SearchText = null;
+        temp.focus();
     }
 
     Run() {
@@ -630,6 +646,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
 
         FiltersList.forEach((Myfilter) => {
+
+            var isHaveMultiSelect = false;
             if (Myfilter.FilterItems.length > 0) {
                 if (this.GetIfFiltersHaveValues(Myfilter.FilterItems) == true) {
                     this.WhereStmt = this.WhereStmt + " ( ";
@@ -656,8 +674,12 @@ export class DWQueryBuilderComponent extends BaseComponent {
                             OperationSimpol = " = @@ ";
                         }
                         else {
-                            OperationSimpol = " = '@@' ";
-                            //abed
+
+                            OperationSimpol = " IN ( '";
+                            OperationSimpol = this.BuildMultiValueSql(filter.TextValue, OperationSimpol);
+                            isHaveMultiSelect = true;
+
+
                         }
                     }
                     else if (filter.Operation.Code == filter.notEqualsOp.Code) {
@@ -665,7 +687,10 @@ export class DWQueryBuilderComponent extends BaseComponent {
                             OperationSimpol = " <> @@ ";
                         }
                         else {
-                            OperationSimpol = " <> '@@' ";
+
+                            OperationSimpol = " not IN ( '";
+                            OperationSimpol = this.BuildMultiValueSql(filter.TextValue, OperationSimpol);
+                            isHaveMultiSelect = true;
 
                             //abed
                         }                       
@@ -695,6 +720,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         OperationSimpol = " <= @@ ";
                     }
 
+
+       
                     if (filter.Operation.Code == filter.IsNullOp.Code) {
                         this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is null or " + (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " = '' " + " " + AndOr + " ";
                     }
@@ -702,7 +729,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is not null and " + (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " <> '' " + " " + AndOr + " ";
                     }
                     else {
-                        this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + OperationSimpol.replace("@@", filter.TextValue) + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
+                        var operation = !isHaveMultiSelect ? OperationSimpol.replace("@@", filter.TextValue) : OperationSimpol;
+                        this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + operation + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
                     }
                 }
                 else {
@@ -720,6 +748,30 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
 
         //return WhereStmt;
+    }
+
+
+    BuildMultiValueSql(textValue: any, operationSimpol: string) {
+
+        var result = operationSimpol;
+        if (textValue) {
+            var values: string[] = textValue.toString().split(';');
+            if (values.length > 0) {
+                values.forEach((item) => {
+                   
+                    if (item) {
+                        result += (item + "','");
+                    }
+                });
+
+                result += ")";
+                result = result.replace(",')", ")");
+
+            } else result += " ')";
+
+        } else result += " ')";
+
+        return result;
     }
 
     GetIfFiltersHaveValues(FiltersList: DWObjectFieldsDetails[]) {
@@ -768,7 +820,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.IsPreview = false;
         var SelectStmt = "Select ";
         var GroupByStmt = " group by ";
-        //var WhereStmt = " Where ";
+        //var Wheremt = " Where ";
         this.WhereStmt = " where ";
         var HasMeasurement: boolean = false;
         var FromTables = [];
@@ -1106,7 +1158,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             //}
             if (field.FilterItems.length == 0) {
                 view.TextValue = field.TextValue;
-                view.MultSelectValueLists = field.MultSelectValueLists;
+                view.MultiSelectedValueLists = this.MapMultiSelectedValueLists(field.MultiSelectedValueLists);
                 view.Operation = new ObjectFieldOperator(field.OperationCode, field.OperationName);
                 MyFilter.FilterItems.push(view);
             }
@@ -1134,6 +1186,30 @@ export class DWQueryBuilderComponent extends BaseComponent {
         //this.SelectedFieldsDataSource = this.ResetIndexes(tempFilters);
     }
 
+
+    MapMultiSelectedValueLists(lists: MultiSelectedValue[]) {
+        var result: MultiSelectedValue[] = [];
+        if (lists) {
+            lists.forEach((field) => {
+                var item: MultiSelectedValue = new MultiSelectedValue();
+                var i = "";
+                var j = 0;
+                while (field["Value" + i]) {
+                    var valueDetails: ValueDetails = new ValueDetails();
+                    valueDetails.Header = field["Value" + i].Header;
+                    valueDetails.Row = field["Value" + i].Row;
+                    item["Value" + i] = valueDetails;
+                    j += 1;
+                    i = j.toString();
+
+                }
+                result.push(item);
+
+            });
+
+            return result;
+        }
+    }
 }
 
 export class DWObjectFieldsDetails extends BaseComponent {
@@ -1148,6 +1224,16 @@ export class DWObjectFieldsDetails extends BaseComponent {
         }
         if (DWObjectField != null) {
             this.LOVAdditionalColumns = DWObjectField.LOVAdditionalColumns;
+            if (!this.LOVAdditionalColumns && ParentClass && ParentClass.AllFieldsDataSource ) {
+                var field = ParentClass.AllFieldsDataSource.filter(a => a.DWObjectTableCode == DWObjectField.DWObjectTableCode && a.Code == DWObjectField.Code && a.Name == DWObjectField.Name)[0];
+                if (field) {
+                    this.LOVAdditionalColumns = DWObjectField.LOVAdditionalColumns = field.LOVAdditionalColumns;
+                }
+
+            }
+
+
+
             this.Name = DWObjectField.Name;
             this.Code = DWObjectField.Code;
             this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
@@ -1157,6 +1243,9 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
             this.IsMeasurement = DWObjectField.IsMeasurement;
             this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
+            this.FilterType = DWObjectField.FilterType;
+            this.IsSetDefaults = DWObjectField.IsSetDefaults;
+            this.IsMandatoryFilter = DWObjectField.IsMandatoryFilter;
             //this.Name = DWObjectField.Name;
         }
 
@@ -1286,19 +1375,20 @@ export class DWObjectFieldsDetails extends BaseComponent {
         return this.textValue;
     }
     public set TextValue(newValue: any) {
-        this.textValue = newValue;
-        this.MyParentClass.SaveChanges();
+        if (this.textValue != newValue) {
+            this.textValue = newValue;
+            this.MyParentClass.SaveChanges();
+        }
     }
 
-    private multSelectValueLists: any;
-    public get MultSelectValueLists() {
-        return this.multSelectValueLists;
+    private multiSelectedValueLists: MultiSelectedValue[];
+    public get MultiSelectedValueLists() {
+        return this.multiSelectedValueLists;
     }
-    public set MultSelectValueLists(newValue: any) {
-        this.multSelectValueLists = newValue;
-        this.MyParentClass.SaveChanges();
-    }
+    public set MultiSelectedValueLists(newValue: MultiSelectedValue[]) {
+        this.multiSelectedValueLists = newValue;
 
+    }
 
 
 
@@ -1331,8 +1421,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
                 if (AppTool.IsNullOrEmpty(this.operation)) {
                     this.operation = new ObjectFieldOperator("Equals", "Equals to");
                 }
-                this.OperationCode = "StartsWith";
-                this.OperationName = "Starts With";
+                this.OperationCode = "Equals";
+                this.OperationName = "Equals to";
                 return this.operation;
             }
         }
@@ -1358,7 +1448,56 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.MyParentClass.SaveChanges();
     }
 
+    private filterType: string = "Fixed Filter";
+    public get FilterType() { return this.filterType; }
+    public set FilterType(newValue: string) { this.filterType = newValue; }
+
+    private isSetDefaults: boolean = false;
+    public get IsSetDefaults() { return this.isSetDefaults; }
+    public set IsSetDefaults(newValue: boolean) { if (this.isSetDefaults != newValue) { this.isSetDefaults = newValue; } }
+
+    private isMandatoryFilter: boolean = false;
+    public get IsMandatoryFilter() { return this.isMandatoryFilter; }
+    public set IsMandatoryFilter(newValue: boolean) { if (this.isMandatoryFilter != newValue) { this.isMandatoryFilter = newValue; } }
+    //IsMandatoryFilter: boolean = false;
+    //IsSetDefaults: boolean = false;
+
+    FilterTypeChanged(Value) {
+        this.FilterType = Value;
+    }
+
+    OpenFilterSettings() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 260;
+        logWindow.Title = "Ask User Settings";
+        //logWindow.DataContext = this;
+        //logWindow.IsShowCloseButton = true;
+        logWindow.Show('./CommonModules/CommonOthers/Components/DWQueryBuilder/DWFilterSettings');
+        logWindow.WindowClosed.subscribe(($event: string) => {
+            var MySettings = $event.split(',');
+            if (MySettings[0] == "true") {
+                this.IsMandatoryFilter = true;
+            }
+            else {
+                this.IsMandatoryFilter = false;
+            }
+            if (MySettings[1] == "true") {
+                this.IsSetDefaults = true;
+            }
+            else {
+                this.IsSetDefaults = false;
+            }
+        });
+    }
+
     OperationValueChanged(operation) {
+
+        if (this.Operation.Code == this.IsNullOp.Code || this.Operation.Code == this.IsNotNullOp.Code) {
+            this.TextValue = "";
+            this.MultiSelectedValueLists = [];
+        }
+
         this.Operation = operation;
         if (operation.Code == this.IsNullOp.Code || operation.Code == this.IsNotNullOp.Code) {
             this.TextValue = operation.Code;
@@ -1482,7 +1621,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     FieldValueChanged(DWObjectField: DWObjectFieldsDetails) {
         //this.MyParentClass = ParentClass;
         this.TextValue = "";
-        this.MultSelectValueLists = [];
+        this.MultiSelectedValueLists = [];
         this.Name = DWObjectField.Name;
         this.Code = DWObjectField.Code;
         this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
@@ -1492,6 +1631,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
         this.IsMeasurement = DWObjectField.IsMeasurement;
         this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
+        this.LOVAdditionalColumns = DWObjectField.LOVAdditionalColumns;
         if (this.DWObjectTableCode.indexOf("DIM_") != -1) {
             this.ParentDataTypeCode = "LookUp";
             this.ParentDimTabelName = DWObjectField.DWObjectTableCode;
@@ -1503,6 +1643,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         //this.ParentDataTypeCode = DWObjectField.DataTypeCode;
 
         this.Operators = this.GetFieldOperators(this);
+
         if ((this.ParentDataTypeCode == "Text" || this.ParentDataTypeCode == "nText")) {
             this.Operation = new ObjectFieldOperator("StartsWith", "Starts With");
         }
@@ -1522,6 +1663,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.MyParentClass.DeleteField(this, this.MyParentClass.SelectedFiltersDataSource);
         //var temp = this.MyParentClass.SelectedFieldsDataSource;
     }
+
 
     list: ObjectFieldOperator[];
     private GetFieldOperators(field: DWObjectFieldsDetails) {
@@ -1635,12 +1777,26 @@ export class DWFieldsGroup {
 }
 
 
-export class MultSelectValue {
-    Name: string;
-    Value: string;
+export class MultiSelectedValue {
+
+    public  Value: ValueDetails;
+    public  Value1: ValueDetails;
+    public   Value2: ValueDetails;
+    public   Value3: ValueDetails;
+    public   Value4: ValueDetails;
+    public  Value5: ValueDetails;
+    public  Value6: ValueDetails;
+    public  Value7: ValueDetails;
+    public Value8: ValueDetails;
+    public   Value9: ValueDetails;
+    public  Value10: ValueDetails;
 
 }
 
+export class ValueDetails {
+    public Header: string;
+   public  Row: string;
+}
 //export class GroupItem {
 
 //    FilterItems: DWObjectFieldsDetails[] = [];

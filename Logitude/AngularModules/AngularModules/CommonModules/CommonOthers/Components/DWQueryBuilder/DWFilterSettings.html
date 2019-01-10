@@ -1,0 +1,117 @@
+<table>
+    <tr style="height:100%;vertical-align:top">
+        <td>
+            <table>
+                <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                    <td colspan="4">
+                        <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+                    </td>
+                </tr>
+                <tr style="height:30px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height:30px">
+                    <td style="width:8px">
+                        <div style="width:8px"></div>
+                    </td>
+                    <td>
+                       <div style="width:30px;"><LogCheckBox (ValueChanged)="MandatoryFilterChecked($event)" [ObjectFieldName]="'IsMandatoryFilter'" [DataContext]="DataContext"></LogCheckBox></div> 
+                    </td>
+                    <td style="width:8px">
+                        <div style="width:8px"></div>
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <span>Mandatory Filter</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span style="color:#8A8A8A;">(users has to fill it before running the report)</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:30px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height:30px">
+                    <td style="width:8px">
+                        <div style="width:8px"></div>
+                    </td>
+                    <td>
+                        <div style="width:30px;"><LogCheckBox style="width:22px;height:22px;" (ValueChanged)="SetDefaultsChecked($event)" [ObjectFieldName]="'IsSetDefaults'" [DataContext]="DataContext"></LogCheckBox></div>
+                    </td>
+
+                    <td style="width:8px">
+                        <div style="width:8px"></div>
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <span>
+                                        Set Defaults
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span style="color:#8A8A8A;">(add default values for filtering, can be changed when running the report)</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+
+
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+

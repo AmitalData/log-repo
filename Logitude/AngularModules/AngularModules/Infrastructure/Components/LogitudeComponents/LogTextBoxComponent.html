@@ -90,7 +90,6 @@
     .expand-btn{
         position: absolute;
         top: 2px;
-        right: 2px;
 
         width:20px;
         height: 20px;
@@ -187,9 +186,10 @@
                                ondrop="return false"
                                (paste)="OnPaste($event)"></textarea>
 
-                    <div *ngIf="isMouseOver" [class.collapse-btn]="isExpanded"
+                    <div *ngIf="!IsDisabled && isMouseOver" [class.collapse-btn]="isExpanded"
                         class="expand-btn"
-                        [style.right]="multlineTextBoxLines > 2 ? '22px' : '2px'"
+                        [style.right]="isRTL ? 'initial' : (multlineTextBoxLines > RowsCount ? '22px' : '2px')"
+                        [style.left]="isRTL ? (multlineTextBoxLines > RowsCount ? '22px' : '2px') : 'initial'"
                         (click)="ExpandButtonClicked()"></div>
 
                 </div>

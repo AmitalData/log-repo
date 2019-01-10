@@ -622,6 +622,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             BankDepositPM depositPM = GetSingle(bankDepositId, true, false);
 
             //update
+            depositPM.IsCanceled = true;
             depositPM.ChangeSetOp = ChangeSetOperation.Update;
             BankDepositUpdateService depositUpdateService = new BankDepositUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             depositUpdateService.Update(depositPM, true);

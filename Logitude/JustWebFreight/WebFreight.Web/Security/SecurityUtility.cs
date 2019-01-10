@@ -545,7 +545,7 @@ namespace WebFreight.Web.Security
                                 RolesIds = allRolesIds,
                                 PackagesCodes = allPackages,
                             };
-                            myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
+                            //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
                             
 
                             CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
@@ -564,7 +564,7 @@ namespace WebFreight.Web.Security
                                 
                             };
 
-                            myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
+                            //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
 
 
                             CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
@@ -576,22 +576,22 @@ namespace WebFreight.Web.Security
             return myContactInfo;
         }
 
-        private static string GetComputingPartnerCode(AuthenticationToken authToken)
-        {
-            string computingPartnerCode = "";
-            if (authToken != null && !string.IsNullOrEmpty(authToken.APICredentialID))
-            {
-                    ApiCredintialsRepository apiCredintialsRepository = new ApiCredintialsRepository();
-                    ApiCredintials apiCredintials = apiCredintialsRepository.GetSingleApiCredintials(authToken.APICredentialID, authToken.Tenant);
-                    if (apiCredintials != null && !string.IsNullOrEmpty(apiCredintials.ComputingPartnerId))
-                    {
-                        ComputingPartnerRepository computingPartnerRepository = new ComputingPartnerRepository(authToken.Tenant);
-                        computingPartnerCode = computingPartnerRepository.GetSingleComputingPartnerCodeById(apiCredintials.ComputingPartnerId);
-                    }
+        //private static string GetComputingPartnerCode(AuthenticationToken authToken)
+        //{
+        //    string computingPartnerCode = "";
+        //    if (authToken != null && !string.IsNullOrEmpty(authToken.APICredentialID))
+        //    {
+        //            ApiCredintialsRepository apiCredintialsRepository = new ApiCredintialsRepository();
+        //            ApiCredintials apiCredintials = apiCredintialsRepository.GetSingleApiCredintials(authToken.APICredentialID, authToken.Tenant);
+        //            if (apiCredintials != null && !string.IsNullOrEmpty(apiCredintials.ComputingPartnerId))
+        //            {
+        //                ComputingPartnerRepository computingPartnerRepository = new ComputingPartnerRepository(authToken.Tenant);
+        //                computingPartnerCode = computingPartnerRepository.GetSingleComputingPartnerCodeById(apiCredintials.ComputingPartnerId);
+        //            }
                 
-            }
-            return computingPartnerCode;
-        }
+        //    }
+        //    return computingPartnerCode;
+        //}
 
         private static List<string> GetAllPackagesCodes(string email, int tenant, bool isCustomerCare)
         {

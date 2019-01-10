@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace WebFreight.Web.DataContracts
@@ -34,32 +35,59 @@ namespace WebFreight.Web.DataContracts
         public string OperationCode { get; set; }
         public string OperationName { get; set; }
         public string AndOr { get; set; }
+        public bool IsSetDefaults { get; set; }
+        public bool IsMandatoryFilter { get; set; }
+        public string FilterType { get; set; }
+        
 
-        public List<MultSelectValue> MultSelectValueLists{ get; set; }
+        public List<MultiSelectedValue> MultiSelectedValueLists { get; set; }
+      
+    }
+
+
+    public class MultiSelectedValue
+    {
+
+        public ValueDetails Value { get; set; }
+
+        public ValueDetails Value1 { get; set; }
+
+        public ValueDetails Value2 { get; set; }
+
+        public ValueDetails Value3 { get; set; }
+
+        public ValueDetails Value4 { get; set; }
+
+        public ValueDetails Value5 { get; set; }
+
+        public ValueDetails Value6 { get; set; }
+
+        public ValueDetails Value7 { get; set; }
+
+        public ValueDetails Value8 { get; set; }
+
+        public ValueDetails Value9 { get; set; }
+
+        public ValueDetails Value10 { get; set; }
+
 
     }
+
+
+    public class ValueDetails
+    {
+        public string Header { get; set; }
+        public string Row { get; set; }
+    }
+
+
 
     public class ObjectFieldOperator
     {
+
         public string Code { get; set; }
+
         public string Name { get; set; }
     }
 
-    public class MultSelectValue
-    {
-        public string Name { get; set; }
-        public string Value { get; set; }
-
-        //public string Value { get; set; }
-        //public string Value1 { get; set; }
-        //public string Value2 { get; set; }
-        //public string Value3 { get; set; }
-        //public string Value4 { get; set; }
-        //public string Value5 { get; set; }
-        //public string Value6 { get; set; }
-        //public string Value7 { get; set; }
-        //public string Value8 { get; set; }
-        //public string Value9 { get; set; }
-        //public string Value10 { get; set; }
-    }
 }
