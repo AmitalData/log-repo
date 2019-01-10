@@ -20,6 +20,8 @@ using Logitude.Server.Tools.Utils;
 using System.Configuration;
 using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.BL.Messaging.Maman;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -175,7 +177,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void Send2470ToMaman(DeclarationPM declarationPM, DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, GenericRequestParams requestParams)
         {
             LogMessagingUtil.Instance.AppendLine("הגדרת ברירת מחדל חדשה ביוניפרייט ברמת מערכת עמילות כפתור בלדרות: שליחה של מסר הודעה מוקדמת לממן עם אופציות .");
-            LogMessagingUtil.Instance.AppendLine("כן / לא");
+
+            var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
+            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_2470", "NON", "NON", false, true);
+
+            bool sendMaman2470 = def.DEFDATA /*DefaultValue*/ == "Y";
+
+
+            LogMessagingUtil.Instance.AppendLine("default value CGO_2470 ==" + def.DEFDATA ?? "N");
+            if (!sendMaman2470)
+            {
+                return;
+            }
             var customsResponseXml = XmlGenericUtil<DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage>.SerializeObject(customResponse);
             var customsResponseBytes = System.Text.UTF8Encoding.UTF8.GetBytes(customsResponseXml);
             var myFTPOutMaman2470ReleaseGoodService = new FTPOutMaman2470ReleaseGoodService();

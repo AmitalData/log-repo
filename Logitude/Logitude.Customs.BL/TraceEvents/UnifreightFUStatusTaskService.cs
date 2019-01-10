@@ -29,8 +29,36 @@ namespace Logitude.Customs.BL.TraceEvents
         {
         }
 
+        public void DeleteINAFUStatus(Def.EntityPMs.DeclarationPM declarationPM)
+        {
+            var myGDFDATAQueryService = new Unifreight.BL.EntityQueryServices.GDFDATAQueryService(AmitalContext.GetContext(declarationPM.Tenant));
+            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "GGG_DEL_INA", "NON", "NON", false, true);
+            def = def ?? new GDFDATAPM();
+            if (def.DEFDATA == "Y")
+            {
 
-        
+                ContactRepository contactRepository = new ContactRepository(declarationPM.Tenant);
+                var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(declarationPM.Tenant), declarationPM.Tenant);
+                string loggedContactId = "";
+                if (loggedContact != null)
+                {
+                    loggedContactId = loggedContact.Id;
+                }
+
+                
+                UpsertFUStatusLE2U(declarationPM.Tenant, loggedContactId, new UnifreightFUStatusParam()
+                {
+                    Entname = "CFIFILEM",
+                    PrimaryNum = declarationPM.CustomFileNo,
+                    Mode = UnifreightEventMode.del,
+                    StatusCode = "INA",
+                    StatusRemarks = "",
+
+                });
+            }
+
+        }
+
         public void UpsertFUStatusLE2U(int tenant, string logitudeUserId, UnifreightFUStatusParam myUnifreightFUStatusParam)
         {
             
