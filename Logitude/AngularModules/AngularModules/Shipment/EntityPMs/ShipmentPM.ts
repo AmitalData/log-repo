@@ -4194,6 +4194,15 @@ export class ShipmentPM {
         }
     }
 
+    private hasContainerException: string;
+    public get HasContainerException() { return this.hasContainerException; }
+    public set HasContainerException(newValue: string) {
+        if (this.hasContainerException != newValue) {
+            this.hasContainerException = newValue;
+            this.MarkAsDirty("HasContainerException");
+        }
+    }
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];

@@ -380,5 +380,17 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
                 shipmentPackageHarmonizesChangeSet = value;
             }
         }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? ETD { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? ETA { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string Routing { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string VoyageTripNumber { get; set; }
     }
 }
