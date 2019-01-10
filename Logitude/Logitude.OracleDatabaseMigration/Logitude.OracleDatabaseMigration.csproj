@@ -168,6 +168,10 @@
     <Compile Include="Migrations\201812161346315_AddMigrationClaimSeizureUpdateKey.Designer.cs">
       <DependentUpon>201812161346315_AddMigrationClaimSeizureUpdateKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901091030580_AddRefundCustomerActivityType.cs" />
+    <Compile Include="Migrations\201901091030580_AddRefundCustomerActivityType.Designer.cs">
+      <DependentUpon>201901091030580_AddRefundCustomerActivityType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -276,6 +280,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812161346315_AddMigrationClaimSeizureUpdateKey.resx">
       <DependentUpon>201812161346315_AddMigrationClaimSeizureUpdateKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901091030580_AddRefundCustomerActivityType.resx">
+      <DependentUpon>201901091030580_AddRefundCustomerActivityType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

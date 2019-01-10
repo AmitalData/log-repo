@@ -139,6 +139,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     !string.IsNullOrWhiteSpace(entityPM.DocumentRemarks) &&
                     entityPM.DocumentRemarks.Contains(LoadTestSendMessageToQueue) &&
                         entityPM.DocumentVersion == entityPOCO.DocumentVersion + 1);
+
                 TrySendMessageToQueue(entityPM, forceDueLoadTest);
                 base.OnUpdating(entityPM, entityPOCO);
                 if (entityPM.DocumentStatusCode == "7")
@@ -392,6 +393,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
+            if (!string.IsNullOrWhiteSpace(entityPM.CollateralId) && !string.IsNullOrWhiteSpace(entityPM.CustomsDocId)) // Send automatically if from Collateral screen
+            {
+                send = true;
+            }
+
             if (send || forceDueLoadTest)
             {
                 if (SendMessageToQueue(entityPM, forceDueLoadTest))
@@ -416,6 +422,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public bool SendMessageToQueue(CustomsDocumentPM entityPM, bool forceDueLoadTest = false)
         {
             bool send = false;
+            bool sendWithCustomsDocId = false;
             try
             {
 
@@ -424,7 +431,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     return send;
                 }
-                if (!String.IsNullOrWhiteSpace(entityPM.CustomsDocId))
+
+                if (!string.IsNullOrWhiteSpace(entityPM.CollateralId))
+                {
+                    sendWithCustomsDocId = true;
+                }
+
+                if (!String.IsNullOrWhiteSpace(entityPM.CustomsDocId) && !sendWithCustomsDocId)
                 {
                     //ALREADY SEND TO MEHES AND RECIVE REF :entityPM.CustomsDocId
                     LogMessagingUtil.Instance.AppendLine("Customs Document already sent to Customs");
@@ -446,7 +459,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var concurCheck = customsDocumentQueryService.GetSingle(entityPM.DocumentsFilingId, false, false);
                 if (concurCheck != null && !forceDueLoadTest)
                 {
-                    if (!String.IsNullOrWhiteSpace(concurCheck.CustomsDocId))
+                    if (!String.IsNullOrWhiteSpace(concurCheck.CustomsDocId) && !sendWithCustomsDocId)
                     {
                         LogMessagingUtil.Instance.AppendLine("Customs Document already sent to Customs");
                         return send;

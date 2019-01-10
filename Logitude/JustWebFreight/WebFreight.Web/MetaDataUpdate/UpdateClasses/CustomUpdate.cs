@@ -7771,7 +7771,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Query OpenPhysicalCheckQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.PhysicalCheck.Q.OpenChecks" && d.ObjectTableId == CustomsPhysicalCheckObject.Id).FirstOrDefault().Id, Code = "OpenChecks", QueryGroupCode = CustomsPhysicalCheckGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsPhysicalCheckObject.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true
                 , IsAddNewEntityEnabled = false
                 , FeatureId = CustomsPhysicalCheckFeature.Id,
-                SpotlightDataTemplate = "CustomsSpotlightComponent" //"CheckSpotLightDataTemplate"
+                //"CheckSpotLightDataTemplate"
             }, QueriesRepository, tenantQueries);
 
             QueryColumn OpenPhysicalCheckQueryColumn12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPhysicalCheckQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsPhysicalCheckFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == CustomsPhysicalCheckObject.Id).FirstOrDefault().Id, ColumnWidth = 90 }, QueryColumnsRepository, tenantQueryColumns);
@@ -7835,7 +7835,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             #region By Upcoming Checks
 
-            Query ByUpcomingChecks = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.PhysicalCheck.Q.AllChecks" && d.ObjectTableId == CustomsPhysicalCheckObject.Id).FirstOrDefault().Id, Code = "By Upcoming Checks", QueryGroupCode = CustomsPhysicalCheckGroup.Code, IndexOrder = 2, Tenant = 0, ObjectTableId = CustomsPhysicalCheckObject.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsPhysicalCheckFeature.Id, SpotlightDataTemplate = "CheckSpotLightDataTemplate" }, QueriesRepository, tenantQueries);
+            Query ByUpcomingChecks = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.PhysicalCheck.Q.AllChecks" && d.ObjectTableId == CustomsPhysicalCheckObject.Id).FirstOrDefault().Id, Code = "By Upcoming Checks", QueryGroupCode = CustomsPhysicalCheckGroup.Code, IndexOrder = 2, Tenant = 0, ObjectTableId = CustomsPhysicalCheckObject.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsPhysicalCheckFeature.Id }, QueriesRepository, tenantQueries);
 
             QueryColumn ByUpcomingChecks12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecks.Id, IndexOrder = 0, ObjectFieldId = CustomsPhysicalCheckFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == CustomsPhysicalCheckObject.Id).FirstOrDefault().Id, ColumnWidth = 90 }, QueryColumnsRepository, tenantQueryColumns);
 

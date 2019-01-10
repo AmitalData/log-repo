@@ -87,7 +87,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsShowTipIcon: boolean = false;
     public IsFirstTipLoad: boolean = false;
 
-    //public Title: string; 
+    //public Title: string;
     private title: string;//= "";
     get Title() { return this.title; }
     set Title(newValue: string) {
@@ -144,7 +144,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
         //this.searchFields = searchtext;
 
-        //this.SearchFieldchangeevent.emit(this.searchFields); 
+        //this.SearchFieldchangeevent.emit(this.searchFields);
     }
 
     SearchMethod() {
@@ -383,7 +383,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     //    }
     //    if (!AppTool.IsNullOrEmpty(this.SelectedQuery.DefaultSortDirection) && AppTool.IsNullOrEmpty(this.CurrentQueryFilters.SortDirection)) {
     //        this.CurrentQueryFilters.SortDirection = this.SelectedQuery.DefaultSortDirection;
-    //    } 
+    //    }
     //    if (this.listArgs.SelectedTransportMode != "All") {
     //        this.CurrentQueryFilters.addAdditionalFilter("TransportModeId", this.listArgs.SelectedTransportMode, null, null, "Equals", false, true, false, "string", (this.listArgs.SelectedTransportMode == "All" ? true : false));
     //    }
@@ -617,7 +617,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     IsShowAddFromLibraryLink: boolean;
     HasExcelExportButton: boolean;
-    
+
     LinkAddDocumentFromLibraryClcik() {
 
         var windowArgs: any = {};
@@ -730,7 +730,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         }
 
-        
+
 
 
 
@@ -949,7 +949,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                             Styles: { width: this.QueryColumns[i].ColumnWidth + 'px' },
                             HtmlListComponentName: this.columnsObjectFields[i].HtmlListComponentName, //'TransportModeCellDisplayListTemplate',
                             HtmlListComponentUrl: this.columnsObjectFields[i].HtmlListComponentUrl, //'./Shipment/Components/ListTemplates/TransportModeCellDisplayListTemplate',
-                            ServerSideSortable: true, //this.columnsObjectFields[i].CanFilter 
+                            ServerSideSortable: true, //this.columnsObjectFields[i].CanFilter
                             ColumnHeaderTemplateName: this.columnsObjectFields[i].ColumnHeaderTemplateName, //'TransportModeCellDisplayListTemplate',
                             ObjectField: this.columnsObjectFields[i],
                             QueryId: queryId
@@ -964,9 +964,11 @@ export class ListComponent implements OnInit, AfterViewInit {
     QueryValueChanged(Args) {
 
         this.AdvanceFilters = new ApiQueryFilters();
-        if (ObjectsLocator.GlobalSetting.WorkEnvironment != "customs" || Args.IgnoreSearchFields != true) {
+        if (ObjectsLocator.GlobalSetting.WorkEnvironment != "customs" ){
+        if(Args.IgnoreSearchFields != true) {
             this.searchFields = "";
         }
+    }
         this.ClearMySearch = true;
         this.UserQueries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id && x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
         this.Title = Args.Title;
@@ -979,7 +981,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         else {
             this.SelectedQuery = this.Queries.filter(x => x.Id === Args.QueryId)[0];
         }
-       
+
         if (this.SelectedQuery == null) {
             this.SelectedQuery = this.UserQueries.filter(x => x.Id === Args.QueryId)[0];
         }
@@ -1162,7 +1164,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         //alert("Hi");
         this.AdvanceFilters = new ApiQueryFilters();
         this.QueryCode = Args.Code;
-        //this.GetQueries(); 
+        //this.GetQueries();
         //var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
 
         //this.Queries = allQueries.filter(x => x.UserId == null && FeatureLocator.IsFeatureGranted(x.FeatureId));
@@ -1386,7 +1388,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
             //if (filter.FieldName == "ShipmentLevelCode") {
             //    this.listArgs.select = filter.FieldValue;
-            //} 
+            //}
         });
     }
     HasFilters: boolean = false;
@@ -2004,7 +2006,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             res.subscribe((aa: any) => {
                 $event.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
                 //SessionLocator.CurrentSession.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
-             
+
                 this.MyScrollTop = $event.scrollTop;//($event.rowIndex * $event.rowHeight) - $event.rowHeight;
                 this.SelectedItem = aa.Result;
               this.MySelectedRowIndex = $event.rowIndex;
@@ -2069,7 +2071,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
         return this.showBackButtonAndTitle;
     }
-    
+
     //Add Button
     public IsAddButtonVisible: boolean = false;
     private SetAddButton() {
@@ -2088,7 +2090,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.IsAddButtonVisible = isVisible;
     }
 
-    // New 
+    // New
     public NewEntityButtonLabel: string = null;
     public IsNewEntityButtonVisible: boolean = false;
     public IsNewEntityButtonDisabled: boolean = false;
@@ -2130,7 +2132,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             else {
                 this.NewEntityButtonLabel = this.listArgs.NewButtonLabel;
             }
-            
+
         }
     }
     private SetNewEntityButtonDisabled() {
@@ -2315,7 +2317,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     logWindow.ShowCloseButton = true;
                     break;
                 }
-                
+
                 case "Customs.Declaration":
                 case "Customs.PaymentOrder":
                 case "Customs.Claim":
@@ -2371,7 +2373,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     break;
                 }
                 case "Customs.CustomsAirline":
-                case "Customs.CouriersVat": 
+                case "Customs.CouriersVat":
                 case "Customs.CourierPendingReason":
              {
 
@@ -2393,7 +2395,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 }
 
                 case "TaxReport":
-              
+
                 {
 
                   logWindow.Width = 400;
@@ -2755,7 +2757,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             });
     }
 
-    // Run New APPaymnet 
+    // Run New APPaymnet
     NewAPPaymentMethod() {
         var newApPaymentPM: APPaymentPM = new APPaymentPM();
         newApPaymentPM.StatusCode = "DR";
@@ -2787,9 +2789,9 @@ export class ListComponent implements OnInit, AfterViewInit {
   Navigate() {
 
     this.CurrentQueryFilters = new ApiQueryFilters();
-    
+
     var MyFilters = new ApiQueryFilters();
-    
+
     this.currentFilters.AdditionalFilters.forEach((filter, key) => {
       if (filter.FieldName == "CompetitorFields")
         filter.Operator = "Contains";
@@ -2809,14 +2811,14 @@ export class ListComponent implements OnInit, AfterViewInit {
     var ids: string[] = [];
     this._entityListService.getByFilters(this.ObjectTableName, MyFilters, this.MethodName == undefined ? null : this.MethodName).then((observable: Observable<any>) => {
 
-  
+
       observable.subscribe((response: ServiceResponse) => {
         console.log(response);
-        
+
         response.Result.forEach((item) => {
           ids.push(item.Id);
         });
-        
+
         console.log(ids);
 
 
@@ -2844,8 +2846,8 @@ export class ListComponent implements OnInit, AfterViewInit {
       });
 
     });
-    
-    
+
+
   }
 
   public SortServerProp: any;
