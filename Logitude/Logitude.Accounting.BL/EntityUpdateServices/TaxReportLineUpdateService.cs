@@ -73,9 +73,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (entityPM.OutputOrInput == "O")
             {
-                //ARInvoice invoice = aRInvoiceRepository.GetSingleARInvoice(a.AccountingEntityId, a.Tenant);
-
-                //Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(invoice.BillToId, tenant);
 
 
 
@@ -84,47 +81,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     entityPM.LineTypeCode = "M";
 
                 }
-                //else if (card.IsAutonomy)
-                //{
-                //    entityPM.LineTypeCode = "I";
-                //}
-                //else
-                //{
-                //    entityPM.LineTypeCode = "S";
-                //}
+
 
                 if (entityPM.VatNumber == null)
                 {
                     entityPM.StatusCode = "1";
                 }
                
-                //               else if (!string.IsNullOrEmpty(line.VatNumber))
-                //               {
-                //                   //var hasChars = Regex.Matches(line.VatNumber, @"[a-zA-Z]");
 
-
-                //                   //if (line.VatNumber.Length != 9 || hasChars.Count != 0)
-                //                   //{
-                //                   //    line.StatusCode = "2";
-                //                   //}
-
-                //                   //else if (line.VatNumber.Length == 9)
-                //                   //{
-                //                   //    var wrongDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(line.VatNumber);
-                //                   //    var digit = line.VatNumber.ToString().Substring(8);
-                //                   //    if (digit == wrongDigit.ToString())
-                //                   //    {
-                //                   //        line.StatusCode = "6";
-                //                   //    }
-                //                   //    else
-                //                   //    {
-                //                   //        line.StatusCode = "2";
-                //                   //    }
-                //                   //}
-
-                //}
-
-                 if (entityPM.Reference != null)
+               else  if (entityPM.Reference != null)
                 {
                     var chars = Regex.Matches(entityPM.Reference, @"[a-zA-Z]");
                     if (chars.Count != 0)
@@ -150,7 +115,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     entityPM.StatusCode = "1";
                 }
 
-                if (entityPM.Reference != null)
+             else   if (entityPM.Reference != null)
                 {
                     var chars = Regex.Matches(entityPM.Reference, @"[a-zA-Z]");
                     if (chars.Count != 0)
