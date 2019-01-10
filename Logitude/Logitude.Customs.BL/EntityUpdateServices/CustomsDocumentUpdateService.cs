@@ -454,9 +454,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var collateralId = entityPM.CollateralId;
                 var customsDocumentQueryService = new CustomsDocumentQueryService(customContext);
                 var concurCheck = customsDocumentQueryService.GetSingle(entityPM.DocumentsFilingId, false, false);
-                if (concurCheck != null && !forceDueLoadTest && !sendWithCustomsDocId)
+                if (concurCheck != null && !forceDueLoadTest)
                 {
-                    if (!String.IsNullOrWhiteSpace(concurCheck.CustomsDocId))
+                    if (!String.IsNullOrWhiteSpace(concurCheck.CustomsDocId) && !sendWithCustomsDocId)
                     {
                         LogMessagingUtil.Instance.AppendLine("Customs Document already sent to Customs");
                         return send;
