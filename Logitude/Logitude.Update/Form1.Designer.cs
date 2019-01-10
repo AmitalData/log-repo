@@ -161,6 +161,7 @@
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
+            this.btnDownloadMrt = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -334,21 +335,21 @@
             // fillCustomsTableToolStripMenuItem
             // 
             this.fillCustomsTableToolStripMenuItem.Name = "fillCustomsTableToolStripMenuItem";
-            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.fillCustomsTableToolStripMenuItem.Text = "FillCustomsTable";
             this.fillCustomsTableToolStripMenuItem.Click += new System.EventHandler(this.FillCustomsTableToolStripMenuItem_Click);
             // 
             // updateDocTypeToolStripMenuItem
             // 
             this.updateDocTypeToolStripMenuItem.Name = "updateDocTypeToolStripMenuItem";
-            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.updateDocTypeToolStripMenuItem.Text = "UpdateDocType";
             this.updateDocTypeToolStripMenuItem.Click += new System.EventHandler(this.updateDocTypeToolStripMenuItem_Click);
             // 
             // loadTextCodesToolStripMenuItem
             // 
             this.loadTextCodesToolStripMenuItem.Name = "loadTextCodesToolStripMenuItem";
-            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.loadTextCodesToolStripMenuItem.Text = "LoadTextCodes";
             this.loadTextCodesToolStripMenuItem.Click += new System.EventHandler(this.loadTextCodesToolStripMenuItem_Click);
             // 
@@ -359,7 +360,7 @@
             this.toolStripMenuItemExportTofil,
             this.loadTextCodeFromDiskToolStripMenuItem});
             this.textCodesToolStripMenuItem.Name = "textCodesToolStripMenuItem";
-            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.textCodesToolStripMenuItem.Text = "TextCodes";
             // 
             // toolStripTextBoxFilePath
@@ -371,28 +372,28 @@
             // toolStripMenuItemExportTofil
             // 
             this.toolStripMenuItemExportTofil.Name = "toolStripMenuItemExportTofil";
-            this.toolStripMenuItemExportTofil.Size = new System.Drawing.Size(199, 22);
+            this.toolStripMenuItemExportTofil.Size = new System.Drawing.Size(200, 22);
             this.toolStripMenuItemExportTofil.Text = "SaveTextCodeToDisk";
             this.toolStripMenuItemExportTofil.Click += new System.EventHandler(this.toolStripMenuItemExportTofil_Click);
             // 
             // loadTextCodeFromDiskToolStripMenuItem
             // 
             this.loadTextCodeFromDiskToolStripMenuItem.Name = "loadTextCodeFromDiskToolStripMenuItem";
-            this.loadTextCodeFromDiskToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.loadTextCodeFromDiskToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.loadTextCodeFromDiskToolStripMenuItem.Text = "LoadTextCodeFromDisk";
             this.loadTextCodeFromDiskToolStripMenuItem.Click += new System.EventHandler(this.loadTextCodeFromDiskToolStripMenuItem_Click);
             // 
             // internationalSiteToolStripMenuItem
             // 
             this.internationalSiteToolStripMenuItem.Name = "internationalSiteToolStripMenuItem";
-            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.internationalSiteToolStripMenuItem.Text = "InternationalSite";
             this.internationalSiteToolStripMenuItem.Click += new System.EventHandler(this.internationalSiteToolStripMenuItem_Click);
             // 
             // createDecToolStripMenuItem
             // 
             this.createDecToolStripMenuItem.Name = "createDecToolStripMenuItem";
-            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.createDecToolStripMenuItem.Text = "CreateDec";
             this.createDecToolStripMenuItem.Click += new System.EventHandler(this.createDecToolStripMenuItem_Click);
             // 
@@ -1459,6 +1460,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.btnDownloadMrt);
             this.tabPage2.Controls.Add(this.button39);
             this.tabPage2.Controls.Add(this.button37);
             this.tabPage2.Controls.Add(this.EncryptionDocumentLabel);
@@ -1506,7 +1508,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(743, 592);
+            this.tabPage2.Size = new System.Drawing.Size(743, 558);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
             // 
@@ -1519,6 +1521,16 @@
             this.EncryptionDocumentLabel.Size = new System.Drawing.Size(100, 13);
             this.EncryptionDocumentLabel.TabIndex = 82;
             this.EncryptionDocumentLabel.Text = "...";
+            // 
+            // btnDownloadMrt
+            // 
+            this.btnDownloadMrt.Location = new System.Drawing.Point(522, 369);
+            this.btnDownloadMrt.Name = "btnDownloadMrt";
+            this.btnDownloadMrt.Size = new System.Drawing.Size(165, 24);
+            this.btnDownloadMrt.TabIndex = 89;
+            this.btnDownloadMrt.Text = "Download Report Mrt to File";
+            this.btnDownloadMrt.UseVisualStyleBackColor = true;
+            this.btnDownloadMrt.Click += new System.EventHandler(this.btnDownloadMrt_Click);
             // 
             // Form1
             // 
@@ -1697,6 +1709,7 @@
         private System.Windows.Forms.Label lblTenantNew;
         private System.Windows.Forms.Button button39;
         private System.Windows.Forms.Button button37;
+        private System.Windows.Forms.Button btnDownloadMrt;
     }
 }
 

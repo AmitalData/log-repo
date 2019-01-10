@@ -123,7 +123,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                           join glAcc in allRevenueExpenseCards.OrderBy(r => r.RevenueExpenseType)
                                           on myCurrencySum.AccountId equals glAcc.Id
                                           //select GetJournalLine(GetMyEnum( glAcc.RevenueExpenseType), myCurrencySum, journal));
-                                          select GetJournalLine(MyJournalActionTypeEnum.Credit, myCurrencySum, journal));
+                                          select GetJournalLine(MyJournalActionTypeEnum.Credit, myCurrencySum, journal, RevenueExpenseGLAccountId));
 
             journal.JournalLines.AddRange(journalLinesOfChildAcc);
             
@@ -166,14 +166,14 @@ namespace Logitude.Accounting.BL.CoreBL
                      LocalAmountDebit = g.Sum(r => r.LocalAmountDebit),
 
                  }
-                 select GetJournalLine(journalActionTypeEnum, myCurrencySumGroup1, journal)
+                 select GetJournalLine(journalActionTypeEnum, myCurrencySumGroup1, journal, "")
                  );
             //
             journal.JournalLines.AddRange(TypeJL);
         }
 
         
-        private JournalLinePM GetJournalLine(MyJournalActionTypeEnum journalActionTypeEnum, CurrencySum myCurrencySum, JournalPM journal)
+        private JournalLinePM GetJournalLine(MyJournalActionTypeEnum journalActionTypeEnum, CurrencySum myCurrencySum, JournalPM journal, string RevenueExpenseGLAccountId)
         {
             int tenant = journal.Tenant;
             var journalLine = new JournalLinePM()
@@ -197,10 +197,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 case MyJournalActionTypeEnum.Credit:
                     journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit;
                     journalLine.CreditAccountId = myCurrencySum.AccountId; //
+                    journalLine.DebitAccountId= RevenueExpenseGLAccountId; //
                     break;
                 case MyJournalActionTypeEnum.Debit:
                     journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
                     journalLine.DebitAccountId = myCurrencySum.AccountId; //
+                    journalLine.CreditAccountId = RevenueExpenseGLAccountId; //
                     break;
                 
             }

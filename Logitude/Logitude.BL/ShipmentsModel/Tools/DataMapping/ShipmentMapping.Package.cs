@@ -88,6 +88,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.OnCarriageETA = itemPM.OnCarriageETA;
             itemPoco.OnCarriageETD = itemPM.OnCarriageETD;
             itemPoco.IsMultiHarmonize = itemPM.IsMultiHarmonize;
+            itemPoco.ETD = itemPM.ETD;
+            itemPoco.ETA = itemPM.ETA;
+            itemPoco.Routing = itemPM.Routing;
+            itemPoco.VoyageTripNumber = itemPM.VoyageTripNumber;
 
             if (itemPM.TemperatureUnitCode == null)
             {

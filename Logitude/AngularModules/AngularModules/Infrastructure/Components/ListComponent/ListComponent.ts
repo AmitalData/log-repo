@@ -2239,14 +2239,6 @@ export class ListComponent implements OnInit, AfterViewInit {
                             isVisible = false;
                             break;
                         }
-
-                    case "CustomsShipper":
-                        {
-                            isVisible = false;
-                            this.IsShowNewDepositionFormLink = true;
-                            break;
-                        }
-
                 }
             }
         }
@@ -2260,7 +2252,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                 return;
             }
 
-            if (this.TenantPM.Id != 0 && this.ObjectTableName == "Port") {
+            if (this.ObjectTableName == "CustomsShipper") {
+                //this.NewDepositionFormClcik();
+            }
+           else if (this.TenantPM.Id != 0 && this.ObjectTableName == "Port") {
 
 
                 var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;

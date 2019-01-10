@@ -27,6 +27,7 @@ using System.Web.Http;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using WebFreight.Web.SystemLogsModel.Queries;
 
 namespace WebFreight.Web.Controllers.ShardLogistics
 {
@@ -85,50 +86,32 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             try
             {
                 Authentication();
-                CardRepository cardRepository = new CardRepository(tenant);
+
                 ContactActivityLogRepository contactLogRep = new ContactActivityLogRepository();
-
                 SharedLogisticsSummary result = new SharedLogisticsSummary();
-                IQueryable<ContactActivityLog> AllSharedLogisticsList = contactLogRep.GetSharedLogisticsContactLogs(tenant);
+                result.Id = 1;
+                IQueryable<ContactActivityLog>allSharedLogisticsList = contactLogRep.GetSharedLogisticsContactLogs(tenant).Where( d=>d.PartnerTypeId == "CS" || d.PartnerTypeId == "AG");
 
-                List<SharedLogisticsCardLog> customersList = new List<SharedLogisticsCardLog>();
-                List<SharedLogisticsCardLog> agnetsList = new List<SharedLogisticsCardLog>();
-                foreach (ContactActivityLog log in AllSharedLogisticsList)
+                if (allSharedLogisticsList.Count() > 0)
                 {
-                    if (!string.IsNullOrEmpty(log.PartnerTypeId))
-                    {
-                        if (log.PartnerTypeId == "CS") customersList.Add(new SharedLogisticsCardLog() { LogDateTime = log.LogDateTime, CardId = log.CardId });
-                        else if (log.PartnerTypeId == "AG") agnetsList.Add(new SharedLogisticsCardLog() { LogDateTime = log.LogDateTime, CardId = log.CardId });
-                    }
 
+                    DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                    DateTime todayDate1 = todayDate;
+                    DateTime todayDate2 = todayDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+                    DateTime lastWeekDate = todayDate.AddDays(-7);
+                    DateTime yesterdayDate = todayDate.AddDays(-1).AddHours(23).AddMinutes(59).AddSeconds(59);
+                    DateTime lastMonthDate = todayDate.AddDays(-30);
+
+
+                    result.TodayCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" && d.LogDateTime >= todayDate1 && d.LogDateTime <= todayDate2).GroupBy(d => d.CardId).Count();  //TodayCustomersList.GroupBy(d => d.CardId).Count();
+                    result.LastWeekCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" && d.LogDateTime >= lastWeekDate && d.LogDateTime <= yesterdayDate).GroupBy(d => d.CardId).Count();//LastWeekCustomersList.GroupBy(d => d.CardId).Count();
+                    result.LastMonthCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" && d.LogDateTime >= lastMonthDate && d.LogDateTime <= yesterdayDate).GroupBy(d => d.CardId).Count();  //LastMonthCustomersList.GroupBy(d => d.CardId).Count();
+                    result.TodayAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" && d.LogDateTime >= todayDate1 && d.LogDateTime <= todayDate2).GroupBy(d => d.CardId).Count(); //TodayAgentsList.GroupBy(d => d.CardId).Count();
+                    result.LastWeekAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" && d.LogDateTime >= lastWeekDate && d.LogDateTime <= yesterdayDate).GroupBy(d => d.CardId).Count();//LastWeekAgentsList.GroupBy(d => d.CardId).Count();
+                    result.LastMonthAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" && d.LogDateTime >= lastMonthDate && d.LogDateTime <= yesterdayDate).GroupBy(d => d.CardId).Count(); //LastMonthAgentsList.GroupBy(d => d.CardId).Count();
                 }
 
-                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-                DateTime todayDate1 = todayDate;
-                DateTime todayDate2 = todayDate.AddHours(23).AddMinutes(59).AddSeconds(59);
-                DateTime lastWeekDate = todayDate.AddDays(-7);
-                DateTime yesterdayDate = todayDate.AddDays(-1).AddHours(23).AddMinutes(59).AddSeconds(59);
-                DateTime lastMonthDate = todayDate.AddDays(-30);
-
-                List<SharedLogisticsCardLog> TodayCustomersList = customersList.Where(d => d.LogDateTime >= todayDate1 && d.LogDateTime <= todayDate2).ToList(); ;
-                List<SharedLogisticsCardLog> LastWeekCustomersList = customersList.Where(d => d.LogDateTime >= lastWeekDate && d.LogDateTime <= yesterdayDate).ToList();
-                List<SharedLogisticsCardLog> LastMonthCustomersList = customersList.Where(d => d.LogDateTime >= lastMonthDate && d.LogDateTime <= yesterdayDate).ToList();
-
-                result.TodayCustomersCount = TodayCustomersList.GroupBy(d => d.CardId).Count();
-                result.LastWeekCustomersCount = LastWeekCustomersList.GroupBy(d => d.CardId).Count();
-                result.LastMonthCustomersCount = LastMonthCustomersList.GroupBy(d => d.CardId).Count();
-
-                List<SharedLogisticsCardLog> TodayAgentsList = agnetsList.Where(d => d.LogDateTime >= todayDate1 && d.LogDateTime <= todayDate2).ToList();
-                List<SharedLogisticsCardLog> LastWeekAgentsList = agnetsList.Where(d => d.LogDateTime >= lastWeekDate && d.LogDateTime <= yesterdayDate).ToList();
-                List<SharedLogisticsCardLog> LastMonthAgentsList = agnetsList.Where(d => d.LogDateTime >= lastMonthDate && d.LogDateTime <= yesterdayDate).ToList();
-
-                result.TodayAgentsCount = TodayAgentsList.GroupBy(d => d.CardId).Count();
-                result.LastWeekAgentsCount = LastWeekAgentsList.GroupBy(d => d.CardId).Count();
-                result.LastMonthAgentsCount = LastMonthAgentsList.GroupBy(d => d.CardId).Count();
-
-                result.Id = 1;
-
-
+   
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
@@ -149,51 +132,43 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             {
                 Authentication();
 
-
                 List<LastLoginPartners> result = new List<LastLoginPartners>();
-                ContactActivityLogRepository contactLogRep = new ContactActivityLogRepository();
-                List<ContactActivityLog> AllSharedLogisticsList = contactLogRep.GetContactActivityLogs(tenant).Where(d => d.IsSharedLogisticsContact && (d.Activity == "Customer Access")).ToList(); // || d.Activity == "Agent Access"
-                CardRepository cardRepository = new Simplog.Data.CommonDataModel.Repositories.CardRepository(tenant);
-                ContactRepository contactRepository = new Simplog.Data.CommonDataModel.Repositories.ContactRepository(tenant);
 
-                int i = 0;
-                List<LastLoginPartners> temp = (from r in AllSharedLogisticsList
-                                                group r by new { r.CardId, r.ContactId, r.Via }
-                                                    into g
-                                                select new LastLoginPartners()
-                                                {
-                                                    Id = (i += 1),
-                                                    CardId = g.Key.CardId,
-                                                    ContactId = g.Key.ContactId,
-                                                    Via = g.Key.Via,
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                DateTime lastMonthDate = todayDate.AddDays(-30);
+  
+                ContactActivityLogQuery contactActivityLogQuery = new ContactActivityLogQuery();
+                List<LastLoginPartners> temp = contactActivityLogQuery.GetlastMonthLoginPartners(tenant).OrderByDescending(d=>d.LogDateTime).Take(10).ToList();
 
-                                                }).ToList();
-
-                foreach (LastLoginPartners item in temp)
+                if (temp.Count > 0)
                 {
+                    List<string> cardIds = temp.Select(d => d.CardId).ToList();
+                    List<string> contactIds = temp.Select(d => d.ContactId).ToList();
 
-                    ContactActivityLog log = AllSharedLogisticsList.Where(c => c.ContactId == item.ContactId && c.CardId == item.CardId).OrderByDescending(d => d.GMTLogDateTime).FirstOrDefault();
-
-                    if (log != null)
+                    CardQuery cardQuery = new CardQuery(tenant);
+                    ContactQuery contactQuery = new ContactQuery(tenant);
+                    List<CardList> cards = cardQuery.GetCardListsByCardIds(cardIds, tenant);
+                    List<ContactList> contacts = contactQuery.GetContactListsByListIds(contactIds, tenant);
+                    int i = 0;
+                    foreach (LastLoginPartners item in temp)
                     {
-                        Card card = cardRepository.GetSingleCardWithoutInclude(log.CardId, tenant);
-                        Contact contact = contactRepository.GetSingleContact(log.ContactId, tenant);
-
+                        CardList card = cards.Where(d => d.Id == item.CardId).FirstOrDefault();
+                        ContactList contact = contacts.Where(d => d.Id == item.ContactId).FirstOrDefault();
                         result.Add(new LastLoginPartners()
                         {
-                            Id = item.Id,
-                            CardId = log.CardId,
+                            Id = (i += 1),
+                            CardId = item.CardId,
                             CardName = card != null ? card.EnglishName : "",
-                            ContactId = log.ContactId,
+                            ContactId = item.ContactId,
                             ContactName = contact != null ? contact.EnglishName : "",
-                            PartnerTypeName = card == null ? "" : (card.PartnerType == null ? "" : card.PartnerType.Name),
-                            LastAccess = log.GMTLogDateTime,
-                            Via = log.Via,
+                            PartnerTypeName = card == null ? "" : card.PartnerTypeName,
+                            LastAccess = item.LogDateTime,
+                            Via = item.Via,
                         });
+
                     }
                 }
-
-                return Request.CreateResponse(HttpStatusCode.OK, result.OrderByDescending(d => d.LastAccess).Take(10).ToList());
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {

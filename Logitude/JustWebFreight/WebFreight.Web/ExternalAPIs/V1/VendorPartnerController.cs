@@ -58,9 +58,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
                     string computingPartnerCode = "";
-                    if (loggedContactInfo != null)
+                    if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                     {
-                        computingPartnerCode = loggedContactInfo.ComputingPartnerCode;
+                        computingPartnerCode = entity.ComputingPartnerCode;//loggedContactInfo.ComputingPartnerCode;
                     }
 
                     ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);

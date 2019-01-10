@@ -21,7 +21,6 @@ export class NewLineComponent extends BaseComponent {
     public DataContext = this;
     public ObjectTableName = "TMEmployeeTime";
     public EntityPM: TMEmployeeTimePM;
-    public LocationCode: any;
     private myDomainService: TimeManagementDomainService = new TimeManagementDomainService();
     Father: DailyTimeSheetComponent;
 
@@ -51,11 +50,9 @@ export class NewLineComponent extends BaseComponent {
                 this.EntityPM = args.EntityPM;
                 this.EntityId = this.EntityPM.Id;
                 this.DateOfWorkDate.Date = this.EntityPM.DateOfWork;
-                //this.DateOfWorkDateFormat = this.ApplyTimeFormat(this.EntityPM.TimeInMinutes);
                 this.DateOfWorkMinutes = this.EntityPM.TimeInMinutes;
                 this.Father = args.Father;
                 this.LocationCode = args.Father.LocationCode;
-                //this.EmployeeUserId = args.Father.EmployeeUserId;
                 this.SetUIProperties();
                 this.IsNew = false;
             }
@@ -73,11 +70,13 @@ export class NewLineComponent extends BaseComponent {
                 this.DateOfWorkDateFormat = this.ApplyTimeFormat(this.DateOfWorkMinutes);
                 this.DateOfWork = args.DateOfWork;
                 this.DateOfWorkDate.Date = this.DateOfWork;
+                this.SprintId = args.SprintId;
             }
         }
     }
 
     SetUIProperties() {
+        this.UIProperties.SetEnabled("LocationCode", this.ObjectTableName,true);
         this.UIProperties.SetRequired("Description", this.ObjectTableName, AppTool.IsNullOrEmpty(this.WINumber) && AppTool.IsNullOrEmpty(this.Description));
         this.UIProperties.SetRequired("WINumber", this.ObjectTableName, AppTool.IsNullOrEmpty(this.WINumber) && AppTool.IsNullOrEmpty(this.Description));
         this.UIProperties.SetRequired("DateOfWorkDateFormat", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DateOfWorkDateFormat));
@@ -110,6 +109,8 @@ export class NewLineComponent extends BaseComponent {
         this.SetUIProperties();
     }
 
+
+
     get EmployeeUserId() {
         if (this.EntityPM != null) {
             return this.EntityPM.EmployeeUserId;
@@ -133,6 +134,18 @@ export class NewLineComponent extends BaseComponent {
         }
         this.SetUIProperties();
     }
+
+    get LocationCode() {
+        if (this.EntityPM != null) {
+            return this.EntityPM.LocationCode;
+        }
+    }
+    set LocationCode(value: string) {
+        if (this.EntityPM.LocationCode != value) {
+            this.EntityPM.LocationCode = value;
+        }
+    }
+
 
     get WINumber() {
         return this.EntityPM.WINumber;

@@ -103,6 +103,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         paymentDataProvider.DepositBankName = !string.IsNullOrEmpty(bankAccount.LocalName) ? bankAccount.LocalName : bankAccount.EnglishName;
                         paymentDataProvider.DepositBankAccountNumber = bankAccount.AccountNumber;
+                        paymentDataProvider.VATNumber = bankAccount.VatNumber;
                     }
 
                 }

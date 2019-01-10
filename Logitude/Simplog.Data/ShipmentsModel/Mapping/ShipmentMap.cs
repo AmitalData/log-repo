@@ -684,6 +684,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.AdditionalChargesId).HasColumnName("AdditionalChargesId");
             this.Property(t => t.FreightPayerId).HasColumnName("FreightPayerId");
             this.Property(t => t.FreightPayerAddressId).HasColumnName("FreightPayerAddressId");
+            this.Property(t => t.FBLIsFromStock).HasColumnName("FBLIsFromStock");
+            this.Property(t => t.HasContainerException).HasColumnName("HasContainerException");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -762,7 +764,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                 this.Property(t => t.OnCarriageAdditionalTransportModeCode).HasColumnName("OnCarriageAdditionalTransportModeCode");
             }
 
-            this.Property(t => t.FBLIsFromStock).HasColumnName("FBLIsFromStock");
 
             // Relationships
             this.HasOptional(t => t.FreightLocationWarehouse).WithMany().HasForeignKey(d => d.FreightLocationId);
