@@ -79,6 +79,9 @@ export class NewBIReport extends BaseComponent {
 
     ShowQueryBuilderClicked() {
         var logWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs.DWQueryId = this.DWQueryId;
+        logWindow.WindowArgs = windowArgs;
         logWindow.Width = 1200;
         logWindow.Height = 820;
         logWindow.Title = "Query Builder";

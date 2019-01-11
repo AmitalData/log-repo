@@ -16,6 +16,7 @@ import { DWSubQueryPM } from '../../../../Infrastructure/EntityPMs/DWSubQueryPM'
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DWObjectTableListService } from '../../../../Infrastructure/Services/StandardLists/DWObjectTableListService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { DWQueryPMService } from '../../../../Infrastructure/Services/StandardPMs/DWQueryPMService';
 
 @Component({
     moduleId: module.id,
@@ -32,6 +33,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     public _DWQueryBuilderService: DWQueryBuilderService;
     public _DWSubQueryPMService: DWSubQueryPMService;
     public _DWObjectTableListService: DWObjectTableListService;
+    public _DWQueryPMService: DWQueryPMService;
     @Output() SelectedFiltersDataSourceChanged = new EventEmitter();
     @Output() onSelectedDataLoadedEvent = new EventEmitter();
     @Output() onUnSelectedDataLoadedEvent = new EventEmitter();
@@ -69,6 +71,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     constructor(private CD: ChangeDetectorRef) {
         super();
         this._DWObjectTablePMService = new DWObjectTablePMService();
+        this._DWQueryPMService = new DWQueryPMService();
         this._DWObjectFieldPMService = new DWObjectFieldExtendedPMService();
         this._DWQueryBuilderService = new DWQueryBuilderService();
         this._DWSubQueryPMService = new DWSubQueryPMService();
@@ -80,6 +83,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
         else {
             this.SearchFieldsId = "DWQueryBuilderSearchFields_" + SessionLocator.CurrentSession.GetNewId("DWQueryBuilderSearchFields");
         }
+
+       
         this._DWObjectTableListService.getAll().subscribe(myResult => {
             this.AllTables = myResult.Result;
             this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
@@ -179,12 +184,19 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
     }
     SetWindowArgs(args: any) {
-        //this.ID = args.queryId;
-        //this.isNewQueryMode = args.isNewQueryMode;
-        //this.CurrentObjectTable = args.currentObjectTable;
-        //this.IsEnabled = false;
-        //this.ObjectTable = window.ObjectTables.filter(d => d.Name == args.currentObjectTable)[0];
-        //this.Run();
+        this.QID = args.DWQueryId;
+        if (this.QID) {
+            this._DWSubQueryPMService.getByQueryId(this.QID).subscribe(myResult => {
+                if (!myResult.HasError) {
+                    this.ID = myResult.Result.SubQueryData.Id;
+
+                    this.EditButtonClicked();
+
+                }
+            });
+        }
+
+        
     }
 
     ClearPlaceHolder() {
@@ -210,96 +222,6 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
     Run() {
 
-        //this.HasChanges = false;
-        //var copy = false;
-
-        //var currentQuery = window.Queries.filter(d => d.Id == this.QueryId)[0];
-        //this.addedQueryColumnList = [];
-        //this.removedQueryColumnList = [];
-        ////queriesByUser = TenantContext.Current.Queries.Where(d => d.UserId == TenantContext.Current.LoggedContactId).ToList();
-        //this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionInfo.LoggedUserTenant + "&queryid=" + this.QueryId + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionInfo.LoggedUserId)
-        //    .subscribe((response) => {
-        //        this.queryColumnsList = response.json();
-        //        // this.queryColumnsList = TenantContext.Current.GeneralContext.QueryColumnPMs.Where(d => d.QueryId == QueryId && ((d.UserId == TenantContext.Current.LoggedContactId && d.Tenant == TenantContext.Current.Id)) && d.DisplayInList).OrderBy(d => d.IndexOrder).ToList();
-        //        this.queryColumnsList = this.queryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
-
-        //        if (this.queryColumnsList.length == 0) // Copy query columns to my tenant
-        //        {
-        //            var zeroColumnsList = [];
-        //            this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=0&queryid=" + this.QueryId + "&objecttableid=" + this.ObjectTable.Id + "&userid=null")
-        //                .subscribe((response) => {
-        //                    zeroColumnsList = response.json();
-        //                    zeroColumnsList = zeroColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
-        //                    zeroColumnsList.forEach((querycolumn, key) => {
-        //                        var newcolumn = new QueryColumnPM();
-
-        //                            newcolumn.Tenant = SessionInfo.LoggedUserTenant,
-        //                            newcolumn.UserId = SessionInfo.LoggedUserId,
-        //                            newcolumn.DisplayInList = querycolumn.DisplayInList,
-        //                            newcolumn.ObjectFieldName = querycolumn.ObjectFieldName,
-        //                            newcolumn.ColumnWidth = querycolumn.ColumnWidth,
-        //                            newcolumn.ConverterName = querycolumn.ConverterName,
-        //                            newcolumn.DataTemplateName = querycolumn.DataTemplateName,
-        //                            newcolumn.ColumnHeaderTemplateName = querycolumn.ColumnHeaderTemplateName,
-        //                            newcolumn.IndexOrder = querycolumn.IndexOrder,
-        //                            newcolumn.ObjectFieldDataTypeCode = querycolumn.ObjectFieldDataTypeCode,
-        //                            newcolumn.ObjectFieldFieldLableTextCodeDefaultText = querycolumn.ObjectFieldFieldLableTextCodeDefaultText,
-        //                            newcolumn.ObjectFieldId = querycolumn.ObjectFieldId,
-        //                            newcolumn.ObjectFieldListLabelTextCodeCode = querycolumn.ObjectFieldListLabelTextCodeCode,
-        //                            newcolumn.QueryCode = querycolumn.QueryCode,
-        //                            newcolumn.QueryId = querycolumn.QueryId,
-        //                            newcolumn.QueryObjectTableName = querycolumn.QueryObjectTableName,
-        //                            newcolumn.ObjectFieldFieldLableTextCodeCode = querycolumn.ObjectFieldFieldLableTextCodeCode,
-        //                            // TenantContext.Current.GeneralContext.QueryColumnPMs.Add(newcolumn);
-        //                            this.queryColumnsList.push(newcolumn);
-        //                            this.addedQueryColumnList.push(newcolumn);
-        //                        //copy = true;
-
-        //                    });
-
-        //                });
-
-        //        }
-
-
-        //        this.staticColumnsList = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && ((q.UserId == SessionInfo.LoggedUserId && q.Tenant == SessionInfo.LoggedUserTenant))).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
-
-        //        var listColumns = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && ((q.UserId == SessionInfo.LoggedUserId && q.Tenant == SessionInfo.LoggedUserTenant))).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
-
-
-        //        this.unselectedObjectFields = window.ObjectFields.filter(a => a.ObjectTableName == this.CurrentObjectTable).filter(d => d.DisplayInList == true && (d.Tenant == SessionInfo.LoggedUserTenant || d.Tenant == 0) && ((d.ValidForQuerySection1 == currentQuery.QuerySection || d.ValidForQuerySection2 == currentQuery.QuerySection) || d.IsCustom == true));
-
-
-        //        this.unselected = [];
-        //        this.unselectedObjectFields.forEach((field, key) => {
-        //            var xx = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && q.ObjectFieldId == field.Id && field.FieldName != "TimeFrameFilter");
-        //            var yy = this.unselected.filter(q => q.Id == field.Id);
-
-        //            if (xx.length == 0 && yy.length == 0) {
-        //                this.unselected.push(field);
-        //            }
-        //        });
-
-
-        //        //this.UnSelectedQueryColumnsList.ItemsSource = unselected.OrderBy(c => c.FieldName);
-        //        this.OrderedQueryColumnsList = [];
-        //        this.unSelectedList = this.unselected.sort((a, b) => { return (a.FieldName.toLowerCase() === b.FieldName.toLowerCase()) ? 0 : (a.FieldName.toLowerCase() < b.FieldName.toLowerCase()) ? -1 : 1 });
-        //        this.queryColumnsList.forEach((qc, key) => {
-        //            var CurColumn = this.OrderedQueryColumnsList.filter(a => a.ObjectFieldName == qc.ObjectFieldName);
-        //            if (CurColumn == null || CurColumn.length == 0) {
-        //                this.OrderedQueryColumnsList.push(new QueryColumnDetails(qc));
-        //            }
-        //        });
-
-        //        this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
-        //        this.CD.detectChanges();
-        //        //SelectedQueryColumnsList.ItemsSource = OrderedQueryColumnsList;
-        //        this.Fixedunselected = this.unSelectedList;
-
-        //        this.IsEnabled = true;
-        //        this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
-        //        this.onSelectedDataLoadedEvent.emit(this.FieldSelectedItem);
-        //    });
     }
 
     SetSelectedItem(item) {
@@ -351,7 +273,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             this.AllGroupsDataSource.forEach((Group) => {
                 var temp = Group.FieldsList.filter(a => a.Name.toLowerCase().indexOf(newValue.toLowerCase()) > -1);
                 this.DataSource.filter(a => a.Key == Group.Key)[0].FieldsList = temp;
-               
+
                 if (temp.length == 0) {
                     this.DataSource.filter(a => a.Key == Group.Key)[0].IsDetailesOpened = false;
                     this.DataSource.filter(a => a.Key == Group.Key)[0].DetailsIcon = "./Images/CellIcons/Arrowdown.png";
@@ -690,7 +612,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                             isHaveMultiSelect = true;
 
                             //abed
-                        }                       
+                        }
                     }
                     else if (filter.Operation.Code == filter.startsWithOp.Code) {
                         OperationSimpol = " like '@@%' ";
@@ -718,7 +640,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     }
 
 
-       
+
                     if (filter.Operation.Code == filter.IsNullOp.Code) {
                         this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is null or " + (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " = '' " + " " + AndOr + " ";
                     }
@@ -755,7 +677,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             var values: string[] = textValue.toString().split(';');
             if (values.length > 0) {
                 values.forEach((item) => {
-                   
+
                     if (item) {
                         result += (item + "','");
                     }
@@ -1036,7 +958,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         this.ID = myResult.Result.Id;
                         this.QID = myResult.Result.DWQueryId
                         this.EditButtonClicked();
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator(); 
+                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
                     });
                 }
                 else {
@@ -1221,7 +1143,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         }
         if (DWObjectField != null) {
             this.LOVAdditionalColumns = DWObjectField.LOVAdditionalColumns;
-            if (!this.LOVAdditionalColumns && ParentClass && ParentClass.AllFieldsDataSource ) {
+            if (!this.LOVAdditionalColumns && ParentClass && ParentClass.AllFieldsDataSource) {
                 var field = ParentClass.AllFieldsDataSource.filter(a => a.DWObjectTableCode == DWObjectField.DWObjectTableCode && a.Code == DWObjectField.Code && a.Name == DWObjectField.Name)[0];
                 if (field) {
                     this.LOVAdditionalColumns = DWObjectField.LOVAdditionalColumns = field.LOVAdditionalColumns;
@@ -1730,23 +1652,23 @@ export class DWFieldsGroup {
 
 export class MultiSelectedValue {
 
-    public  Value: ValueDetails;
-    public  Value1: ValueDetails;
-    public   Value2: ValueDetails;
-    public   Value3: ValueDetails;
-    public   Value4: ValueDetails;
-    public  Value5: ValueDetails;
-    public  Value6: ValueDetails;
-    public  Value7: ValueDetails;
+    public Value: ValueDetails;
+    public Value1: ValueDetails;
+    public Value2: ValueDetails;
+    public Value3: ValueDetails;
+    public Value4: ValueDetails;
+    public Value5: ValueDetails;
+    public Value6: ValueDetails;
+    public Value7: ValueDetails;
     public Value8: ValueDetails;
-    public   Value9: ValueDetails;
-    public  Value10: ValueDetails;
+    public Value9: ValueDetails;
+    public Value10: ValueDetails;
 
 }
 
 export class ValueDetails {
     public Header: string;
-   public  Row: string;
+    public Row: string;
 }
 //export class GroupItem {
 

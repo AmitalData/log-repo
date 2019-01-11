@@ -695,8 +695,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable BusinessRoleObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BusinessRole" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable BusinessRoleObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BusinessRole" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode BusinessRoleGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessRole.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = BusinessRoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature BusinessRoleGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BusinessRole.Tab.General", ObjectTableId = BusinessRoleObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessRoleFeatures.GEBR", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
