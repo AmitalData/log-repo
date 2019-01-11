@@ -14,6 +14,7 @@ import { DWQueryData } from '../../../../Common/DataContracts/DWQueryData';
 import { DWSubQueryPMService } from '../../../../Infrastructure/Services/StandardPMs/DWSubQueryPMService';
 import { DWSubQueryPM } from '../../../../Infrastructure/EntityPMs/DWSubQueryPM';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { DWObjectTableListService } from '../../../../Infrastructure/Services/StandardLists/DWObjectTableListService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { DWQueryPMService } from '../../../../Infrastructure/Services/StandardPMs/DWQueryPMService';
@@ -206,11 +207,13 @@ export class DWQueryBuilderComponent extends BaseComponent {
     }
 
     FillPlaceHolder() {
-        var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
-        temp.placeholder = TextCodeTranslator.Translate("General.O.Search");
-        temp.style.background = "url(Images/Search.png) no-repeat scroll";
-        temp.style.backgroundPosition = "right center";
-        temp.style.paddingRight = "30px";
+        if (!this.SearchText) {
+            var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
+            temp.placeholder = TextCodeTranslator.Translate("General.O.Search");
+            temp.style.background = "url(Images/Search.png) no-repeat scroll";
+            temp.style.backgroundPosition = "right center";
+            temp.style.paddingRight = "30px";
+        }
     }
 
     OnDeleteValue() {
@@ -1162,6 +1165,17 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
             this.IsMeasurement = DWObjectField.IsMeasurement;
             this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
+            if (DWObjectField.FilterType) {
+                this.FilterType = DWObjectField.FilterType;
+            }
+            if (DWObjectField.IsSetDefaults) {
+                this.IsSetDefaults = DWObjectField.IsSetDefaults;
+            }
+            if (DWObjectField.IsMandatoryFilter) {
+                this.IsMandatoryFilter = DWObjectField.IsMandatoryFilter;
+            }
+            
+           
             //this.Name = DWObjectField.Name;
         }
 
@@ -1362,6 +1376,58 @@ export class DWObjectFieldsDetails extends BaseComponent {
     public set AndOr(newValue: string) {
         this.andOr = newValue;
         this.MyParentClass.SaveChanges();
+    }
+
+    private filterType: string = "Fixed Filter";
+    public get FilterType() { return this.filterType; }
+    public set FilterType(newValue: string) { this.filterType = newValue; }
+
+    private isSetDefaults: boolean = false;
+    public get IsSetDefaults() { return this.isSetDefaults; }
+    public set IsSetDefaults(newValue: boolean) { if (this.isSetDefaults != newValue) { this.isSetDefaults = newValue; } }
+
+    private isMandatoryFilter: boolean = false;
+    public get IsMandatoryFilter() { return this.isMandatoryFilter; }
+    public set IsMandatoryFilter(newValue: boolean) { if (this.isMandatoryFilter != newValue) { this.isMandatoryFilter = newValue; } }
+    //IsMandatoryFilter: boolean = false;
+    //IsSetDefaults: boolean = false;
+
+    FilterTypeChanged(Value) {
+        this.FilterType = Value;
+    }
+
+    OpenFilterSettings() {
+        var windowArgs: any = {};
+        windowArgs.IsMandatoryFilter = this.IsMandatoryFilter;
+        windowArgs.IsSetDefaults = this.IsSetDefaults;
+
+        
+       
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = 500;
+        logWindow.Height = 260;
+        logWindow.Title = "Ask User Settings";
+        //logWindow.DataContext = this;
+        //logWindow.IsShowCloseButton = true;
+        logWindow.Show('./CommonModules/CommonOthers/Components/DWQueryBuilder/DWFilterSettings');
+        logWindow.WindowClosed.subscribe(($event: string) => {
+            if ($event) {
+                var MySettings = $event.split(',');
+                if (MySettings[0] == "true") {
+                    this.IsMandatoryFilter = true;
+                }
+                else {
+                    this.IsMandatoryFilter = false;
+                }
+                if (MySettings[1] == "true") {
+                    this.IsSetDefaults = true;
+                }
+                else {
+                    this.IsSetDefaults = false;
+                }
+            }
+        });
     }
 
     OperationValueChanged(operation) {

@@ -16,6 +16,7 @@ export class DWQueryBuilderFiltersComponent implements OnInit{
     SelectedFiltersDataSource: DWObjectFieldsDetails[] = [];
     AllFieldsWithChildrenDataSource: DWObjectFieldsDetails[];
     public AndOrOps = ["And", "Or"];
+    public Types = ["Fixed Filter", "Ask User"];
     DataContext: any;
     public _DWObjectTablePMService: DWObjectTablePMService;
     public _DWObjectFieldPMService: DWObjectFieldExtendedPMService;

@@ -147,6 +147,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                                                         Quantity = a.Quantity,
                                                                                         InternalNotes = a.WarehouseEntry.Notes,
                                                                                         SpecialInstructions = a.WarehouseEntry.SpecialInstruction,
+                                                                                        VolumetricWeight = a.VolumetricWeight,
                                                                                         
                                                                                     });
 

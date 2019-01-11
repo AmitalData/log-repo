@@ -39,7 +39,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         {
             CustomMappedPOCOProperties.Add(POCOPropertyNames.StatusTypeCode);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.CreatedByUserId);
-            CustomMappedPOCOProperties.Add(POCOPropertyNames.DateTypeCode);
+         //   CustomMappedPOCOProperties.Add(POCOPropertyNames.DateTypeCode);
 
             ContactQuery query = new ContactQuery(entityPOCO.Tenant);
             ContactPM loggedContact = null;
@@ -106,24 +106,24 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             }
 
 
-            if (entityPOCO.DateTypeCode != null)
-            {
-                OpenFormatDateTypeQueryService typeQueryService = new OpenFormatDateTypeQueryService(entityPOCO.Tenant);
-                OpenFormatDateTypePM dateType = typeQueryService.GetSingle(entityPOCO.DateTypeCode, false, false);
-                if (dateType != null)
-                {
-                   // loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
-                    if (loggedContact.DontShowLocal)
-                    {
+            //if (entityPOCO.DateTypeCode != null)
+            //{
+            //    OpenFormatDateTypeQueryService typeQueryService = new OpenFormatDateTypeQueryService(entityPOCO.Tenant);
+            //    OpenFormatDateTypePM dateType = typeQueryService.GetSingle(entityPOCO.DateTypeCode, false, false);
+            //    if (dateType != null)
+            //    {
+            //       // loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+            //        if (loggedContact.DontShowLocal)
+            //        {
 
-                        entityPM.DateTypeName = dateType.EnglishName;
-                    }
-                    else { entityPM.DateTypeName = dateType.LocalName; }
+            //            entityPM.DateTypeName = dateType.EnglishName;
+            //        }
+            //        else { entityPM.DateTypeName = dateType.LocalName; }
 
 
-                }
+            //    }
 
-            }
+            //}
 
 
         }
