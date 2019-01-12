@@ -695,7 +695,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
         }
-        public HttpResponseMessage GetActivityStatusByType(string type, string FromDate, string ToDate, int currentTenant, string customerid)
+        public HttpResponseMessage GetActivityStatusByType(string type, string FromDate, string ToDate, int currentTenant, string customerid, string directionId, string transportmodeid)
         {
             try
             {
@@ -732,7 +732,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
 
-                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByCreateOperationalDate(type, FromDateOBJ, ToDateOBJ, currentTenant, customerid);
+                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByCreateOperationalDate(type, FromDateOBJ, ToDateOBJ, currentTenant, customerid, directionId, transportmodeid);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
