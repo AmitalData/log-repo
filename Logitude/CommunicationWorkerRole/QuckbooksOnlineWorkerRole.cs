@@ -935,6 +935,14 @@ namespace CommunicationWorkerRole
         private void SendingSuccessfully(CommunicationLog waitingCommLog,int tenant,string QBOId,string Exception,string Id){
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
+
+                if(String.IsNullOrEmpty(QBOId) && String.IsNullOrEmpty(QBOIDSuccess))
+
+                {
+
+                    throw new Exception("Failed to Send !");
+                }
+
                 CommunicationLogRepository commLogrepository = new CommunicationLogRepository(Commoncontext);
                 waitingCommLog.CommunicationStatusTypeCode = "D";
                 waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
@@ -1026,6 +1034,7 @@ namespace CommunicationWorkerRole
                         invoice.ExternalAccountingEntityId = QBOId;
                     else if (QBOIDSuccess != null)
                         invoice.ExternalAccountingEntityId = QBOIDSuccess;
+                    
                     repository.Update(invoice);
                     repository.SubmitChanges();
                     if (WasErrorInTransfer)
@@ -1048,7 +1057,6 @@ namespace CommunicationWorkerRole
 
                 }
 
-               
 
                 QBOIDSuccess = null;
                 scope.Complete();

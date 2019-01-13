@@ -107,7 +107,12 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     set SelectedDirectionFilterShipment(newValue: string) {
         if (this.selectedDirectionFilterShipment != newValue) {
             this.selectedDirectionFilterShipment = newValue;
-            this.CommonFiltersShipment();
+            if (this.SelectedTimeRangeItem.Index == "-1") {
+                this.LoadActivityStatus();
+            }
+            else {
+                this.CommonFiltersShipment();
+            }
         }
     }
     
@@ -116,7 +121,12 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     set SelectedTransportFilterShipment(newValue: string) {
         if (this.selectedTransportFilterShipment != newValue) {
             this.selectedTransportFilterShipment = newValue;
-            this.CommonFiltersShipment();
+            if (this.SelectedTimeRangeItem.Index == "-1") {
+                this.LoadActivityStatus();
+            }
+            else {
+                this.CommonFiltersShipment();
+            }
         }
 
     }
@@ -169,7 +179,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
 
         if (this.SelectedTimeRangeItem.Index == "-1") {
             if (this.ActivityFromDate != null && this.ActivityToDate != null) {
-                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "").subscribe(myResult => {
+                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "", this.SelectedDirectionFilterShipment, this.SelectedTransportFilterShipment).subscribe(myResult => {
                     this.FinalShipmentData = myResult;
                     this.CommonFiltersShipment();
                 });
@@ -568,7 +578,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
         }
         else {            
                 var FilteredList: List<GroupByClass> = new List<GroupByClass>();
-                this.FinalShipmentData != null ? this.FinalShipmentData.items.forEach((item: DashBoardClass) => {
+            this.FinalShipmentData != null ? this.FinalShipmentData.items.forEach((item: DashBoardClass) => {
                     var obj: GroupByClass = new GroupByClass();
                     obj.XField = item.DateRange;
                     switch (parseInt(this.SelectedShowItem.Index)) {
