@@ -34,6 +34,10 @@ export class NewBIReport extends BaseComponent {
         this.myService = new BIReportPMService();
         this.SetUIProperties();
     }
+    SetWindowArgs(args: any) {
+        this.DWQueryId = args.DWQueryId;
+        this.SetUIProperties();
+    }
 
     SetUIProperties() {
         this.UIProperties.SetEnabled("TypeCode", this.ObjectTableName, false);
@@ -111,7 +115,7 @@ export class NewBIReport extends BaseComponent {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
                 }
                 else {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
                 }
             });
         }

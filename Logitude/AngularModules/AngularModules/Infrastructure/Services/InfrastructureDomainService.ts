@@ -131,7 +131,7 @@ export class InfrastructureDomainService {
                 FeatureLocator.Features = _mappedArray;
 
                 var myResponse = new ServiceResponse();
-                myResponse.Result = _mappedArray;                
+                myResponse.Result = _mappedArray;
                 return myResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
@@ -296,7 +296,7 @@ export class InfrastructureDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    
+
     GetDataCountForTenant(entityId: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -328,7 +328,7 @@ export class InfrastructureDomainService {
     DeleteDataForTenant(entityId: number, type: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        
+
         var url = this._apiUrl + '/GetDeleteDataForTenant?entityId=' + entityId + '&type=' + type;
 
         return Observable.defer(() => {
@@ -554,7 +554,7 @@ export class InfrastructureDomainService {
             }
 
             else if (property === "Items") {
-                
+
                 entityPM.Items = new Array<FeaturePM>();
                 for (var item in jsonPM.Items) {
                     var jItem = jsonPM.Items[item];
@@ -587,7 +587,7 @@ export class InfrastructureDomainService {
             var property = jsonPMKeys[key];
 
             entityPM[property] = jsonPM[property];
-            
+
             entityPM.IsDirty = false;
 
             if (mapParent) {
@@ -696,6 +696,79 @@ export class InfrastructureDomainService {
         });
     }
 
+    UpdateBIReportXMLData(QueryData: BIReportXMLData) {
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+            var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
+            var response: ServiceResponse;
+            response = new ServiceResponse();
+            if (errorsArray.length == 0) {
+                //var mappedEntity: QueryColumnPM;
+                //mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+                //////////////////////////////////////////////////////
+                //var mappedEntity: DWSubQueryPM;
+                //mappedEntity = this.MapJsonToEntityPM(entityPM.SubQueryData, false);
+                //entityPM.SubQueryData = mappedEntity;
+                var temp = this.deepClone(QueryData);
+
+                /////////////////////////////////////////////////////
+                return this._http.put(this._apiUrl + "/PutBIReport", JSON.stringify(temp),
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
+                        if (pm) {
+                            response.Result = pm;
+                        }
+                        return response;
+                    });
+            }
+            else {
+                return null;
+            }
+        }
+        );
+    }
+
+    public deepClone(obj, hash = new WeakMap()) {
+        // Do not try to clone primitives or functions
+        if (Object(obj) !== obj || obj instanceof Function) {
+            return obj;
+        }
+
+        if (hash.has(obj)) {
+            //return hash.get(obj); // Cyclic reference
+            return;
+        }
+
+        try { // Try to run constructor (without arguments, as we don't know them)
+            var result = new obj.constructor();
+        }
+        catch (e) { // Constructor failed, create object without running the constructor
+            result = Object.create(Object.getPrototypeOf(obj));
+        }
+
+        // Optional: support for some standard constructors (extend as desired)
+        if (obj instanceof Map) {
+            Array.from(obj, ([key, val]) => result.set(this.deepClone(key, hash),
+                this.deepClone(val, hash)));
+        }
+        else if (obj instanceof Set) {
+            Array.from(obj, (key) => result.add(this.deepClone(key, hash)));
+        }
+
+        // Register in hash    
+        hash.set(obj, result);
+
+        // Clone and assign enumerable own properties recursively
+        return Object.assign(result, ...Object.keys(obj).map(
+            key => ({
+                [key]:
+
+                    key != "UIProperties" && key != "MyParentClass" ? this.deepClone(obj[key], hash) : true
+
+            })));
+    }
 }
 
 export class FeaturesUpdateHelper {
@@ -717,4 +790,16 @@ export class BusinessRecordsSummary {
     public TicketsCount: number;
     public ActivitiesCount: number;
     public OpportunitiesCount: number;
+}
+
+export class BIReportXMLData {
+    public BIReportId: string;
+    public Columns: BIReportColumnData[];  
+}
+
+export class BIReportColumnData {
+    public SortColId: string;
+    public SortDirction: string;
+    public Width: number;
+    public Index: number;
 }
