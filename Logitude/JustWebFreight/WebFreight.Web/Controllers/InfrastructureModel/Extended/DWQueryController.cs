@@ -46,6 +46,28 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
 {
     public partial class DWQueryController : ApiController
     {
+        public HttpResponseMessage GetSingle(string Id)
+        {
+            try
+            {
+                //string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                //SecurityUtility.CheckContactFeature("DWObjectTable", "READ", authToken.Tenant);
+                DWQueryQuery dWQueryQuery = new DWQueryQuery(authToken.Tenant);
+                DWQueryPM dWQueryPM = dWQueryQuery.GetSinglePM(Id, authToken.Tenant);
+               
+                return Request.CreateResponse(HttpStatusCode.OK, dWQueryPM);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
 
         //public HttpResponseMessage GetAdvancedDWQueryFiltersByTenant(int tenant,string loggedcontactid)
         //{

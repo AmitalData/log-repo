@@ -22,7 +22,10 @@ export class DWFilterSettings extends BaseComponent  {
     constructor() {
         super(); 
     }
-
+    SetWindowArgs(args: any) { 
+        this.IsSetDefaults = args.IsSetDefaults; 
+        this.IsMandatoryFilter = args.IsMandatoryFilter; 
+    }
    
     IsMandatoryFilter: boolean = false;
     IsSetDefaults: boolean = false;

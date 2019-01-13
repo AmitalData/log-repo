@@ -78,6 +78,14 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 this.ShowAlert();
             }
         });
+        SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            if (isLoadSuccess) {
+                this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                console.log("Entity Reloaded");
+                console.log("Deposited Success", this.EntityPM);
+                this.RedrawScreen();
+            }
+        });
 
         // Dim fields
         //this.SetUIProperty(); // do it after getting cashbook (isCashDeposit)

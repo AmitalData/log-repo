@@ -86,11 +86,12 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
         this.IsLoadPage = true;
 
     }
-
+    VolumetricWeightLabel: string;
     SetValue() {
         this.VolumeLabel = this.ViewModelTrigger.VolumeLabel;
         this.GrossWeightLabel = this.ViewModelTrigger.GrossWeightLabel;
         this.DimensionsLabel = this.ViewModelTrigger.DimensionsLabel;
+        this.VolumetricWeightLabel = "Volumetric Weight (" + this.ViewModelTrigger.ChargeableWeightLabel + ")";
     }
     IsShowMessageNoResult: boolean = false;
     FilterWarehouseEntryPackageList() {

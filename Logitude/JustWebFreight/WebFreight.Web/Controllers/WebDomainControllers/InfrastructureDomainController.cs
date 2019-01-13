@@ -67,6 +67,8 @@ using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using System.Xml.Serialization;
+using WebFreight.Web.DataContracts;
+using Logitude.Infrastructure.BL.EntityQueryServices;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -1628,6 +1630,31 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        public HttpResponseMessage PutBIReport(BIReportXMLData QueryData)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                var ColumnsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Columns);
+                IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
+                BIReportQueryService query = new BIReportQueryService(authToken.Tenant);
+                var entityPM = query.GetSingle(QueryData.BIReportId,false,false);
+                if (entityPM != null)
+                {
+                    entityPM.AGGridOptionsXML = ColumnsXML;
+                    entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    BIReportUpdateService service = new BIReportUpdateService(objectContext);
+                    service.Update(entityPM, true);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 

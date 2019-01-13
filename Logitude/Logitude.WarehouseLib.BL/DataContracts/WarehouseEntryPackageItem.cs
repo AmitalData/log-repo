@@ -38,8 +38,7 @@ namespace Logitude.WarehouseLib.BL.DataContracts
            public string ShipmentNumber { get; set; }
            public string InternalNotes { get; set; }
            public string SpecialInstructions { get; set; }
-
-
+           public double? VolumetricWeight { get; set; }
 
 
 
