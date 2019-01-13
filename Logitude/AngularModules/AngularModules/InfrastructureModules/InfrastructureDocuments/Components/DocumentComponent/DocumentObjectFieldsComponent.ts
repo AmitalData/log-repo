@@ -87,6 +87,8 @@ export class DocumentObjectFieldsComponent implements OnInit {
         this.ObjectTablesList = window.ObjectTables;
         this.ObsList = new Array<DocumentObjectFieldsRowViewModel>();
         this.ObsListAll = new Array<DocumentObjectFieldsRowViewModel>();
+        this.SystemObsList = new Array<DocumentObjectFieldsRowViewModel>();
+        this.SystemDataSource = new Array<DocumentObjectFieldsRowViewModel>();  
         this.AllSystemDataSourceViewsLists = new Array<DocumentObjectFieldsRowViewModel>();
         this.AllObjectDataSourceViewsLists = new Array<DocumentObjectFieldsRowViewModel>();
       
@@ -94,7 +96,9 @@ export class DocumentObjectFieldsComponent implements OnInit {
             this.ObjectTypeField = null;
         }
         // Abed
-        this.SystemObsList = new Array<DocumentObjectFieldsRowViewModel>();  
+
+
+
         this.SelectedObjectTable = window.ObjectTables.filter(d=> d.Id == this.ObjectTableId)[0];
 
         this.ObjectTableSelectionChangedMethod(this.SelectedObjectTable);
@@ -176,12 +180,29 @@ export class DocumentObjectFieldsComponent implements OnInit {
                 systemDataObjectFieldsList = window.ObjectFields.filter(f => f.ObjectTableId == table.Id && (f.Tenant == SessionInfo.LoggedUserTenant || f.Tenant == 0) && f.DataTypeCode != "Emails");
 
             }
+            var order = 0;
             systemDataObjectFieldsList.forEach((field) => {
                 var view = new DocumentObjectFieldsRowViewModel(field, field.FieldName, this.ObjectTypeField);
+                view.Order = order;
+                order += 1;
                 this.SystemObsList.push(view);
             });
 
-            this.SystemDataSource = this.SystemObsList;
+            var smailLogo = this.SystemObsList.filter(d => d.FieldName == "SmallLogo")[0];
+            if (smailLogo) {
+                var wideLogo = this.SystemObsList.filter(d => d.FieldName == "WideLogo")[0];
+                if (wideLogo) {
+                    wideLogo.Order = (smailLogo.Order + 1);
+                    order = (wideLogo.Order + 1);
+                    this.SystemObsList.filter(d => d.Order > smailLogo.Order && d.FieldName != "WideLogo").forEach((field) => {
+                        field.Order = order;
+                        order += 1;
+                    });
+
+                }
+            }
+            this.SystemDataSource = this.SystemObsList.sort((a, b) => { return a.Order - b.Order });
+   
 
         }
 

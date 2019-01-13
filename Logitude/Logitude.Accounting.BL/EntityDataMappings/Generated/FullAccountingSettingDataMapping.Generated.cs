@@ -44,7 +44,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DefaultTaxWithholdPercentage, 
 	         CustomsGLAccountId, 
 	         DefaultDifferencesGLAccountId, 
-	         DefaultExternalDiffGLAccountId,
+	         DefaultExternalDiffGLAccountId, 
+	         SoftwareVersion,
 	      }
 
 
@@ -90,7 +91,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DefaultTaxWithholdPercentage, 
 	         CustomsGLAccountId, 
 	         DefaultDifferencesGLAccountId, 
-	         DefaultExternalDiffGLAccountId,
+	         DefaultExternalDiffGLAccountId, 
+	         SoftwareVersion,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -207,6 +209,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultExternalDiffGLAccountId))
             {
 				entityPOCO.DefaultExternalDiffGLAccountId = entityPM.DefaultExternalDiffGLAccountId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SoftwareVersion))
+            {
+				entityPOCO.SoftwareVersion = entityPM.SoftwareVersion;
 			}
 			}
 
@@ -328,6 +335,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.DefaultExternalDiffGLAccountId = entityPOCO.DefaultExternalDiffGLAccountId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SoftwareVersion))
+            {
+					entityPM.SoftwareVersion = entityPOCO.SoftwareVersion;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -442,6 +454,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultExternalDiffGLAccountId))
             {
                 oldEntityPM.DefaultExternalDiffGLAccountId = entityPM.DefaultExternalDiffGLAccountId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SoftwareVersion))
+            {
+                oldEntityPM.SoftwareVersion = entityPM.SoftwareVersion;
             }
 			
 		}
