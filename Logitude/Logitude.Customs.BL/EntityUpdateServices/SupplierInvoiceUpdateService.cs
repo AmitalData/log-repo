@@ -184,7 +184,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 base.OnUpdating(entityPM);
                 SupplierInvoicePM dbOccSupplierInvoicePM = GetDBEntity(entityPM);
                 var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
-                unifreightFUStatusTaskService.DeleteINAFUStatus(declarationPM);
+                unifreightFUStatusTaskService.DeleteINAFUStatus(declarationPM.Tenant, declarationPM.CustomFileNo);
 
                 if (dbOccSupplierInvoicePM != null && dbOccSupplierInvoicePM.IsValueForCustomsOnly != entityPM.IsValueForCustomsOnly)
                 {

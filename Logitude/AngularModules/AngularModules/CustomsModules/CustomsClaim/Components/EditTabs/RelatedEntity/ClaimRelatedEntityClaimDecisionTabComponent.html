@@ -107,13 +107,13 @@
                                                 <div style="width: 420px; height: 100px">
                                                     <logitude-edit-grid GridWidth="100%" GridHeight="100%"
                                                                         [ItemSource]="ClaimsRelatedEntitiesSeizureslist"
-                                                                        [IsReadOnly]="!IsControlEnabled">
+                                                                        [IsReadOnly]="IsControlEnabled">
 
                                                         <!-- SeizureFactorCode -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntitiesSeizure.F.SeizureFactorCode' | TextCodeTranslationPipe"
                                                                     [width]="'140'" [Alignment]="'right'" [binding]="'SeizureFactorName'">
                                                             <log-cell-template template="let item" #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                <div class="TextTrimming RightCenter">
                                                                     <span>{{item.SeizureFactorName}}</span>
                                                                 </div>
                                                             </log-cell-template>
@@ -123,7 +123,7 @@
                                                         <log-column [header]="'Customs.ClaimsRelatedEntitiesSeizure.F.SeizureMethodCode' | TextCodeTranslationPipe"
                                                                     [width]="'140'" [Alignment]="'right'" [binding]="'SeizureMethodName'">
                                                             <log-cell-template template="let item" #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                <div class="TextTrimming RightCenter">
                                                                     <span>{{item.SeizureMethodName}}</span>
                                                                 </div>
                                                             </log-cell-template>
@@ -133,7 +133,7 @@
                                                         <log-column [header]="'Customs.ClaimsRelatedEntitiesSeizure.F.SeizureAmount' | TextCodeTranslationPipe"
                                                                     [width]="'110'" [Alignment]="'right'" [binding]="'SeizureAmount'">
                                                             <log-cell-template template="let item" #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                <div class="TextTrimming RightCenter">
                                                                     <span>{{item.SeizureAmount}}</span>
                                                                 </div>
                                                             </log-cell-template>
@@ -171,13 +171,13 @@
                                                 <div style="width: 420px; height: 100px">
                                                     <logitude-edit-grid GridWidth="100%" GridHeight="100%"
                                                                         [ItemSource]="ClaimsRelatedEntitiesRefundslist"
-                                                                        [IsReadOnly]="!IsControlEnabled">
+                                                                        [IsReadOnly]="IsControlEnabled">
 
                                                         <!-- InvoiceNumber -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntitiesRefund.F.InvoiceNumber' | TextCodeTranslationPipe"
                                                                     [width]="'120'" [Alignment]="'right'" [binding]="'InvoiceNumber'">
                                                             <log-cell-template template="let item" #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                <div class="TextTrimming RightCenter">
                                                                     <span>{{item.InvoiceNumber}}</span>
                                                                 </div>
                                                             </log-cell-template>
@@ -187,7 +187,7 @@
                                                         <log-column [header]="'Customs.ClaimsRelatedEntitiesRefund.F.SequenceNumeric' | TextCodeTranslationPipe"
                                                                     [width]="'120'" [Alignment]="'right'" [binding]="'SequenceNumeric'">
                                                             <log-cell-template template="let item" #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                <div class="TextTrimming RightCenter">
                                                                     <span>{{item.SequenceNumeric}}</span>
                                                                 </div>
                                                             </log-cell-template>
@@ -197,7 +197,7 @@
                                                         <log-column [header]="'Customs.ClaimsRelatedEntitiesRefund.F.RefundQuntity' | TextCodeTranslationPipe"
                                                                     [width]="'150'" [Alignment]="'right'" [binding]="'RefundQuntity'">
                                                             <log-cell-template template="let item" #logcelltemplate>
-                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                <div class="TextTrimming RightCenter">
                                                                     <span>{{item.RefundQuntity}}</span>
                                                                 </div>
                                                             </log-cell-template>
