@@ -194,20 +194,7 @@ export class NewViewComponent {
 
                 this.FillSharedWithUsersItemsSource();
                 this.SetSelectedSharedValue();
-
-                var isEditEnabled = true;                
-                if (this.EntityPM.SharedWithAll || this.EntityPM.SharedWithSpecificUsers) {
-                    if (this.EntityPM.SharedByUserId != SessionLocator.LoggedUserId) {
-                        if (!FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
-                            isEditEnabled = false
-                        }
-                    }
-                }
-
-                this.IsSharedByMessageVisible = !isEditEnabled;
-                this.IsSaveButtonEnabled = isEditEnabled;
-                this.IsbtnUpEnabled = isEditEnabled;
-                this.IsbtnDownEnabled = isEditEnabled;
+                this.CheckEditSharedViewsFeature();                
 
                 if (!AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId) && this.EntityPM.SharedByUserId != SessionLocator.LoggedUserId) {
                     this.IsSharedByVisible = true;
@@ -222,6 +209,44 @@ export class NewViewComponent {
 
             SessionLocator.CurrentSession.StopBusyIndicator();
         });
+    }
+
+    CheckEditSharedViewsFeature(type: string = null) {
+        var isEditEnabled = true;
+        var isUpDownEnabled = false;
+        var isAddEnabled = false;
+        var isRemoveEnabled = false;
+
+        if (this.EntityPM.SharedWithAll || this.EntityPM.SharedWithSpecificUsers) {
+            if (this.EntityPM.SharedByUserId != SessionLocator.LoggedUserId) {
+                if (!FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
+                    isEditEnabled = false
+                }
+            }
+        }
+        
+        if (isEditEnabled) {
+            if (type == "Selected") {
+                isAddEnabled = false;
+                isRemoveEnabled = true;
+                isUpDownEnabled = true;
+            }
+
+            else if (type == "Available") {
+                isAddEnabled = true;
+                isRemoveEnabled = false;
+                isUpDownEnabled = false;
+            }
+        }
+
+        this.IsSharedByMessageVisible = !isEditEnabled;
+        this.IsSaveButtonEnabled = isEditEnabled;
+
+        this.IsbtnUpEnabled = isUpDownEnabled;
+        this.IsbtnDownEnabled = isUpDownEnabled;
+
+        this.IsbtnAddEnabled = isAddEnabled;
+        this.IsbtnRemoveEnabled = isRemoveEnabled;
     }
 
     ClearPlaceHolder() {
@@ -446,6 +471,20 @@ export class NewViewComponent {
         });
     }
 
+    DeleteUser(user: SharedWithUserItem) {
+        var itemIndex = this.SharedWithUsersItemsSource.indexOf(user);
+        if (itemIndex > -1) {
+            this.SharedWithUsersItemsSource.splice(itemIndex, 1);
+        }
+
+        var index = this.EntityPM.SharedUserQueries.indexOf(user.myEnity);
+        if (index > -1) {
+            this.EntityPM.RemoveSharedUserQueryPM(user.myEnity);
+        }
+
+        this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
+    }
+
     //txtSearch_TextChanged
     private searchText: string;
     public get SearchText() { return this.searchText; }
@@ -513,23 +552,14 @@ export class NewViewComponent {
 
     onSelectedItemChanged(item) {
         this.SelectedItem = item;
-        this.IsbtnAddEnabled = true;
-        this.IsbtnRemoveEnabled = false;
-        this.IsbtnUpEnabled = false;
-        this.IsbtnDownEnabled = false;
         this.onUnSelectedDataLoadedEvent.emit(null);
+        this.CheckEditSharedViewsFeature("Selected");
     }
 
     onFieldSelectedItemChanged(item) {
-        this.FieldSelectedItem = item;
-        //if (UnSelectedQueryColumnsList.SelectedItem != null) {
-        this.IsbtnAddEnabled = false;
-        this.IsbtnRemoveEnabled = true;
-        this.IsbtnUpEnabled = true;
-        this.IsbtnDownEnabled = true;
+        this.FieldSelectedItem = item;        
         this.onSelectedDataLoadedEvent.emit(null);
-        //SelectedQueryColumnsList.SelectedItem = null;
-        //}
+        this.CheckEditSharedViewsFeature("Available");
     }
 
     btnUp_Click() {
@@ -1461,7 +1491,7 @@ export class NewViewComponent {
 }
 
 export class SharedWithUserItem {
-    private myEnity: SharedUserQueryPM;
+    public myEnity: SharedUserQueryPM;
     private myUser: UserList;
     constructor(entity: SharedUserQueryPM, user: UserList) {
         this.myEnity = entity;
