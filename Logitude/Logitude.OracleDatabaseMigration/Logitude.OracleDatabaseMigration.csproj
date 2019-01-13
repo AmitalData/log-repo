@@ -180,6 +180,10 @@
     <Compile Include="Migrations\201901100730447_AddMigrationFixProblems.Designer.cs">
       <DependentUpon>201901100730447_AddMigrationFixProblems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901131101558_AddMigrationChangeResponseStatus.cs" />
+    <Compile Include="Migrations\201901131101558_AddMigrationChangeResponseStatus.Designer.cs">
+      <DependentUpon>201901131101558_AddMigrationChangeResponseStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -297,6 +301,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901100730447_AddMigrationFixProblems.resx">
       <DependentUpon>201901100730447_AddMigrationFixProblems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901131101558_AddMigrationChangeResponseStatus.resx">
+      <DependentUpon>201901131101558_AddMigrationChangeResponseStatus.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
