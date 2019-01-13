@@ -25,7 +25,7 @@ export class ClaimRelatedEntityClaimDecisionTabComponent extends BaseComponent {
     public ClaimsRelatedEntitiesRefundslist: ObservableCollection;
 
     public CurrentEditComponentId: string;
-    private isControlEnabled: boolean = true;
+    IsControlEnabled: boolean = true;
 
     ValidationErrors: string[] = [];
 
@@ -72,7 +72,13 @@ export class ClaimRelatedEntityClaimDecisionTabComponent extends BaseComponent {
 
         this.EntityPM = entityPM;
         this.ClaimPM = claimPM;
-        this.isControlEnabled = isEnable;
+
+        this.UIProperties.SetEnabled("DecisionCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("DecisionNote", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("EilatVatRefoundDecision", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("DepositingAmount", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("RefundAmount", this.ObjectTableName, false);
+
         this.BuildSeizureslist();
         this.BuildRefundslist();
     }
@@ -92,9 +98,6 @@ export class ClaimRelatedEntityClaimDecisionTabComponent extends BaseComponent {
         console.log("EntityPM", this.EntityPM);
     }
 
-    public get IsControlEnabled() { return this.isControlEnabled; }
-    public set IsControlEnabled(newValue: boolean) { this.isControlEnabled = newValue; }
-
     public get DecisionCode() { return this.EntityPM.DecisionCode; }
     public set DecisionCode(newValue: string) { this.EntityPM.DecisionCode = newValue; }
 
@@ -104,7 +107,7 @@ export class ClaimRelatedEntityClaimDecisionTabComponent extends BaseComponent {
     public get DepositingAmount() { return this.EntityPM.DepositingAmount; }
     public set DepositingAmount(newValue: number) { this.EntityPM.DepositingAmount = newValue; }
 
-    public get RefundAmount() { return this.EntityPM.RefundAmount ; }
+    public get RefundAmount() { return this.EntityPM.RefundAmount; }
     public set RefundAmount(newValue: number) { this.EntityPM.RefundAmount = newValue; }
 
     public get DecisionNote() { return this.EntityPM.DecisionNote; }
