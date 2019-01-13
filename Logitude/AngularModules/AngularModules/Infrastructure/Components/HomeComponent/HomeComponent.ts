@@ -770,14 +770,11 @@ export class HomeComponent implements OnDestroy{
         }      
     }
 
-
     CloseTab(tabItem: SessionTabItem) {
-
         var isNeedingConfirmation = false;
         if (SessionLocator.CurrentSession.CurrentEditComponent) {
             isNeedingConfirmation = SessionLocator.CurrentSession.CurrentEditComponent.NeedCloseConfirmation();
         }
-
         if (isNeedingConfirmation) {
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 450;
@@ -790,7 +787,7 @@ export class HomeComponent implements OnDestroy{
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
 
-                   
+
                     if (!this.SaveCompletedEvent) {
                         this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                             if (isSaveSuccess) {
@@ -810,8 +807,9 @@ export class HomeComponent implements OnDestroy{
                 }
             });
         }
-
-
+        else {
+            this.Close(tabItem);
+        }
     }
 
     Close(tabItem: SessionTabItem) {

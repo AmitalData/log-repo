@@ -69,9 +69,11 @@ export class BIReportPreviewComponent implements OnInit {
         this.DWQueryId = args['DWQueryId'];
         this.EntityId = args['EntityId'];
         if (this.DWQueryId != null) {
-            this._BIReportPMService.get(this.EntityId).subscribe(myResult => {
+            this._InfrastructureDomainService.GetByBIReportId(this.EntityId).subscribe(myResult => {
                 if (!myResult.HasError) {
-                    this.EntityPM = myResult.Result;
+                    var result: BIReportXMLData = myResult.Result; 
+                    this.EntityPM = result.BIReportPM;
+
                 }
             });
         }
@@ -142,6 +144,8 @@ export class BIReportPreviewComponent implements OnInit {
         this.BusyIndicatorText = null;
         this.ShowBusyIndicator = false;
     }
+
+
     ExportToExcelClicked() {
         var windowArgs: any = {};
         windowArgs.queryId = this.DWQueryId;
@@ -156,9 +160,14 @@ export class BIReportPreviewComponent implements OnInit {
     private gridColumnApi;
     onGridReady(params) {
         this.gridApi = params.api;
-       
         this.gridApi.hideOverlay()
         this.gridColumnApi = params.columnApi;
+    }
+    onSortChanged(params) {
+        this.hasChanged = true;
+    }
+    oncolumnResized(params) {
+        this.hasChanged = true;
     }
 
     ExportToExcelAGGridClicked() {
@@ -179,11 +188,15 @@ export class BIReportPreviewComponent implements OnInit {
         }
     }
 
+    private hasChanged = false;
     get HasChanged() {
-        if (this.EntityId == null || (this.EntityPM != null && this.EntityPM.IsDirty))
+        if (this.EntityId == null || (this.EntityPM != null && this.EntityPM.IsDirty) || this.hasChanged) {
+            this.hasChanged = false;
             return true;
+        }
         return false;
     }
+
     SaveBIReport() {
         if (this.EntityPM == null) {
             var windowTitle = "New BI Report";
@@ -202,10 +215,11 @@ export class BIReportPreviewComponent implements OnInit {
             var coulmns = this.agGrid.columnApi.getColumnState();
 
             this.StartBusyIndicator("Saving ...");
-            var send = new BIReportXMLData();
-            send.BIReportId = this.EntityId;
-            send.Columns = [];
-            this._InfrastructureDomainService.UpdateBIReportXMLData(send).subscribe(myResult => {
+            var result = new BIReportXMLData();
+            result.BIReportId = this.EntityId;
+            result.BIReportPM = this.EntityPM;
+            result.Columns = [];
+            this._InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe(myResult => {
                 this.StopBusyIndicator();
             });
         }
