@@ -95,9 +95,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     Contact contact = contactRepository.GetSingleContact(filter.Id, filter.Tenant);
                     if (contact != null)
                     {
+                        
+                        HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+                        if (!string.IsNullOrEmpty(filter.Body))
+                        {
+                            filter.Body = filter.Body.Replace("\"", "'");
+                        }
 
-                        filter.Body = filter.Body.Replace("\"", "'");
-                        byte[] bytedata = enc.GetBytes(filter.Body);
+                        var  body = htmlEditorHelper.EncodedScript(filter.Body);
+                        byte[] bytedata = enc.GetBytes(body);
                         contact.SignatureHtml = bytedata;
                         contactRepository.Update(contact);
                         contactRepository.SubmitChanges();
@@ -122,8 +128,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                         if (filter.TemplateType == "HTML")
                         {
-                            filter.Body = filter.Body.Replace("\"", "'");
+                            HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
 
+                            if (!string.IsNullOrEmpty(filter.Body))
+                            {
+                                filter.Body = filter.Body.Replace("\"", "'");
+                            }
+
+                            var body = htmlEditorHelper.EncodedScript(filter.Body);
                             byte[] bytedata = enc.GetBytes(filter.Body);
                             documentTypeTemplate.TemplateBodyHtml = bytedata;
                         }

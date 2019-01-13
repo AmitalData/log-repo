@@ -173,8 +173,12 @@ namespace WebFreight.Web.App_Code
                     {
                         htmlstring = filter.Htmlstring;
                         htmlstring = htmlEditorHelper.GetLogoHtmlString(htmlstring);
-
+                        htmlstring = htmlEditorHelper.EncodedScript(htmlstring);
                     }
+
+
+
+
                     byte[] bytedata = enc.GetBytes(htmlstring);
                     if (!filter.IsCRM)
                     {
@@ -185,8 +189,10 @@ namespace WebFreight.Web.App_Code
                         string htmlPlainString = "";
                         if (!string.IsNullOrEmpty(filter.HtmlPlainString))
                         {
+                            filter.HtmlPlainString = htmlEditorHelper.EncodedScript(filter.HtmlPlainString);
                             htmlPlainString = htmlEditorHelper.GetLogoHtmlString(filter.HtmlPlainString);
                         }
+
                         byte[] bytePlainTextdata = enc.GetBytes(htmlPlainString);
 
                         reslut = htmlEditorHelper.SendEmailOutActivityForEntity(bytedata, bytePlainTextdata, filter.Tenant, filter.ToEmail, filter.Subject, filter.Cc, filter.Bcc, filter.UserId, filter.EntityId, filter.CustomerId, filter.ObjectTableId, filter.Attachments, filter.EntityReference, filter.DocumentTypeCode, filter.EventTypeCode);

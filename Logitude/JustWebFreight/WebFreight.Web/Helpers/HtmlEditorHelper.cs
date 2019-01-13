@@ -6886,6 +6886,28 @@ namespace WebFreight.Web.Helpers
 
         }
 
+        public string EncodedScript(string htmlBody)
+        {
+            //htmlstring = "<html><head><meta http- equiv='Content- Type' content= 'text/html; charset = iso-8859-1' > <style type='text/css' style= 'display: none; '></style></head><body><script>alert(document.cookie)</script></html>";
+            //htmlstring = "<html><body><p>Click the button to display an alert box.</p><button onclick='myFunction()'>Try it</button><script>function myFunction() {alert('Hello! I am an alert box!');}</script></body></html>";
+            string htmlstring = "";
+            if (!string.IsNullOrEmpty(htmlBody))
+            {
+                htmlstring = htmlBody;
+                HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+                while (htmlstring.Contains("<script") && htmlstring.Contains("</script>"))
+                {
+                    var scripte = "<script" + htmlEditorHelper.getBetween(htmlstring, "<script", "</script>") + "</script>";
+                    string encodedString = System.Web.HttpUtility.HtmlEncode(scripte);
+
+                    htmlstring = htmlstring.Replace(scripte, encodedString);
+
+                }
+            }
+
+            return htmlstring;
+
+        }
 
 
     }
