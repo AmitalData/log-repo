@@ -502,6 +502,10 @@
     <Compile Include="Migrations\201901130712173_DeleteOpenFormatRportDatetypeMigration.Designer.cs">
       <DependentUpon>201901130712173_DeleteOpenFormatRportDatetypeMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901130934417_NewField_SoftwareVersion_FullAccountingSettings.cs" />
+    <Compile Include="Migrations\201901130934417_NewField_SoftwareVersion_FullAccountingSettings.Designer.cs">
+      <DependentUpon>201901130934417_NewField_SoftwareVersion_FullAccountingSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.cs" />
     <Compile Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.Designer.cs">
       <DependentUpon>201901131517146_AddPackageHasContainerExc.Field.cs</DependentUpon>
@@ -820,6 +824,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901121913356_AddAGGridOptionsXMLToBiReportTable_Maheera.resx">
       <DependentUpon>201901121913356_AddAGGridOptionsXMLToBiReportTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901130934417_NewField_SoftwareVersion_FullAccountingSettings.resx">
+      <DependentUpon>201901130934417_NewField_SoftwareVersion_FullAccountingSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.resx">
       <DependentUpon>201901131517146_AddPackageHasContainerExc.Field.cs</DependentUpon>

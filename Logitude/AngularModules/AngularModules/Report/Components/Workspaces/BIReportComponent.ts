@@ -24,11 +24,9 @@ export class BIReportComponent {
         this.LoadData();
         this.InfrastructureDomainService = new InfrastructureDomainService();
     }
-
     InitComponent() {
 
     }
-
     LoadData() {
         this.ItemsSource = [];
         this.BIReportListService = new BIReportListService();
@@ -50,7 +48,6 @@ export class BIReportComponent {
             }
         });
     }
-
     public NewBIReportButtonClicked() {
         //var windowTitle = "New BI Report";
         //var logWindow = new LogitudeWindow();

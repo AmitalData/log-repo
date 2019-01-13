@@ -940,6 +940,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string softwareVersion ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SoftwareVersion  
+	   {
+	    
+	     get
+		{
+		   return softwareVersion;
+		 }
+		 set
+		 {
+		   if(softwareVersion != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SoftwareVersion",OldValue=softwareVersion,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   softwareVersion=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
