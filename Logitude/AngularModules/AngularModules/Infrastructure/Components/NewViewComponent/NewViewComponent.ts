@@ -28,6 +28,10 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ChooseUserArgs } from '../../../Infrastructure/Components/NewViewComponent/ChooseUserComponent';
 import { FeatureLocator } from '../../Utilities/FeatureLocator';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { SharedUserQueryPM } from '../../EntityPMs/SharedUserQueryPM';
+import { ApiQueryFilters } from '../../DataContracts/ApiQueryFilters';
+import { UserList } from '../../../Common/EntityLists/UserList';
+import { UserListService } from '../../../Common/Services/StandardLists/UserListService';
 
 @Component({
     selector: 'NewViewComponent',
@@ -127,11 +131,13 @@ export class NewViewComponent {
         this.NEWallFilterFieldsClass = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
         this.constantFilterFields = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
 
+        this.LoadUsers();
+
         if (!this.IsNew) {
             this.QueryName = args.QueryName;
             this.CreateBtnText = TextCodeTranslator.Translate("General.B.Save");
 
-            this.LoadQueryPM();
+            //this.LoadQueryPM();
         }
 
         else {
@@ -149,6 +155,30 @@ export class NewViewComponent {
         this.Run();
     }
 
+    private myUsersList: UserList[] = [];
+    private LoadUsers() {
+        var filters: ApiQueryFilters = new ApiQueryFilters();
+        filters.SortBy = "EnglishName";
+        filters.SortDirection = "Ascending";
+        filters.PageIndex = 0;
+        filters.PageSize = 100;
+        filters.Tenant = SessionLocator.Tenant;
+
+        filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
+
+        var userService: UserListService = new UserListService();
+        userService.getByFilters(filters).subscribe(res => {
+            var pmResponse: ServiceResponse = res;
+            if (!pmResponse.HasError) {
+                this.myUsersList = pmResponse.Result;
+
+                if (!this.IsNew) {                   
+                    this.LoadQueryPM();
+                }
+            }
+        });
+    }
+
     private LoadQueryPM() {
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         var myService: QueriesPMService = new QueriesPMService();
@@ -162,6 +192,7 @@ export class NewViewComponent {
                 this.SharedByUserName = this.EntityPM.SharedByUserName;
                 this.SharedByUserEmail = this.EntityPM.SharedByUserEmail;
 
+                this.FillSharedWithUsersItemsSource();
                 this.SetSelectedSharedValue();
 
                 var isEditEnabled = true;                
@@ -391,6 +422,7 @@ export class NewViewComponent {
     ChooseUsers() {
         var args = new ChooseUserArgs();
         args.MyQuery = this.EntityPM;
+        args.AllUsers = this.myUsersList;
 
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Users List";
@@ -399,12 +431,18 @@ export class NewViewComponent {
         logWindow.WindowArgs = args;
         logWindow.Show("./Infrastructure/Components/NewViewComponent/ChooseUserComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
-            //this.SharedUsersList = args.SelectedUsers;
-            //if (this.SharedUsersList) {
-            //   this.ShareWithUsersCount = this.SharedUsersList.length;
-            //}
-
             this.ShareWithUsersCount = this.EntityPM.SharedUserQueries.length;
+            this.FillSharedWithUsersItemsSource();
+        });
+    }
+
+    public SharedWithUsersItemsSource: SharedWithUserItem[] = [];
+    FillSharedWithUsersItemsSource() {
+        this.SharedWithUsersItemsSource = [];
+
+        this.EntityPM.SharedUserQueries.forEach((item) => {
+            var user: UserList = this.myUsersList.filter(d => d.Id == item.UserId)[0];
+            this.SharedWithUsersItemsSource.push(new SharedWithUserItem(item, user));
         });
     }
 
@@ -849,8 +887,7 @@ export class NewViewComponent {
             this.SelectedObjectFields = this.SelectedObjectFields.filter(a => a.ObjectField.Id != field.Id);
         }
     }
-
-
+    
     OnQueryFilterChanged(QueryID: string) {
         this.QueryId = QueryID;
         this.QueryFilterChangedAction(this.QueryId);
@@ -1421,4 +1458,19 @@ export class NewViewComponent {
             SessionLocator.CurrentSession.CurrentWindow.Close(this.QueryId);
         });
     }
+}
+
+export class SharedWithUserItem {
+    private myEnity: SharedUserQueryPM;
+    private myUser: UserList;
+    constructor(entity: SharedUserQueryPM, user: UserList) {
+        this.myEnity = entity;
+        this.myUser = user;
+    }
+
+    get Email() { return this.myUser.Email; }
+    get Name() { return this.myUser.EnglishName; }
+
+
+
 }
