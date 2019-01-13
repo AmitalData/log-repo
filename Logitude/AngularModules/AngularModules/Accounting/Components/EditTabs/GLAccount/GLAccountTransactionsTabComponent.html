@@ -271,6 +271,11 @@
         color: gray;
         font-family: sans-serif;
      }
+
+     .FiltersMenu li{
+         width: fit-content !important;
+         padding: 0 7px;
+     }
 </style>
 
 <!-- Alert -->
@@ -314,7 +319,24 @@
                                             <!-- Date -->
                                             <tr class="FormFieldRow">
                                                 <td style="width:10px"></td>
-                                                <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'" >{{'Accounting.General.O.Datefrom' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 120px;" [style.text-align]="isRTL ? 'right' : 'left'" >{{'Accounting.General.O.Datefrom' | TextCodeTranslationPipe}}</td>
+
+                                                <td style="width: 200px;">
+                                                        <ul class="FiltersMenu">
+                                                                <li id="filter_accounting" (click)="FilterItemClicked('filter_accounting')" style="width: 105px; height: 22px;"
+                                                                [class.SelectedFilter]="filterSelectedValue === 'filter_accounting'">
+                                                                {{'GLAccounts.O.filter_accounting' | TextCodeTranslationPipe}}
+                                                            </li>
+                                                            <li id="filter_reference" (click)="FilterItemClicked('filter_reference')" style="width: 135px; height: 22px;"
+                                                                [class.SelectedFilter]="filterSelectedValue === 'filter_reference'">
+                                                                {{'GLAccounts.O.filter_reference' | TextCodeTranslationPipe}}
+                                                            </li>
+                                                            <li id="filter_due" (click)="FilterItemClicked('filter_due')" style="width: 135px; height: 22px;"
+                                                                [class.SelectedFilter]="filterSelectedValue === 'filter_due'">
+                                                                {{'GLAccounts.O.filter_due' | TextCodeTranslationPipe}}
+                                                            </li>
+                                                        </ul>
+                                                </td>
 
                                                 <td style="width: 130px;">
                                                     <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
@@ -322,11 +344,11 @@
                                                                    [SelectedDateValue]="FromDate"></LogDatePicker>
                                                 </td>
 
-                                                <td style="width: 50px;">
+                                                <td style="width:15px;">
                                                     <div></div>
                                                 </td>
 
-                                                <td style="width: 50px;" [style.text-align]="isRTL ? 'right' : 'left'" >{{'Accounting.General.O.To' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 30px;" [style.text-align]="isRTL ? 'right' : 'left'" >{{'Accounting.General.O.To' | TextCodeTranslationPipe}}</td>
 
                                                 <td style="width: 130px;">
                                                     <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
@@ -378,11 +400,11 @@
 
                                             <!-- CurrencyId -->
                                             <tr class="FormFieldRow">
-                                                <td style="width:330px" colspan="6">
+                                                <td style="width:330px" colspan="7">
                                                     <table>
 
                                                         <tr>
-                                                            <td style="width:160px">
+                                                            <td style="width:130px">
                                                                 <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
                                                                           [DataContext]="DataContext"></LogLabel>
                                                             </td>
@@ -415,7 +437,7 @@
 
                                             <tr class="FormFieldRow">
                                                 <td style="width:10px"></td>
-                                                <td style="width: 150px;"  [style.text-align]="isRTL ? 'right' : 'left'"  >
+                                                <td colspan="2" style="width: 120px;"  [style.text-align]="isRTL ? 'right' : 'left'"  >
                                                     {{'Accounting.General.O.OpenAmount' | TextCodeTranslationPipe}}
                                                 </td>
 
