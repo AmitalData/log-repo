@@ -148,6 +148,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             MeasurementRepository measurementRepository = new MeasurementRepository(this.commonContext);
             AddressQuery addressQuery = new AddressQuery(new AddressRepository(this.commonContext));
             ShipmentQuery shipmentQuery = new ShipmentQuery(new ShipmentRepository(this.shipmentsContext));
+            ShipmentPayableRepository shipmentPayableRepository = new ShipmentPayableRepository(this.shipmentsContext);
+            PrepaidCollectRepository prepaidCollectRepository = new PrepaidCollectRepository(tenant);
 
             foreach (APInvoice item in invoices)
             {
@@ -252,6 +254,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 invoiceElement.InvoiceLines = new List<APInvoiceLineElement>();
                 List<APInvoiceLine> dueVatLines = new List<APInvoiceLine>();
                 List<APInvoiceLine> lines = allInvoicesLines.Where(d => d.APInvoiceId == item.Id).OrderBy(o => o.ChargesType.ViewOrder).ToList();
+                List<string> payablesIds = allInvoicesLines.Select(s => s.EntityPayableId).ToList();
+                List<ShipmentPayable> payables = shipmentPayableRepository.GetShipmentPayablesFromIdList(payablesIds, tenant);
 
                 int count = 1;
                 foreach (APInvoiceLine myline in lines)
@@ -270,7 +274,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         ChargeTypeCode = myline.ChargesType == null ? "" : myline.ChargesType.Code,
                         TaxCode = myline.VatType == null ? "" : myline.VatType.Code,
                     };
-
+                    
                     if (string.IsNullOrEmpty(lineElement.OriginalCurrency))
                     {
                         Currency currency = CurrencyRepository.GetSingleCurrency(myline.ForiegnCurrencyId, tenant, true);
@@ -303,6 +307,19 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                                 {
                                     lineElement.MeasurementCode = myMeasurement.Code;
                                 }
+                            }
+                        }
+                    }
+
+                    ShipmentPayable shipmentPayable = payables.Where(d => d.Id == myline.EntityPayableId).FirstOrDefault();
+                    if (shipmentPayable != null)
+                    {
+                        if (!string.IsNullOrEmpty(shipmentPayable.PrepaidCollectId))
+                        {
+                            PrepaidCollect prepaidCollect = prepaidCollectRepository.GetSinglePrepaidCollect(shipmentPayable.PrepaidCollectId);
+                            if (prepaidCollect != null)
+                            {
+                                lineElement.PrepaidCollect = prepaidCollect.Name;
                             }
                         }
                     }
