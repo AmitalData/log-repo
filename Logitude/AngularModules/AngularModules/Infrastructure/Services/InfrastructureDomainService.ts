@@ -14,6 +14,8 @@ import {Guid} from '../Utilities/Guid';
 import {CustomFieldClass} from '../DataContracts/CustomFieldClass'; 
 import {TasksSchedulerPM} from '../EntityPMs/TasksSchedulerPM';
 import { BIReportPM } from '../EntityPMs/BIReportPM';
+import { ClassLevelValidator } from '../Validators/ClassLevelValidator';
+
 
 @Injectable()
 
@@ -214,7 +216,7 @@ export class InfrastructureDomainService {
 
             var mappedEntity: FeaturesUpdateHelper = this.MapJsonToFeaturesUpdateHelper(entityPM, false);
 
-            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
+            return this._http.put(this._apiUrl + "/PutFeatures", JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
                 var myJsonResult = res.json();
 
                 var mappedResult: FeaturesUpdateHelper = this.MapJsonToFeaturesUpdateHelper(myJsonResult, true, entityPM);
@@ -729,6 +731,10 @@ export class InfrastructureDomainService {
             var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
             var response: ServiceResponse;
             response = new ServiceResponse();
+
+            var validator: ClassLevelValidator;
+            validator = new ClassLevelValidator();
+
             if (errorsArray.length == 0) {
                 var mappedEntity: BIReportPM;
                 mappedEntity = this.MapJsonToEntityPM(QueryData.BIReportPM, false);

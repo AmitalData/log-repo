@@ -11,6 +11,7 @@ import { DateTimePipe } from '../../../../Controls/Pipes/DateTimePipe';
 import { AgGridNg2 } from 'ag-grid-angular/main';
 import { LicenseManager } from "ag-grid-enterprise";
 import { InfrastructureDomainService, BIReportXMLData, BIReportColumnData } from '../../../../Infrastructure/Services/InfrastructureDomainService';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     moduleId: module.id,
@@ -71,9 +72,20 @@ export class BIReportPreviewComponent implements OnInit {
         if (this.DWQueryId != null) {
             this._InfrastructureDomainService.GetByBIReportId(this.EntityId).subscribe(myResult => {
                 if (!myResult.HasError) {
-                    var result: BIReportXMLData = myResult.Result; 
+                    var result: BIReportXMLData = myResult.Result;
                     this.EntityPM = result.BIReportPM;
+                    if (result.Columns != null) {
+                        result.Columns.forEach(item => {
+                            var sort = [
+                                {
+                                    colId: item.SortColId,
+                                    sort: item.SortDirction
+                                }
+                            ];
+                            this.agGrid.api.setSortModel(sort);
+                        });
 
+                    }
                 }
             });
         }
@@ -145,7 +157,6 @@ export class BIReportPreviewComponent implements OnInit {
         this.ShowBusyIndicator = false;
     }
 
-
     ExportToExcelClicked() {
         var windowArgs: any = {};
         windowArgs.queryId = this.DWQueryId;
@@ -166,7 +177,10 @@ export class BIReportPreviewComponent implements OnInit {
     onSortChanged(params) {
         this.hasChanged = true;
     }
-    oncolumnResized(params) {
+    onColumnResized(params) {
+        this.hasChanged = true;
+    }
+    onColumnMoved(params) {
         this.hasChanged = true;
     }
 
@@ -191,7 +205,6 @@ export class BIReportPreviewComponent implements OnInit {
     private hasChanged = false;
     get HasChanged() {
         if (this.EntityId == null || (this.EntityPM != null && this.EntityPM.IsDirty) || this.hasChanged) {
-            this.hasChanged = false;
             return true;
         }
         return false;
@@ -213,13 +226,21 @@ export class BIReportPreviewComponent implements OnInit {
             // call method in server side to build xml 
             var sorting = this.agGrid.api.getSortModel();
             var coulmns = this.agGrid.columnApi.getColumnState();
-
             this.StartBusyIndicator("Saving ...");
             var result = new BIReportXMLData();
             result.BIReportId = this.EntityId;
             result.BIReportPM = this.EntityPM;
             result.Columns = [];
+            if (sorting != null) {
+                sorting.forEach(item => {
+                    var sort: BIReportColumnData = new BIReportColumnData();
+                    sort.SortColId = item["colId"];
+                    sort.SortDirction = item["sort"];
+                    result.Columns.push(sort);
+                });
+            }
             this._InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe(myResult => {
+                this.hasChanged = false;
                 this.StopBusyIndicator();
             });
         }
