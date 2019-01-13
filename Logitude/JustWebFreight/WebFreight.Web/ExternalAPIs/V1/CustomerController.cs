@@ -72,6 +72,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         computingPartnerCode = entity.ComputingPartnerCode;//loggedContactInfo.ComputingPartnerCode;
                     }
 
+                    if (!string.IsNullOrEmpty(entity.PartnerCode) && string.IsNullOrEmpty(computingPartnerCode))
+                    {
+                        throw new ApplicationException("Please provide the computing partner code");
+                    }
+
                     if (entity.MainAddress != null)
                     {
                         if (entity.MainAddress.Country == null)
