@@ -80,6 +80,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			
 	             				    ObjectTableName =  "Sprint",
 			      				    IsNew =  true,
+			      				    CodeField =  "Name",
+			      				    NameField =  "Name",
 			      				    DBTableName =  "Sprints",
 			      				    OldDBTableName =  "Sprints",
 			      				    ObjectTableSingular =  "Sprint",
@@ -122,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardComponentPath =  "./TimeManagement/Components/NewEntity/NewSprintComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  false,
+			      				    AllowedForComputingPartners =  true,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
