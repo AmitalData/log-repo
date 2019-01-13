@@ -1,10 +1,6 @@
-import { Component, Query } from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseComponent } from '../../Components/LogitudeComponents/BaseComponent';
-import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { SessionLocator } from '../../Utilities/SessionLocator';
-import { ApiQueryFilters } from '../../DataContracts/ApiQueryFilters';
-import { UserListService } from '../../../Common/Services/StandardLists/UserListService';
-import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { UserList } from '../../../Common/EntityLists/UserList';
 import { QueryPM } from '../../EntityPMs/QueryPM';
 import { SharedUserQueryPM } from '../../EntityPMs/SharedUserQueryPM';
@@ -16,45 +12,20 @@ import { SharedUserQueryPM } from '../../EntityPMs/SharedUserQueryPM';
 
 export class ChooseUserComponent {
     UsersItemsSource: UserItem[] = [];
-    userService: UserListService;
     private args: ChooseUserArgs;
     constructor() {
-        this.userService = new UserListService();       
     }
 
     public MyQuery: QueryPM;
     SetWindowArgs(args: ChooseUserArgs) {
         this.args = args;
         this.MyQuery = args.MyQuery;
+        this.myUsersList = args.AllUsers;
 
-        this.LoadUsers();
+        this.BuildData();
     }
 
     myUsersList: UserList[];
-    private LoadUsers() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-
-        var filters: ApiQueryFilters = new ApiQueryFilters();        
-        filters.SortBy = "EnglishName";
-        filters.SortDirection = "Ascending";
-        filters.PageIndex = 0;
-        filters.PageSize = 100;
-        filters.Tenant = SessionLocator.Tenant;
-        
-        filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
-
-        this.userService.getByFilters(filters).subscribe(res => {           
-            var pmResponse: ServiceResponse = res;
-            if (!pmResponse.HasError) {
-                this.myUsersList = pmResponse.Result;
-
-                this.BuildData();
-            }
-
-            SessionLocator.CurrentSession.StopBusyIndicator();
-        });
-    }
-
     private BuildData() {
         var myList: UserList[] = [];
         this.UsersItemsSource = [];
@@ -80,7 +51,7 @@ export class ChooseUserComponent {
         this.mySearchText = searchText;
         this.BuildData();
     }
-    
+
     CloseButtonClicked() {
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }
@@ -90,19 +61,9 @@ export class ChooseUserComponent {
         this.ValidationErrorsList = [];
 
         if (this.MyQuery.SharedUserQueries.length > 0) {
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Show("Are you sure you want to share this view with the selected users?");
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-                    this.CloseButtonClicked();
-                }
-
-                else {
-                    this.CloseButtonClicked();
-                }
-            });
-
+            this.CloseButtonClicked();
         }
+
         else {
             this.ValidationErrorsList.push("Please choose at least one user");
         }
@@ -158,4 +119,5 @@ export class UserItem extends BaseComponent {
 
 export class ChooseUserArgs {
     public MyQuery: QueryPM;
+    public AllUsers: UserList[];
 }

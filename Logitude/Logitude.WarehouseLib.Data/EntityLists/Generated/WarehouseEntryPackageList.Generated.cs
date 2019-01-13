@@ -76,6 +76,10 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public string FromPortId  { get; set; }
        [DataMember]
        public string ToPortId  { get; set; }
+       [DataMember]
+       public double? VolumetricWeight  { get; set; }
+       [DataMember]
+       public string ChargeableWeightUnitCode  { get; set; }
    }
 
 }

@@ -70,7 +70,10 @@ namespace WebFreight.Web.DataProviders
         public string DescriptionOfGoods { get; set; }
         public string ContainerNumber { get; set; }
         public string Seal { get; set; }
-        
+
+        public double? VolumetricWeight { get; set; }
+        public string VolumetricWeightUnit { get; set; }
+
 
     }
 }

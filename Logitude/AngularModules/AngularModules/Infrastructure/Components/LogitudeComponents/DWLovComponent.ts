@@ -40,7 +40,7 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
 import {PartnerTypeList} from '../../../Common/EntityLists/PartnerTypeList';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import {DWQueryBuilderService} from '../../Services/ExtendedPMs/DWQueryBuilderService';
-import { MultiSelectedValue} from '../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent';
+
 @Component({
     selector: 'DWLov',
     moduleId: module.id,
