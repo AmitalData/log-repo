@@ -620,13 +620,6 @@ export class ListComponent implements OnInit, AfterViewInit {
 
 
     }
-    IsShowNewDepositionFormLink: boolean;
-    NewDepositionFormClcik() {
-
-        var link = "https://forms.gov.il/globaldata/getsequence/getHtmlForm.aspx?formType=SOVE01_hasava@taxes.gov.il";
-        var win = window.open(link, '_blank');
-        win.focus();
-    }
 
 
 
@@ -2252,10 +2245,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                 return;
             }
 
-            if (this.ObjectTableName == "CustomsShipper") {
-                //this.NewDepositionFormClcik();
-            }
-           else if (this.TenantPM.Id != 0 && this.ObjectTableName == "Port") {
+        
+            if (this.TenantPM.Id != 0 && this.ObjectTableName == "Port") {
 
 
                 var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
