@@ -20,6 +20,7 @@ export class BIReportList {
 	DWQueryId: string;
 	Inactive: boolean;
 	TypeCode: string;
+	AGGridOptionsXML: string;
 	
 }
  

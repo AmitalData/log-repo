@@ -889,38 +889,46 @@ export class EditComponent implements OnDestroy {
     //}
 
     // Commands
-    BackButtonClicked() {
-        if (!this.EntityPM) {
-            this.Close();
-        }
+     BackButtonClicked() {
+         var isNeedingConfirmation = this.NeedCloseConfirmation();
+         if (isNeedingConfirmation) {
+             var confirmWindow = new ConfirmWindow();
+             confirmWindow.Width = 450;
+             confirmWindow.Height = 190;
+             confirmWindow.ShowCancelButton = true;
+             confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.DontSave");
+             confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
+             confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+             confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName)));
+             confirmWindow.WindowClosed.subscribe((event: any) => {
+                 if (confirmWindow.Yes) {
+                     this.SaveEntityChanges(true);
+                 }
 
-        else if (!this.EntityPM.IsDirty) {
-            this.Close();
-        }
-        else if (this.ObjectTableName == "TaxReport"||this.ObjectTableName == "BankDeposit") {
-            this.Close();
-        }
-        else {
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Width = 450;
-            confirmWindow.Height = 190;
-            confirmWindow.ShowCancelButton = true;
-            confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.DontSave");
-            confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
-            confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
-            confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName)));
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-                    this.SaveEntityChanges(true);
-                }
+                 else if (confirmWindow.No) {
+                     this.Close();
+                 }
+             });
+         }
+         else {
+             this.Close();
+         }
+     }
 
-                else if (confirmWindow.No) {
-                    this.Close();
-                }
-            });
-        }
-    }
+     public NeedCloseConfirmation() {
+         var myResult = true; 
+         if (!this.EntityPM) {
+             myResult = false;
+         }
 
+         else if (!this.EntityPM.IsDirty) {
+             myResult = false;
+         }
+         else if (this.ObjectTableName == "TaxReport" || this.ObjectTableName == "BankDeposit") {
+             myResult = false;
+         }
+         return myResult;
+     }
     Close() {
         if (this.IsInsideWindow) {
             SessionLocator.CurrentSession.CloseCurrentWindow();
