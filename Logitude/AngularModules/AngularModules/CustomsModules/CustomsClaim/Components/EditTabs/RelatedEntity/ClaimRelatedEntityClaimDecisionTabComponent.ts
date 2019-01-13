@@ -25,7 +25,7 @@ export class ClaimRelatedEntityClaimDecisionTabComponent extends BaseComponent {
     public ClaimsRelatedEntitiesRefundslist: ObservableCollection;
 
     public CurrentEditComponentId: string;
-    private IsControlEnabled: boolean = true;
+    IsControlEnabled: boolean = true;
 
     ValidationErrors: string[] = [];
 
