@@ -173,6 +173,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        ETA = a.ETA,
                        Routing = a.Routing,
                        VoyageTripNumber = a.VoyageTripNumber,
+                       HasContainerException = a.HasContainerException,
                    }).FirstOrDefault();
 
 
@@ -293,6 +294,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        ETA = a.ETA,
                        Routing = a.Routing,
                        VoyageTripNumber = a.VoyageTripNumber,
+                       HasContainerException = a.HasContainerException,
                    }).ToList();
 
             foreach (ShipmentPackagePM package in shipmentPackages)
@@ -408,6 +410,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 ETA = a.ETA,
                                 Routing = a.Routing,
                                 VoyageTripNumber = a.VoyageTripNumber,
+                                HasContainerException = a.HasContainerException,
                             }).ToList();
             }
 

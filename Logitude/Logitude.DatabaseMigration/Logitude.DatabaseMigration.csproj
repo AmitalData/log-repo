@@ -502,6 +502,10 @@
     <Compile Include="Migrations\201901130712173_DeleteOpenFormatRportDatetypeMigration.Designer.cs">
       <DependentUpon>201901130712173_DeleteOpenFormatRportDatetypeMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.cs" />
+    <Compile Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.Designer.cs">
+      <DependentUpon>201901131517146_AddPackageHasContainerExc.Field.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -816,6 +820,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901121913356_AddAGGridOptionsXMLToBiReportTable_Maheera.resx">
       <DependentUpon>201901121913356_AddAGGridOptionsXMLToBiReportTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.resx">
+      <DependentUpon>201901131517146_AddPackageHasContainerExc.Field.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
