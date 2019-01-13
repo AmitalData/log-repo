@@ -1,4 +1,3 @@
-
 declare var window: any;
 import {Component} from '@angular/core';
 import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
@@ -1145,7 +1144,7 @@ export class MaintenanceComponent {
                     confirmWindow.WindowClosed.subscribe((event: any) => {
                         if (confirmWindow.Yes) {
 
-                            var servicelink = '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
+                            var servicelink = '../../../CustomsModules/CustomsGeneralRequests/Components/RecallClientsForCutoms';
                             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
                                 service.SendRecallMessageToServer();
                             });
