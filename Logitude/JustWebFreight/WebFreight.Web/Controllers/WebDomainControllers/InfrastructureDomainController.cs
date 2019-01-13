@@ -1630,6 +1630,35 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        public HttpResponseMessage GetByBIReportId(string Id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                BIReportQueryService query = new BIReportQueryService(authToken.Tenant);
+                BIReportPM entityPM = query.GetSingle(Id, false, false);
+                BIReportXMLData QueryData = new BIReportXMLData();
+
+                if (entityPM != null)
+                {
+                    QueryData.BIReportPM = entityPM;
+                    if (!string.IsNullOrEmpty(entityPM.AGGridOptionsXML))
+                    {
+                        var Columns = LogitudeXmlSerializer.DeserializeObject<List<BIReportColumnData>>(entityPM.AGGridOptionsXML);
+                        QueryData.Columns = Columns;
+                    }
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, QueryData);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage PutBIReport(BIReportXMLData QueryData)
         {
             try
@@ -1639,8 +1668,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 var ColumnsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Columns);
                 IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
-                BIReportQueryService query = new BIReportQueryService(authToken.Tenant);
-                var entityPM = query.GetSingle(QueryData.BIReportId,false,false);
+                var entityPM = QueryData.BIReportPM;
                 if (entityPM != null)
                 {
                     entityPM.AGGridOptionsXML = ColumnsXML;
