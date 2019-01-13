@@ -21,6 +21,9 @@ namespace Logitude.Infrastructure.Data.Repsitories
 			throw new NotImplementedException();
         }
 
+
+
+
    }
 
 }

@@ -625,6 +625,7 @@ namespace WebFreight.Web
 					if (CacheManager.CacheWrapper.Get(cahce_key) == null && contactPassword != null)
 					{
 						CacheManager.CacheWrapper.Insert(cahce_key, contactPassword.Password, null, DateTime.UtcNow.AddMinutes(5), TimeSpan.Zero);
+						
 					}
 
 					return contactPassword.Password;

@@ -126,6 +126,7 @@
     <Content Include="Common\Components\AccountingTab\AccountingTab_VatType.html" />
     <Content Include="Common\Components\AccountingTab\Advanced\ChargesExternalByProductsComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\CustomerActivation\ReadyForActivationComponent.html" />
+    <Content Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.html" />
     <Content Include="Controls\All\SplitButtonComponent.html" />
     <Content Include="CRMModules\CRMOpportunity\Components\EditTabs\EditProductComponent.html" />
     <Content Include="CRMModules\CRMOpportunity\Components\EditTabs\OpportunityDocsInTabComponent.html" />
@@ -246,7 +247,6 @@
     <Content Include="Images\truck.png" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.html" />
-    <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIReportPreviewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessProcessQueue\QueueNewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessRoleNewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\Team\TeamGeneralTabComponent.html" />
@@ -349,6 +349,7 @@
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\TruckerDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\WarehouseDocsInTabComponent.ts" />
+    <TypeScriptCompile Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\WarehouseCustomFilter.ts" />
     <TypeScriptCompile Include="Common\DataContracts\DWQueryData.ts" />
     <TypeScriptCompile Include="Common\DataContracts\ShipmentPickUpDeliverySL.ts" />
@@ -583,7 +584,6 @@
     <TypeScriptCompile Include="e2e\CRM\Opportunities\NewOpportunity.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.ts" />
-    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIReportPreviewComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\ModuleInfrastructureBIReport.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessRoleNewComponent.ts" />

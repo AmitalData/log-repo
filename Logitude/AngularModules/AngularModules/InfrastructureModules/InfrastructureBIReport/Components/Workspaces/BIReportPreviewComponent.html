@@ -83,13 +83,14 @@
                                          [floatingFilter]="true"
                                          [rowData]="rowData"
                                          [columnDefs]="columnDefs"
-                                         [rowSelection]="multiple"
-                                         [rowModelType]="virtual"
+                                         [rowSelection]="'multiple'"
+                                         [rowModelType]="'virtual'"
                                          [multiSortKey]="'ctrl'"
                                          [excelStyles]="excelStyles"
                                          (gridReady)="onGridReady($event)"
                                          (sortChanged)="onSortChanged($event)"
-                                         (columnResized)="oncolumnResized($event)"
+                                         (columnResized)="onColumnResized($event)"
+                                         (columnMoved)="onColumnMoved($event)"
                                          [paginationPageSize]="100" [pagination]="true">
                         </ag-grid-angular>
                     </div>
