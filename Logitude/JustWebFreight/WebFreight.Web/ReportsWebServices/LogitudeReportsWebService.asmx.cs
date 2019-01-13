@@ -11864,7 +11864,7 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
 
 
-            shipments = shipments.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H" && !d.IsCancelled);
+            shipments = shipments.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H") && !d.IsCancelled);
             if (FromDate != null)
             {
                 shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) >= System.Data.Entity.DbFunctions.TruncateTime(FromDate));
