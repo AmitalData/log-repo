@@ -506,6 +506,10 @@
     <Compile Include="Migrations\201901130934417_NewField_SoftwareVersion_FullAccountingSettings.Designer.cs">
       <DependentUpon>201901130934417_NewField_SoftwareVersion_FullAccountingSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.cs" />
+    <Compile Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.Designer.cs">
+      <DependentUpon>201901131517146_AddPackageHasContainerExc.Field.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -823,6 +827,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901130934417_NewField_SoftwareVersion_FullAccountingSettings.resx">
       <DependentUpon>201901130934417_NewField_SoftwareVersion_FullAccountingSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.resx">
+      <DependentUpon>201901131517146_AddPackageHasContainerExc.Field.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
