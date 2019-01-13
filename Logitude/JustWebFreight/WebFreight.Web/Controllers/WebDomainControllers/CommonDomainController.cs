@@ -262,6 +262,131 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+
+
+        public HttpResponseMessage GetBlueSnapSecretToken(string VaultedShopperId)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    if (VaultedShopperId == "undefined")
+                        VaultedShopperId = null;
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    string loggedUserEmail = authToken.Email;
+                    int tenant = authToken.Tenant;
+                    string myResult = null;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    if (!String.IsNullOrEmpty(VaultedShopperId))
+                    {
+                        HttpClient client = new HttpClient();
+                        client.BaseAddress = new Uri("https://ws.bluesnap.com/services/2/tools/auth-token");
+                        ServicePointManager.Expect100Continue = true;
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                        client.DefaultRequestHeaders.Accept.Add(
+                        new MediaTypeWithQualityHeaderValue("application/xml"));
+
+                        string authInfo = "API_15408257301181065689979" + ":" + "BlueSand123";
+                        authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+
+
+
+                        string xml = @"<param-encryption xmlns='http://ws.plimus.com'><parameters><parameter><param-key>shopperId</param-key><param-value>"+VaultedShopperId+"</param-value></parameter><parameter><param-key>expirationInMinutes</param-key><param-value>300</param-value></parameter><parameter><param-key>pageName</param-key><param-value>AUTO_LOGIN_PAGE</param-value></parameter></parameters></param-encryption>";
+                        //like this:
+                        var request = WebRequest.Create("https://bluesnap.com/services/2/tools/param-encryption");
+                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15408257301181065689979:BlueSand123"));
+
+                        byte[] bytes;
+                        bytes = System.Text.Encoding.ASCII.GetBytes(xml);
+                        request.ContentType = "application/xml";
+                        request.ContentLength = bytes.Length;
+
+                        request.Method = "POST";
+                        Stream requestStream = request.GetRequestStream();
+                        requestStream.Write(bytes, 0, bytes.Length);
+                        requestStream.Close();
+                        try
+                        {
+                            var response2 = request.GetResponse();
+
+                            string strResponse = "";
+                            using (var sr = new StreamReader(response2.GetResponseStream()))
+                            {
+                                strResponse = sr.ReadToEnd();
+
+                            }
+
+                            XmlDocument doc = new XmlDocument();
+                            doc.LoadXml(strResponse);
+
+
+                            myResult = doc.InnerText;
+
+                        }
+                        catch (Exception EX1)
+                        {
+
+                            authInfo = "API_15416735830591484092606" + ":" + "BlueSand123";
+                            authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+
+                            //like this:
+                             request = WebRequest.Create("https://bluesnap.com/services/2/tools/param-encryption");
+                            request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15416735830591484092606:BlueSand123"));
+
+                            bytes =null;
+                            bytes = System.Text.Encoding.ASCII.GetBytes(xml);
+                            request.ContentType = "application/xml";
+                            request.ContentLength = bytes.Length;
+
+                            request.Method = "POST";
+                             requestStream = request.GetRequestStream();
+                            requestStream.Write(bytes, 0, bytes.Length);
+                            requestStream.Close();
+
+                            try
+                            {
+                                var response2 = request.GetResponse();
+
+                                string strResponse = "";
+                                using (var sr = new StreamReader(response2.GetResponseStream()))
+                                {
+                                    strResponse = sr.ReadToEnd();
+
+                                }
+
+                                XmlDocument doc = new XmlDocument();
+                                doc.LoadXml(strResponse);
+
+
+                                myResult = doc.InnerText;
+
+                            }
+                            catch (Exception EX2)
+                            {
+                                myResult = null;
+                            }
+
+                        }
+
+                    }
+
+
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
         public HttpResponseMessage GetPortCopyToCurrentTenant(string entityId)
         {
             try

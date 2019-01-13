@@ -45,6 +45,7 @@ export class FullAccountingSettingList {
 	CustomsGLAccountId: string;
 	DefaultDifferencesGLAccountId: string;
 	DefaultExternalDiffGLAccountId: string;
+	SoftwareVersion: string;
 	
 }
  
