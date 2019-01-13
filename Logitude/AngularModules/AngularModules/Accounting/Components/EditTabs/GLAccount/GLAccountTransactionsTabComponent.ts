@@ -283,6 +283,15 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             IsCustomTemplate: true
         });
         this.columns.push({
+            FieldName: 'DueDate',
+            DataTypeCode: 'DateTime',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.DueDate"), // 'Due Date',
+            Styles: { width: '90px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+            IsCustomTemplate: true
+        });
+        this.columns.push({
             FieldName: 'Source',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Source"), // 'Source',
@@ -298,15 +307,6 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         //    Styles: { width: '113px' },
         //    IsCustomTemplate: true
         //});
-        this.columns.push({
-            FieldName: 'DueDate',
-            DataTypeCode: 'DateTime',
-            Display: TextCodeTranslator.Translate("LedgerTransaction.F.DueDate"), // 'Due Date',
-            Styles: { width: '90px' },
-            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
-        });
         this.columns.push({
             FieldName: 'LocalAmountCredit',
             DataTypeCode: 'String',
