@@ -25,7 +25,6 @@ export class btnUpdateComponent implements OnInit {
     public TenantPM: TenantPM;
     public entityId: string;
     public InUseVisibile: boolean = true;
-    public UpdatedInTenantZero: boolean = false;
 
     constructor(private CD: ChangeDetectorRef, private _entityListService: EntityListService) {
         this.TenantPM = InfraSettings.TenantPM;
@@ -36,7 +35,6 @@ export class btnUpdateComponent implements OnInit {
         this.rowData = rowData;
         this.fieldName = fieldName;
         this.InUseVisibile = this.rowData.InUse;
-        this.UpdatedInTenantZero = this.rowData.TenantZeroUpdated;
 
         //this.Check();
         var isDestroyed: boolean = this.CD['destroyed'];
@@ -65,7 +63,6 @@ export class btnUpdateComponent implements OnInit {
 
             case "Port":
                 {
-                    this.UpdatedInTenantZero = false;
 
                     break;
                 }          
@@ -100,7 +97,6 @@ export class btnUpdateComponent implements OnInit {
 
 
     RefreshDateUpdated() {
-        this.UpdatedInTenantZero = false;
 
         var isDestroyed: boolean = this.CD['destroyed'];
         if (!isDestroyed) {

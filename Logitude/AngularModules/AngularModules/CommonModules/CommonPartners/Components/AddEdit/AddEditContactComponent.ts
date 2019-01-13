@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ContactPM} from '../../../../Common/EntityPMs/ContactPM';
@@ -94,8 +94,16 @@ export class AddEditContactComponent {
                         isBlockingEmail = true;
                     }
                 }
+                if (this.DataContext.fatherComponent.ObjectTableName == "Customer" && !this.DataContext.IsNewEntity) {
+                    args.BlockEditingEmail = false;
+                    args.ShowSearchContacts = false;
+                }
+                else {
+                    args.BlockEditingEmail = isBlockingEmail;
+                }
 
-                args.BlockEditingEmail = isBlockingEmail;
+
+              
 
                 this.ContactTemplate.InitTemplate(args);
                 this.Clone();
