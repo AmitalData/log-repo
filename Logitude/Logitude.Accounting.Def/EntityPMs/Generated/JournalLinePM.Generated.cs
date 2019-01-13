@@ -827,12 +827,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool? isExternalReconcile ;
+	  private bool isExternalReconcile ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool? IsExternalReconcile  
+       public bool IsExternalReconcile  
 	   {
 	    
 	     get
@@ -843,7 +843,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(isExternalReconcile != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExternalReconcile",OldValue=isExternalReconcile,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExternalReconcile",OldValue=isExternalReconcile,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   isExternalReconcile=value;
 		   }

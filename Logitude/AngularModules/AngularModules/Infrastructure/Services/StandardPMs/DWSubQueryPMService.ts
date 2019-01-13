@@ -346,6 +346,41 @@ export class DWSubQueryPMService {
         });
     }
 
+    getByQueryId(Queryid: string) {
+
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getByQueryId?' + 'id=' + Queryid, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
+
+
+
+                var entity: DWQueryData = new DWQueryData();
+                if (pm) {
+                    entity.SubQueryData = pm.SubQueryData;//this.MapJsonToEntityPM(pm);
+                    entity.Columns = pm.Columns;
+                    entity.Filters = pm.Filters;
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
+
+                var servertime = response.headers.get('ServerExecutionTime');
+                //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DWObjectField", "GetSinglePM", 'id=' + id);
+
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: DWSubQueryPM = null) {
 
 

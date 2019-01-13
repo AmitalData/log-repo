@@ -41,7 +41,7 @@ namespace Logitude.Accounting.BL.CoreBL
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
             LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(tenant);
-            List<B100Data> b100Data = ledgerTransactionQueryService.GetTransactionsByDate(openFormatReportPM.DateTypeCode, openFormatReportPM.FromDate, openFormatReportPM.ToDate, tenant);
+            List<B100Data> b100Data = ledgerTransactionQueryService.GetTransactionsByDate( openFormatReportPM.FromDate, openFormatReportPM.ToDate, tenant);
             UserQuery userQuery = new UserQuery(tenant);
             CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);

@@ -594,14 +594,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             list.InUse = false;
                         }
 
-                        if (myCards.Where(p => p.CreateDate == list.UpdateDate).FirstOrDefault() != null)
-                        {
-                            list.TenantZeroUpdated = false;
-                        }
-                        else
-                        {
-                            list.TenantZeroUpdated = true;
-                        }
+                      
 
                         if (SecurityUtility.CheckTableContactFeature(table.Name, "READ", tenant))
                         {

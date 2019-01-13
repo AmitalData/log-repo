@@ -1,15 +1,8 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-import { ReportList } from '../../EntityLists/ReportList';
-import { ReportGroupList } from '../../EntityLists/ReportGroupList';
-import { ReportService } from '../../../Common/Services/ExtendedLists/ReportService';
-import { ReportGroupService } from '../../../Common/Services/ExtendedLists/ReportGroupService';
-import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { AppTool } from '../../../Infrastructure/Tools';
-import { ReportsTemplateListExtendedService } from '../../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { BIReportList } from '../../../Infrastructure/EntityLists/BIReportList';
 import { BIReportListService } from '../../../Infrastructure/Services/StandardLists/BIReportListService';
@@ -42,7 +35,6 @@ export class BIReportComponent {
         this.BIReportListService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var myResult: BIReportList[] = myResponse.Result;
-                //this.ItemsSource = myResult;
                 if (AppTool.IsNullOrEmpty(this.mySearchText)) {
                     this.ItemsSource = myResult;
                 }
@@ -60,14 +52,32 @@ export class BIReportComponent {
     }
 
     public NewBIReportButtonClicked() {
-        var windowTitle = "New BI Report";
+        //var windowTitle = "New BI Report";
+        //var logWindow = new LogitudeWindow();
+        //logWindow.Width = 750;
+        //logWindow.Height = 600;
+        //logWindow.Title = windowTitle;
+        //logWindow.WindowClosed.subscribe(($event: any) => this.OnNewBIReportWindowClosed($event));
+        //logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 750;
-        logWindow.Height = 600;
-        logWindow.Title = windowTitle;
-        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewBIReportWindowClosed($event));
-        logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
-
+        logWindow.Width = 1200;
+        logWindow.Height = 820;
+        var windowArgs: any = {};
+        windowArgs.IsBIReportWorkspace = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = "Query Builder";
+        logWindow.Show('./CommonModules/CommonOthers/Components/LoadSampleData/DWQueryBuilderComponent');
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(d => {
+                if (s != null && d != "cancel") {
+                    SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ DWQueryId: s.QID, ObjectTableName: 'BIReport', EntityId: null });
+                        });
+                }
+            });
+        });
     }
     OnNewBIReportWindowClosed(arg: any) {
         if (arg != 'cancel') {
@@ -81,7 +91,7 @@ export class BIReportComponent {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
-                        cmpRef.instance.Run({ EntityId: report.Id, ObjectTableName: 'BIReport' });
+                        cmpRef.instance.Run({ EntityId: report.Id, ObjectTableName: 'BIReport'});
                         cmpRef.instance.BackCompleted.subscribe(bk => {
                         });
                     });
@@ -90,8 +100,11 @@ export class BIReportComponent {
     }
 
     ViewBIReportClicked(report: BIReportList) {
-
-
+        SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ DWQueryId: report.DWQueryId, ObjectTableName: 'BIReport', EntityList: report, EntityId: report.Id });
+            });
     }
 
     ExportToExcelClicked(report: BIReportList) {

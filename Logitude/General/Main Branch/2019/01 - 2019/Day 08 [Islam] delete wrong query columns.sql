@@ -10,4 +10,4 @@ delete from querycolumns where queryid in (select id from queries where code = '
  
 
 delete from ObjectFields where FieldName = 'ComputingPartnerId' and ObjectTableId in (select Id from ObjectTables where Name = 'ApiCredintials')
-delete from TextCodes where Code like '%.Computing%' and ObjectTableId in (select Id from ObjectTables where Name = 'ApiCredintials'
+delete from TextCodes where Code like '%.Computing%' and ObjectTableId in (select Id from ObjectTables where Name = 'ApiCredintials')

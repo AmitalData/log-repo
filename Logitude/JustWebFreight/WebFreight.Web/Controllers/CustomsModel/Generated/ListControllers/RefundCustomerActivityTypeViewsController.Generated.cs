@@ -34,20 +34,20 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.BL;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.BL.EntityUpdateServices;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.Data;
+using Logitude.Customs.BL;
+using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.Data.EntityListQueryServices;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class OpenFormatDateTypeViewsController : ApiController
+    public partial class RefundCustomerActivityTypeViewsController : ApiController
     {
 	  
        
@@ -59,12 +59,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                OpenFormatDateTypeListQueryService openFormatDateTypeQuery = new OpenFormatDateTypeListQueryService(MyContext);
-                OpenFormatDateTypeList openFormatDateTypeList = openFormatDateTypeQuery.GetSingle(code);
+                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                RefundCustomerActivityTypeListQueryService refundCustomerActivityTypeQuery = new RefundCustomerActivityTypeListQueryService(MyContext);
+                RefundCustomerActivityTypeList refundCustomerActivityTypeList = refundCustomerActivityTypeQuery.GetSingle(code);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
-                return Request.CreateResponse(HttpStatusCode.OK,  openFormatDateTypeList);
+                return Request.CreateResponse(HttpStatusCode.OK,  refundCustomerActivityTypeList);
             }
             catch (Exception ex)
             {
@@ -81,9 +81,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                OpenFormatDateTypeListQueryService openFormatDateTypeQuery = new OpenFormatDateTypeListQueryService(MyContext);
-                List<OpenFormatDateTypeList> result = openFormatDateTypeQuery.GetList(authToken.Tenant);
+                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                RefundCustomerActivityTypeListQueryService refundCustomerActivityTypeQuery = new RefundCustomerActivityTypeListQueryService(MyContext);
+                List<RefundCustomerActivityTypeList> result = refundCustomerActivityTypeQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -110,17 +110,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "OpenFormatDateType",
+                    ObjectTableName = "Customs.RefundCustomerActivityType",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "OpenFormatDateTypes",
+                    QuerySection = "Customs.RefundCustomerActivityTypes",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> OpenFormatDateTypeObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("OpenFormatDateType",tenant);
+				List<ObjectField> RefundCustomerActivityTypeObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.RefundCustomerActivityType",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -143,7 +143,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             //}
 						//}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = OpenFormatDateTypeObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = RefundCustomerActivityTypeObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                        if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -169,7 +169,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = OpenFormatDateTypeObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = RefundCustomerActivityTypeObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -189,15 +189,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     }
                 }
 
-                IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-				OpenFormatDateTypeListQueryService openFormatDateTypeQuery = new OpenFormatDateTypeListQueryService(MyContext);
+                ICustomContext MyContext = CustomContext.GetContext(tenant);
+				RefundCustomerActivityTypeListQueryService refundCustomerActivityTypeQuery = new RefundCustomerActivityTypeListQueryService(MyContext);
 
-                List<OpenFormatDateTypeList> entityLists = openFormatDateTypeQuery.GetList(queryOperations, tenant);
+                List<RefundCustomerActivityTypeList> entityLists = refundCustomerActivityTypeQuery.GetList(queryOperations, tenant);
 				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = openFormatDateTypeQuery.GetListCount(queryOperations);
+                    int count = refundCustomerActivityTypeQuery.GetListCount(queryOperations);
                     response.Count = count;
                 }
 

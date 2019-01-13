@@ -66,6 +66,8 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     VolumeLabel: string;
     GrossWeightLabel: string;
     DimensionsLabel: string;
+    ChargeableWeightLabel: string;
+
     DataContext: any = this;
  
     constructor(public _warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService, public _traceEventExtendedPMService: TraceEventExtendedPMService, private warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
@@ -102,6 +104,8 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         this.warehouseReleasePM.GrossWeightUnitCode = SessionLocator.TenantPM.GrossWeightUnitCode;
         this.warehouseReleasePM.VolumeUnitCode = SessionLocator.TenantPM.VolumeUnitCode;
         this.warehouseReleasePM.DimensionsUnitCode = SessionLocator.TenantPM.DimensionsUnitCode;
+
+        this.warehouseReleasePM.ChargeableWeightUnitCode = SessionLocator.TenantPM.ChargeableWeightUnitCode;
         this.warehouseReleasePM.TotalVolume = 0;
         this.warehouseReleasePM.TotalGrossWeight = 0;
         this.warehouseReleasePM.TotalPieces = 0;
@@ -193,7 +197,9 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         this.VolumeLabel = "Volume (" + SessionLocator.TenantPM.VolumeUnitCode + ")";
         this.GrossWeightLabel = "Gross Weight (" + SessionLocator.TenantPM.GrossWeightUnitCode + ")";
         this.DimensionsLabel = "Dim(L-W-H) (" + SessionLocator.TenantPM.DimensionsUnitCode + ")";
-
+        this.ChargeableWeightLabel = "Dim(L-W-H) (" + SessionLocator.TenantPM.ChargeableWeightUnitCode + ")";
+        
+        
         this.WeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.GrossWeight").replace("%UnitCode", this.ShipmentPM.GrossWeightUnitCode);
         this.DimensionsColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.Dimensions").replace("%UnitCode", this.ShipmentPM.DimensionsUnitCode);
         this.VolumetricWeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.VolWeight").replace("%UnitCode", this.ShipmentPM.ChargeableWeightUnitCode);
@@ -462,7 +468,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
         windowArgs.PackageType = packageType;
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1120;
+        logWindow.Width = 1150;
         logWindow.Height = 550;
         logWindow.Title = "Choose Packages";
         logWindow.WindowArgs = windowArgs;

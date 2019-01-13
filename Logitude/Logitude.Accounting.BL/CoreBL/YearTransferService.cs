@@ -95,14 +95,14 @@ namespace Logitude.Accounting.BL.CoreBL
                 ApproveDate = @now,
                 //journal.ApprovedByUserId = theEntityPm.ApprovedByUserId;
                 AccountingEntityCode = "1",
-                AccountingEntityId = null,
+            //    AccountingEntityId = null,
                 CreatedByUserId= usrid,
                 ApprovedByUserId = usrid,
                  
                 ExternalNo = null,
                 ExternalSystem = null,
                 OriginalJournalId = null,
-                AccountingEntityReference= "YearTransfer"
+             //   AccountingEntityReference= "Year Transfer"
 
             };
 
@@ -172,10 +172,17 @@ namespace Logitude.Accounting.BL.CoreBL
             journal.JournalLines.AddRange(TypeJL);
         }
 
-        
+
+        public virtual string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
+        {
+            return TranslateTextsClass.Translate(textCodeCode, tenant, getLocalDefaultText);
+        }
+
+
         private JournalLinePM GetJournalLine(MyJournalActionTypeEnum journalActionTypeEnum, CurrencySum myCurrencySum, JournalPM journal, string RevenueExpenseGLAccountId)
         {
             int tenant = journal.Tenant;
+            bool useLocal = true;
             var journalLine = new JournalLinePM()
             {
                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -188,7 +195,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 ForeignAmount = (myCurrencySum.ForeignAmountDebit - myCurrencySum.ForeignAmountCredit),
                 DocumentDate = journal.CreateDate,
                 DueDate = journal.CreateDate,
-
+                Notes = TranslateTextsClassTranslate("General.MC.ACC.YearTransfer", 0, useLocal),
 
             };
             switch (journalActionTypeEnum)

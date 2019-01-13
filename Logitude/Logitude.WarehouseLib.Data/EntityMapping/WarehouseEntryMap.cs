@@ -124,6 +124,8 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
             this.Property(t => t.FromPartnerId).HasColumnName("FromPartnerId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ToPartnerId).HasColumnName("ToPartnerId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ChargeableWeightUnitCode).HasColumnName("ChargeableWeightUnitCode").HasMaxLength(3).IsUnicode(false);
         }
     }
 }

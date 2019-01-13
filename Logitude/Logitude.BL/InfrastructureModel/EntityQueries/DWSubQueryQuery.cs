@@ -79,6 +79,22 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     }).FirstOrDefault();
         }
 
+        public DWSubQueryPM GetSinglePMByQueryid(string Queryid, int tenant)
+        {
+            return (from a in repository.webFreightContext.DWSubQueries
+                    where a.DWQueryId == Queryid && a.Tenant == tenant
+                    select new DWSubQueryPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        SQLString = a.SQLString,
+                        ColumnsXML = a.ColumnsXML,
+                        FiltersXML = a.FiltersXML,
+                        DWQueryId = a.DWQueryId,
+                        DWFactTableCode = a.DWFactTableCode,
+                    }).FirstOrDefault();
+        }
+
         public IQueryable<DWSubQueryPM> GetDWSubQueryPMs(int tenant)
         {
             return (from a in repository.webFreightContext.DWSubQueries
