@@ -58,30 +58,29 @@ namespace CommunicationWorkerRole
                     string ftpPassword = ftpDetail.Password;
                     string ftpFolderName = ftpDetail.Folder;
                     string fileName = GetFileName(documentFilingPOCO, document, documentType);
-                    if (!ftpDetail.UseSFTP)
-                    {
-                        FTPService ftpService = new FTPService(ftpHostIP, ftpUserName, ftpPassword);
-                        ftpService.Upload(fileName, ftpFolderName, filedata, true, true);
-                    }
-                    else
-                    {
-                        ftpHostIP = ftpDetail.Host;
-                        string p_status = "";
-                        string p_message = "";
-                        SFTPService sftpService = new SFTPService();
-                        sftpService.Logon(ftpHostIP, ftpUserName, ftpPassword, "22", ftpFolderName, out p_status, out p_message);
-                        if (p_status == "0")
-                        {
-                            if (p_status == "0")
-                            {
-                                sftpService.Upload(fileName, filedata, true, true, out p_status, out p_message);
-                            }
-                            else
-                                throw new Exception("SFTP upload file failed: " + p_message);
-                        }
-                        else
-                            throw new Exception("SFTP Login failed: " + p_message);
-                    }
+					if (!ftpDetail.UseSFTP)
+					{
+						FTPService ftpService = new FTPService(ftpHostIP, ftpUserName, ftpPassword);
+						ftpService.Upload(fileName, ftpFolderName, filedata, true, true);
+					}
+					else
+					{
+						ftpHostIP = ftpDetail.Host;
+						string p_status = "";
+						string p_message = "";
+						SFTPService sftpService = new SFTPService();
+						sftpService.Logon(ftpHostIP, ftpUserName, ftpPassword, "22", ftpFolderName, out p_status, out p_message);
+						if (p_status == "0")
+						{
+
+							sftpService.Upload(fileName, filedata, true, true, out p_status, out p_message);
+
+							if (p_status == "-1")
+								throw new Exception("SFTP upload file failed: " + p_message);
+						}
+						else
+							throw new Exception("SFTP Login failed: " + p_message);
+					}
 
                     documentFilingPOCO.BackedupExternally = true;
                     documentFilingPOCO.LastBackupDate = TenantServerConfigration.GetCurrentDateTime(tenant);
