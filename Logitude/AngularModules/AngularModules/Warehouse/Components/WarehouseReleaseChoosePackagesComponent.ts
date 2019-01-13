@@ -91,7 +91,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
         this.VolumeLabel = this.ViewModelTrigger.VolumeLabel;
         this.GrossWeightLabel = this.ViewModelTrigger.GrossWeightLabel;
         this.DimensionsLabel = this.ViewModelTrigger.DimensionsLabel;
-        this.VolumetricWeightLabel = "Volumetric Weight (" + this.ViewModelTrigger.ChargeableWeightLabel + ")";
+        this.VolumetricWeightLabel = this.ViewModelTrigger.ChargeableWeightLabel;
     }
     IsShowMessageNoResult: boolean = false;
     FilterWarehouseEntryPackageList() {
@@ -229,7 +229,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
                     newWarehouseReleasePackagePM.Description = item.EntityPM.Description;
                     newWarehouseReleasePackagePM.ContainerNumberWarning = item.EntityPM.ContainerNumberWarning;
                     newWarehouseReleasePackagePM.ActualReleaseDate = item.EntityPM.ActualEntryDate;
-
+                    newWarehouseReleasePackagePM.VolumetricWeight = item.EntityPM.VolumetricWeight;
                     var existItem: WarehouseReleasePackagePM = this.ViewModelTrigger.WarehouseReleasePackagesLists.filter(d => d.EntryPackageId == newWarehouseReleasePackagePM.EntryPackageId)[0];
                     if (!existItem) {
                         this.ViewModelTrigger.WarehouseReleasePackagesLists.push(newWarehouseReleasePackagePM);
@@ -354,13 +354,13 @@ export class WarehouseEntryPackageClass extends BaseComponent
     IsConnectedToShipment: boolean = false;
     OldReleaseQTY: number;
     OldIsSelected: boolean;
-
+    VolumetricWeight: number;
     TransportModeId: string;
     DirectionId: string;
     FromPortId: string;
     ToPortId: string;
     CustomerId: string;
-
+    
     IsSelectedKeyId: string = Guid.newGuid();
     get ReleaseQTY() {
         var releaseQTY = 0;
@@ -439,6 +439,9 @@ export class WarehouseEntryPackageClass extends BaseComponent
         this.Quantity = entityPM.Quantity;
         this.Volume = entityPM.Volume;
         this.Weight = entityPM.Weight;
+        this.VolumetricWeight = entityPM.VolumetricWeight;
+
+
         this.Description = entityPM.Description;
         this.Instock = entityPM.Instock;
         this.IsContainer = entityPM.IsContainer;
@@ -446,6 +449,7 @@ export class WarehouseEntryPackageClass extends BaseComponent
         this.EntityPM = entityPM;
         this.OldReleaseQTY = entityPM.ReleaseQTY;
         this.OldIsSelected = entityPM.IsSelected;
+
 
         this.TransportModeId = entityPM.TransportModeId;
         this.DirectionId = entityPM.DirectionId;
