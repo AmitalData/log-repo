@@ -74,8 +74,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                     }
 
                     else
-                    {
-                        
+                    {                        
                         INTTRA_Status.MessagePropertiesType iMessageProperties = iMessageBody.MessageProperties;
 
                         if (iMessageProperties != null)
@@ -244,6 +243,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                             if (!iShipmentContainerStatusRepository.DoesRecordExist(iHash))
                             {
                                 this.UpdateShipmentRoutings(locations, EventCode, EventLocationeDate);
+                                this.UpdateContainerFields(iContainer, iVoyageNumber, DeparturePortCode, ArrivalPortCode, DepartureDate, ArrivalDate, DepartureDateIndicator, ArrivalDateIndicator);
 
                                 shipmentPM.INTTRALastStatusDate = iLogDate;
                                 this.UpdateLastStatus(EventCode, EventLocationeDate, iLogDate, iContainer);
@@ -350,6 +350,8 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 }
             }
         }
+
+
 
         private void UpdateShipmentRoutings(List<INTTRA_Status.LocationType1> locations, string EventCode, DateTime? EventLocationeDate)
         {
@@ -670,6 +672,34 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 iContainer.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             }
         }
+        private void UpdateContainerFields(ShipmentPackagePM iContainer, string iVoyageNumber, string departurePortCode, string arrivalPortCode, DateTime? departureDate, DateTime? arrivalDate, string departureDateIndicator, string arrivalDateIndicator)
+        {
+            iContainer.VoyageTripNumber = iVoyageNumber;
+
+            if (departurePortCode != null)
+            {
+                departurePortCode = "";
+            }
+            if (arrivalPortCode != null)
+            {
+                arrivalPortCode = "";
+            }
+
+            iContainer.Routing = departurePortCode + " > " + arrivalPortCode;
+
+            if (departureDateIndicator == "E")
+            {
+                iContainer.ETD = departureDate;
+            }
+
+            if (arrivalDateIndicator == "E")
+            {
+                iContainer.ETA = arrivalDate;
+            }
+
+            iContainer.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+        }
+
         private DateTime? GetDateFromString(INTTRA_Status.LocationType iLocation)
         {
             // 201804241920

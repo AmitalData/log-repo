@@ -84,6 +84,11 @@ export class BIReportPM {
     public set TypeCode(newValue: string) { if (this.typeCode != newValue) { this.typeCode = newValue; this.MarkAsDirty("TypeCode"); } }
        
 	 
+    private aGGridOptionsXML: string;
+    public get AGGridOptionsXML() { return this.aGGridOptionsXML; }
+    public set AGGridOptionsXML(newValue: string) { if (this.aGGridOptionsXML != newValue) { this.aGGridOptionsXML = newValue; this.MarkAsDirty("AGGridOptionsXML"); } }
+       
+	 
 
     public OldEntityPM: BIReportPM;
 		

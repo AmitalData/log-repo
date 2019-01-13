@@ -49,6 +49,8 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
 
                                                   TypeCode = a.TypeCode,
 
+                                                  AGGridOptionsXML = a.AGGridOptionsXML,
+
                                               });
             return query;
         }

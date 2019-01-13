@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ElementRef, ComponentFactoryResolver, ComponentRef, OnDestroy, ViewEncapsulation} from '@angular/core'
+import {Component, OnInit, ElementRef, ComponentFactoryResolver, ComponentRef, OnDestroy, ViewEncapsulation} from '@angular/core'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
@@ -519,7 +519,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     LoadLineQueries() {     
             if (this.SelectedTimeRangeItem.Index == "-1") {
                 if (this.ActivityFromDate != null && this.ActivityToDate != null) {
-                    this.dashboarddomainservice.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "").subscribe(myResult => {
+                    this.dashboarddomainservice.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "",null,null).subscribe(myResult => {
                         this.LineData = myResult;
                         this.FillLineQueries();
                     });
