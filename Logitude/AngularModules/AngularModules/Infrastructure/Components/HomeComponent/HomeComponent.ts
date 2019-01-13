@@ -1,6 +1,5 @@
-/// <reference path="../../helpers/detectuserinactivity.ts" />
 declare var window: any;
-import {HostListener ,Component, ViewContainerRef, ViewChild, ViewChildren, QueryList, Output, EventEmitter} from '@angular/core';
+import { HostListener, Component, ViewContainerRef, ViewChild, ViewChildren, QueryList, Output, EventEmitter, OnDestroy} from '@angular/core';
 import {AppTool} from '../../Tools';
 import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../Utilities/SessionLocator';
@@ -22,12 +21,14 @@ import {Environment} from '../../Locators/Environment';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import {ServiceLocator} from '../../Locators/ServiceLocator';
 import { DetectUserInActivity } from '../../Helpers/DetectUserInActivity';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+
 @Component({
     moduleId: module.id,
     templateUrl: './HomeComponent.html',
 })
 
-export class HomeComponent {
+export class HomeComponent implements OnDestroy{
     public Tenant: number;
     public DataContext = this;
     public Tabs: Array<SessionTabItem>;
@@ -768,7 +769,51 @@ export class HomeComponent {
             }
         }      
     }
+
     CloseTab(tabItem: SessionTabItem) {
+        var isNeedingConfirmation = false;
+        if (SessionLocator.CurrentSession.CurrentEditComponent) {
+            isNeedingConfirmation = SessionLocator.CurrentSession.CurrentEditComponent.NeedCloseConfirmation();
+        }
+        if (isNeedingConfirmation) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 450;
+            confirmWindow.Height = 190;
+            confirmWindow.ShowCancelButton = true;
+            confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.DontSave");
+            confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
+            confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+            confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(SessionLocator.CurrentSession.CurrentEditComponent.ObjectTableName)));
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+
+
+                    if (!this.SaveCompletedEvent) {
+                        this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                            if (isSaveSuccess) {
+                                this.Close(tabItem);
+                            }
+
+                            AppTool.KillEventEmitter(this.SaveCompletedEvent);
+                            this.SaveCompletedEvent = null;
+                        });
+                    }
+
+                    SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                }
+
+                else if (confirmWindow.No) {
+                    this.Close(tabItem);
+                }
+            });
+        }
+        else {
+            this.Close(tabItem);
+        }
+    }
+
+    Close(tabItem: SessionTabItem) {
+
         var itemIndex = this.Tabs.indexOf(tabItem);
         if (itemIndex > -1) {
 
@@ -787,6 +832,14 @@ export class HomeComponent {
             }
         }
     }
+
+    private SaveCompletedEvent: any = null;
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        this.SaveCompletedEvent = null;
+
+    }
+
     RunSignupWizard() {
         SessionLocator.DynamicLoader.Load("./Infrastructure/Components/Maintenance/Wizard/WizardBaseComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
