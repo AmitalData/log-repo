@@ -53,7 +53,7 @@
                                             <td style="width: 110px;vertical-align:top;">
                                                 <div style="margin-right:10px; vertical-align:top;" [style.text-align]="'right'" class="Label MultiLinesText">{{'Customs.ClaimsRelatedEntity.F.EilatVatRefoundDecision' | TextCodeTranslationPipe }}:</div>
                                             </td>
-                                            <td  style="width: 150px; vertical-align: top;padding-top: 2px; ">
+                                            <td style="width: 150px; vertical-align: top;padding-top: 2px; ">
                                                 <LogTextBox [ObjectFieldName]="'EilatVatRefoundDecision'" [ObjectTableName]="ObjectTableName" [Text]="EilatVatRefoundDecision"
                                                             [HideColumns]="true" [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
                                             </td>
@@ -107,7 +107,7 @@
                                                 <div style="width: 420px; height: 100px">
                                                     <logitude-edit-grid GridWidth="100%" GridHeight="100%"
                                                                         [ItemSource]="ClaimsRelatedEntitiesSeizureslist"
-                                                                        [IsReadOnly]="!IsControlEnabled">
+                                                                        [IsReadOnly]="IsControlEnabled">
 
                                                         <!-- SeizureFactorCode -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntitiesSeizure.F.SeizureFactorCode' | TextCodeTranslationPipe"
@@ -171,7 +171,7 @@
                                                 <div style="width: 420px; height: 100px">
                                                     <logitude-edit-grid GridWidth="100%" GridHeight="100%"
                                                                         [ItemSource]="ClaimsRelatedEntitiesRefundslist"
-                                                                        [IsReadOnly]="!IsControlEnabled">
+                                                                        [IsReadOnly]="IsControlEnabled">
 
                                                         <!-- InvoiceNumber -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntitiesRefund.F.InvoiceNumber' | TextCodeTranslationPipe"
