@@ -72,7 +72,7 @@
 
             <tr>
                 <td>
-                    <!--   [suppressCsvExport]="true" [animateRows]="true"  [showToolPanel]="true"-->
+                    <!--   [suppressCsvExport]="true" [animateRows]="true"  [showToolPanel]="true"    [rowModelType]="'virtual'"-->
                     <div class="MediaFill">
                         <ag-grid-angular style="width:100%; height:100%;"
                                          #agGrid
@@ -83,13 +83,13 @@
                                          [floatingFilter]="true"
                                          [rowData]="rowData"
                                          [columnDefs]="columnDefs"
-                                         [rowSelection]="multiple"
-                                         [rowModelType]="virtual"
+                                         [rowSelection]="'multiple'"
                                          [multiSortKey]="'ctrl'"
                                          [excelStyles]="excelStyles"
                                          (gridReady)="onGridReady($event)"
                                          (sortChanged)="onSortChanged($event)"
-                                         (columnResized)="oncolumnResized($event)"
+                                         (columnResized)="onColumnResized($event)"
+                                         (columnMoved)="onColumnMoved($event)"
                                          [paginationPageSize]="100" [pagination]="true">
                         </ag-grid-angular>
                     </div>

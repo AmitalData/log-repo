@@ -11,6 +11,7 @@ import { DateTimePipe } from '../../../../Controls/Pipes/DateTimePipe';
 import { AgGridNg2 } from 'ag-grid-angular/main';
 import { LicenseManager } from "ag-grid-enterprise";
 import { InfrastructureDomainService, BIReportXMLData, BIReportColumnData } from '../../../../Infrastructure/Services/InfrastructureDomainService';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     moduleId: module.id,
@@ -31,6 +32,7 @@ export class BIReportPreviewComponent implements OnInit {
     public columnDefs: any[] = [];
     public rowData: any[] = [];
     public excelStyles;
+    public IsFromInitialLog = false;
 
     constructor() {
         LicenseManager.setLicenseKey("your license key");
@@ -55,6 +57,7 @@ export class BIReportPreviewComponent implements OnInit {
                 this.DWQueryData = myResult.Result;
                 this.BuildColumns();
                 this.BuildRows();
+
             }
         });
     }
@@ -68,15 +71,7 @@ export class BIReportPreviewComponent implements OnInit {
         this.InitializeServices();
         this.DWQueryId = args['DWQueryId'];
         this.EntityId = args['EntityId'];
-        if (this.DWQueryId != null) {
-            this._InfrastructureDomainService.GetByBIReportId(this.EntityId).subscribe(myResult => {
-                if (!myResult.HasError) {
-                    var result: BIReportXMLData = myResult.Result; 
-                    this.EntityPM = result.BIReportPM;
-
-                }
-            });
-        }
+       
     }
     BuildColumns() {
         this.columnDefs = [];
@@ -128,6 +123,39 @@ export class BIReportPreviewComponent implements OnInit {
                 else {
                     this.StopBusyIndicator();
                 }
+
+                this.LoadBIReportData();
+            });
+        }
+    }
+
+    LoadBIReportData() {
+        if (this.DWQueryId != null) {
+            this._InfrastructureDomainService.GetByBIReportId(this.EntityId).subscribe(myResult => {
+                if (!myResult.HasError) {
+                    var result: BIReportXMLData = myResult.Result;
+                    this.EntityPM = result.BIReportPM;
+                    var sortsList = [];
+                    if (result.Columns != null) {
+                        result.Columns.forEach(item => {
+                            var sort = [
+                                {
+                                    colId: item.SortColId,
+                                    sort: item.SortDirction
+                                }
+                            ];
+                            sortsList.push({
+                                colId: item.SortColId,
+                                sort: item.SortDirction
+                            });
+                            //this.agGrid.columnApi.getColumn(item.SortColId).setSort(item.SortDirction);
+                            //this.agGrid.api.refreshClientSideRowModel("sort");
+                        });
+                        this.IsFromInitialLog = true;
+                        this.agGrid.api.setSortModel(sortsList);
+                        this.IsFromInitialLog = false;
+                    }
+                }
             });
         }
     }
@@ -144,7 +172,6 @@ export class BIReportPreviewComponent implements OnInit {
         this.BusyIndicatorText = null;
         this.ShowBusyIndicator = false;
     }
-
 
     ExportToExcelClicked() {
         var windowArgs: any = {};
@@ -164,10 +191,16 @@ export class BIReportPreviewComponent implements OnInit {
         this.gridColumnApi = params.columnApi;
     }
     onSortChanged(params) {
-        this.hasChanged = true;
+        if (!this.IsFromInitialLog)
+            this.hasChanged = true;
     }
-    oncolumnResized(params) {
-        this.hasChanged = true;
+    onColumnResized(params) {
+        if (!this.IsFromInitialLog)
+            this.hasChanged = true;
+    }
+    onColumnMoved(params) {
+        if (!this.IsFromInitialLog)
+            this.hasChanged = true;
     }
 
     ExportToExcelAGGridClicked() {
@@ -191,7 +224,6 @@ export class BIReportPreviewComponent implements OnInit {
     private hasChanged = false;
     get HasChanged() {
         if (this.EntityId == null || (this.EntityPM != null && this.EntityPM.IsDirty) || this.hasChanged) {
-            this.hasChanged = false;
             return true;
         }
         return false;
@@ -213,13 +245,21 @@ export class BIReportPreviewComponent implements OnInit {
             // call method in server side to build xml 
             var sorting = this.agGrid.api.getSortModel();
             var coulmns = this.agGrid.columnApi.getColumnState();
-
             this.StartBusyIndicator("Saving ...");
             var result = new BIReportXMLData();
             result.BIReportId = this.EntityId;
             result.BIReportPM = this.EntityPM;
             result.Columns = [];
+            if (sorting != null) {
+                sorting.forEach(item => {
+                    var sort: BIReportColumnData = new BIReportColumnData();
+                    sort.SortColId = item["colId"];
+                    sort.SortDirction = item["sort"];
+                    result.Columns.push(sort);
+                });
+            }
             this._InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe(myResult => {
+                this.hasChanged = false;
                 this.StopBusyIndicator();
             });
         }
