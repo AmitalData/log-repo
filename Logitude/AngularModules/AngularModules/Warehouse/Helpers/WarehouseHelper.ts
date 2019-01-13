@@ -145,6 +145,7 @@ export class WarehouseHelper {
                 warehouseEntryPackagePM.UpdatedByUserId = SessionLocator.LoggedUserId;
                 warehouseEntryPackagePM.CreateDate = DateTool.GetCurrentDateAsUtc();
                 warehouseEntryPackagePM.UpdateDate = DateTool.GetCurrentDateAsUtc();
+                warehouseEntryPackagePM.VolumetricWeight = item.VolumetricWeight;
 
                 if (packageType == "ShipmentPackages") warehouseEntryPackagePM.IsContainer = item.IsContainer;
                 else {
