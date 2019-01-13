@@ -2,6 +2,7 @@
 using Logitude.BL.Helpers;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -167,16 +168,14 @@ namespace WebFreight.Web.App_Code
 
                     System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
                     HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-                
+                    EncodedHtmlHelper encodedHtmlHelper = new EncodedHtmlHelper();
                     string htmlstring = "";
                     if (!string.IsNullOrEmpty(filter.Htmlstring))
                     {
                         htmlstring = filter.Htmlstring;
                         htmlstring = htmlEditorHelper.GetLogoHtmlString(htmlstring);
-                        htmlstring = htmlEditorHelper.EncodedScript(htmlstring);
+                        htmlstring = encodedHtmlHelper.EncodedHtmlScript(htmlstring);
                     }
-
-
 
 
                     byte[] bytedata = enc.GetBytes(htmlstring);
@@ -186,11 +185,12 @@ namespace WebFreight.Web.App_Code
                     }
                     else
                     {
+                        
                         string htmlPlainString = "";
                         if (!string.IsNullOrEmpty(filter.HtmlPlainString))
                         {
-                            filter.HtmlPlainString = htmlEditorHelper.EncodedScript(filter.HtmlPlainString);
                             htmlPlainString = htmlEditorHelper.GetLogoHtmlString(filter.HtmlPlainString);
+                            htmlPlainString = encodedHtmlHelper.EncodedHtmlScript(htmlPlainString);
                         }
 
                         byte[] bytePlainTextdata = enc.GetBytes(htmlPlainString);

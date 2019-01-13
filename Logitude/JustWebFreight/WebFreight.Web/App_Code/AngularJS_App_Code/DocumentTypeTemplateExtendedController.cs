@@ -25,6 +25,7 @@ using WebFreight.Web.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -73,6 +74,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
 
                 System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
+                EncodedHtmlHelper encodedHtmlHelper = new EncodedHtmlHelper();
 
                 #region SaveEditFields
                 if (!string.IsNullOrEmpty(filter.Processtype) && filter.Processtype == "SaveEditFields")
@@ -95,15 +97,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     Contact contact = contactRepository.GetSingleContact(filter.Id, filter.Tenant);
                     if (contact != null)
                     {
-                        
-                        HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-                        if (!string.IsNullOrEmpty(filter.Body))
-                        {
-                            filter.Body = filter.Body.Replace("\"", "'");
-                        }
 
-                        var  body = htmlEditorHelper.EncodedScript(filter.Body);
-                        byte[] bytedata = enc.GetBytes(body);
+                   
+                        if (!string.IsNullOrEmpty(filter.Body)) filter.Body = filter.Body.Replace("\"", "'");
+                        filter.Body = encodedHtmlHelper.EncodedHtmlScript(filter.Body);
+                        byte[] bytedata = enc.GetBytes(filter.Body);
                         contact.SignatureHtml = bytedata;
                         contactRepository.Update(contact);
                         contactRepository.SubmitChanges();
@@ -128,14 +126,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                         if (filter.TemplateType == "HTML")
                         {
-                            HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-
-                            if (!string.IsNullOrEmpty(filter.Body))
-                            {
-                                filter.Body = filter.Body.Replace("\"", "'");
-                            }
-
-                            var body = htmlEditorHelper.EncodedScript(filter.Body);
+                            if (!string.IsNullOrEmpty(filter.Body)) filter.Body = filter.Body.Replace("\"", "'");
+                            filter.Body = encodedHtmlHelper.EncodedHtmlScript(filter.Body);
                             byte[] bytedata = enc.GetBytes(filter.Body);
                             documentTypeTemplate.TemplateBodyHtml = bytedata;
                         }
