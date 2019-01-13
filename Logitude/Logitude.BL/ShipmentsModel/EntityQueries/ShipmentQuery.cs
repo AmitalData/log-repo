@@ -4506,7 +4506,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return resulList;
         }
 
-        public List<DashBoardClass> GetShipmentsByCreateOperationalDate(string type, DateTime? FromDate, DateTime? ToDate, int currentTenant, string customerId)
+        public List<DashBoardClass> GetShipmentsByCreateOperationalDate(string type, DateTime? FromDate, DateTime? ToDate, int currentTenant, string customerId,string directionId, string transportmodeid)
         {
             bool AddYearFlag = false;
             if (FromDate.Value.Year != ToDate.Value.Year)
@@ -4525,6 +4525,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             where s.CustomerId == customerId && s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
                             select s;
             }
+
+            if (!string.IsNullOrEmpty(directionId) && directionId!="All")
+            {
+                shipments = (from f in shipments where f.DirectionId == directionId select f);
+            }
+            if (!string.IsNullOrEmpty(transportmodeid) && transportmodeid != "All")
+            {
+                shipments = (from f in shipments where f.TransportModeId == transportmodeid select f);
+            }
+
 
 
 

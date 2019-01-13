@@ -49,7 +49,7 @@ import {ChargesExternalByProductsComponent} from '../Common/Components/Accountin
 import {DocumentFilingEmailSettingsComponent} from  './Components/Maintenance/DocumentFilingEmailSettings/DocumentFilingEmailSettingsComponent';
 import {CountryCityGeneralTabComponent} from './Components/Maintenance/CountryCity/CountryCityGeneralTabComponent';
 import {VesselGeneralTabComponent} from './Components/Maintenance/Vessel/VesselGeneralTabComponent';
-
+import {CustomsShipperFiltersMenuComponent} from './Components/FiltersMenu/CustomsShipperFiltersMenuComponent';
 export const Components =
     [
         CustomerHelperComponent,
@@ -103,6 +103,7 @@ export const Components =
         ChargesExternalByProductsComponent,
         CountryCityGeneralTabComponent,
         DocumentFilingEmailSettingsComponent,
+        CustomsShipperFiltersMenuComponent,
     ];
 
 export class ModuleDeclarations {
@@ -164,6 +165,9 @@ export class ModuleDeclarations {
             case "ChargesExternalByProductsComponent": { myResult = ChargesExternalByProductsComponent; break; }
             case "CountryCityGeneralTabComponent": { myResult = CountryCityGeneralTabComponent; break; }
             case "DocumentFilingEmailSettingsComponent": { myResult = DocumentFilingEmailSettingsComponent; break; }
+            case "CustomsShipperFiltersMenuComponent": { myResult = CustomsShipperFiltersMenuComponent; break; }
+
+                
         }
 
         return myResult;

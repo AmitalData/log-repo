@@ -46,14 +46,14 @@ export class DashboardDomainService {
     }
 
 
-    GetActivityStatusByType(ActivityType: string, fromDate: Date, toDate: Date, currentTenant:string, customerid: string = null) {
+    GetActivityStatusByType(ActivityType: string, fromDate: Date, toDate: Date, currentTenant: string, directionId: string, transportmodeId: string, customerid: string = null) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain'
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetActivityStatusByType?type=' + ActivityType + '&FromDate=' + ServiceHelper.GetDateString(fromDate) + '&ToDate=' + ServiceHelper.GetDateString(toDate) + '&currentTenant=' + currentTenant + '&customerid=' + customerid, {
+            return this._http.get(this._apiUrl + '/GetActivityStatusByType?type=' + ActivityType + '&FromDate=' + ServiceHelper.GetDateString(fromDate) + '&ToDate=' + ServiceHelper.GetDateString(toDate) + '&currentTenant=' + currentTenant + '&customerid=' + customerid + '&directionid=' + directionId + '&transportmodeId=' + transportmodeId, {
                 headers: authHeader
             }).map(response => {
 
