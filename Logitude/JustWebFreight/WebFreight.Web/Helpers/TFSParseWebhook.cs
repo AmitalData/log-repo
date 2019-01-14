@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Counters;
 using Logitude.TimeManagement.BL.EntityPMs;
+using Logitude.TimeManagement.BL.EntityQueryServices;
 using Logitude.TimeManagement.BL.EntityUpdateServices;
 using Logitude.TimeManagement.Data;
 using Logitude.TimeManagement.Data.EntityPOCOs;
@@ -188,34 +189,54 @@ namespace WebFreight.Web.Helpers
             {
                 if ((assignedToUser.Id == updatedByUser.Id) && Details.RemainingWork != null && (Details.TaskState == "In Progress" || Details.TaskState == "Committed" || Details.TaskState == "Done"))
                 {
-                    var newItem = new TMEmployeeTime();
-                    newItem.Id = IdCounter.GetNumber("TMEmployeeTime", Tenant);
-                    newItem.Tenant = Tenant;
-                    //newItem.TimeInMinutes = System.Convert.ToInt32(Details.RemainingWork.Value) * 60;
-                    newItem.DateOfWork = this.Details.ChangedDate != null ? this.Details.ChangedDate.Date : this.Details.ChangedDate;
-                    newItem.CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
-                    newItem.UpdateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
-                    newItem.ProjectId = projectId;
-                    newItem.Description = Description + "";
-                    newItem.WINumber = this.Details.WorkItemId;
-                    newItem.EmployeeUserId = assignedToUser.Id;
-                    newItem.LocationCode = "O";
-                    newItem.UpdatedByUserId = updatedByUser.Id;
-                    newItem.CreatedByUserId = updatedByUser.Id;
-                    newItem.AnalyzeQueueId = this.AnalyzeQueueId;
-                    newItem.NeedsProrating = true;
-                    var sprint = computingPartnerHelper.GetLogitudeCodeTranslation(Details.IterationPath, "G-TFS", "Sprint");
-                    SprintRepository sprintRepository = new SprintRepository(Tenant);
-                    var sprintPOCO = sprintRepository.GetSprintByName(sprint, Tenant);
-                    newItem.SprintId = sprintPOCO != null ? sprintPOCO.Id : null;
-                    tmEmployeeTimeRepository.Add(newItem);
-                    tmEmployeeTimeRepository.SubmitChanges();
+                    if (!CheckTMLineDuplication(this.Details.WorkItemId, Tenant)) {
+                        var newItem = new TMEmployeeTime();
+                        newItem.Id = IdCounter.GetNumber("TMEmployeeTime", Tenant);
+                        newItem.Tenant = Tenant;
+                        //newItem.TimeInMinutes = System.Convert.ToInt32(Details.RemainingWork.Value) * 60;
+                        newItem.DateOfWork = this.Details.ChangedDate != null ? this.Details.ChangedDate.Date : this.Details.ChangedDate;
+                        newItem.CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
+                        newItem.UpdateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
+                        newItem.ProjectId = projectId;
+                        newItem.Description = Description + "";
+                        newItem.WINumber = this.Details.WorkItemId;
+                        newItem.EmployeeUserId = assignedToUser.Id;
+                        newItem.LocationCode = "O";
+                        newItem.UpdatedByUserId = updatedByUser.Id;
+                        newItem.CreatedByUserId = updatedByUser.Id;
+                        newItem.AnalyzeQueueId = this.AnalyzeQueueId;
+                        newItem.NeedsProrating = true;
+                        var sprint = computingPartnerHelper.GetLogitudeCodeTranslation(Details.IterationPath, "G-TFS", "Sprint");
+                        SprintRepository sprintRepository = new SprintRepository(Tenant);
+                        var sprintPOCO = sprintRepository.GetSprintByName(sprint, Tenant);
+                        newItem.SprintId = sprintPOCO != null ? sprintPOCO.Id : null;
+                        tmEmployeeTimeRepository.Add(newItem);
+                        tmEmployeeTimeRepository.SubmitChanges();
+                    }
                 }
             }
             else
             {
                 this.IsAnalyzeQueueFaild = true;
             }
+        }
+
+        public bool CheckTMLineDuplication(string workItemId, int tenant)
+        {
+            var isDuplicate = false;
+            var todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
+            ITimeManagementContext myContext = TimeManagementContext.GetContext(Tenant);
+            TMEmployeeTimeQueryService queryService = new TMEmployeeTimeQueryService(myContext);
+
+            IQueryable<TMEmployeeTime> iQueryable;
+
+            iQueryable = (from d in myContext.TMEmployeeTimes
+                          where d.Tenant == tenant && d.WINumber == workItemId && System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) == System.Data.Entity.DbFunctions.TruncateTime(todayDate)
+                          select d);
+
+            isDuplicate = (iQueryable != null && iQueryable.Count() == 0) ? false : true;
+
+            return isDuplicate;
         }
 
         public List<TMEmployeeTime> GetProjects(List<TMEmployeeTime> list, int tenant)
