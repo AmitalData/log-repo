@@ -551,7 +551,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllStagesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = StageTextCode_0.Id, Code = "All Stages",  QueryGroupCode = "STAG", IndexOrder = 0, Tenant = 0, ObjectTableId = StageObjectTable.Id, QuerySection = "Stage", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = StageFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllStagesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = StageTextCode_0.Id, Code = "All Stages",  QueryGroupCode = "STAG", IndexOrder = 0, Tenant = 0, ObjectTableId = StageObjectTable.Id, QuerySection = "Stage", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = StageFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllStagesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStagesQuery.Id, IndexOrder = 0, ObjectFieldId = StageObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == StageObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -581,8 +581,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable StageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Stage" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable StageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Stage" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode StageGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Stage.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = StageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature StageGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Stage.Tab.General", ObjectTableId = StageObjectTable.Id, Tenant = 0, NameTextCodeCode = "Stage.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
