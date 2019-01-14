@@ -239,6 +239,11 @@ export class DeclarationCourierStatusPM {
     public set CourierSuspentionName(newValue: string) { if (this.courierSuspentionName != newValue) { this.courierSuspentionName = newValue; this.MarkAsDirty("CourierSuspentionName"); } }
        
 	 
+    private specialActionStatus: string;
+    public get SpecialActionStatus() { return this.specialActionStatus; }
+    public set SpecialActionStatus(newValue: string) { if (this.specialActionStatus != newValue) { this.specialActionStatus = newValue; this.MarkAsDirty("SpecialActionStatus"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		
