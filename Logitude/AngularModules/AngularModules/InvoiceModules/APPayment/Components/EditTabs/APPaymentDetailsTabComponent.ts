@@ -243,27 +243,28 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.SetUIProperties_ExchangeRate();
     }
     private SetUIProperties_ExchangeRate() {
-        if (!this.IsScreenEnabled) {
-            this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
-        }
+        var isEnabled: boolean = false;
 
-        else {
+        if (this.IsScreenEnabled) {
             if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "APPaymentEditExchangeRate")) {
-                this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, true);
-                this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, true);
-
                 if (this.EntityPM.PaymentInvoices.length > 0) {
-                    this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
-                    this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
+                    isEnabled = false;
+                }
+                else {
+                    isEnabled = true;
                 }
 
                 if (this.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId) {
-                    this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
-                    this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
+                    isEnabled = false;
                 }
-            }            
+                else {
+                    isEnabled = true;
+                }
+            }
         }
+
+        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, isEnabled);
     }
     private SetUIProperties_Cheque() {
         this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, false);

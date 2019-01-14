@@ -367,7 +367,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTicketSeveritiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketSeverityTextCode_0.Id, Code = "All Ticket Severities",  QueryGroupCode = "TSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketSeverityObjectTable.Id, QuerySection = "TicketSeverity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TicketSeverityFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllTicketSeveritiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketSeverityTextCode_0.Id, Code = "All Ticket Severities",  QueryGroupCode = "TSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketSeverityObjectTable.Id, QuerySection = "TicketSeverity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TicketSeverityFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllTicketSeveritiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketSeveritiesQuery.Id, IndexOrder = 0, ObjectFieldId = TicketSeverityObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TicketSeverityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -401,8 +401,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable TicketSeverityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TicketSeverity" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable TicketSeverityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TicketSeverity" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TicketSeverityGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TicketSeverity.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature TicketSeverityGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketSeverity.Tab.General", ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketSeverity.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

@@ -349,4 +349,19 @@
     </MenuButton>
   </MenuButtons>
   <DataContracts />
+  <AdditionalFeatures>
+    <Feature Code="&quot;Ticket.Menu&quot;" FeatureTypeCode="&quot;MENU&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Ticket.Features.TicketMenu&quot;" FeatureDefaultText="&quot;Tickets&quot;" />
+    <Feature Code="&quot;ClosewithoutNotifying&quot;" FeatureTypeCode="&quot;ACT&quot;" IsPackagable="false" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Ticket.Features.ClosewithoutNotifying&quot;" FeatureDefaultText="&quot;Close without Notifying&quot;" />
+    <Feature Code="&quot;TicketDashboard.Menu&quot;" FeatureTypeCode="&quot;MENU&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;TicketDashboard.Features.TicketMenu&quot;" FeatureDefaultText="&quot;Tickets Dashboard&quot;" />
+    <Feature Code="&quot;TicketReply&quot;" FeatureTypeCode="&quot;ACT&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Ticket.Features.TicketReply&quot;" FeatureDefaultText="&quot;Reply&quot;" />
+    <Feature Code="&quot;TicketClosure&quot;" FeatureTypeCode="&quot;ACT&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Ticket.Features.TicketClosure&quot;" FeatureDefaultText="&quot;Closure&quot;" />
+    <Feature Code="&quot;TicketActivities&quot;" FeatureTypeCode="&quot;ACT&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Ticket.Features.TicketActivities&quot;" FeatureDefaultText="&quot;Activities&quot;" />
+    <Feature Code="&quot;TicketMore&quot;" FeatureTypeCode="&quot;ACT&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Ticket.Features.TicketMore&quot;" FeatureDefaultText="&quot;More&quot;" />
+    <Feature Code="&quot;AUTOMATION&quot;" FeatureTypeCode="&quot;AREA&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Ticket.Features.Automation&quot;" FeatureDefaultText="&quot;Automation&quot;" />
+    <Feature Code="&quot;SaveAsClosed&quot;" FeatureTypeCode="&quot;ACT&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Ticket.Features.SaveAsClosed&quot;" FeatureDefaultText="&quot;Save As Closed&quot;" />
+    <Feature Code="&quot;SaveAsOpen&quot;" FeatureTypeCode="&quot;ACT&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Ticket.Features.SaveAsOpen&quot;" FeatureDefaultText="&quot;Save As Open&quot;" />
+    <Feature Code="&quot;SaveAsResolved&quot;" FeatureTypeCode="&quot;ACT&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Ticket.Features.SaveAsResolved&quot;" FeatureDefaultText="&quot;Save As Resolved&quot;" />
+    <Feature Code="&quot;OwnerLicenseUpdate&quot;" FeatureTypeCode="&quot;ACT&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Ticket.Features.OwnerLicenseUpdate&quot;" FeatureDefaultText="&quot;Owner License Update&quot;" />
+    <Feature Code="&quot;More&quot;" FeatureTypeCode="&quot;ACT&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Ticket.Features.More&quot;" FeatureDefaultText="&quot;More&quot;" />
+  </AdditionalFeatures>
 </entity>

@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import { provideRoutes } from '@angular/router';
 import { AppComponent } from './AppComponent';
 
+
 @NgModule({
     imports: [BrowserModule, HttpModule],
     declarations: [AppComponent],

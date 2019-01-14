@@ -243,6 +243,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public decimal UnitPrice { get; set; }
         public decimal Quantity { get; set; }
         public string MeasurementCode { get; set; }
+        public string PrepaidCollect { get; set; }
 
         [XmlElement(ElementName = "Advanced")]
         public LineAdvancedElement Advanced { get; set; }
@@ -705,7 +706,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string TaxCode { get; set; }
         public string DebitAccount { get; set; }
         public decimal Quantity { get; set; }
-        public string MeasurementCode { get; set; }       
+        public string MeasurementCode { get; set; }
+        public string PrepaidCollect { get; set; }
 
         [XmlElement(ElementName = "Advanced")]
         public LineAdvancedElement Advanced { get; set; }

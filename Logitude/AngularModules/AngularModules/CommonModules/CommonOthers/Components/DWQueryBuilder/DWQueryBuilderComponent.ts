@@ -69,6 +69,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     SearchFieldsId: string;
     HasChanges: boolean = false;
     needsRebuildList: boolean = false;
+    IsBIReportWorkspace: boolean = false;
     constructor(private CD: ChangeDetectorRef) {
         super();
         this._DWObjectTablePMService = new DWObjectTablePMService();
@@ -186,6 +187,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     }
     SetWindowArgs(args: any) {
         this.QID = args.DWQueryId;
+        this.IsBIReportWorkspace = args.IsBIReportWorkspace;
         if (this.QID) {
             this._DWSubQueryPMService.getByQueryId(this.QID).subscribe(myResult => {
                 if (!myResult.HasError) {
@@ -844,7 +846,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
     SampleData: any[] = [];
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
     IsPreview: boolean = true;
     PreviewData(StopPreview: boolean = false) {
@@ -961,7 +963,11 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         this.ID = myResult.Result.Id;
                         this.QID = myResult.Result.DWQueryId
                         this.EditButtonClicked();
+                       
                         SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        if (this.IsBIReportWorkspace) {
+                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                        }
                     });
                 }
                 else {
@@ -978,11 +984,15 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         //if (!myResult.HasError) {
 
                         //}
+                       
                         SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        if (this.IsBIReportWorkspace) {
+                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                        }
                     });
                 }
+               
             }
-
         });
     }
     NotExist: boolean = true;

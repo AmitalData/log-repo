@@ -270,6 +270,7 @@
     <Compile Include="Helpers\FieldDbVaildUtil.cs" />
     <Compile Include="Helpers\FieldValueResolver.cs" />
     <Compile Include="Helpers\General.cs" />
+    <Compile Include="Helpers\EncodedHtmlHelper.cs" />
     <Compile Include="Helpers\HttpContextUtil.cs" />
     <Compile Include="Helpers\InjectionUtil.cs" />
     <Compile Include="Helpers\IQueryableExtensions.cs" />

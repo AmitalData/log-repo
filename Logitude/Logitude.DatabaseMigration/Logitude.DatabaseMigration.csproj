@@ -494,9 +494,25 @@
     <Compile Include="Migrations\201901101033050_DeleteOpenFormatDateTypeMigration.Designer.cs">
       <DependentUpon>201901101033050_DeleteOpenFormatDateTypeMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901121913356_AddAGGridOptionsXMLToBiReportTable_Maheera.cs" />
+    <Compile Include="Migrations\201901121913356_AddAGGridOptionsXMLToBiReportTable_Maheera.Designer.cs">
+      <DependentUpon>201901121913356_AddAGGridOptionsXMLToBiReportTable_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201901130712173_DeleteOpenFormatRportDatetypeMigration.cs" />
     <Compile Include="Migrations\201901130712173_DeleteOpenFormatRportDatetypeMigration.Designer.cs">
       <DependentUpon>201901130712173_DeleteOpenFormatRportDatetypeMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901130934417_NewField_SoftwareVersion_FullAccountingSettings.cs" />
+    <Compile Include="Migrations\201901130934417_NewField_SoftwareVersion_FullAccountingSettings.Designer.cs">
+      <DependentUpon>201901130934417_NewField_SoftwareVersion_FullAccountingSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.cs" />
+    <Compile Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.Designer.cs">
+      <DependentUpon>201901131517146_AddPackageHasContainerExc.Field.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901131510531_NewTables_AccountingIntegrityCheck.cs" />
+    <Compile Include="Migrations\201901131510531_NewTables_AccountingIntegrityCheck.Designer.cs">
+      <DependentUpon>201901131510531_NewTables_AccountingIntegrityCheck.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -809,6 +825,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901130712173_DeleteOpenFormatRportDatetypeMigration.resx">
       <DependentUpon>201901130712173_DeleteOpenFormatRportDatetypeMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901121913356_AddAGGridOptionsXMLToBiReportTable_Maheera.resx">
+      <DependentUpon>201901121913356_AddAGGridOptionsXMLToBiReportTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901130934417_NewField_SoftwareVersion_FullAccountingSettings.resx">
+      <DependentUpon>201901130934417_NewField_SoftwareVersion_FullAccountingSettings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

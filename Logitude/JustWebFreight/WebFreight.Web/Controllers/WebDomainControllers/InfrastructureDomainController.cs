@@ -67,6 +67,9 @@ using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using System.Xml.Serialization;
+using WebFreight.Web.DataContracts;
+using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.Infrastructure.Data.Repsitories;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -443,7 +446,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage Put(FeaturesUpdateHelper args)
+        public HttpResponseMessage PutFeatures(FeaturesUpdateHelper args)
         {
             try
             {
@@ -1628,6 +1631,68 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        public HttpResponseMessage GetByBIReportId(string Id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                BIReportQueryService query = new BIReportQueryService(authToken.Tenant);
+                BIReportPM entityPM = query.GetSingle(Id, false, false);
+                BIReportXMLData QueryData = new BIReportXMLData();
+
+                if (entityPM != null)
+                {
+                    QueryData.BIReportPM = entityPM;
+                    if (!string.IsNullOrEmpty(entityPM.AGGridOptionsXML))
+                    {
+                        var Columns = LogitudeXmlSerializer.DeserializeObject<List<BIReportColumnData>>(entityPM.AGGridOptionsXML);
+                        QueryData.Columns = Columns;
+                    }
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, QueryData);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage PutBIReport(BIReportXMLData QueryData)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                var ColumnsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Columns);
+                IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
+                BIReportRepository repository = new BIReportRepository(objectContext);
+
+                var entityPM = QueryData.BIReportPM;
+
+                var entityPOCO = repository.GetSingle(entityPM.Id, entityPM.Tenant);
+                if (entityPM != null)
+                {
+                    entityPM.AGGridOptionsXML = ColumnsXML;
+                    entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+
+                    entityPOCO.AGGridOptionsXML = ColumnsXML;
+                    BIReportUpdateService service = new BIReportUpdateService(objectContext);
+                   // service.Update(entityPM, true);
+
+                    repository.Update(entityPOCO);
+                    repository.SubmitChanges();
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 
