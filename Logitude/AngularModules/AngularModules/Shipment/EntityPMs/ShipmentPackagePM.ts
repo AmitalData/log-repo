@@ -470,9 +470,9 @@ export class ShipmentPackagePM {
         }
     }
 
-    private hasContainerException: string;
+    private hasContainerException: boolean;
     public get HasContainerException() { return this.hasContainerException; }
-    public set HasContainerException(newValue: string) {
+    public set HasContainerException(newValue: boolean) {
         if (this.hasContainerException != newValue) {
             this.hasContainerException = newValue;
             this.MarkAsDirty("HasContainerException");
