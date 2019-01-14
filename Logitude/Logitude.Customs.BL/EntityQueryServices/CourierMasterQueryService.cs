@@ -106,11 +106,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             var repositoryCourierDeclarations = new CourierDeclarationRepository(MainContext as ICustomContext);
             var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(MainContext as ICustomContext);
+            var declarationRepository = new DeclarationRepository(MainContext as ICustomContext);
+
             var q =
                 (from cd in repositoryCourierDeclarations.GetAll(tenant).Where(r => r.CourierMasterId == courierMasterId)
                  join dStatus in declarationCourierStatusRepository.GetAll(tenant)
                  on cd.DeclarationId equals dStatus.DeclarationId
-                 select dStatus
+                 join declaration in declarationRepository.GetAll(tenant)
+                 on dStatus.DeclarationId equals declaration.Id
+                 select new { dStatus, declaration }
              );
 
             int HOLD = 0;
@@ -131,6 +135,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             int PAY_RL = 0;
             int ACC = 0;
             int ACC_W = 0;
+            int ACC_WS = 0;
             int MNFR_RV = 0;
             int DECR_RV = 0;
 
@@ -140,25 +145,26 @@ namespace Logitude.Customs.BL.EntityQueryServices
              select new
              {
                  aLL = g.Count(),
-                 dOC = g.Count(r => r.DocumentStatusCode == "M" || r.DocumentStatusCode == "X"),
-                 DOC_U = g.Count(r => r.DocumentStatusCode == "X"),
-                 DOC_C = g.Count(r => r.DocumentStatusCode == "M"),
-                 sVG = g.Count(r => (r.IsCourierMissingClassification == true)),
-                 MNF = g.Count(r => (r.CourierManifestStatusCode == "M" || r.CourierManifestStatusCode == "X")),
-                 MNF_C = g.Count(r => (r.CourierManifestStatusCode == "M")),
-                 MNF_W = g.Count(r => (r.CourierManifestStatusCode == "X")),
-                 dEC = g.Count(r => (r.CourierDeclarationStatusCode == "M" || r.CourierDeclarationStatusCode == "X")),
-                 dEC_C = g.Count(r => (r.CourierDeclarationStatusCode == "M")),
-                 dEC_W = g.Count(r => (r.CourierDeclarationStatusCode == "X")),
-                 pAY = g.Count(r => (r.CourierPaymentStatusCode == "R")),
-                 PAY_RL = g.Count(r => (r.CourierPaymentStatusCode == "R" && r.HighLowValue=="L")),
-                 MNFR = g.Count(r => (r.CourierManifestStatusCode == "R" )),
-                 MNFR_RV = g.Count(r => (r.CourierManifestStatusCode == "R" || r.CourierManifestStatusCode == "V")),
-                 DECR = g.Count(r => (r.CourierDeclarationStatusCode == "R" )),
-                 DECR_RV = g.Count(r => (r.CourierDeclarationStatusCode == "R" || r.CourierDeclarationStatusCode == "V")),
-                 HOLD = g.Count(r => (r.CourierPendingReasonCode != null)),
-                 ACC = g.Count(),
-                 //ACC_W = g.Count(r => (r. == "2")),
+                 dOC = g.Count(r => r.dStatus.DocumentStatusCode == "M" || r.dStatus.DocumentStatusCode == "X"),
+                 DOC_U = g.Count(r => r.dStatus.DocumentStatusCode == "X"),
+                 DOC_C = g.Count(r => r.dStatus.DocumentStatusCode == "M"),
+                 sVG = g.Count(r => (r.dStatus.IsCourierMissingClassification == true)),
+                 MNF = g.Count(r => (r.dStatus.CourierManifestStatusCode == "M" || r.dStatus.CourierManifestStatusCode == "X")),
+                 MNF_C = g.Count(r => (r.dStatus.CourierManifestStatusCode == "M")),
+                 MNF_W = g.Count(r => (r.dStatus.CourierManifestStatusCode == "X")),
+                 dEC = g.Count(r => (r.dStatus.CourierDeclarationStatusCode == "M" || r.dStatus.CourierDeclarationStatusCode == "X")),
+                 dEC_C = g.Count(r => (r.dStatus.CourierDeclarationStatusCode == "M")),
+                 dEC_W = g.Count(r => (r.dStatus.CourierDeclarationStatusCode == "X")),
+                 pAY = g.Count(r => (r.dStatus.CourierPaymentStatusCode == "R")),
+                 PAY_RL = g.Count(r => (r.dStatus.CourierPaymentStatusCode == "R" && r.dStatus.HighLowValue=="L")),
+                 MNFR = g.Count(r => (r.dStatus.CourierManifestStatusCode == "R" )),
+                 MNFR_RV = g.Count(r => (r.dStatus.CourierManifestStatusCode == "R" || r.dStatus.CourierManifestStatusCode == "V")),
+                 DECR = g.Count(r => (r.dStatus.CourierDeclarationStatusCode == "R" )),
+                 DECR_RV = g.Count(r => (r.dStatus.CourierDeclarationStatusCode == "R" || r.dStatus.CourierDeclarationStatusCode == "V")),
+                 HOLD = g.Count(r => (r.dStatus.CourierPendingReasonCode != null)),
+                 ACC = g.Count(r => (r.declaration.MamanStatusCode == "2" || r.dStatus.SpecialActionStatus == "X")),
+                 ACC_W = g.Count(r => (r.declaration.MamanStatusCode == "2")),
+                 ACC_WS = g.Count(r => (r.dStatus.SpecialActionStatus == "X")),
              });
 
             var tot =totQ.FirstOrDefault();
@@ -183,6 +189,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 DECR_RV = tot.DECR_RV;
                 PAY_RL = tot.PAY_RL;
                 ACC = tot.ACC;
+                ACC_W = tot.ACC_W;
+                ACC_WS = tot.ACC_WS;
             }
 
             keyValuePairList.Add(new KeyValuePair<string, int>("ALL", ALL));
@@ -204,6 +212,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             keyValuePairList.Add(new KeyValuePair<string, int>("MNFR_RV", MNFR_RV));
             keyValuePairList.Add(new KeyValuePair<string, int>("PAY_RL", PAY_RL));
             keyValuePairList.Add(new KeyValuePair<string, int>("ACC", ACC));
+            keyValuePairList.Add(new KeyValuePair<string, int>("ACC_W", ACC_W));
+            keyValuePairList.Add(new KeyValuePair<string, int>("ACC_WS", ACC_WS));
         }
 
         public IQueryable<DeclarationPM> GetNotConnectedDeclaratins(QueryOperations queryOperations, int tenant)
