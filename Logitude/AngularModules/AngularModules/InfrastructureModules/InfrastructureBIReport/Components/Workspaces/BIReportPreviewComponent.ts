@@ -200,30 +200,28 @@ export class BIReportPreviewComponent implements OnInit {
         this.gridColumnApi = params.columnApi;
     }
     onSortChanged(params) {
-
-        if (!this.IsSorting || !this.IsResizing)
+        if (!this.IsSorting )
             this.hasChanged = true;
         else {
+            this.hasChanged = false;
             this.IsSorting = false;
-            this.IsResizing = false;
         }
-
     }
     onColumnResized(params) {
         if (params != null && params.finished === true) {
-            if (!this.IsSorting || !this.IsResizing)
+            if (!this.IsResizing)
                 this.hasChanged = true;
             else {
-                this.IsSorting = false;
+                this.hasChanged = false;
                 this.IsResizing = false;
             }
         }
     }
     onColumnMoved(params) {
-        if (!this.IsSorting || !this.IsResizing)
+        if (!this.IsResizing)
             this.hasChanged = true;
         else {
-            this.IsSorting = false;
+            this.hasChanged = false;
             this.IsResizing = false;
         }
     }
