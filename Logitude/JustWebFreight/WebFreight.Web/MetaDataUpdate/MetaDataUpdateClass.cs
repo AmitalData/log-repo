@@ -58886,7 +58886,10 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature freightFilesFeature = tenantFeatures.Where(d => d.Code == "FREIGHTFILES" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault();
             Feature connectionsFeature = tenantFeatures.Where(d => d.Code == "CONNECTIONS" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault();
             Feature customsFeature = tenantFeatures.Where(d => d.Code == "CUSTOMS" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault();
+            Feature DownloadDocumentsFeature = tenantFeatures.Where(d => d.Code == "DOWNLOADDOCUMENTS" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault();
 
+
+            
             Feature shipmentAUDITFeature = tenantFeatures.Where(d => d.Code == "AUDIT" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault();
 
 
@@ -66178,6 +66181,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ShipmentFeature_A30 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOMATION", FeatureTypeCode = "AREA", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.Automation", NameTextCodeDefaultText = "Automation" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ShipmentFeature_A31 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMODITYNUMBER", FeatureTypeCode = "AREA", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.CommodityNumber", NameTextCodeDefaultText = "Commodity Number" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ShipmentFeature_A32 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMODITYNAME", FeatureTypeCode = "AREA", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.CommodityName", NameTextCodeDefaultText = "Commodity Name" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShipmentFeature_A33 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOWNLOADDOCUMENTS", FeatureTypeCode = "AREA", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.DownloadDocuments", NameTextCodeDefaultText = "Download Documents" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             Feature ShipmentFeature_C01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGCLOSE", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.AccountingClose", NameTextCodeDefaultText = "Shipment Accounting close", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ShipmentFeature_C02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPERATIONALCLOSE", ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.OperationalClose", NameTextCodeDefaultText = "Shipment Operational close", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
