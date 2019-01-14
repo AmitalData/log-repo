@@ -773,7 +773,7 @@ export class HomeComponent implements OnDestroy{
     CloseTab(tabItem: SessionTabItem) {
         var isNeedingConfirmation = false;
         if (SessionLocator.CurrentSession.CurrentEditComponent) {
-           // isNeedingConfirmation = SessionLocator.CurrentSession.CurrentEditComponent.NeedCloseConfirmation();
+          isNeedingConfirmation = SessionLocator.CurrentSession.CurrentEditComponent.NeedCloseConfirmation();
         }
         if (isNeedingConfirmation) {
             var confirmWindow = new ConfirmWindow();
