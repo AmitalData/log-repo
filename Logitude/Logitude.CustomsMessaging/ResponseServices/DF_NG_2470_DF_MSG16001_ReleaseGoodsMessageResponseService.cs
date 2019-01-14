@@ -209,7 +209,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.GetValueOrDefault().Date.ToString("dd/MM/yyyy");
                         if (customResponse.GeneralData.releaseDate.GetValueOrDefault().TimeOfDay.Hours != 0)
                         {
-                            MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.GetValueOrDefault().TimeOfDay.ToString("hh:mm") + "   " + MyResponseData.releaseDate;
+                            MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.GetValueOrDefault()./*TimeOfDay.*/ToString("hh:mm") + "   " + MyResponseData.releaseDate;
                         }
                     }
 
