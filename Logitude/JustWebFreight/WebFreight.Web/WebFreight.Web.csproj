@@ -52,6 +52,7 @@
     <PublishDatabases>false</PublishDatabases>
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -2663,6 +2664,7 @@
     <Content Include="JustWebFreightConnectionStrings.config">
       <SubType>Designer</SubType>
     </Content>
+    <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.BIReportsType.cs" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />

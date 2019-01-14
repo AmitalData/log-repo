@@ -832,6 +832,12 @@
     <EmbeddedResource Include="Migrations\201901130934417_NewField_SoftwareVersion_FullAccountingSettings.resx">
       <DependentUpon>201901130934417_NewField_SoftwareVersion_FullAccountingSettings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901131510531_NewTables_AccountingIntegrityCheck.resx">
+      <DependentUpon>201901131510531_NewTables_AccountingIntegrityCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.resx">
+      <DependentUpon>201901131517146_AddPackageHasContainerExc.Field.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.resx">
       <DependentUpon>201901131517146_AddPackageHasContainerExc.Field.cs</DependentUpon>
     </EmbeddedResource>

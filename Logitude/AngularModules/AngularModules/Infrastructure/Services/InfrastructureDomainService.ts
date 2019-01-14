@@ -760,7 +760,6 @@ export class InfrastructureDomainService {
 
     MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: BIReportPM = null) {
 
-
         if (!entityPM) {
 
             entityPM = new BIReportPM();

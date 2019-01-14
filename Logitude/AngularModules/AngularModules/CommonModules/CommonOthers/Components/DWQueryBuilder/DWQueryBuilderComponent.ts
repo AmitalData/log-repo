@@ -963,7 +963,11 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         this.ID = myResult.Result.Id;
                         this.QID = myResult.Result.DWQueryId
                         this.EditButtonClicked();
+                       
                         SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        if (this.IsBIReportWorkspace) {
+                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                        }
                     });
                 }
                 else {
@@ -980,12 +984,14 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         //if (!myResult.HasError) {
 
                         //}
+                       
                         SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        if (this.IsBIReportWorkspace) {
+                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                        }
                     });
                 }
-                if (this.IsBIReportWorkspace) {
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
-                }
+               
             }
         });
     }
