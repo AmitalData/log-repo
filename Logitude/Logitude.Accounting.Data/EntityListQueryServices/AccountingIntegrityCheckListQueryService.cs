@@ -21,27 +21,29 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
 	    private IQueryable<AccountingIntegrityCheckList> GetIqueryableList(IQueryable<AccountingIntegrityCheck> iQueryable)
         {
-		IQueryable<AccountingIntegrityCheckList> query = (from a in iQueryable
-                                            select new AccountingIntegrityCheckList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-					                          CreateDateTimeUTC = a.CreateDateTimeUTC,
-					
-					                          StatusCode = a.StatusCode,
-					
-					                          ParametersXML = a.ParametersXML,
-					
-					                          ResultXML = a.ResultXML,
-					
-					                          HasException = a.HasException,
-					
-					                          DoneDateTimeUTC = a.DoneDateTimeUTC,
-					
-		                    	            });
+            IQueryable<AccountingIntegrityCheckList> query = (from a in iQueryable.Include("IntegrityCheckStatus")
+                                                              select new AccountingIntegrityCheckList()
+                                                              {
+
+                                                                  Id = a.Id,
+
+                                                                  Tenant = a.Tenant,
+
+                                                                  CreateDateTimeUTC = a.CreateDateTimeUTC,
+
+                                                                  StatusCode = a.StatusCode,
+
+                                                                  ParametersXML = a.ParametersXML,
+
+                                                                  ResultXML = a.ResultXML,
+
+                                                                  HasException = a.HasException,
+
+                                                                  DoneDateTimeUTC = a.DoneDateTimeUTC,
+
+                                                                  StatusName = a.IntegrityCheckStatus.Name,
+
+                                                              });
             return query;
 		}
 
