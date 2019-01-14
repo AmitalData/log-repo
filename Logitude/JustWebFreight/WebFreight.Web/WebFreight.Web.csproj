@@ -52,6 +52,7 @@
     <PublishDatabases>false</PublishDatabases>
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

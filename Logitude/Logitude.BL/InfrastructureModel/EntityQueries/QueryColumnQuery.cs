@@ -300,7 +300,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             if (myQuery != null)
             {
-                if (!string.IsNullOrEmpty(myQuery.SharedByUserId) && myQuery.SharedByUserId != userId)
+                if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(myQuery.SharedByUserId) && myQuery.SharedByUserId != userId)
                 {
                     queries = from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
                               where a.Tenant == tenant && a.UserId == myQuery.SharedByUserId && a.QueryId == queryId && a.ObjectField.DisplayInList == true
