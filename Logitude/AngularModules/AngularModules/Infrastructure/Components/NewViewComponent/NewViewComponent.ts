@@ -571,7 +571,8 @@ export class NewViewComponent {
             var i = this.OrderedQueryColumnsList.indexOf(item);
 
             this.ReorderColumnsList();
-            var upColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId == item.ObjectFieldId && ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.QueryId == this.QueryId)[0];
+            //var upColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId == item.ObjectFieldId && ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.QueryId == this.QueryId)[0];
+            var upColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId == item.ObjectFieldId)[0];
 
             if (i > 0) {
                 this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId != upColumn.ObjectFieldId);
@@ -594,7 +595,8 @@ export class NewViewComponent {
 
             this.ReorderColumnsList();
 
-            var downColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId == item.ObjectFieldId && ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.QueryId == this.QueryId)[0];
+            //var downColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId == item.ObjectFieldId && ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.QueryId == this.QueryId)[0];
+            var downColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId == item.ObjectFieldId)[0];
 
             if (i < this.OrderedQueryColumnsList.length - 1) {
                 this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId != downColumn.ObjectFieldId);
@@ -1384,14 +1386,12 @@ export class NewViewComponent {
                     case "ALL": {
                         this.EntityPM.SharedWithAll = true;
                         this.EntityPM.SharedWithSpecificUsers = false;
-                        this.EntityPM.SharedByUserId = SessionLocator.LoggedUserId;
                         break;
                     }
 
                     case "SPF": {
                         this.EntityPM.SharedWithAll = false;
                         this.EntityPM.SharedWithSpecificUsers = true;
-                        this.EntityPM.SharedByUserId = SessionLocator.LoggedUserId;
                         break;
                     }
 
