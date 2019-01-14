@@ -7,9 +7,9 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-           // DropForeignKey("dbo.OpenFormatReports", "DateTypeCode", "dbo.OpenFormatDateTypes");
-           // DropIndex("dbo.OpenFormatReports", new[] { "DateTypeCode" });
-           // DropColumn("dbo.OpenFormatReports", "DateTypeCode");
+            DropForeignKey("dbo.OpenFormatReports", "DateTypeCode", "dbo.OpenFormatDateTypes");
+            DropIndex("dbo.OpenFormatReports", new[] { "DateTypeCode" });
+            //DropColumn("dbo.OpenFormatReports", "DateTypeCode");
             //DropTable("dbo.OpenFormatDateTypes");
 
             Sql("delete from QueryColumns where ObjectFieldId=(select ID from ObjectFields where FieldName ='DateTypeCode' and ObjectTableId = (select ID from ObjectTables where Name='OpenFormatReport'))");

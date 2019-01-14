@@ -131,6 +131,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ETA).HasColumnName("ETA");
             this.Property(t => t.Routing).HasColumnName("Routing");
             this.Property(t => t.VoyageTripNumber).HasColumnName("VoyageTripNumber");
+            this.Property(t => t.HasContainerException).HasColumnName("HasContainerException");
 
             this.HasOptional(t => t.Shipment).WithMany().HasForeignKey(d => d.ShipmentId);
             this.HasOptional(t => t.PackageType).WithMany().HasForeignKey(d => d.PackageTypeId);

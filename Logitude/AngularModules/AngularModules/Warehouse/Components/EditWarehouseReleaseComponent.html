@@ -290,6 +290,9 @@
                                                         <td style="width: 130px; min-width: 130px;max-width: 130px;">{{DimensionsLabel}}</td>
                                                         <td style="width: 70px; min-width: 70px;max-width: 70px;">Quantity</td>
                                                         <td style="width: 90px; min-width: 90px;max-width: 90px;">{{VolumeLabel}}</td>
+
+                                                        <td style="width: 135px;min-width: 135px;max-width: 135px;">{{VolumetricWeightLabel}}</td>
+
                                                         <td style="width: 110px;min-width: 110px;max-width: 110px;">{{GrossWeightLabel}}</td>
                                                         <td style="width: 170px;min-width:170px;">Description Of Goods</td>
                                             
@@ -370,7 +373,10 @@
                                                                                 </td>
 
 
+                                                                                <td class="GridViewCell" style="width: 135px; min-width: 135px; max-width: 135px;text-align:right">
+                                                                                    {{item.VolumetricWeight | NumbersPipe:'N3'}}
 
+                                                                                </td>
                                                                                 <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px;text-align:right">
                                                                                     {{item.Weight | NumbersPipe:'N3'}}
 

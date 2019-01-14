@@ -96,6 +96,8 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                           TransportModeId = a.WarehouseEntry.TransportModeId,
                                                           DirectionId = a.WarehouseEntry.DirectionId,
                                                           IsConnectedToShipment = a.IsConnectedToShipment,
+                                                          VolumetricWeight = a.VolumetricWeight,
+                                                          ChargeableWeightUnitCode = a.WarehouseEntry.ChargeableWeightUnitCode,
                                                       }).ToList();
 
 
