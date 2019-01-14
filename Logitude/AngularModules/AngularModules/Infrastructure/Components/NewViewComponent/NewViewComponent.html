@@ -391,9 +391,7 @@
                                                                             <div [style.float]="RTL == true ? 'right' : 'left'" style="width: 50%;">
                                                                                 <div *ngFor="let item of NEWallFilterFieldsClass.FilterFields" [hidden]="!NEWallFilterFieldsClass">
                                                                                     <div *ngIf="item" class="CheckBox" style="margin: 10px;">
-                                                                                        <LogCheckBox [IsDisabled]="!IsSaveButtonEnabled" [ObjectFieldName]="'Exists'" [DataContext]="item" [Text]="item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe" [Value]="item.Exists"></LogCheckBox>
-                                                                                        <!--<input id="{{item.ControlId}}" type="checkbox" [(ngModel)]="item.Exists" />
-                                                                                        <label [attr.for]="item.FieldName">{{item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe}}</label>-->
+                                                                                        <CheckBox [IsEnabled]="IsSaveButtonEnabled" (Checked)="item.Exists = $event" [IsChecked]="item.Exists" [Text]="item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe"></CheckBox>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
