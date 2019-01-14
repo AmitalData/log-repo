@@ -72,6 +72,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new AccountingEntityMap());
 	
+            modelBuilder.Configurations.Add(new AccountingIntegrityCheckMap());
+	
             modelBuilder.Configurations.Add(new AccountingPeriodMap());
 	
             modelBuilder.Configurations.Add(new ARPaymentChequeMap());
@@ -133,6 +135,8 @@ namespace Logitude.Accounting.Data
             modelBuilder.Configurations.Add(new GLAccountTypeMap());
 	
             modelBuilder.Configurations.Add(new GLAccountWithholdingTaxMap());
+	
+            modelBuilder.Configurations.Add(new IntegrityCheckStatusMap());
 	
             modelBuilder.Configurations.Add(new JournalMap());
 	
@@ -583,6 +587,12 @@ namespace Logitude.Accounting.Data
 	 
 	 }
 	
+	 public IDbSet<AccountingIntegrityCheck> AccountingIntegrityChecks 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<AccountingPeriod> AccountingPeriods 
 	 {
 	      get; set;
@@ -764,6 +774,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<GLAccountWithholdingTax> GLAccountWithholdingTax 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<IntegrityCheckStatus> IntegrityCheckStatuses 
 	 {
 	      get; set;
 	 

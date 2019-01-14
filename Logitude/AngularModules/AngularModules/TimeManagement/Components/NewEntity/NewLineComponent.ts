@@ -52,7 +52,7 @@ export class NewLineComponent extends BaseComponent {
                 this.DateOfWorkDate.Date = this.EntityPM.DateOfWork;
                 this.DateOfWorkMinutes = this.EntityPM.TimeInMinutes;
                 this.Father = args.Father;
-                this.LocationCode = args.Father.LocationCode;
+                this.LocationCode = args.LocationCode;
                 this.SetUIProperties();
                 this.IsNew = false;
             }

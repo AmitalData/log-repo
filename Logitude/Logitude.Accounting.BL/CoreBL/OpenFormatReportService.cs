@@ -1,12 +1,15 @@
 ﻿using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
@@ -18,6 +21,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -47,6 +51,11 @@ namespace Logitude.Accounting.BL.CoreBL
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
             List<B110Data> b110Data = gLAccountQueryService.GetB110sForGLAccounts(tenant);
             ComputingPartnerTranslationHelper computingPartnerTranslationHelper = new ComputingPartnerTranslationHelper(tenant);
+            ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(tenant);
+
+
+
+
 
             List<string> linesArray = new List<string>();
 
@@ -642,6 +651,1427 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append('\n');
             }
 
+            //C100
+          
+            List<C100Data> C100 = new List<C100Data>();
+            List<C100Data> ARC100 =  GetARInvoiceC100Data(openFormatReportPM, tenant);
+            List<C100Data> APC100 = GetAPInvoiceC100Data(openFormatReportPM, tenant);
+            List<C100Data> ARPAymentC100 = GetARPaymentC100Data(openFormatReportPM, tenant);
+            List<C100Data> DepositC100 = GetDepositC100Data(openFormatReportPM, tenant);
+            ARInvoiceTotalVATQuery aRInvoiceTotalVATQuery = new ARInvoiceTotalVATQuery(tenant);
+            List<string> ARInvoiceIDs = ARC100.Select(d => d.ARInvoiceId).ToList();
+            List<ARInvoiceTotalVATPM> totalVats = aRInvoiceTotalVATQuery.GetTotalVATs(ARInvoiceIDs, tenant);
+        
+
+           
+            C100 = ARC100.Concat(APC100).Concat(ARPAymentC100).ToList();
+            List<string> vandorIDs = C100.Select(d => d.VendorId).ToList();
+
+            addreses = addressQuery.GetAddressesByCardIds(vandorIDs, tenant);
+            APInvoiceTotalVATQuery aPInvoiceTotalVATQuery = new APInvoiceTotalVATQuery(tenant);
+            List<string> APInvoiceIDs = APC100.Select(d => d.APInvoiceId).ToList();
+            List<APInvoiceTotalVATPM> APtotalVats = aPInvoiceTotalVATQuery.GetTotalVATs(APInvoiceIDs, tenant);
+
+            List<string> GLAccountIds = C100.Select(d => d.GLAccountId).ToList();
+            List<GLAccountPM> acccounts = gLAccountQueryService.GetGLAccountsByIds(GLAccountIds, tenant);
+
+            ARInvoiceLineQuery aRInvoiceLineQuery = new ARInvoiceLineQuery(tenant);
+            List<ARInvoiceLinePM> aRInvoiceLinePMs = aRInvoiceLineQuery.GetInvoiceLinePMsByInvoiceIds(ARInvoiceIDs, tenant);
+            //ARInvoice
+            foreach (C100Data item in ARC100)
+            {
+                counter++;
+                myStringBuilder.Append("C100");
+                
+               
+                if (counter.ToString().Length > 9)
+                {
+                    counter.ToString().Substring(0, 9);
+                    myStringBuilder.Append("a" + counter.ToString().PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
+                }
+
+                if (tenantPM.VatNumber != null)
+                {
+                    if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber = tenantPM.VatNumber.Substring(0, 9); }
+                    myStringBuilder.Append("a" + tenantPM.VatNumber.PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 9);
+                }
+                myStringBuilder.Append(item.DocumentType);
+
+                if (item.DocumentReference != null)
+                {
+                    if (item.DocumentReference.Length > 20) { item.DocumentReference = item.DocumentReference.Substring(0, 20); }
+                    myStringBuilder.Append("a" + item.DocumentReference.PadLeft(20, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 20);
+                }
+
+                var CreateDate = String.Format("{0:yyyyMMdd}", item.DocumentCreateDate);
+                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HH:mm");
+
+                if (CreateDate.Length > 8) { CreateDate.Substring(0, 8); }
+                myStringBuilder.Append("a" + CreateDate.PadLeft(8, '0'));
+                if (CreateDateTime.Length > 4) { CreateDateTime.Substring(0, 4); }
+                myStringBuilder.Append("a" + CreateDateTime.PadLeft(4, '0'));
+
+                if (item.CustomerVendorName != null)
+                {
+                    if (item.CustomerVendorName.Length > 50) { item.CustomerVendorName = item.CustomerVendorName.Substring(0, 50); }
+                    myStringBuilder.Append("a" + item.CustomerVendorName.PadLeft(50, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 50);
+                }
+
+                string address = item.AddressStreet;
+                if (item.AddressStreet != null)
+                {
+                    if (item.AddressStreet.Length > 50) { item.AddressStreet = item.AddressStreet.Substring(0, 50); }
+                    myStringBuilder.Append("a" + item.AddressStreet.PadLeft(50, ' '));
+
+                    if (address != null && address.Length > 51)
+                    {
+                        item.AddressHomeNO = address.Substring(51, 60);
+                        myStringBuilder.Append("a" + item.AddressHomeNO.PadLeft(10, ' '));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 10);
+                    }
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 50);
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 10);
+                }
+
+
+
+                if (item.AddressCity != null)
+                {
+                    if (item.AddressCity.Length > 30) { item.AddressCity = item.AddressCity.Substring(0, 30); }
+                    myStringBuilder.Append("a" + item.AddressCity.PadLeft(30, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 30);
+                }
+
+
+                if (item.AddressZIPCode != null)
+                {
+                    if (item.AddressZIPCode.Length > 8) { item.AddressZIPCode = item.AddressZIPCode.Substring(0, 8); }
+                    myStringBuilder.Append("a" + item.AddressZIPCode.PadLeft(8, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 8);
+                }
+
+                if (item.AddressCountry != null)
+                {
+                    if (item.AddressCountry.Length > 30) { item.AddressCountry = item.AddressCountry.Substring(0, 30); }
+                    myStringBuilder.Append("a" + item.AddressCountry.PadLeft(30, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ',30);
+                }
+
+                if (item.AddressCountryCode != null)
+                {
+                    var partnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(item.AddressCountryCode, "Cust", "Country");
+
+                    if (partnerCode != null)
+                    {
+                        if (partnerCode.Length > 2) { partnerCode.Substring(0, 2); }
+                        myStringBuilder.Append("a" + partnerCode.PadLeft(2, ' '));
+                    }
+
+                    else
+                    {
+                        myStringBuilder.Append("a");
+
+                       myStringBuilder.Append(' ', 2);
+                    }
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+
+                    myStringBuilder.Append(' ', 2);
+                }
+                if (item.CustomeVendorTelephone != null)
+                {
+                    if (item.CustomeVendorTelephone.Length > 15) { item.CustomeVendorTelephone = item.CustomeVendorTelephone.Substring(0, 15); }
+                    myStringBuilder.Append("a" + item.CustomeVendorTelephone.PadLeft(15, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 30);
+                }
+
+                if (item.CustomerVendorVatNumber != null)
+                {
+                    if (item.CustomerVendorVatNumber.Length > 9) { item.CustomerVendorVatNumber = item.CustomerVendorVatNumber.Substring(0, 9); }
+                    myStringBuilder.Append("a" + item.CustomerVendorVatNumber.PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 9);
+                }
+                var ValueDate = String.Format("{0:yyyyMMdd}", item.ValueDate);
+                if (ValueDate != null)
+                {
+                  
+                    myStringBuilder.Append("a" + ValueDate);
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 8);
+                }
+
+                myStringBuilder.Append('0', 15);
+                myStringBuilder.Append(' ', 3);
+
+                string AmountBFDiscount = item.TotalDocumentsAmountBeforeDiscount.ToString();
+
+                if (AmountBFDiscount  != null)
+                {
+                    if (AmountBFDiscount.Length > 15) { AmountBFDiscount = AmountBFDiscount.Substring(0, 15); }
+                    myStringBuilder.Append("a" + AmountBFDiscount.PadLeft(15, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+                }
+
+                myStringBuilder.Append(' ', 15);
+                string AmountAFDiscount = item.TotalDocumentsAmountAfterDiscount.ToString();
+
+                if (AmountAFDiscount != null)
+                {
+                    if (AmountAFDiscount.Length > 15) { AmountAFDiscount = AmountAFDiscount.Substring(0, 15); }
+                    myStringBuilder.Append("a" + AmountAFDiscount.PadLeft(15, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+                }
+
+
+                List<ARInvoiceTotalVATPM> aRInvoiceTotalVATs = totalVats.Where(d => d.ARInvoiceId == item.ARInvoiceId).ToList();
+                if (aRInvoiceTotalVATs.Count > 0)
+                {
+                    item.VatAmount = aRInvoiceTotalVATs.Sum(d => d.LocalVATAmount);
+                    string vatAmount = item.VatAmount.ToString();
+                    if (vatAmount != null)
+                    {
+                        if (vatAmount.Length > 15) { vatAmount = vatAmount.Substring(0, 15); }
+                        myStringBuilder.Append("a" + vatAmount.PadLeft(15, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 15);
+                    }
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+                }
+
+                string DocumentAmountAndVATAmount = item.DocumentAmountAndVATAmount.ToString();
+
+                if (DocumentAmountAndVATAmount != null)
+                {
+                    if (DocumentAmountAndVATAmount.Length > 15) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 15); }
+                    myStringBuilder.Append("a" + DocumentAmountAndVATAmount.PadLeft(15, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+                }
+
+                myStringBuilder.Append('0', 15);
+
+                GLAccountPM gLAccountPM = acccounts.Where(d => d.Id == item.GLAccountId).FirstOrDefault();
+                if(gLAccountPM != null)
+                {
+                    item.CustomerVendorCode = gLAccountPM.DisplayNumber;
+                    if (item.CustomerVendorCode != null)
+                    {
+                        if (item.CustomerVendorCode.Length > 15) { item.CustomerVendorCode = item.CustomerVendorCode.Substring(0, 15); }
+                        myStringBuilder.Append("a" + item.CustomerVendorCode.PadLeft(15, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 15);
+                    }
+
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+                }
+
+                myStringBuilder.Append(' ', 10);
+                if (item.IsCancelled)
+                {
+                    myStringBuilder.Append("1");
+                }
+                else
+                {
+                    myStringBuilder.Append("0");
+                }
+                var DocuemntsReferenceDate = String.Format("{0:yyyyMMdd}", item.DocuemntsReferenceDate);
+                if (DocuemntsReferenceDate != null)
+                {
+
+                    myStringBuilder.Append("a" + DocuemntsReferenceDate);
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 8);
+                }
+
+
+                myStringBuilder.Append(' ', 7);
+
+
+                if (item.CreatedbyUser != null)
+                {
+                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 9);
+                }
+
+                myStringBuilder.Append('0', 7);
+                myStringBuilder.Append(' ', 13);
+                myStringBuilder.Append('\n');
+
+                List<ARInvoiceLinePM> lines = aRInvoiceLinePMs.Where(d => d.ARInvoiceId == item.ARInvoiceId).ToList();
+                foreach(ARInvoiceLinePM line in lines)
+                {
+                    counter++;
+                    myStringBuilder.Append("D110");
+
+
+                    if (counter.ToString().Length > 9)
+                    {
+                        counter.ToString().Substring(0, 9);
+                        myStringBuilder.Append("a" + counter.ToString().PadLeft(9, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
+                    }
+
+                    if (tenantPM.VatNumber != null)
+                    {
+                        if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber = tenantPM.VatNumber.Substring(0, 9); }
+                        myStringBuilder.Append("a" + tenantPM.VatNumber.PadLeft(9, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 9);
+                    }
+
+                    myStringBuilder.Append("305");
+
+                    if (item.DocumentReference != null)
+                    {
+                        if (item.DocumentReference.Length > 20) { item.DocumentReference = item.DocumentReference.Substring(0, 20); }
+                        myStringBuilder.Append("a" + item.DocumentReference.PadLeft(20, ' '));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 20);
+                    }
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(line.LineNumber.ToString().PadLeft(4, '0'));
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 3);
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 20);
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append("1");
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 20);
+
+                    if (line.Description != null)
+                    {
+                        if (line.Description.Length > 30) { line.Description = line.Description.Substring(0, 30); }
+                        myStringBuilder.Append("a" + line.Description.PadLeft(30, ' '));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 30);
+                    }
+
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 50);
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 30);
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append("יחידה");
+                    myStringBuilder.Append(' ', 15);
+
+                   
+                    if (line.Quantity != null)
+                    {
+                        string quantity = line.Quantity.ToString();
+                        if (quantity.Length > 17) { quantity = quantity.Substring(0, 17); }
+                        myStringBuilder.Append("a" + quantity.PadLeft(17, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 17);
+                    }
+
+
+                  
+                    if (line.UnitPrice != null)
+                    {
+                        string UnitPrice = line.UnitPrice.ToString();
+                        if (UnitPrice.Length > 15) { UnitPrice = UnitPrice.Substring(0, 15); }
+                        myStringBuilder.Append("a" + UnitPrice.PadLeft(15, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 15);
+                    }
+
+
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+
+                 
+                    if (line.VatPercentage != null)
+                    {
+                        string VatPercentage = line.VatPercentage.ToString();
+                        if (VatPercentage.Length > 4) { VatPercentage = VatPercentage.Substring(0, 4); }
+                        myStringBuilder.Append("a" + VatPercentage.PadLeft(4, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 4);
+                    }
+
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 7);
+
+                    if (DocuemntsReferenceDate != null)
+                    {
+
+                        myStringBuilder.Append("a" + DocuemntsReferenceDate);
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 8);
+                    }
+
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 7);
+
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 7);
+
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 21);
+
+                    myStringBuilder.Append('\n');
+                }
+            }
+
+            //APInvoice
+          
+            foreach (C100Data item in APC100)
+            {
+                counter++;
+                myStringBuilder.Append("C100");
+
+
+                if (counter.ToString().Length > 9)
+                {
+                    counter.ToString().Substring(0, 9);
+                    myStringBuilder.Append("a" + counter.ToString().PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
+                }
+
+                if (tenantPM.VatNumber != null)
+                {
+                    if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber = tenantPM.VatNumber.Substring(0, 9); }
+                    myStringBuilder.Append("a" + tenantPM.VatNumber.PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 9);
+                }
+                myStringBuilder.Append(item.DocumentType);
+
+                if (item.DocumentReference != null)
+                {
+                    if (item.DocumentReference.Length > 20) { item.DocumentReference = item.DocumentReference.Substring(0, 20); }
+                    myStringBuilder.Append("a" + item.DocumentReference.PadLeft(20, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 20);
+                }
+
+                var CreateDate = String.Format("{0:yyyyMMdd}", item.DocumentCreateDate);
+                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HH:mm");
+
+                if (CreateDate.Length > 8) { CreateDate.Substring(0, 8); }
+                myStringBuilder.Append("a" + CreateDate.PadLeft(8, '0'));
+                if (CreateDateTime.Length > 4) { CreateDateTime.Substring(0, 4); }
+                myStringBuilder.Append("a" + CreateDateTime.PadLeft(4, '0'));
+
+                if (item.CustomerVendorName != null)
+                {
+                    if (item.CustomerVendorName.Length > 50) { item.CustomerVendorName = item.CustomerVendorName.Substring(0, 50); }
+                    myStringBuilder.Append("a" + item.CustomerVendorName.PadLeft(50, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 50);
+                }
+
+
+
+                AddressList billingAddress = addreses.Where(d => d.CardId == item.VendorId && d.AddressTypeId == "B").FirstOrDefault();
+                AddressList mainaddress = addreses.Where(d => d.CardId == item.VendorId && d.AddressTypeId == "M").FirstOrDefault();
+
+
+                string address = null;
+                if (billingAddress != null)
+                    {
+                   
+                    address = billingAddress.Address1;
+                    if (item.AddressStreet != null)
+                    {
+                        if (item.AddressStreet.Length > 50) { item.AddressStreet.Substring(0, 50); }
+                        myStringBuilder.Append(item.AddressStreet.PadLeft(50, ' '));
+                        if (address != null && address.Length > 51)
+                        {
+                            item.AddressHomeNO = address.Substring(51, 60);
+                            myStringBuilder.Append("a" + item.AddressHomeNO.PadLeft(10, ' '));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append(' ', 10);
+                        }
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 50);
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 10);
+                    }
+                    
+                        if (billingAddress.City != null)
+                        {
+                            if (billingAddress.City.Length > 30) { billingAddress.City = billingAddress.City.Substring(0, 30); }
+                            myStringBuilder.Append("a" + billingAddress.City.PadLeft(30, ' '));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append(' ', 30);
+                        }
+                        if (billingAddress.ZipCode != null)
+                        {
+                            if (billingAddress.ZipCode.Length > 8) { billingAddress.ZipCode=  billingAddress.ZipCode.Substring(0, 8); }
+                            myStringBuilder.Append("a" + billingAddress.ZipCode.PadLeft(8, ' '));
+                        }
+                        else
+                        {
+
+                        myStringBuilder.Append("a");
+
+                        myStringBuilder.Append(' ', 8);
+                        }
+                        if (billingAddress.CountryName != null)
+                        {
+                            if (billingAddress.CountryName.Length > 30) { billingAddress.CountryName= billingAddress.CountryName.Substring(0, 30); }
+                            myStringBuilder.Append("a" + billingAddress.CountryName.PadLeft(30, ' '));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append(' ', 30);
+                        }
+                        if (billingAddress.CountryCode != null)
+                        {
+                            var partnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(billingAddress.CountryCode, "Cust", "Country");
+
+                            if (partnerCode != null)
+                            {
+                                if (partnerCode.Length > 2) { partnerCode.Substring(0, 2); }
+                                myStringBuilder.Append("a" + partnerCode.PadLeft(2, ' '));
+                            }
+
+                            else
+                            {
+                            myStringBuilder.Append("a");
+
+                               myStringBuilder.Append(' ', 2);
+                            }
+                        }
+                        else
+                        {
+                        myStringBuilder.Append("a");
+
+                           myStringBuilder.Append(' ',2);
+                        }
+                    }
+
+                else  if(mainaddress != null)
+                {
+                    
+                 
+                   
+                        address = mainaddress.Address1;
+                        item.AddressStreet = address;
+                        if (item.AddressStreet != null)
+                        {
+                            if (item.AddressStreet.Length > 50) { item.AddressStreet= item.AddressStreet.Substring(0, 50); }
+                            myStringBuilder.Append("a" + item.AddressStreet.PadLeft(50, ' '));
+                            if (address != null && address.Length > 51)
+                            {
+                                item.AddressHomeNO = address.Substring(51, 60);
+                                myStringBuilder.Append("a" + item.AddressHomeNO.PadLeft(10, ' '));
+                            }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append(' ', 10);
+                        }
+                        }
+                        else
+                        {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 50);
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 10);
+                        }
+                        if (mainaddress.City != null)
+                        {
+                            if (mainaddress.City.Length > 30) { mainaddress.City = mainaddress.City.Substring(0, 30); }
+                            myStringBuilder.Append("a" + mainaddress.City.PadLeft(30, ' '));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+
+                           myStringBuilder.Append(' ', 30);
+                        }
+                        if (mainaddress.ZipCode != null)
+                        {
+                            if (mainaddress.ZipCode.Length > 8) { mainaddress.ZipCode= mainaddress.ZipCode.Substring(0, 8); }
+                            myStringBuilder.Append("a" + mainaddress.ZipCode.PadLeft(8, ' '));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append(' ', 8);
+                        }
+                        if (mainaddress.CountryName != null)
+                        {
+                            if (mainaddress.CountryName.Length > 30) { mainaddress.CountryName= mainaddress.CountryName.Substring(0, 30); }
+                            myStringBuilder.Append("a" + mainaddress.CountryName.PadLeft(30, ' '));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append(' ', 30);
+                        }
+                        if (mainaddress.CountryCode != null)
+                        {
+                        var partnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(mainaddress.CountryCode, "Cust", "Country");
+
+                        if (partnerCode != null)
+                        {
+                            if (partnerCode.Length > 2) { partnerCode.Substring(0, 2); }
+                            myStringBuilder.Append("a" + partnerCode.PadLeft(2, ' '));
+                        }
+
+                        else
+                        {
+                            myStringBuilder.Append("a");
+
+                            myStringBuilder.Append(' ', 2);
+                        }
+                        }
+
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append(' ', 2);
+                        }
+
+                        if (mainaddress.PhoneNumber != null)
+                        {
+                            if (mainaddress.PhoneNumber.Length > 15) { mainaddress.PhoneNumber = mainaddress.PhoneNumber.Substring(0, 15); }
+                            myStringBuilder.Append("a" + mainaddress.PhoneNumber.PadLeft(15, ' '));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append(' ', 15);
+                        }
+                    }
+                
+
+                else
+                {
+                    myStringBuilder.Append(' ', 145);
+                }
+
+                
+
+                if (item.CustomerVendorVatNumber != null)
+                {
+                    if (item.CustomerVendorVatNumber.Length > 9) { item.CustomerVendorVatNumber = item.CustomerVendorVatNumber.Substring(0, 9); }
+                    myStringBuilder.Append("a" + item.CustomerVendorVatNumber.PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 9);
+                }
+                var ValueDate = String.Format("{0:yyyyMMdd}", item.ValueDate);
+                if (ValueDate != null)
+                {
+
+                    myStringBuilder.Append("a" + ValueDate);
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 8);
+                }
+
+                myStringBuilder.Append('0', 15);
+                myStringBuilder.Append(' ', 3);
+
+                string AmountBFDiscount = item.TotalDocumentsAmountBeforeDiscount.ToString();
+
+                if (AmountBFDiscount != null)
+                {
+                    if (AmountBFDiscount.Length > 15) { AmountBFDiscount = AmountBFDiscount.Substring(0, 15); }
+                    myStringBuilder.Append("a" + AmountBFDiscount.PadLeft(15, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+                }
+
+                myStringBuilder.Append(' ', 15);
+                string AmountAFDiscount = item.TotalDocumentsAmountAfterDiscount.ToString();
+
+                if (AmountAFDiscount != null)
+                {
+                    if (AmountAFDiscount.Length > 15) { AmountAFDiscount = AmountAFDiscount.Substring(0, 15); }
+                    myStringBuilder.Append("a" + AmountAFDiscount.PadLeft(15, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+                }
+
+
+                List<APInvoiceTotalVATPM> aPInvoiceTotalVATs = APtotalVats.Where(d => d.APInvoiceId == item.APInvoiceId).ToList();
+                if (aPInvoiceTotalVATs.Count > 0)
+                {
+                    item.VatAmount = aPInvoiceTotalVATs.Sum(d => d.LocalVATAmount);
+                    string vatAmount = item.VatAmount.ToString();
+                    if (vatAmount != null)
+                    {
+                        if (vatAmount.Length > 15) { vatAmount = vatAmount.Substring(0, 15); }
+                        myStringBuilder.Append("a" + vatAmount.PadLeft(15, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 15);
+                    }
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+                }
+
+                string DocumentAmountAndVATAmount = item.DocumentAmountAndVATAmount.ToString();
+
+                if (DocumentAmountAndVATAmount != null)
+                {
+                    if (DocumentAmountAndVATAmount.Length > 15) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 15); }
+                    myStringBuilder.Append("a" + DocumentAmountAndVATAmount.PadLeft(15, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+                }
+
+                myStringBuilder.Append('0', 15);
+
+                GLAccountPM gLAccountPM = acccounts.Where(d => d.Id == item.GLAccountId).FirstOrDefault();
+                if (gLAccountPM != null)
+                {
+                    item.CustomerVendorCode = gLAccountPM.DisplayNumber;
+                    if (item.CustomerVendorCode != null)
+                    {
+                        if (item.CustomerVendorCode.Length > 15) { item.CustomerVendorCode = item.CustomerVendorCode.Substring(0, 15); }
+                        myStringBuilder.Append("a" + item.CustomerVendorCode.PadLeft(15, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 15);
+                    }
+
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+                }
+
+                myStringBuilder.Append(' ', 10);
+                if (item.IsCancelled)
+                {
+                    myStringBuilder.Append("1");
+                }
+                else
+                {
+                    myStringBuilder.Append("0");
+                }
+                var DocuemntsReferenceDate = String.Format("{0:yyyyMMdd}", item.DocuemntsReferenceDate);
+                if (DocuemntsReferenceDate != null)
+                {
+
+                    myStringBuilder.Append("a" + DocuemntsReferenceDate);
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 8);
+                }
+
+
+                myStringBuilder.Append(' ', 7);
+
+
+                if (item.CreatedbyUser != null)
+                {
+                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 9);
+                }
+
+                myStringBuilder.Append('0', 7);
+                myStringBuilder.Append(' ', 13);
+                myStringBuilder.Append('\n');
+            }
+
+            //ARPayment
+
+            foreach (C100Data item in ARPAymentC100)
+            {
+
+                counter++;
+                myStringBuilder.Append("C100");
+
+
+                if (counter.ToString().Length > 9)
+                {
+                    counter.ToString().Substring(0, 9);
+                    myStringBuilder.Append("a" + counter.ToString().PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
+                }
+
+                if (tenantPM.VatNumber != null)
+                {
+                    if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber = tenantPM.VatNumber.Substring(0, 9); }
+                    myStringBuilder.Append("a" + tenantPM.VatNumber.PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 9);
+                }
+                myStringBuilder.Append(item.DocumentType);
+
+                if (item.DocumentReference != null)
+                {
+                    if (item.DocumentReference.Length > 20) { item.DocumentReference = item.DocumentReference.Substring(0, 20); }
+                    myStringBuilder.Append("a" + item.DocumentReference.PadLeft(20, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 20);
+                }
+
+                var CreateDate = String.Format("{0:yyyyMMdd}", item.DocumentCreateDate);
+                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HH:mm");
+
+                if (CreateDate.Length > 8) { CreateDate.Substring(0, 8); }
+                myStringBuilder.Append("a" + CreateDate.PadLeft(8, '0'));
+                if (CreateDateTime.Length > 4) { CreateDateTime.Substring(0, 4); }
+                myStringBuilder.Append("a" + CreateDateTime.PadLeft(4, '0'));
+
+                if (item.CustomerVendorName != null)
+                {
+                    if (item.CustomerVendorName.Length > 50) { item.CustomerVendorName = item.CustomerVendorName.Substring(0, 50); }
+                    myStringBuilder.Append("a" + item.CustomerVendorName.PadLeft(50, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 50);
+                }
+
+
+                AddressList billingAddress = addreses.Where(d => d.CardId == item.VendorId && d.AddressTypeId == "B").FirstOrDefault();
+                AddressList mainaddress = addreses.Where(d => d.CardId == item.VendorId && d.AddressTypeId == "M").FirstOrDefault();
+
+
+                string address = null;
+                if (billingAddress != null)
+                {
+
+                    address = billingAddress.Address1;
+                    if (item.AddressStreet != null)
+                    {
+                        if (item.AddressStreet.Length > 50) { item.AddressStreet.Substring(0, 50); }
+                        myStringBuilder.Append(item.AddressStreet.PadLeft(50, ' '));
+                        if (address != null && address.Length > 51)
+                        {
+                            item.AddressHomeNO = address.Substring(51, 60);
+                            myStringBuilder.Append("a" + item.AddressHomeNO.PadLeft(10, ' '));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append(' ', 10);
+                        }
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 50);
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 10);
+                    }
+                    if (billingAddress.City != null)
+                    {
+                        if (billingAddress.City.Length > 30) { billingAddress.City = billingAddress.City.Substring(0, 30); }
+                        myStringBuilder.Append("a" + billingAddress.City.PadLeft(30, ' '));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append(' ', 30);
+                    }
+                    if (billingAddress.ZipCode != null)
+                    {
+                        if (billingAddress.ZipCode.Length > 8) { billingAddress.ZipCode = billingAddress.ZipCode.Substring(0, 8); }
+                        myStringBuilder.Append("a" + billingAddress.ZipCode.PadLeft(8, ' '));
+                    }
+                    else
+                    {
+
+                        myStringBuilder.Append("a");
+
+                        myStringBuilder.Append(' ', 8);
+                    }
+                    if (billingAddress.CountryName != null)
+                    {
+                        if (billingAddress.CountryName.Length > 30) { billingAddress.CountryName = billingAddress.CountryName.Substring(0, 30); }
+                        myStringBuilder.Append("a" + billingAddress.CountryName.PadLeft(30, ' '));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append(' ', 30);
+                    }
+                    if (billingAddress.CountryCode != null)
+                    {
+                        var partnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(billingAddress.CountryCode, "Cust", "Country");
+
+                        if (partnerCode != null)
+                        {
+                            if (partnerCode.Length > 2) { partnerCode.Substring(0, 2); }
+                            myStringBuilder.Append("a" + partnerCode.PadLeft(2, ' '));
+                        }
+
+                        else
+                        {
+                            myStringBuilder.Append("a");
+
+                            myStringBuilder.Append(' ', 2);
+                        }
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+
+                        myStringBuilder.Append(' ', 2);
+                    }
+                }
+
+                else if (mainaddress != null)
+                {
+
+
+
+                    address = mainaddress.Address1;
+                    item.AddressStreet = address;
+                    if (item.AddressStreet != null)
+                    {
+                        if (item.AddressStreet.Length > 50) { item.AddressStreet = item.AddressStreet.Substring(0, 50); }
+                        myStringBuilder.Append("a" + item.AddressStreet.PadLeft(50, ' '));
+                        if (address != null && address.Length > 51)
+                        {
+                            item.AddressHomeNO = address.Substring(51, 60);
+                            myStringBuilder.Append("a" + item.AddressHomeNO.PadLeft(10, ' '));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append(' ', 10);
+                        }
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 50);
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 10);
+                    }
+                    if (mainaddress.City != null)
+                    {
+                        if (mainaddress.City.Length > 30) { mainaddress.City = mainaddress.City.Substring(0, 30); }
+                        myStringBuilder.Append("a" + mainaddress.City.PadLeft(30, ' '));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+
+                        myStringBuilder.Append(' ', 30);
+                    }
+                    if (mainaddress.ZipCode != null)
+                    {
+                        if (mainaddress.ZipCode.Length > 8) { mainaddress.ZipCode = mainaddress.ZipCode.Substring(0, 8); }
+                        myStringBuilder.Append("a" + mainaddress.ZipCode.PadLeft(8, ' '));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 8);
+                    }
+                    if (mainaddress.CountryName != null)
+                    {
+                        if (mainaddress.CountryName.Length > 30) { mainaddress.CountryName = mainaddress.CountryName.Substring(0, 30); }
+                        myStringBuilder.Append("a" + mainaddress.CountryName.PadLeft(30, ' '));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 30);
+                    }
+                    if (mainaddress.CountryCode != null)
+                    {
+                        var partnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(mainaddress.CountryCode, "Cust", "Country");
+
+                        if (partnerCode != null)
+                        {
+                            if (partnerCode.Length > 2) { partnerCode.Substring(0, 2); }
+                            myStringBuilder.Append("a" + partnerCode.PadLeft(2, ' '));
+                        }
+
+                        else
+                        {
+                            myStringBuilder.Append("a");
+
+                            myStringBuilder.Append(' ', 2);
+                        }
+                    }
+
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 2);
+                    }
+
+                    if (mainaddress.PhoneNumber != null)
+                    {
+                        if (mainaddress.PhoneNumber.Length > 15) { mainaddress.PhoneNumber = mainaddress.PhoneNumber.Substring(0, 15); }
+                        myStringBuilder.Append("a" + mainaddress.PhoneNumber.PadLeft(15, ' '));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 15);
+                    }
+                }
+
+
+                else
+                {
+                    myStringBuilder.Append(' ', 145);
+                }
+
+
+
+                if (item.CustomerVendorVatNumber != null)
+                {
+                    if (item.CustomerVendorVatNumber.Length > 9) { item.CustomerVendorVatNumber = item.CustomerVendorVatNumber.Substring(0, 9); }
+                    myStringBuilder.Append("a" + item.CustomerVendorVatNumber.PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 9);
+                }
+                var ValueDate = String.Format("{0:yyyyMMdd}", item.ValueDate);
+                if (ValueDate != null)
+                {
+
+                    myStringBuilder.Append("a" + ValueDate);
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 8);
+                }
+
+                myStringBuilder.Append('0', 15);
+                myStringBuilder.Append(' ', 3);
+                myStringBuilder.Append("a");
+                myStringBuilder.Append('0', 15);
+              
+
+                myStringBuilder.Append(' ', 15);
+                myStringBuilder.Append("a");
+                myStringBuilder.Append('0', 15);
+
+                myStringBuilder.Append("a");
+                myStringBuilder.Append('0', 15);
+
+          
+
+                string DocumentAmountAndVATAmount = item.DocumentAmountAndVATAmount.ToString();
+
+                if (DocumentAmountAndVATAmount != null)
+                {
+                    if (DocumentAmountAndVATAmount.Length > 15) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 15); }
+                    myStringBuilder.Append("a" + DocumentAmountAndVATAmount.PadLeft(15, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+                }
+
+                myStringBuilder.Append('0', 15);
+
+                GLAccountPM gLAccountPM = acccounts.Where(d => d.Id == item.GLAccountId).FirstOrDefault();
+                if (gLAccountPM != null)
+                {
+                    item.CustomerVendorCode = gLAccountPM.DisplayNumber;
+                    if (item.CustomerVendorCode != null)
+                    {
+                        if (item.CustomerVendorCode.Length > 15) { item.CustomerVendorCode = item.CustomerVendorCode.Substring(0, 15); }
+                        myStringBuilder.Append("a" + item.CustomerVendorCode.PadLeft(15, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 15);
+                    }
+
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+                }
+
+                myStringBuilder.Append(' ', 10);
+                if (item.IsCancelled)
+                {
+                    myStringBuilder.Append("1");
+                }
+                else
+                {
+                    myStringBuilder.Append("0");
+                }
+                var DocuemntsReferenceDate = String.Format("{0:yyyyMMdd}", item.DocuemntsReferenceDate);
+                if (DocuemntsReferenceDate != null)
+                {
+
+                    myStringBuilder.Append("a" + DocuemntsReferenceDate);
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 8);
+                }
+
+
+                myStringBuilder.Append(' ', 7);
+
+
+                if (item.CreatedbyUser != null)
+                {
+                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 9);
+                }
+
+                myStringBuilder.Append('0', 7);
+                myStringBuilder.Append(' ', 13);
+                myStringBuilder.Append('\n');
+            }
+
+            //Deposit
+            foreach (C100Data item in DepositC100)
+            {
+
+                counter++;
+                myStringBuilder.Append("C100");
+
+
+                if (counter.ToString().Length > 9)
+                {
+                    counter.ToString().Substring(0, 9);
+                    myStringBuilder.Append("a" + counter.ToString().PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
+                }
+
+                if (tenantPM.VatNumber != null)
+                {
+                    if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber = tenantPM.VatNumber.Substring(0, 9); }
+                    myStringBuilder.Append("a" + tenantPM.VatNumber.PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 9);
+                }
+                myStringBuilder.Append(item.DocumentType);
+
+                if (item.DocumentReference != null)
+                {
+                    if (item.DocumentReference.Length > 20) { item.DocumentReference = item.DocumentReference.Substring(0, 20); }
+                    myStringBuilder.Append("a" + item.DocumentReference.PadLeft(20, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 20);
+                }
+
+                var CreateDate = String.Format("{0:yyyyMMdd}", item.DocumentCreateDate);
+                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HH:mm");
+
+                if (CreateDate.Length > 8) { CreateDate.Substring(0, 8); }
+                myStringBuilder.Append("a" + CreateDate.PadLeft(8, '0'));
+                if (CreateDateTime.Length > 4) { CreateDateTime.Substring(0, 4); }
+                myStringBuilder.Append("a" + CreateDateTime.PadLeft(4, '0'));
+
+                if (item.CustomerVendorName != null)
+                {
+                    if (item.CustomerVendorName.Length > 50) { item.CustomerVendorName = item.CustomerVendorName.Substring(0, 50); }
+                    myStringBuilder.Append("a" + item.CustomerVendorName.PadLeft(50, ' '));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 50);
+                }
+
+
+
+                myStringBuilder.Append("a");
+                myStringBuilder.Append(' ', 50);
+                myStringBuilder.Append("a");
+                myStringBuilder.Append(' ', 10);
+                myStringBuilder.Append("a");
+                myStringBuilder.Append(' ', 30);
+                myStringBuilder.Append("a");
+                myStringBuilder.Append(' ', 8);
+                myStringBuilder.Append("a");
+                myStringBuilder.Append(' ', 30);
+                myStringBuilder.Append("a");
+                myStringBuilder.Append(' ', 2);
+                myStringBuilder.Append("a");
+                myStringBuilder.Append(' ', 15);
+
+
+                myStringBuilder.Append("a");
+                myStringBuilder.Append('0', 9);
+
+                var ValueDate = String.Format("{0:yyyyMMdd}", item.ValueDate);
+                if (ValueDate != null)
+                {
+
+                    myStringBuilder.Append("a" + ValueDate);
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 8);
+                }
+
+                myStringBuilder.Append('0', 15);
+                myStringBuilder.Append(' ', 3);
+                myStringBuilder.Append("a");
+                myStringBuilder.Append('0', 15);
+
+
+                myStringBuilder.Append(' ', 15);
+                myStringBuilder.Append("a");
+                myStringBuilder.Append('0', 15);
+
+                myStringBuilder.Append("a");
+                myStringBuilder.Append('0', 15);
+
+
+
+                string DocumentAmountAndVATAmount = item.DocumentAmountAndVATAmount.ToString();
+
+                if (DocumentAmountAndVATAmount != null)
+                {
+                    if (DocumentAmountAndVATAmount.Length > 15) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 15); }
+                    myStringBuilder.Append("a" + DocumentAmountAndVATAmount.PadLeft(15, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+                }
+
+                myStringBuilder.Append('0', 15);
+                myStringBuilder.Append("a");
+                myStringBuilder.Append('0', 15);
+
+
+                myStringBuilder.Append(' ', 10);
+                if (item.IsCancelled)
+                {
+                    myStringBuilder.Append("1");
+                }
+                else
+                {
+                    myStringBuilder.Append("0");
+                }
+                var DocuemntsReferenceDate = String.Format("{0:yyyyMMdd}", item.DocuemntsReferenceDate);
+                if (DocuemntsReferenceDate != null)
+                {
+
+                    myStringBuilder.Append("a" + DocuemntsReferenceDate);
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 8);
+                }
+
+
+                myStringBuilder.Append(' ', 7);
+
+
+                if (item.CreatedbyUser != null)
+                {
+                    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
+                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 9);
+                }
+
+                myStringBuilder.Append('0', 7);
+                myStringBuilder.Append(' ', 13);
+                myStringBuilder.Append('\n');
+            }
+
+            
+           
+            
+
+
 
 
             DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, openFormatReportPM);
@@ -787,6 +2217,145 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
             return loggedContact;
+        }
+
+
+        public static List<C100Data> GetARInvoiceC100Data(OpenFormatReportPM openFormatReportPM,int tenant)
+        {
+            IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+            List<C100Data> c100s = (from a in invoiceContext.ARInvoices
+                                    where (a.InvoiceDate >= openFormatReportPM.FromDate && a.InvoiceDate <= openFormatReportPM.ToDate) && a.Tenant == tenant
+                                    select new C100Data()
+                                    {
+                                        ARInvoiceId = a.Id,
+                                        DocumentType = "305",
+                                        DocumentReference = a.InvoiceNumber,
+                                        DocumentCreateDate = a.CreateDate,
+                                        CustomerVendorName = a.BillTo.LocalName != null ? a.BillTo.LocalName : a.BillTo.EnglishName,
+                                        AddressStreet = a.BillToAddress != null? a.BillToAddress.Address1:null,
+                                        AddressCity = a.BillToAddress != null ? a.BillToAddress.City : null,
+                                        AddressZIPCode = a.BillToAddress != null? a.BillToAddress.ZipCode: null,
+                                        AddressCountry = a.BillToAddress != null ? a.BillToAddress.Country.EnglishName : null,
+                                        AddressCountryCode = a.BillToAddress != null ? a.BillToAddress.Country.Code : null,
+                                        CustomeVendorTelephone = a.BillToAddress != null ? a.BillToAddress.PhoneNumber : null,
+                                        CustomerVendorVatNumber = a.BillTo != null ? a.BillTo.VatNumber : null,
+                                        ValueDate = a.DueDate,
+                                        TotalDocumentsAmountBeforeDiscount = a.SubTotalInLocalCurrency,
+                                        TotalDocumentsAmountAfterDiscount = a.SubTotalInLocalCurrency,
+                                        DocumentAmountAndVATAmount = a.AmountInLocalCurrency,
+                                        DocuemntsReferenceDate = a.InvoiceDate,
+                                        CreatedbyUser= a.CreatedByUser.Contact.LocalName != null? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
+                                        GLAccountId = a.BillTo.GLAccountId,
+                                        IsCancelled = a.IsCancelled,
+
+                                    }).ToList();
+
+
+            return c100s;
+        }
+
+        public static List<C100Data> GetAPInvoiceC100Data(OpenFormatReportPM openFormatReportPM, int tenant)
+        {
+            IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+            List<C100Data> c100s = (from a in invoiceContext.APInvoices
+                                    where ((a.InvoiceDate >= openFormatReportPM.FromDate && a.InvoiceDate <= openFormatReportPM.ToDate) || (a.AccountingDate >= openFormatReportPM.FromDate && a.AccountingDate <= openFormatReportPM.ToDate)) && a.Tenant == tenant
+                                    select new C100Data()
+                                    {
+                                        APInvoiceId = a.Id,
+                                        DocumentType = "700",
+                                        DocumentReference = a.InvoiceNumber,
+                                        DocumentCreateDate = a.CreateDate,
+                                        CustomerVendorName = a.VendorCard.LocalName != null ? a.VendorCard.LocalName : a.VendorCard.EnglishName,
+                                        //AddressStreet = a.BillToAddress != null ? a.BillToAddress.Address1 : null,
+                                        //AddressCity = a.BillToAddress != null ? a.BillToAddress.City : null,
+                                        //AddressZIPCode = a.BillToAddress != null ? a.BillToAddress.ZipCode : null,
+                                        //AddressCountry = a.BillToAddress != null ? a.BillToAddress.Country.EnglishName : null,
+                                        //AddressCountryCode = a.BillToAddress != null ? a.BillToAddress.Country.Code : null,
+                                        //CustomeVendorTelephone = a.BillToAddress != null ? a.BillToAddress.PhoneNumber : null,
+                                        CustomerVendorVatNumber = a.VendorCard != null ? a.VendorCard.VatNumber : null,
+                                        ValueDate = a.DueDate,
+                                        TotalDocumentsAmountBeforeDiscount = a.SubTotalInLocalCurrency,
+                                        TotalDocumentsAmountAfterDiscount = a.SubTotalInLocalCurrency,
+                                        DocumentAmountAndVATAmount = a.AmountInLocalCurrency,
+                                        DocuemntsReferenceDate = a.InvoiceDate,
+                                        CreatedbyUser = a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
+                                        GLAccountId = a.VendorCard.GLAccountId,
+                                        IsCancelled = false,
+                                        VendorId =a.VendorId,
+                                    }).ToList();
+
+
+            return c100s;
+        }
+
+        public static List<C100Data> GetARPaymentC100Data(OpenFormatReportPM openFormatReportPM, int tenant)
+        {
+            IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+            List<C100Data> c100s = (from a in invoiceContext.ARPayments
+                                    where ((a.ValueDate >= openFormatReportPM.FromDate && a.ValueDate <= openFormatReportPM.ToDate) || (a.RegisterDate >= openFormatReportPM.FromDate && a.RegisterDate <= openFormatReportPM.ToDate)) && a.Tenant == tenant
+                                    select new C100Data()
+                                    {
+                                        APInvoiceId = a.Id,
+                                        DocumentType = "400",
+                                        DocumentReference = a.PaymentNo,
+                                        DocumentCreateDate = a.CreateDate,
+                                        CustomerVendorName = a.BillToCard.LocalName != null ? a.BillToCard.LocalName : a.BillToCard.EnglishName,
+                                        //AddressStreet = a.BillToAddress != null ? a.BillToAddress.Address1 : null,
+                                        //AddressCity = a.BillToAddress != null ? a.BillToAddress.City : null,
+                                        //AddressZIPCode = a.BillToAddress != null ? a.BillToAddress.ZipCode : null,
+                                        //AddressCountry = a.BillToAddress != null ? a.BillToAddress.Country.EnglishName : null,
+                                        //AddressCountryCode = a.BillToAddress != null ? a.BillToAddress.Country.Code : null,
+                                        //CustomeVendorTelephone = a.BillToAddress != null ? a.BillToAddress.PhoneNumber : null,
+                                        CustomerVendorVatNumber = a.BillToCard != null ? a.BillToCard.VatNumber : null,
+                                        ValueDate = a.ValueDate,
+                                        TotalDocumentsAmountBeforeDiscount = null,
+                                        TotalDocumentsAmountAfterDiscount = null,
+                                        DocumentAmountAndVATAmount = a.AmountInLocalCurrency,
+                                        DocuemntsReferenceDate = a.ValueDate,
+                                        CreatedbyUser = a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
+                                        GLAccountId = a.BillToCard.GLAccountId,
+                                        IsCancelled = false,
+                                        VendorId = a.BillToId,
+                                       
+                                    }).ToList();
+
+
+            return c100s;
+        }
+
+        public static List<C100Data> GetDepositC100Data(OpenFormatReportPM openFormatReportPM, int tenant)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+            List<C100Data> c100s = (from a in accountingContext.BankDeposits
+                                    where (a.AccountingDate >= openFormatReportPM.FromDate && a.AccountingDate <= openFormatReportPM.ToDate) && a.Tenant == tenant
+                                    select new C100Data()
+                                    {
+                                        APInvoiceId = a.Id,
+                                        DocumentType = "420",
+                                        DocumentReference = a.DepositNumber.ToString(),
+                                        DocumentCreateDate = a.CreateDate,
+                                        CustomerVendorName =null,
+                                        //AddressStreet = a.BillToAddress != null ? a.BillToAddress.Address1 : null,
+                                        //AddressCity = a.BillToAddress != null ? a.BillToAddress.City : null,
+                                        //AddressZIPCode = a.BillToAddress != null ? a.BillToAddress.ZipCode : null,
+                                        //AddressCountry = a.BillToAddress != null ? a.BillToAddress.Country.EnglishName : null,
+                                        //AddressCountryCode = a.BillToAddress != null ? a.BillToAddress.Country.Code : null,
+                                        //CustomeVendorTelephone = a.BillToAddress != null ? a.BillToAddress.PhoneNumber : null,
+                                        CustomerVendorVatNumber = null,
+                                        ValueDate = a.AccountingDate,
+                                        TotalDocumentsAmountBeforeDiscount = null,
+                                        TotalDocumentsAmountAfterDiscount = null,
+                                        DocumentAmountAndVATAmount =(double?) a.LocalDepositAmount,
+                                        DocuemntsReferenceDate = a.AccountingDate,
+                                        CreatedbyUser = a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
+                                        GLAccountId = null,
+                                        IsCancelled = a.IsCanceled,
+                                        VendorId =null,
+
+                                    }).ToList();
+
+
+            return c100s;
         }
 
     }

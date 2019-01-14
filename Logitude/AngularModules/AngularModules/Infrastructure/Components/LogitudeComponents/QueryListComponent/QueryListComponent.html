@@ -198,16 +198,16 @@
         <li class="ActionButtonsParent TextTrimming" [class.ComboBoxItem]="LayoutDirection!='rtl'" [class.ComboBoxItemRTL]="LayoutDirection=='rtl'" style="margin-bottom: 4px;" *ngFor="let item of UserItemSource" (click)="ItemClicked(item)" [class.Selected]="item === SelectedItem">
             <div>
                 <div [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
-                    <img (click)="ItemClicked(item)" [attr.src]="item.SharedByUserId ? './Images/Menu/Shared.png' : './Images/Menu/Person.small.png'" style="margin-right:5px;margin-top:9px;position:relative;pointer-events:none;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" />
+                    <img (click)="ItemClicked(item)" [attr.src]="item.SharedByUserId ? './Images/Menu/Shared.png' : './Images/Menu/Person.small.png'" width="18" style="margin-right:5px;margin-top:9px;position:relative;pointer-events:none;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" />
                 </div>
-                <div style="max-width:110px;" class="TextTrimming" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" [style.padding-right]="LayoutDirection=='rtl' ? '15px' : ''">
+                <div style="max-width:100px;" class="TextTrimming" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" [style.padding-right]="LayoutDirection=='rtl' ? '15px' : ''">
                     <span (click)="ItemClicked(item)" title="{{item[Binding] | TextCodeTranslationPipe}}" *ngIf="Binding != null" style="float:left;max-width:100px;" class="TextTrimming">{{item[Binding] | TextCodeTranslationPipe}}</span>
                 </div>
                 <div>
-                    <div class="Button ActionButtons" (click)="DeleteButtonClicked(item)" style="width:18px;height:18px;margin-right:3px;margin-top:1px;" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
+                    <div [class.ToggleButtonDisabled]="!IsDeleteButtonEnabled" class="Button ActionButtons" (click)="DeleteButtonClicked(item)" style="width:18px;height:18px;margin-right:2px;margin-top:1px;" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
                         <img src="./Images/Buttons/Delete.over.png" class="CenterCenter" style="margin-left:3px;margin-top:1px;" />
                     </div>
-                    <div class="Button ActionButtons" (click)="EditButtonClicked(item)" style="width:18px;height:18px; margin-right:5px;margin-top:1px;" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
+                    <div class="Button ActionButtons" (click)="EditButtonClicked(item)" style="width:18px;height:18px; margin-right:2px;margin-top:1px;" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
                         <img src="./Images/Buttons/Edit.over.png" class="CenterCenter" style="margin-left:3px;margin-top:1px;" />
                     </div>
                 </div>

@@ -12,4 +12,5 @@
     <Record Code="&quot;OO&quot;" SearchFields="&quot;OO,Hours,&quot;" Name="&quot;Hours&quot;" />
   </Records>
   <DataContracts />
+  <AdditionalFeatures />
 </entity>

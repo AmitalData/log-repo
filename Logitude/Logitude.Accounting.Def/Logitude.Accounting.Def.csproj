@@ -69,6 +69,7 @@
     <Compile Include="EntityPMs\ChartOfAccountPM.cs" />
     <Compile Include="EntityPMs\Generated\AccountingCompanyTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingEntityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AccountingIntegrityCheckPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingPeriodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ARPaymentChequePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ARPaymentChequeStatusPM.Generated.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="EntityPMs\Generated\GLAccountTotalDateTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountWithholdingTaxPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\IntegrityCheckStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalActionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalAdditionalDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalLinePM.Generated.cs" />

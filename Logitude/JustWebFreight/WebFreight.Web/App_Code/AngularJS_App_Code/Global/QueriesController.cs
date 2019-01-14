@@ -118,9 +118,19 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
                 QueryRepository Repo = new QueryRepository(objectContext);
-                var entity = Repo.GetSingleQuery(id);
+                SharedUserQueryRepository sharedUserQueryRepository = new SharedUserQueryRepository(objectContext);
+
+                Query entity = Repo.GetSingleQuery(id);
+                List<SharedUserQuery> sharedUserQueries = sharedUserQueryRepository.GetAllByQueryId(id);
+
+                foreach (SharedUserQuery item in sharedUserQueries)
+                {
+                    sharedUserQueryRepository.Remove(item);                    
+                }
+
                 Repo.Remove(entity);
                 Repo.SubmitChanges();
+
                 return Request.CreateResponse(HttpStatusCode.OK, entity);
             }
             catch (Exception ex)
