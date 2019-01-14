@@ -64,6 +64,11 @@ export class AccountingIntegrityCheckPM {
     public set DoneDateTimeUTC(newValue: Date) { if (this.doneDateTimeUTC != newValue) { this.doneDateTimeUTC = newValue; this.MarkAsDirty("DoneDateTimeUTC"); } }
        
 	 
+    private statusName: string;
+    public get StatusName() { return this.statusName; }
+    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
+       
+	 
 
     public OldEntityPM: AccountingIntegrityCheckPM;
 		

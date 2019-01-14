@@ -50,13 +50,13 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     if (ContainerNumber != null)
                                     {
                                         ContainerNumber = ContainerNumber.Trim();
-                                    }
 
-                                    iContainer = this.shipmentPM.ShipmentPackages.Where(d => d.ContainerNumber == ContainerNumber).FirstOrDefault();
+                                        iContainer = this.shipmentPM.ShipmentPackages.Where(d => d.ContainerNumber != null && d.ContainerNumber.ToUpper() == ContainerNumber.ToUpper()).FirstOrDefault();
 
-                                    if (iContainer != null)
-                                    {
-                                        isContainerExists_Shipment = true;
+                                        if (iContainer != null)
+                                        {
+                                            isContainerExists_Shipment = true;
+                                        }
                                     }
                                 }
                             }
@@ -676,11 +676,11 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
         {
             iContainer.VoyageTripNumber = iVoyageNumber;
 
-            if (departurePortCode != null)
+            if (departurePortCode == null)
             {
                 departurePortCode = "";
             }
-            if (arrivalPortCode != null)
+            if (arrivalPortCode == null)
             {
                 arrivalPortCode = "";
             }
