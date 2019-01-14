@@ -97,17 +97,16 @@ export class BIReportPreviewComponent implements OnInit {
                                     var colDef = col.getColDef();
                                     colDef.width = item.Width;
                                     colDef.pivotIndex = item.Index;
-                                   
-                                    this.agGrid.columnApi.setColumnWidth(item.SortColId, item.Width);
-                                    this.agGrid.columnApi.moveColumn(item.SortColId, item.Index);
                                     this.IsResizing = true;
+                                    this.agGrid.columnApi.moveColumn(item.SortColId, item.Index);
+                                    this.agGrid.columnApi.setColumnWidth(item.SortColId, item.Width);                  
                                 }
                             }
                         });
 
                         if (sortsList != null) {
-                            this.agGrid.api.setSortModel(sortsList);
                             this.IsSorting = true;
+                            this.agGrid.api.setSortModel(sortsList);                        
                         }
                     }
                 }
@@ -123,13 +122,13 @@ export class BIReportPreviewComponent implements OnInit {
                     this.columnDefs.push({
                         headerName: columns[i].Name,
                         field: columns[i].Name,
-                        sortable: true,
-                        filter: true,
+                        sortable: true,                       
                         //checkboxSelection: true,
                         width: 170,
                         resizable: true,
                         cellRenderer: this.DateCellRenderer,
                         cellClass: columns[i].DataTypeCode,
+                        filter: 'agTextColumnFilter',
                         //cellStyle: {'background':'red'}
                     });
                 }
@@ -201,21 +200,23 @@ export class BIReportPreviewComponent implements OnInit {
         this.gridColumnApi = params.columnApi;
     }
     onSortChanged(params) {
-       
+
+        if (!this.IsSorting || !this.IsResizing)
+            this.hasChanged = true;
+        else {
+            this.IsSorting = false;
+            this.IsResizing = false;
+        }
+
+    }
+    onColumnResized(params) {
+        if (params != null && params.finished === true) {
             if (!this.IsSorting || !this.IsResizing)
                 this.hasChanged = true;
             else {
                 this.IsSorting = false;
                 this.IsResizing = false;
             }
-        
-    }
-    onColumnResized(params) {
-        if (!this.IsSorting || !this.IsResizing)
-            this.hasChanged = true;
-        else {
-            this.IsSorting = false;
-            this.IsResizing = false;
         }
     }
     onColumnMoved(params) {

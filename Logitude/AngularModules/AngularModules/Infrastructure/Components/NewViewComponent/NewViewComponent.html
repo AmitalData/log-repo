@@ -236,7 +236,7 @@
                                                 <label> Show in Spotlight Mode</label>
                                             </td>
                                             <td>
-                                                <CheckBox [IsChecked]="ShowInSpotLight" (Checked)="ShowInSpotLight = $event"></CheckBox>
+                                                <CheckBox [IsEnabled]="IsSaveButtonEnabled" [IsChecked]="ShowInSpotLight" (Checked)="ShowInSpotLight = $event"></CheckBox>
                                             </td>
                                             <td style="width:10px"></td>
                                         </tr>
@@ -391,9 +391,7 @@
                                                                             <div [style.float]="RTL == true ? 'right' : 'left'" style="width: 50%;">
                                                                                 <div *ngFor="let item of NEWallFilterFieldsClass.FilterFields" [hidden]="!NEWallFilterFieldsClass">
                                                                                     <div *ngIf="item" class="CheckBox" style="margin: 10px;">
-                                                                                        <LogCheckBox [IsDisabled]="!IsSaveButtonEnabled" [ObjectFieldName]="'Exists'" [DataContext]="item" [Text]="item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe" [Value]="item.Exists"></LogCheckBox>
-                                                                                        <!--<input id="{{item.ControlId}}" type="checkbox" [(ngModel)]="item.Exists" />
-                                                                                        <label [attr.for]="item.FieldName">{{item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe}}</label>-->
+                                                                                        <CheckBox [IsEnabled]="IsSaveButtonEnabled" (Checked)="item.Exists = $event" [IsChecked]="item.Exists" [Text]="item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe"></CheckBox>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -678,7 +676,7 @@
             <td style="width:100%;" [style.float]="RTL == true ? 'left' : 'right'">
                 <button class="RedButton" [disabled]="!IsSaveButtonEnabled" (click)="btnCreateNewQuery_Click()" [style.float]="RTL == true ? 'left' : 'right'" style="width:72px;">{{CreateBtnText}}</button>
                 <button class="Button" (click)="CancelButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
-                <button class="Button" (click)="DeleteButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Delete' | TextCodeTranslationPipe}}</button>
+                <button *ngIf="!IsNew" class="Button" [disabled]="!IsSaveButtonEnabled" (click)="DeleteButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Delete' | TextCodeTranslationPipe}}</button>
             </td>
         </tr>
     </table>
