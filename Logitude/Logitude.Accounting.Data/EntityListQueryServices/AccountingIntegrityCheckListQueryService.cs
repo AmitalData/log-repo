@@ -47,9 +47,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 		private IQueryable<AccountingIntegrityCheck> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AccountingIntegrityCheck> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
-				private IQueryable<AccountingIntegrityCheck> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<AccountingIntegrityCheck> iQueryable, int tenant)
+			return iQueryable;
+            //throw new NotImplementedException();
+        }
+        private IQueryable<AccountingIntegrityCheck> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<AccountingIntegrityCheck> iQueryable, int tenant)
         {
 			return iQueryable;
 		}
