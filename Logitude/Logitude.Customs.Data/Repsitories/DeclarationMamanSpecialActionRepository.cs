@@ -17,11 +17,22 @@ namespace Logitude.Customs.Data.Repsitories
         
 		public List<DeclarationMamanSpecialAction> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            DeclarationMamanSpecialActionKeys mamanSpecialActionKeys = entityKeys as DeclarationMamanSpecialActionKeys;
+
+            return (from a in context.DeclarationMamanSpecialActions
+                    where a.DeclarationId == mamanSpecialActionKeys.DeclarationId
+                    select a).ToList();
         }
 
-   }
+        public List<DeclarationMamanSpecialAction> GetDeclarationMamanSpecialActionByDeclarationId(string declarationId, int tenant)
+        {
+            return (from a in context.DeclarationMamanSpecialActions
+                    where a.DeclarationId == declarationId && a.Tenant == tenant
+                    select a).ToList();
+        }
+
+    }
 
 }
    
