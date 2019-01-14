@@ -236,7 +236,7 @@
                                                 <label> Show in Spotlight Mode</label>
                                             </td>
                                             <td>
-                                                <CheckBox [IsChecked]="ShowInSpotLight" (Checked)="ShowInSpotLight = $event"></CheckBox>
+                                                <CheckBox [IsEnabled]="IsSaveButtonEnabled" [IsChecked]="ShowInSpotLight" (Checked)="ShowInSpotLight = $event"></CheckBox>
                                             </td>
                                             <td style="width:10px"></td>
                                         </tr>
@@ -678,7 +678,7 @@
             <td style="width:100%;" [style.float]="RTL == true ? 'left' : 'right'">
                 <button class="RedButton" [disabled]="!IsSaveButtonEnabled" (click)="btnCreateNewQuery_Click()" [style.float]="RTL == true ? 'left' : 'right'" style="width:72px;">{{CreateBtnText}}</button>
                 <button class="Button" (click)="CancelButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
-                <button class="Button" (click)="DeleteButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Delete' | TextCodeTranslationPipe}}</button>
+                <button *ngIf="!IsNew" class="Button" [disabled]="!IsSaveButtonEnabled" (click)="DeleteButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Delete' | TextCodeTranslationPipe}}</button>
             </td>
         </tr>
     </table>
