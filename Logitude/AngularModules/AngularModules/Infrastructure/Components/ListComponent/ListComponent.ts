@@ -2417,8 +2417,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                 case "OpenFormatReport":
                     {
 
-                        logWindow.Width = 500;
-                        logWindow.Height = 240;
+                        logWindow.Width = 400;
+                        logWindow.Height = 180;
                         break;
                     }
             }
