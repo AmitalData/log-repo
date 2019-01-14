@@ -80,6 +80,8 @@ import {SprintListService} from '../../TimeManagement/Services/StandardLists/Spr
 import { TenantManagmentPrivateLabelsListService } from '../../Infrastructure/Services/StandardLists/TenantManagmentPrivateLabelsListService';
 
 
+import { BIReportsTypeListService } from  '../Services/StandardLists/BIReportsTypeListService'; 
+
 export class CachedDataManagerServices {
     public getAllFromCache(objectTableName: string, filters: ApiQueryFilters) {
 
@@ -174,6 +176,8 @@ export class CachedDataManagerServices {
             case "TMProjectCategoryListService": { myResult = new TMProjectCategoryListService(); break; }
             case "SprintListService": { myResult = new SprintListService(); break; }
             case "TenantManagmentPrivateLabelsListService": { myResult = new TenantManagmentPrivateLabelsListService(); break; }
+            case "BIReportsTypeListService": { myResult = new BIReportsTypeListService(); break; }
+
 
             default: {
                 alert(name + " is not declared in CachedDataManagerServices");

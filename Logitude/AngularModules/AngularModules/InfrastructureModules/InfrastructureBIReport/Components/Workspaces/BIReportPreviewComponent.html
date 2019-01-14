@@ -53,14 +53,14 @@
                                 <div></div>
                             </td>
 
-                            <td style="width: 90px;float:right">
+                            <td style="width: 65px;float:right">
                                 <button *ngIf="!HasChanged" class="Button" style="height:25px;" (click)="SaveBIReport()">
                                     <img [ngStyle]="{'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="LeftCenter" />
-                                    <span style="line-height: 19px;" [ngStyle]="{'margin-left': '5px'}">Save</span>
+                                    <span style="line-height: 19px;" [ngStyle]="{'margin-left': '3px'}">Save</span>
                                 </button>
                                 <button *ngIf="HasChanged" class="EntityChangesButton" (click)="SaveBIReport()" style="height:25px;">
                                     <img src="./Images/Buttons/Save.Red.png" [className]="LeftCenter" [ngStyle]="{'margin-left': '2px'}" />
-                                    <span style="line-height: 19px;" [ngStyle]="{'margin-left': '5px'}">Save</span>
+                                    <span style="line-height: 19px;" [ngStyle]="{'margin-left': '3px'}">Save</span>
                                 </button>
                             </td>
                         </tr>

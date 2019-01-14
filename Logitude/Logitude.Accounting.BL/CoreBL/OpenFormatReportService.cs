@@ -675,6 +675,8 @@ namespace Logitude.Accounting.BL.CoreBL
             List<string> GLAccountIds = C100.Select(d => d.GLAccountId).ToList();
             List<GLAccountPM> acccounts = gLAccountQueryService.GetGLAccountsByIds(GLAccountIds, tenant);
 
+            ARInvoiceLineQuery aRInvoiceLineQuery = new ARInvoiceLineQuery(tenant);
+            List<ARInvoiceLinePM> aRInvoiceLinePMs = aRInvoiceLineQuery.GetInvoiceLinePMsByInvoiceIds(ARInvoiceIDs, tenant);
             //ARInvoice
             foreach (C100Data item in ARC100)
             {
@@ -980,6 +982,149 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append('0', 7);
                 myStringBuilder.Append(' ', 13);
                 myStringBuilder.Append('\n');
+
+                List<ARInvoiceLinePM> lines = aRInvoiceLinePMs.Where(d => d.ARInvoiceId == item.ARInvoiceId).ToList();
+                foreach(ARInvoiceLinePM line in lines)
+                {
+                    counter++;
+                    myStringBuilder.Append("D110");
+
+
+                    if (counter.ToString().Length > 9)
+                    {
+                        counter.ToString().Substring(0, 9);
+                        myStringBuilder.Append("a" + counter.ToString().PadLeft(9, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
+                    }
+
+                    if (tenantPM.VatNumber != null)
+                    {
+                        if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber = tenantPM.VatNumber.Substring(0, 9); }
+                        myStringBuilder.Append("a" + tenantPM.VatNumber.PadLeft(9, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 9);
+                    }
+
+                    myStringBuilder.Append("305");
+
+                    if (item.DocumentReference != null)
+                    {
+                        if (item.DocumentReference.Length > 20) { item.DocumentReference = item.DocumentReference.Substring(0, 20); }
+                        myStringBuilder.Append("a" + item.DocumentReference.PadLeft(20, ' '));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 20);
+                    }
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(line.LineNumber.ToString().PadLeft(4, '0'));
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 3);
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 20);
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append("1");
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 20);
+
+                    if (line.Description != null)
+                    {
+                        if (line.Description.Length > 30) { line.Description = line.Description.Substring(0, 30); }
+                        myStringBuilder.Append("a" + line.Description.PadLeft(30, ' '));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append(' ', 30);
+                    }
+
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 50);
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 30);
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append("יחידה");
+                    myStringBuilder.Append(' ', 15);
+
+                   
+                    if (line.Quantity != null)
+                    {
+                        string quantity = line.Quantity.ToString();
+                        if (quantity.Length > 17) { quantity = quantity.Substring(0, 17); }
+                        myStringBuilder.Append("a" + quantity.PadLeft(17, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 17);
+                    }
+
+
+                  
+                    if (line.UnitPrice != null)
+                    {
+                        string UnitPrice = line.UnitPrice.ToString();
+                        if (UnitPrice.Length > 15) { UnitPrice = UnitPrice.Substring(0, 15); }
+                        myStringBuilder.Append("a" + UnitPrice.PadLeft(15, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 15);
+                    }
+
+
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 15);
+
+                 
+                    if (line.VatPercentage != null)
+                    {
+                        string VatPercentage = line.VatPercentage.ToString();
+                        if (VatPercentage.Length > 4) { VatPercentage = VatPercentage.Substring(0, 4); }
+                        myStringBuilder.Append("a" + VatPercentage.PadLeft(4, '0'));
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 4);
+                    }
+
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 7);
+
+                    if (DocuemntsReferenceDate != null)
+                    {
+
+                        myStringBuilder.Append("a" + DocuemntsReferenceDate);
+                    }
+                    else
+                    {
+                        myStringBuilder.Append("a");
+                        myStringBuilder.Append('0', 8);
+                    }
+
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append('0', 7);
+
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 7);
+
+                    myStringBuilder.Append("a");
+                    myStringBuilder.Append(' ', 21);
+
+                    myStringBuilder.Append('\n');
+                }
             }
 
             //APInvoice
@@ -1921,6 +2066,13 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(' ', 13);
                 myStringBuilder.Append('\n');
             }
+
+            
+           
+            
+
+
+
 
             DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, openFormatReportPM);
 
