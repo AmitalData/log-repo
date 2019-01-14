@@ -33,4 +33,5 @@
     <EventType Code="&quot;UPOT&quot;" ObjectTableName="&quot;OpportunityType&quot;" ShortView="false" IsManualEntry="false" LocalName="&quot;Opportunity Type Updated&quot;" EnglishName="&quot;Opportunity Type Updated&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;CROT&quot;" ObjectTableName="&quot;OpportunityType&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
+  <AdditionalFeatures />
 </entity>

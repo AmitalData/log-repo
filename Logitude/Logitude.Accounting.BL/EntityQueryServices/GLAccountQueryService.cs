@@ -929,6 +929,22 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
+        public List<GLAccountPM> GetGLAccountsByIds(List<string> Ids, int tenant)
+        {
+            List<GLAccountPM> Accounts = (from a in context.GLAccounts
+                                          where Ids.Contains(a.Id) && a.Tenant == tenant
+                                          select new GLAccountPM()
+                                          {
+                                              Id = a.Id,
+                                              Tenant = a.Tenant,
+                                              InternalNumber = a.InternalNumber,
+                                              AccountTypeCode = a.AccountTypeCode,
+                                              DisplayNumber = a.DisplayNumber,
+                                             
+                                          }).ToList();
+            return Accounts;
+        }
+
         
     }
     public class GLAccountCurrencyBalance

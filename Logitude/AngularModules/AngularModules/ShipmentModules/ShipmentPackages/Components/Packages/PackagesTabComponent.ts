@@ -2754,7 +2754,6 @@ export class ShipmentPackageItem extends BaseComponent {
             logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditDeliveryComponent');
         }
     }
-
     ChooseCommodityClicked() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 775;
@@ -2763,7 +2762,6 @@ export class ShipmentPackageItem extends BaseComponent {
         logitudeWindow.Title = TextCodeTranslator.TranslateTablePlural("Commodity") + " Search";
         logitudeWindow.Show("./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBChooseCommodityComponent");
     }
-
     AdvancedDangerousClicked() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 500;
@@ -2771,6 +2769,13 @@ export class ShipmentPackageItem extends BaseComponent {
         logitudeWindow.WindowArgs = this.EntityPM;
         logitudeWindow.Title = "Dangerous Goods Advanced";
         logitudeWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/AdvancedDangerousGoodsComponent");
+    }
+
+    get HasContainerException() { return this.EntityPM.HasContainerException; }
+    set HasContainerException(value: boolean) {
+        if (this.EntityPM.HasContainerException != value) {
+            this.EntityPM.HasContainerException = value;            
+        }
     }
 }
 export class InsideShipmentPackageItem extends BaseComponent {

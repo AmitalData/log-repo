@@ -19,6 +19,7 @@ namespace Logitude.Accounting.Data
    
        	 IDbSet<AccountingCompanyType> AccountingCompanyTypes { get; }
 		 IDbSet<AccountingEntity> AccountingEntities { get; }
+		 IDbSet<AccountingIntegrityCheck> AccountingIntegrityChecks { get; }
 		 IDbSet<AccountingPeriod> AccountingPeriods { get; }
 		 IDbSet<ARPaymentCheque> ARPaymentCheques { get; }
 		 IDbSet<ARPaymentChequeStatus> ARPaymentChequeStatuses { get; }
@@ -50,6 +51,7 @@ namespace Logitude.Accounting.Data
 		 IDbSet<GLAccountTotalDateType> GLAccountTotalDateTypes { get; }
 		 IDbSet<GLAccountType> GLAccountTypes { get; }
 		 IDbSet<GLAccountWithholdingTax> GLAccountWithholdingTax { get; }
+		 IDbSet<IntegrityCheckStatus> IntegrityCheckStatuses { get; }
 		 IDbSet<Journal> Journals { get; }
 		 IDbSet<JournalActionType> JournalActionTypes { get; }
 		 IDbSet<JournalAdditionalData> JournalAdditionalDatas { get; }

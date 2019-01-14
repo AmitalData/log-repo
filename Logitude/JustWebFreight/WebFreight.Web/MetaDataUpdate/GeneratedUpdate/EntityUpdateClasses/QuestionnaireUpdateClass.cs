@@ -776,7 +776,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AllQuestionnairesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuestionnaireTextCode_0.Id, Code = " All Questionnaires",  EditWizardName = "Logitude.CRM.Views.QuestionnairesView.QuestionnaireWizardEditControl",
 			   EditWizardComponentPath = "./CRMModules/CRMOthers/Components/Questionnaire/AddEditQuestionnaireComponent",
-			   QueryGroupCode = "QUQG", IndexOrder = 0, Tenant = 0, ObjectTableId = QuestionnaireObjectTable.Id, QuerySection = "Questionnaire", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuestionnaireFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "QUQG", IndexOrder = 0, Tenant = 0, ObjectTableId = QuestionnaireObjectTable.Id, QuerySection = "Questionnaire", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuestionnaireFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllQuestionnairesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuestionnairesQuery.Id, IndexOrder = 0, ObjectFieldId = QuestionnaireObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == QuestionnaireObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
