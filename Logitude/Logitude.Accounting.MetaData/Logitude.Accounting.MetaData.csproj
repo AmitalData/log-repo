@@ -66,7 +66,13 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="EntityFiles\AccountingCompanyType.lxml" />
+    <None Include="EntityFiles\IntegrityCheckStatus.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\AutomaticExternalReconcileMethod.lxml" />
+    <None Include="EntityFiles\AccountingIntegrityCheck.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\GLAccount.lxml">
       <SubType>Designer</SubType>
     </None>

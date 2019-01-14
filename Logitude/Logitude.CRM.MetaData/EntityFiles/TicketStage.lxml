@@ -36,4 +36,5 @@
     <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;TicketStage&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;TicketStage&quot;" ShortView="false" IsManualEntry="false" LocalName="&quot;Updated&quot;" EnglishName="&quot;Updated&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
+  <AdditionalFeatures />
 </entity>

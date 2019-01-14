@@ -1,0 +1,208 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL.EntityDataMappings
+{
+   
+   public partial class AccountingIntegrityCheckDataMapping: IMapping<AccountingIntegrityCheckPM, AccountingIntegrityCheck>,IMappingEncodeBase64NVARCHARFields<AccountingIntegrityCheckPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         CreateDateTimeUTC, 
+	         StatusCode, 
+	         ParametersXML, 
+	         ResultXML, 
+	         HasException, 
+	         DoneDateTimeUTC,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         CreateDateTimeUTC, 
+	         StatusCode, 
+	         ParametersXML, 
+	         ResultXML, 
+	         HasException, 
+	         DoneDateTimeUTC,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(AccountingIntegrityCheckPM entityPM, AccountingIntegrityCheck entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDateTimeUTC))
+            {
+				entityPOCO.CreateDateTimeUTC = entityPM.CreateDateTimeUTC;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
+            {
+				entityPOCO.StatusCode = entityPM.StatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParametersXML))
+            {
+				entityPOCO.ParametersXML = entityPM.ParametersXML;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ResultXML))
+            {
+				entityPOCO.ResultXML = entityPM.ResultXML;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HasException))
+            {
+				entityPOCO.HasException = entityPM.HasException;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DoneDateTimeUTC))
+            {
+				entityPOCO.DoneDateTimeUTC = entityPM.DoneDateTimeUTC;
+			}
+			}
+
+		public void POCOToPM(AccountingIntegrityCheckPM entityPM, AccountingIntegrityCheck entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateDateTimeUTC))
+            {
+					entityPM.CreateDateTimeUTC = entityPOCO.CreateDateTimeUTC;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusCode))
+            {
+					entityPM.StatusCode = entityPOCO.StatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ParametersXML))
+            {
+					entityPM.ParametersXML = entityPOCO.ParametersXML;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ResultXML))
+            {
+					entityPM.ResultXML = entityPOCO.ResultXML;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HasException))
+            {
+					entityPM.HasException = entityPOCO.HasException;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DoneDateTimeUTC))
+            {
+					entityPM.DoneDateTimeUTC = entityPOCO.DoneDateTimeUTC;
+            }
+
+		}
+
+		public void PMToOldPM(AccountingIntegrityCheckPM entityPM, AccountingIntegrityCheckPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDateTimeUTC))
+            {
+                oldEntityPM.CreateDateTimeUTC = entityPM.CreateDateTimeUTC;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
+            {
+                oldEntityPM.StatusCode = entityPM.StatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParametersXML))
+            {
+                oldEntityPM.ParametersXML = entityPM.ParametersXML;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ResultXML))
+            {
+                oldEntityPM.ResultXML = entityPM.ResultXML;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HasException))
+            {
+                oldEntityPM.HasException = entityPM.HasException;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DoneDateTimeUTC))
+            {
+                oldEntityPM.DoneDateTimeUTC = entityPM.DoneDateTimeUTC;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(AccountingIntegrityCheckPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ParametersXML)) //T4 find type == nText 
+            {
+                entityPM.ParametersXML = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ParametersXML));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ResultXML)) //T4 find type == nText 
+            {
+                entityPM.ResultXML = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ResultXML));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

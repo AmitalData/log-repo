@@ -25,6 +25,7 @@ using WebFreight.Web.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -73,6 +74,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
 
                 System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
+                EncodedHtmlHelper encodedHtmlHelper = new EncodedHtmlHelper();
 
                 #region SaveEditFields
                 if (!string.IsNullOrEmpty(filter.Processtype) && filter.Processtype == "SaveEditFields")
@@ -96,7 +98,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     if (contact != null)
                     {
 
-                        filter.Body = filter.Body.Replace("\"", "'");
+                   
+                        if (!string.IsNullOrEmpty(filter.Body)) filter.Body = filter.Body.Replace("\"", "'");
+                        filter.Body = encodedHtmlHelper.EncodedHtmlScript(filter.Body);
                         byte[] bytedata = enc.GetBytes(filter.Body);
                         contact.SignatureHtml = bytedata;
                         contactRepository.Update(contact);
@@ -122,8 +126,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                         if (filter.TemplateType == "HTML")
                         {
-                            filter.Body = filter.Body.Replace("\"", "'");
-
+                            if (!string.IsNullOrEmpty(filter.Body)) filter.Body = filter.Body.Replace("\"", "'");
+                            filter.Body = encodedHtmlHelper.EncodedHtmlScript(filter.Body);
                             byte[] bytedata = enc.GetBytes(filter.Body);
                             documentTypeTemplate.TemplateBodyHtml = bytedata;
                         }

@@ -11,4 +11,5 @@
     <Record Code="&quot;CUS&quot;" Name="&quot;Customer&quot;" SearchFields="&quot;Customer,CUS,&quot;" />
     <Record Code="&quot;INU&quot;" Name="&quot;Internal User&quot;" SearchFields="&quot;Internal User,INU,&quot;" />
   </Records>
+  <AdditionalFeatures />
 </entity>
