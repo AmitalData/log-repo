@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs; 
 using Logitude.Accounting.Data;
+using Logitude.Accounting.BL.EntityQueryServices;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -19,12 +20,23 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(AccountingIntegrityCheckPM entityPM, AccountingIntegrityCheck entityPOCO)
         {
-            //throw new NotImplementedException();
+
         }
 
         public void CustomPOCOToPM(AccountingIntegrityCheckPM entityPM, AccountingIntegrityCheck entityPOCO)
         {
-            //throw new NotImplementedException();
+            CustomMappedPMProperties.Add(PMPropertyNames.StatusName);
+
+            if (entityPOCO.IntegrityCheckStatus != null)
+            {
+                IntegrityCheckStatusQueryService query = new IntegrityCheckStatusQueryService(entityPOCO.Tenant);
+
+                var checkStatus = query.GetSingle(entityPOCO.StatusCode, false, false);
+                if (checkStatus != null)
+                {
+                    entityPM.StatusName = checkStatus.Name;
+                }
+            }
         }
    }
 
