@@ -49,8 +49,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("TMEmployeeTime", "READ", tenant);
 
-                TFSParseWebhook weebhook = new TFSParseWebhook();
-                weebhook.CheckTMLineDuplication("54879", authToken.Tenant);
 
                 DateTime? myStartDate = periodStartDate == "null" ? null : DateHelper.GetDate(periodStartDate);
 
