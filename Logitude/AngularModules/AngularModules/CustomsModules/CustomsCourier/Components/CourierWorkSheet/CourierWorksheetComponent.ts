@@ -84,7 +84,7 @@ implements OnDestroy
     _SelectedMNFValue: string = 'A'; // ALL/Complete/Wrong
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
     _SelectedDOCValue: string = 'A'; // All/Correction/CorrectionUploaded
-    _SelectedACCValue: string = 'W'; // Wrong/WrongSpecial
+    _SelectedACCValue: string = 'A'; // Wrong/WrongSpecial
 
     public columns: any[] = null;
 
@@ -798,6 +798,17 @@ implements OnDestroy
             FieldName: 'MamanStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.MamanStatusCode"),
+            Styles: { width: '55px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: false,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+        });
+
+        this.columns.push({
+            FieldName: 'SpecialActionStatus',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.SpecialActionStatus"),
             Styles: { width: '55px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
