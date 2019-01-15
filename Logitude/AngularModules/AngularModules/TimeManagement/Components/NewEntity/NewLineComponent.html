@@ -105,6 +105,25 @@
                     </td>
                 </tr>
 
+                <!-- LocationCode -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'LocationCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'LocationCode'"
+                                [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="LocationCode"
+                                [LookUpTableName]="'TMLocation'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
                 <!-- Date -->
                 <tr class="FormFieldRow">
                     <td>
@@ -121,7 +140,7 @@
                 <!-- Time -->
                 <tr class="FormFieldRow">
                     <td>
-                        <LogLabel [NoObjectField]="true"  [ObjectFieldName]="'Time'" [Text]="'Time'" [DataContext]="DataContext"></LogLabel>
+                        <LogLabel [NoObjectField]="true" [ObjectFieldName]="'Time'" [Text]="'Time'" [DataContext]="DataContext"></LogLabel>
                     </td>
 
                     <td>
@@ -135,7 +154,7 @@
                                     <div></div>
                                 </td>
                             </tr>
-                        </table>                        
+                        </table>
                     </td>
 
                     <td>

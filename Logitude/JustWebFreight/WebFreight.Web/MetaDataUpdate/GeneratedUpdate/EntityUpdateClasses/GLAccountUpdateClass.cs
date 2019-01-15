@@ -5641,7 +5641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query GeneralLedgerAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_0.Id, Code = "General Ledger Accounts",  QueryGroupCode = "GLAC", IndexOrder = 0, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query GeneralLedgerAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_0.Id, Code = "General Ledger Accounts",  QueryGroupCode = "GLAC", IndexOrder = 0, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn GeneralLedgerAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralLedgerAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 73 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5659,7 +5659,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query VendorAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_1.Id, Code = "Vendor Accounts",  QueryGroupCode = "VNAC", IndexOrder = 1, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query VendorAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_1.Id, Code = "Vendor Accounts",  QueryGroupCode = "VNAC", IndexOrder = 1, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn VendorAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5684,7 +5684,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AllCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_2.Id, Code = "All Customers",  QueryGroupCode = "GLAC", IndexOrder = 2, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_2.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_2.Id, Code = "All Customers",  QueryGroupCode = "GLAC", IndexOrder = 2, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_2.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 73 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5705,7 +5705,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query MyCustomersAsCollectorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_3.Id, Code = "MyCustomersAsCollectors",  QueryGroupCode = "GLAC", IndexOrder = 3, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_3.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query MyCustomersAsCollectorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_3.Id, Code = "MyCustomersAsCollectors",  QueryGroupCode = "GLAC", IndexOrder = 3, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_3.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MyCustomersAsCollectorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5728,7 +5728,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query DebetorsCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_4.Id, Code = "DebetorsCustomers",  QueryGroupCode = "GLAC", IndexOrder = 4, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_4.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query DebetorsCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_4.Id, Code = "DebetorsCustomers",  QueryGroupCode = "GLAC", IndexOrder = 4, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_4.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn DebetorsCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5754,7 +5754,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query ActiveCustomersGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_5.Id, Code = "ActiveCustomersGLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 5, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_5.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query ActiveCustomersGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_5.Id, Code = "ActiveCustomersGLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 5, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_5.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ActiveCustomersGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5778,7 +5778,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query InactiveCustomersGLAccountQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_6.Id, Code = "InactiveCustomersGLAccount",  QueryGroupCode = "GLAC", IndexOrder = 6, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_6.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query InactiveCustomersGLAccountQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_6.Id, Code = "InactiveCustomersGLAccount",  QueryGroupCode = "GLAC", IndexOrder = 6, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_6.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn InactiveCustomersGLAccountQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5802,7 +5802,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query ActiveGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_7.Id, Code = "ActiveGLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 7, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_7.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query ActiveGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_7.Id, Code = "ActiveGLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 7, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_7.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ActiveGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5830,7 +5830,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query InactiveGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_8.Id, Code = "InactiveGLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 8, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_8.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query InactiveGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_8.Id, Code = "InactiveGLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 8, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_8.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn InactiveGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5858,7 +5858,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query OpenFilesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_9.Id, Code = "OpenFiles",  QueryGroupCode = "GLAC", IndexOrder = 9, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_9.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query OpenFilesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_9.Id, Code = "OpenFiles",  QueryGroupCode = "GLAC", IndexOrder = 9, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_9.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn OpenFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5886,7 +5886,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query ClosedFilesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_10.Id, Code = "ClosedFiles",  QueryGroupCode = "GLAC", IndexOrder = 10, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_10.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query ClosedFilesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_10.Id, Code = "ClosedFiles",  QueryGroupCode = "GLAC", IndexOrder = 10, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_10.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ClosedFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5914,7 +5914,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AllFilesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_11.Id, Code = "AllFiles",  QueryGroupCode = "GLAC", IndexOrder = 11, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_11.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllFilesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_11.Id, Code = "AllFiles",  QueryGroupCode = "GLAC", IndexOrder = 11, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_11.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5939,7 +5939,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AllJobsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_12.Id, Code = "AllJobs",  QueryGroupCode = "GLAC", IndexOrder = 12, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_12.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllJobsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_12.Id, Code = "AllJobs",  QueryGroupCode = "GLAC", IndexOrder = 12, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_12.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllJobsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5964,7 +5964,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query ActiveVendorsGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_13.Id, Code = "ActiveVendorsGLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 13, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_13.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query ActiveVendorsGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_13.Id, Code = "ActiveVendorsGLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 13, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_13.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ActiveVendorsGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -5988,7 +5988,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query InactiveVendorsGLAccountQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_14.Id, Code = "InactiveVendorsGLAccount",  QueryGroupCode = "GLAC", IndexOrder = 14, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_14.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query InactiveVendorsGLAccountQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_14.Id, Code = "InactiveVendorsGLAccount",  QueryGroupCode = "GLAC", IndexOrder = 14, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_14.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn InactiveVendorsGLAccountQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -6012,7 +6012,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query ClientAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_15.Id, Code = "Client Accounts",  QueryGroupCode = "CLAC", IndexOrder = 15, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_15.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query ClientAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_15.Id, Code = "Client Accounts",  QueryGroupCode = "CLAC", IndexOrder = 15, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_15.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ClientAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 73 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -6030,7 +6030,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AllGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_16.Id, Code = "All GLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 16, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_16.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllGLAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_16.Id, Code = "All GLAccounts",  QueryGroupCode = "GLAC", IndexOrder = 16, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GLAccountFeature_16.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 85 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -6087,8 +6087,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable GLAccountObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "GLAccount" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable GLAccountObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "GLAccount" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode GLAccountOverviewTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Overview", DefaultText = "Overview",LocalDefaultText = "מבט על", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature GLAccountOverviewFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccount.Tab.Overview", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccountFeatures.GAOV", NameTextCodeDefaultText = "Overview", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

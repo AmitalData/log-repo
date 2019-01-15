@@ -119,5 +119,11 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string FlashPointTemperatureUnitCode { get; set; }
 
         public bool IsMultiHarmonize { get; set; }
+
+        public DateTime? ETD { get; set; }
+        public DateTime? ETA { get; set; }
+        public string Routing { get; set; }
+        public string VoyageTripNumber { get; set; }
+        public bool HasContainerException { get; set; }
     }
 }

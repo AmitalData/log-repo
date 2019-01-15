@@ -69,6 +69,8 @@ namespace Logitude.Accounting.BL.DataContract
         public bool? IsMultiCurrency { get; set; }
         public string CurrecnyId { get; set; }
         public decimal? OpeningBalanceInForegnCurrency { get; set; }
+        public decimal? TotalDebitInForeignCurrency { get; set; }
+        public decimal? TotalCreditInForeignCurrency { get; set; }
 
 
 
@@ -89,4 +91,40 @@ namespace Logitude.Accounting.BL.DataContract
         public string CountryCode { get; set; }
     }
 
+    public class C100Data
+    {
+        public string ARInvoiceId { get; set; }
+        public string DocumentType { get; set; }
+        public string DocumentReference { get; set; }
+        public DateTime? DocumentCreateDate { get; set; }
+        public DateTime DocumentCreateTime { get; set; }
+        public string CustomerVendorName { get; set; }
+        public string AddressStreet { get; set; }
+        public string AddressHomeNO { get; set; }
+        public string AddressCity { get; set; }
+        public string AddressZIPCode { get; set; }
+        public string AddressCountry { get; set; }
+        public string AddressCountryCode { get; set; }
+        public string CustomeVendorTelephone { get; set; }
+        public string CustomerVendorVatNumber { get; set; }
+        public DateTime? ValueDate { get; set; }
+        public decimal TotalDocumentsAmount { get; set; }
+        public string CurrencyCode { get; set; }
+        public double? TotalDocumentsAmountBeforeDiscount { get; set; }
+        public decimal DocumentsDiscount { get; set; }
+        public double? TotalDocumentsAmountAfterDiscount { get; set; }
+        public double? VatAmount { get; set; }
+        public double? DocumentAmountAndVATAmount { get; set; }
+        public decimal TaxWithholdingAmount { get; set; }
+        public string CustomerVendorCode { get; set; }
+        public bool IsCancelled { get; set; }
+        public DateTime? DocuemntsReferenceDate { get; set; }
+        public string BranchCode { get; set; }
+        public string CreatedbyUser { get; set; }
+        public string AddressId { get; set; }
+        public string GLAccountId { get; set; }
+        public string VendorId { get;  set; }
+        public string APInvoiceId { get;  set; }
+        public string ARPaymentMethod { get; set; }
+    }
 }

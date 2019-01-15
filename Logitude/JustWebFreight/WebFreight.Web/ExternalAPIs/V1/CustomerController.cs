@@ -67,9 +67,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     CardRepository cardRepository = new CardRepository(MyContext);
 
                     string computingPartnerCode = "";
-                    if (loggedContactInfo != null)
+                    if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                     {
-                        computingPartnerCode = loggedContactInfo.ComputingPartnerCode;
+                        computingPartnerCode = entity.ComputingPartnerCode;//loggedContactInfo.ComputingPartnerCode;
+                    }
+
+                    if (!string.IsNullOrEmpty(entity.PartnerCode) && string.IsNullOrEmpty(computingPartnerCode))
+                    {
+                        throw new ApplicationException("Please provide the computing partner code");
                     }
 
                     if (entity.MainAddress != null)

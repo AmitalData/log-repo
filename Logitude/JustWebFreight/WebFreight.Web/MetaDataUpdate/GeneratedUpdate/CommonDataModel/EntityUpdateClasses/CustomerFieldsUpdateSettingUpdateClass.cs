@@ -355,8 +355,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable CustomerFieldsUpdateSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerFieldsUpdateSetting" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable CustomerFieldsUpdateSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerFieldsUpdateSetting" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CustomerFieldsUpdateSettingGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerFieldsUpdateSetting.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature CustomerFieldsUpdateSettingGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

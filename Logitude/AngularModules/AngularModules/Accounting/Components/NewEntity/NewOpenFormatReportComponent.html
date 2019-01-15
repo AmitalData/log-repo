@@ -13,43 +13,28 @@
     </tr>
 
 
+  
     <tr style="height:32px">
-        <td style="width:100px">
-            <LogLabel [ObjectFieldName]="'DateTypeCode'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-
-        <td style="width:100px">
-            <LogLov [ObjectFieldName]="'DateTypeCode'"
-                    [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext"
-                    [LookUpTableName]="'OpenFormatDateType'"
-                  
-                    [HideColumns]="true">
-            </LogLov>
-        </td>
-        <td style="width:20px"></td>
-        <td style="width:80px"></td>
-        <td style="width:100px"></td>
-        <td></td>
-    </tr>
-    <tr style="height:32px">
-        <td style="width:100px">
+        <td style="width:30px">
             <LogLabel [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td style="width:100px">
+        <td style="width:50px">
             <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
-                           [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                           [DataContext]="DataContext" [HideColumns]="false"></LogDatePicker>
         </td>
         <td></td>
-        <td style="width:80px">
+       
+    </tr>
+
+    <tr style="height:32px">
+        <td style="width:30px">
             <LogLabel [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td style="width:100px">
+        <td style="width:50px">
             <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
-                           [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                           [DataContext]="DataContext" [HideColumns]="false"></LogDatePicker>
         </td>
 
         <td></td>

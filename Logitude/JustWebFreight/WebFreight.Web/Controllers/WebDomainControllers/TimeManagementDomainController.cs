@@ -49,6 +49,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("TMEmployeeTime", "READ", tenant);
 
+                TFSParseWebhook weebhook = new TFSParseWebhook();
+                weebhook.CheckTMLineDuplication("54879", authToken.Tenant);
+
                 DateTime? myStartDate = periodStartDate == "null" ? null : DateHelper.GetDate(periodStartDate);
 
                 TimeManagementAPIHelper myResult = this.FillWeeklyTimeSheetList(employeeUserId, locationCode, myStartDate, tenant);
@@ -117,6 +120,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 itemPOCO.ProjectId = itemChanged.ProjectId;
                                 itemPOCO.Description = itemChanged.Description;
                                 itemPOCO.WINumber = itemChanged.WINumber;
+                                itemPOCO.LocationCode = itemChanged.LocationCode;
                                 //repository.Update(itemPOCO);
                                 itemPOCO.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                                 service.Update(itemPOCO, true);
@@ -134,6 +138,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     itemPOCO.SprintId = itemChanged.SprintId;
                                     itemPOCO.ProjectId = itemChanged.ProjectId;
                                     itemPOCO.DateOfWork = itemChanged.DateOfWork;
+                                    itemPOCO.LocationCode = itemChanged.LocationCode;
                                     //repository.Update(itemPOCO);
 
                                     itemPOCO.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
@@ -222,7 +227,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     iQueryable = iQueryable.Where(d => d.EmployeeUserId == employeeUserId);
                 }
 
-                if (!string.IsNullOrEmpty(locationCode))
+                if (!string.IsNullOrEmpty(locationCode) && locationCode != "A")
                 {
                     iQueryable = iQueryable.Where(d => d.LocationCode == locationCode);
                 }
@@ -322,7 +327,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 iQueryable = iQueryable.Where(d => d.EmployeeUserId == employeeUserId);
             }
-            if (!string.IsNullOrEmpty(locationCode))
+            if (!string.IsNullOrEmpty(locationCode) && locationCode != "A")
             {
                 iQueryable = iQueryable.Where(d => d.LocationCode == locationCode);
             }
@@ -688,7 +693,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     iQueryable = iQueryable.Where(d => d.EmployeeUserId == employeeUserId);
                 }
 
-                if (!string.IsNullOrEmpty(locationCode))
+                if (!string.IsNullOrEmpty(locationCode) && locationCode != "A")
                 {
                     iQueryable = iQueryable.Where(d => d.LocationCode == locationCode);
                 }

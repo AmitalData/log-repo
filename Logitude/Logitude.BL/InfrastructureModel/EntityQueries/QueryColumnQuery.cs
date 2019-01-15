@@ -233,12 +233,77 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             IQueryable<QueryColumnPM> queries = null;
             Query myQuery = repository.context.Queries.Where(d => d.Id == queryId).FirstOrDefault();
-            if(myQuery != null)
+            if (myQuery != null)
             {
-                if(!string.IsNullOrEmpty(myQuery.SharedByUserId) && myQuery.SharedByUserId != userId)
+                if (!string.IsNullOrEmpty(myQuery.SharedByUserId) && myQuery.SharedByUserId != userId)
                 {
                     queries = from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
                               where a.Tenant == tenant && a.Query.UserId == myQuery.SharedByUserId && a.QueryId == queryId && a.ObjectField.DisplayInList == true
+                              select new QueryColumnPM()
+                              {
+                                  ColumnWidth = a.ColumnWidth,
+                                  Id = a.Id,
+                                  IndexOrder = a.IndexOrder,
+                                  ObjectFieldId = a.ObjectFieldId,
+                                  ObjectFieldName = a.ObjectField.FieldName,
+                                  QueryId = a.QueryId,
+                                  Tenant = a.Tenant,
+                                  QueryCode = a.Query.Code,
+                                  QueryObjectTableName = a.Query.ObjectTable.Name,
+                                  ConverterName = a.ObjectField.ConverterName,
+                                  DataTemplateName = a.ObjectField.DataTemplateName,
+                                  ObjectFieldListLabelTextCodeCode = a.ObjectField.ListTextCode.Code,
+                                  ColumnHeaderTemplateName = a.ObjectField.ColumnHeaderTemplateName,
+                                  ObjectFieldFieldLableTextCodeDefaultText = a.ObjectField.FullNameTextCode.DefaultText,
+                                  DisplayInList = a.ObjectField.DisplayInList,
+                                  ObjectFieldDataTypeCode = a.ObjectField.DataTypeCode,
+                                  UserId = a.UserId,
+                                  ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code,
+                              };
+                }
+
+                else
+                {
+                    queries = from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
+                              where a.Tenant == tenant && a.Query.UserId == userId && a.QueryId == queryId && a.ObjectField.DisplayInList == true
+                              select new QueryColumnPM()
+                              {
+                                  ColumnWidth = a.ColumnWidth,
+                                  Id = a.Id,
+                                  IndexOrder = a.IndexOrder,
+                                  ObjectFieldId = a.ObjectFieldId,
+                                  ObjectFieldName = a.ObjectField.FieldName,
+                                  QueryId = a.QueryId,
+                                  Tenant = a.Tenant,
+                                  QueryCode = a.Query.Code,
+                                  QueryObjectTableName = a.Query.ObjectTable.Name,
+                                  ConverterName = a.ObjectField.ConverterName,
+                                  DataTemplateName = a.ObjectField.DataTemplateName,
+                                  ObjectFieldListLabelTextCodeCode = a.ObjectField.ListTextCode.Code,
+                                  ColumnHeaderTemplateName = a.ObjectField.ColumnHeaderTemplateName,
+                                  ObjectFieldFieldLableTextCodeDefaultText = a.ObjectField.FullNameTextCode.DefaultText,
+                                  DisplayInList = a.ObjectField.DisplayInList,
+                                  ObjectFieldDataTypeCode = a.ObjectField.DataTypeCode,
+                                  UserId = a.UserId,
+                                  ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code,
+                              };
+                }
+            }
+
+            return queries;
+        }
+
+        public IQueryable<QueryColumnPM> GetQueryColumnsByQueryIdAndUserAngular(int tenant, string userId, string queryId)
+        {
+            IQueryable<QueryColumnPM> queries = null;
+            Query myQuery = repository.context.Queries.Where(d => d.Id == queryId).FirstOrDefault();
+
+            if (myQuery != null)
+            {
+                if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(myQuery.SharedByUserId) && myQuery.SharedByUserId != userId)
+                {
+                    queries = from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
+                              where a.Tenant == tenant && a.UserId == myQuery.SharedByUserId && a.QueryId == queryId && a.ObjectField.DisplayInList == true
                               select new QueryColumnPM()
                               {
                                   ColumnWidth = a.ColumnWidth,
@@ -287,43 +352,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   UserId = a.UserId,
                                   ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code,
                               };
-                }
-            }                      
-        
-            return queries;
-        }
+                }                  
+            }
 
-        public IQueryable<QueryColumnPM> GetQueryColumnsByQueryIdAndUserAngular(int tenant, string userId, string queryId)
-        {
-            IQueryable<QueryColumnPM> queries = null;
-            //if (!string.IsNullOrEmpty(userId))
-            //{
-            queries = from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
-                      where a.Tenant == tenant && a.UserId == userId && a.QueryId == queryId && a.ObjectField.DisplayInList == true
-                      //group a by a.ObjectFieldId into Group
-                      select new QueryColumnPM()
-                      {
-                          ColumnWidth = a.ColumnWidth,
-                          Id = a.Id,
-                          IndexOrder = a.IndexOrder,
-                          ObjectFieldId = a.ObjectFieldId,
-                          ObjectFieldName = a.ObjectField.FieldName,
-                          QueryId = a.QueryId,
-                          Tenant = a.Tenant,
-                          QueryCode = a.Query.Code,
-                          QueryObjectTableName = a.Query.ObjectTable.Name,
-                          //QueryUserId = a.Query.UserId,
-                          ConverterName = a.ObjectField.ConverterName,
-                          DataTemplateName = a.ObjectField.DataTemplateName,
-                          ObjectFieldListLabelTextCodeCode = a.ObjectField.ListTextCode.Code,
-                          ColumnHeaderTemplateName = a.ObjectField.ColumnHeaderTemplateName,
-                          ObjectFieldFieldLableTextCodeDefaultText = a.ObjectField.FullNameTextCode.DefaultText,
-                          DisplayInList = a.ObjectField.DisplayInList,
-                          ObjectFieldDataTypeCode = a.ObjectField.DataTypeCode,
-                          UserId = a.UserId,
-                          ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code,
-
-                      };
             List<QueryColumnPM> Cols = new List<QueryColumnPM>();
             foreach (var item in queries)
             {
@@ -332,6 +363,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     Cols.Add(item);
                 }
             }
+
             return Cols.AsQueryable();
         }
 

@@ -314,6 +314,27 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return addressLists;
         }
 
+        public List<AddressList> GetAddressesByCardIds(List<string> cardIds,  int tenant)
+        {
+            List<AddressList> addressLists = (from a in repository.context.Addresses
+                                              where a.Tenant == tenant
+                                              && cardIds.Contains(a.CardId)
+                                            
+                                              select new AddressList()
+                                              {
+                                                  CardId = a.CardId,
+                                                  ZipCode = a.ZipCode,
+                                                  City = a.City,
+                                                  CountryCode = a.Country != null ? a.Country.Code : null,
+                                                  CountryName = a.Country != null? a.Country.LocalName:null,
+                                                  AddressTypeId = a.AddressTypeId,
+                                                  Id = a.Id,
+                                                  Address1 = a.Address1,
+                                                  Address2= a.Address2
+                                              }).ToList();
+
+            return addressLists;
+        }
 
 
         public AddressList GetAddressListByTypeAndCard(string cardId, string typeId, int tenant)

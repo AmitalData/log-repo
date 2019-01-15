@@ -16,9 +16,18 @@ export class DirectShipment {
     var AWBToggle = this.Helper.WaitByIdAndClick('NEWSHIP');
     this.Helper.WaitByIdAndClick('NEWDIRECT');
     this.ShipmentModes.SelectDicrctionTransportMode(LogitudeShipType, Direction, TransportMode, ShipmentType);
+
+
+
     this.FillDirectShipmentFields(ReferenceNumber);
 
     this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
+  }
+
+  public CreateAndCloseNewShipment(){
+    var AWBToggle = this.Helper.WaitByIdAndClick('NEWSHIP');
+    this.Helper.WaitByIdAndClick('NEWDIRECT');
+    this.Helper.WaitByIdAndClick('ShipmentCancelbtn');
   }
 
 

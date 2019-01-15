@@ -138,6 +138,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.State = tenantAddress.StateEnglishName;
                         invoicedataprovider.ZipCode = tenantAddress.ZipCode;
                         invoicedataprovider.State = tenantAddress.StateEnglishName;
+                        invoicedataprovider.TenantStateCode = tenantAddress.StateCode;
                     }
                 }
 
@@ -1162,6 +1163,7 @@ namespace WebFreight.Web.ReportsWebServices
                         if (billToCardAddress != null)
                         {
                             invoicedataprovider.BillToAddress_NoName = DataProviders.General.GetAddress(billToCardAddress);
+                            invoicedataprovider.BillToStateCode = billToCardAddress.State == null ? null : billToCardAddress.State.Code;
 
                             if (billToCardAddress.IsLocalLanguage && !string.IsNullOrEmpty(invoicedataprovider.BillTo_LocalName))
                             {

@@ -227,29 +227,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string dateTypeCode ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DateTypeCode  
-	   {
-	    
-	     get
-		{
-		   return dateTypeCode;
-		 }
-		 set
-		 {
-		   if(dateTypeCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DateTypeCode",OldValue=dateTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   dateTypeCode=value;
-		   }
-			
-		 }
-	   }
 	  private string statusTypeCode ;
 	  	  
        
@@ -338,29 +315,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Status",OldValue=status,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   status=value;
-		   }
-			
-		 }
-	   }
-	  private string dateTypeName ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DateTypeName  
-	   {
-	    
-	     get
-		{
-		   return dateTypeName;
-		 }
-		 set
-		 {
-		   if(dateTypeName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DateTypeName",OldValue=dateTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   dateTypeName=value;
 		   }
 			
 		 }

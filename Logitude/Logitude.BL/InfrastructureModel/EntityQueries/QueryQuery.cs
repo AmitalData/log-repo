@@ -75,6 +75,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  SharedWithSpecificUsers = a.SharedWithSpecificUsers,
                  SharedByUserId = a.SharedByUserId,
                  SharedByUserName = a.SharedByUser == null ? null : a.SharedByUser.Contact.EnglishName,
+                 SharedByUserEmail = a.SharedByUser == null ? null : a.SharedByUser.Contact.Email,
                  SpotlightModeActivated = a.SpotlightModeActivated,
              }).FirstOrDefault();
 

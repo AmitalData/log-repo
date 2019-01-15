@@ -12,4 +12,5 @@
     <Record Code="&quot;LOG&quot;" Name="&quot;Logitude&quot;" SearchFields="&quot;Logitude,LOG,&quot;" />
     <Record Code="&quot;MAL&quot;" Name="&quot;Mail&quot;" SearchFields="&quot;Mail,MAL,&quot;" />
   </Records>
+  <AdditionalFeatures />
 </entity>

@@ -1,4 +1,4 @@
-﻿
+
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
@@ -6,9 +6,9 @@ import {EntityPMServiceResponse} from '../../../Infrastructure/DataContracts/Ent
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import {Observable}     from 'rxjs/Rx';
-
+import {Observable}     from 'rxjs/Rx'; 
 import {DWQueryPM} from '../../EntityPMs/DWQueryPM';
+import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 
 
 @Injectable()
@@ -22,6 +22,38 @@ export class DWQueryPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DWQuery';     
     }
 
+    get(id: string) {
+
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
+
+
+
+                var entity: DWQueryPM = new DWQueryPM();
+                if (pm) {
+                    entity = this.MapJsonToEntityPM(pm); 
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
+
+                //var servertime = response.headers.get('ServerExecutionTime');
+                //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DWObjectField", "GetSinglePM", 'id=' + id);
+
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 
     insert(entityPM: DWQueryPM) {
 

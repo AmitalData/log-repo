@@ -32,5 +32,6 @@
   <AdditionalTextCodes />
   <AdditionalFeatures>
     <Feature Code="&quot;WebhookKeys&quot;" FeatureTypeCode="&quot;MENU&quot;" FeatureTextCodeCode="&quot;WebhookKeys.Features.WebhookKeys&quot;" FeatureDefaultText="&quot;Webhook Keys&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+    <Feature Code="&quot;WebhookKeysTester&quot;" FeatureTypeCode="&quot;OTH&quot;" FeatureTextCodeCode="&quot;WebhookKeys.Features.WebhookKeysTester&quot;" FeatureDefaultText="&quot;Webhook Keys Tester&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

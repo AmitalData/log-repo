@@ -522,16 +522,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return repository.GetClosedPeriodTransactions(accountId, year, openMonth, closedMonth, tenant);
         }
 
-        public List<B100Data> GetTransactionsByDate(string DateType, DateTime fromDate, DateTime toDate, int tenant)
+        public List<B100Data> GetTransactionsByDate( DateTime fromDate, DateTime toDate, int tenant)
         {
             List<B100Data> transactions = null;
 
-            if (DateType == "2") {
                 transactions = (from a in context.LedgerTransactions
                                                join g in context.GLAccounts on a.AccountId equals g.Id
                                                         join j in context.Journals on a.JournalId equals j.Id
-                                                        join jl in context.JournalLines on j.Id equals jl.JournalId
-                                                        where a.DueDate >= fromDate && a.DueDate <= toDate && a.Tenant == tenant
+                                                     
+                                                        where ((a.DueDate >= fromDate && a.DueDate <= toDate) || (a.AccountingDate >= fromDate && a.AccountingDate <= toDate)) && a.Tenant == tenant
                                                         select  new B100Data()
                                                         {
                                                             AccountingDate = a.AccountingDate,
@@ -549,43 +548,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                             JournalLineNumber = a.JournalLineNumber,
                                                             JournalNumber = j.JournalNumber,
                                                             Notes = a.Notes,
-                                                            Reference2 = jl.Reference2,
+                                                            Reference2 = a.Reference2,
                                                             OppositGLAccount = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber:null,
                                                         }).ToList();
 
-                //ledgerTransactions = transactions.Select(poco => GetEntityPM(poco)).ToList();
-            }
-            else if(DateType == "1")
-            {
-                 transactions = (from a in context.LedgerTransactions
-                                               join g in context.GLAccounts on a.AccountId equals g.Id
-                                               join j in context.Journals on a.JournalId equals j.Id
-                                                        join jl in context.JournalLines on j.Id equals jl.JournalId
-                                                        where a.AccountingDate >= fromDate && a.AccountingDate <= toDate && a.Tenant == tenant
-                                                        select new B100Data()
-                                                        {
-                                                            AccountingDate = a.AccountingDate,
-                                                            DocumentDate = a.DocumentDate,
-                                                            AccountingEntityCode = j.AccountingEntityCode,
-                                                            AccountingEntityReference = j.AccountingEntityReference,
-                                                            ForeignAmountCredit = a.ForeignAmountCredit,
-                                                            ForeignAmountDebit = a.ForeignAmountDebit,
-                                                            GLAccountDisplayNumber = g.DisplayNumber,
-                                                            LocalAmountCredit = a.LocalAmountCredit,
-                                                            LocalAmountDebit = a.LocalAmountDebit,
-                                                            CreateDate = a.CreateDate,
-                                                            CurrencyId = a.CurrencyId,
-                                                            CreatedByUser = j.CreatedByUserId,
-                                                            JournalLineNumber = a.JournalLineNumber,
-                                                            JournalNumber = j.JournalNumber,
-                                                            Notes = a.Notes,
-                                                            Reference2 = jl.Reference2,
-                                                            OppositGLAccount = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
-                                                        }).ToList();
-
-              //  ledgerTransactions = transactions.Select(poco => GetEntityPM(poco)).ToList();
-            }
-
+                
+           
 
 
             return transactions;

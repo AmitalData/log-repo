@@ -33,7 +33,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         Description, 
 	         DWQueryId, 
 	         Inactive, 
-	         TypeCode,
+	         TypeCode, 
+	         AGGridOptionsXML,
 	      }
 
 
@@ -51,7 +52,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         Description, 
 	         DWQueryId, 
 	         Inactive, 
-	         TypeCode,
+	         TypeCode, 
+	         AGGridOptionsXML,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -113,6 +115,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TypeCode))
             {
 				entityPOCO.TypeCode = entityPM.TypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AGGridOptionsXML))
+            {
+				entityPOCO.AGGridOptionsXML = entityPM.AGGridOptionsXML;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -181,6 +188,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.TypeCode = entityPOCO.TypeCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AGGridOptionsXML))
+            {
+					entityPM.AGGridOptionsXML = entityPOCO.AGGridOptionsXML;
+            }
+
 		}
 
 		public void PMToOldPM(BIReportPM entityPM, BIReportPM oldEntityPM)
@@ -242,6 +254,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
                 oldEntityPM.TypeCode = entityPM.TypeCode;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AGGridOptionsXML))
+            {
+                oldEntityPM.AGGridOptionsXML = entityPM.AGGridOptionsXML;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(BIReportPM entityPM)
@@ -262,6 +279,10 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.Description)) //T4 find type == nText 
             {
                 entityPM.Description = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Description));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.AGGridOptionsXML)) //T4 find type == nText 
+            {
+                entityPM.AGGridOptionsXML = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AGGridOptionsXML));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

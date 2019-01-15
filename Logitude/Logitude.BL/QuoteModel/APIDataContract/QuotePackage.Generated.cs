@@ -38,5 +38,8 @@ namespace Logitude.BL.QuoteModel.APIDataContract.ApiV1
     public double? Length { get; set; }
     
     public double? VolumetricWeight { get; set; }
+
+    public  string  ComputingPartnerCode { get; set; }
+
     }
 } 

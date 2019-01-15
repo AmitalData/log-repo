@@ -42,7 +42,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Reference3, 
 	         Notes, 
 	         ExternalOpenAmount, 
-	         ExternalReconcileNumber,
+	         ExternalReconcileNumber, 
+	         IsExternalReconcile,
 	      }
 
 
@@ -83,7 +84,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ExternalOpenAmount, 
 	         IsCreditAccountMulti, 
 	         IsDebitAccountMulti, 
-	         ExternalReconcileNumber,
+	         ExternalReconcileNumber, 
+	         IsExternalReconcile,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -185,6 +187,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalReconcileNumber))
             {
 				entityPOCO.ExternalReconcileNumber = entityPM.ExternalReconcileNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExternalReconcile))
+            {
+				entityPOCO.IsExternalReconcile = entityPM.IsExternalReconcile;
 			}
 			}
 
@@ -296,6 +303,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ExternalReconcileNumber = entityPOCO.ExternalReconcileNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsExternalReconcile))
+            {
+					entityPM.IsExternalReconcile = entityPOCO.IsExternalReconcile;
+            }
+
 		}
 
 		public void PMToOldPM(JournalLinePM entityPM, JournalLinePM oldEntityPM)
@@ -395,6 +407,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalReconcileNumber))
             {
                 oldEntityPM.ExternalReconcileNumber = entityPM.ExternalReconcileNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExternalReconcile))
+            {
+                oldEntityPM.IsExternalReconcile = entityPM.IsExternalReconcile;
             }
 			
 		}

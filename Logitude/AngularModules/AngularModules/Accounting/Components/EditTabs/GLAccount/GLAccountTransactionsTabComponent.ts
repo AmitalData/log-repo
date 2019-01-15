@@ -24,6 +24,7 @@ import {GLAccountExtendedListService} from '../../../Services/ExtendedLists/GLAc
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
 import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
 import {RatesTableListService} from '../../../../Infrastructure/Services/StandardLists/RatesTableListService';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     moduleId: module.id,
@@ -282,6 +283,15 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             IsCustomTemplate: true
         });
         this.columns.push({
+            FieldName: 'DueDate',
+            DataTypeCode: 'DateTime',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.DueDate"), // 'Due Date',
+            Styles: { width: '90px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+            IsCustomTemplate: true
+        });
+        this.columns.push({
             FieldName: 'Source',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Source"), // 'Source',
@@ -297,15 +307,6 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         //    Styles: { width: '113px' },
         //    IsCustomTemplate: true
         //});
-        this.columns.push({
-            FieldName: 'DueDate',
-            DataTypeCode: 'DateTime',
-            Display: TextCodeTranslator.Translate("LedgerTransaction.F.DueDate"), // 'Due Date',
-            Styles: { width: '90px' },
-            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
-        });
         this.columns.push({
             FieldName: 'LocalAmountCredit',
             DataTypeCode: 'String',
@@ -423,8 +424,16 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         if (this.searchFieldFilter) {
             filters.AdditionalFilters.push(this.searchFieldFilter);
         }
+        if (this._dateTypeCode) {
+            var dummyFilter =  new FilterItem("DateTypeCode", this._dateTypeCode, null, null, "Equals", false, false, false, "string", false);
+            filters.AdditionalFilters.push(dummyFilter);
+        }else{
+            var msg = new MessageWindow();
+            msg.Show("No filter selected!!!!");
+            return;
+        }
 
-        filters.PageSize = 30;
+        filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetAll = false;
         filters.GetCount = true;
@@ -499,7 +508,10 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         if (this.searchFieldFilter) {
             filters.AdditionalFilters.push(this.searchFieldFilter);
         }
-
+        if (this._dateTypeCode) {
+            var dummyFilter =  new FilterItem("DateTypeCode", this._dateTypeCode, null, null, "Equals", false, false, false, "string", false);
+            filters.AdditionalFilters.push(dummyFilter);
+        }
         filters.PageSize = 30;
         filters.GetAll = false;
         filters.GetCount = true;
@@ -891,6 +903,43 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
     }
 
+    //#endregion
+
+    //#region Filter Methods
+    public filterSelectedValue: string = 'filter_accounting';
+    public _dateTypeCode: string = '1';
+    FilterItemClicked(itemValue: string) {
+        if (this.filterSelectedValue != itemValue) {
+            this.filterSelectedValue = itemValue;
+            this.FilterLines();
+        }
+    }
+    FilterLines() {
+
+        //Task 46666: Transaction Tab - date filter new design
+        // <DateTypeCode>2</DateTypeCode> 1/2/3
+        // Accounting- - code 1- חשבונאי
+        // Due - code 2 - לגביה
+        // Reference -code-3-  אסמכתא
+
+        switch (this.filterSelectedValue) {
+            case 'filter_accounting':
+                this._dateTypeCode = '1';
+                break;
+            case 'filter_due':
+                this._dateTypeCode = '2';
+                break;
+            case 'filter_reference':
+                this._dateTypeCode = '3';
+                break;
+            default:
+                break;
+        }
+
+        this.RefreshButtonClicked();
+
+
+    }
     //#endregion
 
 }

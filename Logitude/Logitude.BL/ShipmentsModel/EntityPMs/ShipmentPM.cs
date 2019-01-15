@@ -2291,5 +2291,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string FreightPayerAddressId { get; set; }
 
+        public bool HasContainerException { get; set; }
     }
 }

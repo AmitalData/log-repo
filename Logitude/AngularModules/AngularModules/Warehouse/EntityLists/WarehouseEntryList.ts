@@ -69,6 +69,7 @@ export class WarehouseEntryList {
 	Manufacturer: string;
 	FromPartnerId: string;
 	ToPartnerId: string;
+	ChargeableWeightUnitCode: string;
 	
 }
  

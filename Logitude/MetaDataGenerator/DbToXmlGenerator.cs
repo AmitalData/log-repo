@@ -256,7 +256,19 @@ namespace MetaDataGenerator
                             GenerateAdditionalTextCodes(doc, entityElement, table, fields);
                             break;
                         }
-                    case "entity":
+					case "features":
+						{
+							GenerateAdditionalFeatures(doc, entityElement, table, fields);
+							break;
+						}
+					case "features and textCodes":
+						{
+							GenerateAdditionalTextCodes(doc, entityElement, table, fields);
+							GenerateAdditionalFeatures(doc, entityElement, table, fields);
+
+							break;
+						}
+					case "entity":
                         {
                             this.UpdateEntityElement(entityElement, doc, table, tableTextCodes);
                             break;
@@ -643,16 +655,27 @@ namespace MetaDataGenerator
 
         private void GenerateAdditionalFeatures(XmlDocument doc, XmlElement entityElement, ObjectTable table, List<ObjectField> tableObjectFields)
         {
-            //            select* from Features where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') 
-            //and Code<> 'NEW'and Code<> 'UPDATE'and Code<> 'READ'and Code<> 'Module'
-            //and Id not in (select FeatureId from MenuButtons where FeatureId is not null and Tenant = 0 and MenuButtonGroupId in (select Id from MenuButtonGroups where  ObjectTableId in (select id from objecttables where name = 'shipment'))
-            //)
-            //and Id not in (select FeatureId from ObjectTableTabs where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
-            //and Id not in (select FeatureId from Queries where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
+			//            select* from Features where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') 
+			//and Code<> 'NEW'and Code<> 'UPDATE'and Code<> 'READ'and Code<> 'Module'
+			//and Id not in (select FeatureId from MenuButtons where FeatureId is not null and Tenant = 0 and MenuButtonGroupId in (select Id from MenuButtonGroups where  ObjectTableId in (select id from objecttables where name = 'shipment'))
+			//)
+			//and Id not in (select FeatureId from ObjectTableTabs where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
+			//and Id not in (select FeatureId from Queries where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
 
-            RemoveOldNodes(doc, entityElement, "AdditionalFeatures");
-            XmlElement additionalTextCodesListXElement = doc.CreateElement("AdditionalFeatures");
-            entityElement.AppendChild(additionalTextCodesListXElement);
+			XmlElement additionalFeaturesListXElement = (XmlElement)doc.GetElementsByTagName("AdditionalFeatures")[0];
+			if (additionalFeaturesListXElement == null)
+			{
+				additionalFeaturesListXElement = doc.CreateElement("AdditionalFeatures");
+				entityElement.AppendChild(additionalFeaturesListXElement);
+
+			}
+
+
+			RemoveOldNodes(doc, additionalFeaturesListXElement, "Feature");
+
+			//RemoveOldNodes(doc, entityElement, "AdditionalFeatures");
+   //         XmlElement additionalTextCodesListXElement = doc.CreateElement("AdditionalFeatures");
+   //         entityElement.AppendChild(additionalTextCodesListXElement);
 
             List<Feature> additionalFeatures = (from a in allFeatures
                                                 where a.ObjectTableId == table.Id && a.Tenant == 0
@@ -668,7 +691,7 @@ namespace MetaDataGenerator
             {
 
                 XmlElement featureXElement = doc.CreateElement("Feature");
-                additionalTextCodesListXElement.AppendChild(featureXElement);
+				additionalFeaturesListXElement.AppendChild(featureXElement);
 
                 SetAttribute("Code", GetStringValue(feature.Code), featureXElement);
                 SetAttribute("FeatureTypeCode", GetStringValue(feature.FeatureTypeCode), featureXElement);

@@ -323,7 +323,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTicketTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTypeTextCode_0.Id, Code = "All Ticket Types",  QueryGroupCode = "TTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketTypeObjectTable.Id, QuerySection = "TicketType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllTicketTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTypeTextCode_0.Id, Code = "All Ticket Types",  QueryGroupCode = "TTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketTypeObjectTable.Id, QuerySection = "TicketType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllTicketTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketTypesQuery.Id, IndexOrder = 0, ObjectFieldId = TicketTypeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TicketTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -357,8 +357,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable TicketTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TicketType" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable TicketTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TicketType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TicketTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TicketType.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature TicketTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketType.Tab.General", ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

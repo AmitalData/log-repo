@@ -53,5 +53,20 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return result;
         }
+
+        public IQueryable<SharedUserQueryPM> GetSharedUserQueriesByTenant(int tenant)
+        {
+            IQueryable<SharedUserQueryPM> result = (from d in repository.context.SharedUserQueries
+                                                    where d.Tenant == tenant
+                                                    select new SharedUserQueryPM()
+                                                    {
+                                                        Id = d.Id,
+                                                        Tenant = d.Tenant,
+                                                        UserId = d.UserId,
+                                                        QueryId = d.QueryId,
+                                                    });
+
+            return result;
+        }
     }    
 }

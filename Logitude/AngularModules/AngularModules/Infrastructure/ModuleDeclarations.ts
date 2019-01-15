@@ -125,7 +125,7 @@ import { LogWaterMarkComponent } from './Components/Templates/LogWaterMarkCompon
 import {DWLogSearchWindowFieldsComponent} from './Components/QueryColumnsComponents/DWLogSearchWindowFieldsComponent';
 import { ChooseUserComponent } from './Components/NewViewComponent/ChooseUserComponent';
 
-
+import {DWLogSearchAddFieldsComponent} from './Components/QueryColumnsComponents/DWLogSearchAddFieldsComponent';
 
 
 
@@ -289,7 +289,7 @@ export const Components =
         LogSearchWindowComponent,
         DWLogSearchWindowComponent,
         ChooseUserComponent,
-
+        DWLogSearchAddFieldsComponent,
         InfrastructureFieldTemplateComponent,
 
         LogSearchWindowButtonsComponent,
@@ -369,6 +369,8 @@ export class ModuleDeclarations {
             case 'btnComponent': { myResult = btnComponent; break; }
             case 'btnUpdateComponent': { myResult = btnUpdateComponent; break; }
             case 'ToComponent': { myResult = ToComponent; break; }
+            case 'DWLogSearchAddFieldsComponent': { myResult = DWLogSearchAddFieldsComponent; break; }
+                
             case 'NewEntityComponent': { myResult = NewEntityComponent; break; }
             case 'LogSearchWindowComponent': { myResult = LogSearchWindowComponent; break; }
             case 'DWLogSearchWindowComponent': { myResult = DWLogSearchWindowComponent; break; }
