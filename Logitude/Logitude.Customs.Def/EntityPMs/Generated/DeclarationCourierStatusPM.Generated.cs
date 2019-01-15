@@ -1032,6 +1032,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string specialActionsErrorXml ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SpecialActionsErrorXml  
+	   {
+	    
+	     get
+		{
+		   return specialActionsErrorXml;
+		 }
+		 set
+		 {
+		   if(specialActionsErrorXml != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SpecialActionsErrorXml",OldValue=specialActionsErrorXml,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   specialActionsErrorXml=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
