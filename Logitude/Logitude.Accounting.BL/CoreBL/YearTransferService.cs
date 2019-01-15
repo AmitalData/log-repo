@@ -84,7 +84,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 ///journal.JournalNumber = "1";
                 CreateDate = @now,
                 AccountingDate = endOfYearUserInput.AddDays(1),//1.1.(yyyy+1)
-                TypeCode = "1",
+                TypeCode = "0",
                 StatusCode = "2",
                 //journal.CreatedByUserId = theEntityPm.CreatedByUserId;
 
