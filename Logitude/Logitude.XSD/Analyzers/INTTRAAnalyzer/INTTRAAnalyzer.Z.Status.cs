@@ -50,13 +50,13 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     if (ContainerNumber != null)
                                     {
                                         ContainerNumber = ContainerNumber.Trim();
-                                    }
 
-                                    iContainer = this.shipmentPM.ShipmentPackages.Where(d => d.ContainerNumber == ContainerNumber).FirstOrDefault();
+                                        iContainer = this.shipmentPM.ShipmentPackages.Where(d => d.ContainerNumber != null && d.ContainerNumber.ToUpper() == ContainerNumber.ToUpper()).FirstOrDefault();
 
-                                    if (iContainer != null)
-                                    {
-                                        isContainerExists_Shipment = true;
+                                        if (iContainer != null)
+                                        {
+                                            isContainerExists_Shipment = true;
+                                        }
                                     }
                                 }
                             }
@@ -243,7 +243,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                             if (!iShipmentContainerStatusRepository.DoesRecordExist(iHash))
                             {
                                 this.UpdateShipmentRoutings(locations, EventCode, EventLocationeDate);
-                                this.UpdateContainerFields(iContainer, iVoyageNumber, DeparturePortCode, ArrivalPortCode, DepartureDate, ArrivalDate, DepartureDateIndicator, ArrivalDateIndicator);
+                                this.UpdateContainerFields(iContainer, iVoyageNumber, DeparturePortId, DeparturePortCode, DepartureDate, DepartureDateIndicator, ArrivalPortId, ArrivalPortCode, ArrivalDate, ArrivalDateIndicator);
 
                                 shipmentPM.INTTRALastStatusDate = iLogDate;
                                 this.UpdateLastStatus(EventCode, EventLocationeDate, iLogDate, iContainer);
@@ -583,7 +583,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                             {
                                                 if (this.shipmentPM.OnCarriageFromPortId != null && this.shipmentPM.OnCarriageToPortId != null)
                                                 {
-                                                    if (PortId == this.shipmentPM.PreCarriageToPortId)
+                                                    if (PortId == this.shipmentPM.OnCarriageToPortId)
                                                     {
                                                         switch (iLocation.DateTime.DateType)
                                                         {
@@ -672,15 +672,15 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 iContainer.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             }
         }
-        private void UpdateContainerFields(ShipmentPackagePM iContainer, string iVoyageNumber, string departurePortCode, string arrivalPortCode, DateTime? departureDate, DateTime? arrivalDate, string departureDateIndicator, string arrivalDateIndicator)
+        private void UpdateContainerFields(ShipmentPackagePM iContainer, string iVoyageNumber, string departurePortId, string departurePortCode, DateTime? departureDate, string departureDateIndicator, string arrivalPortId, string arrivalPortCode, DateTime? arrivalDate, string arrivalDateIndicator)
         {
             iContainer.VoyageTripNumber = iVoyageNumber;
 
-            if (departurePortCode != null)
+            if (departurePortCode == null)
             {
                 departurePortCode = "";
             }
-            if (arrivalPortCode != null)
+            if (arrivalPortCode == null)
             {
                 arrivalPortCode = "";
             }
@@ -697,9 +697,57 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 iContainer.ETA = arrivalDate;
             }
 
+            bool iHasContainerException = false;
+            List<ShipmentPackagePM> AllContainers = this.shipmentPM.ShipmentPackages.ToList();
+            if (AllContainers.Count > 1)
+            {
+                List<string> AllVoyageNumber = (from a in AllContainers
+                                                where a.VoyageTripNumber != null
+                                                group a by iVoyageNumber into g
+                                                select g.Key).ToList();
+
+                if (AllVoyageNumber.Count >1)
+                {
+                    iHasContainerException = true;
+                }
+            }
+
+            if (iHasContainerException)
+            {
+                iContainer.HasContainerException = true;
+                shipmentPM.HasContainerException = true;
+            }
+
+            else
+            {
+                iContainer.HasContainerException = false;
+                shipmentPM.HasContainerException = false;
+
+                if (departureDateIndicator == "E")
+                {
+                    if (departurePortId == this.shipmentPM.MainCarriageFromPortId)
+                    {
+                        if (this.shipmentPM.MainCarriageATD == null)
+                        {
+                            this.shipmentPM.MainCarriageETD = departureDate;
+                        }
+                    }
+                }
+
+                if (arrivalDateIndicator == "E")
+                {
+                    if (arrivalPortId == this.shipmentPM.MainCarriageFinalDestinationPortId)
+                    {
+                        if (this.shipmentPM.MainCarriageATA == null)
+                        {
+                            this.shipmentPM.MainCarriageETA = arrivalDate;
+                        }
+                    }
+                }
+            }
+
             iContainer.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
         }
-
         private DateTime? GetDateFromString(INTTRA_Status.LocationType iLocation)
         {
             // 201804241920

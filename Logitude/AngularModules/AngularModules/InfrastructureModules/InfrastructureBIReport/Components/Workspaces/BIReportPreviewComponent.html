@@ -1,4 +1,8 @@
-
+<style type="text/css">
+    button{
+        display:initial !important;
+    }
+</style>
 <div class="MediaFillAbsolute" style="background: white;">
     <div class="MarginAbsolute10" style="top: 5px;">
         <table>
@@ -49,14 +53,14 @@
                                 <div></div>
                             </td>
 
-                            <td style="width: 90px;float:right">
+                            <td style="width: 65px;float:right">
                                 <button *ngIf="!HasChanged" class="Button" style="height:25px;" (click)="SaveBIReport()">
                                     <img [ngStyle]="{'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="LeftCenter" />
-                                    <span style="line-height: 19px;" [ngStyle]="{'margin-left': '5px'}">Save</span>
+                                    <span style="line-height: 19px;" [ngStyle]="{'margin-left': '3px'}">Save</span>
                                 </button>
                                 <button *ngIf="HasChanged" class="EntityChangesButton" (click)="SaveBIReport()" style="height:25px;">
                                     <img src="./Images/Buttons/Save.Red.png" [className]="LeftCenter" [ngStyle]="{'margin-left': '2px'}" />
-                                    <span style="line-height: 19px;" [ngStyle]="{'margin-left': '5px'}">Save</span>
+                                    <span style="line-height: 19px;" [ngStyle]="{'margin-left': '3px'}">Save</span>
                                 </button>
                             </td>
                         </tr>
@@ -72,7 +76,7 @@
 
             <tr>
                 <td>
-                    <!--   [suppressCsvExport]="true" [animateRows]="true"  [showToolPanel]="true"-->
+                    <!--   [suppressCsvExport]="true" [animateRows]="true"  [showToolPanel]="true"    [rowModelType]="'virtual'"   [floatingFilter]="true" -->
                     <div class="MediaFill">
                         <ag-grid-angular style="width:100%; height:100%;"
                                          #agGrid
@@ -80,14 +84,15 @@
                                          class="ag-theme-balham"
                                          [enableSorting]="true"
                                          [enableFilter]="true"
-                                         [floatingFilter]="true"
                                          [rowData]="rowData"
                                          [columnDefs]="columnDefs"
-                                         [rowSelection]="multiple"
-                                         [rowModelType]="virtual"
+                                         [rowSelection]="'multiple'"
                                          [multiSortKey]="'ctrl'"
                                          [excelStyles]="excelStyles"
                                          (gridReady)="onGridReady($event)"
+                                         (sortChanged)="onSortChanged($event)"
+                                         (columnResized)="onColumnResized($event)"
+                                         (columnMoved)="onColumnMoved($event)"
                                          [paginationPageSize]="100" [pagination]="true">
                         </ag-grid-angular>
                     </div>

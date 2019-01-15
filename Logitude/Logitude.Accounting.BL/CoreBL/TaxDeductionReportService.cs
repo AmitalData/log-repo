@@ -595,7 +595,16 @@ namespace Logitude.Accounting.BL.CoreBL
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("TDR856", tenant);
 
             string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
-            string name = "A856." + DeductionFileNumber + "." + taxDeductionReport.TaxYear.ToString().Substring(1, 3);
+            string deductionfilenumber;
+            if (DeductionFileNumber == null)
+            {
+                deductionfilenumber = "000000000";
+            }
+            else {
+                deductionfilenumber = DeductionFileNumber;
+            }
+
+            string name = "A856." + deductionfilenumber + "." + taxDeductionReport.TaxYear.ToString().Substring(1, 3);
             DocumentsFilingPM document = new DocumentsFilingPM()
             {
                 Description = "TDR856 Text File",

@@ -13,6 +13,9 @@ import {BusinessHoursHolidayPM} from '../EntityPMs/BusinessHoursHolidayPM';
 import {Guid} from '../Utilities/Guid';
 import {CustomFieldClass} from '../DataContracts/CustomFieldClass'; 
 import {TasksSchedulerPM} from '../EntityPMs/TasksSchedulerPM';
+import { BIReportPM } from '../EntityPMs/BIReportPM';
+import { ClassLevelValidator } from '../Validators/ClassLevelValidator';
+
 
 @Injectable()
 
@@ -213,7 +216,7 @@ export class InfrastructureDomainService {
 
             var mappedEntity: FeaturesUpdateHelper = this.MapJsonToFeaturesUpdateHelper(entityPM, false);
 
-            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
+            return this._http.put(this._apiUrl + "/PutFeatures", JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
                 var myJsonResult = res.json();
 
                 var mappedResult: FeaturesUpdateHelper = this.MapJsonToFeaturesUpdateHelper(myJsonResult, true, entityPM);
@@ -696,6 +699,30 @@ export class InfrastructureDomainService {
         });
     }
 
+    GetByBIReportId(Queryid: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetByBIReportId?' + 'Id=' + Queryid, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
+                var entity: BIReportXMLData = new BIReportXMLData();
+                if (pm) {
+                    entity.BIReportPM = pm.BIReportPM;
+                    entity.Columns = pm.Columns;
+                }
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
+                var servertime = response.headers.get('ServerExecutionTime');
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     UpdateBIReportXMLData(QueryData: BIReportXMLData) {
         return Observable.defer(() => {
             var authHeader = new Headers();
@@ -704,13 +731,14 @@ export class InfrastructureDomainService {
             var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
             var response: ServiceResponse;
             response = new ServiceResponse();
+
+            var validator: ClassLevelValidator;
+            validator = new ClassLevelValidator();
+
             if (errorsArray.length == 0) {
-                //var mappedEntity: QueryColumnPM;
-                //mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-                //////////////////////////////////////////////////////
-                //var mappedEntity: DWSubQueryPM;
-                //mappedEntity = this.MapJsonToEntityPM(entityPM.SubQueryData, false);
-                //entityPM.SubQueryData = mappedEntity;
+                var mappedEntity: BIReportPM;
+                mappedEntity = this.MapJsonToEntityPM(QueryData.BIReportPM, false);
+                QueryData.BIReportPM = mappedEntity;
                 var temp = this.deepClone(QueryData);
 
                 /////////////////////////////////////////////////////
@@ -729,6 +757,27 @@ export class InfrastructureDomainService {
         }
         );
     }
+
+    MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: BIReportPM = null) {
+
+        if (!entityPM) {
+
+            entityPM = new BIReportPM();
+        }
+
+        var jsonPMKeys = Object.keys(jsonPM);
+
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties") {
+
+                continue;
+            }
+            var property = jsonPMKeys[key];
+            entityPM[property] = jsonPM[property];
+        }
+        return entityPM;
+    }
+
 
     public deepClone(obj, hash = new WeakMap()) {
         // Do not try to clone primitives or functions
@@ -794,6 +843,7 @@ export class BusinessRecordsSummary {
 
 export class BIReportXMLData {
     public BIReportId: string;
+    public BIReportPM: BIReportPM;
     public Columns: BIReportColumnData[];  
 }
 

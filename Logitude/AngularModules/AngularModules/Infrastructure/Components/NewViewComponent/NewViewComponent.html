@@ -172,11 +172,13 @@
                             {{'General.O.ViewName' | TextCodeTranslationPipe}}:
                         </td>
 
-                        <td  style="float:left;width:190px;">
-                            <input type="text" [(ngModel)]="QueryName" />
+                        <td style="float:left;width:190px;">
+                            <input type="text" [(ngModel)]="QueryName" [disabled]="!IsSaveButtonEnabled"/>
                         </td>
 
-                        <td style="width:10px;"><div></div></td>
+                        <td style="width:10px;">
+                            <div></div>
+                        </td>
 
                         <td>
                             <div *ngIf="IsSharedByMessageVisible" class="OrangeInfo">
@@ -188,10 +190,10 @@
             </td>
 
             <td *ngIf="RTL == true" style="float: right;width: 305px;">
-                <input type="text" style="float:left;width:190px;" [(ngModel)]="QueryName" />
+                <input type="text" style="float:left;width:190px;" [(ngModel)]="QueryName" [disabled]="!IsSaveButtonEnabled"/>
                 <label style="float:left;width:80px;">{{'General.O.ViewName' | TextCodeTranslationPipe}}:</label>
                 <img style="float:left;margin: 5px;" src="./Images/Icons/Validation.png" />
-                
+
             </td>
         </tr>
 
@@ -226,8 +228,7 @@
                                         </li>
                                     </ul>
                                 </td>
-                                <td>
-                                </td>
+                                <td></td>
                                 <td style="width:170px" *ngIf="SpotlightFeatureEnabled">
                                     <table>
                                         <tr>
@@ -235,7 +236,7 @@
                                                 <label> Show in Spotlight Mode</label>
                                             </td>
                                             <td>
-                                                <CheckBox [IsChecked]="ShowInSpotLight" (Checked)="ShowInSpotLight = $event"></CheckBox>
+                                                <CheckBox [IsEnabled]="IsSaveButtonEnabled" [IsChecked]="ShowInSpotLight" (Checked)="ShowInSpotLight = $event"></CheckBox>
                                             </td>
                                             <td style="width:10px"></td>
                                         </tr>
@@ -243,7 +244,7 @@
                                 </td>
                             </tr>
                         </table>
-                       
+
                     </div>
 
                     <div class="TabControlBody">
@@ -269,7 +270,8 @@
                                                         <tr>
                                                             <td style="height:25px;width:100%">
                                                                 <div style="width:100%;height:100%;">
-                                                                    <input type="text" [id]="SearchFieldsId" placeholder="{{'General.O.Search' | TextCodeTranslationPipe}}" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [(ngModel)]="SearchText" style="background-color:white;background: url(Images/Search.png) no-repeat scroll;width:100%;height:100%;" [style.backgroundPosition]="RTL == true ? 'left center' : 'right center'" [style.paddingRight.px]="RTL == true ? 0 : 30" [style.paddingLeft.px]="RTL == true ? 30 : 0"><br>
+                                                                    <input type="text" [id]="SearchFieldsId" placeholder="{{'General.O.Search' | TextCodeTranslationPipe}}" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [(ngModel)]="SearchText" style="background-color:white;background: url(Images/Search.png) no-repeat scroll;width:100%;height:100%;" [style.backgroundPosition]="RTL == true ? 'left center' : 'right center'" [style.paddingRight.px]="RTL == true ? 0 : 30" [style.paddingLeft.px]="RTL == true ? 30 : 0">
+                                                                    <br>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -281,7 +283,9 @@
                                                                             <LogListBox [DataSource]="unSelectedList" [Height]="'380'" [Binding]="'ListTextCodeCode'" [DataSourceChanged]="onUnSelectedDataSourceChangedEvent" [event]="onUnSelectedDataLoadedEvent" (SelectedItemChanged)="onFieldSelectedItemChanged($event)"></LogListBox>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr><td style="height:100%;"></td></tr>
+                                                                    <tr>
+                                                                        <td style="height:100%;"></td>
+                                                                    </tr>
                                                                 </table>
                                                             </td>
                                                         </tr>
@@ -291,12 +295,12 @@
                                                 </div>
                                             </td>
                                             <td style="width: 10%; vertical-align: middle;">
-                                                <button (click)="btnAdd_Click()" class="Button" [disabled]="IsbtnAddEnabled" style="width:80px;margin: 7px;">
+                                                <button (click)="btnAdd_Click()" class="Button" [disabled]="!IsbtnAddEnabled" style="width:80px;margin: 7px;">
                                                     {{'General.B.Add' | TextCodeTranslationPipe}}
                                                     <img *ngIf="RTL == false" src="./Images/Icons/ArrowRight.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
                                                     <img *ngIf="RTL == true" src="./Images/Icons/ArrowLeft.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
                                                 </button>
-                                                <button (click)="btnRemove_Click()" class="Button" [disabled]="IsbtnRemoveEnabled" style="width:80px;margin: 7px;">
+                                                <button (click)="btnRemove_Click()" class="Button" [disabled]="!IsbtnRemoveEnabled" style="width:80px;margin: 7px;">
                                                     <img *ngIf="RTL == false" src="./Images/Icons/ArrowLeft.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
                                                     <img *ngIf="RTL == true" src="./Images/Icons/ArrowRight.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
                                                     {{'General.B.Remove' | TextCodeTranslationPipe}}
@@ -313,10 +317,10 @@
                                                                         <!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}-->
                                                                     </div>
                                                                     <div [style.float]="RTL == true ? 'left' : 'right'">
-                                                                        <button (click)="btnDown_Click()" class="Button" [disabled]="IsbtnUpEnabled" style="width:26px;margin-right: 5px; float:right;">
+                                                                        <button (click)="btnDown_Click()" class="Button" [disabled]="!IsbtnUpEnabled" style="width:26px;margin-right: 5px; float:right;">
                                                                             <img src="./Images/Icons/ArrowDown.png" style="height:16px;vertical-align:middle;" />
                                                                         </button>
-                                                                        <button (click)="btnUp_Click()" class="Button" [disabled]="IsbtnDownEnabled" style="width:26px;margin-right: 2px;float:right;">
+                                                                        <button (click)="btnUp_Click()" class="Button" [disabled]="!IsbtnDownEnabled" style="width:26px;margin-right: 2px;float:right;">
                                                                             <img src="./Images/Icons/ArrowUp.png" style="height:16px;vertical-align:middle;" />
                                                                         </button>
                                                                     </div>
@@ -331,7 +335,9 @@
                                                                             <LogListBox [DataSource]="OrderedQueryColumnsList" [Height]="'380'" [Binding]="'ObjectFieldListLabelTextCodeCode'" [event]="onSelectedDataLoadedEvent" [DataSourceChanged]="onDataSourceChangedEvent" (SelectedItemChanged)="onSelectedItemChanged($event)"></LogListBox>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr><td style="height:100%;"></td></tr>
+                                                                    <tr>
+                                                                        <td style="height:100%;"></td>
+                                                                    </tr>
                                                                 </table>
                                                             </td>
                                                         </tr>
@@ -372,7 +378,8 @@
                                                                     </div>
                                                                     <div [style.float]="RTL == true ? 'left' : 'right'">
                                                                         <div style="width:100%;height:100%;">
-                                                                            <input type="text" [id]="FiltersSearchFieldsId" placeholder="{{'General.O.Search' | TextCodeTranslationPipe}}" (focus)="ClearFiltersPlaceHolder();" (blur)="FillFiltersPlaceHolder();" [(ngModel)]="FilterssearchText" style="background-color:white;background: url(Images/Search.png) no-repeat scroll;width:100%;height:100%;" [style.backgroundPosition]="RTL == true ? 'left center' : 'right center'" [style.paddingRight.px]="RTL == true ? 0 : 30" [style.paddingLeft.px]="RTL == true ? 30 : 0"><br>
+                                                                            <input type="text" [id]="FiltersSearchFieldsId" placeholder="{{'General.O.Search' | TextCodeTranslationPipe}}" (focus)="ClearFiltersPlaceHolder();" (blur)="FillFiltersPlaceHolder();" [(ngModel)]="FilterssearchText" style="background-color:white;background: url(Images/Search.png) no-repeat scroll;width:100%;height:100%;" [style.backgroundPosition]="RTL == true ? 'left center' : 'right center'" [style.paddingRight.px]="RTL == true ? 0 : 30" [style.paddingLeft.px]="RTL == true ? 30 : 0">
+                                                                            <br>
                                                                         </div>
                                                                     </div>
                                                                 </td>
@@ -384,9 +391,7 @@
                                                                             <div [style.float]="RTL == true ? 'right' : 'left'" style="width: 50%;">
                                                                                 <div *ngFor="let item of NEWallFilterFieldsClass.FilterFields" [hidden]="!NEWallFilterFieldsClass">
                                                                                     <div *ngIf="item" class="CheckBox" style="margin: 10px;">
-                                                                                        <LogCheckBox [ObjectFieldName]="'Exists'" [DataContext]="item" [Text]="item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe" [Value]="item.Exists"></LogCheckBox>
-                                                                                        <!--<input id="{{item.ControlId}}" type="checkbox" [(ngModel)]="item.Exists" />
-                                                                    <label [attr.for]="item.FieldName">{{item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe}}</label>-->
+                                                                                        <CheckBox [IsEnabled]="IsSaveButtonEnabled" (Checked)="item.Exists = $event" [IsChecked]="item.Exists" [Text]="item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe"></CheckBox>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -408,7 +413,7 @@
                                                                     </div>
                                                                     <div [style.float]="RTL == true ? 'left' : 'right'">
                                                                         <div style="width:100%;height:100%;">
-                                                                            <button class="Button" style="height:21px;width:64px;" (click)="CLearAll()">{{'General.O.ClearAll' | TextCodeTranslationPipe}}</button>
+                                                                            <button class="Button" style="height:21px;width:64px;" [disabled]="!IsSaveButtonEnabled" (click)="CLearAll()">{{'General.O.ClearAll' | TextCodeTranslationPipe}}</button>
                                                                         </div>
                                                                     </div>
                                                                 </td>
@@ -459,14 +464,14 @@
                                                                                                 <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" (SelectedItemChanged)="item.OperationValueChanged($event)" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                                                                                 <div style="width:150px;">
                                                                                                     <!--<LogLov
-                                                                                        *ngIf="item.ObjectField"
-                                                                                        [ObjectFieldName]="'TextValue'"
+                                                                                                            *ngIf="item.ObjectField"
+                                                                                                            [ObjectFieldName]="'TextValue'"
 
-                                                                                        [DataContext]="item"
-                                                                                        [LookUpTableName]="item.ObjectField.ObjectTable_LookUpTableName"
-                                                                                        [PlaceHolder]="item.ObjectField.ObjectTable_LookUpTableName"
-                                                                                        (ValueChanged)="item.onTextChange($event)">
-                                                                                </LogLov>-->
+                                                                                                            [DataContext]="item"
+                                                                                                            [LookUpTableName]="item.ObjectField.ObjectTable_LookUpTableName"
+                                                                                                            [PlaceHolder]="item.ObjectField.ObjectTable_LookUpTableName"
+                                                                                                            (ValueChanged)="item.onTextChange($event)">
+                                                                                                    </LogLov>-->
                                                                                                     <LogLov *ngIf="item.ObjectField"
                                                                                                             [SelectedValue]="item.TextValue"
                                                                                                             [ObjectFieldName]="'TextValue'"
@@ -512,16 +517,16 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                             <!--<div *ngSwitchCase="'PickList'" style="display: inline-flex;">
-                                                                            <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
-                                                                            <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                                                                <PickList [ObjectFieldName]="item.ObjectField.FieldName"
-                                                                                          [ObjectTableName]="ObjectTableName" [NoValidation]="true" [FromNewView]="true"
-                                                                                          [DataContext]="item"
-                                                                                          (SelectedItemChanged)="item.onTextChange($event ? $event.Id:'')"
-                                                                                          [PlaceHolder]="item[item.ObjectField.FieldName]!=null?item[item.ObjectField.FieldName].Code:''">
-                                                                                </PickList>
-                                                                            </div>
-                                                                        </div>-->
+                                                                                                <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
+                                                                                                <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
+                                                                                                    <PickList [ObjectFieldName]="item.ObjectField.FieldName"
+                                                                                                              [ObjectTableName]="ObjectTableName" [NoValidation]="true" [FromNewView]="true"
+                                                                                                              [DataContext]="item"
+                                                                                                              (SelectedItemChanged)="item.onTextChange($event ? $event.Id:'')"
+                                                                                                              [PlaceHolder]="item[item.ObjectField.FieldName]!=null?item[item.ObjectField.FieldName].Code:''">
+                                                                                                    </PickList>
+                                                                                                </div>
+                                                                                            </div>-->
                                                                                             <div *ngSwitchCase="'PickList'" style="display: inline-flex;">
                                                                                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                                                                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
@@ -559,98 +564,104 @@
                         <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'SHR'" [style.float]="RTL == true ? 'right' : 'left'">
                             <div class="LocationDirective" LocationDirective Code="SHR">
                                 <table style="margin: 7px 20px 7px 7px;">
-                                    <tr style="height:5px;">
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <tr style="height:1px;" *ngIf="IsSharedByVisible">
-                                        <td style="font-size:13px; font-family:Arial; font-style:italic;">
-                                            Shared by: {{SharedByUserName}} ({{SharedByUserEmail}})
-                                        </td>
-                                    </tr>
-
-                                    <tr style="height:5px;" *ngIf="IsSharedByVisible">
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="FormFieldRow">
-                                        <td>
+                                    <tr>
+                                        <td style="width:500px;">
                                             <table>
-                                                <tr>
-                                                    <td style="width:100px" class="Label">Share with:</td>
-                                                    <td style="width:150px;">
-                                                        <ComboBox [ItemsSource]="ShareValuesList" [SelectedItem]="ShareValueSelectedItem" [Binding]="'Name'" (SelectedItemChanged)="ShareValueSelectedItem = $event"></ComboBox>
+                                                <tr style="height:5px;">
+                                                    <td>
+                                                        <div></div>
                                                     </td>
-                                                    <td style="width:30px;" *ngIf="IsChooseUsersVisible">
-                                                        <Hyperlink style="margin-left:5px;" (click)="ChooseUsers()" [FontSize]="12" [Text]="'Choose'"></Hyperlink>
-                                                    </td>
-                                                    <td *ngIf="IsChooseUsersVisible">
-                                                        <div style="margin-left:5px;color: #1E8DC4">( {{ShareWithUsersCount}} selected )</div>
-                                                    </td>
-                                                    <td><div></div></td>
                                                 </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
 
-                                    <tr style="height:10px;">
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
+                                                <tr style="height:1px;" *ngIf="IsSharedByVisible">
+                                                    <td style="font-size:13px; font-family:Arial; font-style:italic;">
+                                                        Shared by: {{SharedByUserName}} ({{SharedByUserEmail}})
+                                                    </td>
+                                                </tr>
 
-                                    <tr style="height:100px;">
-                                        <td>
-                                            <table>
-                                                <tr>
-                                                    <td style="width:500px;">
-                                                        <div class="SimpleGridView">
-                                                            <div class="SimpleGridViewHeader">
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width:200px; min-width:200px; max-width:200px; text-align:center">Email</td>
-                                                                        <td style="width:200px; min-width:200px; max-width:200px; text-align:center ">Name</td>
-                                                                        <td class="LastChild">
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
+                                                <tr style="height:5px;" *ngIf="IsSharedByVisible">
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
 
-                                                            <div class="SimpleGridViewBody">
-                                                                <table>
-                                                                    <tr class="SimpleGridViewRow" *ngFor="let item of SharedWithUsersItemsSource">
-                                                                        <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
-                                                                            <div style="text-align:left">{{item.Email}}</div>
-                                                                        </td>
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:100px" class="Label">Share with:</td>
+                                                                <td style="width:150px;">
+                                                                    <ComboBox [IsDisabled]="!IsSaveButtonEnabled" [ItemsSource]="ShareValuesList" [SelectedItem]="ShareValueSelectedItem" [Binding]="'Name'" (SelectedItemChanged)="ShareValueSelectedItem = $event"></ComboBox>
+                                                                </td>
+                                                                <td style="width:30px;" *ngIf="IsChooseUsersVisible">
+                                                                    <Hyperlink [IsEnabled]="IsSaveButtonEnabled" style="margin-left:5px;" (click)="ChooseUsers()" [FontSize]="12" [Text]="'Choose'"></Hyperlink>
+                                                                </td>
+                                                                <td *ngIf="IsChooseUsersVisible">
+                                                                    <div style="margin-left:5px;color: #1E8DC4">( {{ShareWithUsersCount}} selected )</div>
+                                                                </td>
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
 
-                                                                        <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
-                                                                            <div style="text-align:left">{{item.Name}}</div>
-                                                                        </td>
+                                                <tr style="height:10px;">
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
 
-                                                                        <td class="CellTools">
-                                                                            <span class="CellSeparator"></span>
-                                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteUser(item)"></IconButton>
-                                                                        </td>
-                                                                    </tr>
+                                                <tr style="height:350px;">
+                                                    <td>
+                                                        <div class="MediaFill">
+                                                            <div class="SimpleGridView" *ngIf="IsChooseUsersVisible">
+                                                                <div class="SimpleGridViewHeader">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width:200px; min-width:200px; max-width:200px; text-align:center">Email</td>
+                                                                            <td style="width:200px; min-width:200px; max-width:200px; text-align:center ">Name</td>
+                                                                            <td class="LastChild">
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
 
-                                                                    <tr>
-                                                                        <td colspan="3">
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
+                                                                <div class="SimpleGridViewBody">
+                                                                    <table>
+                                                                        <tr class="SimpleGridViewRow" *ngFor="let item of SharedWithUsersItemsSource">
+                                                                            <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                                                                {{item.Email}}
+                                                                            </td>
+
+                                                                            <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                                                                {{item.Name}}
+                                                                            </td>
+
+                                                                            <td class="CellTools">
+                                                                                <span class="CellSeparator"></span>
+                                                                                <IconButton [IsEnabled]="IsSaveButtonEnabled" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteUser(item)"></IconButton>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td colspan="3">
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </td>
-
-                                                    <td><div></div></td>
                                                 </tr>
                                             </table>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
                                         </td>
                                     </tr>
                                 </table>
@@ -665,8 +676,8 @@
             <td style="width:100%;" [style.float]="RTL == true ? 'left' : 'right'">
                 <button class="RedButton" [disabled]="!IsSaveButtonEnabled" (click)="btnCreateNewQuery_Click()" [style.float]="RTL == true ? 'left' : 'right'" style="width:72px;">{{CreateBtnText}}</button>
                 <button class="Button" (click)="CancelButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
-                <button class="Button" (click)="DeleteButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Delete' | TextCodeTranslationPipe}}</button>
-            </td> 
+                <button *ngIf="!IsNew" class="Button" [disabled]="!IsSaveButtonEnabled" (click)="DeleteButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Delete' | TextCodeTranslationPipe}}</button>
+            </td>
         </tr>
     </table>
 </div>

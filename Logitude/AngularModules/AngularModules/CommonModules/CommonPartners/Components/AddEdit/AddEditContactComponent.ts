@@ -93,17 +93,11 @@ export class AddEditContactComponent {
                     if (!AppTool.IsNullOrEmpty(this.EntityPM.Email)) {
                         isBlockingEmail = true;
                     }
-                }
-                if (this.DataContext.fatherComponent.ObjectTableName == "Customer" && !this.DataContext.IsNewEntity) {
-                    args.BlockEditingEmail = false;
-                    args.ShowSearchContacts = false;
-                }
-                else {
-                    args.BlockEditingEmail = isBlockingEmail;
-                }
+                }         
 
 
-              
+                args.BlockEditingEmail = isBlockingEmail;
+
 
                 this.ContactTemplate.InitTemplate(args);
                 this.Clone();

@@ -619,7 +619,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTicketClassificationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketClassificationTextCode_0.Id, Code = "All Ticket Classifications",  QueryGroupCode = "TCQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketClassificationObjectTable.Id, QuerySection = "TicketClassification", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketClassificationFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllTicketClassificationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketClassificationTextCode_0.Id, Code = "All Ticket Classifications",  QueryGroupCode = "TCQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketClassificationObjectTable.Id, QuerySection = "TicketClassification", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketClassificationFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllTicketClassificationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketClassificationsQuery.Id, IndexOrder = 0, ObjectFieldId = TicketClassificationObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TicketClassificationObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -645,8 +645,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable TicketClassificationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TicketClassification" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable TicketClassificationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TicketClassification" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TicketClassificationGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TicketClassification.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = TicketClassificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature TicketClassificationGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketClassification.Tab.General", ObjectTableId = TicketClassificationObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketClassification.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
