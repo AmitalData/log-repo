@@ -197,9 +197,14 @@
 
         <li class="ActionButtonsParent TextTrimming" [class.ComboBoxItem]="LayoutDirection!='rtl'" [class.ComboBoxItemRTL]="LayoutDirection=='rtl'" style="margin-bottom: 4px;" *ngFor="let item of UserItemSource" (click)="ItemClicked(item)" [class.Selected]="item === SelectedItem">
             <div>
-                <div [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
-                    <img (click)="ItemClicked(item)" [attr.src]="item.SharedByUserId ? './Images/Menu/Shared.png' : './Images/Menu/Person.small.png'" width="18" style="margin-right:5px;margin-top:9px;position:relative;pointer-events:none;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" />
+                <div *ngIf="item.SharedByUserId" title="Shared View" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
+                    <img (click)="ItemClicked(item)" [attr.src]="'./Images/Menu/Shared.png'" width="18" style="margin-right:5px;margin-top:9px;position:relative;pointer-events:none;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" />
                 </div>
+
+                <div *ngIf="!item.SharedByUserId" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
+                    <img (click)="ItemClicked(item)" [attr.src]="'./Images/Menu/Person.small.png'" width="18" style="margin-right:5px;margin-top:9px;position:relative;pointer-events:none;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" />
+                </div>
+
                 <div style="max-width:100px;" class="TextTrimming" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" [style.padding-right]="LayoutDirection=='rtl' ? '15px' : ''">
                     <span (click)="ItemClicked(item)" title="{{item[Binding] | TextCodeTranslationPipe}}" *ngIf="Binding != null" style="float:left;max-width:100px;" class="TextTrimming">{{item[Binding] | TextCodeTranslationPipe}}</span>
                 </div>

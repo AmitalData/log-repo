@@ -190,6 +190,15 @@
         margin-left: 5px;
         display: inline-block;
     }
+    .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                                      not supported by any browser */
+    }
 </style>
 <table>
     <tr>
@@ -226,12 +235,12 @@
                                                         <table style="vertical-align:top;top:0px;">
                                                             <tr style="text-align:left;vertical-align:top" *ngFor="let Group of DataSource">
                                                                 <td style="min-height:30px;">
-                                                                    <table>
+                                                                    <table class="noselect">
                                                                         <tr>
                                                                             <td>
-                                                                                <div style="width:100%;height:100%;background-color: #E4E4E4;border-bottom: 1px solid;border-top: 1px solid;border-color:rgb(167, 169, 172);height: 27px;">
+                                                                                <div (click)="Group.GroupClicked()" style="width:100%;height:100%;background-color: #E4E4E4;border-bottom: 1px solid;border-top: 1px solid;border-color:rgb(167, 169, 172);height: 27px;">
                                                                                     <div style="float:left;">
-                                                                                        <img [src]="Group.DetailsIcon" style="margin-top:5px;" (click)="Group.GroupClicked()"/>
+                                                                                        <img [src]="Group.DetailsIcon" style="margin-top:5px;" />
                                                                                         <label style="margin:5px;vertical-align: middle;">{{Group.Key}}</label>
                                                                                     </div> 
                                                                                 </div>
