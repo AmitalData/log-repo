@@ -177,6 +177,8 @@ export class BankAccountToRefundComponent
         else {
             this.UIProperties.SetRequired("BankCode", null, true);
         }
+        this.AccountBranch = null;
+        this.AccountNumber = null;
     }
 
     get AccountBranch() { return this.RequestParams ? this.RequestParams.AccountBranch : null; }
@@ -190,6 +192,7 @@ export class BankAccountToRefundComponent
         else {
             this.UIProperties.SetRequired("AccountBranch", null, true);
         }
+        this.AccountNumber = null;
     }
 
     get AccountNumber() { return this.RequestParams ? this.RequestParams.AccountNumber : null; }
