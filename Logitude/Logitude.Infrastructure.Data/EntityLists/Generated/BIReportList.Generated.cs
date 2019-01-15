@@ -38,6 +38,8 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public bool Inactive  { get; set; }
        [DataMember]
        public string TypeCode  { get; set; }
+       [DataMember]
+       public string AGGridOptionsXML  { get; set; }
    }
 
 }

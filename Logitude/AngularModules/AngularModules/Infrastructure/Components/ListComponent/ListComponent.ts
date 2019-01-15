@@ -620,13 +620,6 @@ export class ListComponent implements OnInit, AfterViewInit {
 
 
     }
-    IsShowNewDepositionFormLink: boolean;
-    NewDepositionFormClcik() {
-
-        var link = "https://forms.gov.il/globaldata/getsequence/getHtmlForm.aspx?formType=SOVE01_hasava@taxes.gov.il";
-        var win = window.open(link, '_blank');
-        win.focus();
-    }
 
 
 
@@ -890,16 +883,21 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.UserQueries = allQueries.filter(x => x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
 
         if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == false) {
-            this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective)[0];
+            //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective)[0];
+            this.SelectedQuery = allQueries.filter(f => f.Perspective == this.listArgs.Perspective)[0];
+
             this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGranted(f.FeatureId) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
         else if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == true) {
-            this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
+            //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
+            this.SelectedQuery = allQueries.filter(f => f.Code == this.QueryCode)[0];
+
             this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGranted(f.FeatureId) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
 
         else if (this.QueryCode) {
-            this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
+            //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
+            this.SelectedQuery = allQueries.filter(f => f.Code == this.QueryCode)[0];
         }
 
         else {
@@ -2252,10 +2250,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                 return;
             }
 
-            if (this.ObjectTableName == "CustomsShipper") {
-                //this.NewDepositionFormClcik();
-            }
-           else if (this.TenantPM.Id != 0 && this.ObjectTableName == "Port") {
+        
+            if (this.TenantPM.Id != 0 && this.ObjectTableName == "Port") {
 
 
                 var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
@@ -2421,8 +2417,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                 case "OpenFormatReport":
                     {
 
-                        logWindow.Width = 500;
-                        logWindow.Height = 240;
+                        logWindow.Width = 400;
+                        logWindow.Height = 180;
                         break;
                     }
             }

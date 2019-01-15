@@ -1596,6 +1596,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return invoices;
         }
 
+  
         private ARInvoicePM GetSingleMappedEntityPM(ARInvoice entityPOCO, bool withComposition)
         {
             ARInvoicePM entityPM = null;

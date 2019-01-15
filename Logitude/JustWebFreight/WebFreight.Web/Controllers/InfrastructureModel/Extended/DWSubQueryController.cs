@@ -81,6 +81,40 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
 
         }
 
+        public HttpResponseMessage getByQueryId(string Id)
+        {
+            try
+            {
+                //string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                //SecurityUtility.CheckContactFeature("DWObjectTable", "READ", authToken.Tenant);
+                DWSubQueryQuery dWSubQueryQuery = new DWSubQueryQuery(authToken.Tenant);
+                DWSubQueryPM dWSubQueryPM = dWSubQueryQuery.GetSinglePMByQueryid(Id, authToken.Tenant);
+                DWQueryData QueryData = new DWQueryData();
+                if (dWSubQueryPM != null)
+                {
+                    var Columns = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(dWSubQueryPM.ColumnsXML);
+                    var Filters = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(dWSubQueryPM.FiltersXML);
+
+                    QueryData.SubQueryData = dWSubQueryPM;
+                    QueryData.Columns = Columns;
+                    QueryData.Filters = Filters;
+                }
+                //PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, QueryData);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         public HttpResponseMessage Post(DWQueryData QueryData)
         {
             try

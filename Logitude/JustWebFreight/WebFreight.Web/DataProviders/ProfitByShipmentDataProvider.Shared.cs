@@ -87,6 +87,7 @@ namespace WebFreight.Web.DataProviders
             public string ShipmentField19 { get; set; }
             public string ShipmentField20 { get; set; }
             public string Notes { get; set; }
+            public string RealShipmentType { get; set; }
         }
     }
 }

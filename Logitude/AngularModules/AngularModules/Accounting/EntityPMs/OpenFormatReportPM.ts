@@ -70,11 +70,6 @@ export class OpenFormatReportPM {
     public set ToDate(newValue: Date) { if (this.toDate != newValue) { this.toDate = newValue; this.MarkAsDirty("ToDate"); } }
        
 	 
-    private dateTypeCode: string;
-    public get DateTypeCode() { return this.dateTypeCode; }
-    public set DateTypeCode(newValue: string) { if (this.dateTypeCode != newValue) { this.dateTypeCode = newValue; this.MarkAsDirty("DateTypeCode"); } }
-       
-	 
     private statusTypeCode: string;
     public get StatusTypeCode() { return this.statusTypeCode; }
     public set StatusTypeCode(newValue: string) { if (this.statusTypeCode != newValue) { this.statusTypeCode = newValue; this.MarkAsDirty("StatusTypeCode"); } }
@@ -93,11 +88,6 @@ export class OpenFormatReportPM {
     private status: string;
     public get Status() { return this.status; }
     public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
-       
-	 
-    private dateTypeName: string;
-    public get DateTypeName() { return this.dateTypeName; }
-    public set DateTypeName(newValue: string) { if (this.dateTypeName != newValue) { this.dateTypeName = newValue; this.MarkAsDirty("DateTypeName"); } }
        
 	 
 

@@ -33,8 +33,6 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public DateTime ToDate  { get; set; }
        [DataMember]
-       public string DateTypeCode  { get; set; }
-       [DataMember]
        public string StatusTypeCode  { get; set; }
        [DataMember]
        public string ErrorMessage  { get; set; }
@@ -42,8 +40,6 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CreatedByUserName  { get; set; }
        [DataMember]
        public string Status  { get; set; }
-       [DataMember]
-       public string DateTypeName  { get; set; }
    }
 
 }

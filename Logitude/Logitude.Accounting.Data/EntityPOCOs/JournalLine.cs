@@ -84,7 +84,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("ExternalReconcileNumber")]
 	    public string ExternalReconcileNumber { get; set; }
         [Column("IsExternalReconcile")]
-	    public bool? IsExternalReconcile { get; set; }
+	    public bool IsExternalReconcile { get; set; }
     }
 }
 	 

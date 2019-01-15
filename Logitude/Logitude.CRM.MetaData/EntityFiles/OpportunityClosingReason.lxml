@@ -39,4 +39,5 @@
     <EventType Code="&quot;UPCL&quot;" ObjectTableName="&quot;OpportunityClosingReason&quot;" ShortView="false" IsManualEntry="false" LocalName="&quot;Closing Reason Updated&quot;" EnglishName="&quot;Closing Reason Updated&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;CRCL&quot;" ObjectTableName="&quot;OpportunityClosingReason&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
+  <AdditionalFeatures />
 </entity>

@@ -145,6 +145,7 @@ export class WarehouseHelper {
                 warehouseEntryPackagePM.UpdatedByUserId = SessionLocator.LoggedUserId;
                 warehouseEntryPackagePM.CreateDate = DateTool.GetCurrentDateAsUtc();
                 warehouseEntryPackagePM.UpdateDate = DateTool.GetCurrentDateAsUtc();
+                warehouseEntryPackagePM.VolumetricWeight = item.VolumetricWeight;
 
                 if (packageType == "ShipmentPackages") warehouseEntryPackagePM.IsContainer = item.IsContainer;
                 else {
@@ -325,6 +326,8 @@ export class WarehouseHelper {
             warehouseEntryPM.GrossWeightUnitCode = SessionLocator.TenantPM.GrossWeightUnitCode;
             warehouseEntryPM.VolumeUnitCode = SessionLocator.TenantPM.VolumeUnitCode;
             warehouseEntryPM.DimensionsUnitCode = SessionLocator.TenantPM.DimensionsUnitCode;
+            warehouseEntryPM.ChargeableWeightUnitCode = SessionLocator.TenantPM.ChargeableWeightUnitCode;
+
             warehouseEntryPM.EntryNumber = "123";
             //if (viewModel.IsFromShipment) {
                 warehouseEntryPM.TotalVolume = 0;

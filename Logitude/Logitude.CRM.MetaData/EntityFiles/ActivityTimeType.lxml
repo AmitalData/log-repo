@@ -13,4 +13,5 @@
     <Record Code="&quot;OF&quot;" SearchFields="&quot;OF,Out Of Office&quot;" Name="&quot;Out Of Office&quot;" />
     <Record Code="&quot;TN&quot;" SearchFields="&quot;TN,Tentative&quot;" Name="&quot;Tentative&quot;" />
   </Records>
+  <AdditionalFeatures />
 </entity>

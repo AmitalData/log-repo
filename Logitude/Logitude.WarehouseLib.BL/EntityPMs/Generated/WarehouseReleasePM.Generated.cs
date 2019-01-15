@@ -952,6 +952,29 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private string chargeableWeightUnitCode ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChargeableWeightUnitCode  
+	   {
+	    
+	     get
+		{
+		   return chargeableWeightUnitCode;
+		 }
+		 set
+		 {
+		   if(chargeableWeightUnitCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargeableWeightUnitCode",OldValue=chargeableWeightUnitCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   chargeableWeightUnitCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

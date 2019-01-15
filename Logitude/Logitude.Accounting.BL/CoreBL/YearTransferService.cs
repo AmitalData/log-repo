@@ -84,7 +84,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 ///journal.JournalNumber = "1";
                 CreateDate = @now,
                 AccountingDate = endOfYearUserInput.AddDays(1),//1.1.(yyyy+1)
-                TypeCode = "1",
+                TypeCode = "0",
                 StatusCode = "2",
                 //journal.CreatedByUserId = theEntityPm.CreatedByUserId;
 
@@ -275,7 +275,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private FullAccountingSettingPM GetRevenueExpenseGLAccountFromAccSetting(IAccountingContext accountingContext,int tenant)
         {
-            
+            bool useLocal = true;
+            string text;
             var myFullAccountingSettingQueryService = new FullAccountingSettingQueryService(accountingContext);
             var myFullAccountingSettingPM =myFullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
             if (myFullAccountingSettingPM == null)
@@ -284,7 +285,21 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             if (string.IsNullOrWhiteSpace(myFullAccountingSettingPM.RevenueExpenseGLAccountId))
             {
-                throw new Exception("No myFullAccountingSettingPM.RevenueExpenseGLAccountId  for tenant ");
+                //   throw new Exception("No myFullAccountingSettingPM.RevenueExpenseGLAccountId  for tenant ");
+                text = TranslateTextsClassTranslate("YearTransfer.O.RevenueExpenseType", 0, useLocal);
+                // A year transfer account is undefined or not configured correctly
+                throw new Exception(text);
+            }
+            else
+            {
+                GLAccountQueryService myGLAccountQueryService = new GLAccountQueryService(accountingContext);
+                GLAccountPM revenueExpenseGLAccount = myGLAccountQueryService.GetSingle(myFullAccountingSettingPM.RevenueExpenseGLAccountId, false, true);
+                if (revenueExpenseGLAccount == null || revenueExpenseGLAccount.RevenueExpenseType != "3")
+                {
+                    text = TranslateTextsClassTranslate("YearTransfer.O.RevenueExpenseType", 0, useLocal);
+                    // A year transfer account is undefined or not configured correctly
+                    throw new Exception(text);
+                }
             }
             return myFullAccountingSettingPM;
 

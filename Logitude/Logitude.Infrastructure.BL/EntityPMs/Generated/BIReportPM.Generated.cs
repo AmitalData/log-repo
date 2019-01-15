@@ -296,6 +296,29 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private string aGGridOptionsXML ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AGGridOptionsXML  
+	   {
+	    
+	     get
+		{
+		   return aGGridOptionsXML;
+		 }
+		 set
+		 {
+		   if(aGGridOptionsXML != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AGGridOptionsXML",OldValue=aGGridOptionsXML,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   aGGridOptionsXML=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
