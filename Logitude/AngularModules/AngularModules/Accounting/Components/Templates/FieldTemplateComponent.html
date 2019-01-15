@@ -267,8 +267,7 @@
                     </div>
 
                     <div *ngIf="FieldName == 'StatusName'">
-                        <div *ngIf="IsHeaderScreenTemplate"   [style.text-align]="isRTL ? 'right' : 'left'" style="padding:0 3px;">{{FieldValue}}</div>
-                        <div *ngIf="!IsHeaderScreenTemplate"  [style.text-align]="isRTL ? 'right' : 'left'"  style="padding:0 3px;" [style.color]="GetAccountingIntegrityCheckStatus()">{{FieldValue}}</div>
+                        <div  [style.text-align]="isRTL ? 'right' : 'left'"  style="padding:0 3px;" [style.color]="GetAccountingIntegrityCheckStatus()">{{FieldValue}}</div>
                     </div>
 
                 </div>
