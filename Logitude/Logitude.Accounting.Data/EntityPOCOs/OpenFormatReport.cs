@@ -40,11 +40,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public DateTime FromDate { get; set; }
         [Column("ToDate")]
 	    public DateTime ToDate { get; set; }
-        [ForeignKey("OpenFormatDateType")]
-        [Column("DateTypeCode")]
-	    public string DateTypeCode { get; set; }
-	      
-        public virtual OpenFormatDateType OpenFormatDateType { get; set; }
         [ForeignKey("OpenFormatReportStatus")]
         [Column("StatusTypeCode")]
 	    public string StatusTypeCode { get; set; }

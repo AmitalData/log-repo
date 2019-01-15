@@ -476,7 +476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllClosingReasonsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityClosingReasonTextCode_0.Id, Code = "All Closing Reasons",  QueryGroupCode = "OPCR", IndexOrder = 0, Tenant = 0, ObjectTableId = OpportunityClosingReasonObjectTable.Id, QuerySection = "OpportunityClosingReason", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityClosingReasonFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllClosingReasonsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityClosingReasonTextCode_0.Id, Code = "All Closing Reasons",  QueryGroupCode = "OPCR", IndexOrder = 0, Tenant = 0, ObjectTableId = OpportunityClosingReasonObjectTable.Id, QuerySection = "OpportunityClosingReason", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityClosingReasonFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllClosingReasonsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClosingReasonsQuery.Id, IndexOrder = 0, ObjectFieldId = OpportunityClosingReasonObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == OpportunityClosingReasonObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -514,8 +514,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable OpportunityClosingReasonObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpportunityClosingReason" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable OpportunityClosingReasonObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpportunityClosingReason" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode OpportunityClosingReasonGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpportunityClosingReason.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature OpportunityClosingReasonGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpportunityClosingReason.Tab.General", ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClosingReason.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

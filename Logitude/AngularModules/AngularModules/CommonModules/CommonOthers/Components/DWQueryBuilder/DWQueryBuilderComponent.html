@@ -190,6 +190,15 @@
         margin-left: 5px;
         display: inline-block;
     }
+    .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                                      not supported by any browser */
+    }
 </style>
 <table>
     <tr>
@@ -213,6 +222,7 @@
                                     <td style="height:23px;width:100%">
                                         <div style="width:100%;height:100%;">
                                             <input type="text" [id]="SearchFieldsId" placeholder="{{'General.O.Search' | TextCodeTranslationPipe}}" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [(ngModel)]="SearchText" style="background-color:white;background: url(Images/Search.png) no-repeat scroll;background-position: right center;padding-right:30px;width:100%;height:100%;"><br>
+                                            <img *ngIf="SearchText" class="DeleteButton" [className]="'RightCenter'" style="display:inline-block;margin-right: 5px;" src="Images/RedX.png" (click)="OnDeleteValue()" />
                                         </div>
                                     </td>
                                 </tr>
@@ -225,12 +235,12 @@
                                                         <table style="vertical-align:top;top:0px;">
                                                             <tr style="text-align:left;vertical-align:top" *ngFor="let Group of DataSource">
                                                                 <td style="min-height:30px;">
-                                                                    <table>
+                                                                    <table class="noselect">
                                                                         <tr>
                                                                             <td>
-                                                                                <div style="width:100%;height:100%;background-color: #E4E4E4;border-bottom: 1px solid;border-top: 1px solid;border-color:rgb(167, 169, 172);height: 27px;">
+                                                                                <div (click)="Group.GroupClicked()" style="width:100%;height:100%;background-color: #E4E4E4;border-bottom: 1px solid;border-top: 1px solid;border-color:rgb(167, 169, 172);height: 27px;">
                                                                                     <div style="float:left;">
-                                                                                        <img [src]="Group.DetailsIcon" style="margin-top:5px;" (click)="Group.GroupClicked()"/>
+                                                                                        <img [src]="Group.DetailsIcon" style="margin-top:5px;" />
                                                                                         <label style="margin:5px;vertical-align: middle;">{{Group.Key}}</label>
                                                                                     </div> 
                                                                                 </div>
@@ -546,12 +556,17 @@
                                                                     </table>
                                                                 </div>
 
-                                                                <div class="SimpleGridViewBody" style="bottom:25px;">
+                                                                <div class="SimpleGridViewBody"><!--style="bottom:25px;height: Calc(100% - 25px);"-->
                                                                     <table *ngIf="SampleData.length > 0">
                                                                         <tr class="SimpleGridViewRow" *ngFor="let item of SampleData;">
 
                                                                             <td *ngFor="let Column of SelectedFieldsDataSource; let i=index;" class="CellStretched  TextTrimming" style="width: 100px; max-width: 100px;min-width:100px;padding-left: 4px;">
-                                                                                {{item[Column.DisplayName.replace('[', '').replace(']','')]}}
+                                                                                <div *ngIf="Column.IsMeasurement == false">
+                                                                                    {{item[Column.DisplayName.replace('[', '').replace(']','')]}}
+                                                                                </div>
+                                                                                <div *ngIf="Column.IsMeasurement == true" style="text-align:right;padding-right:4px;">
+                                                                                    {{item[Column.DisplayName.replace('[', '').replace(']','')] | NumbersPipe:'N2'}}
+                                                                                </div>
                                                                             </td>
                                                                             <td style="width:100%;"></td>
 

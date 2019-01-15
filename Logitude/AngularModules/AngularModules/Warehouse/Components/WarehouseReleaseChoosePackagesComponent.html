@@ -144,9 +144,10 @@
                                                     <td *ngIf="!IsContainerShipment" style="width: 120px; min-width: 120px;">{{DimensionsLabel}}</td>
                                                     <td style="width: 65px; min-width: 65px;">Quantity</td>
                                                     <td style="width: 90px; min-width: 90px;">{{VolumeLabel}}</td>
+                                                    <td style="width: 135px; min-width: 135px;max-width: 135px;">{{VolumetricWeightLabel}}</td>
                                                     <td style="width: 110px;min-width: 110px;">{{GrossWeightLabel}}</td>
 
-                                                    <td style="width: 235px;min-width:235px;max-width: 235px;">Description Of Goods</td>
+                                                    <td style="width: 125px;min-width:125px;max-width: 125px;">Description Of Goods</td>
                                                     <td style="width: 85px;min-width :85px">Release QTY</td>
                                                     <td style="width: 80px;min-width :80px">In Stock</td>
 
@@ -230,7 +231,10 @@
 
                                                                                 {{item.Volume | NumbersPipe:'N3'}}
                                                                             </td>
+                                                                            <td class="GridViewCell" style="width: 135px; min-width: 135px; max-width: 135px;text-align:right">
 
+                                                                                {{item.VolumetricWeight | NumbersPipe:'N3'}}
+                                                                            </td>
 
 
                                                                             <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px;text-align:right">
@@ -242,11 +246,11 @@
 
                                                                   
 
-                                                                            <td class="GridViewCell" style="width:235px; min-width: 235px; max-width: 235px; position: relative;">
+                                                                            <td class="GridViewCell" style="width:125px; min-width: 125px; max-width: 125px; position: relative;">
 
 
-                                                                                <!--<div *ngIf="IsContainerShipment" style="width:130px;max-width:118px">{{item.Description}}</div>-->
-                                                                                <div  style="width:230px;max-width:230px">{{item.Description}}</div>
+                                                                      
+                                                                                <div  style="width:125px;max-width:125px">{{item.Description}}</div>
 
 
 

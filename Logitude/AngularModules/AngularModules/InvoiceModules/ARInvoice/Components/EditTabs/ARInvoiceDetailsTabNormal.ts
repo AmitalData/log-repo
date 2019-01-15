@@ -1533,6 +1533,7 @@ export class ARInvoiceLineItem extends BaseComponent {
         this.UIProperties.SetEnabled("LocalDescription", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("UnitPrice", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
 
         this.SetUIProperties_Rate();
         this.SetUIProperties_VAT();

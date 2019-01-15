@@ -94,9 +94,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
                     string computingPartnerCode = "";
-                    if (loggedContactInfo != null)
+                    if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                     {
-                        computingPartnerCode = loggedContactInfo.ComputingPartnerCode;
+                        computingPartnerCode = entity.ComputingPartnerCode;//loggedContactInfo.ComputingPartnerCode;
                     }
 
                     if (entity.Receivables != null && entity.Receivables.Count > 0)
@@ -865,7 +865,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
             //        ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
             //        string computingPartnerCode = "";
-            //        if (loggedContactInfo != null) computingPartnerCode = loggedContactInfo.ComputingPartnerCode;
+            //        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode)) computingPartnerCode = entity.ComputingPartnerCode;//loggedContactInfo.ComputingPartnerCode;
 
             //        IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
             //        HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
@@ -920,7 +920,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
             //}
         }
-        
+
         private void CheckEntityChanges(ShipmentPM entityPM, Shipment entityPoco, IShipmentsContext context, int tenant)
         {
             if (!string.IsNullOrEmpty(entityPM.MasterShipmentDataId) && !entityPM.IsOperationalClosed && !entityPM.IsAccountingClosed && !entityPM.IsCancelled)

@@ -315,6 +315,12 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
+    get SoftwareVersion() { return this.EntityPM.SoftwareVersion; }
+    set SoftwareVersion(value: string) {
+        if (this.EntityPM.SoftwareVersion != value) {
+            this.EntityPM.SoftwareVersion = value;
+        }
+    }
 
     //automaticExternalRconcilMthods: AutomaticExternalRconcilMthodsPM;
     //get AutomaticExternalRconcilMthods() { return this.taxWithholdingGLAccount; }

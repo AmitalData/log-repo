@@ -167,8 +167,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        LastStatusDate = a.LastStatusDate,
                        LastStatusName = a.LastStatus == null ? null : a.LastStatus.Name,
                        DeliveryTransportModeCode = a.DeliveryTransportModeCode,
-                       ECRTransportModeCode=a.ECRTransportModeCode,
+                       ECRTransportModeCode = a.ECRTransportModeCode,
                        IsMultiHarmonize = a.IsMultiHarmonize,
+                       ETD = a.ETD,
+                       ETA = a.ETA,
+                       Routing = a.Routing,
+                       VoyageTripNumber = a.VoyageTripNumber,
+                       HasContainerException = a.HasContainerException,
                    }).FirstOrDefault();
 
 
@@ -285,6 +290,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        DeliveryTransportModeCode = a.DeliveryTransportModeCode,
                        ECRTransportModeCode = a.ECRTransportModeCode,
                        IsMultiHarmonize = a.IsMultiHarmonize,
+                       ETD = a.ETD,
+                       ETA = a.ETA,
+                       Routing = a.Routing,
+                       VoyageTripNumber = a.VoyageTripNumber,
+                       HasContainerException = a.HasContainerException,
                    }).ToList();
 
             foreach (ShipmentPackagePM package in shipmentPackages)
@@ -396,6 +406,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 DeliveryTransportModeCode = a.DeliveryTransportModeCode,
                                 ECRTransportModeCode = a.ECRTransportModeCode,
                                 IsMultiHarmonize = a.IsMultiHarmonize,
+                                ETD = a.ETD,
+                                ETA = a.ETA,
+                                Routing = a.Routing,
+                                VoyageTripNumber = a.VoyageTripNumber,
+                                HasContainerException = a.HasContainerException,
                             }).ToList();
             }
 

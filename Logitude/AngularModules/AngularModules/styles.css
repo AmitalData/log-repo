@@ -20,3 +20,6 @@
 @import url("_Resources/Froala/css/plugins/quick_insert.css");
 @import url("_Resources/Froala/css/plugins/file.css");
 @import url("_Resources/Froala/css/codemirror.min.css");
+
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css";

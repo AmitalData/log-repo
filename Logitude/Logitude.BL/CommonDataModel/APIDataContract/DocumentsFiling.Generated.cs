@@ -45,5 +45,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     public string Description { get; set; }
     
     public bool IsSharedWithCustomer { get; set; }
+
+    public  string  ComputingPartnerCode { get; set; }
+
     }
 } 

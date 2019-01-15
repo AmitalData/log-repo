@@ -1516,7 +1516,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CashBooksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CashBookTextCode_0.Id, Code = "CashBooks",  QueryGroupCode = "e691", IndexOrder = 0, Tenant = 0, ObjectTableId = CashBookObjectTable.Id, QuerySection = "CashBook", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CashBookFeature_0.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query CashBooksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CashBookTextCode_0.Id, Code = "CashBooks",  QueryGroupCode = "e691", IndexOrder = 0, Tenant = 0, ObjectTableId = CashBookObjectTable.Id, QuerySection = "CashBook", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CashBookFeature_0.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CashBooksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashBooksQuery.Id, IndexOrder = 0, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 270 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1532,7 +1532,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query CashbookCashQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CashBookTextCode_1.Id, Code = "CashbookCash",  QueryGroupCode = "e691", IndexOrder = 1, Tenant = 0, ObjectTableId = CashBookObjectTable.Id, QuerySection = "CashBook", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CashBookFeature_1.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query CashbookCashQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CashBookTextCode_1.Id, Code = "CashbookCash",  QueryGroupCode = "e691", IndexOrder = 1, Tenant = 0, ObjectTableId = CashBookObjectTable.Id, QuerySection = "CashBook", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CashBookFeature_1.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CashbookCashQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookCashQuery.Id, IndexOrder = 0, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 261 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1551,7 +1551,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query CashbookChequeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CashBookTextCode_2.Id, Code = "CashbookCheque",  QueryGroupCode = "e691", IndexOrder = 2, Tenant = 0, ObjectTableId = CashBookObjectTable.Id, QuerySection = "CashBook", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CashBookFeature_2.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query CashbookChequeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CashBookTextCode_2.Id, Code = "CashbookCheque",  QueryGroupCode = "e691", IndexOrder = 2, Tenant = 0, ObjectTableId = CashBookObjectTable.Id, QuerySection = "CashBook", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CashBookFeature_2.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CashbookChequeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookChequeQuery.Id, IndexOrder = 0, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 291 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1614,8 +1614,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable CashBookObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CashBook" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable CashBookObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CashBook" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CashBookGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature CashBookGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Tab.General", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

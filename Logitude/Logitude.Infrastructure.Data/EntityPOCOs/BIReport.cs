@@ -55,6 +55,8 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string TypeCode { get; set; }
 	      
         public virtual BIReportsType BIReportsType { get; set; }
+        [Column("AGGridOptionsXML")]
+	    public string AGGridOptionsXML { get; set; }
     }
 }
 	 

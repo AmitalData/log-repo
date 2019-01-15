@@ -73,7 +73,12 @@ namespace CommunicationWorkerRole
                             string communicationLogId = response.MessageValues["QuickbooksOnline"].ToString();
                             type = response.MessageValues["type"].ToString();
                             int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
-                            OldTransferStatusCode = response.MessageValues["OldTransferStatusCode"].ToString();
+                            if (!response.MessageValues.ContainsKey("OldTransferStatusCode"))
+                            {
+                                OldTransferStatusCode = null;
+                            }
+                            else 
+                            OldTransferStatusCode = response.MessageValues["OldTransferStatusCode"];
                             Commoncontext = CommonDataContext.GetContext(tenant);
                             Invoicecontext = InvoiceContext.GetContext(tenant);
                             CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(Commoncontext);
@@ -492,6 +497,10 @@ namespace CommunicationWorkerRole
                 Payment final = service.Update(myResult[0]) as Payment;
                 SendingSuccessfully(waitingCommLog, tenant, final.Id,null,null);                
             }
+            else
+            {
+                throw new Exception("Failed to Send");
+            }
 
         }
 
@@ -507,6 +516,10 @@ namespace CommunicationWorkerRole
                 myResult[0].Line = payment.Line==null ? new List<Line>().ToArray():payment.Line;
                 BillPayment final = service.Update(myResult[0]) as BillPayment;
                 SendingSuccessfully(waitingCommLog, tenant, final.Id, null,null);
+            }
+            else
+            {
+                throw new Exception("Failed to Send");
             }
 
         }
@@ -922,6 +935,14 @@ namespace CommunicationWorkerRole
         private void SendingSuccessfully(CommunicationLog waitingCommLog,int tenant,string QBOId,string Exception,string Id){
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
+
+                if(String.IsNullOrEmpty(QBOId) && String.IsNullOrEmpty(QBOIDSuccess))
+
+                {
+
+                    throw new Exception("Failed to Send !");
+                }
+
                 CommunicationLogRepository commLogrepository = new CommunicationLogRepository(Commoncontext);
                 waitingCommLog.CommunicationStatusTypeCode = "D";
                 waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
@@ -1013,6 +1034,7 @@ namespace CommunicationWorkerRole
                         invoice.ExternalAccountingEntityId = QBOId;
                     else if (QBOIDSuccess != null)
                         invoice.ExternalAccountingEntityId = QBOIDSuccess;
+                    
                     repository.Update(invoice);
                     repository.SubmitChanges();
                     if (WasErrorInTransfer)
@@ -1035,7 +1057,6 @@ namespace CommunicationWorkerRole
 
                 }
 
-               
 
                 QBOIDSuccess = null;
                 scope.Complete();

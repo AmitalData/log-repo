@@ -1,7 +1,7 @@
 declare var System: any;
 declare var window: any;
 
-import {Component, OnInit, EventEmitter, Output, AfterViewInit, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, EventEmitter, Output, AfterViewInit, ChangeDetectorRef, Query} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 //import {TextCodeTranslationPipe} from '../../../../Controls/Pipes/TextCodeTranslationPipe';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
@@ -21,13 +21,17 @@ import {QueryColumnsPMService} from '../../../../Infrastructure/Services/Standar
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
 import {CachedDataManager} from '../../../../Infrastructure/Utilities/CachedDataManager';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { SharedUserQueryPM } from '../../../EntityPMs/SharedUserQueryPM';
+import { QueryPM } from '../../../EntityPMs/QueryPM';
+import { ServiceResponse } from '../../../DataContracts/ServiceResponse';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     moduleId: module.id,
 
     selector: 'QueryList',
     templateUrl: './QueryListComponent.html',
-    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'UserItemSource', 'ObjectTableName', 'onSelectedQueryChangeEvent', 'LoadResourceCompleted','pubSubAdvanceQueryFiltersService','QueryListSourceChanged'],
+    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'UserItemSource', 'ObjectTableName', 'onSelectedQueryChangeEvent', 'LoadResourceCompleted', 'pubSubAdvanceQueryFiltersService', 'QueryListSourceChanged'],
     //pipes: [TextCodeTranslationPipe],
     providers: [Http],
 })
@@ -38,7 +42,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
     public get ItemsSource() { return this.itemsSource; }
     public set ItemsSource(newValue: any) {
         this.itemsSource = newValue;
-    } 
+    }
     //public ItemsSource: any[];
     public UserItemSource: any[];
     public HandledUserItemSource: any[];
@@ -61,17 +65,17 @@ export class QueryListComponent implements OnInit, AfterViewInit {
     newViewClicked: boolean = false;
     ShowButtons: boolean = false;
     public ObjectTableName: string;
-    onSelectedQueryChangeEvent: EventEmitter<any>; 
+    onSelectedQueryChangeEvent: EventEmitter<any>;
     GeneralEntitiesArgs: GeneralEntitiesArgs;
     private myAdvancedQueryFiltersPMService: AdvancedQueryFiltersPMService;
-    public AdvancedQueryFilterPMs: AdvancedQueryFilterPM[]; 
+    public AdvancedQueryFilterPMs: AdvancedQueryFilterPM[];
     pubSubAdvanceQueryFiltersService: any;
     //PubSubFiltersChangeEventService: PubSubFiltersChangeEventService;
     //@Output() SelectedItem: EventEmitter<any> = new EventEmitter();
     public serviceArgs: ServiceArgs;
     LayoutDirection: string = 'ltr';
 
-
+    public IsDeleteButtonEnabled: boolean = true;
     constructor(private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
         this.serviceArgs.http = ServiceHelper.Http;
@@ -106,16 +110,19 @@ export class QueryListComponent implements OnInit, AfterViewInit {
             this.ItemClicked(res, true);
             this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
         });
-        //SessionLocator.CurrentSession.pubSubAdvanceQueryFiltersService.subscribe(evt => {
-        //    this.pubSubAdvanceQueryFiltersService = evt;
-        //});
-        //this.LoadResourceCompleted.subscribe((res) => { 
-        //    this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
-        //});
+
+        this.UserItemSource.forEach((item) => {
+            if (item.SharedWithAll || item.SharedWithSpecificUsers) {
+                if (item.SharedByUserId != SessionLocator.LoggedUserId) {
+                    if (!FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
+                        this.IsDeleteButtonEnabled = false
+                    }
+                }
+            }
+        });
+
         this.QueryListSourceChanged.subscribe((res) => {
             this.UserItemSource = [];
-            //this.UserItemSource = res;
-            //this.CD.detectChanges();
         });
     }
 
@@ -123,7 +130,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
     }
 
-    ComputeListHeight(ItemsCount : number) {
+    ComputeListHeight(ItemsCount: number) {
         //if (ItemsCount == 0) {
         //    document.getElementById(this.ListControlId).style.height = this.MinHeight + "px";
         //}
@@ -145,16 +152,16 @@ export class QueryListComponent implements OnInit, AfterViewInit {
             document.getElementById(this.DropdownId).style.height = this.MinHeight + "px";
         }
         else {
-                    var itemsHeight = ((this.ItemsSource.length * 23) + (this.UserItemSource.length * 23) + 3);
-                    if (itemsHeight > this.MaxHeight) {
-                        document.getElementById(this.DropdownId).style.height = this.MaxHeight + "px";
-                        document.getElementById(this.ListControlId).style.height = itemsHeight + "px";
-                    }
+            var itemsHeight = ((this.ItemsSource.length * 23) + (this.UserItemSource.length * 23) + 3);
+            if (itemsHeight > this.MaxHeight) {
+                document.getElementById(this.DropdownId).style.height = this.MaxHeight + "px";
+                document.getElementById(this.ListControlId).style.height = itemsHeight + "px";
+            }
 
-                    else {
-                        document.getElementById(this.DropdownId).style.height = itemsHeight + 36 + "px";
-                        document.getElementById(this.ListControlId).style.height = "100%";
-                    }
+            else {
+                document.getElementById(this.DropdownId).style.height = itemsHeight + 36 + "px";
+                document.getElementById(this.ListControlId).style.height = "100%";
+            }
         }
         document.getElementById(this.DropdownId).style.visibility = "visible";
         //this.ignorePublicClicked = true;
@@ -234,125 +241,125 @@ export class QueryListComponent implements OnInit, AfterViewInit {
 
                 this.SetDisplayText();
                 ///////////////////////////////
-               
+
                 //if (filters == null) {
-                    var filters = new ApiQueryFilters();
+                var filters = new ApiQueryFilters();
                 //}
 
-                    //IsDropDownOpened = false;
-                    //FilterParametersChangedArgs theFilterAgrs = new FilterParametersChangedArgs(queryOperations);
-                    //ValueResolver resolver = new ValueResolver();
-                    //QueryChangedEventArgs queryChanged = new QueryChangedEventArgs();
-                    //queryChanged.QueryId = theSelectedQuery.Id;
-                    //queryChanged.ObjectTableName = theSelectedQuery.ObjectTableName;
-                    //theFilterAgrs.QueryOperations.QuerySection = theSelectedQuery.QuerySection;
+                //IsDropDownOpened = false;
+                //FilterParametersChangedArgs theFilterAgrs = new FilterParametersChangedArgs(queryOperations);
+                //ValueResolver resolver = new ValueResolver();
+                //QueryChangedEventArgs queryChanged = new QueryChangedEventArgs();
+                //queryChanged.QueryId = theSelectedQuery.Id;
+                //queryChanged.ObjectTableName = theSelectedQuery.ObjectTableName;
+                //theFilterAgrs.QueryOperations.QuerySection = theSelectedQuery.QuerySection;
 
-                    if (window.PreDefinedFilters.filter(d => d.QueryId == clickedItem.Id) != null) {
-                        var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == clickedItem.Id);
-                        predefinedFilters.forEach((filter, key) => {
-                            var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
-                            var value1 = filter.PredefinedValue;
-                            var value2 = filter.PredefinedValue2;
-                            if (value2 != null) {
+                if (window.PreDefinedFilters.filter(d => d.QueryId == clickedItem.Id) != null) {
+                    var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == clickedItem.Id);
+                    predefinedFilters.forEach((filter, key) => {
+                        var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
+                        var value1 = filter.PredefinedValue;
+                        var value2 = filter.PredefinedValue2;
+                        if (value2 != null) {
+                            filterOperator = "Between";
+                        }
+
+                        if (filter.DataTypeCode == "DateTime") {
+                            var TodayDate = new Date();
+                            if (value1 == '#today') value1 = new Date(TodayDate.getFullYear(), TodayDate.getMonth(), TodayDate.getDate(), 0, 0, 0);
+                            if (value2 == '#today') value2 = new Date(TodayDate.getFullYear(), TodayDate.getMonth(), TodayDate.getDate(), 23, 59, 59);
+
+
+                            var YesterdayDate = DateTool.AddDays((new Date()), -1);
+                            var LastSevenDaysDate = DateTool.AddDays((new Date()), -7)
+                            var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
+                            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                            var CurrentYearToDate = new Date();
+                            var LastYearFromDate = DateTool.AddDays((new Date()), -365);
+                            var LastYearToDate = new Date();
+                            //CustomDatePickerControl datecontrol = new CustomDatePickerControl();
+                            //datecontrol.SetSelectedDates(filter.PredefinedValue != null ? filter.PredefinedValue.ToString() : null);
+                            if (value1 == "Today") {
+                                value1 = TodayDate;
+                                filterOperator = "Equals";
+                            }
+                            else if (value1 == "Yesterday") {
+                                value1 = YesterdayDate;
+                                filterOperator = "GreaterThanOrEqual";
+                            }
+                            else if (value1 == "Last 7 Days") {
+                                value1 = LastSevenDaysDate;
+                                filterOperator = "GreaterThanOrEqual";
+                            }
+                            else if (value1 == "Last 30 Days") {
+                                value1 = LastThirtyDaysDate;
+                                filterOperator = "GreaterThanOrEqual";
+                            }
+                            else if (value1 == "Current Year") {
+                                value1 = CurrentYearFromDate;
+                                value2 = CurrentYearToDate;
+                                filterOperator = "Between";
+                            }
+                            else if (value1 == "Last Year") {
+                                value1 = LastYearFromDate;
+                                value2 = LastYearToDate;
                                 filterOperator = "Between";
                             }
 
-                            if (filter.DataTypeCode == "DateTime") {
-                                var TodayDate = new Date();
-                                if (value1 == '#today') value1 = new Date(TodayDate.getFullYear(), TodayDate.getMonth(), TodayDate.getDate(), 0, 0, 0);
-                                if (value2 == '#today') value2 = new Date(TodayDate.getFullYear(), TodayDate.getMonth(), TodayDate.getDate(), 23, 59, 59);
 
+                            //if (!AppTool.IsNullOrEmpty(filter.PredefinedValue)) {
+                            //    if (filter.PredefinedValue.Contains("GreaterThan")) {
+                            //        filterOperator = "GreaterThanOrEqual";
+                            //        value1 = datecontrol.FromDate;
+                            //        value2 = null;
+                            //    }
 
-                                 var YesterdayDate = DateTool.AddDays((new Date()), -1);
-                                var LastSevenDaysDate = DateTool.AddDays((new Date()), -7)
-                                var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
-                                var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
-                                var CurrentYearToDate = new Date();
-                                var LastYearFromDate = DateTool.AddDays((new Date()), -365);
-                                var LastYearToDate = new Date();
-                                //CustomDatePickerControl datecontrol = new CustomDatePickerControl();
-                                //datecontrol.SetSelectedDates(filter.PredefinedValue != null ? filter.PredefinedValue.ToString() : null);
-                                if (value1 == "Today") {
-                                    value1 = TodayDate;
-                                    filterOperator = "Equals";
-                                }
-                                else if (value1 == "Yesterday") {
-                                    value1 = YesterdayDate;
-                                    filterOperator = "GreaterThanOrEqual";
-                                }
-                                else if (value1 == "Last 7 Days") {
-                                    value1 = LastSevenDaysDate;
-                                    filterOperator = "GreaterThanOrEqual";
-                                }
-                                else if (value1 == "Last 30 Days") {
-                                    value1 = LastThirtyDaysDate;
-                                    filterOperator = "GreaterThanOrEqual";
-                                }
-                                else if (value1 == "Current Year") {
-                                    value1 = CurrentYearFromDate;
-                                    value2 = CurrentYearToDate;
-                                    filterOperator = "Between";
-                                }
-                                else if (value1 == "Last Year") {
-                                    value1 = LastYearFromDate;
-                                    value2 = LastYearToDate;
-                                    filterOperator = "Between";
-                                } 
-                                
-
-                                //if (!AppTool.IsNullOrEmpty(filter.PredefinedValue)) {
-                                //    if (filter.PredefinedValue.Contains("GreaterThan")) {
-                                //        filterOperator = "GreaterThanOrEqual";
-                                //        value1 = datecontrol.FromDate;
-                                //        value2 = null;
-                                //    }
-
-                                //    if (filter.PredefinedValue.Contains("LessThan")) {
-                                //        filterOperator = "LessThanOrEqual";
-                                //        value1 = datecontrol.ToDate;
-                                //        value2 = null;
-                                //    }
-                                //}
-                                //if (value1 == null && value2 == null)
-                                //{
-                                //    value1 = "NoDate";
-                                //    value2 = "NoDate";
-                                //}
-                            }
-                            //if (value1 == null && value2 == null) {
-                            //    theFilterAgrs.QueryOperations.SetFilter(filter.ObjectFieldName, value1, filter.IsCustomFilter, "NoDate", value2, filter.DisplayInList);
+                            //    if (filter.PredefinedValue.Contains("LessThan")) {
+                            //        filterOperator = "LessThanOrEqual";
+                            //        value1 = datecontrol.ToDate;
+                            //        value2 = null;
+                            //    }
                             //}
-                            //else {
-                            //    theFilterAgrs.QueryOperations.SetFilter(filter.ObjectFieldName, value1, filter.IsCustomFilter, filterOperator, value2, filter.DisplayInList);
+                            //if (value1 == null && value2 == null)
+                            //{
+                            //    value1 = "NoDate";
+                            //    value2 = "NoDate";
                             //}
-                            var ObjectField = window.ObjectFields.filter(d => d.Id == filter.ObjectFieldId);
-                            filters.addAdditionalFilter(
-                                filter.ObjectFieldName, value1, value2, null, filterOperator, ObjectField.IsCustomFilter, filter.DisplayInList, ObjectField.IsCustom, filter.DataTypeCode);
-                        }); 
-                    }
+                        }
+                        //if (value1 == null && value2 == null) {
+                        //    theFilterAgrs.QueryOperations.SetFilter(filter.ObjectFieldName, value1, filter.IsCustomFilter, "NoDate", value2, filter.DisplayInList);
+                        //}
+                        //else {
+                        //    theFilterAgrs.QueryOperations.SetFilter(filter.ObjectFieldName, value1, filter.IsCustomFilter, filterOperator, value2, filter.DisplayInList);
+                        //}
+                        var ObjectField = window.ObjectFields.filter(d => d.Id == filter.ObjectFieldId);
+                        filters.addAdditionalFilter(
+                            filter.ObjectFieldName, value1, value2, null, filterOperator, ObjectField.IsCustomFilter, filter.DisplayInList, ObjectField.IsCustom, filter.DataTypeCode);
+                    });
+                }
 
-                    //theFilterAgrs.ObjectTableName = theSelectedQuery.ObjectTableName;
+                //theFilterAgrs.ObjectTableName = theSelectedQuery.ObjectTableName;
 
-                    if (!AppTool.IsNullOrEmpty(clickedItem.DefaultSortColumn)) {
-                        filters.SortBy = clickedItem.DefaultSortColumn;
-                    }
+                if (!AppTool.IsNullOrEmpty(clickedItem.DefaultSortColumn)) {
+                    filters.SortBy = clickedItem.DefaultSortColumn;
+                }
 
-                    if (!AppTool.IsNullOrEmpty(clickedItem.DefaultSortDirection)) {
-                        filters.SortDirection = clickedItem.DefaultSortDirection;
-                    }
+                if (!AppTool.IsNullOrEmpty(clickedItem.DefaultSortDirection)) {
+                    filters.SortDirection = clickedItem.DefaultSortDirection;
+                }
 
-                    //FilterParametersChangedEvent evt2 = eventAggregator.GetEvent<FilterParametersChangedEvent>();
-                    //evt2.Publish(theFilterAgrs);
+                //FilterParametersChangedEvent evt2 = eventAggregator.GetEvent<FilterParametersChangedEvent>();
+                //evt2.Publish(theFilterAgrs);
 
-                    //QueryChangedEvent evt = eventAggregator.GetEvent<QueryChangedEvent>();
-                    //evt.Publish(queryChanged);
+                //QueryChangedEvent evt = eventAggregator.GetEvent<QueryChangedEvent>();
+                //evt.Publish(queryChanged);
 
-                    //this.CurrentQuery = theSelectedQuery;
-                    //TenantContext.Current.CurrentQueryCode = theSelectedQuery.Code;
-               
+                //this.CurrentQuery = theSelectedQuery;
+                //TenantContext.Current.CurrentQueryCode = theSelectedQuery.Code;
+
                 ///////////////////////////////
-                    this.itemSelectedEvent.emit({ QueryId: clickedItem.Id, Filters: filters, Title: TextCodeTranslator.Translate(clickedItem.NameTextCodeCode) });
-                    //SessionLocator.CurrentSession.PubSubFiltersChangeEventService.Stream.emit({ QueryId: clickedItem.Id, Filters: filters });
+                this.itemSelectedEvent.emit({ QueryId: clickedItem.Id, Filters: filters, Title: TextCodeTranslator.Translate(clickedItem.NameTextCodeCode) });
+                //SessionLocator.CurrentSession.PubSubFiltersChangeEventService.Stream.emit({ QueryId: clickedItem.Id, Filters: filters });
             }
         }
         else if (this.ignoreItemClicked == true) {
@@ -382,31 +389,31 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         this.newViewClicked = true;
         this.ignoreMouseDown = false;
 
-                var windowArgs: any = {};
-                windowArgs.queryId = this.SelectedItem.Id;
-                windowArgs.currentObjectTable = this.ObjectTableName;
-                windowArgs.IsNew = true;
-                windowArgs.pubSubAdvanceQueryFiltersService = this.pubSubAdvanceQueryFiltersService;
-                var logitudeWindow = new LogitudeWindow();
-                logitudeWindow.Width = 960;
-                logitudeWindow.Height = 610;
-                logitudeWindow.Title = TextCodeTranslator.Translate("General.O.CreateNewView");//"Create New View";
-                logitudeWindow.WindowArgs = windowArgs;
-                logitudeWindow.Show('./Infrastructure/Components/NewViewComponent/NewViewComponent');
-                logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                    var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
-                    if ($event != this.SelectedItem.Id) {
-                        CachedDataManager.RefreshTenantTextCodes().subscribe(response=> {
-                        var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.Id == $event)[0];
-                        this.UserItemSource.push(Query);
-                        this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
-                        this.SelectedItem = Query;
-                        this.SetDisplayText();
-                        this.QueriesChangedEvent.emit(Query);
-                        this.NewViewClosedEvent.emit("");
-                        });
-                    }
+        var windowArgs: any = {};
+        windowArgs.queryId = this.SelectedItem.Id;
+        windowArgs.currentObjectTable = this.ObjectTableName;
+        windowArgs.IsNew = true;
+        windowArgs.pubSubAdvanceQueryFiltersService = this.pubSubAdvanceQueryFiltersService;
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 960;
+        logitudeWindow.Height = 610;
+        logitudeWindow.Title = TextCodeTranslator.Translate("General.O.CreateNewView");//"Create New View";
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./Infrastructure/Components/NewViewComponent/NewViewComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+            if ($event != this.SelectedItem.Id) {
+                CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
+                    var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.Id == $event)[0];
+                    this.UserItemSource.push(Query);
+                    this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
+                    this.SelectedItem = Query;
+                    this.SetDisplayText();
+                    this.QueriesChangedEvent.emit(Query);
+                    this.NewViewClosedEvent.emit("");
                 });
+            }
+        });
     }
     IgnoreMouseDown() {
         if (this.newViewClicked == true) {
@@ -418,93 +425,126 @@ export class QueryListComponent implements OnInit, AfterViewInit {
     }
 
     DeleteButtonClicked(Item) {
-        this.GeneralEntitiesArgs = new GeneralEntitiesArgs();
-        this.GeneralEntitiesArgs.RemovedQueryColumnsPMs = [];
-        this.GeneralEntitiesArgs.RemovedQueryFilters = [];
-        this.ignoreItemClicked = true;
-        //this.OnLostFocus();
-        var ObjectTable = window.ObjectTables.filter(a => a.Name == this.ObjectTableName)[0];
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Title = TextCodeTranslator.Translate("General.O.DeletQuery");
-        confirmWindow.Show(TextCodeTranslator.Translate("General.M.WantToDeleteThisQuery"));
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-                this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
-                var myQCService: QueryColumnsPMService = new QueryColumnsPMService();
-                myQCService.setServiceArgs(this.serviceArgs);
-                myQCService.GetQueryColumnPMs(SessionInfo.LoggedUserTenant, Item.Id, ObjectTable.Id, SessionInfo.LoggedUserId).subscribe(myResult => {
-                    var queryColumns = myResult;
-                    //var queryColumns = window.QueryColumnPMs.filter(c => c.QueryId == Item.Id);
-                    queryColumns.forEach((column, key) => {
-                        this.GeneralEntitiesArgs.RemovedQueryColumnsPMs.push(column);
-                    });
-                    if (this.myAdvancedQueryFiltersPMService == null) {
-                        this.myAdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
-                    }
-                    this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
-                    this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, Item.Id).subscribe(myResult => {
-                        if (myResult == null) {
-                            this.AdvancedQueryFilterPMs = [];
+        if (Item.UserId == SessionInfo.LoggedUserId) {
+            this.GeneralEntitiesArgs = new GeneralEntitiesArgs();
+            this.GeneralEntitiesArgs.RemovedQueryColumnsPMs = [];
+            this.GeneralEntitiesArgs.RemovedQueryFilters = [];
+            this.ignoreItemClicked = true;
+            var ObjectTable = window.ObjectTables.filter(a => a.Name == this.ObjectTableName)[0];
+
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Title = TextCodeTranslator.Translate("General.O.DeletQuery");
+            confirmWindow.Show(TextCodeTranslator.Translate("General.M.WantToDeleteThisQuery"));
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+                    this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
+                    var myQCService: QueryColumnsPMService = new QueryColumnsPMService();
+                    myQCService.setServiceArgs(this.serviceArgs);
+                    myQCService.GetQueryColumnPMs(SessionInfo.LoggedUserTenant, Item.Id, ObjectTable.Id, SessionInfo.LoggedUserId).subscribe(myResult => {
+                        var queryColumns = myResult;
+
+                        queryColumns.forEach((column, key) => {
+                            this.GeneralEntitiesArgs.RemovedQueryColumnsPMs.push(column);
+                        });
+
+                        if (this.myAdvancedQueryFiltersPMService == null) {
+                            this.myAdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
                         }
 
-                        else {
-                            this.AdvancedQueryFilterPMs = myResult;
-                            var advanceQueryFilters = this.AdvancedQueryFilterPMs.filter(c => c.QueryId == Item.Id);
-                            advanceQueryFilters.forEach((filter, key) => {
-                                this.GeneralEntitiesArgs.RemovedQueryFilters.push(filter);
-                            });
-                        }
-                        var query = window.Queries.filter(q => q.Id == Item.Id)[0];
-                        var myService: QueriesPMService = new QueriesPMService();
-                        myService.setServiceArgs(this.serviceArgs);
-                        var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
-                        myGeneralService.setServiceArgs(this.serviceArgs);
-                        myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
-                            myService.delete(query).subscribe(myResult => {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
-                                window.Queries = window.Queries.filter(a => a.Id != query.Id);
-                                var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
-                                var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];
-                                this.UserItemSource = this.UserItemSource.filter(a => a.Id != query.Id); 
-                                this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
-                                this.QueriesChangedEvent.emit(Query);
+                        this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
+                        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, Item.Id).subscribe(myResult => {
+                            if (myResult == null) {
+                                this.AdvancedQueryFilterPMs = [];
+                            }
+
+                            else {
+                                this.AdvancedQueryFilterPMs = myResult;
+                                var advanceQueryFilters = this.AdvancedQueryFilterPMs.filter(c => c.QueryId == Item.Id);
+                                advanceQueryFilters.forEach((filter, key) => {
+                                    this.GeneralEntitiesArgs.RemovedQueryFilters.push(filter);
+                                });
+                            }
+
+                            var query = window.Queries.filter(q => q.Id == Item.Id)[0];
+                            var myService: QueriesPMService = new QueriesPMService();
+                            myService.setServiceArgs(this.serviceArgs);
+                            var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
+                            myGeneralService.setServiceArgs(this.serviceArgs);
+                            myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
+                                myService.delete(query).subscribe(myResult => {
+                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    window.Queries = window.Queries.filter(a => a.Id != query.Id);
+                                    var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+                                    var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];
+                                    this.UserItemSource = this.UserItemSource.filter(a => a.Id != query.Id);
+                                    this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
+                                    this.QueriesChangedEvent.emit(Query);
+                                });
                             });
                         });
                     });
-                });
-                
-            }
-        });
+                }
+            });
+        }
+
+        else {
+            var myService: QueriesPMService = new QueriesPMService();
+            myService.setServiceArgs(this.serviceArgs);
+
+            myService.get(Item.Id).subscribe(myResult => {
+                var myResponse: ServiceResponse = myResult;
+                if (!myResponse.HasError) {
+                    var query: QueryPM = myResponse.Result;
+
+                    var sharedUserQuery: SharedUserQueryPM = query.SharedUserQueries.filter(s => s.UserId == SessionInfo.LoggedUserId)[0];
+                    var index = query.SharedUserQueries.indexOf(sharedUserQuery);
+
+                    if (index > -1) {
+                        query.RemoveSharedUserQueryPM(sharedUserQuery);
+                    }
+
+                    myService.update(query).subscribe(myResult1 => {
+                        window.Queries = window.Queries.filter(a => a.Id != query.Id);
+                        var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+                        var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];
+                        this.UserItemSource = this.UserItemSource.filter(a => a.Id != query.Id);
+                        this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
+                        this.QueriesChangedEvent.emit(Query);
+                    });
+                }
+            });
+        }
     }
     EditButtonClicked(Item) {
         this.ignoreItemClicked = true;
         this.ignoreMouseDown = false;
-                var windowArgs: any = {};
-                windowArgs.queryId = Item.Id;
-                windowArgs.pubSubAdvanceQueryFiltersService = this.pubSubAdvanceQueryFiltersService;
-                windowArgs.currentObjectTable = this.ObjectTableName;
-                windowArgs.IsNew = false;
-                windowArgs.QueryName = TextCodeTranslator.Translate(Item[this.Binding]);
-                var logitudeWindow = new LogitudeWindow();
-                logitudeWindow.Width = 960;
-                logitudeWindow.Height = 610;
-                logitudeWindow.Title = TextCodeTranslator.Translate("General.B.EditView");//"Edit View";
-                logitudeWindow.WindowArgs = windowArgs;
-                logitudeWindow.Show('./Infrastructure/Components/NewViewComponent/NewViewComponent');
-                logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                   // CachedDataManager.RefreshTenantTextCodes().subscribe(response=> {
-                    var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0]; 
-                    var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.Id == $event)[0];
-                    this.SetDisplayText();
-                    //var xx = this.UserItemSource.filter(a => a.Id == Query.Id);
-                    this.UserItemSource = null;
-                    //this.UserItemSource.push(Query); 
-                    this.QueriesChangedEvent.emit(Query);
-                    this.NewViewClosedEvent.emit("");
-                        this.CD.detectChanges();
-                    //});
-                   
-                });
+        var windowArgs: any = {};
+        windowArgs.queryId = Item.Id;
+        windowArgs.pubSubAdvanceQueryFiltersService = this.pubSubAdvanceQueryFiltersService;
+        windowArgs.currentObjectTable = this.ObjectTableName;
+        windowArgs.IsNew = false;
+        windowArgs.QueryName = TextCodeTranslator.Translate(Item[this.Binding]);
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 960;
+        logitudeWindow.Height = 610;
+        logitudeWindow.Title = TextCodeTranslator.Translate("General.B.EditView");
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./Infrastructure/Components/NewViewComponent/NewViewComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+            var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.Id == $event)[0];
+
+            if (!Query) {
+                Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0 && a.Id != $event)[0];
+            }
+
+            this.SetDisplayText();
+            this.UserItemSource = null;
+
+            this.QueriesChangedEvent.emit(Query);
+            this.NewViewClosedEvent.emit("");
+            this.CD.detectChanges();
+        });
     }
 }

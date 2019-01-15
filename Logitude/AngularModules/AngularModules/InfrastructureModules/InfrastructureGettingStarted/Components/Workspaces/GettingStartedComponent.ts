@@ -509,8 +509,8 @@ export class GettingStartedComponent extends BaseComponent {
     }
     ChangePasswordClick() {
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 800;
-        logitudeWindow.Height = 550;
+        logitudeWindow.Width = 600;
+        logitudeWindow.Height = 400;
         logitudeWindow.Title = "Change User Password";
         this._entityResourceService.getEntityResourceByTableName("User").subscribe(response => {
             logitudeWindow.DataContext = this;

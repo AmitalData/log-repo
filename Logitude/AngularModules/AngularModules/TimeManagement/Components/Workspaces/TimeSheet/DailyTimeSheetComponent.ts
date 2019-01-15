@@ -72,7 +72,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         this.employeeUserId = SessionLocator.LoggedUserId;
         var pipe = new DateTimePipe();
         this.LoggedUserName = SessionLocator.LoggedUserPM.EnglishName + " " + pipe.transform(DateTool.GetCurrentDateAsUtc(), "SD");
-        this.locationCode = this.SelectedLocationFilter;
+        this.locationCodeFilter = this.SelectedLocationFilter;
         this.startDate = DateTool.GetCurrentDateTimeAsUtc();
         this.endDate = this.startDate;
         this.myDomainService = new TimeManagementDomainService();
@@ -91,7 +91,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         if (this.myDomainService == null) {
             this.myDomainService = new TimeManagementDomainService();
         }
-        this.myDomainService.GetPeriodTimeSheetList(this.EmployeeUserId, this.LocationCode, this.StartDate, this.EndDate).subscribe((myResponse: ServiceResponse) => {
+        this.myDomainService.GetPeriodTimeSheetList(this.EmployeeUserId, this.LocationCodeFilter, this.StartDate, this.EndDate).subscribe((myResponse: ServiceResponse) => {
             // this.ItemSource = [];
             this.ItemSource.Clear();
             if (myResponse.HasError) {
@@ -136,13 +136,13 @@ export class DailyTimeSheetComponent extends BaseComponent {
         }
     }
 
-    private locationCode: string;
-    get LocationCode() {
-        return this.locationCode;
+    private locationCodeFilter: string;
+    get LocationCodeFilter() {
+        return this.locationCodeFilter;
     }
-    set LocationCode(value: string) {
-        if (this.locationCode != value) {
-            this.locationCode = value;
+    set LocationCodeFilter(value: string) {
+        if (this.locationCodeFilter != value) {
+            this.locationCodeFilter = value;
             this.SaveChanges();
         }
     }
@@ -173,7 +173,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
     set SelectedLocationFilter(value: string) {
         if (this.mySelectedLocationFilter != value) {
             this.mySelectedLocationFilter = value;
-            this.LocationCode = value;
+            this.LocationCodeFilter = value;
         }
     }
 
@@ -216,7 +216,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         logWindow.Title = "New Line";
         var args: any = {};
         args.IsNew = true;
-        args.LocationCode = this.LocationCode;
+        args.LocationCode = this.LocationCodeFilter != "A" ? this.LocationCodeFilter : "O";
         args.EmployeeUserId = this.EmployeeUserId;
         args.Father = this;
         var date = DateTool.GetCurrentDateTimeAsUtc();
@@ -235,7 +235,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Copy Line";
         var args: any = {};
-        args.LocationCode = this.LocationCode;
+        args.LocationCode = item.LocationCode;
         args.EmployeeUserId = this.EmployeeUserId;
         var date = DateTool.GetCurrentDateTimeAsUtc();
         if (this.SelectedDateFilter == "Y") {
@@ -246,6 +246,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         args.IsNew = true;
         args.WINumber = item.WINumber;
         args.ProjectId = item.ProjectId;
+        args.SprintId = item.SprintId;
         args.Description = item.Description;
         logWindow.WindowArgs = args;
         logWindow.Show('./TimeManagement/Components/NewEntity/NewLineComponent');
@@ -281,7 +282,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
                 var myServiceHelper = new TimeManagementAPIHelper();
                 myServiceHelper.Id = SessionLocator.Tenant;
                 myServiceHelper.EmployeeUserId = this.EmployeeUserId;
-                myServiceHelper.LocationCode = this.LocationCode;
+                myServiceHelper.LocationCode = this.LocationCodeFilter;
                 myServiceHelper.StartDate = this.StartDate;
                 myServiceHelper.EndDate = this.EndDate;
                 itemsChanges.forEach(item => {
@@ -316,7 +317,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
                 var myServiceHelper = new TimeManagementAPIHelper();
                 myServiceHelper.Id = SessionLocator.Tenant;
                 myServiceHelper.EmployeeUserId = this.EmployeeUserId;
-                myServiceHelper.LocationCode = this.LocationCode;
+                myServiceHelper.LocationCode = this.LocationCodeFilter;
                 myServiceHelper.StartDate = this.StartDate;
                 myServiceHelper.EndDate = this.EndDate;
                 itemsChanges.forEach(item => {
@@ -391,6 +392,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         args.EntityPM = item.entityPM;
         args.Father = this;
         args.IsNew = false;
+        args.LocationCode = item.LocationCode;
         logWindow.WindowArgs = args;
         logWindow.Show('./TimeManagement/Components/NewEntity/NewLineComponent');
         logWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));

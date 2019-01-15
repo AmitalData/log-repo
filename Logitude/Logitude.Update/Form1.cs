@@ -61,6 +61,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.Utils;
+using System.Data.Common;
 
 namespace Logitude.Update
 {
@@ -3372,6 +3373,18 @@ User/Pass",
             batch.SetTotalFutureOpenChequesInLocalCurrency(1);
         }
 
+        private void btnDownloadMrt_Click(object sender, EventArgs e)
+        {
+            //string connectionString = "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
+            //DbConnection Logitudeconnection = DatabaseInitializer.GetConnection(connectionString);
+            //CommonDataContext Logitudecontext = new CommonDataContext(Logitudeconnection);
+            //DocumentTypeTemplate template = (from a in Logitudecontext.DocumentTypeTemplates
+            //                                 where a.Id == "1-149534"
+            //                                 select a).FirstOrDefault();
+
+            //File.WriteAllBytes("template.mrt", template.TemplateBody); // Requires System.IO
+
+        }
 
     }
 

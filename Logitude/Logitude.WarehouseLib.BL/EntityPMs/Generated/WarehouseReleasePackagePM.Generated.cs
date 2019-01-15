@@ -641,6 +641,52 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private double? volumetricWeight ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double? VolumetricWeight  
+	   {
+	    
+	     get
+		{
+		   return volumetricWeight;
+		 }
+		 set
+		 {
+		   if(volumetricWeight != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VolumetricWeight",OldValue=volumetricWeight,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChanged(values);
+		   volumetricWeight=value;
+		   }
+			
+		 }
+	   }
+	  private string chargeableWeightUnitCode ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChargeableWeightUnitCode  
+	   {
+	    
+	     get
+		{
+		   return chargeableWeightUnitCode;
+		 }
+		 set
+		 {
+		   if(chargeableWeightUnitCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargeableWeightUnitCode",OldValue=chargeableWeightUnitCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   chargeableWeightUnitCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

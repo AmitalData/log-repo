@@ -40,12 +40,12 @@ export class NewOpenFormatReportComponent extends BaseComponent {
     }
 
 
-    get DateTypeCode() { return this.entityPM.DateTypeCode; }
-    set DateTypeCode(value: string) {
-        if (this.entityPM.DateTypeCode != value) {
-            this.entityPM.DateTypeCode = value;
-        }
-    }
+    //get DateTypeCode() { return this.entityPM.DateTypeCode; }
+    //set DateTypeCode(value: string) {
+    //    if (this.entityPM.DateTypeCode != value) {
+    //        this.entityPM.DateTypeCode = value;
+    //    }
+    //}
 
 
     get FromDate() { return this.entityPM.FromDate; }

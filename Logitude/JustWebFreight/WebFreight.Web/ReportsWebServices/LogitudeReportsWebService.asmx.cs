@@ -703,7 +703,7 @@ namespace WebFreight.Web.ReportsWebServices
                     profitrecord.Origin = a.MainCarriageFromPortName;
                     profitrecord.Destination = a.ToPortName;
                     profitrecord.Notes = a.Notes;
-
+                    profitrecord.RealShipmentType = a.ShipmentTypeName;
 
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, a, profitrecord);
@@ -9188,12 +9188,15 @@ namespace WebFreight.Web.ReportsWebServices
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
 
             QueryFilterItem filterItem_EmployeeUserId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "EmployeeUserId").FirstOrDefault();
+            QueryFilterItem filterItem_TimeRequired = queryOperations.QueryFilterItems.Where(d => d.FieldName == "TimeRequired").FirstOrDefault();
+
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
 
             DateTime? fromDate = null;
             DateTime? toDate = null;
             string employeeUserId = null;
+            double? timeRequired = 9.0; 
 
             if (filterItem_FromDate != null)
             {
@@ -9216,6 +9219,13 @@ namespace WebFreight.Web.ReportsWebServices
                 if (filterItem_EmployeeUserId.FieldValue != null)
                 {
                     employeeUserId = filterItem_EmployeeUserId.FieldValue.ToString();
+                }
+            }
+            if (filterItem_TimeRequired != null)
+            {
+                if (filterItem_TimeRequired.FieldValue != null)
+                {
+                    timeRequired = Convert.ToDouble(filterItem_TimeRequired.FieldValue);
                 }
             }
 
@@ -9295,7 +9305,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 else
                 {
-                    timSheetItem.RequiredWorkHours = 9;
+                    timSheetItem.RequiredWorkHours = timeRequired;
                 }
 
                 timSheetItem.TimeFromClock = "";
@@ -9310,9 +9320,12 @@ namespace WebFreight.Web.ReportsWebServices
                 double timeFromClock = 0;
                 foreach (var day in officeDays)
                 {
-                    DateTime? entry = day.EntryTime != null ? day.EntryTime : day.RecordedEntryTime;
-                    DateTime? exit = day.ExitTime != null ? day.ExitTime : day.RecordedExitTime;
-                    timeFromClock += Math.Round((exit.Value - entry.Value).TotalHours, 2);
+                    DateTime? entry = (day != null && day.EntryTime != null) ? day.EntryTime : day.RecordedEntryTime;
+                    DateTime? exit = (day != null && day.ExitTime != null) ? day.ExitTime : day.RecordedExitTime;
+                    if (entry != null && exit != null)
+                    {
+                        timeFromClock += Math.Round((exit.Value - entry.Value).TotalHours, 2);
+                    }
                 }
                 timeFromClock_Total += timeFromClock;
                 timSheetItem.TimeFromClock = DateFormat(timeFromClock);
@@ -9376,9 +9389,10 @@ namespace WebFreight.Web.ReportsWebServices
                 var m = (ts.TotalHours - h) * 60;
                 if (isMinus)
                 {
-                    m = m * -1;
-                    h = h * -1;
-
+                    if(m<0)
+                        m = m * -1;
+                    if(h<0)
+                        h = h * -1;
                     result = "- " + h + ":" + m.ToString("00");
                 }
                 else {
@@ -9422,6 +9436,7 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<TMProject> allProjects = (from d in myContext.TMProjects where d.Tenant == tenant select d);
             IQueryable<TMEmployeeTime> iQueryable = (from d in myContext.TMEmployeeTimes where d.Tenant == tenant select d);
             CardRepository cardRep = new CardRepository(tenant);
+            ContactRepository contactRep = new ContactRepository(tenant);
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
@@ -9733,7 +9748,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 timSheetItem_Detailed.CustomerName = card.EnglishName;
                             }
 
-                            var owner = cardRep.GetSingleCard(project.OwnerId, tenant);
+                            var owner = contactRep.GetSingleContact(project.OwnerId, tenant);
                             if (owner != null)
                             {
                                 timSheetItem_Detailed.OwnerName = owner.EnglishName;
@@ -11849,7 +11864,7 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
 
 
-            shipments = shipments.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H");
+            shipments = shipments.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H" && !d.IsCancelled);
             if (FromDate != null)
             {
                 shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) >= System.Data.Entity.DbFunctions.TruncateTime(FromDate));

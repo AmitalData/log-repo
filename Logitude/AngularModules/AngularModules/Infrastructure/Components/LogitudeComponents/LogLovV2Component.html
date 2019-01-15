@@ -436,6 +436,66 @@
         text-align: left !important;
     }
 
+    .LogLOVFooter {
+        padding: 0;
+        margin: 0;
+        height: 26px;
+    }
+        .LogLOVFooter ul {
+            height: 100%;
+            /* float: left; */
+
+        }
+            .LogLOVFooter ul li {
+                float: right;
+                color: #4a4a4a;
+                background: white;
+                line-height: 25px;
+                font-size: 10px;
+                height: 100% ;
+                text-align: center;
+            }
+            .LogLOVFooter ul li:hover {
+                background: rgb(196, 196, 196);
+            }
+            .LogLOVFooter ul li.SelectedFilter {
+                background: rgb(226, 226, 226);
+                /* box-shadow: inset 0 0 5px 0px #ababab; */
+            }
+            .LogLOVFooter ul li:active {
+                box-shadow: inset 0 0 5px 1px #969696;
+            }
+
+        .LogLOVFooter a {
+            color: #6d6d6d;
+            padding: 0 10px;
+            display: block;
+            /* float: right; */
+            background: white;
+            height: 100%;
+            line-height: 25px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .LogLOVFooter a:hover {
+            background: rgb(218, 218, 218);
+        }
+        .LogLOVFooter a:active {
+            background: rgb(218, 218, 218);
+            box-shadow: inset 0 0 5px 1px #969696;
+        }
+
+
+        .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+    }
+
 </style>
 <div style="width:100%;height:100%" *ngIf="DataContext">
 
@@ -671,9 +731,21 @@
 
                             <!-- Footer -->
                             <div class="LogLOVFooter" [style.text-align]="LayoutDirection=='rtl' ? 'left' : 'right'" *ngIf="ShowAddLink || ShowSearchButton">
-                                <a href="javascript:;" *ngIf="ShowAddLink" (click)="OnAddValue()">{{'General.B.Add' | TextCodeTranslationPipe}}</a>
-                                <a href="javascript:;" *ngIf="ShowSearchButton" (click)="SearchButtonClicked()"
-                                   style="margin-left: 8px;">{{'General.O.ViewAll' | TextCodeTranslationPipe}}</a>
+                                <ul *ngIf="ShowLanguageFilter"  [style.float]="isRTL ? 'right' : 'left'" >
+                                    <li style="width: 50px;" [class.SelectedFilter]="LanguageFilterValue == 'L'" (click)="SwitchBetweenLocalAndEng('L')" class="noselect">
+                                        Local
+                                    </li>
+                                    <li style="width: 50px;" [class.SelectedFilter]="LanguageFilterValue == 'E'" (click)="SwitchBetweenLocalAndEng('E')" class="noselect">
+                                        English
+                                    </li>
+                                </ul>
+
+                                <a href="javascript:;" *ngIf="ShowAddLink" (click)="OnAddValue()" [style.float]="isRTL ? 'left' : 'right'">
+                                    <img src="./Images/Icons/plus.png">
+                                    {{'General.B.Add' | TextCodeTranslationPipe}}</a>
+                                <a href="javascript:;" *ngIf="ShowSearchButton"  [style.float]="isRTL ? 'left' : 'right'" (click)="SearchButtonClicked()" style="margin-left: 8px;">{{'General.O.ViewAll'| TextCodeTranslationPipe}}</a>
+
+
                             </div>
 
 

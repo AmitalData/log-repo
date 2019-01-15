@@ -753,5 +753,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         [ForeignKey("FreightPayerAddressId")]
         public virtual Address FreightPayerAddress { get; set; }
 
+        public bool HasContainerException { get; set; }
     }
 }

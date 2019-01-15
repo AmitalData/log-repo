@@ -434,18 +434,22 @@
                 <tr>
                     <td>
                         <table>
+                            <tr style="height:60px;border-bottom:1px solid #BCBEC0;width:100%;font-family:sans-serif;">
+                                <td style="width: 125px; max-width: 125px;padding-right: 4px;color:#1B90CB;font-size: 13px;font-weight: bold;">סעיף חיוב</td>
+                                <td style="width: 110px; max-width: 110px;padding-right: 4px;color:#1B90CB;font-size: 13px;font-weight: bold;">סכום</td>
+                            </tr>
                             <tr style="height:60px;border-bottom:1px solid #BCBEC0;width:100%;font-family:sans-serif;" *ngFor="let item of AdditionalData.RequestPaymentData.ServiceTypes; let i=index;">
                                 <td>
                                     <table>
                                         <tr>
-                                            <td style="width: 125px; max-width: 125px;padding-right: 4px;color:#1B90CB;">סעיף חיוב</td>
+                                            <!--<td style="width: 125px; max-width: 125px;padding-right: 4px;color:#1B90CB;">סעיף חיוב</td>-->
                                             <td class="CellStretched TextTrimming" style="width: 125px; max-width: 125px;padding-right: 4px;">
                                                 {{item.LocalName}}
                                             </td>
                                         </tr>
                                         <tr>
 
-                                            <td></td>
+                                            <!--<td></td>-->
                                             <td></td>
 
                                         </tr>
@@ -454,7 +458,7 @@
                                 <td>
                                     <table>
                                         <tr>
-                                            <td style="width: 110px; max-width: 110px;padding-right: 4px;color:#1B90CB;">סכום</td>
+                                            <!--<td style="width: 110px; max-width: 110px;padding-right: 4px;color:#1B90CB;">סכום</td>-->
                                             <td class="CellStretched TextTrimming" style="width: 110px; max-width: 110px;padding-right: 4px;">
                                                 {{item.AmountInNIS}}
                                             </td>
@@ -462,7 +466,7 @@
 
                                         <tr>
 
-                                            <td></td>
+                                            <!--<td></td>-->
                                             <td></td>
 
                                         </tr>
