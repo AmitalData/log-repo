@@ -195,7 +195,7 @@
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); MamanStickerCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
                                         <span>הפקת מדבקה</span>
                                     </li>
-                                    <li *ngIf="MamanStickerDetails != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','4');">
+                                    <li *ngIf="IsMamanSticker" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','4');">
                                         <span>ביטול הפקת מדבקה</span>
                                     </li>
                                     <li *ngIf="!IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','5');">
