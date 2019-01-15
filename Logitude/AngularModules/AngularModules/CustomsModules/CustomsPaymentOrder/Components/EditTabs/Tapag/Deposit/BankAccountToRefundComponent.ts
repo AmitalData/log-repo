@@ -362,7 +362,7 @@ export class BankAccountToRefundComponent
         currRequestParams.RequestVIA = customSendOptionsArgs.RequestVIA;
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        
+
         currRequestParams.FileType = this.FileTypeCode;
         currRequestParams.FileNumber = this.FileNumber;
         currRequestParams.Numeral = this.Numeral;

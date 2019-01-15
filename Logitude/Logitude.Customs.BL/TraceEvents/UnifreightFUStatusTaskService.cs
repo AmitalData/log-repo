@@ -29,16 +29,16 @@ namespace Logitude.Customs.BL.TraceEvents
         {
         }
 
-        public void DeleteINAFUStatus(Def.EntityPMs.DeclarationPM declarationPM)
+        public void DeleteINAFUStatus(int Tenant ,string CustomFileNo)
         {
-            var myGDFDATAQueryService = new Unifreight.BL.EntityQueryServices.GDFDATAQueryService(AmitalContext.GetContext(declarationPM.Tenant));
+            var myGDFDATAQueryService = new Unifreight.BL.EntityQueryServices.GDFDATAQueryService(AmitalContext.GetContext(Tenant));
             var def = myGDFDATAQueryService.GetSingle("ISRAEL", "GGG_DEL_INA", "NON", "NON", false, true);
             def = def ?? new GDFDATAPM();
             if (def.DEFDATA == "Y")
             {
 
-                ContactRepository contactRepository = new ContactRepository(declarationPM.Tenant);
-                var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(declarationPM.Tenant), declarationPM.Tenant);
+                ContactRepository contactRepository = new ContactRepository(Tenant);
+                var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(Tenant), Tenant);
                 string loggedContactId = "";
                 if (loggedContact != null)
                 {
@@ -46,10 +46,10 @@ namespace Logitude.Customs.BL.TraceEvents
                 }
 
                 
-                UpsertFUStatusLE2U(declarationPM.Tenant, loggedContactId, new UnifreightFUStatusParam()
+                UpsertFUStatusLE2U(Tenant, loggedContactId, new UnifreightFUStatusParam()
                 {
                     Entname = "CFIFILEM",
-                    PrimaryNum = declarationPM.CustomFileNo,
+                    PrimaryNum = CustomFileNo,
                     Mode = UnifreightEventMode.del,
                     StatusCode = "INA",
                     StatusRemarks = "",

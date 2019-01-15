@@ -25,7 +25,7 @@ export class ClaimRelatedEntityClaimDecisionTabComponent extends BaseComponent {
     public ClaimsRelatedEntitiesRefundslist: ObservableCollection;
 
     public CurrentEditComponentId: string;
-    private isControlEnabled: boolean = true;
+    public IsControlEnabled: boolean = true;
 
     ValidationErrors: string[] = [];
 
@@ -72,7 +72,13 @@ export class ClaimRelatedEntityClaimDecisionTabComponent extends BaseComponent {
 
         this.EntityPM = entityPM;
         this.ClaimPM = claimPM;
-        this.isControlEnabled = isEnable;
+
+        this.UIProperties.SetEnabled("DecisionCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("DecisionNote", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("EilatVatRefoundDecision", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("DepositingAmount", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("RefundAmount", this.ObjectTableName, false);
+
         this.BuildSeizureslist();
         this.BuildRefundslist();
     }
@@ -91,9 +97,6 @@ export class ClaimRelatedEntityClaimDecisionTabComponent extends BaseComponent {
         this.EntityPM = args.EntityPM;
         console.log("EntityPM", this.EntityPM);
     }
-
-    public get IsControlEnabled() { return this.isControlEnabled; }
-    public set IsControlEnabled(newValue: boolean) { this.isControlEnabled = newValue; }
 
     public get DecisionCode() { return this.EntityPM.DecisionCode; }
     public set DecisionCode(newValue: string) { this.EntityPM.DecisionCode = newValue; }

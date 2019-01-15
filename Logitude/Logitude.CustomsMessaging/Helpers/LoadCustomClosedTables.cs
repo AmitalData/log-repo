@@ -904,6 +904,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(seizureFactorType, seizureFactorTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(seizureFactorType);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData refundCustomerActivityType = closedSystemTables.Where(d => d.id == "1248").FirstOrDefault();
+            ObjectTable refundCustomerActivityTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.RefundCustomerActivityType", 0, false);
+            InsertClosedTableRecord(refundCustomerActivityType, refundCustomerActivityTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(refundCustomerActivityType);
+
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);
             //InsertClosedTableRecord(collateralAnswerStatusTable, collateralAnswerStatusObjectTable, customsClosedTables, customsClosedTableRepository);

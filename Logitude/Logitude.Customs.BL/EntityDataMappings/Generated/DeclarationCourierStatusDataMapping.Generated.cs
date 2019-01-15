@@ -33,7 +33,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DocumentStatusCode, 
 	         TotalInvoiceAmountInUSD, 
 	         CourierPendingReasonCode, 
-	         PendingRemarks,
+	         PendingRemarks, 
+	         SpecialActionStatus,
 	      }
 
 
@@ -82,7 +83,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         MamanStatusCode, 
 	         MamanErrorXml, 
 	         CourierSuspentionCode, 
-	         CourierSuspentionName,
+	         CourierSuspentionName, 
+	         SpecialActionStatus,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -144,6 +146,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PendingRemarks))
             {
 				entityPOCO.PendingRemarks = entityPM.PendingRemarks;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SpecialActionStatus))
+            {
+				entityPOCO.SpecialActionStatus = entityPM.SpecialActionStatus;
 			}
 			}
 
@@ -210,6 +217,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.PendingRemarks = entityPOCO.PendingRemarks;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SpecialActionStatus))
+            {
+					entityPM.SpecialActionStatus = entityPOCO.SpecialActionStatus;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationCourierStatusPM entityPM, DeclarationCourierStatusPM oldEntityPM)
@@ -269,6 +281,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PendingRemarks))
             {
                 oldEntityPM.PendingRemarks = entityPM.PendingRemarks;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SpecialActionStatus))
+            {
+                oldEntityPM.SpecialActionStatus = entityPM.SpecialActionStatus;
             }
 			
 		}

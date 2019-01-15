@@ -84,7 +84,7 @@ implements OnDestroy
     _SelectedMNFValue: string = 'A'; // ALL/Complete/Wrong
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
     _SelectedDOCValue: string = 'A'; // All/Correction/CorrectionUploaded
-    _SelectedACCValue: string = 'A';//'W'; // All/Wrong eitan temp
+    _SelectedACCValue: string = 'W'; // Wrong/WrongSpecial
 
     public columns: any[] = null;
 
@@ -559,7 +559,8 @@ implements OnDestroy
     _DEC_C_Total = 0;
     _MNF_W_Total = 0;
     _MNF_C_Total = 0;
-    //_ACC_W_Total = 0;
+    _ACC_W_Total = 0;
+    _ACC_WS_Total = 0;
     _CorrectMNFToBatchSend = 0;
     _CorrectDECToBatchSend = 0;
 
@@ -638,7 +639,14 @@ implements OnDestroy
                             this._ReadyLOWPAYToBatchSend = item.Value;
                             break;
                         }
-
+                        case "ACC_W": {
+                            this._ACC_W_Total = item.Value;
+                            break;
+                        }
+                        case "ACC_WS": {
+                            this._ACC_WS_Total = item.Value;
+                            break;
+                        }
                         default: {
                             //statements; 
                             var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
@@ -1131,6 +1139,10 @@ implements OnDestroy
         switch (this._SelectedACCValue) {
             case "W": {
                 filters.addAdditionalFilter("MamanStatusCode", "2", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "WS": {
+                filters.addAdditionalFilter("SpecialActionStatus", "X", null, null, "Equals", false, false, false, "string");
                 break;
             }
         }
