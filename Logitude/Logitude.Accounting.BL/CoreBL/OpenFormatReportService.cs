@@ -315,7 +315,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 //    MyRevenueExpenseReportLevel = ReportLevel.,
                 ToDate = (DateTime)openFormatReportPM.ToDate,
                 FromDate = (DateTime)openFormatReportPM.FromDate,
-                CurrenciesDetailed = false,
+                CurrenciesDetailed = true,
                 DetailedControlVendors = true,
                 DetailedControlClients = true,
                 Category1 = null,
@@ -684,7 +684,7 @@ namespace Logitude.Accounting.BL.CoreBL
             List<ARInvoiceLinePM> aRInvoiceLinePMs = aRInvoiceLineQuery.GetInvoiceLinePMsByInvoiceIds(ARInvoiceIDs, tenant);
             APInvoiceLineQuery aPInvoiceLineQuery = new APInvoiceLineQuery(tenant);
             List<APInvoiceLinePM> aPInvoiceLinePMs = aPInvoiceLineQuery.GetInvoiceLinesByInvoiceIds(APInvoiceIDs, tenant);
-            
+         //   List<ARPaymentLinePM> 
             //ARInvoice
             foreach (C100Data item in ARC100)
             {
@@ -2471,6 +2471,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         GLAccountId = a.BillToCard.GLAccountId,
                                         IsCancelled = false,
                                         VendorId = a.BillToId,
+                                        ARPaymentMethod = a.AccountingPaymentMethod != null? a.AccountingPaymentMethod.Name : null,
                                        
                                     }).ToList();
 
