@@ -46,11 +46,14 @@
 
                         <TextBlock HorizontalAlignment="Left" Margin="5" Grid.Row="1" TextWrapping="Wrap" Text="Tag Name:"  Width="80" Height="25"/>
                         <ComboBox x:Name="cmbMetaTagName" HorizontalAlignment="Left" Margin="5" Grid.Row="1" Width="280" Height="25">
+							<ComboBoxItem Content="Entity"/>
                             <ComboBoxItem Content="ClosedTables"/>
                             <ComboBoxItem Content="Menus"/>
                             <ComboBoxItem Content="Tabs"/>
-                            <ComboBoxItem Content="TextCodes"/>
-                            <ComboBoxItem Content="Entity"/>
+							<ComboBoxItem Content="TextCodes"/>
+							<ComboBoxItem Content="Features"/>
+							<ComboBoxItem Content="Features and TextCodes"/>
+							
 
                         </ComboBox>
 

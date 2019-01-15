@@ -30,6 +30,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
+        public List<SharedUserQuery> GetAllByQueryId(string queryId)
+        {
+            return context.SharedUserQueries.Where(d => d.QueryId == queryId).ToList();
+        }
+
         public void Add(SharedUserQuery entity)
         {
             context.SharedUserQueries.Add(entity);
