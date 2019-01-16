@@ -99,6 +99,8 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public bool CanAutomateSetValue { get; set; }
         public string Code { get; set; }
 
+        public bool  DisplayOnLookUpLocal { get; set; }
+
         // HTML5
         public bool HasTemplate { get; set; }
         public string HtmlHeaderComponentUrl { get; set; }
