@@ -34,6 +34,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                            Tenant = a.Tenant,
                                                            TypeCode = a.TypeCode,
                                                            InternalBankId = a.InternalBankId,
+                                                           CustomerActivityTypeCode = a.CustomerActivityTypeCode,
                                                            
                                                        });
             return query;

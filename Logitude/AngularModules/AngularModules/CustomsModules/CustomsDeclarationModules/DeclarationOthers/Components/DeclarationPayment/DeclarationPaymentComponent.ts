@@ -541,19 +541,19 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         this.RefreshScreen();
 
-        if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
+        //if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
 
-            /*
-            Auto Filling screen data - check field Default “CGG_PAYHAND_FIL” in Unifreight  , if TRUE - WI 32966
-            PaymentMethodType - 1(Masab)
-            PaymentMethodAmount - Total Tax (same as double click on the field)
-            */
+        //    /*
+        //    Auto Filling screen data - check field Default “CGG_PAYHAND_FIL” in Unifreight  , if TRUE - WI 32966
+        //    PaymentMethodType - 1(Masab)
+        //    PaymentMethodAmount - Total Tax (same as double click on the field)
+        //    */
 
 
-            //this.OldAutoFillPaymentScreen();
-            this.AutoFillPaymentScreenByDefault();
+        //    //this.OldAutoFillPaymentScreen();
+        //    this.AutoFillPaymentScreenByDefault();
 
-        }
+        //}
 
 
 
@@ -612,11 +612,17 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         let bank: CustomBankList = allCustomBankList.filter(d => d.InternalCode == customFileCreditResponseData.BankCode && !d.InActive)[0];
                         if (!AppTool.IsNullOrEmpty(bank)) {
                             this.GetCreditInternalBankId = bank.Id;
-                            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection.length == 1) {
-                                this.JustAutoFillPaymentScreen();
+                            //if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                            //    this.JustAutoFillPaymentScreen();
+                            //}
+                            if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
+                                this.AutoFillPaymentScreenByDefault();
                             }
                         }
                     });
+                }
+                else if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
+                    this.AutoFillPaymentScreenByDefault();
                 }
                 SessionLocator.CurrentSession.StopBusyIndicator();
             });
@@ -2256,7 +2262,7 @@ export class PaymentMethodModel extends BaseComponent {
                                 }
                                 else {
                                     if (customsSetting != null) {
-                                        this.InternalBankId = null;
+                                        //this.InternalBankId = null;
                                         if (!AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
                                             this.InternalBankId = this.parent.GetCreditInternalBankId;
                                         }
