@@ -838,9 +838,6 @@
     <EmbeddedResource Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.resx">
       <DependentUpon>201901131517146_AddPackageHasContainerExc.Field.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.resx">
-      <DependentUpon>201901131517146_AddPackageHasContainerExc.Field.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
