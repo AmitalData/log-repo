@@ -1,10 +1,14 @@
-﻿USE [Logitude2-5_Main]
+﻿USE [LogitudeMain-Test2]
 GO
-/****** Object:  StoredProcedure [dbo].[usp_AccountingStreaming]    Script Date: 04/12/2018 15:31:40 ******/
+
+/****** Object:  StoredProcedure [dbo].[usp_AccountingStreaming]    Script Date: 1/16/2019 6:26:49 AM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
+
 
 
 -- =============================================
@@ -98,11 +102,11 @@ DEALLOCATE Journal_cursor;
 	 print N'LedgerTransactions insert as is -always'
 	INSERT INTO dbo.LedgerTransactions 
 	( [Id] ,
-	[JournalId], [JournalLineNumber],  [Tenant], [CreateDate], [ControlAccountId], [AccountId], [AccountingDate], [DocumentDate], [DueDate], [LocalAmountDebit], [LocalAmountCredit], [CurrencyId], [ForeignAmountDebit], [ForeignAmountCredit], [ExchangeRate], [Reference1], [Reference2], [Reference3], [OpenAmount], [OppositeAccountId], [SearchFields], [OpenAmountCurrencyId], [Notes], [AmountToReconcile], [Mark], [IsReconciled])
+	[JournalId], [JournalLineNumber],  [Tenant], [CreateDate], [ControlAccountId], [AccountId], [AccountingDate], [DocumentDate], [DueDate], [LocalAmountDebit], [LocalAmountCredit], [CurrencyId], [ForeignAmountDebit], [ForeignAmountCredit], [ExchangeRate], [Reference1], [Reference2], [Reference3], [OpenAmount], [OppositeAccountId], [SearchFields], [OpenAmountCurrencyId], [Notes], [AmountToReconcile], [Mark], [IsReconciled], [IsExternalReconcile])
     SELECT 
 	[Id] ,
 	---dbo.GetNextTableIdValue (@pTableName) ,
-	[JournalId], [JournalLineNumber],  [Tenant], [CreateDate], [ControlAccountId], [AccountId], [AccountingDate], [DocumentDate], [DueDate], [LocalAmountDebit], [LocalAmountCredit], [CurrencyId], [ForeignAmountDebit], [ForeignAmountCredit], [ExchangeRate], [Reference1], [Reference2], [Reference3], [OpenAmount], [OppositeAccountId], [SearchFields], [OpenAmountCurrencyId], [Notes], [AmountToReconcile], [Mark], [IsReconciled]
+	[JournalId], [JournalLineNumber],  [Tenant], [CreateDate], [ControlAccountId], [AccountId], [AccountingDate], [DocumentDate], [DueDate], [LocalAmountDebit], [LocalAmountCredit], [CurrencyId], [ForeignAmountDebit], [ForeignAmountCredit], [ExchangeRate], [Reference1], [Reference2], [Reference3], [OpenAmount], [OppositeAccountId], [SearchFields], [OpenAmountCurrencyId], [Notes], [AmountToReconcile], [Mark], [IsReconciled] , [IsExternalReconcile]
 	FROM @tLedgerTransactionsType ;  
 
 SELECT @myrowcount = @@ROWCOUNT
@@ -291,5 +295,10 @@ print N'end'
 
 
 END
+
+
+
+
+GO
 
 

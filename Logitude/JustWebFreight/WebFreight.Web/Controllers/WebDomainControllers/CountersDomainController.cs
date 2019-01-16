@@ -8,6 +8,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -118,6 +119,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         myResult.LastDBValue = myCounterStats.LastValue;
                     }
                 }
+
+				if (LogitudeSettings.DeploymentStage == "Dev")
+				{
+					myResult.IsCounterUsed = false;
+				}
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }

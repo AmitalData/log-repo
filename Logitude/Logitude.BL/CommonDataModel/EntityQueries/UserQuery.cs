@@ -1639,5 +1639,18 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                       }).FirstOrDefault();
             return entity;
         }
+
+
+        public List<string> GetUserIdsByTenant(int tenant)
+        {
+
+
+            var usersIds = (from a in repository.context.Users
+                         where a.Tenant == tenant
+                         select a.Id).ToList();
+
+            return usersIds;
+        }
+
     }
 }

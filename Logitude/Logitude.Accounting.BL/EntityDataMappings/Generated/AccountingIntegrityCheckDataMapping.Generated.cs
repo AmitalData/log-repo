@@ -43,7 +43,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ParametersXML, 
 	         ResultXML, 
 	         HasException, 
-	         DoneDateTimeUTC,
+	         DoneDateTimeUTC, 
+	         StatusName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

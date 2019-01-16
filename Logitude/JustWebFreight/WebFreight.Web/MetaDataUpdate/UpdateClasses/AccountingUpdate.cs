@@ -973,6 +973,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             ObjectTablePM externalReconciliationObjectTable = objectTables.Where(d => d.Name == "ExternalReconciliation").FirstOrDefault();
             ObjectTablePM TaxReportObjectTable = objectTables.Where(d => d.Name == "TaxReport").FirstOrDefault();
             ObjectTablePM TaxDeductionReportObjectTable = objectTables.Where(d => d.Name == "TaxDeductionReport").FirstOrDefault();
+            ObjectTablePM AccountingIntegrityCheckObjectTable = objectTables.Where(d => d.Name == "AccountingIntegrityCheck").FirstOrDefault();
 
             #endregion
 
@@ -1204,7 +1205,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             #region TaxDeductionReport
             Feature TaxDeductionReportFeature_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxDeductionReport.Features.Menu", Packagable = true, ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "TaxDeductionReport.Features.Menu", NameTextCodeDefaultText = "Tax Deduction Report", FullLocalDefaultText = "", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             #endregion
-            
+
+            Feature AccountingIntegrityCheckFeature_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Features.Menu", Packagable = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AccountingIntegrityCheck.Features.Menu", NameTextCodeDefaultText = "Accounting Integrity Checks", FullLocalDefaultText = "", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
             #endregion
 
             textCodeRep.SubmitChanges();
@@ -1732,6 +1735,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ClientActivationBTN", DefaultText = "Activate", LocalDefaultText = "הפעל כעת", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.MultiRecoCreated", DefaultText = "Reconciliations created successfully", LocalDefaultText = "התאמות בוצעו בהצלחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.RedeemedChequeMSG", DefaultText = "The cheque is redeemed and can’t be out of deposit, cancel the external reconcilaition in order to return the cheque to the cashbook", LocalDefaultText = "לא ניתן להוציא את ההמחאה מההפקדה משום שהיא בסטטוס נפרע, יש לבטל את ההתאמה החיצונית ע”מ להחזיר את ההמחאה לקופה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.IntegrityChecks", DefaultText = "Accounting Integrity Checks", LocalDefaultText = "Accounting Integrity Checks", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
             #region MainMenu
@@ -3403,6 +3407,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             Feature TaxDeductionReportMenuFeature = tenantFeatures.Where(d => d.Code == "TaxDeductionReport.Features.Menu" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             #endregion
 
+            Feature AccountingIntegrityCheckMenuFeature = tenantFeatures.Where(d => d.Code == "AccountingIntegrityCheck.Features.Menu" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+
+
             #endregion
 
             #region Menus
@@ -3446,6 +3453,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTTX", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 14, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.TaxWithholding", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaxWithholdingAssessOffice").FirstOrDefault().Id, FeatureId = TaxWithholdingOfficesMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TXRP", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 15, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.TaxReport", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaxReport").FirstOrDefault().Id, FeatureId = TaxReportMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TXDR", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 16, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.TaxDeductionReport", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaxDeductionReport").FirstOrDefault().Id, FeatureId = TaxDeductionReportMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "AICH", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 17, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.IntegrityChecks", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "AccountingIntegrityCheck").FirstOrDefault().Id, FeatureId = AccountingIntegrityCheckMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
 
             #endregion
 
