@@ -487,6 +487,8 @@ export class ItemSourceItem extends BaseComponent {
         }
     }
 
+    get LocationName() { return this.entity.LocationName; }
+
     get Description() { return this.entity.Description; }
     set Description(value: string) {
         if (this.entity.Description != value) {

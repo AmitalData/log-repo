@@ -6023,6 +6023,7 @@
     <TypeScriptCompile Include="Shipment\EntityLists\ContainerFollowUpList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\CustomsTransmissionsStatusList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\FBLStockList.ts" />
+    <TypeScriptCompile Include="Shipment\EntityLists\HarmonizeCodeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\INTTRADocumentTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\MessagingStockList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\MessagingStockUsageHistoryList.ts" />
@@ -6049,6 +6050,7 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentFollowUpPM.ts" />
     <TypeScriptCompile Include="Shipment\Services\SplitShipmentService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ContainerFollowUpListService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardLists\HarmonizeCodeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\INTTRADocumentTypeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\MessagingStockListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\OBLTypeListService.ts" />

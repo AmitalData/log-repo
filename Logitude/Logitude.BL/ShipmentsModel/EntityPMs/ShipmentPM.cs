@@ -2292,5 +2292,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string FreightPayerAddressId { get; set; }
 
         public bool HasContainerException { get; set; }
+
+        public bool IsRequestedDocuments { get; set; }
+        public bool IsDigitalSignRequired { get; set; }
+      
+
     }
 }
