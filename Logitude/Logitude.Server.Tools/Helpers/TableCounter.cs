@@ -16,12 +16,13 @@ using Simplog.Data.InfrastructureModel;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using Devart.Data.Oracle;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Server.Tools.Helpers
 {
     public class TableCounter
     { 
-        public static string GetNumber(int tenant ,string counterCode,string parameter1,string parameter2)
+        public static string GetNumber(int tenant ,string counterCode,string parameter1,string parameter2,string additionalParameter = "")
         {
             Counter counter = null;
             CounterDefinition counterDef = null;
@@ -131,7 +132,7 @@ namespace Logitude.Server.Tools.Helpers
                     cn.Close();
                 }
 
-                return number;
+                 
             }
             else
             {
@@ -180,10 +181,27 @@ namespace Logitude.Server.Tools.Helpers
 
                 }
 
-                return number;
+               
             }
-        }
 
+			ResolveCounterPrefixVariables(ref number, tenant, additionalParameter);
+
+			return number;
+		}
+
+		private static void ResolveCounterPrefixVariables(ref string number, int tenant, string additionalParameter)
+		{
+			//[MM],[YY] or [YYYY],[B]
+
+			DateTime date = TenantServerConfigration.GetCurrentDateTime(tenant);
+			string MM = date.ToString("MM");
+			string YY = date.ToString("yy");
+			string YYYY = date.ToString("yyyy");
+
+			number = number.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY).Replace("[P]", !string.IsNullOrEmpty(additionalParameter) ? additionalParameter : "");
+
+
+		}
         public static string GetCounterPrefix(int tenant, string counterCode, string parameter1, string parameter2)
         {
             //ObjectTabelRepository tablesRepository = new ObjectTabelRepository();

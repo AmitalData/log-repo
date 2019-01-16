@@ -21,9 +21,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.INTTRAId).HasMaxLength(35).IsUnicode(false);
             this.Property(t => t.INTTRAContactId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.INTTRAAlias).HasMaxLength(35).IsUnicode(false);
+			this.Property(t => t.CounterCode).HasMaxLength(5).IsUnicode(false);
 
-            // Table & Column Mappings
-            this.ToTable("Branches");
+			// Table & Column Mappings
+			this.ToTable("Branches");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.EnglishName).HasColumnName("EnglishName");
@@ -38,8 +39,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.INTTRAId).HasColumnName("INTTRAId");
             this.Property(t => t.INTTRAContactId).HasColumnName("INTTRAContactId");
             this.Property(t => t.INTTRAAlias).HasColumnName("INTTRAAlias");
+			this.Property(t => t.CounterCode).HasColumnName("CounterCode");
 
-            this.HasOptional(t => t.Address).WithMany().HasForeignKey(d => d.AddressId);
+
+			this.HasOptional(t => t.Address).WithMany().HasForeignKey(d => d.AddressId);
             this.HasOptional(t => t.INTTRAContact).WithMany().HasForeignKey(d => d.INTTRAContactId);
         }
     }
