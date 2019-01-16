@@ -142,7 +142,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
                     entityPoco.CountryForStatisticsId = country.Id;
                 }
-
                 else if (entityPM.DirectionId == "E")
                 {
                     PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
@@ -166,9 +165,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
                 else if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
                 {
-                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
-                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
-                   // entityPoco.CountryForStatisticsId = port.a
+                    if (!string.IsNullOrEmpty(entityPM.MainCarriageToAddressId))
+                    {
+
+                        AddressRepository addressRepository = new AddressRepository(entityPoco.Tenant);
+
+                        Address toAddress = addressRepository.GetSingleAddress(entityPM.MainCarriageToAddressId, entityPM.Tenant);
+                        if (toAddress != null)
+                        {
+                            if (toAddress.Country != null)
+                            {
+                                entityPoco.CountryForStatisticsId = toAddress.Country.Id;
+                            }
+                        }
+
+                    }
                 }
 
 
@@ -209,6 +220,47 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 else if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "A")
                 {
                     PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.MainCarriageToPortId, true);
+                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
+                    entityPoco.CountryForStatisticsId = country.Id;
+                }
+
+                else if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "O")
+                {
+                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
+                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
+                    entityPoco.CountryForStatisticsId = country.Id;
+                }
+
+                else if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
+                {
+                    if (!string.IsNullOrEmpty(entityPM.MainCarriageToAddressId))
+                    {
+                        
+                            AddressRepository addressRepository = new AddressRepository(entityPoco.Tenant);
+
+                            Address toAddress = addressRepository.GetSingleAddress(entityPM.MainCarriageToAddressId, entityPM.Tenant);
+                            if (toAddress != null)
+                            {
+                                if (toAddress.Country != null)
+                                {
+                                    entityPoco.CountryForStatisticsId = toAddress.Country.Id;
+                                }
+                            }
+                        
+                    }                  
+                }
+
+
+                else if (entityPM.DirectionId == "C")
+                {
+                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.FromPortId, true);
+                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
+                    entityPoco.CountryForStatisticsId = country.Id;
+                }
+
+                else if (entityPM.DirectionId == "R")
+                {
+                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
                     Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
                     entityPoco.CountryForStatisticsId = country.Id;
                 }
