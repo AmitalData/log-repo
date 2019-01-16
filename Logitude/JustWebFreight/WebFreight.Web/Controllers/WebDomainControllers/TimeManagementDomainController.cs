@@ -49,7 +49,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("TMEmployeeTime", "READ", tenant);
 
-
                 DateTime? myStartDate = periodStartDate == "null" ? null : DateHelper.GetDate(periodStartDate);
 
                 TimeManagementAPIHelper myResult = this.FillWeeklyTimeSheetList(employeeUserId, locationCode, myStartDate, tenant);
@@ -321,6 +320,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                      where d.Tenant == tenant && d.DateOfWork != null
                                                      select d);
             List<TMProject> allProjects = (from d in myContext.TMProjects where d.Tenant == tenant select d).ToList();
+            List<TMLocation> allLocations = (from d in myContext.TMLocations select d).ToList();
+
             if (!string.IsNullOrEmpty(employeeUserId))
             {
                 iQueryable = iQueryable.Where(d => d.EmployeeUserId == employeeUserId);
@@ -385,6 +386,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                  ProjectId_db = a.ProjectId,
                                                  SprintId=a.SprintId,
                                                  ProjectName = (allProjects.Where(d => d.Id == a.ProjectId).FirstOrDefault() != null ? allProjects.Where(d => d.Id == a.ProjectId).FirstOrDefault().Name : null),
+                                                 LocationName = (allLocations.Where(d => d.Code == a.LocationCode).FirstOrDefault() != null ? allLocations.Where(d => d.Code == a.LocationCode).FirstOrDefault().Name : null),
                                              }).ToList();
 
             myResult.ItemsPM = listPM;
