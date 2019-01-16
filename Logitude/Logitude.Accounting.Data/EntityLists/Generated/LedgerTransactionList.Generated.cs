@@ -104,6 +104,12 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal ForeignAmount  { get; set; }
        [DataMember]
        public string ReconcileRemarks  { get; set; }
+       [DataMember]
+       public string OppositeAccountEnglishName  { get; set; }
+       [DataMember]
+       public string OppositeAccountLocalName  { get; set; }
+       [DataMember]
+       public string OppositeAccountDisplayNumber  { get; set; }
    }
 
 }
