@@ -22,7 +22,7 @@ namespace Logitude.Server.Tools.Helpers
 {
     public class TableCounter
     { 
-        public static string GetNumber(int tenant ,string counterCode,string parameter1,string parameter2,string additionalParameter = "")
+        public static string GetNumber(int tenant ,string counterCode,string parameter1,string parameter2, Dictionary<string, string> additionalParameters = null)
         {
             Counter counter = null;
             CounterDefinition counterDef = null;
@@ -184,12 +184,12 @@ namespace Logitude.Server.Tools.Helpers
                
             }
 
-			ResolveCounterPrefixVariables(ref number, tenant, additionalParameter);
+			ResolveCounterPrefixVariables(counter, counterDef, tenant,ref number, additionalParameters);
 
 			return number;
 		}
 
-		private static void ResolveCounterPrefixVariables(ref string number, int tenant, string additionalParameter)
+		private static void ResolveCounterPrefixVariables(Counter counter, CounterDefinition counterDef, int tenant, ref string number, Dictionary<string,string> additionalParameters)
 		{
 			//[MM],[YY] or [YYYY],[B]
 
@@ -198,9 +198,13 @@ namespace Logitude.Server.Tools.Helpers
 			string YY = date.ToString("yy");
 			string YYYY = date.ToString("yyyy");
 
-			number = number.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY).Replace("[P]", !string.IsNullOrEmpty(additionalParameter) ? additionalParameter : "");
+			number = number.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
+			if (additionalParameters != null) {
+				foreach (var k in additionalParameters.Keys)
+					number = number.Replace(k, additionalParameters[k]);
+			}
 
-
+			 
 		}
         public static string GetCounterPrefix(int tenant, string counterCode, string parameter1, string parameter2)
         {

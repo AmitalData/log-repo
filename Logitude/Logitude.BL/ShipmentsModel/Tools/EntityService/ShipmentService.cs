@@ -2404,12 +2404,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 if (!entityPM.IsHybrid)
                 {
-                    entityPM.CreateDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+					Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]",""} };
+					if (!string.IsNullOrEmpty(entityPM.BranchId))
+					{
+						Branch myBranch = (from d in myCommonContext.Branches
+										   where d.Tenant == tenant
+										   && d.Id == entityPM.BranchId
+										   select d).FirstOrDefault();
+
+						if (myBranch != null && !string.IsNullOrEmpty(myBranch.CounterCode))
+						{
+							counterAdditionalParameters["[B]"] = myBranch.CounterCode;
+						}
+					}
+
+					entityPM.CreateDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
 
                     if (entityPM.ShipmentLevelCode == "C")
                     {
                         if (entityPM.ShipmentNumber == null)
-                            entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "MAST", entityPM.DirectionId, entityPM.TransportModeId);
+                            entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "MAST", entityPM.DirectionId, entityPM.TransportModeId, counterAdditionalParameters);
                     }
 
                     else
@@ -2417,13 +2431,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         if (entityPM.DirectionId.ToUpper() == "C")
                         {
                             if (entityPM.ShipmentNumber == null)
-                                entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", "I", entityPM.TransportModeId);
+                                entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", "I", entityPM.TransportModeId, counterAdditionalParameters);
                         }
 
                         else
                         {
                             if (entityPM.ShipmentNumber == null)
-                                entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId);
+                                entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId, counterAdditionalParameters);
                         }
                     }
                 }
