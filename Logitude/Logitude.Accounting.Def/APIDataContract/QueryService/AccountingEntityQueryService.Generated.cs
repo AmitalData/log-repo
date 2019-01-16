@@ -76,14 +76,16 @@ using Logitude.Accounting.Data;
         {
 		    try
             {
-				   					var temp = new AccountingEntityPM();
-					if (!string.IsNullOrEmpty(MyEntity.Code))
+				   
+					var temp = new AccountingEntityPM();
+										if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
 						temp = query.GetSinglePM(MyEntity.Code);
 					} 					   
 					if(temp == null)
 					{
 					    throw new ApplicationException("AccountingEntity with Code " + MyEntity.Code + " doesn't exist");
+						
 					} 
 					if(string.IsNullOrEmpty(temp.Code))
 					{
