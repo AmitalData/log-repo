@@ -107,7 +107,9 @@ using Logitude.Accounting.Data;
         {
 		    try
             {
-				   					var temp = new AutomaticReconcileMethodPM();								  
+				   
+					var temp = new AutomaticReconcileMethodPM();
+												  
 					if (!string.IsNullOrEmpty(MyEntity.Id))
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
@@ -116,6 +118,7 @@ using Logitude.Accounting.Data;
 					if(temp == null)
 					{
 					    throw new ApplicationException("AutomaticReconcileMethod with Id " + MyEntity.Id + " doesn't exist");
+						
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
