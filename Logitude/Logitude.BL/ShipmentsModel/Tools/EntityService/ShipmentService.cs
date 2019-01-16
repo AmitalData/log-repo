@@ -2282,10 +2282,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 DateTime? dateBefore = DateTime.Now;
                 string tableName = entityPM.ShipmentLevelCode == "C" ? "Master" : entityPM.ShipmentLevelCode == "H" ? "Shipment" : "MasterAndHouse";
-
+                EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
                 if (type == "OnCreate")
                 {
-                    EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
                     bool isHaveAutomation = entityChangeHelper.CheckIfEntityHaveAutomation(tableName, "OnCreate", entityPM.Tenant);
                     if (isHaveAutomation)
                     {
@@ -2295,7 +2294,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 else if (!entityPM.IsUpdateByAutomation && type == "OnUpdate")
                 {
-                    EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
+                    
                     ShipmentPM changeTrackingPM = new ShipmentPM();
                     ShipmentQuery query = new ShipmentQuery(tenant);
                     query.MapShipmentToShipmentPMForAutomation(changeTrackingPM, this.entityPoco, null, this.entityMasterData);
