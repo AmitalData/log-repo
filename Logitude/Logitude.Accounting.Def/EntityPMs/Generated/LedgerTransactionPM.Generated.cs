@@ -1055,6 +1055,75 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string oppositeAccountEnglishName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OppositeAccountEnglishName  
+	   {
+	    
+	     get
+		{
+		   return oppositeAccountEnglishName;
+		 }
+		 set
+		 {
+		   if(oppositeAccountEnglishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OppositeAccountEnglishName",OldValue=oppositeAccountEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   oppositeAccountEnglishName=value;
+		   }
+			
+		 }
+	   }
+	  private string oppositeAccountLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OppositeAccountLocalName  
+	   {
+	    
+	     get
+		{
+		   return oppositeAccountLocalName;
+		 }
+		 set
+		 {
+		   if(oppositeAccountLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OppositeAccountLocalName",OldValue=oppositeAccountLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   oppositeAccountLocalName=value;
+		   }
+			
+		 }
+	   }
+	  private string oppositeAccountDisplayNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OppositeAccountDisplayNumber  
+	   {
+	    
+	     get
+		{
+		   return oppositeAccountDisplayNumber;
+		 }
+		 set
+		 {
+		   if(oppositeAccountDisplayNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OppositeAccountDisplayNumber",OldValue=oppositeAccountDisplayNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   oppositeAccountDisplayNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

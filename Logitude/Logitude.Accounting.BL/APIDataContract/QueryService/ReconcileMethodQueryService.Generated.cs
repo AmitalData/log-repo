@@ -77,14 +77,16 @@ using Logitude.Accounting.Data;
         {
 		    try
             {
-				   					var temp = new ReconcileMethodPM();
-					if (!string.IsNullOrEmpty(MyEntity.Code))
+				   
+					var temp = new ReconcileMethodPM();
+										if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
 						temp = query.GetSinglePM(MyEntity.Code);
 					} 					   
 					if(temp == null)
 					{
 					    throw new ApplicationException("ReconcileMethod with Code " + MyEntity.Code + " doesn't exist");
+						
 					} 
 					if(string.IsNullOrEmpty(temp.Code))
 					{

@@ -16,6 +16,7 @@ export class AccountingIntegrityCheckList {
 	ResultXML: string;
 	HasException: boolean;
 	DoneDateTimeUTC: Date;
+	StatusName: string;
 	
 }
  

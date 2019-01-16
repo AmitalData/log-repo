@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
       .BoxItemRow td span {
         color: #0B3861;
@@ -107,6 +107,21 @@
 
                         <td>
                             <LogTextBox [ObjectFieldName]="'Signature'" [Text]="Signature" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- Code -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'CounterCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'CounterCode'" [Text]="CounterCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                         </td>
 
                         <td>

@@ -375,6 +375,17 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             Styles: { width: '90px' },
             IsCustomTemplate: true
         });
+
+        this.columns.push({
+            FieldName: 'OppositeAccountLocalName',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.OppositeAccountLocalName"),
+            Styles: { width: '120px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+            IsCustomTemplate: true
+        });
+
         this.columns.push({
             FieldName: 'JournalNumber',
             DataTypeCode: 'String',

@@ -30,6 +30,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool HasException  { get; set; }
        [DataMember]
        public DateTime? DoneDateTimeUTC  { get; set; }
+       [DataMember]
+       public string StatusName  { get; set; }
    }
 
 }

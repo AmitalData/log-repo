@@ -135,7 +135,15 @@
         {{ rowData[fieldName] | NumbersPipe:'N2'  }} {{rowData['CurrencySign']}}
     </div>
 
+    <!-- OppositeAccount -->
+    <div [style.text-align]="isRTL ? 'right' : 'left'" [title]="rowData['OppositeAccountDisplayNumber']" class="TextTrimming" *ngIf="fieldName == 'OppositeAccountLocalName'">
+        <a (click)="OpenGLAccount()">{{ rowData['OppositeAccountLocalName'] }}</a>
+
+    </div>
+
+
     <!-- **** -->
+
     <!-- Reconcile Window -->
     <div class="TextTrimming" *ngIf="fieldName == 'SelectCheckBox'" style="padding: 4px;">
         <CheckBox (Checked)="CheckBoxClicked($event)" [IsChecked]="rowData['IsChecked']"></CheckBox>

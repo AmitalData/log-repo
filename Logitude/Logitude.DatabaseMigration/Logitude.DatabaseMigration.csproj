@@ -514,6 +514,10 @@
     <Compile Include="Migrations\201901131510531_NewTables_AccountingIntegrityCheck.Designer.cs">
       <DependentUpon>201901131510531_NewTables_AccountingIntegrityCheck.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901160605329_branch_countercode_field.cs" />
+    <Compile Include="Migrations\201901160605329_branch_countercode_field.Designer.cs">
+      <DependentUpon>201901160605329_branch_countercode_field.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -837,6 +841,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.resx">
       <DependentUpon>201901131517146_AddPackageHasContainerExc.Field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901160605329_branch_countercode_field.resx">
+      <DependentUpon>201901160605329_branch_countercode_field.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

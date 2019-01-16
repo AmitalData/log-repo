@@ -26,6 +26,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private string CustomerId = null;
         private bool IncludeOperationalClosed = false;
         private bool IsByCreateDate = true;
+        private string Direction = null;
+        private string TransportMode = null;
+        private string ShipmentLevel = null;
 
         public StatisticsByCustomerManager(byte[] xmlFilters, int tenant)
         {
@@ -41,12 +44,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             QueryFilterItem filterItem_CustomerId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
             QueryFilterItem filterItem_IncludeOperationalClosed = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeOperationalClosed").FirstOrDefault();
             QueryFilterItem filterItem_Currency = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "Currency").FirstOrDefault();
+            QueryFilterItem filterItem_Direction = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "Direction").FirstOrDefault();
+            QueryFilterItem filterItem_TransportMode = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "TransportMode").FirstOrDefault();
+            QueryFilterItem filterItem_ShipmentLevel = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ShipmentLevel").FirstOrDefault();
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             DateTime myStartDate = todayDate.AddMonths(-1);
             DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
             DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
-
+            
             if (filterItem_IsByCreateDate != null)
             {
                 if (filterItem_IsByCreateDate.FieldValue != null)
@@ -99,6 +105,29 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 }
             }
 
+            if (filterItem_Direction != null)
+            {
+                if (filterItem_Direction.FieldValue != null)
+                {
+                    Direction = filterItem_Direction.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_TransportMode != null)
+            {
+                if (filterItem_TransportMode.FieldValue != null)
+                {
+                    TransportMode = filterItem_TransportMode.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_ShipmentLevel != null)
+            {
+                if (filterItem_ShipmentLevel.FieldValue != null)
+                {
+                    ShipmentLevel = filterItem_ShipmentLevel.FieldValue.ToString();
+                }
+            }
         }
 
         public byte[] GetData()
@@ -184,6 +213,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             if (!IncludeOperationalClosed)
             {
                 shipments = shipments.Where(d => !d.IsOperationalClosed);
+            }
+
+            if (!string.IsNullOrEmpty(Direction))
+            {
+                shipments = shipments.Where(d => d.DirectionId == Direction);
+            }
+
+            if (!string.IsNullOrEmpty(TransportMode))
+            {
+                shipments = shipments.Where(d => d.TransportModeId == TransportMode);
+            }
+
+            if (!string.IsNullOrEmpty(ShipmentLevel))
+            {
+                shipments = shipments.Where(d => d.ShipmentLevelCode == ShipmentLevel);
             }
 
             string[] currencyarray = Currency.Split(',');

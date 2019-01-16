@@ -110,6 +110,11 @@ export class BranchPM {
     public set INTTRAContactId(newValue: string) { if (this.iNTTRAContactId != newValue) { this.iNTTRAContactId = newValue; this.MarkAsDirty("INTTRAContactId"); } }
        
 	 
+    private counterCode: string;
+    public get CounterCode() { return this.counterCode; }
+    public set CounterCode(newValue: string) { if (this.counterCode != newValue) { this.counterCode = newValue; this.MarkAsDirty("CounterCode"); } }
+       
+	 
 
     public OldEntityPM: BranchPM;
 		

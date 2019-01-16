@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BranchPM} from '../../../EntityPMs/BranchPM';
@@ -93,6 +93,13 @@ export class BranchGeneralTabComponent extends BaseComponent implements OnDestro
     set Signature(value: string) {
         if (this.EntityPM.Signature != value) {
             this.EntityPM.Signature = value;
+        }
+    }
+
+    get CounterCode() { return this.EntityPM.CounterCode; }
+    set CounterCode(value: string) {
+        if (this.EntityPM.CounterCode != value) {
+            this.EntityPM.CounterCode = value;
         }
     }
 
