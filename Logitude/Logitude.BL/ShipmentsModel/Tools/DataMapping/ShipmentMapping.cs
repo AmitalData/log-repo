@@ -167,7 +167,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 {
                     PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
                     Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
-                    entityPoco.CountryForStatisticsId = port.a
+                   // entityPoco.CountryForStatisticsId = port.a
                 }
 
 
