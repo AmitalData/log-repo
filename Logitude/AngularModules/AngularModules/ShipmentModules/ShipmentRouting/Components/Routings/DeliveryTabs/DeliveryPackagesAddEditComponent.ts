@@ -69,6 +69,18 @@ export class DeliveryPackagesAddEditComponent extends BaseComponent {
         });
     }
 
+    ChooseHarmonizeClicked() {
+        if (this.DataContext) {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = TextCodeTranslator.TranslateTablePlural("HarmonizeCode") + " Search";
+            logitudeWindow.WindowArgs = { Entity: this.DataContext, FieldName: 'Harmonize' };
+            logitudeWindow.Show("./ShipmentModules/ShipmentTabs/Components/Windows/Harmonizes/HarmonizesComponent");
+            logitudeWindow.WindowClosed.subscribe(s => {
+
+            });
+        }
+    }
+
     private myCloner: Cloner;
     private Clone() {
         this.myCloner = new Cloner(this.EntityPM);
