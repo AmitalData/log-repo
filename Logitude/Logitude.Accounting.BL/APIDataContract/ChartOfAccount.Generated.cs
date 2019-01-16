@@ -25,6 +25,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     
     public int Tenant { get; set; }
     
+	[XmlAttribute]
     public string LogitudeCode { get; set; }
     
     public string LocalName { get; set; }
