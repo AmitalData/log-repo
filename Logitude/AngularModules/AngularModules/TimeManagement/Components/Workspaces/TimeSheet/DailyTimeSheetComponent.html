@@ -236,6 +236,13 @@
                                         </log-cell-template>
                                     </log-column>
 
+                                    <!-- Location  -->
+                                    <log-column *ngIf="SelectedDateFilter == 'P'" [Alignment]="'left'" [width]="'120'" [header]="'Location'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            {{item.LocationName}}
+                                        </log-cell-template>
+                                    </log-column>
+                                   
                                     <!-- Hours -->
                                     <log-column [width]="'120'" [Alignment]="'center'" [header]="'Hours'">
                                         <log-cell-template template="let item" #logcelltemplate>

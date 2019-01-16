@@ -932,7 +932,12 @@ export class HomeComponent {
                         this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
                         var contractId: string = SessionLocator.TenantManagementPM.BluesnapContractId;
                         if (AppTool.IsNullOrEmpty(contractId)) {
-                            contractId = "3507474";
+                            if (SessionLocator.TenantManagementPM.CountryName == "Israel") {
+                                contractId = "3256464";
+                            }
+                            else {
+                                contractId = "3507474";
+                            }
                         }
 
                         var numberofUsers: number = SessionLocator.TenantManagementPM.NumberOfUsers;                       

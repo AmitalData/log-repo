@@ -28,6 +28,7 @@ export class TMEmployeeTimeList {
 	ProratedDuration: number;
 	FullDuration: number;
 	NeedsProrating: boolean;
+	LocationName: string;
 	
 }
  

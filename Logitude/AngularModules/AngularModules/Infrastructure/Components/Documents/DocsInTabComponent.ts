@@ -26,7 +26,9 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {GeneralDocumentFollowUpHelper} from '../../../Infrastructure/Helpers/GeneralDocumentFollowUpHelper';
 import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
 import {ShipmentPM} from '../../../Shipment/EntityPMs/ShipmentPM';
-import {BaseComponent} from '../LogitudeComponents/BaseComponent';
+import { BaseComponent } from '../LogitudeComponents/BaseComponent';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { CardPMService } from '"../../../Common/Services/StandardPMs/CardPMService';
 
 @Component({
     moduleId: module.id,
@@ -50,6 +52,8 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     public ChildEntityReference: string = "";
     public Tenant: number;
     public IsClickToUpload: boolean = false;
+    public DownloadAllVisibile: boolean = false;
+    public HasDocuments: boolean = false;
     ObjectTableName: string;
     IsShowFollowColum: boolean;
     DocumentsList: DocsInDataViewModel[];
@@ -83,6 +87,21 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
     }
 
+    DownloadAllClick() {
+
+        var service: CardPMService = new CardPMService();
+        service.get(SessionLocator.LoggedUserPM.Id).subscribe(res => {
+            if (!res.HasError) {
+
+                var link = ServiceHelper.GetLogitudeURL() + "/WebPages/SharedDownloadPage.aspx?id=" + SessionLocator.Tenant + ":" + null + ":ship:" + this.EntityId + ":" + res.Result.PartnerTypeId + ":" + ServiceHelper.GetLDocumentDownloadToken();
+                var win = window.open(link, '_blank');
+                win.focus();
+            }
+        });
+       
+
+    }
+
 
     ngOnInit() {
         var table = window.ObjectTables.filter(d => d.Id == this.ObjectTableId)[0];
@@ -91,6 +110,12 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         }
 
         else this.ObjectTableName = "Shipment";
+
+
+        if (FeatureLocator.HasFeaturePermession("Shipment", "DOCSINDOWNLOADDOCUMENTS") && this.ObjectTableName == "Shipment") {
+            this.DownloadAllVisibile = true;
+        }
+
 
         // Ayman:
         // we need this for Translation
@@ -125,6 +150,8 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             });
 
         });
+
+
     }
 
 
@@ -546,13 +573,18 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     BuildItemsSource() {
 
         var itemsCollection: DocsInDataViewModel[] = [];
+        this.HasDocuments = false;
 
         this.DocumentsList.forEach((item) => {
+            if (item.DataContext.DocumentId) {
+                this.HasDocuments = true;
+            }
             itemsCollection.push(item);
         })
 
 
         this.ItemsSource.Clear();
+               
         this.ItemsSource.AppendCollection(itemsCollection);
 
     }
