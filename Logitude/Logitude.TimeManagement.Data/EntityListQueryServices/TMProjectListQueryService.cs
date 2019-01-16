@@ -42,6 +42,9 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
                                                    SearchFields = a.SearchFields,
                                                    IsInnerProject=a.IsInnerProject,
                                                    ExternalProjectNumber = a.ExternalProjectNumber,
+                                                   BudgetId = a.BudgetId,
+                                                   CategoryId = a.CategoryId,
+                                                   IsProrated = a.IsProrated, 
                                                });
             return query;
         }

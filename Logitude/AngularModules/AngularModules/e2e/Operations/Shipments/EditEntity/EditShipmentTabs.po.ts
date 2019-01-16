@@ -45,7 +45,7 @@ export class EditTabsComponent {
   GoToShipment(){
     this.Operation.GoToMainMenu('General.MH.Operations');
     this.Operation.SelectMenuWorkSpaceTabs('SHIP');
-    this.QuickSearch.UseQuickSearch('SR1545342');
+    // this.QuickSearch.UseQuickSearch('SR1545342');
   }
 
   EditTabs(shipperRef1:string,LogitudeShipType:string,ShipmentType: string) {
