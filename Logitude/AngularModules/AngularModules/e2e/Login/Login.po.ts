@@ -13,18 +13,20 @@ export class LoginComp {
   }
   DoLogin() {
     browser.ignoreSynchronization = true;
-    // this.Helper.WaitByIdAndFill('Email','angular@fnarsoft.com' );
-    // this.Helper.WaitByIdAndFill('Password','1' );
+    //this.Helper.WaitByIdAndFill('Email','angular@fnarsoft.com' );
+    //this.Helper.WaitByIdAndFill('Password','1' );
 
     this.Helper.WaitByIdAndFill('Email','razan@razancompany.com' );
     this.Helper.WaitByIdAndFill('Password','!R123j456' );
     this.Helper.ButtonClick('cmdLogin');
 
-   
+
+
     // // LOCALLLY
     // this.Helper.WaitByIdAndFill('Email','angular@fnarsoft.com' );
 
     // this.Helper.WaitByIdAndFill('Password','1' );
     // this.Helper.ButtonClick('cmdLogin');
+
   }
 }

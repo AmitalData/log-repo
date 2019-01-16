@@ -155,6 +155,35 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
                     entityPoco.CountryForStatisticsId = country.Id;
                 }
+
+                else if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "O")
+                {
+                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
+                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
+                    entityPoco.CountryForStatisticsId = country.Id;
+                }
+
+                else if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
+                {
+                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
+                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
+                   // entityPoco.CountryForStatisticsId = port.a
+                }
+
+
+                else if (entityPM.DirectionId == "C")
+                {
+                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.FromPortId, true);
+                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
+                    entityPoco.CountryForStatisticsId = country.Id;
+                }
+
+                else if (entityPM.DirectionId == "R")
+                {
+                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
+                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
+                    entityPoco.CountryForStatisticsId = country.Id;
+                }
             }
 
             else

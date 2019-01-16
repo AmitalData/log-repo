@@ -152,7 +152,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     SLAHeaderLists: SLAHeaderList[];
     IsLoadEventFollowUp: boolean = false;
     IsLoadSLAHeaders: boolean = false;
-    
+    IsAutomationResultEmailAllActiveUsers: boolean = false;
+
     IsMasterShipment: boolean = false;
     SetWindowArgs(args: any) {
         this.ObjectTableId = args.ObjectTableId;
@@ -628,6 +629,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.Inactive = this.CurrentEntityPM.Inactive;
             this.IsActiveAutomation = this.CurrentEntityPM.Inactive;
             this.DelayTime = this.AutomatedBackupClass.Delaytime;
+            this.IsAutomationResultEmailAllActiveUsers = this.AutomatedBackupClass.IsAutomationResultEmailAllActiveUsers;
+
             this.FillObjectField();
             this.LoadAutomationHistory();
             this.LoadDocumentType();
@@ -1005,7 +1008,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
 
         if (this.ParticipantsList.length == 0 && this.EntityContactVariable.length == 0 && this.CurrentEntityPM.ResultCode == "EMAIL") {
-            this.ValidationErrorsList.push("Please add at least one recipient");
+            if (!this.IsAutomationResultEmailAllActiveUsers) {
+                this.ValidationErrorsList.push("Please add at least one recipient");
+            }
         }
 
         if (this.CurrentEntityPM.ResultCode == "FIELDSET" && this.AutomationSetValueLists && this.AutomationSetValueLists.length > 0) {
@@ -1220,6 +1225,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automatedBackup.Type = this.AutomatedBackupClass.Type;
         automatedBackup.DelayAautomationConditionLists = this.AutomatedBackupClass.DelayAautomationConditionLists;
         automatedBackup.AautomationConditionLists = automationConditionList;
+        automatedBackup.IsAutomationResultEmailAllActiveUsers = this.IsAutomationResultEmailAllActiveUsers;
 
         if (this.CurrentEntityPM.ResultCode == "FIELDSET") automatedBackup.AutomationSetValueLists = automationSetValuelist;
         else if (this.CurrentEntityPM.ResultCode == "SETSLA") automatedBackup.AutomationSetSLAValue = this.AutomationSetSLAValue;

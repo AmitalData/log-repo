@@ -77,14 +77,16 @@ using Logitude.Accounting.Data;
         {
 		    try
             {
-				   					var temp = new GLAccountTypePM();
-					if (!string.IsNullOrEmpty(MyEntity.Code))
+				   
+					var temp = new GLAccountTypePM();
+										if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
 						temp = query.GetSinglePM(MyEntity.Code);
 					} 					   
 					if(temp == null)
 					{
 					    throw new ApplicationException("GLAccountType with Code " + MyEntity.Code + " doesn't exist");
+						
 					} 
 					if(string.IsNullOrEmpty(temp.Code))
 					{
