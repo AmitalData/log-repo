@@ -69,6 +69,7 @@ export class CourierWorksheetListTemplate {
     MamanStickerDetails: DeclarationMamanSpecialActionPM = null;
     IsReceivingDelayCertificate: boolean = false;
     IsPrintDocuments: boolean = false;
+    IsMamanSticker: boolean = false;
 
     private _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
     private _CourierMasterService: CourierMasterService = new CourierMasterService();
@@ -400,15 +401,22 @@ export class CourierWorksheetListTemplate {
                 response.Result.forEach((declarationMamanSpecialActionPMItem: DeclarationMamanSpecialActionPM) => {
                     switch (declarationMamanSpecialActionPMItem.MamanSpecialActionCode) {
                         case "2": {
-                            this.IsReceivingDelayCertificate = true;
+                            if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
+                                this.IsReceivingDelayCertificate = true;
+                            }
                             break;
                         }
                         case "4": {
                             this.MamanStickerDetails = declarationMamanSpecialActionPMItem;
+                            if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
+                                this.IsMamanSticker = true;
+                            }
                             break;
                         }
                         case "5": {
-                            this.IsPrintDocuments = true;
+                            if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
+                                this.IsPrintDocuments = true;
+                            }
                             break;
                         }
                     }

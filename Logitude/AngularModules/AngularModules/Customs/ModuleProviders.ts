@@ -211,6 +211,7 @@ import { PendingErrorPlaceListService } from './Services/StandardLists/PendingEr
 import { DecisionTypeListService } from './Services/StandardLists/DecisionTypeListService';
 import { SeizureMethodTypeListService } from './Services/StandardLists/SeizureMethodTypeListService';
 import { SeizureFactorTypeListService } from './Services/StandardLists/SeizureFactorTypeListService';
+import { RefundCustomerActivityTypeListService } from './Services/StandardLists/RefundCustomerActivityTypeListService';
 
 //#endregion
 
@@ -547,6 +548,7 @@ export class ModuleProviders {
             case "DecisionTypeListService": { myResult = new DecisionTypeListService(); break; }
             case "SeizureMethodTypeListService": { myResult = new SeizureMethodTypeListService(); break; }
             case "SeizureFactorTypeListService": { myResult = new SeizureFactorTypeListService(); break; }
+            case "RefundCustomerActivityTypeListService": { myResult = new RefundCustomerActivityTypeListService(); break; }
             //#endregion                
 
             //#region StandardPMs

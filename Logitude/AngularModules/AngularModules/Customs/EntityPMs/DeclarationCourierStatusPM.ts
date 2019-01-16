@@ -244,6 +244,11 @@ export class DeclarationCourierStatusPM {
     public set SpecialActionStatus(newValue: string) { if (this.specialActionStatus != newValue) { this.specialActionStatus = newValue; this.MarkAsDirty("SpecialActionStatus"); } }
        
 	 
+    private specialActionsErrorXml: string;
+    public get SpecialActionsErrorXml() { return this.specialActionsErrorXml; }
+    public set SpecialActionsErrorXml(newValue: string) { if (this.specialActionsErrorXml != newValue) { this.specialActionsErrorXml = newValue; this.MarkAsDirty("SpecialActionsErrorXml"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

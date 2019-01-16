@@ -70,6 +70,35 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 CourierSuspentionName = d.CourierSuspention != null ? d.CourierSuspention.LocalName : null,
                                                                 SpecialActionStatus = a.SpecialActionStatus,
                                                               });
+
+
+            //bool todo = true;
+            //if (todo)
+            //{
+            //    var declarationMamanSpecialActionRepository = new DeclarationMamanSpecialActionRepository(MainContext as ICustomContext);
+            //    var q1 = (from action in declarationMamanSpecialActionRepository.GetAll(tenant)
+            //              group action by action.DeclarationId into gaction
+            //              select new
+            //              {
+            //                  id = gaction.Key,
+            //                  text = "Test",
+
+            //                  //gaction.Aggregate((b4, after) =>string.Concat(b4.DeclarationId , after.DeclarationId)),
+            //                  //string.Join(" ", gaction.Select(r => r.MamanSpecialActionsErrorXml))
+            //              });
+
+            //    q = (from a in q
+            //         join t in q1
+            //         on a.dStatus.DeclarationId equals t.id
+            //         into leftJoin
+            //         from ao in leftJoin.DefaultIfEmpty()
+            //         select new { a.dStatus, a.declaration, tooltip = ao.text }
+            //        );
+
+            //}
+
+
+
             return query;
 		}
 

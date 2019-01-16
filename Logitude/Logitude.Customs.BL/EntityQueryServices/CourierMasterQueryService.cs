@@ -114,8 +114,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                  on cd.DeclarationId equals dStatus.DeclarationId
                  join declaration in declarationRepository.GetAll(tenant)
                  on dStatus.DeclarationId equals declaration.Id
-                 select new { dStatus, declaration }
-             );
+                 select new { dStatus, declaration ,tooltip="" }
+             );         
 
             int HOLD = 0;
             int ALL = 0;
