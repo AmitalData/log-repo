@@ -40,26 +40,27 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     {
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
-                            var branches = (from a in repository.context.Branches
-                                            where a.Tenant == tenant
-                                            select new BranchPM()
-                                            {
-                                                EnglishName = a.EnglishName,
-                                                Id = a.Id,
-                                                InActive = a.InActive,
-                                                LocalName = a.LocalName,
-                                                Notes = a.Notes,
-                                                Tenant = a.Tenant,
-                                                SearchFields = a.SearchFields,
-                                                ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                                                ExternalId = a.ExternalId,
-                                                AddressId = a.AddressId,
-                                                Signature = a.Signature,
-                                                Code = a.Code,
-                                                INTTRAId = a.INTTRAId,
-                                                INTTRAAlias = a.INTTRAAlias,
-                                                INTTRAContactId = a.INTTRAContactId,
-                                            });
+							var branches = (from a in repository.context.Branches
+											where a.Tenant == tenant
+											select new BranchPM()
+											{
+												EnglishName = a.EnglishName,
+												Id = a.Id,
+												InActive = a.InActive,
+												LocalName = a.LocalName,
+												Notes = a.Notes,
+												Tenant = a.Tenant,
+												SearchFields = a.SearchFields,
+												ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+												ExternalId = a.ExternalId,
+												AddressId = a.AddressId,
+												Signature = a.Signature,
+												Code = a.Code,
+												INTTRAId = a.INTTRAId,
+												INTTRAAlias = a.INTTRAAlias,
+												INTTRAContactId = a.INTTRAContactId,
+												CounterCode = a.CounterCode,
+											});
 
                             foreach (var c in branches)
                             {
@@ -99,7 +100,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       INTTRAId = a.INTTRAId,
                                       INTTRAAlias = a.INTTRAAlias,
                                       INTTRAContactId = a.INTTRAContactId,
-                                  }).FirstOrDefault();
+									  CounterCode = a.CounterCode,
+								  }).FirstOrDefault();
                     }
                 }
                 else
@@ -123,7 +125,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   INTTRAId = a.INTTRAId,
                                   INTTRAAlias = a.INTTRAAlias,
                                   INTTRAContactId = a.INTTRAContactId,
-                              }).FirstOrDefault();
+								  CounterCode = a.CounterCode,
+							  }).FirstOrDefault();
                 }
 
                 BranchPM securedPm = new BranchPM();
@@ -165,7 +168,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 INTTRAId = a.INTTRAId,
                                                 INTTRAAlias = a.INTTRAAlias,
                                                 INTTRAContactId = a.INTTRAContactId,
-                                            });
+												CounterCode = a.CounterCode,
+											});
 
                             foreach (var c in branches)
                             {
@@ -205,7 +209,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       INTTRAId = a.INTTRAId,
                                       INTTRAAlias = a.INTTRAAlias,
                                       INTTRAContactId = a.INTTRAContactId,
-                                  }).FirstOrDefault();
+									  CounterCode = a.CounterCode,
+								  }).FirstOrDefault();
                     }
                 }
                 else
@@ -229,7 +234,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   INTTRAId = a.INTTRAId,
                                   INTTRAAlias = a.INTTRAAlias,
                                   INTTRAContactId = a.INTTRAContactId,
-                              }).FirstOrDefault();
+								  CounterCode = a.CounterCode,
+							  }).FirstOrDefault();
                 }
                 BranchPM securedPm = new BranchPM();
                 SecuredMapping.GetMappedPM(entity, securedPm, "Branch", tenant);
@@ -259,7 +265,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 INTTRAId = a.INTTRAId,
                                                 INTTRAAlias = a.INTTRAAlias,
                                                 INTTRAContactId = a.INTTRAContactId,
-                                            };
+												CounterCode = a.CounterCode,
+											};
             return branches;
         }
         public BranchPM GetBranchByName(string name, int tenant)
@@ -286,7 +293,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              INTTRAId = a.INTTRAId,
                              INTTRAAlias = a.INTTRAAlias,
                              INTTRAContactId = a.INTTRAContactId,
-                         }).FirstOrDefault();
+							 CounterCode = a.CounterCode,
+						 }).FirstOrDefault();
             return query;
         }
         public IQueryable<BranchList> GetIQueryableEntityList(IQueryable<Branch> iQueryable)

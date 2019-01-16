@@ -154,7 +154,9 @@ using Logitude.Accounting.Data;
         {
 		    try
             {
-				   					var temp = new JournalPM();								  
+				   
+					var temp = new JournalPM();
+												  
 					if (!string.IsNullOrEmpty(MyEntity.Id))
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
@@ -163,6 +165,7 @@ using Logitude.Accounting.Data;
 					if(temp == null)
 					{
 					    throw new ApplicationException("Journal with Id " + MyEntity.Id + " doesn't exist");
+						
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -258,7 +261,7 @@ using Logitude.Accounting.Data;
 						var myJournalTypePM = JournalTypeJournalTypeService.JournalTypeDataMappingAndValidatin(MyEntity.JournalType,Tenant,ComputingPartnerName);
 												if(myJournalTypePM != null)
 						{
-							temp.TypeCode = myJournalTypePM.JournalTypeID;
+							temp.TypeCode = myJournalTypePM.Code;
 						}
 						 
 					}
@@ -270,7 +273,7 @@ using Logitude.Accounting.Data;
 						var myJournalStatusTypePM = JournalStatusTypeJournalStatusTypeService.JournalStatusTypeDataMappingAndValidatin(MyEntity.JournalStatusType,Tenant,ComputingPartnerName);
 												if(myJournalStatusTypePM != null)
 						{
-							temp.StatusCode = myJournalStatusTypePM.JournalStatusID;
+							temp.StatusCode = myJournalStatusTypePM.Code;
 						}
 						 
 					}

@@ -296,7 +296,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      select new CallBackBalance
                      {
                          CurrencyId = tot.CurrencyId,
-                         BalanceForeign = tot.ForeignAmountDebit - tot.ForeignAmountCredit
+                         BalanceForeign = tot.ForeignAmountDebit - tot.ForeignAmountCredit,
+                         BalanceLocal = tot.LocalAmountDebit - tot.LocalAmountCredit
+
                      });
                 if (!String.IsNullOrWhiteSpace(_Param.CurrencyId))
                 {
@@ -309,7 +311,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                            select new CallBackBalance
                            {
                                CurrencyId = tot.CurrencyId,
-                               BalanceForeign = tot.ForeignAmountDebit - tot.ForeignAmountCredit
+                               BalanceForeign = tot.ForeignAmountDebit - tot.ForeignAmountCredit,
+
+                               BalanceLocal = tot.LocalAmountDebit - tot.LocalAmountCredit
                            });
                 if (!String.IsNullOrWhiteSpace(_Param.CurrencyId))
                 {

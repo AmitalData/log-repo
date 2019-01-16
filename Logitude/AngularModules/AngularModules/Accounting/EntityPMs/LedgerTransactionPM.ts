@@ -249,6 +249,21 @@ export class LedgerTransactionPM {
     public set OriginalJournalId(newValue: string) { if (this.originalJournalId != newValue) { this.originalJournalId = newValue; this.MarkAsDirty("OriginalJournalId"); } }
        
 	 
+    private oppositeAccountEnglishName: string;
+    public get OppositeAccountEnglishName() { return this.oppositeAccountEnglishName; }
+    public set OppositeAccountEnglishName(newValue: string) { if (this.oppositeAccountEnglishName != newValue) { this.oppositeAccountEnglishName = newValue; this.MarkAsDirty("OppositeAccountEnglishName"); } }
+       
+	 
+    private oppositeAccountLocalName: string;
+    public get OppositeAccountLocalName() { return this.oppositeAccountLocalName; }
+    public set OppositeAccountLocalName(newValue: string) { if (this.oppositeAccountLocalName != newValue) { this.oppositeAccountLocalName = newValue; this.MarkAsDirty("OppositeAccountLocalName"); } }
+       
+	 
+    private oppositeAccountDisplayNumber: string;
+    public get OppositeAccountDisplayNumber() { return this.oppositeAccountDisplayNumber; }
+    public set OppositeAccountDisplayNumber(newValue: string) { if (this.oppositeAccountDisplayNumber != newValue) { this.oppositeAccountDisplayNumber = newValue; this.MarkAsDirty("OppositeAccountDisplayNumber"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		

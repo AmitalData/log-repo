@@ -22,7 +22,20 @@ export class ChooseUserComponent {
         this.MyQuery = args.MyQuery;
         this.myUsersList = args.AllUsers;
 
+        this.SaveData(); 
         this.BuildData();
+    }
+
+    private savedList: SharedUserQueryPM[] = [];
+    SaveData() {
+        this.MyQuery.SharedUserQueries.forEach(item => {
+            var newItem = new SharedUserQueryPM(null);
+            newItem.Id = item.Id;
+            newItem.UserId = item.UserId;
+            newItem.QueryId = item.QueryId;            
+
+            this.savedList.push(newItem);
+        });               
     }
 
     myUsersList: UserList[];
@@ -53,15 +66,21 @@ export class ChooseUserComponent {
     }
 
     CloseButtonClicked() {
+        this.MyQuery.SharedUserQueries = [];
+
+        this.savedList.forEach(item => {
+            this.MyQuery.AddSharedUserQueryPM(item);
+        });
+
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
     SaveButtonClicked() {
         this.ValidationErrorsList = [];
-
+        
         if (this.MyQuery.SharedUserQueries.length > 0) {
-            this.CloseButtonClicked();
+            SessionLocator.CurrentSession.CloseCurrentWindow();
         }
 
         else {
