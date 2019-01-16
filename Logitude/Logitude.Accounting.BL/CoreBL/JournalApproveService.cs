@@ -778,7 +778,8 @@ namespace Logitude.Accounting.BL.CoreBL
                               AmountToReconcile = r.AmountToReconcile,
 
                               Mark = r.Mark,
-                              IsReconciled = r.IsReconciled
+                              IsReconciled = r.IsReconciled,
+                              IsExternalReconcile = r.IsExternalReconcile
                           }
                     ).ToList();
 
@@ -953,6 +954,9 @@ namespace Logitude.Accounting.BL.CoreBL
         public bool Mark { get; set; }
 
         public bool IsReconciled { get; set; }
+
+
+        public bool IsExternalReconcile { get; set; }
 
     }
 

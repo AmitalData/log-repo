@@ -27,7 +27,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         {
             CustomMappedPMProperties.Add(PMPropertyNames.StatusName);
 
-            if (entityPOCO.IntegrityCheckStatus != null)
+            if (entityPOCO.StatusCode != null)
             {
                 IntegrityCheckStatusQueryService query = new IntegrityCheckStatusQueryService(entityPOCO.Tenant);
 

@@ -1,12 +1,52 @@
-﻿USE [LogitudeMain-Test2]
+﻿
+DROP PROCEDURE [dbo].[usp_AccountingStreaming]
+
+GO 
+
+
+DROP TYPE [dbo].[LedgerTransactionsType]
+
+GO 
+
+
+
+/****** Object:  UserDefinedTableType [dbo].[LedgerTransactionsType]    Script Date: 1/16/2019 6:30:02 AM ******/
+CREATE TYPE [dbo].[LedgerTransactionsType] AS TABLE(
+	[JournalId] [varchar](15) NOT NULL,
+	[JournalLineNumber] [int] NOT NULL,
+	[Id] [varchar](15) NOT NULL,
+	[Tenant] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[ControlAccountId] [varchar](15) NULL,
+	[AccountId] [varchar](15) NOT NULL,
+	[AccountingDate] [datetime] NOT NULL,
+	[DocumentDate] [datetime] NOT NULL,
+	[DueDate] [datetime] NOT NULL,
+	[LocalAmountDebit] [decimal](16, 2) NOT NULL,
+	[LocalAmountCredit] [decimal](16, 2) NOT NULL,
+	[CurrencyId] [varchar](15) NULL,
+	[ForeignAmountDebit] [decimal](16, 2) NOT NULL,
+	[ForeignAmountCredit] [decimal](16, 2) NOT NULL,
+	[ExchangeRate] [decimal](16, 5) NOT NULL,
+	[Reference1] [varchar](30) NULL,
+	[Reference2] [varchar](30) NULL,
+	[Reference3] [varchar](30) NULL,
+	[OpenAmount] [decimal](16, 2) NOT NULL,
+	[OppositeAccountId] [varchar](15) NULL,
+	[SearchFields] [nvarchar](4000) NULL,
+	[OpenAmountCurrencyId] [varchar](15) NULL,
+	[Notes] [nvarchar](150) NULL,
+	[AmountToReconcile] [decimal](16, 2) NOT NULL,
+	[Mark] [bit] NOT NULL,
+	[IsReconciled] [bit] NOT NULL,
+	[IsExternalReconcile] [bit] NOT NULL
+)
 GO
+
+
+
 
 /****** Object:  StoredProcedure [dbo].[usp_AccountingStreaming]    Script Date: 1/16/2019 6:26:49 AM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 
 
@@ -16,7 +56,7 @@ GO
 -- Create date: 
 -- Description:	
 -- =============================================
-ALTER PROCEDURE [dbo].[usp_AccountingStreaming] 
+create PROCEDURE [dbo].[usp_AccountingStreaming] 
 	-- Add the parameters for the stored procedure here
 	@pJournalId varchar(15) , 
 	@pTenant int ,
@@ -300,5 +340,6 @@ END
 
 
 GO
+
 
 

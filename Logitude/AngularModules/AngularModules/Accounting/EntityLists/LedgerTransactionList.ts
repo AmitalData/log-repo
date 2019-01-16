@@ -53,6 +53,9 @@ export class LedgerTransactionList {
 	InReconcileProgress: boolean;
 	ForeignAmount: number;
 	ReconcileRemarks: string;
+	OppositeAccountEnglishName: string;
+	OppositeAccountLocalName: string;
+	OppositeAccountDisplayNumber: string;
 	
 }
  
