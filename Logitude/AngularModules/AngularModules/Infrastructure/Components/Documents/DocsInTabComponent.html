@@ -22,7 +22,7 @@
                         </td>
 
                         <td style="width:1px">
-                            <button *ngIf="DownloadAllVisibile" class="Button" (click)="DownloadAllClick()">
+                            <button *ngIf="DownloadAllVisibile" class="Button" (click)="DownloadAllClick()" [disabled]="!HasDocuments">
                                 <div style="display:inline">
                                     <span>Download Documents</span>
                                 </div>
