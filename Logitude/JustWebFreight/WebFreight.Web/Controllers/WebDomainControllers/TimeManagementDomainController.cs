@@ -351,6 +351,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                select a);
             }
 
+            //List<DateTime> workDays = iQueryable.Select(a => a.DateOfWork).ToList();
+            //officeHours = officeHours.Where(a => workDays.Contains(System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate)));
+
             double? totalOfficeHours = 0;
             for (int i = 0; i <= count; i++)
             {
@@ -359,9 +362,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 newItemDay.Index = i;
                 newItemDay.Date = date;
                 this.FillOfficeHours(newItemDay, date);
-                // myResult.OfficeClockDays.Add(newItemDay);
                 totalOfficeHours += newItemDay.TotalFromClock;
             }
+
             myResult.TotalFromClock = DateFormat(totalOfficeHours.Value);
             List<TMEmployeeTime> list = iQueryable.ToList();
             List<TMEmployeeTimePM> listPM = (from a in list
@@ -392,6 +395,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             myResult.ItemsPM = listPM;
             return myResult;
         }
+
+
         private void FillOfficeHours(TimeSheetItemDay newItem, DateTime date)
         {
             List<TMOfficeHour> officeDays = officeHours.Where(a => System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) == System.Data.Entity.DbFunctions.TruncateTime(date)).ToList();
