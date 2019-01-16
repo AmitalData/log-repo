@@ -507,5 +507,19 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             throw new NotImplementedException();
         }
+
+
+
+        public IQueryable<ObjectField> GetObjectFieldsByFieldsNamesAndObjectTable( List<string> fieldsNames, string objectTableId)
+        {
+            return from a in context.ObjectFields
+                   where a.ObjectTableId == objectTableId && fieldsNames.Contains(a.FieldName) && a.Tenant == 0
+                   select a;
+
+        }
+
+
+
+
     }
 }

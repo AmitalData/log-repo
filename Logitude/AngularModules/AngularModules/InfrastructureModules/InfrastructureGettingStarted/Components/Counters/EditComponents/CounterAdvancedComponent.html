@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .CounterItemBackground {
         background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 100%);
@@ -133,6 +133,10 @@
                                         <td colspan="3">
                                             <div class="NoDataTextStyle" style="text-align: left;">The created numbers have the following format:</div>
                                             <div class="Value" style="padding-left: 15px;">[Prefix]Number</div>
+                                            <br/>
+                                            <div class="NoDataTextStyle" style="text-align: left;">You can add [MM],[YY] or [YYYY] to the prefix. it will be translated due to the current date</div>
+                                            <div *ngIf="CounterPM.Code == 'MAST'  || CounterPM.Code == 'SHIP'"  class="NoDataTextStyle" style="text-align: left;">You can also add [B] to bring the branch code</div>
+
                                         </td>
                                     </tr>
 

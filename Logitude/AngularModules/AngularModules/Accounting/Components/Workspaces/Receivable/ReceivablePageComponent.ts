@@ -409,6 +409,7 @@ export class ReceivablePageComponent {
         //args.CollectorId = SessionLocator.LoggedUserId;
         //args.SalesmanId = "";
         args.IsCustomer = false;
+        args.ForceUseMonthMethod = true;
 
 
         this._GLAccountExtendedListService.GetAgingReport(args).subscribe((myResponse: ServiceResponse) => {
