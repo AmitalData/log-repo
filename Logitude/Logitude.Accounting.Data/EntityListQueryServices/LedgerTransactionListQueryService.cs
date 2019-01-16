@@ -578,7 +578,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 	{
 	    public string CurrencyId { get; set; }
         public decimal? BalanceForeign { get; set; }
-	}
+        public decimal? BalanceLocal { get; set; }
+    }
     
 
        
