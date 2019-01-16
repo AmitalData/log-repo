@@ -514,6 +514,22 @@
     <Compile Include="Migrations\201901131510531_NewTables_AccountingIntegrityCheck.Designer.cs">
       <DependentUpon>201901131510531_NewTables_AccountingIntegrityCheck.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901160901352_AddHarmonizeCodesTable.cs" />
+    <Compile Include="Migrations\201901160901352_AddHarmonizeCodesTable.Designer.cs">
+      <DependentUpon>201901160901352_AddHarmonizeCodesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901161513218_AddHarmonizeCodesTableModifications.cs" />
+    <Compile Include="Migrations\201901161513218_AddHarmonizeCodesTableModifications.Designer.cs">
+      <DependentUpon>201901161513218_AddHarmonizeCodesTableModifications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901161520085_AddHarmonizeCodesTableModifications2.cs" />
+    <Compile Include="Migrations\201901161520085_AddHarmonizeCodesTableModifications2.Designer.cs">
+      <DependentUpon>201901161520085_AddHarmonizeCodesTableModifications2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901161524277_AddHarmonizeCodesTableModifications3.cs" />
+    <Compile Include="Migrations\201901161524277_AddHarmonizeCodesTableModifications3.Designer.cs">
+      <DependentUpon>201901161524277_AddHarmonizeCodesTableModifications3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -837,6 +853,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.resx">
       <DependentUpon>201901131517146_AddPackageHasContainerExc.Field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901160901352_AddHarmonizeCodesTable.resx">
+      <DependentUpon>201901160901352_AddHarmonizeCodesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901161513218_AddHarmonizeCodesTableModifications.resx">
+      <DependentUpon>201901161513218_AddHarmonizeCodesTableModifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901161520085_AddHarmonizeCodesTableModifications2.resx">
+      <DependentUpon>201901161520085_AddHarmonizeCodesTableModifications2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901161524277_AddHarmonizeCodesTableModifications3.resx">
+      <DependentUpon>201901161524277_AddHarmonizeCodesTableModifications3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
