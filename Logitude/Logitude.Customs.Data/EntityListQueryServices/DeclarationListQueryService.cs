@@ -260,6 +260,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      ItemsProcessTypesList = a.ItemsProcessTypesList,
                                                      CourierSuspentionCode = a.CourierSuspentionCode,
                                                      CourierSuspentionName = a.CourierSuspention != null ? a.CourierSuspention.LocalName : null,
+                                                     DepositionStatusCode = a.DepositionStatusCode,
                                                  });
 
 
