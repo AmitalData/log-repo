@@ -11889,7 +11889,7 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
 
 
-            shipments = shipments.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H" && !d.IsCancelled);
+            shipments = shipments.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H") && !d.IsCancelled);
             if (FromDate != null)
             {
                 shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) >= System.Data.Entity.DbFunctions.TruncateTime(FromDate));
@@ -11919,8 +11919,7 @@ namespace WebFreight.Web.ReportsWebServices
                 List<Address> FromPartnerAddressLists = (from a in commonContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && FromPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
                 List<Country> FromAddressCountryLists = (from record in commonContext.Countries.Include("GlobalZone") where FromAddressCountryIds.Contains(record.Id) && record.Tenant == tenant select record).ToList();
                 List<Address> ToPartnerAddressLists = (from a in commonContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && ToPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
-
-                //(from a in commonContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && FromPortCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
+                List<ShipmentPackage> ShipmentPackages = (from d in shipmentsContext.ShipmentPackages where shipmentdelevriesIds.Contains(d.ShipmentId) && d.Reference1!=null && d.Reference2 != null && d.Reference3 != null && d.Reference4 != null  select d).ToList();
 
 
 
@@ -11928,7 +11927,7 @@ namespace WebFreight.Web.ReportsWebServices
                 foreach (ShipmentDataView Item in Shipments)
                 {
 
-
+                  
 
 
                     Currency ValueOfgoodsCurrency = currencyLists.Where(d => d.Id == Item.ValueOfGoodsCurrencyId).FirstOrDefault(); // (from d in commonContext.Currencies where d.Id == Item.ValueOfGoodsCurrencyId select d).FirstOrDefault();
@@ -11945,6 +11944,11 @@ namespace WebFreight.Web.ReportsWebServices
                     //                                         select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
                     ShipmentPickUpDelivery myFirstPickup = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "PICK").OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                    ShipmentPackage firstShipmentPackage = ShipmentPackages.Where(d => d.ShipmentId == Item.Id).FirstOrDefault();
+
+
+                  
+
                     //(from d in shipmentsContext.ShipmentPickUpDeliveries
                     //  where d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "PICK"
                     //  select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
@@ -11952,6 +11956,16 @@ namespace WebFreight.Web.ReportsWebServices
                     ShipmentDetals shipment = new ShipmentDetals();
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, Item, shipment);
+
+                    if (firstShipmentPackage != null)
+                    {
+                        shipment.Reference1 = firstShipmentPackage.Reference1;
+                        shipment.Reference2 = firstShipmentPackage.Reference2;
+                        shipment.Reference3 = firstShipmentPackage.Reference3;
+                        shipment.Reference4 = firstShipmentPackage.Reference4;
+                    }
+
+
 
                     if (myLastPickup != null)
                     {

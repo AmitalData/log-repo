@@ -6,6 +6,7 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -24,7 +25,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
     public class DummyTenantProvider
     {
         private int _BuildJournalEachMonth = 200;//20000
-        
+        private List<TotalPerM> _TotalPerChartOfAccountsId;
 
         public void GenrateGLAccount(
             int BuildGLAccountEachType,
@@ -33,7 +34,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             DisplayNumberProvider displayNumberProvider,
             FullAccountingSetting fullSetting, int tenant)
         {
-            
+
 
 
 
@@ -53,14 +54,14 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
 
         public void GenrateJournals(
             int BuildJournalEachMonth,
-            IAccountingContext accountingContext, int forYear ,int tenant)
+            IAccountingContext accountingContext, int forYear, int tenant)
         {
             _BuildJournalEachMonth = BuildJournalEachMonth;
 
             //int forYear = 2017;
 
             Stopwatch sw = null;
-            
+
 
             var journalTesterClass = new JournalTesterClass();
             journalTesterClass.ForceRecreate();
@@ -146,9 +147,18 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
 
         private void CreateGLAccount(IAccountingContext accountingContext,
             ChartOfAccountProvider chartOfAccountProvider,
-            DisplayNumberProvider displayNumberProvider, FullAccountingSetting FullAccountingSetting
+            DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting
             , int BuildGLAccountEachType)
         {
+
+            
+            _TotalPerChartOfAccountsId = accountingContext.GLAccounts
+                .Where(r => r.Tenant == fullAccountingSetting.Tenant)
+                //.Where(r => r.AccountTypeCode == GLAccountTypeEnum.Job.ToIntString())
+                .GroupBy(r => r.ChartOfAccountsId)
+                .Select(g => new TotalPerM() { Key = g.Key, Value = g.Count() })
+                .ToList();
+
 
             bool fixSize = false;
             TimeSpan? ts = TimeSpan.FromMinutes(30);
@@ -157,47 +167,48 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 ts = TimeSpan.FromHours(1);
             }
             if (fixSize) BuildGLAccountEachType = 100000;
-            CreateJobs(accountingContext, chartOfAccountProvider, displayNumberProvider, FullAccountingSetting, BuildGLAccountEachType);
+
+            CreateJobs(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, BuildGLAccountEachType);
             accountingContext.SaveChanges();
 
 
-            
+
 
             //using (var trans = TransactionFactory.GetTransaction(ts))
             {
                 if (fixSize) BuildGLAccountEachType = 20000;
-                CreateCustomers(accountingContext, chartOfAccountProvider, displayNumberProvider, FullAccountingSetting, BuildGLAccountEachType);
+                CreateCustomers(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, BuildGLAccountEachType);
                 accountingContext.SaveChanges();
 
-              //  trans.Complete();
+                //  trans.Complete();
             }
 
 
             if (fixSize) BuildGLAccountEachType = 300000;
-            CreateFiles(accountingContext, chartOfAccountProvider, displayNumberProvider, FullAccountingSetting, BuildGLAccountEachType);
+            CreateFiles(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, BuildGLAccountEachType);
             accountingContext.SaveChanges();
 
             //using (var trans = TransactionFactory.GetTransaction(ts))
             {
                 if (fixSize) BuildGLAccountEachType = 20000;
-                CreateVendors(accountingContext, chartOfAccountProvider, displayNumberProvider, FullAccountingSetting, BuildGLAccountEachType);
+                CreateVendors(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, BuildGLAccountEachType);
                 accountingContext.SaveChanges();
-              //  trans.Complete();
+                //  trans.Complete();
             }
             ///using (var trans = TransactionFactory.GetTransaction(ts))
             {
                 if (fixSize) BuildGLAccountEachType = 2000;
-                CreateExpanse(accountingContext, chartOfAccountProvider, displayNumberProvider, FullAccountingSetting, BuildGLAccountEachType);
+                CreateExpanse(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, BuildGLAccountEachType);
                 accountingContext.SaveChanges();
-               // trans.Complete();
+                // trans.Complete();
             }
             //using (var trans = TransactionFactory.GetTransaction(ts))
             {
                 if (fixSize) BuildGLAccountEachType = 2000;
-                CreateRevenue(accountingContext, chartOfAccountProvider, displayNumberProvider, FullAccountingSetting, BuildGLAccountEachType);
+                CreateRevenue(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, BuildGLAccountEachType);
 
                 accountingContext.SaveChanges();
-              //  trans.Complete();
+                //  trans.Complete();
             }
 
 
@@ -212,13 +223,22 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
         private void CreateFiles(IAccountingContext accountingContext, ChartOfAccountProvider chartOfAccountProvider, DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting, int buildGLAccountEachType)
         {
 
+
             var myJournalTesterClass = new JournalTesterClass();
             var us = new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
-            for (int i =
-                displayNumberProvider
-                .GetMaxDisplayNumberOfType("MTKR", fullAccountingSetting.Tenant)
-                ; i < buildGLAccountEachType; i++)
+            //for (int i =
+            //    //displayNumberProvider
+            //    //.GetMaxDisplayNumberOfType("MTKR", fullAccountingSetting.Tenant)
+            //    iMTKR
+            //    ; i < buildGLAccountEachType; i++)
+            int tot = _TotalPerChartOfAccountsId.Where(r => r.Key == ChartOfAccountsTypeEnum.Workers.ToIntString()).DefaultIfEmpty(new TotalPerM()).First().Value;
+
+            while (tot++ < buildGLAccountEachType)
             {
+
+
+                int iMTKR = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + "MTKR", fullAccountingSetting.Tenant);
+
 
                 us.Update(new Def.EntityPMs.GLAccountPM()
                 {
@@ -228,19 +248,19 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.Workers.ToIntString(),
                     ChartOfAccountsId = chartOfAccountProvider.GetChartOfAccountsId(fullAccountingSetting.Tenant, ChartOfAccountsTypeEnum.Workers),
                     ControlAccountId = fullAccountingSetting.FileControlAccountId,
-                    LocalName = "תיק " + " " + i.ToString(),
-                    EnglishName = "FILE" + " " + i.ToString(),
+                    LocalName = "תיק " + " " + iMTKR.ToString(),
+                    EnglishName = "FILE" + " " + iMTKR.ToString(),
                     IsMultiCurrency = true,
                     IsControlAccount = false,
                     RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString(),
-                    DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR("MTKR", false, i, fullAccountingSetting.Tenant),
+                    DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR("MTKR", false, iMTKR, fullAccountingSetting.Tenant),
                     CustomerGLAccountId = myJournalTesterClass.GetClientCard(accountingContext, fullAccountingSetting.Tenant)
 
-                // = FullAccountingSetting.CustomerControlAccountName + " " + i.ToString(),
-                //AccountTypeCode 
+                    // = FullAccountingSetting.CustomerControlAccountName + " " + i.ToString(),
+                    //AccountTypeCode 
 
-            }, false);
-                if (i % 500 == 0)
+                }, false);
+                if (iMTKR % 500 == 0)
                 {
                     accountingContext.SaveChanges();
 
@@ -251,12 +271,22 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
 
         private void CreateJobs(IAccountingContext accountingContext, ChartOfAccountProvider chartOfAccountProvider, DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting, int buildGLAccountEachType)
         {
+
+
             var us = new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
-            for (int i =
-                displayNumberProvider
-                .GetMaxDisplayNumberOfType("SPDR", fullAccountingSetting.Tenant)
-                ; i < buildGLAccountEachType; i++)
+            //for (int i =
+            //    //displayNumberProvider
+            //    //.GetMaxDisplayNumberOfType("SPDR", fullAccountingSetting.Tenant)
+            //    ; i < buildGLAccountEachType; i++)
+            int tot = _TotalPerChartOfAccountsId.Where(r => r.Key == ChartOfAccountsTypeEnum.Workers.ToIntString()).DefaultIfEmpty(new TotalPerM()).First().Value;
+                
+                
+            
+
+            while (tot++ < buildGLAccountEachType)
             {
+                int iSPDR = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + "SPDR", fullAccountingSetting.Tenant);
+
 
                 us.Update(new Def.EntityPMs.GLAccountPM()
                 {
@@ -266,19 +296,19 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.Workers.ToIntString(),
                     ChartOfAccountsId = chartOfAccountProvider.GetChartOfAccountsId(fullAccountingSetting.Tenant, ChartOfAccountsTypeEnum.Workers),
                     ControlAccountId = fullAccountingSetting.OceanImportJobControlAccountId,
-                    LocalName = "ספד" + " " + i.ToString(),
-                    EnglishName = "Job" + " " + i.ToString(),
+                    LocalName = "ספד" + " " + iSPDR.ToString(),
+                    EnglishName = "Job" + " " + iSPDR.ToString(),
                     IsMultiCurrency = true,
                     IsControlAccount = false,
                     RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString(),
-                    DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR("SPDR", false, i, fullAccountingSetting.Tenant),
+                    DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR("SPDR", false, iSPDR, fullAccountingSetting.Tenant),
 
 
                     // = FullAccountingSetting.CustomerControlAccountName + " " + i.ToString(),
                     //AccountTypeCode 
 
                 }, false);
-                if (i % 500 == 0)
+                if (iSPDR % 500 == 0)
                 {
                     accountingContext.SaveChanges();
 
@@ -298,10 +328,20 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             }
 
             var us = new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
-            for (int i =displayNumberProvider
-                .GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Revenues.ToIntString(), fullAccountingSetting.Tenant) 
-                ; i < timeLimit; i++)
+            //for (int i =
+            //    //displayNumberProvider
+            //    //.GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Revenues.ToIntString(), fullAccountingSetting.Tenant) 
+            //    iRevenues
+            //    ; i < timeLimit; i++)
+
+
+            int tot = _TotalPerChartOfAccountsId.Where(r => r.Key == ChartOfAccountsTypeEnum.Revenues.ToIntString()).DefaultIfEmpty(new TotalPerM()).First().Value;
+
+
+            while (tot++ < timeLimit)
             {
+
+                int iRevenues = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Revenues.ToIntString(), fullAccountingSetting.Tenant);
                 us.Update(new Def.EntityPMs.GLAccountPM()
                 {
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -311,15 +351,15 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     ChartOfAccountsId = chartOfAccountProvider.GetChartOfAccountsId(fullAccountingSetting.Tenant, ChartOfAccountsTypeEnum.Revenues),
                     ControlAccountId = //FullAccountingSetting.RevenueExpenseGLAccountId,
                     null,
-                    LocalName = "הכנסות" + " " + i.ToString(),
-                    EnglishName = "Revenue" + " " + i.ToString(),
+                    LocalName = "הכנסות" + " " + iRevenues.ToString(),
+                    EnglishName = "Revenue" + " " + iRevenues.ToString(),
                     IsMultiCurrency = true,
                     IsControlAccount = false,
                     RevenueExpenseType = RevenueExpenseTypeEnum.Revenue.ToIntString(),
-                    DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR(ChartOfAccountsTypeEnum.Revenues.ToIntString(), false, i, fullAccountingSetting.Tenant),
+                    DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR(ChartOfAccountsTypeEnum.Revenues.ToIntString(), false, iRevenues, fullAccountingSetting.Tenant),
 
                 }, false);
-                if (i % 5000 == 0)
+                if (iRevenues % 5000 == 0)
                 {
                     accountingContext.SaveChanges();
                 }
@@ -336,12 +376,21 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             {
                 timeLimit = 2000;
             }
+
             var us = new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
-            for (int i =
-                displayNumberProvider
-                .GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Expenses.ToIntString(), fullAccountingSetting.Tenant)
-                ; i < timeLimit; i++)
+            //for (int i =
+            //    //displayNumberProvider
+            //    //.GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Expenses.ToIntString(), fullAccountingSetting.Tenant)
+            //    iExpenses
+            //    ; i < timeLimit; i++)
+
+            int tot = _TotalPerChartOfAccountsId.Where(r => r.Key == ChartOfAccountsTypeEnum.Expenses.ToIntString()).DefaultIfEmpty(new TotalPerM()).First().Value;
+
+            while (tot++ < timeLimit)
             {
+                int iExpenses =
+            CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Expenses.ToIntString(), fullAccountingSetting.Tenant);
+
 
                 us.Update(new Def.EntityPMs.GLAccountPM()
                 {
@@ -352,15 +401,15 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     ChartOfAccountsId = chartOfAccountProvider.GetChartOfAccountsId(fullAccountingSetting.Tenant, ChartOfAccountsTypeEnum.Expenses),
                     ControlAccountId = //FullAccountingSetting.RevenueExpenseGLAccountId,
                     null,
-                    LocalName = "הוצאות" + " " + i.ToString(),
-                    EnglishName = "Expense" + " " + i.ToString(),
+                    LocalName = "הוצאות" + " " + iExpenses.ToString(),
+                    EnglishName = "Expense" + " " + iExpenses.ToString(),
                     IsMultiCurrency = true,
                     IsControlAccount = false,
                     RevenueExpenseType = RevenueExpenseTypeEnum.Expense.ToIntString(),
-                    DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR(ChartOfAccountsTypeEnum.Expenses.ToIntString(), false, i, fullAccountingSetting.Tenant),
+                    DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR(ChartOfAccountsTypeEnum.Expenses.ToIntString(), false, iExpenses, fullAccountingSetting.Tenant),
 
                 }, false);
-                if (i % 5000 == 0)
+                if (iExpenses % 5000 == 0)
                 {
                     accountingContext.SaveChanges();
                 }
@@ -373,14 +422,17 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting, int times)
         {
 
-            
-            var us = new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
-            for (int i =
-                displayNumberProvider
-                .GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Customers.ToIntString(), fullAccountingSetting.Tenant)
-                ; i < times; i++)
-            {
 
+            var us = new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
+            //for (int i =
+            //    displayNumberProvider
+            //    .GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Customers.ToIntString(), fullAccountingSetting.Tenant)
+            //    ; i < times; i++)
+            int tot = _TotalPerChartOfAccountsId.Where(r => r.Key == ChartOfAccountsTypeEnum.Customers.ToIntString()).DefaultIfEmpty(new TotalPerM()).First().Value;
+
+            while (tot++ < times)
+            {
+                int iClient = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + GLAccountTypeEnum.Client.ToIntString(), fullAccountingSetting.Tenant);
                 us.Update(new Def.EntityPMs.GLAccountPM()
                 {
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -389,22 +441,22 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.Customers.ToIntString(),
                     ChartOfAccountsId = chartOfAccountProvider.GetChartOfAccountsId(fullAccountingSetting.Tenant, ChartOfAccountsTypeEnum.Customers),
                     ControlAccountId = fullAccountingSetting.CustomerControlAccountId,
-                    LocalName = "לקוחות" + " " + i.ToString(),
-                    EnglishName = "Customer" + " " + i.ToString(),
+                    LocalName = "לקוחות" + " " + iClient.ToString(),
+                    EnglishName = "Customer" + " " + iClient.ToString(),
                     IsMultiCurrency = true,
                     IsControlAccount = false,
                     RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString(),
-                    DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR(ChartOfAccountsTypeEnum.Customers.ToIntString(), false, i, fullAccountingSetting.Tenant),
+                    DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR(ChartOfAccountsTypeEnum.Customers.ToIntString(), false, iClient, fullAccountingSetting.Tenant),
 
 
                     // = FullAccountingSetting.CustomerControlAccountName + " " + i.ToString(),
                     //AccountTypeCode 
 
                 }, false);
-                if (i % 500 == 0)
+                if (iClient % 500 == 0)
                 {
                     accountingContext.SaveChanges();
-                    
+
                 }
             }
             accountingContext.SaveChanges();
@@ -415,10 +467,15 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting, int times)
         {
             var us = new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
-            for (int i = displayNumberProvider
-                .GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Customers.ToIntString(), fullAccountingSetting.Tenant)
-                ; i < times; i++)
-            {
+            //for (int i = displayNumberProvider
+            //    .GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Customers.ToIntString(), fullAccountingSetting.Tenant)
+            //    ; i < times; i++)
+            int tot = _TotalPerChartOfAccountsId.Where(r => r.Key == ChartOfAccountsTypeEnum.Vendors.ToIntString()).DefaultIfEmpty(new TotalPerM()).First().Value;
+
+            while (tot++ < times) {
+
+                int iVendors = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Vendors.ToIntString(), fullAccountingSetting.Tenant);
+
 
                 us.Update(new Def.EntityPMs.GLAccountPM()
                 {
@@ -428,19 +485,19 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.Vendors.ToIntString(),
                     ChartOfAccountsId = chartOfAccountProvider.GetChartOfAccountsId(fullAccountingSetting.Tenant, ChartOfAccountsTypeEnum.Vendors),
                     ControlAccountId = fullAccountingSetting.CustomerControlAccountId,
-                    LocalName = "ספקים" + " " + i.ToString(),
-                    EnglishName = "Vendors" + " " + i.ToString(),
+                    LocalName = "ספקים" + " " + iVendors.ToString(),
+                    EnglishName = "Vendors" + " " + iVendors.ToString(),
                     IsMultiCurrency = true,
                     IsControlAccount = false,
                     RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString(),
-                    DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR(ChartOfAccountsTypeEnum.Vendors.ToIntString(), false, i, fullAccountingSetting.Tenant),
+                    DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR(ChartOfAccountsTypeEnum.Vendors.ToIntString(), false, iVendors, fullAccountingSetting.Tenant),
 
 
                     // = FullAccountingSetting.CustomerControlAccountName + " " + i.ToString(),
                     //AccountTypeCode 
 
                 }, false);
-                if (i % 5000 == 0)
+                if (iVendors % 5000 == 0)
                 {
                     accountingContext.SaveChanges();
                 }
@@ -471,7 +528,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             {
                 if (true)
                 {
-                    _Client = _GLAccList 
+                    _Client = _GLAccList
                         .Where(r => r.ChartOfAccountsTypeCode == ChartOfAccountsTypeEnum.Customers.ToIntString())
                         .Where(r => r.IsControlAccount == false)
                         .Select(r => r.Id).ToList();
@@ -584,11 +641,11 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             DebitCreditAndVatdeduction = 3
 
         }
-        enum JournalLineDebitCredit:int
+        enum JournalLineDebitCredit : int
         {
-            VendorClient=1,
-            VendorJob ,
-            JobClient ,
+            VendorClient = 1,
+            VendorJob,
+            JobClient,
             FileJob,
             JobFile,
             RevExpense,
@@ -651,7 +708,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                         break;
                     case JournalLineDebitCredit.JobClient:
                         creditCard = GetClientCard(accountingContext, tenant);
-                        debitCard= GetJob(accountingContext, tenant);
+                        debitCard = GetJob(accountingContext, tenant);
                         break;
                     case JournalLineDebitCredit.FileJob:
                         creditCard = GetFile(accountingContext, tenant);
@@ -668,7 +725,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                         debitCard = GetExpenseCard(accountingContext, tenant);
 
                         break;
-                  
+
                 }
 
                 DateTime DocumentDate = DateTime.Now.AddDays(_Rand.Next(-600, 180));
@@ -750,12 +807,12 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                            new Logitude.Accounting.Def.EntityPMs.JournalLinePM
                            {
                                AccountingDate = j.AccountingDate,
-                                   //ActionName = "2", 
-                                   ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
+                               //ActionName = "2", 
+                               ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
                                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                                   //CreditAccountId = "35", 
+                               //CreditAccountId = "35", 
 
-                                   CreditAccountId = null,
+                               CreditAccountId = null,
                                DebitAccountId = debitCard,
                                DocumentDate = DocumentDate,
                                DueDate = DueDate,
@@ -772,11 +829,11 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
 
 
             }
-            
+
             using (var scope = TransactionFactory.GetNewTransaction())
             {
                 var accountingContext1 = AccountingContext.GetContext(tenant);
-                var logger= (accountingContext1 as DbContextBase).CreateLogger();
+                var logger = (accountingContext1 as DbContextBase).CreateLogger();
                 var us = new Logitude.Accounting.BL.EntityUpdateServices.JournalUpdateService(accountingContext1, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
                 try
                 {
@@ -800,7 +857,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 scope.Complete();
                 return j.Id;
             }
-            
+
         }
 
         private string GetJob(IAccountingContext accountingContext, int tenant)
@@ -815,7 +872,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                         .Where(r => r.IsControlAccount == false)
                         .Select(r => r.Id).ToList();
                 }
-                
+
             }
             if (_Jobs.Count < 1)
             {
@@ -853,7 +910,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
         }
         private void InitStatic(IAccountingContext accountingContext, int tenant)
         {
-            
+
             if (_GLAccList != null)
             {
                 return;
@@ -906,6 +963,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             return pm.Id;
         }
 
-        
+
     }
+    public class TotalPerM { public string Key { get; set; } public int Value { get; set; }  }
 }

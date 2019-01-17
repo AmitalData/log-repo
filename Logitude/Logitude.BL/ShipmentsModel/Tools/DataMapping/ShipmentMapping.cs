@@ -2652,29 +2652,29 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field39, pm.Field39, "Field39", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field40, pm.Field40, "Field40", notifyPropertyChangeValuesList);
 
-            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
-            {
-                ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(pm.Tenant);
-                ShipmentComputedFields shipmentComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(pm.Id, pm.Tenant);
-                if (shipmentComputedFields != null)
-                {
-                    if (pm.IsDigitalSignRequired != shipmentComputedFields.IsDigitalSignRequired)
-                    {
-                        NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "IsDigitalSignRequired", OldValue = pm.IsDigitalSignRequired, NewValue = shipmentComputedFields.IsDigitalSignRequired, PropertyType = "bool" };
-                        notifyPropertyChangeValuesList.Add(values);
-                    }
+            //if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+            //{
+            //    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(pm.Tenant);
+            //    ShipmentComputedFields shipmentComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(pm.Id, pm.Tenant);
+            //    if (shipmentComputedFields != null)
+            //    {
+            //        if (pm.IsDigitalSignRequired != shipmentComputedFields.IsDigitalSignRequired)
+            //        {
+            //            NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "IsDigitalSignRequired", OldValue = pm.IsDigitalSignRequired, NewValue = shipmentComputedFields.IsDigitalSignRequired, PropertyType = "bool" };
+            //            notifyPropertyChangeValuesList.Add(values);
+            //        }
 
-                    if (pm.IsRequestedDocuments != shipmentComputedFields.IsRequestedDocuments)
-                    {
-                        NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "IsRequestedDocuments", OldValue = pm.IsRequestedDocuments, NewValue = shipmentComputedFields.IsRequestedDocuments, PropertyType = "bool" };
-                        notifyPropertyChangeValuesList.Add(values);
-                    }
+            //        if (pm.IsRequestedDocuments != shipmentComputedFields.IsRequestedDocuments)
+            //        {
+            //            NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "IsRequestedDocuments", OldValue = pm.IsRequestedDocuments, NewValue = shipmentComputedFields.IsRequestedDocuments, PropertyType = "bool" };
+            //            notifyPropertyChangeValuesList.Add(values);
+            //        }
 
-                    pm.IsRequestedDocuments = shipmentComputedFields.IsRequestedDocuments;
-                    pm.IsDigitalSignRequired = shipmentComputedFields.IsDigitalSignRequired;
+            //        pm.IsRequestedDocuments = shipmentComputedFields.IsRequestedDocuments;
+            //        pm.IsDigitalSignRequired = shipmentComputedFields.IsDigitalSignRequired;
 
-                }
-            }
+            //    }
+            //}
 
 
             return notifyPropertyChangeValuesList;
