@@ -385,7 +385,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             string collectorId,
             string salesmanId,
             bool isCustomer,
-            string groupByDate
+            string groupByDate,
+            bool forceUseMonthMethod
             )
         {
             try
@@ -414,7 +415,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     Aging4AccountTypeCode = isCustomer == true ? AgingReportParam.Aging4AccountTypeCodeEnum.Customer2 : AgingReportParam.Aging4AccountTypeCodeEnum.ControlAccountOnly1,
 
                     GroupByDate = groupByDate == "AccountingDate" ? AgingReportParam.DateEnum.AccountingDate : AgingReportParam.DateEnum.DueDate,
-                    AgingMethod = AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString(),
+                    AgingMethod = forceUseMonthMethod ? AgingReportParam.MethodEnum.TotalByMonthMethod.ToString() : AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString(),
 
                     AgingMethod_Options = Enum.GetNames(typeof(AgingReportParam.MethodEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
                     GroupByDate_Options = Enum.GetNames(typeof(AgingReportParam.DateEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),

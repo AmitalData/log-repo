@@ -16,8 +16,8 @@ export class LoginComp {
     //this.Helper.WaitByIdAndFill('Email','angular@fnarsoft.com' );
     //this.Helper.WaitByIdAndFill('Password','1' );
 
-    this.Helper.WaitByIdAndFill('Email','ahmadb@test.com' );
-    this.Helper.WaitByIdAndFill('Password','ahmed13!A15' );
+    this.Helper.WaitByIdAndFill('Email','razan@razancompany.com' );
+    this.Helper.WaitByIdAndFill('Password','!R123j456' );
     this.Helper.ButtonClick('cmdLogin');
 
 

@@ -31,7 +31,11 @@ exports.config = {
   suites: {
     // ********************* Login **********************************
      login: 'e2e/Login/**/Login.e2e-spec.ts',
+    //  activiteis: 'e2e/Activities/**/NewTasks-spec.ts',
+
      NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
+    //  Contact: 'e2e/Contacts/**/Contacts-spec.ts',
+
      //EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
     //  ShipmentSearch: 'e2e/Operations/**/ShipmentSearch.e2e-spec.ts',
 

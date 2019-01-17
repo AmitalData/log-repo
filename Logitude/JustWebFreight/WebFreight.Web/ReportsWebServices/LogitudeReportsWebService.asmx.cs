@@ -2327,6 +2327,11 @@ namespace WebFreight.Web.ReportsWebServices
                 double? sum91_120 = 0;
                 double? over120 = 0;
 
+                double? sum1_15 = 0;
+                double? sum16_30 = 0;
+                double? sum1_24 = 0;
+                double? sum25_30 = 0;
+
                 List<AgingStatemantDataItem> tempList = totalList.Where(d => d.CardId == cardId).ToList();
 
                 List<AgingStatemantDataItem> currentDueItems = tempList.Where(d => d.Date >= todayDate).ToList();
@@ -2335,6 +2340,12 @@ namespace WebFreight.Web.ReportsWebServices
                 List<AgingStatemantDataItem> Due61_90Items = tempList.Where(d => (((todayDate - d.Date.Value).TotalDays) > 60) && (((todayDate - d.Date.Value).TotalDays) <= 90)).ToList();
                 List<AgingStatemantDataItem> Due91_120Items = tempList.Where(d => (((todayDate - d.Date.Value).TotalDays) > 90) && (((todayDate - d.Date.Value).TotalDays) <= 120)).ToList();
                 List<AgingStatemantDataItem> over120Items = tempList.Where(d => (todayDate - d.Date.Value).TotalDays > 120).ToList();
+
+                List<AgingStatemantDataItem> Due1_15Items = tempList.Where(d => (todayDate - d.Date.Value).TotalDays >= 1 && (todayDate - d.Date.Value).TotalDays <= 15).ToList();
+                List<AgingStatemantDataItem> Due16_30Items = tempList.Where(d => (((todayDate - d.Date.Value).TotalDays) > 15) && (((todayDate - d.Date.Value).TotalDays) <= 30)).ToList();
+
+                List<AgingStatemantDataItem> Due1_24Items = tempList.Where(d => (todayDate - d.Date.Value).TotalDays >= 1 && (todayDate - d.Date.Value).TotalDays <= 24).ToList();
+                List<AgingStatemantDataItem> Due25_30Items = tempList.Where(d => (((todayDate - d.Date.Value).TotalDays) > 24) && (((todayDate - d.Date.Value).TotalDays) <= 30)).ToList();
 
                 if (currencyType == "profit")
                 {
@@ -2346,6 +2357,11 @@ namespace WebFreight.Web.ReportsWebServices
                         sum61_90 = (Due61_90Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
                         sum91_120 = (Due91_120Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
                         over120 = (over120Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+
+                        sum1_15 = (Due1_15Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum16_30 = (Due16_30Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum1_24 = (Due1_24Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum25_30 = (Due25_30Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
                     }
                 }
 
@@ -2357,6 +2373,11 @@ namespace WebFreight.Web.ReportsWebServices
                     sum61_90 = Due61_90Items.Sum(d => d.Debit + d.Credit);
                     sum91_120 = Due91_120Items.Sum(d => d.Debit + d.Credit);
                     over120 = over120Items.Sum(d => d.Debit + d.Credit);
+
+                    sum1_15 = Due1_15Items.Sum(d => d.Debit + d.Credit);
+                    sum16_30 = Due16_30Items.Sum(d => d.Debit + d.Credit);
+                    sum1_24 = Due1_24Items.Sum(d => d.Debit + d.Credit);
+                    sum25_30 = Due25_30Items.Sum(d => d.Debit + d.Credit);
                 }
 
                 CardEntityClass cardEntity = allCardData.Where(d => d.Id == cardId).FirstOrDefault();
@@ -2375,6 +2396,10 @@ namespace WebFreight.Web.ReportsWebServices
                 acountsRecored.Over120DaysPastDue = over120;
                 acountsRecored.CustomerTotals = currentsum + sum1_30 + sum31_60 + sum61_90 + sum91_120 + over120;
 
+                acountsRecored.DaysPastDue1_15 = sum1_15;
+                acountsRecored.DaysPastDue16_30 = sum16_30;
+                acountsRecored.DaysPastDue1_24 = sum1_24;
+                acountsRecored.DaysPastDue25_30 = sum25_30;
                 dataProvider.AgedAccountsReceivableList.Add(acountsRecored);
             }
 
@@ -11864,7 +11889,7 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
 
 
-            shipments = shipments.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H" && !d.IsCancelled);
+            shipments = shipments.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H") && !d.IsCancelled);
             if (FromDate != null)
             {
                 shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) >= System.Data.Entity.DbFunctions.TruncateTime(FromDate));
@@ -11894,8 +11919,7 @@ namespace WebFreight.Web.ReportsWebServices
                 List<Address> FromPartnerAddressLists = (from a in commonContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && FromPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
                 List<Country> FromAddressCountryLists = (from record in commonContext.Countries.Include("GlobalZone") where FromAddressCountryIds.Contains(record.Id) && record.Tenant == tenant select record).ToList();
                 List<Address> ToPartnerAddressLists = (from a in commonContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && ToPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
-
-                //(from a in commonContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && FromPortCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
+                List<ShipmentPackage> ShipmentPackages = (from d in shipmentsContext.ShipmentPackages where shipmentdelevriesIds.Contains(d.ShipmentId) && d.Reference1!=null && d.Reference2 != null && d.Reference3 != null && d.Reference4 != null  select d).ToList();
 
 
 
@@ -11903,7 +11927,7 @@ namespace WebFreight.Web.ReportsWebServices
                 foreach (ShipmentDataView Item in Shipments)
                 {
 
-
+                  
 
 
                     Currency ValueOfgoodsCurrency = currencyLists.Where(d => d.Id == Item.ValueOfGoodsCurrencyId).FirstOrDefault(); // (from d in commonContext.Currencies where d.Id == Item.ValueOfGoodsCurrencyId select d).FirstOrDefault();
@@ -11920,6 +11944,11 @@ namespace WebFreight.Web.ReportsWebServices
                     //                                         select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
                     ShipmentPickUpDelivery myFirstPickup = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "PICK").OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                    ShipmentPackage firstShipmentPackage = ShipmentPackages.Where(d => d.ShipmentId == Item.Id).FirstOrDefault();
+
+
+                  
+
                     //(from d in shipmentsContext.ShipmentPickUpDeliveries
                     //  where d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "PICK"
                     //  select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
@@ -11927,6 +11956,16 @@ namespace WebFreight.Web.ReportsWebServices
                     ShipmentDetals shipment = new ShipmentDetals();
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, Item, shipment);
+
+                    if (firstShipmentPackage != null)
+                    {
+                        shipment.Reference1 = firstShipmentPackage.Reference1;
+                        shipment.Reference2 = firstShipmentPackage.Reference2;
+                        shipment.Reference3 = firstShipmentPackage.Reference3;
+                        shipment.Reference4 = firstShipmentPackage.Reference4;
+                    }
+
+
 
                     if (myLastPickup != null)
                     {

@@ -169,6 +169,7 @@
     <Content Include="2018.R4\10 - 2018\Day 02 [Islam] delete old queries for sat.sql" />
     <Content Include="2018.R4\10 - 2018\Day 11 [Rabaia] DeleteOldAuthenticationTokensStoredProc - Copy.sql" />
     <Content Include="2018.R4\10 - 2018\Day 11 [Rabaia] RemoveForwardingPartnerIdFKConstraint.sql" />
+    <Content Include="2018.R5\1 - 2019\Day 16  [Khalid] deleteOldTextCode and Feature DownloadDocuments.sql" />
     <Content Include="2018.R5\10 - 2018\Day 15 [Ayman] RemoveAutoCriditAndCreditedReceivableId.sql" />
     <Content Include="2018.R5\11 - 2018\Day 25 [Samar] set shared logistics setting defaults.sql" />
     <Content Include="2018.R5\11 - 2018\Day 28 [Samar] Add new help resources.sql" />
@@ -521,6 +522,7 @@
     <Content Include="Main Branch\2018\12 - 2018\Day 30  [Abed] Fix wrong text codes.sql" />
     <Content Include="Main Branch\2019\01 - 2019\Day 08 [Islam] delete wrong query columns.sql" />
     <Content Include="Main Branch\2019\01 - 2019\Day 02 [Samar] set computing partners for objecttable.sql" />
+    <Content Include="Main Branch\2019\01 - 2019\Day 16[Itzik]AccountingStreaming - Copy.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />
@@ -1914,7 +1916,7 @@
     <Content Include="Main Branch\2017\09 - 2017\Day 09 [Islam] add communication log type sms.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Main Branch\2019\01 - 2019\Day 16[Itzik]AccountingStreaming.sql" />
+    <Content Include="Main Branch\2019\01 - 2019\Day 16[Khalid] Countries for statistics Id fill.sql" />
     <Compile Include="Old Scripts\SQL Logitude2-5\2014 - 02\Day 13 [Islam] Fix Fields List TextCodes1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

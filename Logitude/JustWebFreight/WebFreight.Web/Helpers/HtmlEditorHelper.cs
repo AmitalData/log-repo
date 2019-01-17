@@ -5210,6 +5210,15 @@ namespace WebFreight.Web.Helpers
                                         }
                                     }
                                 }
+                                else if (propertyName == "OwnerLink" && ObjectTableName == "Shipment")
+                                {
+                                    var shipmentNumber = GetEntityFieldValue(theEntity, "ShipmentNumber", theEntityObjectFields, tenant);
+                                    string href = LogitudeSettings.LogitudeURL + "?Menu=LogBox&Tenant=" + tenant + "&Parmters=%7b%22SearchField%22%3a%22" + shipmentNumber + "%22%7d";
+                                    resultValue = "<a style=" + "'font-family:Arial;font-size:18px;color:#0000FF'" + " href='" + href + "'" + ">Link</a>";
+
+                                    node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue);
+                                    nodeTextValue = resultValue;
+                                }
                                 else
                                 {
                                     node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue);

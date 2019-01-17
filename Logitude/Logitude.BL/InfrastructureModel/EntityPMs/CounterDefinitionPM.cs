@@ -26,5 +26,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public int StartNumber_Old { get; set; }
 
         public bool IsUsed { get; set; }
-    }
+		public int? CounterSize { get; set; }
+	}
 }
