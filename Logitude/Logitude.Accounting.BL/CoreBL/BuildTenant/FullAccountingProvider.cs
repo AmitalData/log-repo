@@ -25,6 +25,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
         int _Counter = 0;
         private DisplayNumberProvider _DisplayNumberProvider;
         private GLAccountMoreDataRepository _GLAccountMoreDataRepository;
+        private GLAccountUpdateService _GLAccountUpdateService;
 
         public FullAccountingProvider(IChartOfAccountProvider chartOfAccountProvider , DisplayNumberProvider displayNumberProvider )
         {
@@ -38,7 +39,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             using (var trans = TransactionFactory.GetTransaction())
             {
 
-                accountingContext = accountingContext??AccountingContext.GetContext(tenant);
+                accountingContext = accountingContext ?? AccountingContext.GetContext(tenant);
                 var fullAccountingSettingRepo
                     = new FullAccountingSettingRepository(accountingContext);
                 var fullAccountingSettingQueryService = new FullAccountingSettingQueryService(accountingContext);
@@ -48,13 +49,13 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     throw new Exception("I create All Or Nothing !!");
                 }
                 var coaRepo = new ChartOfAccountRepository(tenant);
-                var coa=coaRepo.GetAll(tenant).FirstOrDefault();
+                var coa = coaRepo.GetAll(tenant).FirstOrDefault();
                 if (coa != null)
                 {
                     throw new Exception("I create All Or Nothing !!");
                 }
-                
-                _ChartOfAccountProvider.CreateCOA(accountingContext,tenant);
+
+                _ChartOfAccountProvider.CreateCOA(accountingContext, tenant);
                 FullAccountingSetting fullSetting = new FullAccountingSetting()
                 {
                     Id = tenant.ToString(),
@@ -62,62 +63,9 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     //ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert
                 };
 
+                //CreateVatGLAccount(tenant, accountingContext, fullSetting);
 
-                fullSetting.DefaultVATTypeId = GetDefaultVATTypeId(tenant);
-                
-
-                fullSetting.AutomaticReconcileMethodId = null;
-                fullSetting.VATInputsGLAccountId = InsertGLAccountGetId(accountingContext,new GLAccount()
-                {
-                    Tenant = tenant,
-                    AccountTypeCode = GLAccountTypeEnum.Card.ToIntString(),// "1",
-                    InternalNumber = "",
-                    DisplayNumber = "",
-                    LocalName = "מעמ תשומות",
-                    EnglishName = "Input VAT",
-                    SearchFields = ",Input VAT,מעמ תשומות",
-                    IsMultiCurrency = true,
-                    CurrencyId = null,
-                    RevenueExpenseType = RevenueExpenseTypeEnum.Revenue.ToIntString(),// "3",//OTHER
-                    IsControlAccount = false  /*true */,
-
-                    Inactive = false,
-                    ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.DebtorsAndCreditors.ToIntString(),//"1",//Revenues
-                    ChartOfAccountsId = _ChartOfAccountProvider.GetChartOfAccountsId(tenant, ChartOfAccountsTypeEnum.DebtorsAndCreditors),//"1-105"
-                    ////CurrencyCode = "Multi",
-                     
-                    ReconcileMethodCode = "0",
-                    ControlAccountId = null,
-                    AutomaticReconcileId = null,
-                    PreviousEnglishName = null,
-                    PreviousNumber = null,
-                });
-                fullSetting.VATOutputGLAccountId = InsertGLAccountGetId(accountingContext,new GLAccount()
-                {
-                    Tenant = tenant,
-                    AccountTypeCode = GLAccountTypeEnum.Card.ToIntString(),// "1",
-                    InternalNumber = "",
-                    DisplayNumber = "",
-                    LocalName = "מעמ עסקאות",
-                    EnglishName = "Output VAT",
-                    SearchFields = ",Output VAT,מעמ עסקאות",
-                    IsMultiCurrency = true,
-                    CurrencyId = null,
-                    RevenueExpenseType = RevenueExpenseTypeEnum.Expense.ToIntString(),
-                    IsControlAccount = false,/*true*/
-
-                    Inactive = false,
-                    ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.DebtorsAndCreditors.ToIntString(),//"1",//Revenues
-                    ChartOfAccountsId = _ChartOfAccountProvider.GetChartOfAccountsId(tenant, ChartOfAccountsTypeEnum.DebtorsAndCreditors),//"1-105"
-                    //CurrencyCode = "Multi",
-                    ReconcileMethodCode = "0",
-                    ControlAccountId = null,
-                    AutomaticReconcileId = null,
-                    PreviousEnglishName = null,
-                    PreviousNumber = null,
-                });
-
-                fullSetting.ExchangeRateDiffGLAccountId = InsertGLAccountGetId(accountingContext,new GLAccount()
+                fullSetting.ExchangeRateDiffGLAccountId = InsertGLAccountGetId(accountingContext, new GLAccount()
                 {
                     Tenant = tenant,
                     AccountTypeCode = GLAccountTypeEnum.Card.ToIntString(),// "1",
@@ -141,7 +89,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     PreviousEnglishName = null,
                     PreviousNumber = null,
                 });
-                fullSetting.RevenueExpenseGLAccountId = InsertGLAccountGetId(accountingContext,new GLAccount()
+                fullSetting.RevenueExpenseGLAccountId = InsertGLAccountGetId(accountingContext, new GLAccount()
                 {
                     Tenant = tenant,
                     AccountTypeCode = GLAccountTypeEnum.Card.ToIntString(),// "1",
@@ -166,7 +114,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     PreviousNumber = null,
                 });
 
-                fullSetting.CustomerControlAccountId = InsertGLAccountGetId(accountingContext,new GLAccount()
+                fullSetting.CustomerControlAccountId = InsertGLAccountGetId(accountingContext, new GLAccount()
                 {
                     Tenant = tenant,
                     InternalNumber = null,
@@ -190,7 +138,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     PreviousEnglishName = null,
                     PreviousNumber = null,
                 });
-                fullSetting.VendorControlAccountId = InsertGLAccountGetId(accountingContext,new GLAccount()
+                fullSetting.VendorControlAccountId = InsertGLAccountGetId(accountingContext, new GLAccount()
                 {
                     Tenant = tenant,
                     InternalNumber = null,
@@ -215,14 +163,14 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     PreviousNumber = null,
                 });
                 fullSetting.FileControlAccountId =
-                    InsertGLAccountGetId(accountingContext,new GLAccount()
+                    InsertGLAccountGetId(accountingContext, new GLAccount()
                     {
                         Tenant = tenant,
                         ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.WorkersIsAlsoWorkAsProject.ToIntString(),// "6",
-                    ChartOfAccountsId = _ChartOfAccountProvider.GetChartOfAccountsId(tenant, ChartOfAccountsTypeEnum.WorkersIsAlsoWorkAsProject),//"1-105"
-                    InternalNumber = null,
+                        ChartOfAccountsId = _ChartOfAccountProvider.GetChartOfAccountsId(tenant, ChartOfAccountsTypeEnum.WorkersIsAlsoWorkAsProject),//"1-105"
+                        InternalNumber = null,
                         AccountTypeCode = GLAccountTypeEnum.Card.ToIntString(),//
-                    DisplayNumber = "",
+                        DisplayNumber = "",
                         LocalName = "מרכז תיקים",
                         EnglishName = "Files Control",
                         SearchFields = ",Files Control,מרכז תיקים",
@@ -230,7 +178,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                         CurrencyId = null,
                         RevenueExpenseType = "1",//הכנסות
 
-                    IsControlAccount = true,
+                        IsControlAccount = true,
                         Inactive = false,
                         //CurrencyCode = "Multi",
                         ReconcileMethodCode = "0",
@@ -240,15 +188,15 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                         PreviousNumber = null,
                     });
                 fullSetting.OceanExportJobControlAccountId =
-                    InsertGLAccountGetId(accountingContext,new GLAccount()
+                    InsertGLAccountGetId(accountingContext, new GLAccount()
                     {
                         Tenant = tenant,
                         ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.WorkersIsAlsoWorkAsProject.ToIntString(),// "6",
-                    ChartOfAccountsId = _ChartOfAccountProvider.GetChartOfAccountsId(tenant, ChartOfAccountsTypeEnum.WorkersIsAlsoWorkAsProject),//"1-105"
-                    InternalNumber = "",
+                        ChartOfAccountsId = _ChartOfAccountProvider.GetChartOfAccountsId(tenant, ChartOfAccountsTypeEnum.WorkersIsAlsoWorkAsProject),//"1-105"
+                        InternalNumber = "",
                         DisplayNumber = "",
                         AccountTypeCode = GLAccountTypeEnum.Card.ToIntString(),//
-                    LocalName = "מרכז ספדים יצוא ימי",
+                        LocalName = "מרכז ספדים יצוא ימי",
                         EnglishName = "OE Control",
                         SearchFields = ",OE Control,מרכז ספדים יצוא ימי",
                         IsMultiCurrency = true,
@@ -256,7 +204,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                         RevenueExpenseType = "1",//הכנסות
 
 
-                    IsControlAccount = true,
+                        IsControlAccount = true,
                         Inactive = false,
                         //CurrencyCode = "Multi",
                         ReconcileMethodCode = "0",
@@ -265,7 +213,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                         PreviousEnglishName = null,
                         PreviousNumber = null,
                     });
-                fullSetting.AirExportJobControlAccountId = InsertGLAccountGetId(accountingContext,new GLAccount()
+                fullSetting.AirExportJobControlAccountId = InsertGLAccountGetId(accountingContext, new GLAccount()
                 {
                     Tenant = tenant,
                     ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.WorkersIsAlsoWorkAsProject.ToIntString(),// "6",
@@ -290,7 +238,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     PreviousEnglishName = null,
                     PreviousNumber = null,
                 });
-                fullSetting.OceanImportJobControlAccountId = InsertGLAccountGetId(accountingContext,new GLAccount()
+                fullSetting.OceanImportJobControlAccountId = InsertGLAccountGetId(accountingContext, new GLAccount()
                 {
                     Tenant = tenant,
                     ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.WorkersIsAlsoWorkAsProject.ToIntString(),// "6",
@@ -315,11 +263,11 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     PreviousEnglishName = null,
                     PreviousNumber = null,
                 });
-                fullSetting.AirImportJobControlAccountId = InsertGLAccountGetId(accountingContext,new GLAccount()
+                fullSetting.AirImportJobControlAccountId = InsertGLAccountGetId(accountingContext, new GLAccount()
                 {
                     Tenant = tenant,
                     ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.WorkersIsAlsoWorkAsProject.ToIntString(),// "6",
-                    ChartOfAccountsId = _ChartOfAccountProvider. GetChartOfAccountsId(tenant, ChartOfAccountsTypeEnum.WorkersIsAlsoWorkAsProject),//"1-105"
+                    ChartOfAccountsId = _ChartOfAccountProvider.GetChartOfAccountsId(tenant, ChartOfAccountsTypeEnum.WorkersIsAlsoWorkAsProject),//"1-105"
                     InternalNumber = null,
                     DisplayNumber = "",
                     AccountTypeCode = GLAccountTypeEnum.Card.ToIntString(),//
@@ -345,24 +293,116 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
 
                 fullAccountingSettingRepo.Add(fullSetting);
                 accountingContext.SaveChanges();
-    
+
                 trans.Complete();
                 return fullSetting;
             }
         }
 
+        public void CreateVatGLAccount(int tenant, IAccountingContext accountingContext, FullAccountingSetting fullSetting)
+        {
+            if (!string.IsNullOrWhiteSpace(fullSetting.VATInputsGLAccountId))
+            {
+                throw new Exception("CreateVatGLAccount()-!string.IsNullOrWhiteSpace(fullSetting.VATInputsGLAccountId)");
+            }
+            if (!string.IsNullOrWhiteSpace(fullSetting.VATOutputGLAccountId))
+            {
+                throw new Exception("CreateVatGLAccount()-!string.IsNullOrWhiteSpace(fullSetting.VATOutputGLAccountId)");
+            }
+            using (var trans = TransactionFactory.GetTransaction())
+            {
+                fullSetting.DefaultVATTypeId = GetDefaultVATTypeId(tenant);
 
 
- 
+                fullSetting.AutomaticReconcileMethodId = null;
+                fullSetting.VATInputsGLAccountId = InsertGLAccountGetId(accountingContext, new GLAccount()
+                {
+                    Tenant = tenant,
+                    AccountTypeCode = GLAccountTypeEnum.Card.ToIntString(),// "1",
+                    InternalNumber = "",
+                    DisplayNumber = "",
+                    LocalName = "מעמ תשומות",
+                    EnglishName = "Input VAT",
+                    SearchFields = ",Input VAT,מעמ תשומות",
+                    IsMultiCurrency = true,
+                    CurrencyId = null,
+                    RevenueExpenseType = RevenueExpenseTypeEnum.Revenue.ToIntString(),// "3",//OTHER
+                    IsControlAccount = false  /*true */,
 
-        
+                    Inactive = false,
+                    ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.DebtorsAndCreditors.ToIntString(),//"1",//Revenues
+                    ChartOfAccountsId = _ChartOfAccountProvider.GetChartOfAccountsId(tenant, ChartOfAccountsTypeEnum.DebtorsAndCreditors),//"1-105"
+                                                                                                                                          ////CurrencyCode = "Multi",
+
+                    ReconcileMethodCode = "0",
+                    ControlAccountId = null,
+                    AutomaticReconcileId = null,
+                    PreviousEnglishName = null,
+                    PreviousNumber = null,
+                });
+                fullSetting.VATOutputGLAccountId = InsertGLAccountGetId(accountingContext, new GLAccount()
+                {
+                    Tenant = tenant,
+                    AccountTypeCode = GLAccountTypeEnum.Card.ToIntString(),// "1",
+                    InternalNumber = "",
+                    DisplayNumber = "",
+                    LocalName = "מעמ עסקאות",
+                    EnglishName = "Output VAT",
+                    SearchFields = ",Output VAT,מעמ עסקאות",
+                    IsMultiCurrency = true,
+                    CurrencyId = null,
+                    RevenueExpenseType = RevenueExpenseTypeEnum.Expense.ToIntString(),
+                    IsControlAccount = false,/*true*/
+
+                    Inactive = false,
+                    ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.DebtorsAndCreditors.ToIntString(),//"1",//Revenues
+                    ChartOfAccountsId = _ChartOfAccountProvider.GetChartOfAccountsId(tenant, ChartOfAccountsTypeEnum.DebtorsAndCreditors),//"1-105"
+                                                                                                                                          //CurrencyCode = "Multi",
+                    ReconcileMethodCode = "0",
+                    ControlAccountId = null,
+                    AutomaticReconcileId = null,
+                    PreviousEnglishName = null,
+                    PreviousNumber = null,
+                });
+
+                trans.Complete();
+
+            }
+        }
+
+
+
+
+
 
 
         string InsertGLAccountGetId(IAccountingContext accountingContext,GLAccount poco)
         {
             //pm.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+            int display = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + poco.ChartOfAccountsTypeCode, poco.Tenant);
+            int InternalNumber = CodeCounter.GetNumber("GLAccount", poco.Tenant);
+            _GLAccountUpdateService = _GLAccountUpdateService ?? new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), poco.Tenant);
+            var acc = new Def.EntityPMs.GLAccountPM()
+            {
+                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                Tenant = poco.Tenant,
+                AccountTypeCode = poco.AccountTypeCode,
+                ChartOfAccountsTypeCode = poco.ChartOfAccountsTypeCode,
+                ChartOfAccountsId = poco.ChartOfAccountsId,
+                ControlAccountId = //FullAccountingSetting.RevenueExpenseGLAccountId,
+                    null,
+                LocalName = poco.LocalName,
+                EnglishName = poco.EnglishName,
+                IsMultiCurrency = poco.IsMultiCurrency,
+                IsControlAccount = poco.IsControlAccount,
+                RevenueExpenseType = poco.RevenueExpenseType,
+                DisplayNumber = _DisplayNumberProvider.GetDisplayNumber15CHAR(poco.ChartOfAccountsTypeCode, false, display, poco.Tenant),
 
-            
+            };
+            _GLAccountUpdateService.Update(acc, true);
+            return acc.Id;
+
+
             _GLAccountRepository = _GLAccountRepository ?? new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), poco.Tenant);
 
             poco.Id = IdCounter.GetNumber("GLAccount", poco.Tenant);
@@ -415,6 +455,9 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
     {
         public int GetMaxDisplayNumberOfType(string chartOfAccountsTypeCode,  int tenant)
         {
+            throw new Exception(@"use  int iMTKR = CodeCounter.GetNumber(/*DummyTenantProvider*/ ""DummyTP: "" + ""MTKR"", fullAccountingSetting.Tenant);");
+
+            
             return 0;
             try
             {
@@ -595,6 +638,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             {
                 chartOfAccountRepo.Add(item);
             }
+            chartOfAccountRepo.SubmitChanges();
         }
 
 
