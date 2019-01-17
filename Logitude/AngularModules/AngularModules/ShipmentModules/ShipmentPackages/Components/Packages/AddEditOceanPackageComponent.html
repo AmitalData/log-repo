@@ -384,8 +384,23 @@
                                                         <!-- Harmonize | CarrierSeal -->
                                                         <tr class="FormFieldRow">
                                                             <td style="width: 110px;">
-                                                                <LogLabel [ObjectFieldName]="'Harmonize'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'Harmonize'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width: 1px;">
+                                                                            <Hyperlink (click)="MultiHarmonizeClicked()">Multi</Hyperlink>
+                                                                        </td>
+
+                                                                        <td style="width: 2px;">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
                                                             </td>
+
                                                             <td style="width: 160px;">
                                                                 <table>
                                                                     <tr>
@@ -396,15 +411,23 @@
                                                                                     <LogTextBox [ObjectFieldName]="'Harmonize'" [Text]="DataContext.Harmonize" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                                                     <div class="Value" style="position: absolute; left: 10px; top: 7px;" *ngIf="EntityPM.IsMultiHarmonize">Multi</div>
                                                                                 </div>
-                                                                            </div>                                                                           
+                                                                            </div>
                                                                         </td>
 
-                                                                        <td style="width: 6px;">
+                                                                        <td style="width: 4px;">
                                                                             <div></div>
                                                                         </td>
 
-                                                                        <td style="width: 30px;">
-                                                                            <Hyperlink (click)="MultiHarmonizeClicked()">Multi</Hyperlink>
+                                                                        <td style="width: 14px;">
+                                                                            <div>
+                                                                                <span class="hyperlink" *ngIf="!EntityPM.IsMultiHarmonize" [class.HyperlinkDisabled]="!DataContext.IsEditingFieldsEnabled" (click)="ChooseHarmonizeClicked()">
+                                                                                    <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
+                                                                                </span>
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <td style="width: 18px;">
+                                                                            <div></div>
                                                                         </td>
                                                                     </tr>
                                                                 </table>

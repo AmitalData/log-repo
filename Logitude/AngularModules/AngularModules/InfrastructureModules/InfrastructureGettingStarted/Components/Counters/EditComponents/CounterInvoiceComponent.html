@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .CounterItemBackground {               
         background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 100%);
@@ -65,6 +65,21 @@
 
                                         <td style="width: 150px;">
                                             <LogTextBox [ObjectFieldName]="'Prefix'" [Text]="Prefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Prefix -->
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 100px;">
+                                            <LogLabel [ObjectFieldName]="'CounterSize'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td style="width: 150px;">
+                                            <LogTextBox [ObjectFieldName]="'CounterSize'" [Text]="CounterSize" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                         </td>
 
                                         <td>
@@ -159,6 +174,21 @@
 
                                                                                     <td style="width: 150px;">
                                                                                         <LogTextBox [ObjectFieldName]="'Prefix'" [Text]="item.Prefix" [ObjectTableName]="ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- Prefix -->
+                                                                                <tr>
+                                                                                    <td style="width: 100px;">
+                                                                                        <LogLabel [ObjectFieldName]="'CounterSize'" [ObjectTableName]="ObjectTableName" [DataContext]="item.DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td style="width: 150px;">
+                                                                                        <LogTextBox [ObjectFieldName]="'CounterSize'" [Text]="item.CounterSize" [ObjectTableName]="ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
                                                                                     </td>
 
                                                                                     <td>

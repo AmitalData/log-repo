@@ -61,7 +61,7 @@ namespace Logitude.Server.Tools.Helpers
             
             int startNumber = counterDef.StartNumber;
             string number = null;
-
+			string counterLastNumberValue;
             string strConnString = GetConnection(tenant);//ConfigurationManager.ConnectionStrings["str"].ConnectionString;
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
@@ -119,10 +119,11 @@ namespace Logitude.Server.Tools.Helpers
                         cn.Open();
                         cmd.ExecuteNonQuery();
                         cn.Close();
-                        number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value : counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value);
+						//number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value : counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value);
+						counterLastNumberValue = cmd.Parameters["v_pLastValue"].Value.ToString();
 
 
-                    }
+					}
                     catch (Exception ex)
                     {
                         System.Console.WriteLine("Exception: {0}", ex.ToString());
@@ -177,35 +178,57 @@ namespace Logitude.Server.Tools.Helpers
                     cn.Open();
                     cmd.ExecuteNonQuery();
                     cn.Close();
-                    number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["@pLastValue"].Value : counterDef.Prefix + cmd.Parameters["@pLastValue"].Value);
+					//number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["@pLastValue"].Value : counterDef.Prefix + cmd.Parameters["@pLastValue"].Value);
+					counterLastNumberValue = cmd.Parameters["@pLastValue"].Value.ToString();
 
-                }
+
+				}
 
                
             }
 
-			ResolveCounterPrefixVariables(counter, counterDef, tenant,ref number, additionalParameters);
+			number = ResolveCounterPrefixVariables(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
 
 			return number;
 		}
 
-		private static void ResolveCounterPrefixVariables(Counter counter, CounterDefinition counterDef, int tenant, ref string number, Dictionary<string,string> additionalParameters)
+		private static string ResolveCounterPrefixVariables(Counter counter, CounterDefinition counterDef, int tenant, string counterLastNumberValue, Dictionary<string, string> additionalParameters)
 		{
-			//[MM],[YY] or [YYYY],[B]
+			string counterPrefix = counterDef.Prefix;
+			if (!string.IsNullOrEmpty(counterPrefix))
+			{
+				//number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value : counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value);
 
-			DateTime date = TenantServerConfigration.GetCurrentDateTime(tenant);
-			string MM = date.ToString("MM");
-			string YY = date.ToString("yy");
-			string YYYY = date.ToString("yyyy");
+				//[MM],[YY] or [YYYY],[B]
 
-			number = number.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
-			if (additionalParameters != null) {
-				foreach (var k in additionalParameters.Keys)
-					number = number.Replace(k, additionalParameters[k]);
+				DateTime date = TenantServerConfigration.GetCurrentDateTime(tenant);
+				string MM = date.ToString("MM");
+				string YY = date.ToString("yy");
+				string YYYY = date.ToString("yyyy");
+
+				counterPrefix = counterPrefix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
+				if (additionalParameters != null)
+				{
+					foreach (var k in additionalParameters.Keys)
+						counterPrefix = counterPrefix.Replace(k, additionalParameters[k]);
+				}
+
+				if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0 && (counterPrefix + counterLastNumberValue).Length < counterDef.CounterSize.Value)
+				{
+					int sizeOfPrefix = (counterDef.CounterSize.Value - (counterPrefix + counterLastNumberValue).Length + counterPrefix.Length);
+					counterPrefix = counterPrefix.ToString().PadRight(sizeOfPrefix, '0');
+				}
+
+				counterLastNumberValue = counterPrefix + counterLastNumberValue;//(counterDef.Prefix != null ? counterDef.Prefix + counterLastNumberValue : counterDef.Prefix + counterLastNumberValue);
+			}
+			else if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0)
+			{
+				counterLastNumberValue = counterLastNumberValue.ToString().PadLeft(counterDef.CounterSize.Value, '0');
 			}
 
-			 
+			return counterLastNumberValue;
 		}
+
         public static string GetCounterPrefix(int tenant, string counterCode, string parameter1, string parameter2)
         {
             //ObjectTabelRepository tablesRepository = new ObjectTabelRepository();
@@ -225,9 +248,7 @@ namespace Logitude.Server.Tools.Helpers
             return counterDef.Prefix;
         }
 
-
-
-        public static string GetConnection(int tenant)
+		public static string GetConnection(int tenant)
         {
             GlobalDB currentDb;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())

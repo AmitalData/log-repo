@@ -31,7 +31,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private bool SplitByCharges = false;
         private bool IsByRegistryDate = false;
         private bool IsByCreateDate = false;
-        private bool? IncludeCancelledShipments = null;
         private IInvoiceContext myInvoiceContext;
         private ICommonDataContext myCommonContext;
         private IShipmentsContext myShipmentsContext;
@@ -64,8 +63,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             QueryFilterItem filterItem_IncludeEstimations = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeEstimations").FirstOrDefault();
             QueryFilterItem filterItem_SplitByCharges = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "SplitByCharges").FirstOrDefault();
             QueryFilterItem filterItem_IsByCreateDate = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByCreateDate").FirstOrDefault();
-            QueryFilterItem filterItem_IncludeCancelledShipments = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeCancelledShipments").FirstOrDefault();
-
+            
             if (filterItem_FromDate != null)
             {
                 if (filterItem_FromDate.FieldValue != null)
@@ -139,14 +137,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     IsByCreateDate = (bool)filterItem_IsByCreateDate.FieldValue;
                 }
             }
-
-            if (filterItem_IncludeCancelledShipments != null)
-            {
-                if (filterItem_IncludeCancelledShipments.FieldValue != null)
-                {
-                    IncludeCancelledShipments = (bool)filterItem_IncludeCancelledShipments.FieldValue;
-                }
-            }
         }
 
         public byte[] GetData()
@@ -187,20 +177,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             myDataProvider.To = this.GetDateString(this.ToDate);
             myDataProvider.Shipments = new List<ArchivoExportadoShipmentItem>();
 
-            IQueryable<ShipmentDataView> iQueryable_Shipments = this.GetIQueryableShipments();
-
-            if(this.IncludeCancelledShipments != null)
-            {
-                if(this.IncludeCancelledShipments.Value)
-                {
-
-                }
-                else
-                {
-                    iQueryable_Shipments = iQueryable_Shipments.Where(d => !d.IsCancelled);
-                }
-            }
-
+            IQueryable<ShipmentDataView> iQueryable_Shipments = this.GetIQueryableShipments();            
             List<ShipmentDataView> allShipments = iQueryable_Shipments.ToList();
 
             if (allShipments.Count > 0)
@@ -403,20 +380,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             myDataProvider.To = this.GetDateString(this.ToDate);
             myDataProvider.Shipments = new List<ArchivoExportadoShipmentItem>();
 
-            IQueryable<ShipmentDataView> iQueryable_Shipments = this.GetIQueryableShipments();
-
-            if (this.IncludeCancelledShipments != null)
-            {
-                if (this.IncludeCancelledShipments.Value)
-                {
-
-                }
-                else
-                {
-                    iQueryable_Shipments = iQueryable_Shipments.Where(d => !d.IsCancelled);
-                }
-            }
-
+            IQueryable<ShipmentDataView> iQueryable_Shipments = this.GetIQueryableShipments();            
             List<ShipmentDataView> allShipments = iQueryable_Shipments.ToList();
 
             if (allShipments.Count > 0)

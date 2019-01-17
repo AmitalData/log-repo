@@ -826,6 +826,18 @@ namespace Simplog.Data.ShipmentsModel.Mocks
                 throw new NotImplementedException();
             }
         }
+        public IDbSet<HarmonizeCode> HarmonizeCodes
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
     }
 }
