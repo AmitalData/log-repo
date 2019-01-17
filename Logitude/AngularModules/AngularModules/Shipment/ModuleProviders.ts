@@ -26,6 +26,7 @@ import {CustomsTransmissionsStatusListService} from './Services/StandardLists/Cu
 import {OBLTypeListService} from './Services/StandardLists/OBLTypeListService';
 import {PickUpDeliveryTransportModeListService} from './Services/StandardLists/PickUpDeliveryTransportModeListService';
 import {INTTRADocumentTypeListService} from './Services/StandardLists/INTTRADocumentTypeListService';
+import { HarmonizeCodeListService } from './Services/StandardLists/HarmonizeCodeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -57,7 +58,8 @@ export class ModuleProviders {
             case "OBLTypeListService": { myResult = new OBLTypeListService(); break; }
             case "PickUpDeliveryTransportModeListService": { myResult = new PickUpDeliveryTransportModeListService(); break; }
             case "INTTRADocumentTypeListService": { myResult = new INTTRADocumentTypeListService(); break; }               
-                
+            case "HarmonizeCodeListService": { myResult = new HarmonizeCodeListService(); break; }                              
+
             // PM
             case "MessagingStockPMService": { myResult = new MessagingStockPMService(); break; }
             case "ShipmentPMService": { myResult = new ShipmentPMService(); break; }

@@ -9,7 +9,6 @@ import { DWSubQueryPMService } from '../../../../Infrastructure/Services/Standar
 import { DWQueryBuilderService } from '../../../../Infrastructure/Services/ExtendedPMs/DWQueryBuilderService';
 import { DateTimePipe } from '../../../../Controls/Pipes/DateTimePipe';
 import { AgGridNg2 } from 'ag-grid-angular/main';
-import { LicenseManager } from "ag-grid-enterprise";
 import { InfrastructureDomainService, BIReportXMLData, BIReportColumnData } from '../../../../Infrastructure/Services/InfrastructureDomainService';
 
 @Component({
@@ -31,9 +30,9 @@ export class BIReportPreviewComponent implements OnInit {
     public columnDefs: any[] = [];
     public rowData: any[] = [];
     public excelStyles;
+    public BIReportName = "";
 
     constructor() {
-        LicenseManager.setLicenseKey("your license key");
         this.excelStyles = [
             {
                 id: "Boolean",
@@ -80,6 +79,7 @@ export class BIReportPreviewComponent implements OnInit {
                 if (!myResult.HasError) {
                     var result: BIReportXMLData = myResult.Result;
                     this.EntityPM = result.BIReportPM;
+                    this.BIReportName = this.EntityPM.Name;
                     var sortsList = [];
                     var allColumnIds = [];
                     if (result.Columns != null) {
@@ -271,6 +271,14 @@ export class BIReportPreviewComponent implements OnInit {
             logWindow.WindowArgs = windowArgs;
             logWindow.WindowClosed.subscribe(($event: any) => this.OnNewBIReportWindowClosed($event));
             logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
+            logWindow.ComponentLoaded.subscribe(s => {
+                logWindow.WindowClosed.subscribe(d => {
+                    this.EntityPM = s.EntityPM;
+                    this.EntityId = s.EntityPM.Id;
+                    this.BIReportName = this.EntityPM.Name;
+                });
+            });
+
         } else {
             // call method in server side to build xml 
             var sorting = this.agGrid.api.getSortModel();

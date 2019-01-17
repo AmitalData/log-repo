@@ -12,6 +12,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.DataContracts;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
+using System.Collections.Generic;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -539,5 +540,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 }
             }
         }
+
+      
     }
 }

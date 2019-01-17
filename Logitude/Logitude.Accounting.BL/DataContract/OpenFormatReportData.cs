@@ -126,5 +126,9 @@ namespace Logitude.Accounting.BL.DataContract
         public string VendorId { get;  set; }
         public string APInvoiceId { get;  set; }
         public string ARPaymentMethod { get; set; }
+        public string DepositId { get; set; }
+        public string CashBookType { get; set; }
+        public string ARPaymentId { get; set; }
+       
     }
 }
