@@ -316,6 +316,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ItemsProcessTypesList { get; set; }
         [Column("IsClose")]
 	    public bool IsClose { get; set; }
+        [Column("DepositionStatusCode")]
+	    public string DepositionStatusCode { get; set; }
     }
 }
 	 

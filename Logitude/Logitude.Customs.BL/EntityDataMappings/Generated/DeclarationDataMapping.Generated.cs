@@ -123,7 +123,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         MamanStatusCode, 
 	         MamanErrorXml, 
 	         ItemsProcessTypesList, 
-	         IsClose,
+	         IsClose, 
+	         DepositionStatusCode,
 	      }
 
 
@@ -280,7 +281,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ItemsProcessTypesList, 
 	         IsClose, 
 	         MamanStatusName, 
-	         AcceptanceStatusName,
+	         AcceptanceStatusName, 
+	         DepositionStatusCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -792,6 +794,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsClose))
             {
 				entityPOCO.IsClose = entityPM.IsClose;
+			}
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositionStatusCode))
+            {
+				entityPOCO.DepositionStatusCode = entityPM.DepositionStatusCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1310,6 +1317,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsClose = entityPOCO.IsClose;
             }
 
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DepositionStatusCode))
+            {
+					entityPM.DepositionStatusCode = entityPOCO.DepositionStatusCode;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -1819,6 +1832,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsClose))
             {
                 oldEntityPM.IsClose = entityPM.IsClose;
+            }
+			
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositionStatusCode))
+            {
+                oldEntityPM.DepositionStatusCode = entityPM.DepositionStatusCode;
             }
 			
 		}

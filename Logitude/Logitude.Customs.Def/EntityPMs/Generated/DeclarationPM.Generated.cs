@@ -3697,6 +3697,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string depositionStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DepositionStatusCode  
+	   {
+	    
+	     get
+		{
+		   return depositionStatusCode;
+		 }
+		 set
+		 {
+		   if(depositionStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DepositionStatusCode",OldValue=depositionStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   depositionStatusCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
