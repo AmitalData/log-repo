@@ -13,13 +13,18 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
 {
     public partial class QuoteMapping
     {
-        public static void MapQuoteCharge(QuoteChargePM itemPM, QuoteCharge itemPoco, bool isNewEntity)
+        public static void MapQuoteCharge(QuoteChargePM itemPM, QuoteCharge itemPoco, bool isNewEntity, QuotePM iQuotePM)
         {
             if (isNewEntity)
             {
                 itemPoco.Id = itemPM.Id;
                 itemPoco.Tenant = itemPM.Tenant;
                 itemPoco.QuoteId = itemPM.QuoteId;
+            }
+
+            if (iQuotePM.IsSaleCurrencySameAsCost)
+            {
+                itemPM.IsAllIN = false;
             }
 
             itemPoco.ValueDate = TenantServerConfigration.GetCurrentDateTime(itemPM.Tenant);
