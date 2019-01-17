@@ -26,6 +26,21 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
+
+        public List<ARPaymentChequePM> GetAllARPaymentChequesByPaymentIds(List<string> paymentIds, int tenant)
+        {
+
+
+
+            List<ARPaymentCheque> paymentCheques = (from a in context.ARPaymentCheques
+                                                    where paymentIds.Contains(a.PaymentId) && a.Tenant == tenant
+                                                    select a).ToList();
+
+            return paymentCheques.Select(r => this.GetEntityPM(r)).ToList();
+
+
+        }
+
         public List<ARPaymentChequePM>  GetListByPaymentId(string paymentId, int tenant)
         {
             List<ARPaymentChequePM> paymentCheques = (from a in context.ARPaymentCheques

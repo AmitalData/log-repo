@@ -199,6 +199,11 @@ namespace WebFreight.Web.MetaDataUpdate
                             updateClass.LoadHelpResources();
                             updateClass.CreateMasterCounter(0);
                             updateClass.LoadEmailAlertSettings();
+                            if (LogitudeSettings.WorkEnvironment == "logbox")
+                            {
+                                updateClass.UpdateLogboxAuomationObjectFields(context);
+                            }
+                         
 
                             break;
                         }
