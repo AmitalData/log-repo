@@ -22,6 +22,7 @@ delete  ReconciliationLines WHERE tenant = 1051
 delete  Reconciliations WHERE tenant = 1051
 delete journalReconciles where tenant = 1051
 delete journallines where tenant = 1051
+delete JournalAdditionalDatas where tenant = 1051
 delete Journals where tenant = 1051
 delete CashBookLines where tenant = 1051
 
@@ -42,7 +43,7 @@ update ChargesTypes set PayableDebitGLAcountId='' where tenant = 1051  and Payab
 delete GLAccountTotalByMonths where tenant = 1051
 delete GLAccountCurrencies where tenant = 1051
 
-update GLAccounts set controlAccountId =NULL where controlAccountId is not null WHERE tenant = 1051 
+update GLAccounts set controlAccountId =NULL where controlAccountId is not null AND tenant = 1051 
 
 delete GLAccountMOredatas where  tenant = 1051 
 

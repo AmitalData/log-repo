@@ -1722,7 +1722,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             var paramDefault = new
             {
                 Tenant = 1051,
-                YYYY = 2017,
+                YYYY = 2019,
                 BuildFullAccountingSetting = true,
                 BuildFullAccountingSettingVAT = true,
                 BuildGLAccountEachType = 30,

@@ -338,7 +338,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             int tot = _TotalPerChartOfAccountsId.Where(r => r.Key == ChartOfAccountsTypeEnum.Revenues.ToIntString()).DefaultIfEmpty(new TotalPerM()).First().Value;
 
 
-            while (tot < timeLimit)
+            while (tot++ < timeLimit)
             {
 
                 int iRevenues = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Revenues.ToIntString(), fullAccountingSetting.Tenant);

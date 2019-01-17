@@ -396,7 +396,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 IsMultiCurrency = poco.IsMultiCurrency,
                 IsControlAccount = poco.IsControlAccount,
                 RevenueExpenseType = poco.RevenueExpenseType,
-                DisplayNumber = _DisplayNumberProvider.GetDisplayNumber15CHAR(poco.ChartOfAccountsTypeCode, false, display, poco.Tenant),
+                DisplayNumber = _DisplayNumberProvider.GetDisplayNumber15CHAR(poco.ChartOfAccountsTypeCode, poco.IsControlAccount.GetValueOrDefault(), display, poco.Tenant),
 
             };
             _GLAccountUpdateService.Update(acc, true);
