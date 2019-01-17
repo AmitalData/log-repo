@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {CounterPM} from '../../../../../Common/EntityPMs/CounterPM';
 import {CounterDefinitionPM} from '../../../../../Common/EntityPMs/CounterDefinitionPM';
@@ -80,6 +80,7 @@ export class CounterInvoiceComponent extends BaseComponent {
     SetUIProperties() {
         this.UIProperties.SetEnabled("Prefix", this.ObjectTableName, !this.IsCounterUsed);
         this.UIProperties.SetEnabled("StartNumber", this.ObjectTableName, !this.IsCounterUsed);
+        this.UIProperties.SetEnabled("CounterSize", this.ObjectTableName, !this.IsCounterUsed);
     }
     InitializeDefinitions() {
 
@@ -198,6 +199,17 @@ export class CounterInvoiceComponent extends BaseComponent {
 
             this.ItemsSource.forEach(item => {
                 item.Prefix = value;
+            });
+        }
+    }
+
+    public get CounterSize() { return this.EntityPM.CounterSize; }
+    public set CounterSize(value: number) {
+        if (this.EntityPM.CounterSize != value) {
+            this.EntityPM.CounterSize = value;
+
+            this.ItemsSource.forEach(item => {
+                item.CounterSize = value;
             });
         }
     }
@@ -327,6 +339,13 @@ export class CounterInvoiceDefinitionItem extends BaseComponent {
     public set Prefix(value: string) {
         if (this.EntityPM.Prefix != value) {
             this.EntityPM.Prefix = value;
+        }
+    }
+
+    public get CounterSize() { return this.EntityPM.CounterSize; }
+    public set CounterSize(value: number) {
+        if (this.EntityPM.CounterSize != value) {
+            this.EntityPM.CounterSize = value;
         }
     }
 
