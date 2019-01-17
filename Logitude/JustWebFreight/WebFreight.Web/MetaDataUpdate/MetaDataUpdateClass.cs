@@ -378,10 +378,9 @@ namespace WebFreight.Web.MetaDataUpdate
             this.ObjectContext.SaveChanges();
         }
 
-        public void UpdateLogboxAuomationObjectFields(IWebFreightContext context)
+        public void UpdateShipmentLogboxAuomationObjectFields(IWebFreightContext context)
         {
-            //"OwnerLink",
-                List<string> fieldsName = new List<string> {  "IsDigitalSignRequired", "IsRequestedDocuments" };
+                List<string> fieldsName = new List<string> { "OwnerLink", "IsDigitalSignRequired", "IsRequestedDocuments" };
                 ObjectFieldsRepository = new ObjectFieldRepository(context);
                 List<ObjectField> objectFields = ObjectFieldsRepository.GetObjectFieldsByFieldsNamesAndObjectTable(fieldsName, ShipmentObject.Id).ToList();
                 if (objectFields.Count > 0)

@@ -1755,6 +1755,7 @@
     <Content Include="ShipmentModules\ShipmentTabs\Components\Shipments\ShipmentsTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Groupage\GroupageComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Groupage\GroupageContainerComponent.html" />
+    <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Harmonizes\HarmonizesComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Payables\PayablesComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Profit\ProfitComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Quotes\QuotesComponent.html" />
@@ -5996,6 +5997,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Shipments\ShipmentsTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Windows\Groupage\GroupageComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Windows\Groupage\GroupageContainerComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Windows\Harmonizes\HarmonizesComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Windows\Payables\PayablesComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Windows\Profit\ProfitComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Windows\Quotes\QuotesComponent.ts" />

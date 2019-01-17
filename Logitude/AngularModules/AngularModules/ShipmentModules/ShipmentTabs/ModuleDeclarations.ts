@@ -1,4 +1,4 @@
-﻿import {CustomsTabComponent} from './Components/Customs/CustomsTabComponent';
+import {CustomsTabComponent} from './Components/Customs/CustomsTabComponent';
 import {ExportFileComponent} from './Components/Customs/ExportFileComponent';
 import {OverviewTabComponent} from './Components/Overview/OverviewTabComponent';
 import {OrdersTabComponent} from './Components/Orders/OrdersTabComponent';
@@ -24,6 +24,7 @@ import {QuotesComponent} from './Components/Windows/Quotes/QuotesComponent';
 import {PayablesComponent} from './Components/Windows/Payables/PayablesComponent';
 import {GroupageComponent} from './Components/Windows/Groupage/GroupageComponent';
 import {GroupageContainerComponent} from './Components/Windows/Groupage/GroupageContainerComponent';
+import { HarmonizesComponent } from './Components/Windows/Harmonizes/HarmonizesComponent';
 
 export const Components =
     [
@@ -53,6 +54,7 @@ export const Components =
         PayablesComponent,
         GroupageComponent,
         GroupageContainerComponent,
+        HarmonizesComponent,
     ];
 
 
@@ -88,6 +90,7 @@ export class ModuleDeclarations {
             case "PayablesComponent": { myResult = PayablesComponent; break; }
             case "GroupageComponent": { myResult = GroupageComponent; break; }
             case "GroupageContainerComponent": { myResult = GroupageContainerComponent; break; }
+            case "HarmonizesComponent": { myResult = HarmonizesComponent; break; }
         }
 
         return myResult;
