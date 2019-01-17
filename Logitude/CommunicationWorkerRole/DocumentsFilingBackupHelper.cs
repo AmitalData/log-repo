@@ -69,19 +69,18 @@ namespace CommunicationWorkerRole
                         string p_status = "";
                         string p_message = "";
                         SFTPService sftpService = new SFTPService();
-                        sftpService.Logon(ftpHostIP, ftpUserName, ftpPassword, "22", ftpFolderName, out p_status, out p_message);
-                        if (p_status == "0")
-                        {
-                            if (p_status == "0")
-                            {
-                                sftpService.Upload(fileName, filedata, true, true, out p_status, out p_message);
-                            }
-                            else
-                                throw new Exception("SFTP upload file failed: " + p_message);
-                        }
-                        else
-                            throw new Exception("SFTP Login failed: " + p_message);
-                    }
+						sftpService.Logon(ftpHostIP, ftpUserName, ftpPassword, "22", ftpFolderName, out p_status, out p_message);
+						if (p_status == "0")
+						{
+
+							sftpService.Upload(fileName, filedata, true, true, out p_status, out p_message);
+
+							if (p_status == "-1")
+								throw new Exception("SFTP upload file failed: " + p_message);
+						}
+						else
+							throw new Exception("SFTP Login failed: " + p_message);
+					}
 
                     documentFilingPOCO.BackedupExternally = true;
                     documentFilingPOCO.LastBackupDate = TenantServerConfigration.GetCurrentDateTime(tenant);
