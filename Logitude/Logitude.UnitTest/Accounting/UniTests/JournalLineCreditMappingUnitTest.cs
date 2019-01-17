@@ -824,6 +824,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
                     CreditAccountId = "File",
                     CreditControlAccountId = expectedControlAccountId,
+                    IsExternalReconcile = true,
                 },
                 new JournalPM() { Tenant = 1, Id = "1-1" },
                 "Check Local Amount"
@@ -851,6 +852,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     var myLedgerTransaction = fakeJournalLineCreditMapping.MyLedgerTransaction;
 
                     Assert.AreEqual(Math.Round(-1* state2Check.Item1.LocalAmount,2), myLedgerTransaction.OpenAmount);
+                    Assert.AreEqual(state2Check.Item1.IsExternalReconcile, myLedgerTransaction.IsExternalReconcile);
                     if (ExpectedOpenAmountCurrencyId != myLedgerTransaction.OpenAmountCurrencyId)
                     {
                     }

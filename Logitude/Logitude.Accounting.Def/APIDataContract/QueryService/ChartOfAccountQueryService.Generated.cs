@@ -58,6 +58,25 @@ using Logitude.Accounting.Data;
             }
         }
 		
+		public ChartOfAccount GetChartOfAccountByCode(string Code,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("ChartOfAccount with Code " + Code + " doesn't exist");
+
+				return ChartOfAccountDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
 		public ChartOfAccount ChartOfAccountDataMapping(ChartOfAccountPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -99,15 +118,21 @@ using Logitude.Accounting.Data;
         {
 		    try
             {
-				   					var temp = new ChartOfAccountPM();								  
+				   
+					var temp = new ChartOfAccountPM();
+												  
 					if (!string.IsNullOrEmpty(MyEntity.Id))
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
+										if (!string.IsNullOrEmpty(MyEntity.LogitudeCode))
+					{
+						temp = query.GetSinglePMByCode(MyEntity.LogitudeCode, Tenant);
+					} 					   
 					if(temp == null)
 					{
-					    throw new ApplicationException("ChartOfAccount with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("ChartOfAccount with LogitudeCode " + MyEntity.LogitudeCode + " doesn't exist");
+						
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{

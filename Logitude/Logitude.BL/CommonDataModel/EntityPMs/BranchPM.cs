@@ -64,5 +64,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string INTTRAContactId { get; set; }
 
-    }
+		[DataMember]
+		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+		public string CounterCode { get; set; }
+
+
+	}
 }

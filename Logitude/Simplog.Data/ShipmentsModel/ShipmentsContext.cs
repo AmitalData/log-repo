@@ -322,6 +322,9 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ShipmentPackageHarmonizeMap());
             modelBuilder.Configurations.Add(new PickUpDeliveryPackageHarmonizeMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
+            modelBuilder.Configurations.Add(new HarmonizeCodeMap());
+
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -381,6 +384,7 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<INTTRADocumentType> INTTRADocumentTypes { get; set; }
         public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; set; }
         public IDbSet<PickUpDeliveryPackageHarmonize> PickUpDeliveryPackageHarmonizes { get; set; }
+        public IDbSet<HarmonizeCode> HarmonizeCodes { get; set; }
 
         [DbFunction("ShipmentsContext", "udf_ShipmentSearch")]
         public IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields)

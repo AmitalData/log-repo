@@ -14,24 +14,24 @@ import {AppTool} from '../../../Infrastructure/Tools';
 
 @Injectable()
 
-export class GLAccountExtendedListService { 
+export class GLAccountExtendedListService {
     private _http: Http
     private _apiUrl: string;
 
-    constructor() { 
+    constructor() {
         this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/glaccountviews';
      }
 
 
-    GetRecentGLAccounts(accountTypeCode: string) { 
+    GetRecentGLAccounts(accountTypeCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
         var url = this._apiUrl + '/GetRecentGLAccounts?accountTypeCode=' + accountTypeCode;
 
-        return Observable.defer(() => { 
-            return this._http.get(url, {  headers: authHeader  }).map(response => { 
+        return Observable.defer(() => {
+            return this._http.get(url, {  headers: authHeader  }).map(response => {
                 var allLists = response.json();
 
                 var serviceResponse = new ServiceResponse();
@@ -118,7 +118,7 @@ export class GLAccountExtendedListService {
                         return false;
                     }
                 }
-                
+
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
@@ -207,6 +207,7 @@ export class GLAccountExtendedListService {
         urlParameters += "&salesmanId=" + args.SalesmanId;
         urlParameters += "&isCustomer=" + args.IsCustomer;
         urlParameters += "&groupByDate=" + args.GroupByDate;
+        urlParameters += "&forceUseMonthMethod=" + args.ForceUseMonthMethod;
 
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
@@ -287,7 +288,7 @@ export class GLAccountExtendedListService {
                 return serviceResponse;
 
             }).catch(ServiceHelper.HandleServiceError);
-        });                    
+        });
     }
 
     GetAccountOpenTransactionsCount(accountId: string) {
@@ -313,13 +314,13 @@ export class GLAccountExtendedListService {
 
 
 
-    MapJsonToEntityList(jsonList: any) { 
+    MapJsonToEntityList(jsonList: any) {
 
         var entityList: GLAccountList;
         entityList = new GLAccountList();
         var jsonListKeys = Object.keys(jsonList);
 
-        for (var key in jsonListKeys) { 
+        for (var key in jsonListKeys) {
             var property = jsonListKeys[key];
             entityList[property] = jsonList[property];
          }

@@ -16,7 +16,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         string GetConactIdByemail(string email, int tenant);
         string GetConactNameByemail(string email, int tenant);
         Simplog.Data.CommonDataModel.EntityPOCOs.Contact GetContactByUserTypeAndTenant(string userType, int tenant);
-        System.Linq.IQueryable<Simplog.Data.CommonDataModel.EntityPOCOs.Contact> GetContactListsForShipmentFollow(System.Collections.Generic.List<string> trackedIds, int tenant);
+        System.Linq.IQueryable<Simplog.Data.CommonDataModel.EntityPOCOs.Contact> GetContactsByIds(System.Collections.Generic.List<string> trackedIds, int tenant);
         System.Linq.IQueryable<Simplog.Data.CommonDataModel.EntityPOCOs.Contact> GetContacts(System.Collections.Generic.List<string> allContactsId, int tenant);
         System.Linq.IQueryable<Simplog.Data.CommonDataModel.EntityPOCOs.Contact> GetContacts(int tenant);
         System.Linq.IQueryable<Simplog.Data.CommonDataModel.EntityPOCOs.Contact> GetContactsByEmail(string email);

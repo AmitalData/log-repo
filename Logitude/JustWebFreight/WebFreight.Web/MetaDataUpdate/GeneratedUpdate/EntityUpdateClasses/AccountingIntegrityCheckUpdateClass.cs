@@ -106,7 +106,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "CreateDateTimeUTC",
 			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  false,
+			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
@@ -562,12 +562,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable AccountingIntegrityCheckObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingIntegrityCheck" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> AccountingIntegrityCheckObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingIntegrityCheck").ToList();
+		       
+	      
+
+	         Screen AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingIntegrityCheck.HeaderScreen", Name = "AccountingIntegrityCheckHeaderScreen", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+            ScreenField AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AccountingIntegrityCheckObjectFields.Where(d => d.FieldName == "CreateDateTimeUTC").FirstOrDefault().Id, ScreenId = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AccountingIntegrityCheckObjectFields.Where(d => d.FieldName == "DoneDateTimeUTC").FirstOrDefault().Id, ScreenId = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = AccountingIntegrityCheckObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = AccountingIntegrityCheckObjectFields.Where(d => d.FieldName == "HasException").FirstOrDefault().Id, ScreenId = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         	
+		    AccountingIntegrityCheckObjectTable.HeaderScreenId = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Id;
+	   		  
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable AccountingIntegrityCheckObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingIntegrityCheck" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode AccountingIntegrityCheckGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingIntegrityCheck.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature AccountingIntegrityCheckGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Tab.General", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheckFeatures.AICG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AICG",HtmlComponentName = "IntegrityCheckTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/AccountingIntegrityCheck/IntegrityCheckTabComponent", FeatureId = AccountingIntegrityCheckGeneralFeature_TH0.Id, ControlPath = "IntegrityCheckTabComponent", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, TabNameTextCodeId = AccountingIntegrityCheckGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

@@ -2282,10 +2282,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 DateTime? dateBefore = DateTime.Now;
                 string tableName = entityPM.ShipmentLevelCode == "C" ? "Master" : entityPM.ShipmentLevelCode == "H" ? "Shipment" : "MasterAndHouse";
-
+                EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
                 if (type == "OnCreate")
                 {
-                    EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
                     bool isHaveAutomation = entityChangeHelper.CheckIfEntityHaveAutomation(tableName, "OnCreate", entityPM.Tenant);
                     if (isHaveAutomation)
                     {
@@ -2295,7 +2294,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 else if (!entityPM.IsUpdateByAutomation && type == "OnUpdate")
                 {
-                    EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
+                    
                     ShipmentPM changeTrackingPM = new ShipmentPM();
                     ShipmentQuery query = new ShipmentQuery(tenant);
                     query.MapShipmentToShipmentPMForAutomation(changeTrackingPM, this.entityPoco, null, this.entityMasterData);
@@ -2404,12 +2403,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 if (!entityPM.IsHybrid)
                 {
-                    entityPM.CreateDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+					Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]",""} };
+					if (!string.IsNullOrEmpty(entityPM.BranchId))
+					{
+						Branch myBranch = (from d in myCommonContext.Branches
+										   where d.Tenant == tenant
+										   && d.Id == entityPM.BranchId
+										   select d).FirstOrDefault();
+
+						if (myBranch != null && !string.IsNullOrEmpty(myBranch.CounterCode))
+						{
+							counterAdditionalParameters["[B]"] = myBranch.CounterCode;
+						}
+					}
+
+					entityPM.CreateDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
 
                     if (entityPM.ShipmentLevelCode == "C")
                     {
                         if (entityPM.ShipmentNumber == null)
-                            entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "MAST", entityPM.DirectionId, entityPM.TransportModeId);
+                            entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "MAST", entityPM.DirectionId, entityPM.TransportModeId, counterAdditionalParameters);
                     }
 
                     else
@@ -2417,13 +2430,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         if (entityPM.DirectionId.ToUpper() == "C")
                         {
                             if (entityPM.ShipmentNumber == null)
-                                entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", "I", entityPM.TransportModeId);
+                                entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", "I", entityPM.TransportModeId, counterAdditionalParameters);
                         }
 
                         else
                         {
                             if (entityPM.ShipmentNumber == null)
-                                entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId);
+                                entityPM.ShipmentNumber = TableCounter.GetNumber(tenant, "SHIP", entityPM.DirectionId, entityPM.TransportModeId, counterAdditionalParameters);
                         }
                     }
                 }

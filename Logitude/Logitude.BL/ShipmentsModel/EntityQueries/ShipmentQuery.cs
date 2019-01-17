@@ -34,6 +34,7 @@ using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using System.Reflection;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -2211,8 +2212,23 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (shipment.IsDangerous && iDangerousShipmentPackages) shipmentPM.ShipmentContanisDangerousGoods = true;
 
+            //  if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+            //{
+            //    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipmentPM.Tenant);
+            //    ShipmentComputedFields shipmentComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipmentPM.Id, shipmentPM.Tenant);
+            //    if (shipmentComputedFields != null)
+            //    {
+            //        shipmentPM.IsRequestedDocuments = shipmentComputedFields.IsRequestedDocuments;
+            //        shipmentPM.IsDigitalSignRequired = shipmentComputedFields.IsDigitalSignRequired;
+            //    }
+            //}
+
+
+
             ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
+
+
 
             return returnShipment;
         }

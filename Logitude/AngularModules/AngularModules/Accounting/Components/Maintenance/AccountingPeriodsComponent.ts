@@ -42,6 +42,7 @@ export class AccountingPeriodsComponent extends BaseComponent {
     PeriodsList: AccountingPeriodList[];
     ShowPrompt: boolean = false;
     public isRTL: boolean = false;
+    public hasReadPermision: boolean = false;
 
     constructor(private _entityResourceService: EntityResourceService, public entityArgs: EntityArgs) {
         super();
@@ -53,9 +54,11 @@ export class AccountingPeriodsComponent extends BaseComponent {
 
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.hasReadPermision = FeatureLocator.HasEntityPermessions(this.ObjectTableName, 'READ',false);
+        if(this.hasReadPermision) this.UIProperties.SetEnabled("Year", this.ObjectTableName, false);
 
     }
-    
+
     // Properties
     private year;
     get Year() { return this.year; }
@@ -67,7 +70,7 @@ export class AccountingPeriodsComponent extends BaseComponent {
     }
     noPeriodMsg: string = "";
     GetPeriods(year) {
-        if (!AppTool.IsNullOrEmpty(year)) {
+        if (!AppTool.IsNullOrEmpty(year) && this.hasReadPermision) {
 
             var filters = new ApiQueryFilters();
             filters.GetAll = true;
@@ -119,7 +122,7 @@ export class AccountingPeriodsComponent extends BaseComponent {
             if (period.PeriodTypeCode == "2") { // 2-Invoice
                 var row = this.PeriodsList.find(d => d.PeriodTypeCode == "1"); // 1-Accounting
                 if (row != null) {
-                    windowArgs.AccountingRow = row; // attach accounting period to window to use it in logic 
+                    windowArgs.AccountingRow = row; // attach accounting period to window to use it in logic
                 }
             }
 
@@ -156,14 +159,14 @@ export class AccountingPeriodsComponent extends BaseComponent {
             }
         });
 
-        
+
     }
 
     CreateRecord() {
         this._AccountingPeriodExtendedPMService.createDefaultPeriods(this.year).subscribe((myResult: any) => {
             var result = myResult.Result;
             this.BrowseButtonClicked();
-           
+
         });
     }
 

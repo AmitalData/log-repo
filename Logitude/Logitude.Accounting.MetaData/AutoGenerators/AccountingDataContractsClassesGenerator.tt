@@ -20,7 +20,7 @@
 this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
 
 
-GenerateNewModelsApiDataContracts("../EntityFiles","../../Logitude.Accounting.BL/APIDataContract","../../Logitude.Accounting.Def/APIDataContract","AccountingContext","Logitude.Accounting.Def.EntityPMs");
+GenerateNewModelsApiDataContracts("../EntityFiles","../../Logitude.Accounting.BL/APIDataContract","../../Logitude.Accounting.BL/APIDataContract","AccountingContext","Logitude.Accounting.Def.EntityPMs");
 
  #>
 
