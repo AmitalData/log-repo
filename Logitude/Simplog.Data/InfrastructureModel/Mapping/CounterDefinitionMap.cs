@@ -44,12 +44,13 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.UniquePerPrefix).HasColumnName("UniquePerPrefix");
             this.Property(t => t.StartNumber).HasColumnName("StartNumber");
             this.Property(t => t.CounterId).HasColumnName("CounterId");
+			this.Property(t => t.CounterSize).HasColumnName("CounterSize");
 
-            // Relationships
-            //this.HasRequired(t => t.Counter)
-            //    .WithMany(t => t.CounterDefinitions)
-            //    .HasForeignKey(d => d.CounterId);
+			// Relationships
+			//this.HasRequired(t => t.Counter)
+			//    .WithMany(t => t.CounterDefinitions)
+			//    .HasForeignKey(d => d.CounterId);
 
-        }
-    }
+		}
+	}
 }

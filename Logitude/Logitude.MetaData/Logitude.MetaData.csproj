@@ -414,6 +414,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\InfrastructureModel\ChargesGroup.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\CounterDefinition.lxml" />
     <None Include="EntityFiles\InfrastructureModel\Direction.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DWObjectField.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DWObjectTable.lxml" />
