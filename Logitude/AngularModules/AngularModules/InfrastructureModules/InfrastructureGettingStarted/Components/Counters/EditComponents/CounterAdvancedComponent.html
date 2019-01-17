@@ -92,7 +92,7 @@
 
                                 <!-- SameForAll -->
                                 <table *ngIf="SameForAllDirectios == true && SameForAllTransports == true">
-                                    
+
                                     <!-- Prefix -->
                                     <tr class="FormFieldRow">
                                         <td style="width: 100px;">
@@ -101,6 +101,21 @@
 
                                         <td style="width: 150px;">
                                             <LogTextBox [ObjectFieldName]="'Prefix'" [Text]="Prefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- CounterSize -->
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 100px;">
+                                            <LogLabel [ObjectFieldName]="'CounterSize'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td style="width: 150px;">
+                                            <LogTextBox [ObjectFieldName]="'CounterSize'" [Text]="CounterSize" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                         </td>
 
                                         <td>
@@ -133,9 +148,9 @@
                                         <td colspan="3">
                                             <div class="NoDataTextStyle" style="text-align: left;">The created numbers have the following format:</div>
                                             <div class="Value" style="padding-left: 15px;">[Prefix]Number</div>
-                                            <br/>
+                                            <br />
                                             <div class="NoDataTextStyle" style="text-align: left;">You can add [MM],[YY] or [YYYY] to the prefix. it will be translated due to the current date</div>
-                                            <div *ngIf="CounterPM.Code == 'MAST'  || CounterPM.Code == 'SHIP'"  class="NoDataTextStyle" style="text-align: left;">You can also add [B] to bring the branch code</div>
+                                            <div *ngIf="CounterPM.Code == 'MAST'  || CounterPM.Code == 'SHIP'" class="NoDataTextStyle" style="text-align: left;">You can also add [B] to bring the branch code</div>
 
                                         </td>
                                     </tr>
@@ -205,7 +220,16 @@
                                                                                                                             <LogTextBox [ObjectFieldName]="'Prefix'" [Text]="item.Prefix" [ObjectTableName]="ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
                                                                                                                         </td>
                                                                                                                     </tr>
+                                                                                                                    <!-- CounterSize -->
+                                                                                                                    <tr>
+                                                                                                                        <td style="width: 100px;">
+                                                                                                                            <LogLabel [ObjectFieldName]="'CounterSize'" [ObjectTableName]="ObjectTableName" [DataContext]="item.DataContext"></LogLabel>
+                                                                                                                        </td>
 
+                                                                                                                        <td>
+                                                                                                                            <LogTextBox [ObjectFieldName]="'CounterSize'" [Text]="item.CounterSize" [ObjectTableName]="ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                                        </td>
+                                                                                                                    </tr>
                                                                                                                     <!-- StartNumber -->
                                                                                                                     <tr>
                                                                                                                         <td>

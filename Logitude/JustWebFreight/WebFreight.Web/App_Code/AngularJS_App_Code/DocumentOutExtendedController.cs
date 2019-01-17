@@ -16,6 +16,9 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.ShipmentsModel.Mapping;
 using Simplog.Server.Infrastructure;
@@ -260,7 +263,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
         
         public HttpResponseMessage GetEntityPartners(string entityId, string objectTableName , string childEntityId , string childobjectTableName)
-        {
+        {            
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
@@ -585,6 +588,93 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         PartnerType = "Customer Contacts",
 
                     });
+                    #endregion
+                }
+
+                else if (objectTableName == "ARInvoice" || objectTableName == "ARPayment" || objectTableName == "APInvoice" || objectTableName == "APPayment")
+                {
+                    #region
+                    IInvoiceContext invoiceContext = InvoiceContext.GetContext(authToken.Tenant);
+
+                    switch (objectTableName)
+                    {
+                        case "ARInvoice":
+                            {
+                                ARInvoice iEntity = (from d in invoiceContext.ARInvoices where d.Id == entityId select d).FirstOrDefault();
+                                if(iEntity != null)
+                                {
+                                    if(iEntity.BillToId != null)
+                                    {
+                                        list.Add(new EntityPartner()
+                                        {
+                                            Id = 1,
+                                            PartnerId = iEntity.BillToId,
+                                            PartnerType = "Bill To",
+                                        });
+                                    }
+                                }
+
+                                break;
+                            }
+
+                        case "ARPayment":
+                            {
+                                ARPayment iEntity = (from d in invoiceContext.ARPayments where d.Id == entityId select d).FirstOrDefault();
+                                if (iEntity != null)
+                                {
+                                    if (iEntity.BillToId != null)
+                                    {
+                                        list.Add(new EntityPartner()
+                                        {
+                                            Id = 1,
+                                            PartnerId = iEntity.BillToId,
+                                            PartnerType = "Bill To",
+                                        });
+                                    }
+                                }
+
+                                break;
+                            }
+
+                        case "APInvoice":
+                            {
+                                APInvoice iEntity = (from d in invoiceContext.APInvoices where d.Id == entityId select d).FirstOrDefault();
+                                if (iEntity != null)
+                                {
+                                    if (iEntity.VendorId != null)
+                                    {
+                                        list.Add(new EntityPartner()
+                                        {
+                                            Id = 1,
+                                            PartnerId = iEntity.VendorId,
+                                            PartnerType = "Vendor",
+                                        });
+                                    }
+                                }
+
+                                break;
+                            }
+
+                        case "APPayment":
+                            {
+                                APPayment iEntity = (from d in invoiceContext.APPayments where d.Id == entityId select d).FirstOrDefault();
+                                if (iEntity != null)
+                                {
+                                    if (iEntity.VendorId != null)
+                                    {
+                                        list.Add(new EntityPartner()
+                                        {
+                                            Id = 1,
+                                            PartnerId = iEntity.VendorId,
+                                            PartnerType = "Vendor",
+                                        });
+                                    }
+                                }
+
+                                break;
+                            }
+                    }
+
                     #endregion
                 }
 

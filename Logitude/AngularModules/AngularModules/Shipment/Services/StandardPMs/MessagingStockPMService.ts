@@ -103,7 +103,7 @@ export class MessagingStockPMService {
             var validator: ClassLevelValidator;
             validator = new ClassLevelValidator();
 
-            var errorsArray = validator.Validate("Booking", entityPM);
+            var errorsArray = validator.Validate("MessagingStock", entityPM);
 
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
