@@ -57,6 +57,7 @@
     <Content Include="Accounting\Components\ListTemplates\ReconcileExternalPageLineListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\ReconcileExternalPageListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\TaxReportListTemplate.html" />
+    <Content Include="Accounting\Components\Maintenance\AccountingLoadTestComponent.html" />
     <Content Include="Accounting\Components\Maintenance\AccountingPeriodEventComponent.html" />
     <Content Include="Accounting\Components\Maintenance\EditAccountingPeriodComponent.html" />
     <Content Include="Accounting\Components\Maintenance\AccountingPeriodsComponent.html" />
@@ -325,6 +326,7 @@
     <TypeScriptCompile Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\TaxReportListTemplate.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Maintenance\AccountingLoadTestComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\OpenFormatReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\TaxDeductionReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewOpenFormatReportComponent.ts" />
