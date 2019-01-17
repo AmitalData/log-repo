@@ -2600,7 +2600,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field39, pm.Field39, "Field39", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field40, pm.Field40, "Field40", notifyPropertyChangeValuesList);
 
-            if (LogitudeSettings.WorkEnvironment == "logbox")
+            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
             {
                 ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(pm.Tenant);
                 ShipmentComputedFields shipmentComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(pm.Id, pm.Tenant);
