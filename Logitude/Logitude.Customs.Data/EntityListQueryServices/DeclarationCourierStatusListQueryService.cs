@@ -21,11 +21,37 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<DeclarationCourierStatusList> GetIqueryableList(IQueryable<DeclarationCourierStatus> iQueryable)
         {
+            //var qMmmnActionError = (from action in context.DeclarationMamanSpecialActions
+            //            .Where( r=> r.MamanSpecialActionStatusCode== "2" )
+            //            group action by action.DeclarationId into gaction
+            //            select new
+            //            {
+            //                id = gaction.Key,
+            //                text =
+            //                gaction.Select(r => r.MamanSpecialActionsErrorXml).Aggregate((b4, after) => b4 + " " + after),
+            //                //string.Join(" ", gaction.Select(r => r.MamanSpecialActionsErrorXml)),
+
+            //                //(string)gaction.Aggregate((b4, after) => b4.MamanLabelText1 + " "+ after.DeclarationId),
+            //            });
+            //bool test = false    ;
+            //if (test)
+            //{
+            //    var resQ = qMmmnActionError.ToList();
+            //}        
+
             IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable
                                                               join d in context.Declarations.Include("GovernmentProcedureCurrent").Include("CourierCustomStatus").Include("DeclarationStatusType").Include("CustomerCard").Include("Importer").Include("AgentTalkBackType")
                                                               on a.DeclarationId equals d.Id
                                                               join c in context.CourierDeclarations
                                                               on a.DeclarationId equals c.DeclarationId
+
+
+                                                              //join mmnAction in qMmmnActionError
+                                                              //on a.DeclarationId equals mmnAction.id
+                                                              //into leftJoin
+                                                              //from ao in leftJoin.DefaultIfEmpty()
+
+
                                                               select new DeclarationCourierStatusList()
                                                               {
                                                                 DeclarationId = a.DeclarationId,
@@ -69,34 +95,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 CourierSuspentionCode = d.CourierSuspentionCode,
                                                                 CourierSuspentionName = d.CourierSuspention != null ? d.CourierSuspention.LocalName : null,
                                                                 SpecialActionStatus = a.SpecialActionStatus,
+                                                                //SpecialActionsErrorXml = ao.text,
                                                               });
-
-
-            //bool todo = true;
-            //if (todo)
-            //{
-            //    var declarationMamanSpecialActionRepository = new DeclarationMamanSpecialActionRepository(MainContext as ICustomContext);
-            //    var q1 = (from action in declarationMamanSpecialActionRepository.GetAll(tenant)
-            //              group action by action.DeclarationId into gaction
-            //              select new
-            //              {
-            //                  id = gaction.Key,
-            //                  text = "Test",
-
-            //                  //gaction.Aggregate((b4, after) =>string.Concat(b4.DeclarationId , after.DeclarationId)),
-            //                  //string.Join(" ", gaction.Select(r => r.MamanSpecialActionsErrorXml))
-            //              });
-
-            //    q = (from a in q
-            //         join t in q1
-            //         on a.dStatus.DeclarationId equals t.id
-            //         into leftJoin
-            //         from ao in leftJoin.DefaultIfEmpty()
-            //         select new { a.dStatus, a.declaration, tooltip = ao.text }
-            //        );
-
-            //}
-
 
 
             return query;
