@@ -17,6 +17,11 @@
                             </td>
                             <td style="width:10px"></td>
                             <td>
+                                <div class="TabTitleRow">
+                                    {{BIReportName}}
+                                </div>
+                            </td>
+                            <td>
                                 <div></div>
                             </td>
                         </tr>
@@ -92,8 +97,7 @@
                                          (gridReady)="onGridReady($event)"
                                          (sortChanged)="onSortChanged($event)"
                                          (columnResized)="onColumnResized($event)"
-                                         (columnMoved)="onColumnMoved($event)"
-                                         [paginationPageSize]="100" [pagination]="true">
+                                         (columnMoved)="onColumnMoved($event)">
                         </ag-grid-angular>
                     </div>
                 </td>
