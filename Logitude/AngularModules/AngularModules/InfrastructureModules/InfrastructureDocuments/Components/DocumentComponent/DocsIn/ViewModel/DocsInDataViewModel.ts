@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
 import {LogitudeWindow} from '../../../../../../Controls/Windows/LogitudeWindow';
@@ -318,6 +318,7 @@ export class DocsInDataViewModel extends BaseComponent {
             this.SetReceivedButtonVisibility = false;
             this.DownloadButtonVisibility = true;
             this.Received = this.CurrentDocument.Received;
+            this.DocsInComponent.CheckHasDocuments();
 
 
         }
