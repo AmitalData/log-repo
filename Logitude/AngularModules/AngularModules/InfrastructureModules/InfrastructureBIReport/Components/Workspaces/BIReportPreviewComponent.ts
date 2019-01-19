@@ -278,6 +278,7 @@ export class BIReportPreviewComponent implements OnInit {
         }
         else {
             if (this.ComponentRef) {
+                SessionLocator.CurrentSession.FireEvent("BIRefresh");
                 this.ComponentRef.destroy();
             }
         }
