@@ -1580,11 +1580,17 @@ namespace WebFreight.Web.Helpers
                         dataProvider = myDataManager.GetData();
                         break;
                     }
-
-                case "DSCA":
+                    
                 case "AREX":
                     {
                         ArchivoExportadoManager myDataManager = new ArchivoExportadoManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
+
+                case "DSCA":
+                    {
+                        DetailedShipmentChargesManager myDataManager = new DetailedShipmentChargesManager(filters, reportFliter.tenant);
                         dataProvider = myDataManager.GetData();
                         break;
                     }

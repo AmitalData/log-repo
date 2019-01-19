@@ -6,6 +6,8 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     moduleId: module.id,
@@ -115,7 +117,20 @@ export class AddEditPackageHarmonizeComponent {
     private RejectChanges() {
         
     }
+
+    ChooseHarmonizeClicked(item: HarmonizeItemClass) {
+        if (item) {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = TextCodeTranslator.TranslateTablePlural("HarmonizeCode") + " Search";
+            logitudeWindow.WindowArgs = { Entity: item, FieldName: 'Harmonize' };
+            logitudeWindow.Show("./ShipmentModules/ShipmentTabs/Components/Windows/Harmonizes/HarmonizesComponent");
+            logitudeWindow.WindowClosed.subscribe(s => {
+
+            });
+        }
+    }
 }
+
 class HarmonizeItemClass extends BaseComponent {
     public Id: string = null;
     public EntityPM: PickUpDeliveryPackageHarmonizePM;

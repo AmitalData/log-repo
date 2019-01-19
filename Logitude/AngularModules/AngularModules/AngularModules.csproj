@@ -57,6 +57,7 @@
     <Content Include="Accounting\Components\ListTemplates\ReconcileExternalPageLineListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\ReconcileExternalPageListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\TaxReportListTemplate.html" />
+    <Content Include="Accounting\Components\Maintenance\AccountingLoadTestComponent.html" />
     <Content Include="Accounting\Components\Maintenance\AccountingPeriodEventComponent.html" />
     <Content Include="Accounting\Components\Maintenance\EditAccountingPeriodComponent.html" />
     <Content Include="Accounting\Components\Maintenance\AccountingPeriodsComponent.html" />
@@ -325,6 +326,7 @@
     <TypeScriptCompile Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\TaxReportListTemplate.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Maintenance\AccountingLoadTestComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\OpenFormatReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\TaxDeductionReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewOpenFormatReportComponent.ts" />
@@ -1755,6 +1757,7 @@
     <Content Include="ShipmentModules\ShipmentTabs\Components\Shipments\ShipmentsTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Groupage\GroupageComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Groupage\GroupageContainerComponent.html" />
+    <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Harmonizes\HarmonizesComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Payables\PayablesComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Profit\ProfitComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Quotes\QuotesComponent.html" />
@@ -5996,6 +5999,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Shipments\ShipmentsTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Windows\Groupage\GroupageComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Windows\Groupage\GroupageContainerComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Windows\Harmonizes\HarmonizesComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Windows\Payables\PayablesComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Windows\Profit\ProfitComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Windows\Quotes\QuotesComponent.ts" />
@@ -6023,6 +6027,7 @@
     <TypeScriptCompile Include="Shipment\EntityLists\ContainerFollowUpList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\CustomsTransmissionsStatusList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\FBLStockList.ts" />
+    <TypeScriptCompile Include="Shipment\EntityLists\HarmonizeCodeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\INTTRADocumentTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\MessagingStockList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\MessagingStockUsageHistoryList.ts" />
@@ -6049,6 +6054,7 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentFollowUpPM.ts" />
     <TypeScriptCompile Include="Shipment\Services\SplitShipmentService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ContainerFollowUpListService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardLists\HarmonizeCodeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\INTTRADocumentTypeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\MessagingStockListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\OBLTypeListService.ts" />

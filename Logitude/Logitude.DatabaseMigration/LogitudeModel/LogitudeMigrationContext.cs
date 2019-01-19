@@ -1618,6 +1618,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<PickUpDeliveryTransportMode> PickUpDeliveryTransportModes { get; }
         public IDbSet<INTTRADocumentType> INTTRADocumentTypes { get; }
         public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; }
+        public IDbSet<HarmonizeCode> HarmonizeCodes { get; }
 
         #endregion
 
@@ -4744,7 +4745,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new AccountingIntegrityCheckMap());
             modelBuilder.Configurations.Add(new IntegrityCheckStatusMap());
+            modelBuilder.Configurations.Add(new HarmonizeCodeMap());
 
+            
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -2232,6 +2232,7 @@
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\AWBCustomsInformationDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\AWBInformationDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\CustomsTransmissionsStatusDetails.Generated.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\HarmonizeCodeDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\INTTRADocumentTypeDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\ManifestStatusDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\OBLTypeDetails.Generated.cs" />
@@ -2248,6 +2249,7 @@
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\AWBCustomsInformationStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\AWBInformationStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\CustomsTransmissionsStatusStruct.Generated.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\HarmonizeCodeStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\INTTRADocumentTypeStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\ManifestStatusStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\OBLTypeStruct.Generated.cs" />
@@ -2272,6 +2274,7 @@
     <Compile Include="ShipmentsModel\EntityLists\AWBChargesCodeList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\AWBCustomsInformationList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\AWBInformationList.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\HarmonizeCodeList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\MessagingStockList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\AWBOCIList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\AWBSpecialHandlingCodeList.cs" />
@@ -2374,6 +2377,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\AWBChargeCodesQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBCustomsInformationQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBInformationQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\HarmonizeCodeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\MessagingStockQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBOCIQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBSpecialHandlingCodeQuery.cs" />

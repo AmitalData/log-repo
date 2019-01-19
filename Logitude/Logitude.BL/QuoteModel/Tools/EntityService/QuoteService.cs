@@ -1076,7 +1076,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 Id = itemPM.Id,
             };
 
-            QuoteMapping.MapQuoteCharge(itemPM, itemPoco, true);
+            QuoteMapping.MapQuoteCharge(itemPM, itemPoco, true, this.entityPM);
             quoteChargeRepository.Add(itemPoco);
 
             if (itemPM.IsChargeBySteps)
@@ -1095,7 +1095,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         private void UpdateQuoteChargeUp(QuoteChargePM itemPM)
         {
             QuoteCharge itemPoco = quoteChargeRepository.GetSingleQuoteReceivable(itemPM.Id, tenant);
-            QuoteMapping.MapQuoteCharge(itemPM, itemPoco, false);
+            QuoteMapping.MapQuoteCharge(itemPM, itemPoco, false, this.entityPM);
             quoteChargeRepository.Update(itemPoco);
 
             if (itemPM.QuoteChargePriceStepsChangeSet != null)

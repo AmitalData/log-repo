@@ -1,3 +1,5 @@
+import { ARPaymentChequeList } from './../../../EntityLists/ARPaymentChequeList';
+import { ARPaymentChequeListService } from './../../../Services/StandardLists/ARPaymentChequeListService';
 import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {BankDepositPM} from '../../../EntityPMs/BankDepositPM';
@@ -18,6 +20,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {BankDepositExtendedPMService } from '../../../Services/ExtendedPMs/BankDepositExtendedPMService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     moduleId: module.id,
@@ -42,6 +45,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     ratesTableExtendedListService: RatesTableExtendedListService = new RatesTableExtendedListService();
     currencyListService: CurrencyListService = new CurrencyListService();
     _BankDepositExtendedPMService: BankDepositExtendedPMService = new BankDepositExtendedPMService();
+    _ARPaymentChequeListService: ARPaymentChequeListService = new ARPaymentChequeListService();
+
     public isRTL: boolean = false;
     public IsReturnChequeEnabled: boolean = false;
 
@@ -658,6 +663,21 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     //#region Out of Deposit
     ReturnChequeButtonClicked(line: BankDepositLinePM) {
 
+        // validate redeemed cheque
+        if (line.ChequeStatusCode == "6") { // 6- Redeemed
+            // var msg = new MessageWindow();
+            // msg.Show(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
+            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
+
+            return;
+        } else {
+            this.showReturnChequeWindow(line);
+        }
+
+    }
+    showReturnChequeWindow(line){
+
         // new code
         var windowArgs: any = {};
         //windowArgs.ReconciliationPM = entity;
@@ -680,7 +700,6 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
             }
         });
-
 
     }
     ReturnCheque(chequeId:string ,returnType:string, notes: string) {
