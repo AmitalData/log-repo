@@ -7,6 +7,8 @@ import { DWQueryBuilderComponent } from './Components/DWQueryBuilder/DWQueryBuil
 import { DWQueryBuilderFiltersComponent } from './Components/DWQueryBuilder/DWQueryBuilderFiltersComponent'; 
 import { CustomsShipperGeneralTabComponent } from './Components/Depositions/EditTab/CustomsShipperGeneralTabComponent';
 import { DWFilterSettings } from './Components/DWQueryBuilder/DWFilterSettings';
+//import { DWAskUserFiltersComponent } from './Components/DWQueryBuilder/DWAskUserFiltersComponent'; 
+
 
 export const Components =
     [
@@ -18,6 +20,7 @@ export const Components =
         DWQueryBuilderFiltersComponent,
         CustomsShipperGeneralTabComponent,
         DWFilterSettings,
+        //DWAskUserFiltersComponent
     ];
 
 export class ModuleDeclarations {
@@ -34,6 +37,7 @@ export class ModuleDeclarations {
             case "DWQueryBuilderFiltersComponent": { myResult = DWQueryBuilderFiltersComponent; break; }
             case "CustomsShipperGeneralTabComponent": { myResult = CustomsShipperGeneralTabComponent; break; }
             case "DWFilterSettings": { myResult = DWFilterSettings; break; }
+            //case "DWAskUserFiltersComponent": { myResult = DWAskUserFiltersComponent; break; }
                  
                 
         }

@@ -23,6 +23,7 @@ export class BIReportPreviewComponent implements OnInit {
     public EntityId: string;
     public DWQueryId: string;
     public DWQueryData: DWQueryData;
+    SelectedFiltersDataSource: any[] = [];
     public _DWSubQueryPMService: DWSubQueryPMService;
     public _DWQueryBuilderService: DWQueryBuilderService;
     public _BIReportPMService: BIReportPMService;
@@ -52,6 +53,7 @@ export class BIReportPreviewComponent implements OnInit {
         this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe(myResult => {
             if (!myResult.HasError) {
                 this.DWQueryData = myResult.Result;
+                this.SelectedFiltersDataSource.push(this.DWQueryData.Filters);
                 this.BuildColumns();
                 this.BuildRows();
             }

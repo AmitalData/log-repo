@@ -1,0 +1,421 @@
+
+<style type="text/css">
+    .LinkBtn {
+        text-decoration: underline;
+        float: left;
+        color: blue;
+        font-size: 11px;
+        text-indent: 3px;
+    }
+
+        .LinkBtn:hover {
+            text-decoration: underline;
+            float: left;
+            color: lightskyblue;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+    .GroupItem {
+        min-width: 70px;
+        min-height: 65px;
+        /*border-left: 1px solid gray;
+        padding-left: 5px;*/
+        /*padding-right: 5px;
+        border-right: 1px solid gray;*/
+        margin: 5px;
+        display: inline-block;
+    }
+
+    .FilterItem {
+        min-width: 55px;
+        min-height: 20px;
+        margin: 5px;
+        /*height:1px;*/
+    }
+
+    .Filters {
+        /*display: inline-block;*/
+        display: table-cell;
+        border-left: 1px solid gray;
+    }
+
+    .Operator {
+        min-width: 55px;
+        min-height: 20px;
+        margin: 5px;
+        display: inline-block;
+        /*display: table-cell;
+        vertical-align: middle;*/
+    }
+
+    .OperatorItem {
+        min-width: 55px;
+        min-height: 65px;
+        margin: 5px;
+        display: inline-block;
+    }
+
+    .GroupInnerItem {
+        min-width: 55px;
+        min-height: 65px;
+        /*border-right: 1px solid gray;
+        padding-right: 5px;*/
+        display: inline-block;
+    }
+
+    .GroupItemSeperator {
+        width: 55px;
+        border-right: 1px solid gray;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        margin-left: 5px;
+        display: inline-block;
+    }
+
+    .MyFilterItem {
+        /*height:30px;*/
+    }
+
+        .MyFilterItem:hover .DeleteButton {
+            display: block;
+        }
+
+    .DeleteButton {
+        display: none;
+    }
+</style>
+
+<div *ngFor="let item of SelectedFiltersDataSource; let i=index;">
+    <div *ngIf="item.IsGroup == false">
+        <div>
+            <table style="height:30px;">
+                <tr style="height:30px;" class="MyFilterItem">
+                    <!--<td style="width: 16px;">
+                        <img class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer;" (click)="onDeleteFilterClick(item)" />
+                    </td>
+                    <td style="width:150px;">
+                        <ComboBox style="width:130px;" [ItemsSource]="AllFieldsWithChildrenDataSource" [SelectedItem]="item" [Binding]="'DisplayName'" (SelectedItemChanged)="item.FieldValueChanged($event)"></ComboBox>
+                    </td>
+                    <td style="width:7px;">
+                        <div style="width:7px;"></div>
+                    </td>
+                    <td style="width:100px;">
+                        <ComboBox style="width:130px;" (SelectedItemChanged)="item.FilterTypeChanged($event)" [ItemsSource]="Types" [SelectedItem]="item.FilterType"></ComboBox>
+                    </td>
+                    <td style="width:7px;">
+                        <div style="width:7px;"></div>
+                    </td>
+                    <td style="width:100px;">
+                        <ComboBox style="width:130px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>
+                    </td>-->
+                   
+                    <td style="width:7px;">
+                        <div style="width:7px;"></div>
+                    </td>
+                    <td *ngIf="item.FilterType == 'Fixed Filter' || (item.FilterType == 'Ask User' && item.IsSetDefaults == true)" style="width:150px;" [ngSwitch]="item.ParentDataTypeCode">
+
+                        <!-- Text -->
+                        <div *ngSwitchCase="'Text'">
+                            <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                            <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
+                                <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Text'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                            </div>
+                        </div>
+
+                        <!-- nText -->
+                        <div *ngSwitchCase="'nText'">
+                            <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                            <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
+                                <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'nText'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                            </div>
+                        </div>
+
+                        <!-- Integer -->
+                        <div *ngSwitchCase="'Integer'">
+                            <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                            <div style="width:180px;">
+                                <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Integer'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                            </div>
+                        </div>
+
+                        <!-- Double -->
+                        <div *ngSwitchCase="'Double'">
+                            <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                            <div style="width:180px;">
+                                <LogTextBox [ObjectFieldName]="'TextValue'" [DataContext]="item" [InputType]="'Double'" [NoValidation]="true"></LogTextBox>
+                            </div>
+                        </div>
+
+                        <!-- Decimal -->
+                        <div *ngSwitchCase="'Decimal'">
+                            <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                            <div style="width:180px;">
+                                <LogTextBox [ObjectFieldName]="'TextValue'" [DataContext]="item" [InputType]="'Decimal'" [NoValidation]="true"></LogTextBox>
+                            </div>
+                        </div>
+
+                        <!-- Boolean -->
+                        <div *ngSwitchCase="'Boolean'">
+                            <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                            <div style="width:180px;">
+                                <LogCheckBox (ValueChanged)="item.onTextChange($event)" [ObjectFieldName]="'TextValue'" [DataContext]="item"></LogCheckBox>
+                                <!--<ComboBox *ngIf="BooleanValues" (SelectedItemChanged)="item.onTextChange($event)" [ItemsSource]="BooleanValues" [SelectedItem]="item.TextValue"></ComboBox>-->
+                            </div>
+                        </div>
+
+                        <!-- Lookup -->
+                        <div *ngSwitchCase="'LookUp'">
+                            <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>-->
+                            <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
+                                <DWLov *ngIf="item.ParentDimTabelName && item.Name"
+                                       [SelectedValue]="item.TextValue"
+                                       [ObjectFieldName]="item.Code"
+                                       [DataContext]="item"
+                                       (ValueChanged)="item.onTextChange($event)"
+                                       [Operation]="item.Operation.Code"
+                                       [ObjectTableName]="item.ParentDimTabelName"
+                                       [LOVAdditionalColumns]="item.LOVAdditionalColumns"
+                                       [IsFreeText]="true">
+                                </DWLov>
+                            </div>
+                        </div>
+
+                        <div *ngSwitchCase="'Dimension'">
+                            <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>-->
+                            <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
+                                <DWLov *ngIf="item.ParentDimTabelName && item.Name"
+                                       [SelectedValue]="item.TextValue"
+                                       [ObjectFieldName]="item.Code"
+                                       [DataContext]="item"
+                                       (ValueChanged)="item.onTextChange($event)"
+                                       [Operation]="item.Operation.Code"
+                                       [ObjectTableName]="item.ParentDimTabelName"
+                                       [LOVAdditionalColumns]="item.LOVAdditionalColumns"
+                                       [IsFreeText]="true">
+                                </DWLov>
+                            </div>
+                        </div>
+                    </td>
+                    <!--<td *ngIf="item.FilterType == 'Ask User'" [style.width.px]="item.FilterType == 'Ask User' && item.IsSetDefaults == true ? 50: 310">
+                        <span class="LinkBtn" (click)="item.OpenFilterSettings()">Settings</span>
+                    </td>-->
+                </tr>
+            </table>
+            <!-------------------------->
+            <!--<DWQueryBuilderFilters [SelectedFiltersDataSource]="item.FilterItems" [DataContext]="item.MyParentClass"></DWQueryBuilderFilters>-->
+            <!-------------------------------------------------------->
+            <!-------------------------------------------------------->
+            <div *ngIf="SelectedFiltersDataSource.length > 0 && item.IsGroup == true" style="margin-top: 10px;margin-left: 6px;">
+                <table>
+                    <tr>
+                        <td style="width:1%;"></td>
+                        <td style="width:1%;"><span class="LinkBtn" (click)="AddFilterToGroup(item)">Add Filter</span></td>
+                        <td style="width:1%;"></td>
+                        <td style="width:10%;"><span class="LinkBtn" (click)="AddGroup(item)">Add Group</span></td>
+                        <td style="width:4%;"></td>
+                        <td style="width:30%;"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="GroupItem" *ngIf="item.IsGroup == true">
+        <div class="OperatorItem">
+            <div style="display: table-cell;vertical-align: middle;">
+                <div class="Operator">
+                    <ComboBox *ngIf="item" (SelectedItemChanged)="item.AndOrOpsChanged($event)" [ItemsSource]="AndOrOps" [SelectedItem]="item.AndOr"></ComboBox>
+                </div>
+            </div>
+
+            <div class="Filters">
+                <div class="FilterItem">
+                    <table style="height:30px;" *ngIf="item.IsGroup == false">
+                        <tr style="height:30px;" class="MyFilterItem">
+                            <!--<td style="width: 16px;">
+                                <img class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer;" (click)="onDeleteFilterClick(item)" />
+                            </td>
+                            <td style="width:150px;">
+                                <ComboBox style="width:130px;" [ItemsSource]="AllFieldsWithChildrenDataSource" [SelectedItem]="item" [Binding]="'DisplayName'" (SelectedItemChanged)="item.FieldValueChanged($event)"></ComboBox>
+                            </td>
+                            <td style="width:7px;">
+                                <div style="width:7px;"></div>
+                            </td>
+                            <td style="width:100px;">
+                                <ComboBox style="width:130px;" (SelectedItemChanged)="item.FilterTypeChanged($event)" [ItemsSource]="Types" [SelectedItem]="item.FilterType"></ComboBox>
+                            </td>
+                            <td style="width:7px;">
+                                <div style="width:7px;"></div>
+                            </td>
+                            <td style="width:100px;">
+                                <ComboBox style="width:130px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>
+                            </td>
+                            <td style="width:7px;">
+                                <div style="width:7px;"></div>
+                            </td>-->
+
+                            <td *ngIf="item.FilterType == 'Fixed Filter' || (item.FilterType == 'Ask User' && item.IsSetDefaults == true)" style="width:150px;" [ngSwitch]="item.ParentDataTypeCode">
+
+                                <!-- Text -->
+                                <div *ngSwitchCase="'Text'">
+                                    <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                    <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
+                                        <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Text'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- nText -->
+                                <div *ngSwitchCase="'nText'">
+                                    <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                    <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
+                                        <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'nText'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Integer -->
+                                <div *ngSwitchCase="'Integer'">
+                                    <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                    <div style="width:180px;">
+                                        <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Integer'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Double -->
+                                <div *ngSwitchCase="'Double'">
+                                    <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                    <div style="width:180px;">
+                                        <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Double'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Decimal -->
+                                <div *ngSwitchCase="'Decimal'">
+                                    <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                    <div style="width:180px;">
+                                        <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Decimal'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    </div>
+                                </div>
+
+                                <!-- Boolean -->
+                                <div *ngSwitchCase="'Boolean'">
+                                    <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                    <div style="width:180px;">
+                                        <LogCheckBox (ValueChanged)="item.onTextChange($event)" [ObjectFieldName]="'TextValue'" [DataContext]="item"></LogCheckBox>
+                                        <!--<ComboBox *ngIf="BooleanValues" (SelectedItemChanged)="item.onTextChange($event)" [ItemsSource]="BooleanValues" [SelectedItem]="item.TextValue"></ComboBox>-->
+                                    </div>
+                                </div>
+
+                                <!-- Lookup -->
+                                <div *ngSwitchCase="'LookUp'">
+                                    <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>-->
+                                    <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
+                                        <DWLov *ngIf="item.ParentDimTabelName && item.Name"
+                                               [SelectedValue]="'TextValue'"
+                                               [ObjectFieldName]="item.Code"
+                                               [DataContext]="item"
+                                               (ValueChanged)="item.onTextChange($event)"
+                                               [Operation]="item.Operation.Code"
+                                               [ObjectTableName]="item.ParentDimTabelName"
+                                               [IsFreeText]="true">
+                                        </DWLov>
+                                    </div>
+                                </div>
+
+                                <div *ngSwitchCase="'Dimension'">
+                                    <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>-->
+                                    <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
+                                        <DWLov *ngIf="item.ParentDimTabelName && item.Name"
+                                               [SelectedValue]="'TextValue'"
+                                               [ObjectFieldName]="item.Code"
+                                               [DataContext]="item"
+                                               (ValueChanged)="item.onTextChange($event)"
+                                               [Operation]="item.Operation.Code"
+                                               [ObjectTableName]="item.ParentDimTabelName"
+                                               [IsFreeText]="true">
+                                        </DWLov>
+                                    </div>
+                                </div>
+                            </td>
+                            <!--<td *ngIf="item.FilterType == 'Ask User'" [style.width.px]="item.FilterType == 'Ask User' && item.IsSetDefaults == true ? 50: 310">
+                                <span class="LinkBtn" (click)="item.OpenFilterSettings()">Settings</span>
+                            </td>-->
+
+
+                        </tr>
+                    </table>
+                    <!-------------------------->
+                    <!--<DWQueryBuilderFilters [SelectedFiltersDataSource]="item.FilterItems" [DataContext]="item.MyParentClass"></DWQueryBuilderFilters>-->
+                    <!-------------------------------------------------------->
+                    <!-------------------------------------------------------->
+                    <div *ngIf="SelectedFiltersDataSource.length > 0 && item.IsGroup == true" style="margin-top: 10px;margin-left: 6px;">
+                        <table>
+                            <tr>
+                                <td style="width:1%;"></td>
+                                <td style="width:1%;"><span class="LinkBtn" (click)="AddFilterToGroup(item)">Add Filter</span></td>
+                                <td style="width:1%;"></td>
+                                <td style="width:10%;"><span class="LinkBtn" (click)="AddGroup(item)">Add Group</span></td>
+                                <td style="width:4%;"></td>
+                                <td style="width:30%;"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!--<div class="Filters">
+    <div *ngFor="let item of SelectedFiltersDataSource; let i=index;" class="FilterItem">
+
+        <table style="height:22px;" *ngIf="item.IsGroup == false">
+            <tr style="height:22px;">
+                <td style="width:150px;">
+                    <ComboBox style="width:130px;" [ItemsSource]="AllFieldsWithChildrenDataSource" [SelectedItem]="item" [Binding]="'Name'" (SelectedItemChanged)="item.FieldValueChanged($event)"></ComboBox>
+                </td>
+                <td style="width:7px;">
+                    <div style="width:7px;"></div>
+                </td>
+                <td style="width:310px;" [ngSwitch]="item.ParentDataTypeCode">
+
+                    <div *ngSwitchCase="'Text'">
+                        <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>
+                        <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
+                            <LogTextBox [IsFreeText]="true" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div class="GroupItem" *ngIf="item.IsGroup == true">
+            <div class="OperatorItem">
+                <div class="Operator">
+                    <ComboBox *ngIf="SelectedFiltersDataSource[0]" (SelectedItemChanged)="SelectedFiltersDataSource[0].AndOrOpsChanged($event)" [ItemsSource]="AndOrOps" [SelectedItem]="SelectedFiltersDataSource[0].AndOr"></ComboBox>
+                </div>
+                <DWQueryBuilderFilters [SelectedFiltersDataSource]="item.FilterItems"></DWQueryBuilderFilters>
+            </div>
+        </div>
+
+
+        <div *ngIf="SelectedFiltersDataSource.length > 0 && item.IsGroup == true" style="margin-top: 10px;margin-left: 5px;">
+            <table>
+                <tr>
+                    <td style="width:1%;"></td>
+                    <td style="width:1%;"><span class="LinkBtn" (click)="AddFilterToGroup()">Add Filter</span></td>
+                    <td style="width:1%;"></td>
+                    <td style="width:10%;"><span class="LinkBtn" (click)="AddGroup()">Add Group</span></td>
+                    <td style="width:4%;"></td>
+                    <td style="width:30%;"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>-->

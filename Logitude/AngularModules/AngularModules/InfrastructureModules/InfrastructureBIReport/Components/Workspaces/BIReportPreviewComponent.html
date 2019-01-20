@@ -33,6 +33,31 @@
                 <td></td>
             </tr>
 
+            <tr *ngIf="SelectedFiltersDataSource">
+                <td>
+                    <table class="BodyBackground">
+                        <tr>
+                            <td>
+                                <div class="EmailBoxMultiLinesText" style="white-space: normal;max-width: 815px;max-height:345px;overflow: auto;">
+                                    <div style="margin:5px;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="EmailBoxMultiLinesText" style="white-space: normal;">
+                                                        <DWAskUserFiltersComponent [SelectedFiltersDataSource]="SelectedFiltersDataSource" ></DWAskUserFiltersComponent>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr><td style="height:100%;"></td></tr>
+                    </table>
+                </td>
+            </tr>
+
             <!-- Filters -->
             <tr style="height: 1px;">
                 <td>
