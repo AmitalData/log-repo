@@ -1787,9 +1787,18 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 if (BuildGLAccountEachType > 0)
                 {
+                    var dummyTenantProviderArg = new DummyTenantProviderArg()
+                    {
+                         CreateJobs = BuildGLAccountEachType,
+                        CreateCustomers= BuildGLAccountEachType,
+                        CreateExpanse= BuildGLAccountEachType,
+                        CreateFiles= BuildGLAccountEachType,
+                        CreateRevenue = BuildGLAccountEachType,
+                        CreateVendors = BuildGLAccountEachType,
 
+                    };
                     var g = new DummyTenantProvider();
-                    g.GenrateGLAccount(BuildGLAccountEachType, accountingContext, chartOfAccountProvider, displayNumberProvider, fullSetting, tenant);
+                    g.GenrateGLAccount(dummyTenantProviderArg, accountingContext, chartOfAccountProvider, displayNumberProvider, fullSetting, tenant);
                     accountingContext.SaveChanges();
                 }
                 CacheManager.ClearCacheItems();
