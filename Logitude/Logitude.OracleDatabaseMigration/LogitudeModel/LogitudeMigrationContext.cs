@@ -79,6 +79,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
         #region Common Context
         public IDbSet<CustomsShipper> CustomsShippers { get; set; }
+        public IDbSet<SharedUserQuery> SharedUserQueries { get; set; }
         public IDbSet<DocumentFilingBackupSetting> DocumentFilingBackupSettings { get; set; }
         public IDbSet<MetodoPago> MetodoPagos { get; set; }
         public IDbSet<BlobFile> BlobFiles
@@ -3988,7 +3989,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TMLocationMap());
             modelBuilder.Configurations.Add(new TMProjectMap());
             #endregion
-
+            modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new DocumentFilingBackupSettingMap());
             modelBuilder.Configurations.Add(new CustomerFieldsUpdateSettingMap());
