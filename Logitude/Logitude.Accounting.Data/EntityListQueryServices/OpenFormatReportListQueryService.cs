@@ -50,8 +50,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          StatusTypeCode = a.StatusTypeCode,
 					
 					                          ErrorMessage = a.ErrorMessage,
-                                              CreatedByUserName = a.CreatedByUser.Contact.LocalName,
-                                              Status= a.OpenFormatReportStatus != null? a.OpenFormatReportStatus.LocalName:null,
+                                              CreatedByUserName = a.CreatedByUser.Contact.EnglishName,
+                                              Status= a.OpenFormatReportStatus != null? a.OpenFormatReportStatus.EnglishName:null,
+                                              UserLocalName = a.CreatedByUser.Contact.LocalName,
+                                              StatusLocalName = a.OpenFormatReportStatus != null ? a.OpenFormatReportStatus.LocalName:null,
                                           //    DateTypeName = a.OpenFormatDateType != null? a.OpenFormatDateType.LocalName : null
 					
 		                    	            });
