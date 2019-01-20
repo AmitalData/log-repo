@@ -53,6 +53,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     public Tenant: number;
     public IsClickToUpload: boolean = false;
     public DownloadAllVisibile: boolean = false;
+    public HasDocuments: boolean = false;
     ObjectTableName: string;
     IsShowFollowColum: boolean;
     DocumentsList: DocsInDataViewModel[];
@@ -111,7 +112,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         else this.ObjectTableName = "Shipment";
 
 
-        if (FeatureLocator.HasFeaturePermession("Shipment", "DOWNLOADDOCUMENTS") && this.ObjectTableName == "Shipment") {
+        if (FeatureLocator.HasFeaturePermession("Shipment", "DOCSINDOWNLOADDOCUMENTS") && this.ObjectTableName == "Shipment") {
             this.DownloadAllVisibile = true;
         }
 
@@ -149,6 +150,8 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             });
 
         });
+
+
     }
 
 
@@ -253,6 +256,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
 
             this.IsLoadDocumentTypeListsComplete = true;
             this.LoadComplete();
+            this.CheckHasDocuments();
         });
 
 
@@ -342,7 +346,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                 }
 
             });
-
+            this.CheckHasDocuments();
 
         }
 
@@ -570,13 +574,18 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     BuildItemsSource() {
 
         var itemsCollection: DocsInDataViewModel[] = [];
+        this.HasDocuments = false;
 
         this.DocumentsList.forEach((item) => {
+            if (item.DataContext.DocumentHasFile) {
+                this.HasDocuments = true;
+            }
             itemsCollection.push(item);
         })
 
 
         this.ItemsSource.Clear();
+               
         this.ItemsSource.AppendCollection(itemsCollection);
 
     }
@@ -639,7 +648,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                                 this.DeleteAttachmentButtonEnable = false;
                                 this.UndoReceivedButtonEnable = true;
                                 this.IsDeleteAttachment = false;
-
+                                this.CheckHasDocuments();
                                 SessionLocator.CurrentSession.StopBusyIndicator();
 
                             });
@@ -655,6 +664,19 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             });
         }
     }
+
+    CheckHasDocuments() {
+        this.HasDocuments = false;
+        if (this.DocumentsList) {
+            this.DocumentsList.forEach(item => {
+                if (item.DataContext.DocumentHasFile) {
+                    this.HasDocuments = true;
+                }
+            });
+        }
+    }
+
+
 
     UndoReceivedButtonClicked() {
         if (this.SelectedExternalViewModel != null) {

@@ -572,6 +572,29 @@ namespace Logitude.TimeManagement.BL.EntityPMs
 			
 		 }
 	   }
+	  private string locationName ;
+	  	  
+       
+	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LocationName  
+	   {
+	    
+	     get
+		{
+		   return locationName;
+		 }
+		 set
+		 {
+		   if(locationName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocationName",OldValue=locationName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   locationName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
