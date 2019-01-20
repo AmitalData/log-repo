@@ -986,6 +986,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "5101T":
                                 case "5101U":
                                 case "5101B":
+                                case "5101P":
                                 case "5107N":
                                 case "2754N":
                                 case "70N":
@@ -1160,7 +1161,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "8213N":
                                 case "8211N":
                                 case "8211U":
-
+                                case "5101N":
                                     {
                                         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                                             this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {

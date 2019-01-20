@@ -30,9 +30,12 @@ OnPMToPOCOEncodeBase64NVARCHARFields= "iso-….."
 
          */
         [DataMember]
-        public string EncodeBase64NVARCHARFieldsBy { get; set; }  
+        public string EncodeBase64NVARCHARFieldsBy { get; set; }
 
+        [ThreadStatic]
         public static bool SuppressCreateNotifyPropertyChangeValues = false;
+
+
         //on server only  !!! [DataMember]
         object _CurrentContextTag;
         public object CurrentContextTag // itzik Genric object reflect Context (pass Context  to onUpdating - UnifreightUpdate)
@@ -41,7 +44,7 @@ OnPMToPOCOEncodeBase64NVARCHARFields= "iso-….."
             set { _CurrentContextTag = value; }
         }
         
-
+        
         List<NotifyPropertyChangeValues> changedProperties;
         public List<NotifyPropertyChangeValues> ChangedProperties
         {

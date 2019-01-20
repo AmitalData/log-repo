@@ -17,7 +17,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationCorrection
 
        public List<Entity> Amendments { get; set; }
 
-
+        public List<error> SystemMessages { get; set; }
 
     }
 }

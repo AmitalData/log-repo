@@ -1,0 +1,909 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+ 
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.QuoteModel;
+using Simplog.Data.QuoteModel.Repositories;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.Repositories;
+using WebFreight.Web.CommonDataModel;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using WebFreight.Web.GlobalModel;
+using WebFreight.Web.Helpers;
+using WebFreight.Web.InfrastructureModel;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using WebFreight.Web.InvoiceModel;
+using WebFreight.Web.MetaDataUpdate.AddClasses;
+using WebFreight.Web.MetaDataUpdate.DetailClasses;
+using WebFreight.Web.QuoteModel;
+using WebFreight.Web.ShipmentsModel;
+using WebFreight.Web.CommonDataModel.DomainServices;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using System.Data.Entity.Core.EntityClient;
+using System.Configuration;
+using Simplog.Server.Infrastructure;
+using System.Data.Common;
+using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.CRM.BL;
+using Logitude.CRM.Data.Repsitories;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.BL;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.BookingLib.Data.EntityPOCOs;
+using Logitude.BookingLib.BL;
+using Logitude.BookingLib.Data.Repositories;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.BL;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Social.Data.EntityPOCOs;
+using Logitude.Social.BL;
+using Logitude.Social.Data.Repsitories;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Customs.BL.CloseTables;
+using Logitude.CRM.BL.CLoseTable;
+using Logitude.BookingLib.BL.CLoseTable;
+using Logitude.WarehouseLib.Data.Repositories;
+using Logitude.WarehouseLib.Data.EntityPOCOs;
+using Logitude.WarehouseLib.BL.CLoseTable;
+using Logitude.TimeManagement.Data.Repositories;
+using Logitude.TimeManagement.Data.EntityPOCOs;
+using Logitude.TimeManagement.BL.CLoseTable;
+namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
+{
+   public class DeclarationMamanSpecialActionUpdateClass
+   {  
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+        {                     
+            
+            AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
+            {
+			
+	             				    ObjectTableName =  "Customs.DeclarationMamanSpecialAction",
+			      				    IsNew =  true,
+			      				    DBTableName =  "Customs.DeclarationMamanSpecialActions",
+			      				    OldDBTableName =  "Customs.DeclarationMamanSpecialActions",
+			      				    ObjectTableSingular =  "DeclarationMamanSpecialAction",
+			      				    ObjectTablePlural =  "DeclarationMamanSpecialActions",
+			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  false,
+			      				    IsNewWizard =  false,
+			      				    KeyPropertyPath =  "DeclarationId",
+			      				    AutoCompleteSearchWindow =  false,
+			      				    IsClosed =  false,
+			      				    CacheOnClient =  false,
+			      				    EditableFromAutoCompleteWindow =  false,
+			      				    HasCounter =  false,
+			      				    EnableAddFromLOV =  false,
+			      				    IsRestrictable =  false,
+			      				    IsMain =  true,
+			      				    IsAutoComplete =  false,
+			      				    EnableEditFromLOV =  false,
+			      				    SortingByObjectField =  "DeclarationId",
+			      				    InActive =  false,
+			      				    IsSaveButtonVisible =  false,
+			      				    IsComposition =  false,
+			      				    EnableSecurity =  false,
+			      				    AllowCustomFields =  false,
+			      				    HasDynamicHeader =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    LocalDefaultText =  "פעולות מיוחדת בממן",
+			      				    DefaultText =  "Declaration Maman Special Action",
+			      				    Code =  "343a",
+			      				    Name =  " Query Group",
+			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Customs",
+			      				    ServerModuleName =  "Customs",
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    Code1 =  "e734",
+			      				    Name1 =  " Query Group",
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
+			      				    HasDocuments =  false,
+			      				    IsLookUp =  false,
+			                    
+            }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
+		}
+	
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    {
+	         
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "DeclarationId",
+					  						OldFieldName =  "DeclarationId",
+					  						IsNew =  false,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationMamanSpecialAction",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "DeclarationId",
+					  						ListPropertyPath =  "DeclarationId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationMamanSpecialAction",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "DeclarationId",
+					  						DefaultText =  "Declaration Id",
+					  						FullLocalDefaultText =  "מספר תיק מכס",
+					  						ListFieldLable =  "DeclarationIdListLable",
+					  						ListLableDefaultText =  "Declaration Id",
+					  						ListLocalDefaultText =  "מספר תיק מכס",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MamanSpecialActionCode",
+					  						OldFieldName =  "MamanSpecialActionCode",
+					  						IsNew =  false,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationMamanSpecialAction",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Customs.MamanSpecialAction",
+					  						MinLength =  0,
+					  						MaxLength =  2,
+					  						IsRequired =  true,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  2,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MamanSpecialActionCode",
+					  						ListPropertyPath =  "MamanSpecialActionCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationMamanSpecialAction",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MamanSpecialActionCode",
+					  						DefaultText =  "Maman Special Action",
+					  						FullLocalDefaultText =  "קוד פעולה מיוחדת בממן",
+					  						ListFieldLable =  "MamanSpecialActionCodeListLable",
+					  						ListLableDefaultText =  "Maman Special Action",
+					  						ListLocalDefaultText =  "קוד פעולה מיוחדת בממן",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MamanLabelText1",
+					  						OldFieldName =  "MamanLabelText1",
+					  						IsNew =  false,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationMamanSpecialAction",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MamanLabelText1",
+					  						ListPropertyPath =  "MamanLabelText1",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationMamanSpecialAction",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MamanLabelText1",
+					  						DefaultText =  "Label Text 1",
+					  						FullLocalDefaultText =  "טקסט למדבקה",
+					  						ListFieldLable =  "MamanLabelText1ListLable",
+					  						ListLableDefaultText =  "Label Text 1",
+					  						ListLocalDefaultText =  "טקסט למדבקה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MamanLabelText2",
+					  						OldFieldName =  "MamanLabelText2",
+					  						IsNew =  false,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationMamanSpecialAction",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MamanLabelText2",
+					  						ListPropertyPath =  "MamanLabelText2",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationMamanSpecialAction",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MamanLabelText2",
+					  						DefaultText =  "Label Text 2",
+					  						FullLocalDefaultText =  "טקסט למדבקה",
+					  						ListFieldLable =  "MamanLabelText2ListLable",
+					  						ListLableDefaultText =  "Label Text 2",
+					  						ListLocalDefaultText =  "טקסט למדבקה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MamanLabelText3",
+					  						OldFieldName =  "MamanLabelText3",
+					  						IsNew =  false,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationMamanSpecialAction",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MamanLabelText3",
+					  						ListPropertyPath =  "MamanLabelText3",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationMamanSpecialAction",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MamanLabelText3",
+					  						DefaultText =  "Label Text 3",
+					  						FullLocalDefaultText =  "טקסט למדבקה",
+					  						ListFieldLable =  "MamanLabelText3ListLable",
+					  						ListLableDefaultText =  "Label Text 3",
+					  						ListLocalDefaultText =  "טקסט למדבקה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MamanSpecialActionName",
+					  						OldFieldName =  "MamanSpecialActionName",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationMamanSpecialAction",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MamanSpecialActionName",
+					  						ListPropertyPath =  "MamanSpecialActionName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationMamanSpecialAction",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MamanSpecialActionName",
+					  						DefaultText =  "Maman Special Action",
+					  						FullLocalDefaultText =  "פעולה מיוחדת בממן",
+					  						ListFieldLable =  "MamanSpecialActionNameListLable",
+					  						ListLableDefaultText =  "Maman Special Action",
+					  						ListLocalDefaultText =  "פעולה מיוחדת בממן",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MamanLabelText4",
+					  						OldFieldName =  "MamanLabelText4",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationMamanSpecialAction",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MamanLabelText4",
+					  						ListPropertyPath =  "MamanLabelText4",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationMamanSpecialAction",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MamanLabelText4",
+					  						DefaultText =  "Label Text 4",
+					  						FullLocalDefaultText =  "טקסט למדבקה",
+					  						ListFieldLable =  "MamanLabelText4ListLable",
+					  						ListLableDefaultText =  "Label Text 4",
+					  						ListLocalDefaultText =  "טקסט למדבקה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MamanLabelText5",
+					  						OldFieldName =  "MamanLabelText5",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationMamanSpecialAction",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MamanLabelText5",
+					  						ListPropertyPath =  "MamanLabelText5",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationMamanSpecialAction",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MamanLabelText5",
+					  						DefaultText =  "Label Text 5",
+					  						FullLocalDefaultText =  "טקסט למדבקה",
+					  						ListFieldLable =  "MamanLabelText5ListLable",
+					  						ListLableDefaultText =  "Label Text 5",
+					  						ListLocalDefaultText =  "טקסט למדבקה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MamanSpecialActionStatusCode",
+					  						OldFieldName =  "MamanSpecialActionStatusCode",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationMamanSpecialAction",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Customs.MamanSpecialActionStatus",
+					  						MinLength =  0,
+					  						MaxLength =  3,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  3,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MamanSpecialActionStatusCode",
+					  						ListPropertyPath =  "MamanSpecialActionStatusCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationMamanSpecialAction",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MamanSpecialActionStatusCode",
+					  						DefaultText =  "Maman Special Action Status",
+					  						FullLocalDefaultText =  "סטטוס ממן פעולות מיוחדות",
+					  						ListFieldLable =  "MamanSpecialActionStatusCodeListLable",
+					  						ListLableDefaultText =  "Maman Special Action Status",
+					  						ListLocalDefaultText =  "סטטוס ממן פעולות מיוחדות",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MamanSpecialActionStatusName",
+					  						OldFieldName =  "MamanSpecialActionStatusName",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationMamanSpecialAction",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MamanSpecialActionStatusName",
+					  						ListPropertyPath =  "MamanSpecialActionStatusName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationMamanSpecialAction",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MamanSpecialActionStatusName",
+					  						DefaultText =  "Maman Special Action Status",
+					  						FullLocalDefaultText =  "סטטוס ממן פעולות מיוחדות",
+					  						ListFieldLable =  "MamanSpecialActionStatusNameListLable",
+					  						ListLableDefaultText =  "Maman Special Action Status",
+					  						ListLocalDefaultText =  "סטטוס ממן פעולות מיוחדות",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MamanSpecialActionsErrorXml",
+					  						OldFieldName =  "MamanSpecialActionsErrorXml",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationMamanSpecialAction",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1200,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1200,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MamanSpecialActionsErrorXml",
+					  						ListPropertyPath =  "MamanSpecialActionsErrorXml",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationMamanSpecialAction",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MamanSpecialActionsErrorXml",
+					  						DefaultText =  "Special Actions Error Xml",
+					  						FullLocalDefaultText =  "שגיאות מסר ש.מ.ב ממן",
+					  						ListFieldLable =  "MamanSpecialActionsErrorXmlListLable",
+					  						ListLableDefaultText =  "Special Actions Error Xml",
+					  						ListLocalDefaultText =  "שגיאות מסר ש.מ.ב ממן",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+	    }
+
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    {  	   
+	    }
+
+	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
+	    {    
+
+	    }
+
+	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
+	    {      
+	    } 
+	
+	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+		   ObjectTable DeclarationMamanSpecialActionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationMamanSpecialAction" && d.Tenant == 0).FirstOrDefault(); 
+		   Feature DeclarationMamanSpecialActionFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationMamanSpecialActionObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationMamanSpecialAction.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DeclarationMamanSpecialActionFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationMamanSpecialActionObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationMamanSpecialAction.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DeclarationMamanSpecialActionFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationMamanSpecialActionObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationMamanSpecialAction.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DeclarationMamanSpecialActionFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = DeclarationMamanSpecialActionObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationMamanSpecialAction.Features.PackageFeature", NameTextCodeDefaultText = "DeclarationMamanSpecialAction Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+	    
+		}
+
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    {   
+			ObjectTable DeclarationMamanSpecialActionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationMamanSpecialAction" && d.Tenant == 0).FirstOrDefault(); 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "CREV",
+                EnglishName = "Created",
+                Tenant = 0,
+                AddedManually = false,
+				IsManualEntry = false,
+                LocalName = "Created",
+                ObjectTableId = DeclarationMamanSpecialActionObjectTable.Id,
+                ShortView = true,
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "UPEV",
+                EnglishName = "Updated",
+                Tenant = 0,
+                AddedManually = false,
+				IsManualEntry = false,
+                LocalName = "Updated",
+                ObjectTableId = DeclarationMamanSpecialActionObjectTable.Id,
+                ShortView = false,
+            }, EventTypeRepository, tenantEventTypes);
+
+
+	    }
+	
+	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
+	    {  
+	    }     
+
+   }
+    
+}
+	 

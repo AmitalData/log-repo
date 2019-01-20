@@ -21,24 +21,51 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<DeclarationCourierStatusList> GetIqueryableList(IQueryable<DeclarationCourierStatus> iQueryable)
         {
-		IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable
-                                                          join d in context.Declarations.Include("GovernmentProcedureCurrent").Include("CourierCustomStatus").Include("DeclarationStatusType").Include("CustomerCard").Include("Importer").Include("AgentTalkBackType")
-                                                          on a.DeclarationId equals d.Id
-                                                          join c in context.CourierDeclarations
-                                                          on a.DeclarationId equals c.DeclarationId
-                                                          select new DeclarationCourierStatusList()
-											                {
+            //var qMmmnActionError = (from action in context.DeclarationMamanSpecialActions
+            //            .Where( r=> r.MamanSpecialActionStatusCode== "2" )
+            //            group action by action.DeclarationId into gaction
+            //            select new
+            //            {
+            //                id = gaction.Key,
+            //                text =
+            //                gaction.Select(r => r.MamanSpecialActionsErrorXml).Aggregate((b4, after) => b4 + " " + after),
+            //                //string.Join(" ", gaction.Select(r => r.MamanSpecialActionsErrorXml)),
+
+            //                //(string)gaction.Aggregate((b4, after) => b4.MamanLabelText1 + " "+ after.DeclarationId),
+            //            });
+            //bool test = false    ;
+            //if (test)
+            //{
+            //    var resQ = qMmmnActionError.ToList();
+            //}        
+
+            IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable
+                                                              join d in context.Declarations.Include("GovernmentProcedureCurrent").Include("CourierCustomStatus").Include("DeclarationStatusType").Include("CustomerCard").Include("Importer").Include("AgentTalkBackType")
+                                                              on a.DeclarationId equals d.Id
+                                                              join c in context.CourierDeclarations
+                                                              on a.DeclarationId equals c.DeclarationId
+
+
+                                                              //join mmnAction in qMmmnActionError
+                                                              //on a.DeclarationId equals mmnAction.id
+                                                              //into leftJoin
+                                                              //from ao in leftJoin.DefaultIfEmpty()
+
+
+                                                              select new DeclarationCourierStatusList()
+                                                              {
                                                                 DeclarationId = a.DeclarationId,
-					                                            Tenant = a.Tenant,
+                                                                Tenant = a.Tenant,
                                                                 CourierMasterId = c.CourierMasterId,
                                                                 IsDOCTab = (a.DocumentStatusCode == "M" || a.DocumentStatusCode == "X"),
                                                                 IsSVGTab = a.IsCourierMissingClassification == true,
                                                                 IsMNFRTab = (a.CourierManifestStatusCode == "R"),
                                                                 IsDECRTab = (a.CourierDeclarationStatusCode == "R"),
                                                                 IsHOLDTab = (a.CourierPendingReasonCode != null),
-                                                                IsMNFTab = (a.CourierManifestStatusCode == "M" || a.CourierManifestStatusCode =="X"),
+                                                                IsMNFTab = (a.CourierManifestStatusCode == "M" || a.CourierManifestStatusCode == "X"),
                                                                 IsPAYTab = a.CourierPaymentStatusCode == "R",
                                                                 IsDECTab = (a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X"),
+                                                                //IsACCTab = (d.MamanStatusCode == "2"), ???
                                                                 CourierManifestStatusCode = a.CourierManifestStatusCode,
                                                                 CourierDeclarationStatusCode = a.CourierDeclarationStatusCode,
                                                                 CourierPaymentStatusCode = a.CourierPaymentStatusCode,
@@ -63,7 +90,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 PendingRemarks = a.PendingRemarks,
                                                                 CourierSuspentionReasonName = d.CourierSuspentionReasonCode != null ? d.AgentTalkBackType.LocalName : null,
                                                                 AcceptanceStatusCode = d.AcceptanceStatusCode,
-                                                          });
+                                                                MamanStatusCode = d.MamanStatusCode,
+                                                                MamanErrorXml = d.MamanErrorXml,
+                                                                CourierSuspentionCode = d.CourierSuspentionCode,
+                                                                CourierSuspentionName = d.CourierSuspention != null ? d.CourierSuspention.LocalName : null,
+                                                                SpecialActionStatus = a.SpecialActionStatus,
+                                                                //SpecialActionsErrorXml = ao.text,
+                                                              });
+
+
             return query;
 		}
 

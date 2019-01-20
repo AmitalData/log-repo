@@ -1,0 +1,250 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class DeclarationMamanSpecialActionDataMapping: IMapping<DeclarationMamanSpecialActionPM, DeclarationMamanSpecialAction>,IMappingEncodeBase64NVARCHARFields<DeclarationMamanSpecialActionPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         DeclarationId, 
+	         Tenant, 
+	         MamanSpecialActionCode, 
+	         MamanLabelText1, 
+	         MamanLabelText2, 
+	         MamanLabelText3, 
+	         MamanLabelText4, 
+	         MamanLabelText5, 
+	         MamanSpecialActionStatusCode, 
+	         MamanSpecialActionsErrorXml,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         DeclarationId, 
+	         Tenant, 
+	         MamanSpecialActionCode, 
+	         MamanLabelText1, 
+	         MamanLabelText2, 
+	         MamanLabelText3, 
+	         MamanSpecialActionName, 
+	         MamanLabelText4, 
+	         MamanLabelText5, 
+	         MamanSpecialActionStatusCode, 
+	         MamanSpecialActionStatusName, 
+	         MamanSpecialActionsErrorXml,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(DeclarationMamanSpecialActionPM entityPM, DeclarationMamanSpecialAction entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanLabelText1))
+            {
+				entityPOCO.MamanLabelText1 = entityPM.MamanLabelText1;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanLabelText2))
+            {
+				entityPOCO.MamanLabelText2 = entityPM.MamanLabelText2;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanLabelText3))
+            {
+				entityPOCO.MamanLabelText3 = entityPM.MamanLabelText3;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanLabelText4))
+            {
+				entityPOCO.MamanLabelText4 = entityPM.MamanLabelText4;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanLabelText5))
+            {
+				entityPOCO.MamanLabelText5 = entityPM.MamanLabelText5;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanSpecialActionStatusCode))
+            {
+				entityPOCO.MamanSpecialActionStatusCode = entityPM.MamanSpecialActionStatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanSpecialActionsErrorXml))
+            {
+				entityPOCO.MamanSpecialActionsErrorXml = entityPM.MamanSpecialActionsErrorXml;
+			}
+			}
+
+		public void POCOToPM(DeclarationMamanSpecialActionPM entityPM, DeclarationMamanSpecialAction entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationId))
+            {
+					entityPM.DeclarationId = entityPOCO.DeclarationId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MamanSpecialActionCode))
+            {
+					entityPM.MamanSpecialActionCode = entityPOCO.MamanSpecialActionCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MamanLabelText1))
+            {
+					entityPM.MamanLabelText1 = entityPOCO.MamanLabelText1;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MamanLabelText2))
+            {
+					entityPM.MamanLabelText2 = entityPOCO.MamanLabelText2;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MamanLabelText3))
+            {
+					entityPM.MamanLabelText3 = entityPOCO.MamanLabelText3;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MamanLabelText4))
+            {
+					entityPM.MamanLabelText4 = entityPOCO.MamanLabelText4;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MamanLabelText5))
+            {
+					entityPM.MamanLabelText5 = entityPOCO.MamanLabelText5;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MamanSpecialActionStatusCode))
+            {
+					entityPM.MamanSpecialActionStatusCode = entityPOCO.MamanSpecialActionStatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MamanSpecialActionsErrorXml))
+            {
+					entityPM.MamanSpecialActionsErrorXml = entityPOCO.MamanSpecialActionsErrorXml;
+            }
+
+		}
+
+		public void PMToOldPM(DeclarationMamanSpecialActionPM entityPM, DeclarationMamanSpecialActionPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanLabelText1))
+            {
+                oldEntityPM.MamanLabelText1 = entityPM.MamanLabelText1;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanLabelText2))
+            {
+                oldEntityPM.MamanLabelText2 = entityPM.MamanLabelText2;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanLabelText3))
+            {
+                oldEntityPM.MamanLabelText3 = entityPM.MamanLabelText3;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanLabelText4))
+            {
+                oldEntityPM.MamanLabelText4 = entityPM.MamanLabelText4;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanLabelText5))
+            {
+                oldEntityPM.MamanLabelText5 = entityPM.MamanLabelText5;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanSpecialActionStatusCode))
+            {
+                oldEntityPM.MamanSpecialActionStatusCode = entityPM.MamanSpecialActionStatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanSpecialActionsErrorXml))
+            {
+                oldEntityPM.MamanSpecialActionsErrorXml = entityPM.MamanSpecialActionsErrorXml;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(DeclarationMamanSpecialActionPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.MamanLabelText1)) //T4 find type == nText 
+            {
+                entityPM.MamanLabelText1 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.MamanLabelText1));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.MamanLabelText2)) //T4 find type == nText 
+            {
+                entityPM.MamanLabelText2 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.MamanLabelText2));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.MamanLabelText3)) //T4 find type == nText 
+            {
+                entityPM.MamanLabelText3 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.MamanLabelText3));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.MamanLabelText4)) //T4 find type == nText 
+            {
+                entityPM.MamanLabelText4 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.MamanLabelText4));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.MamanLabelText5)) //T4 find type == nText 
+            {
+                entityPM.MamanLabelText5 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.MamanLabelText5));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.MamanSpecialActionsErrorXml)) //T4 find type == nText 
+            {
+                entityPM.MamanSpecialActionsErrorXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.MamanSpecialActionsErrorXml));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

@@ -37,7 +37,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
 
         }
 
-        public string AnalyzeErrorPionter(ResponseError[] responseError, DeclarationPM declarationPM, WCOTypeEnum myWCOTypeEnum = WCOTypeEnum.WCO) // to add ref to ResponseError in Logitude.CustomsMessaging
+        public string AnalyzeErrorPionter(ResponseError[] responseError, DeclarationPM declarationPM, WCOTypeEnum myWCOTypeEnum = WCOTypeEnum.WCO, bool isRaiseUnifreightEvent = false) // to add ref to ResponseError in Logitude.CustomsMessaging
         {
             if (responseError == null)
             {
@@ -54,7 +54,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                 //if (Environment.UserDomainName.Equals("ntdomain", StringComparison.OrdinalIgnoreCase))
                 //{
                 //Analyze pointers
-                GetLogitudeEntity(errorItem, myWCOTypeEnum);
+                GetLogitudeEntity(errorItem, myWCOTypeEnum, isRaiseUnifreightEvent);
                 //}
             }
 
@@ -95,7 +95,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             return myDeclaretionErrorXml;
         }
 
-        private void GetLogitudeEntity(ResponseError errorItem, WCOTypeEnum myWCOTypeEnum = WCOTypeEnum.WCO)
+        private void GetLogitudeEntity(ResponseError errorItem, WCOTypeEnum myWCOTypeEnum = WCOTypeEnum.WCO, bool isRaiseUnifreightEvent = false)
         {
             var myDB = WCO.Instance.CreateDB(myWCOTypeEnum);
             int pointerLevelCounter = 0;
@@ -180,6 +180,10 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             }
 
             HandleSpecialError(errorItem, ref myChild1Type, ref myChild1Sequence, ref myChild2Type, ref myChild2Sequence, ref myChild3Type, ref myChild3Sequence);// Handling special cases
+            if (isRaiseUnifreightEvent)
+            {
+                HandleValidationCodeError(errorItem);
+            }
 
             Entity myEntityErrorDetail = FindEntityinList(myChild1Type, myChild1Sequence, myChild2Type, myChild2Sequence, myChild3Type, myChild3Sequence);
             if (myEntityErrorDetail == null)
@@ -247,6 +251,21 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                         myChild3Sequence = "1";
                         break;
                     }
+
+            }
+
+            //Special: If this is level 3 of SupplierInvoiceItem as level 2 AND it is AdditionalDocument
+            if (!string.IsNullOrWhiteSpace(SequenceNumeric) && myChild2Type == "SupplierInvoiceItem" && pointerLevelCounterCurrent == 3 && DocumentSectionCode == "02A")
+            {
+                myChild3Type = "SupplierInvioceItemsCertificate";
+                myChild3Sequence = SequenceNumeric;
+            }
+        }
+
+        private void HandleValidationCodeError(ResponseError errorItem)
+        {
+            switch (errorItem.ValidationCode.Value)
+            {
                 case "1501":
                     {
                         RaiseUnifreightEvent("MPOA", "MPOA", ""); //errorItem.ValidationCode.name
@@ -264,53 +283,8 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                     }
             }
 
-
-            //Special: If this is level 3 of SupplierInvoiceItem as level 2 AND it is AdditionalDocument
-            if (!string.IsNullOrWhiteSpace(SequenceNumeric) && myChild2Type == "SupplierInvoiceItem" && pointerLevelCounterCurrent == 3 && DocumentSectionCode == "02A")
-            {
-                myChild3Type = "SupplierInvioceItemsCertificate";
-                myChild3Sequence = SequenceNumeric;
-            }
         }
 
-        //private void RaiseUnifreightEvent(string eventCode, string unifrieghtEvent, string eventRemarks)
-        //{
-        //    try
-        //    {
-        //        string loggingUserId = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);
-
-        //        var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-        //        {
-
-        //            Tenant = _MyDeclarationPM.Tenant,
-        //            objectTableName = "Customs.Declaration",
-        //            EventCode = eventCode,
-        //            notes = eventRemarks,
-        //            CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
-        //            EntityId = _MyDeclarationPM.Id,
-        //            UserId = loggingUserId,
-        //            CommunicationSubject = "Event from logitude",
-        //            MyUnifreightEventParam = new UnifreightEventParam()
-        //            {
-        //                Code = unifrieghtEvent,
-        //                Mode = UnifreightEventMode.@new,
-        //                EventDateTime = DateTime.Now,
-        //                Entname = "CFIFILEM",
-        //                PrimaryNum = _MyDeclarationPM.CustomFileNo,
-        //                EventRemarks = eventRemarks,
-        //            }
-        //        };
-
-        //        LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent: eventCode = " + eventCode + " CustomFileNo= " + _MyDeclarationPM.CustomFileNo + "   ");
-        //        AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, true);
-
-        //    }
-        //    catch (System.Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
-    
 
         private void RaiseUnifreightEvent(string eventCode, string unifrieghtEvent, string eventRemarks)
         {
@@ -337,6 +311,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                         Entname = "CFIFILEM",
                         PrimaryNum = _MyDeclarationPM.CustomFileNo,
                         EventRemarks = eventRemarks,
+                        EventUser = loggingUserId,
                     }
                 };
 

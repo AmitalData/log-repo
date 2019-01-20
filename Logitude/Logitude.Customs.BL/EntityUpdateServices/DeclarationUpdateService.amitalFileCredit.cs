@@ -138,5 +138,77 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return null;
         }
 
+        public static string DeclarationClosure(string declarationId, int tenant)
+        {
+            try
+            {
+                var customContext = CustomContext.GetContext(tenant);
+                var declarationQuery = new DeclarationQueryService(customContext);
+                DeclarationPM myDeclarationPM = declarationQuery.GetSingle(declarationId, false, false);
+
+                //If the Declaration exists
+                if (myDeclarationPM == null) return null;
+
+                //Update IsClose
+                var traceEventParams = new EventTracerArgs()
+                {
+                    EntityId = myDeclarationPM.Id,
+                    ObjectTableName = "Customs.Declaration",
+                    Tenant = myDeclarationPM.Tenant,
+                    UserId = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant),
+                    EventTypeCode = "DCS",
+                    Notes = "Close Declaration " + myDeclarationPM.DeclarationNumber,
+                };
+                EventTracer.CreateTraceEvent(traceEventParams);
+
+                LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent: EventCode= " + "DCS" + "CustomFileNo= " + myDeclarationPM.CustomFileNo + "  ");
+                myDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                myDeclarationPM.IsClose = true;
+                DeclarationUpdateService service = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), myDeclarationPM.Tenant);
+                service.Update(myDeclarationPM, true);
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+            return null;
+        }
+
+        public static string CancelDeclarationClosure(string declarationId, int tenant)
+        {
+            try
+            {
+                var customContext = CustomContext.GetContext(tenant);
+                var declarationQuery = new DeclarationQueryService(customContext);
+                DeclarationPM myDeclarationPM = declarationQuery.GetSingle(declarationId, false, false);
+
+                //If the Declaration exists
+                if (myDeclarationPM == null) return null;
+
+                //Update IsClose
+                var traceEventParams = new EventTracerArgs()
+                {
+                    EntityId = myDeclarationPM.Id,
+                    ObjectTableName = "Customs.Declaration",
+                    Tenant = myDeclarationPM.Tenant,
+                    UserId = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant),
+                    EventTypeCode = "CDCS",
+                    Notes = "Cancel Declaration Close " + myDeclarationPM.DeclarationNumber,
+                };
+                EventTracer.CreateTraceEvent(traceEventParams);
+
+                LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent: EventCode= " + "CDCS" + "CustomFileNo= " + myDeclarationPM.CustomFileNo + "  ");
+                myDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                myDeclarationPM.IsClose = false;
+                DeclarationUpdateService service = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), myDeclarationPM.Tenant);
+                service.Update(myDeclarationPM, true);
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+            return null;
+        }
+
     }
 }

@@ -35,7 +35,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var CustomsCollateralsAnswerQueryService = new CustomsCollateralsAnswerQueryService(this._CustomContext);
                 var CustomsCollateralsAnswerUpdateService = new CustomsCollateralsAnswerUpdateService(this._CustomContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
 
-                for(int collateralCounter = 0; collateralCounter < customResponse.AnswersApprovalList.LongCount() ; collateralCounter++)
+                for (int collateralCounter = 0; collateralCounter < customResponse.AnswersApprovalList.LongCount(); collateralCounter++)
                 {
                     this._CustomsCollateralPM = new CustomsCollateralPM();
                     var collateralRequestId = customsCollateralQueryService.GetIdByCollateralRequestNumber(customResponse.AnswersApprovalList[collateralCounter].collateralRequestNumber.ToString(), requestParams.Tenant);
@@ -49,7 +49,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     this._CustomsCollateralPM = customsCollateralQueryService.GetSingle(collateralRequestId, true, false);
                     var AnswerForCollateralRequestApprovalList = customResponse.AnswersApprovalList[collateralCounter].AnswerForCollateralRequestApproval.ToList();
-                    var DBAnswers = this._CustomsCollateralPM.CustomsCollateralsAnswers.ToList(); 
+                    var DBAnswers = this._CustomsCollateralPM.CustomsCollateralsAnswers.ToList();
 
                     if (AnswerForCollateralRequestApprovalList[0].TPGIdentifier == null)
                     {
@@ -82,87 +82,166 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     answerItem.AnswerEntityTypeJoin = answerItem.AnswerEntityTypeCode;
                                 }
                             }
+                        }
 
-                            //Join DB occurences with CustomResponse occurences
-                            var customsCollateralsAnswerJoin =
-                            (
-                            from customsCollateralsAnswerPM in DBAnswers
-                            join customMethodCustom in AnswerForCollateralRequestApprovalList
+//                            //Join DB occurences with CustomResponse occurences
+//                            var customsCollateralsAnswerJoin =
+//                            (
+//                            from customsCollateralsAnswerPM in DBAnswers
+//                            join customMethodCustom in AnswerForCollateralRequestApprovalList
 
-                             on new
-                             {
-                                 //customsCollateralsAnswerPM.AnswerEntityTypeCode,
-                                 customsCollateralsAnswerPM.AnswerEntityTypeJoin,
-                             }
-                             equals
-                             new
-                             {
-                                 AnswerEntityTypeJoin = customMethodCustom.answerEntityType.ToString(),
-                             }
+//                             on new
+//                             {
+//                                 //customsCollateralsAnswerPM.AnswerEntityTypeCode,
+//                                 customsCollateralsAnswerPM.AnswerEntityTypeJoin,
+//                             }
+//                             equals
+//                             new
+//                             {
+//                                 AnswerEntityTypeJoin = customMethodCustom.answerEntityType.ToString(),
+//                             }
 
-                            select
-                            new { customsCollateralsAnswerPM, customMethodCustom }
-                             ).ToList();
+//                            select
+//                            new { customsCollateralsAnswerPM, customMethodCustom }
+//                             ).ToList();
 
-                            foreach (var joinItem in customsCollateralsAnswerJoin)
+//                        foreach (var joinItem in customsCollateralsAnswerJoin)
+//                        {
+//                            joinItem.customsCollateralsAnswerPM.ChangeSetOp = ChangeSetOperation.Update;
+//                            joinItem.customsCollateralsAnswerPM.AnswerForCollateralStatusCode = joinItem.customMethodCustom.answerForCollateralStatus.ToString();
+//                            string errorsList = null;
+//                            if (joinItem.customMethodCustom.ErrorsForAnsware != null)
+//                            {
+//                                foreach (var errorItem in joinItem.customMethodCustom.ErrorsForAnsware)
+//                                {
+//                                    if (errorItem != null)
+//                                    {
+//                                        if (!string.IsNullOrWhiteSpace(errorsList))
+//                                        {
+//                                            errorsList = errorsList + @"
+
+//";
+//                                        }
+//                                        errorsList = errorsList + errorItem.errorCode.ToString();
+//                                        if (!string.IsNullOrWhiteSpace(errorItem.errorDescription))
+//                                        {
+//                                            errorsList = errorsList + " - " + errorItem.errorDescription;
+//                                        }
+//                                    }
+//                                }
+//                                if (!String.IsNullOrEmpty(errorsList))
+//                                {
+//                                    joinItem.customsCollateralsAnswerPM.Errors = errorsList;
+//                                }
+//                            }
+//                            if (joinItem.customMethodCustom.TPGIdentifier != null)
+//                            {
+//                                joinItem.customsCollateralsAnswerPM.RequestedTapagFile = joinItem.customMethodCustom.TPGIdentifier.fileNumber;
+//                                joinItem.customsCollateralsAnswerPM.RequestedTapagNumeral = joinItem.customMethodCustom.TPGIdentifier.numeral.ToString();
+//                            }
+
+//                            //this._CustomsCollateralPM.CustomsCollateralsAnswers.Add(joinItem.customsCollateralsAnswerPM);
+
+//                            //Check if the CustomsCollateralsAnswer already exists in the DB
+//                            CustomsCollateralsAnswerPM customsCollateralsAnswersToUpdate = this._CustomsCollateralPM.CustomsCollateralsAnswers.FirstOrDefault(rec => rec.CustomsCollateralId == joinItem.customsCollateralsAnswerPM.CustomsCollateralId && rec.Tenant == joinItem.customsCollateralsAnswerPM.Tenant && rec.LineNumber == joinItem.customsCollateralsAnswerPM.LineNumber);
+//                            //If the CustomsCollateralsAnswer already exists in the DB - Update the item in the existing DB list
+//                            if (customsCollateralsAnswersToUpdate != null)
+//                            {
+//                                foreach (var currentCustomsCollateralsAnswer in this._CustomsCollateralPM.CustomsCollateralsAnswers.Where(rec => rec.CustomsCollateralId == joinItem.customsCollateralsAnswerPM.CustomsCollateralId && rec.Tenant == joinItem.customsCollateralsAnswerPM.Tenant && rec.LineNumber == joinItem.customsCollateralsAnswerPM.LineNumber))
+//                                {
+//                                    currentCustomsCollateralsAnswer.ChangeSetOp = joinItem.customsCollateralsAnswerPM.ChangeSetOp;
+//                                    currentCustomsCollateralsAnswer.AnswerForCollateralStatusCode = joinItem.customsCollateralsAnswerPM.AnswerForCollateralStatusCode;
+//                                    currentCustomsCollateralsAnswer.RequestedTapagFile = joinItem.customsCollateralsAnswerPM.RequestedTapagFile;
+//                                    currentCustomsCollateralsAnswer.RequestedTapagNumeral = joinItem.customsCollateralsAnswerPM.RequestedTapagNumeral;
+//                                }
+//                            }
+//                            //If the CustomsCollateralsAnswer does NOT exists in the DB - Add it to the list
+//                            else
+//                            {
+//                                this._CustomsCollateralPM.CustomsCollateralsAnswers.Add(joinItem.customsCollateralsAnswerPM);
+//                            }
+//                        }
+
+                        foreach (var answerForCollateralItem in AnswerForCollateralRequestApprovalList)
+                        {
+                            string errorsList = null;
+                            if (answerForCollateralItem.ErrorsForAnsware != null)
                             {
-                                joinItem.customsCollateralsAnswerPM.ChangeSetOp = ChangeSetOperation.Update;
-                                joinItem.customsCollateralsAnswerPM.AnswerForCollateralStatusCode = joinItem.customMethodCustom.answerForCollateralStatus.ToString();
-                                string errorsList = null;
-                                if (joinItem.customMethodCustom.ErrorsForAnsware != null)
+                                foreach (var errorItem in answerForCollateralItem.ErrorsForAnsware)
                                 {
-                                    foreach (var errorItem in joinItem.customMethodCustom.ErrorsForAnsware)
+                                    if (errorItem != null)
                                     {
-                                        if (errorItem != null)
+                                        if (!string.IsNullOrWhiteSpace(errorsList))
                                         {
-                                            if (!string.IsNullOrWhiteSpace(errorsList))
-                                            {
-                                                errorsList = errorsList + @"
+                                            errorsList = errorsList + @"
 
 ";
-                                            }
-                                            errorsList = errorsList + errorItem.errorCode.ToString();
-                                            if (!string.IsNullOrWhiteSpace(errorItem.errorDescription))
-                                            {
-                                                errorsList = errorsList + " - " + errorItem.errorDescription;
-                                            }
+                                        }
+                                        errorsList = errorsList + errorItem.errorCode.ToString();
+                                        if (!string.IsNullOrWhiteSpace(errorItem.errorDescription))
+                                        {
+                                            errorsList = errorsList + " - " + errorItem.errorDescription;
                                         }
                                     }
+                                }
+                            }
+
+                            var customsCollateralsAnswerPMList = _CustomsCollateralPM.CustomsCollateralsAnswers.Where(d => d.AnswerEntityTypeJoin == answerForCollateralItem.answerEntityType.ToString()).ToList();
+                            //If the CustomsCollateralsAnswer does NOT exists in the DB - Add it to the list
+                            if (customsCollateralsAnswerPMList.Count == 0)
+                            {
+                                CustomsCollateralsAnswerPM customsCollateralsAnswerPM = new CustomsCollateralsAnswerPM();
+                                customsCollateralsAnswerPM.ChangeSetOp = ChangeSetOperation.Insert;
+                                customsCollateralsAnswerPM.CustomsCollateralId = _CustomsCollateralPM.Id;
+                                customsCollateralsAnswerPM.Tenant = _CustomsCollateralPM.Tenant;
+                                customsCollateralsAnswerPM.AnswerEntityTypeCode = answerForCollateralItem.answerEntityType.ToString();
+                                customsCollateralsAnswerPM.AnswerForCollateralStatusCode = answerForCollateralItem.answerForCollateralStatus.ToString();
+                                if (!String.IsNullOrEmpty(errorsList))
+                                {
+                                    customsCollateralsAnswerPM.Errors = errorsList;
+                                }
+                                if (answerForCollateralItem.TPGIdentifier != null)
+                                {
+                                    customsCollateralsAnswerPM.RequestedTapagFile = answerForCollateralItem.TPGIdentifier.fileNumber;
+                                    customsCollateralsAnswerPM.RequestedTapagNumeral = answerForCollateralItem.TPGIdentifier.numeral.ToString();
+                                }
+                                this._CustomsCollateralPM.CustomsCollateralsAnswers.Add(customsCollateralsAnswerPM);
+                                LogMessagingUtil.Instance.AppendLine("CustomsCollateralsAnswer does NOT exists in the DB - Add new to the list");
+                            }
+                            //If the CustomsCollateralsAnswer already exists in the DB - Update the item in the existing DB list
+                            else if (customsCollateralsAnswerPMList.Count > 0)
+                            {
+                                var currentCustomsCollateralsAnswer = new CustomsCollateralsAnswerPM();
+                                if (customsCollateralsAnswerPMList.Count == 1)
+                                {
+                                    currentCustomsCollateralsAnswer = customsCollateralsAnswerPMList.FirstOrDefault();
+                                }
+                                else // If there is more than one CustomsCollateralsAnswer with the same ‘allocatedAmount’ update CustomsCollateralsAnswer  with no 'answerForCollateralStatus'
+                                {
+                                    currentCustomsCollateralsAnswer = customsCollateralsAnswerPMList.FirstOrDefault(d => d.AnswerForCollateralStatusCode == null);
+                                }
+                                if (currentCustomsCollateralsAnswer != null)
+                                {
+                                    LogMessagingUtil.Instance.AppendLine("CustomsCollateralsAnswer already exists in the DB - Update the item");
+                                    currentCustomsCollateralsAnswer.ChangeSetOp = ChangeSetOperation.Update;
+                                    currentCustomsCollateralsAnswer.AnswerForCollateralStatusCode = answerForCollateralItem.answerForCollateralStatus.ToString();
                                     if (!String.IsNullOrEmpty(errorsList))
                                     {
-                                        joinItem.customsCollateralsAnswerPM.Errors = errorsList;
+                                        currentCustomsCollateralsAnswer.Errors = errorsList;
                                     }
-                                }
-                                if (joinItem.customMethodCustom.TPGIdentifier != null)
-                                {
-                                    joinItem.customsCollateralsAnswerPM.RequestedTapagFile = joinItem.customMethodCustom.TPGIdentifier.fileNumber;
-                                    joinItem.customsCollateralsAnswerPM.RequestedTapagNumeral = joinItem.customMethodCustom.TPGIdentifier.numeral.ToString();
-                                }
-
-                                //this._CustomsCollateralPM.CustomsCollateralsAnswers.Add(joinItem.customsCollateralsAnswerPM);
-
-                                //Check if the CustomsCollateralsAnswer already exists in the DB
-                                CustomsCollateralsAnswerPM customsCollateralsAnswersToUpdate = this._CustomsCollateralPM.CustomsCollateralsAnswers.FirstOrDefault(rec => rec.CustomsCollateralId == joinItem.customsCollateralsAnswerPM.CustomsCollateralId && rec.Tenant == joinItem.customsCollateralsAnswerPM.Tenant && rec.LineNumber == joinItem.customsCollateralsAnswerPM.LineNumber
-        );
-                                //If the CustomsCollateralsAnswer already exists in the DB - Update the item in the existing DB list
-                                if (customsCollateralsAnswersToUpdate != null)
-                                {
-                                    foreach (var currentCustomsCollateralsAnswer in this._CustomsCollateralPM.CustomsCollateralsAnswers.Where(rec => rec.CustomsCollateralId == joinItem.customsCollateralsAnswerPM.CustomsCollateralId && rec.Tenant == joinItem.customsCollateralsAnswerPM.Tenant && rec.LineNumber == joinItem.customsCollateralsAnswerPM.LineNumber
-        ))
+                                    if (answerForCollateralItem.TPGIdentifier != null)
                                     {
-                                        currentCustomsCollateralsAnswer.ChangeSetOp = joinItem.customsCollateralsAnswerPM.ChangeSetOp;
-                                        currentCustomsCollateralsAnswer.AnswerForCollateralStatusCode = joinItem.customsCollateralsAnswerPM.AnswerForCollateralStatusCode;
-                                        currentCustomsCollateralsAnswer.RequestedTapagFile = joinItem.customsCollateralsAnswerPM.RequestedTapagFile;
-                                        currentCustomsCollateralsAnswer.RequestedTapagNumeral = joinItem.customsCollateralsAnswerPM.RequestedTapagNumeral;
+                                        currentCustomsCollateralsAnswer.RequestedTapagFile = answerForCollateralItem.TPGIdentifier.fileNumber;
+                                        currentCustomsCollateralsAnswer.RequestedTapagNumeral = answerForCollateralItem.TPGIdentifier.numeral.ToString();
                                     }
                                 }
-                                //If the CustomsCollateralsAnswer does NOT exists in the DB - Add it to the list
                                 else
                                 {
-                                    this._CustomsCollateralPM.CustomsCollateralsAnswers.Add(joinItem.customsCollateralsAnswerPM);
+                                    LogMessagingUtil.Instance.AppendLine("Can NOT update CustomsCollateralsAnswer - all items has an answer already");
                                 }
                             }
                         }
+                        //}
                     }
 
                     this._CustomsCollateralPM.ChangeSetOp = ChangeSetOperation.Update;

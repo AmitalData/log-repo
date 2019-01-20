@@ -4,6 +4,7 @@ using Simplog.Server.Infrastructure.Azure;
 using System.Diagnostics;
 using System.Data.SqlClient;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.SystemLogs
 {
@@ -15,6 +16,15 @@ namespace Logitude.SystemLogs
             {
                 DbContextBaseUtil.MaxPoolSizeWasReachedWhileSave = DateTime.Now;
             }
+            if (exception.ToString().Contains("max pool size was reached"))
+            {
+                if (InjectionUtil.Instance.IISManager != null)
+                {
+                    InjectionUtil.Instance.IISManager.RecycleMe();
+                }
+
+            }
+            Debug.WriteLine(exception.ToString());
             AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Error);
             string ErrorMessage = "";
 

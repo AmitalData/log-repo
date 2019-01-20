@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class CustomsPartnerFtpList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string TypeCode  { get; set; }
+       [DataMember]
+       public string PartnerCode  { get; set; }
+       [DataMember]
+       public string InterfaceName  { get; set; }
+       [DataMember]
+       public string FtpDetailsId  { get; set; }
+       [DataMember]
+       public string FileName  { get; set; }
+       [DataMember]
+       public string FileExt  { get; set; }
+       [DataMember]
+       public string InterfaceCodeName  { get; set; }
+   }
+
+}
+	 

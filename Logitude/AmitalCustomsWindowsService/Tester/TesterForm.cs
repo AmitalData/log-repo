@@ -19,6 +19,7 @@ using System.Xml.Linq;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure;
+using Logitude.Customs.BL.Messaging.Maman;
 //using System.Windows.Interactivity;
 
 namespace AmitalCustomsWindowsService.Tester
@@ -37,7 +38,15 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("CustomsCommandSendWSReceiveCorrelationWR");
             _CBWorkerRole.Items.Add("CustomsCommandDownloadDcaReceiveCorrelationWR");
             _CBWorkerRole.Items.Add("CustomsCommandAnalyzeResponseWR");
+            _CBWorkerRole.Items.Add("SendWEBAPIMessage2MamanWR");
+            _CBWorkerRole.Items.Add("FTPToAnalyzeQueueWR");
+            _CBWorkerRole.Items.Add("CustomsAnalyzeQueueWR");
 
+            Debug.WriteLine("Env:");
+            Debug.WriteLine(LogitudeSettings.LogitudeURL);
+            var pmCustomsSetting= Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(1);
+            var jsonSetting=ProxyUtil.JsonConvertSerialize(pmCustomsSetting);
+            Debug.WriteLine(jsonSetting);
             ///customsMessagingSheetWRToolStripMenuItem_Click(this, null);
         }
 
@@ -199,6 +208,23 @@ namespace AmitalCustomsWindowsService.Tester
                     d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandAnalyzeResponseWR>(
                 10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
                     break;
+                case "SendWEBAPIMessage2MamanWR":
+                    d = new AmitalCustomsWindowsService.BL.WorkerOnce<SendWEBAPIMessage2MamanWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+                    { ServiceStarted = true, };
+                    break;
+                case "FTPToAnalyzeQueueWR":
+                    d = new AmitalCustomsWindowsService.BL.WorkerOnce<FTPToAnalyzeQueueWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+                    { ServiceStarted = true, };
+                    break;
+
+                case "CustomsAnalyzeQueueWR":
+                    d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsAnalyzeQueueWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+                    { ServiceStarted = true, };
+                    break;
+                    
                 default:
                     return;
             }
@@ -225,7 +251,9 @@ namespace AmitalCustomsWindowsService.Tester
         {
             //http://lodmpn05/DSVWebFreightDebug/api/DeclarationWebService/GetDeclarationMandatoryTicketList/?parentEntityId=1-92241&parentEntityCode=Declaration
             //DbContextBaseUtil.ToLog = true;
-            clsTester.GetDeclarationMandatoryTicketList(parentEntityId: "1-92241", parentEntityCode: "Declaration");
+            WebFreight.Web.CustomWebServices.Testers.Tester.TestNOWait();
+
+            //clsTester.GetDeclarationMandatoryTicketList(parentEntityId: "1-92241", parentEntityCode: "Declaration");
             //clsTester.TestLockTab();
             return;
             clsTester.TestNull();
@@ -422,6 +450,9 @@ namespace AmitalCustomsWindowsService.Tester
             Task.WaitAll(taskArray);     
         }
         LoadTesterForm _LoadTest;
+
+        
+
         private void loadTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_LoadTest==null)
@@ -663,6 +694,75 @@ namespace AmitalCustomsWindowsService.Tester
         {
             var tst = new CustomsWorkerRole.Test.clsTester();
             tst.TestAsDataSet("1306");
+
+        }
+
+        private void _CBWorkerRole_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void hAWBALDARMamanToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var wr = new SendWEBAPIMessage2MamanWR();
+            string data =
+                @"{""BaldarCode"":""2026"",""BaldarAwb"":""baldarAWb35"",""AirlineAwbPref"":""001"",""Master"":22222211,""Awb8"":88888888,""HawbExtnd"":""abcd1234 update"",""AirlineCode"":""1X"",""FltNo"":null,""FltDate"":null,""LandTime"":null,""DecNoOfPackags"":1,""DecWeight"":100.1,""DolarValue"":200.12345,""StoreTypeReq"":""67"",""Description"":""Description1 - 2026 update"",""CustomerName"":""Miriam"",""CustomerAddress"":""Ein Gedi"",""CustomerPhone"":""026765544"",""DestLineDesc"":""DestLineDesc"",""BaldarMessageTime"":""2018 - 10 - 16T17: 38:33.1365366 + 03:00"",""BaldarHp"":""2323231"",""OpenBaldarAwbDate"":""2018 - 10 - 15T17: 38:33.1365366 + 03:00"",""ResponseStatusCode"":null,""ResponseStatusMsg"":null}";
+            var service = new WebAPI2BearerMamanMessage(new Logitude.Customs.BL.Messaging.Maman.Courier2MamanCommSettings()
+            {
+                DeclarationId = "",
+                username = "F_unitedf",
+                password = "Unit2019",
+                URIToken = @"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
+                URIBaldarCreateECTHRMessgae = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae",
+                Tenant = 1
+
+            });
+            var res = service.PostIt(data);
+
+            
+        }
+
+        private void mamanCreateECSpclMessgaeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            var wr = new SendWEBAPIMessage2MamanWR();
+            string data =
+                @"{
+  ""ActionCode"": ""sample string 1"",
+  ""BaldarAwb"": ""sample string 2"",
+  ""BaldarHp"": ""sample string 3"",
+  ""OpenBaldarAwbDate"": ""2018-12-12T15:40:40.6169976+02:00"",
+  ""ResponseStatusCode"": 1,
+  ""ResponseStatusMsg"": ""sample string 4"",
+  ""SpLabel1"": ""sample string 5"",
+  ""SpLabel2"": ""sample string 6"",
+  ""SpLabel3"": ""sample string 7"",
+  ""SpLabel4"": ""sample string 8"",
+  ""SpLabel5"": ""sample string 9"",
+  ""SpSpclCode"": ""sample string 10""
+}";
+            var service = new WebAPI2BearerMamanMessage(new Logitude.Customs.BL.Messaging.Maman.Courier2MamanCommSettings()
+            {
+                DeclarationId = "",
+                username = "F_unitedf",
+                password = "Unit2019",
+                URIToken = @"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
+                URIBaldarCreateECTHRMessgae = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECSpclMessgae",
+                Tenant = 1
+
+            });
+            var res = service.PostIt(data);
+
+            CourierGWMessageECSpclMamanRequestService.TestSend();
+
+
+
+
+
+        }
+
+        private void TesterForm_Load(object sender, EventArgs e)
+        {
 
         }
     }

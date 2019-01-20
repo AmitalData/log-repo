@@ -11,6 +11,8 @@ import {ClaimPM} from './ClaimPM';
 import {ClaimsRelatedEntitiesAmountPM} from './ClaimsRelatedEntitiesAmountPM';
 import {ClaimsRelatedEntitiesReasonPM} from './ClaimsRelatedEntitiesReasonPM';
 import {ClaimsRelatedEntsExpDeclarPM} from './ClaimsRelatedEntsExpDeclarPM';
+import {ClaimsRelatedEntitiesSeizurePM} from './ClaimsRelatedEntitiesSeizurePM';
+import {ClaimsRelatedEntitiesRefundPM} from './ClaimsRelatedEntitiesRefundPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -277,7 +279,105 @@ export class ClaimsRelatedEntityPM {
     public set IsSendClaimsRelatedEntity(newValue: boolean) { if (this.isSendClaimsRelatedEntity != newValue) { this.isSendClaimsRelatedEntity = newValue; this.MarkAsDirty("IsSendClaimsRelatedEntity"); } }
        
 	 
+    private decisionCode: string;
+    public get DecisionCode() { return this.decisionCode; }
+    public set DecisionCode(newValue: string) { if (this.decisionCode != newValue) { this.decisionCode = newValue; this.MarkAsDirty("DecisionCode"); } }
+       
+	 
+    private decisionName: string;
+    public get DecisionName() { return this.decisionName; }
+    public set DecisionName(newValue: string) { if (this.decisionName != newValue) { this.decisionName = newValue; this.MarkAsDirty("DecisionName"); } }
+       
+	 
+    private decisionNote: string;
+    public get DecisionNote() { return this.decisionNote; }
+    public set DecisionNote(newValue: string) { if (this.decisionNote != newValue) { this.decisionNote = newValue; this.MarkAsDirty("DecisionNote"); } }
+       
+	 
+    private eilatVatRefoundDecision: string;
+    public get EilatVatRefoundDecision() { return this.eilatVatRefoundDecision; }
+    public set EilatVatRefoundDecision(newValue: string) { if (this.eilatVatRefoundDecision != newValue) { this.eilatVatRefoundDecision = newValue; this.MarkAsDirty("EilatVatRefoundDecision"); } }
+       
+	 
+    private depositingAmount: number;
+    public get DepositingAmount() { return this.depositingAmount; }
+    public set DepositingAmount(newValue: number) { if (this.depositingAmount != newValue) { this.depositingAmount = newValue; this.MarkAsDirty("DepositingAmount"); } }
+       
+	 
+    private refundAmount: number;
+    public get RefundAmount() { return this.refundAmount; }
+    public set RefundAmount(newValue: number) { if (this.refundAmount != newValue) { this.refundAmount = newValue; this.MarkAsDirty("RefundAmount"); } }
+       
+	 
+     
+	private claimsRelatedEntitiesSeizures: ClaimsRelatedEntitiesSeizurePM[];
+    get  ClaimsRelatedEntitiesSeizures() {
+        if (this.claimsRelatedEntitiesSeizures == null) {
+            this.claimsRelatedEntitiesSeizures = [];
+        }
 
+        return this.claimsRelatedEntitiesSeizures;
+    }
+    set  ClaimsRelatedEntitiesSeizures(newValue: ClaimsRelatedEntitiesSeizurePM[]) {
+        if (this.claimsRelatedEntitiesSeizures != newValue) {
+            this.claimsRelatedEntitiesSeizures = newValue;
+        }
+    }
+    public AddClaimsRelatedEntitiesSeizure(item: ClaimsRelatedEntitiesSeizurePM) {
+        if (item != null) {
+            var index = this. ClaimsRelatedEntitiesSeizures.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. ClaimsRelatedEntitiesSeizures.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveClaimsRelatedEntitiesSeizure(item: ClaimsRelatedEntitiesSeizurePM) {
+        if (item != null) {
+            var index = this. ClaimsRelatedEntitiesSeizures.indexOf(item);
+            if (index > -1) {
+                this. ClaimsRelatedEntitiesSeizures.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public ClaimsRelatedEntitiesSeizures: Array<ClaimsRelatedEntitiesSeizurePM>= [];
+      
+	private claimsRelatedEntitiesRefunds: ClaimsRelatedEntitiesRefundPM[];
+    get  ClaimsRelatedEntitiesRefunds() {
+        if (this.claimsRelatedEntitiesRefunds == null) {
+            this.claimsRelatedEntitiesRefunds = [];
+        }
+
+        return this.claimsRelatedEntitiesRefunds;
+    }
+    set  ClaimsRelatedEntitiesRefunds(newValue: ClaimsRelatedEntitiesRefundPM[]) {
+        if (this.claimsRelatedEntitiesRefunds != newValue) {
+            this.claimsRelatedEntitiesRefunds = newValue;
+        }
+    }
+    public AddClaimsRelatedEntitiesRefund(item: ClaimsRelatedEntitiesRefundPM) {
+        if (item != null) {
+            var index = this. ClaimsRelatedEntitiesRefunds.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. ClaimsRelatedEntitiesRefunds.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveClaimsRelatedEntitiesRefund(item: ClaimsRelatedEntitiesRefundPM) {
+        if (item != null) {
+            var index = this. ClaimsRelatedEntitiesRefunds.indexOf(item);
+            if (index > -1) {
+                this. ClaimsRelatedEntitiesRefunds.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public ClaimsRelatedEntitiesRefunds: Array<ClaimsRelatedEntitiesRefundPM>= [];
+ 
     public OldEntityPM: ClaimsRelatedEntityPM;
 	
     private entityParentPM: any;

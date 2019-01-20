@@ -1,0 +1,191 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class ClaimsRelatedEntitiesRefundPM : EntityPM
+   {
+   	  private string claimId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClaimId  
+	   {
+	    
+	     get
+		{
+		   return claimId;
+		 }
+		 set
+		 {
+		   if(claimId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimId",OldValue=claimId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   claimId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private int counterKey ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CounterKey  
+	   {
+	    
+	     get
+		{
+		   return counterKey;
+		 }
+		 set
+		 {
+		   if(counterKey != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CounterKey",OldValue=counterKey,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   counterKey=value;
+		   }
+			
+		 }
+	   }
+	  private int refundQuntityLineNo ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int RefundQuntityLineNo  
+	   {
+	    
+	     get
+		{
+		   return refundQuntityLineNo;
+		 }
+		 set
+		 {
+		   if(refundQuntityLineNo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RefundQuntityLineNo",OldValue=refundQuntityLineNo,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   refundQuntityLineNo=value;
+		   }
+			
+		 }
+	   }
+	  private int? invoiceNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? InvoiceNumber  
+	   {
+	    
+	     get
+		{
+		   return invoiceNumber;
+		 }
+		 set
+		 {
+		   if(invoiceNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceNumber",OldValue=invoiceNumber,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   invoiceNumber=value;
+		   }
+			
+		 }
+	   }
+	  private int? sequenceNumeric ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? SequenceNumeric  
+	   {
+	    
+	     get
+		{
+		   return sequenceNumeric;
+		 }
+		 set
+		 {
+		   if(sequenceNumeric != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SequenceNumeric",OldValue=sequenceNumeric,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   sequenceNumeric=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? refundQuntity ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? RefundQuntity  
+	   {
+	    
+	     get
+		{
+		   return refundQuntity;
+		 }
+		 set
+		 {
+		   if(refundQuntity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RefundQuntity",OldValue=refundQuntity,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   refundQuntity=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

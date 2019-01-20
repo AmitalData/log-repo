@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -81,30 +81,62 @@ export class GITITEMExtendedPMService {
         });
     }
 
-    insert(entityPM: GITITEMDto) {
+    //insert(entityPM: GITITEMDto) {
+
+    //    return Observable.defer(() => {
+
+    //        var authHeader = new Headers();
+    //        authHeader.append('Token', SessionInfo.Token);
+    //        authHeader.append('Content-Type', 'application/json');
+           
+
+    //        var serviceResponse: ServiceResponse;
+    //        serviceResponse = new ServiceResponse();
+            
+    //        return this._http
+    //            .post(
+    //            this._apiUrl + '/PostGITITEMPM',
+    //            JSON.stringify(entityPM),
+    //            { headers: authHeader })
+    //            .map((res) => {
+    //                var pm = res.json();
+    //                if (pm) {
+    //                    var mappedResult: GITITEMDto;
+    //                    mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+    //                    serviceResponse.Result = mappedResult;
+    //                }
+
+    //                return serviceResponse;
+
+    //            }).catch(ServiceHelper.HandleServiceError);
+
+    //    });
+    //}
+
+    insert(GITITEMDtoList: GITITEMDto[]) {
 
         return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
-           
+
 
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
-            
+
             return this._http
                 .post(
-                this._apiUrl + '/PostGITITEMPM',
-                JSON.stringify(entityPM),
-                { headers: authHeader })
+                    this._apiUrl + '/PostGITITEMPMList',
+                    JSON.stringify(GITITEMDtoList),
+                    { headers: authHeader })
                 .map((res) => {
-                    var pm = res.json();
-                    if (pm) {
-                        var mappedResult: GITITEMDto;
-                        mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                        serviceResponse.Result = mappedResult;
-                    }
+                    //var pm = res.json();
+                    //if (pm) {
+                    //    var mappedResult: GITITEMDto[];
+                    //    mappedResult = this.MapJsonToEntityPM(pm, true, GITITEMDtoList);
+                    //    serviceResponse.Result = mappedResult;
+                    //}
 
                     return serviceResponse;
 

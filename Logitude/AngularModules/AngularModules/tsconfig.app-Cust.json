@@ -64,6 +64,6 @@
     "Shipment/Components/HeaderScreenTemplates/IsOperationalClosedHeaderTemplate.ts",
     "Shipment/Components/ListTemplates/DirectionCellDisplayListTemplate.ts",
     "Shipment/Components/ListTemplates/RoutingCellDisplayListTemplate.ts",
-    "Shipment/Components/ListTemplates/TransportModeCellDisplayListTemplate.ts",
+    "Shipment/Components/ListTemplates/TransportModeCellDisplayListTemplate.ts"
   ]
 }

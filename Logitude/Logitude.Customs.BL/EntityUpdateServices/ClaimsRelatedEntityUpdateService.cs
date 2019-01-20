@@ -42,6 +42,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ClaimsRelatedEntsExpDeclarUpdateService claimsRelatedEntsExpDeclarUpdateService = new ClaimsRelatedEntsExpDeclarUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             claimsRelatedEntsExpDeclarUpdateService.UpdateMulti(entityPM.ClaimsRelatedEntsExpDeclars, entityPM.DeletedClaimsRelatedEntsExpDeclars, entityPM, false);
 
+            ClaimsRelatedEntitiesSeizureUpdateService claimsRelatedEntitiesSeizureUpdateService = new ClaimsRelatedEntitiesSeizureUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            claimsRelatedEntitiesSeizureUpdateService.UpdateMulti(entityPM.ClaimsRelatedEntitiesSeizures, entityPM.DeletedClaimsRelatedEntitiesSeizures, entityPM, false);
+
+            ClaimsRelatedEntitiesRefundUpdateService claimsRelatedEntitiesRefundUpdateService = new ClaimsRelatedEntitiesRefundUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            claimsRelatedEntitiesRefundUpdateService.UpdateMulti(entityPM.ClaimsRelatedEntitiesRefunds, entityPM.DeletedClaimsRelatedEntitiesRefunds, entityPM, false);
+
             base.UpdateComposition(entityPM);
         }
     }

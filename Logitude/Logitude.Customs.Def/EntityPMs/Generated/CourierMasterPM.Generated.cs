@@ -802,6 +802,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string weightValueCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string WeightValueCode  
+	   {
+	    
+	     get
+		{
+		   return weightValueCode;
+		 }
+		 set
+		 {
+		   if(weightValueCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WeightValueCode",OldValue=weightValueCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   weightValueCode=value;
+		   }
+			
+		 }
+	   }
+	  private string weightValueName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string WeightValueName  
+	   {
+	    
+	     get
+		{
+		   return weightValueName;
+		 }
+		 set
+		 {
+		   if(weightValueName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WeightValueName",OldValue=weightValueName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   weightValueName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

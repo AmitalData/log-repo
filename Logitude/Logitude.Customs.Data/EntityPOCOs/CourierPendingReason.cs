@@ -29,8 +29,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string EnglishName { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [ForeignKey("PendingErrorPlace")]
         [Column("ErrorPlace")]
 	    public string ErrorPlace { get; set; }
+	      
+        public virtual PendingErrorPlace PendingErrorPlace { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("UnifreightStatusCode")]

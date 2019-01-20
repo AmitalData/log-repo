@@ -97,6 +97,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
+    <None Include="EntityFiles\ClaimsRelatedEntitiesRefund.lxml" />
+    <None Include="EntityFiles\ClaimsRelatedEntitiesSeizure.lxml" />
+    <None Include="EntityFiles\CustomsPartnerFtp.lxml" />
+    <None Include="EntityFiles\DecisionType.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\DeclarationMamanSpecialAction.lxml" />
+    <None Include="EntityFiles\MamanSpecialAction.lxml" />
+    <None Include="EntityFiles\MamanSpecialActionStatus.lxml" />
     <None Include="EntityFiles\MamanStatus.lxml" />
     <None Include="EntityFiles\ClientDrivingLicense.lxml" />
     <None Include="EntityFiles\ClientDrivingLicenseType.lxml" />
@@ -106,6 +115,10 @@
     <None Include="EntityFiles\DecCargoSplitCargoIdentifier.lxml" />
     <None Include="EntityFiles\DecCargoSplitConsPackDet.lxml" />
     <None Include="EntityFiles\DecCargoSplitConsItem.lxml" />
+    <None Include="EntityFiles\PendingErrorPlace.lxml" />
+    <None Include="EntityFiles\RefundCustomerActivityType.lxml" />
+    <None Include="EntityFiles\SeizureFactorType.lxml" />
+    <None Include="EntityFiles\SeizureMethodType.lxml" />
     <None Include="EntityFiles\TPGFileType.lxml" />
     <None Include="EntityFiles\TreatmentWay.lxml" />
     <None Include="EntityFiles\CargoSplitRequestStatus.lxml" />

@@ -56,16 +56,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string requestFileNumber = string.Concat(customResponse.TapagIdentifier.fileNumber, "-", customResponse.TapagIdentifier.numeral);
             string tapagId = tapagConnectionTableQueryService.GetTapagIdByRequestFileNumber(requestFileNumber, this._MyTenant);
 
-            if (!String.IsNullOrWhiteSpace(tapagId))
+            this.MyRequestSheetParam = new RequestSheetParam();
+
+            if (String.IsNullOrWhiteSpace(tapagId))
             {
-                notificationDescription = "בקשה להשלמת פרטי החזר פקדון תיק תפ\"ג" + requestFileNumber;
+                this.MyResponseData = new INF_MSG_GenericResponseData()
+                {
+                    Succeeded = true,
+                    HasException = true,
+                    UserMessage = "Can not find tapag file (not exist in connection table) " + "fileNumber=" + customResponse.TapagIdentifier.fileNumber + "Numeral=" + customResponse.TapagIdentifier.numeral,
+                };
+                LogMessagingUtil.Instance.AppendLine("Can not find tapag file (not exist in connection table) " + "fileNumber=" + customResponse.TapagIdentifier.fileNumber + "Numeral=" + customResponse.TapagIdentifier.numeral);
+                return;
             }
 
-
-
-            this.MyRequestSheetParam = new RequestSheetParam();
             if (!String.IsNullOrWhiteSpace(tapagId))
             {
+                notificationDescription = "בקשה להשלמת פרטי החזר פקדון תיק תפ\"ג: " + requestFileNumber.Replace("-"," מספר רץ ");
                 var depositId = depositQueryService.GetDepositIdByTapagNumber(tapagId, this._MyTenant);
                 if (depositId != null) this._MyDepositPM = depositQueryService.GetSingle(depositId, true, false);
 
@@ -75,7 +82,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         Succeeded = true,
                         HasException = true,
-                        UserMessage = "Can not find tapag file (not exist in connection table) " + "fileNumber=" + customResponse.TapagIdentifier.fileNumber + "Numeral=" + customResponse.TapagIdentifier.numeral,
+                        UserMessage = "Can not find deposit file (not exist in connection table) " + "fileNumber=" + customResponse.TapagIdentifier.fileNumber + "Numeral=" + customResponse.TapagIdentifier.numeral,
                     };
                     LogMessagingUtil.Instance.AppendLine("Can not find tapag file (not exist in connection table) " + "fileNumber=" + customResponse.TapagIdentifier.fileNumber + "Numeral=" + customResponse.TapagIdentifier.numeral);
                     return;
@@ -116,7 +123,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             this.MyResponseData = new INF_MSG_GenericResponseData()
             {
-                ApplicationID = this._MyTapagPM.Id,
+                ApplicationID = this._MyDepositPM.Id,
                 Succeeded = true,
                 HasException = false,
                 UserMessage = notificationDescription,

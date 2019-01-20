@@ -16,19 +16,19 @@ namespace Simplog.Server.Infrastructure.Helpers
 
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                    return new TransactionScope(TransactionScopeOption.Suppress, new TransactionOptions() {  IsolationLevel = IsolationLevel.ReadCommitted });
+                return new TransactionScope(TransactionScopeOption.Suppress, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted });
             }
 
             //#endif
-            
+
             return new TransactionScope(TransactionScopeOption.Suppress, new TransactionOptions() { IsolationLevel = IsolationLevel.Snapshot });
 
         }
 
         public static TransactionScope GetNewTransaction(TimeSpan? timeOut = null)
         {
-//#if ORACLE_DB
-            
+            //#if ORACLE_DB
+
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
                 if (timeOut != null)
@@ -37,8 +37,8 @@ namespace Simplog.Server.Infrastructure.Helpers
                 }
                 return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted });
             }
-            
-//#endif
+
+            //#endif
             if (timeOut != null)
             {
                 return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.Snapshot, Timeout = timeOut.Value });
@@ -68,44 +68,44 @@ namespace Simplog.Server.Infrastructure.Helpers
         }
         public static TransactionScope GetNewSerializableTransaction(TimeSpan? timeOut = null)
         {
-//#if ORACLE_DB
-             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            //#if ORACLE_DB
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-            if (timeOut != null)
-            {
-                return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { Timeout = timeOut.Value, IsolationLevel = IsolationLevel.Serializable });
+                if (timeOut != null)
+                {
+                    return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { Timeout = timeOut.Value, IsolationLevel = IsolationLevel.Serializable });
+                }
+                return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.Serializable });
             }
-            return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.Serializable });
-            }
-//#endif
+            //#endif
             if (timeOut != null)
             {
                 return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.Serializable, Timeout = timeOut.Value });
-        }
+            }
             return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.Serializable });
 
         }
 
         public static TransactionScope GetTransaction(TimeSpan? timeOut = null)
         {
-//#if ORACLE_DB
-             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            //#if ORACLE_DB
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-            if (timeOut != null)
-            {
-                if (Transaction.Current != null)
+                if (timeOut != null)
                 {
-                    return new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { Timeout = timeOut.Value, IsolationLevel = IsolationLevel.ReadCommitted });
+                    if (Transaction.Current != null)
+                    {
+                        return new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { Timeout = timeOut.Value, IsolationLevel = IsolationLevel.ReadCommitted });
+                    }
+                    return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { Timeout = timeOut.Value, IsolationLevel = IsolationLevel.ReadCommitted });
                 }
-                return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { Timeout = timeOut.Value, IsolationLevel = IsolationLevel.ReadCommitted });
-            }
                 if (Transaction.Current != null)
                 {
                     return new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted });
                 }
                 return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted });
             }
-//#endif
+            //#endif
             if (timeOut != null)
             {
                 if (Transaction.Current != null)
@@ -137,6 +137,25 @@ namespace Simplog.Server.Infrastructure.Helpers
                 return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted, Timeout = timeOut.Value });
             }
             return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted });
+        }
+        // I USING THAT WHILE DEBUG AT IMMEDIATE WINDOW>
+        //Simplog.Server.Infrastructure.Helpers.TransactionFactory.RegisterTransactionCompleted()
+        public static void RegisterTransactionCompleted()
+        {
+            if (Transaction.Current == null) return;
+            //Register for the transaction completed event for the current transaction
+            Transaction.Current.TransactionCompleted += new TransactionCompletedEventHandler(Current_TransactionCompleted);
+
+
+        }
+        static void Current_TransactionCompleted(object sender, TransactionEventArgs e)
+        {
+            Console.WriteLine(Environment.StackTrace.ToString());
+            Console.WriteLine("A transaction has completed:");
+            Console.WriteLine("ID:             {0}", e.Transaction.TransactionInformation.LocalIdentifier);
+            Console.WriteLine("Distributed ID: {0}", e.Transaction.TransactionInformation.DistributedIdentifier);
+            Console.WriteLine("Status:         {0}", e.Transaction.TransactionInformation.Status);
+            Console.WriteLine("IsolationLevel: {0}", e.Transaction.IsolationLevel);
         }
     }
 

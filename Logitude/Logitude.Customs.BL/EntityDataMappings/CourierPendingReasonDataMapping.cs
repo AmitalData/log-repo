@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -29,7 +30,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(CourierPendingReasonPM entityPM, CourierPendingReason entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPMProperties.Add(PMPropertyNames.ErrorPlaceName);
+
+            if (entityPOCO.ErrorPlace != null)
+            {
+                PendingErrorPlaceQueryService pendingErrorPlaceQueryService = new PendingErrorPlaceQueryService(entityPOCO.Tenant);
+                PendingErrorPlacePM pendingErrorPlacePM = pendingErrorPlaceQueryService.GetSingle(entityPOCO.ErrorPlace, false, true);
+                entityPM.ErrorPlaceName = pendingErrorPlacePM.LocalName;
+            }
         }
    }
 

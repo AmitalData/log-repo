@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using UnifreightIIG.Common.GlobalScannedAttachmentToEntityServiceReference;
+///using UnifreightIIG.Common.GlobalScannedAttachmentToEntityServiceReference;
 
 namespace AmitalCustomsWindowsService.Tester.CustomMessage
 {

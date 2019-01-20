@@ -64,6 +64,11 @@ export class CustomsAirlinePM {
     public set AirlinePrefix(newValue: string) { if (this.airlinePrefix != newValue) { this.airlinePrefix = newValue; this.MarkAsDirty("AirlinePrefix"); } }
        
 	 
+    private iCAO: string;
+    public get ICAO() { return this.iCAO; }
+    public set ICAO(newValue: string) { if (this.iCAO != newValue) { this.iCAO = newValue; this.MarkAsDirty("ICAO"); } }
+       
+	 
 
     public OldEntityPM: CustomsAirlinePM;
 		

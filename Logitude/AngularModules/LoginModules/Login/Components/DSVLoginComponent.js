@@ -1,9 +1,17 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -13,16 +21,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var LoginService_1 = require('../LoginService');
-var SessionInfo_1 = require('../SessionInfo');
-var LoginComponent_1 = require('./LoginComponent');
-var Tools_1 = require('../Utilities/Tools');
-var DSVLoginComponent = (function (_super) {
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var LoginService_1 = require("../LoginService");
+var SessionInfo_1 = require("../SessionInfo");
+var LoginComponent_1 = require("./LoginComponent");
+var Tools_1 = require("../Utilities/Tools");
+var DSVLoginComponent = /** @class */ (function (_super) {
     __extends(DSVLoginComponent, _super);
     function DSVLoginComponent(ss) {
-        _super.call(this, ss);
-        this.ss = ss;
+        var _this = _super.call(this, ss) || this;
+        _this.ss = ss;
+        return _this;
     }
     DSVLoginComponent.prototype.ngOnInit = function () {
         console.log("ngOnInit");
@@ -45,8 +55,8 @@ var DSVLoginComponent = (function (_super) {
             moduleId: './Login/Components/',
             templateUrl: 'DSVLoginComponent.html',
             styleUrls: ['DSVLoginComponent.css']
-        }), 
-        __metadata('design:paramtypes', [LoginService_1.LoginService])
+        }),
+        __metadata("design:paramtypes", [LoginService_1.LoginService])
     ], DSVLoginComponent);
     return DSVLoginComponent;
 }(LoginComponent_1.LoginComponent));

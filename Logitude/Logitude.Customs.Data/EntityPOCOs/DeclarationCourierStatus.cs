@@ -49,6 +49,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual CourierPendingReason CourierPendingReason { get; set; }
         [Column("PendingRemarks")]
 	    public string PendingRemarks { get; set; }
+        [Column("SpecialActionStatus")]
+	    public string SpecialActionStatus { get; set; }
     }
 }
 	 

@@ -1,4 +1,4 @@
-﻿import { Component, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { LocationDirective } from '../../../../../Infrastructure/Utilities/LocationDirective';
 import { AppTool, FontTool } from '../../../../../Infrastructure/Tools';
@@ -64,8 +64,12 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
                     this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntsReasonsExp").subscribe(response => {
                         this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntitiesReason").subscribe(response => {
                             this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntsExpDeclar").subscribe(response => {
-                                this.BuildTabs();
-                                this.RunComponent();
+                                this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntitiesSeizure").subscribe(response => {
+                                    this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntitiesRefund").subscribe(response => {
+                                        this.BuildTabs();
+                                        this.RunComponent();
+                                    });
+                                });
                             });
                         });
                     });
@@ -79,6 +83,7 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
         this.TabsItemsSource.push(new TabItem("FileData", "Customs.Claim.O.FileData"));
         this.TabsItemsSource.push(new TabItem("ReasonsAndExplanitaions", "Customs.Claim.TH.ReasonsAndExplanitaions"));
         this.TabsItemsSource.push(new TabItem("ExportDeclaration", "Customs.Claim.O.ClaimsRelatedEntityAdditional"));
+        this.TabsItemsSource.push(new TabItem("ClaimDecision", "Customs.Claim.TH.ClaimDecision"));
         this.TabsItemsSource.push(new TabItem("CustomAnswer", "Customs.Claim.TH.CustomAnswer"));
         this.selectedTabCode = "FileData";
     }
@@ -173,6 +178,16 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
                     case "CustomAnswer": {
                         if (this.CustomAnswer == null) {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsClaim/Components/EditTabs/RelatedEntity/ClaimRelatedEntityCustomAnswerTabComponent', myLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    this.CustomAnswer = cmpRef.instance;
+                                    this.CustomAnswer.InitTab(this.ClaimPM.ClaimsRelatedEntities.filter(d => d.EntityCounterKey == this.EntityCounterKey)[0], this.ClaimPM, !this.IsDisplayOnly);
+                                });
+                        }
+                        break;
+                    }
+                    case "ClaimDecision": {
+                        if (this.CustomAnswer == null) {
+                            SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsClaim/Components/EditTabs/RelatedEntity/ClaimRelatedEntityClaimDecisionTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.CustomAnswer = cmpRef.instance;
                                     this.CustomAnswer.InitTab(this.ClaimPM.ClaimsRelatedEntities.filter(d => d.EntityCounterKey == this.EntityCounterKey)[0], this.ClaimPM, !this.IsDisplayOnly);

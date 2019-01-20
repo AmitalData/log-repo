@@ -46,6 +46,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ((new TSH_NG_3053_MSG8_AgentPaymentRequestMessageService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                TSH_NG_3053_MSG8_AgentPaymentRequestMessageService>
+                ("3050");// because alalyze DCA MEssaage its not 3053 its 3050 !!!
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 CL_MSG101_GetCustomerByEntityCustomerIdentificationMassagingService>
                 ((new CL_MSG101_GetCustomerByEntityCustomerIdentificationMassagingService()).MainInterfaceCode);
 
@@ -403,6 +407,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             MN_MSG8370_CargoSplitMessagingService>
                             ((new MN_MSG8370_CargoSplitMessagingService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                            DCAInCLAIM_5114_AcceptanceOrRejectionClaimMessageMessagingServices>
+                            ((new DCAInCLAIM_5114_AcceptanceOrRejectionClaimMessageMessagingServices()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                            DCAInDEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestMessagingServices>
+                            ((new DCAInDEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestMessagingServices()).MainInterfaceCode);
 
         }
         public static void InitContainer()
