@@ -522,6 +522,10 @@
     <Compile Include="Migrations\201901161128192_AddPackageHasContainerExcField_MM_Fix.Designer.cs">
       <DependentUpon>201901161128192_AddPackageHasContainerExcField_MM_Fix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901200830579_missingcustomsmigratinos_MM_20012019.cs" />
+    <Compile Include="Migrations\201901200830579_missingcustomsmigratinos_MM_20012019.Designer.cs">
+      <DependentUpon>201901200830579_missingcustomsmigratinos_MM_20012019.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -857,6 +861,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901161128192_AddPackageHasContainerExcField_MM_Fix.resx">
       <DependentUpon>201901161128192_AddPackageHasContainerExcField_MM_Fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901200830579_missingcustomsmigratinos_MM_20012019.resx">
+      <DependentUpon>201901200830579_missingcustomsmigratinos_MM_20012019.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
