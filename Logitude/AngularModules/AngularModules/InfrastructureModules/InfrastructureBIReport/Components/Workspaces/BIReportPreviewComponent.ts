@@ -333,11 +333,6 @@ export class BIReportPreviewComponent implements OnInit {
         result.BIReportPM = this.EntityPM;
         result.BITabularViewSettings.Columns = [];
         var newColumn = new Column();
-        //if (sorting != null) {
-        //    sorting.forEach(item => {
-        //        newColumn.SortDirction = item["sort"];
-        //    });
-        //}
         if (coulmns != null) {
             coulmns.forEach(item => {
                 newColumn = new Column();
@@ -368,7 +363,12 @@ export class BIReportPreviewComponent implements OnInit {
         }
     }
     ShowQueryBuilderClicked() {
-        this.UpdateBIReport(true);
+        if (this.HasChanges) {
+            this.UpdateBIReport(true);
+        }
+        else {
+            this.ShowQueryBuilder();
+        }
     }
     ShowQueryBuilder() {
         var logWindow = new LogitudeWindow();
