@@ -494,6 +494,13 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             errors.push(TextCodeTranslator.Translate("Accounting.General.O.NotransactionsSelected"));//"No transactions selected
         }
 
+        // lines errors
+        if (this.SelectedLines.Collection.find(d => d.isLineValid == false ))
+        {
+            // errors.push(TextCodeTranslator.Translate("Reconciliations.O.AmountMustBSmaller2OpenAmount"));
+            errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInSelectedLines"));
+        }
+
         //multiple payment check
         var paymentsCount = this.SelectedLines.Collection.filter(d=>d.SourceTypeCode == "3" || d.SourceTypeCode == "5" ).length;
         if (paymentsCount > 1)
@@ -502,18 +509,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             this.ValidationErrorsList = errors;
             return;
         }
-
-        //else if (!this.IsEntityValid) {
-        if (this.SelectedLines.Collection.find(d => d.isLineValid == false )) {
-
-
-            //errors.push("Check amount!");
-            errors.push(TextCodeTranslator.Translate("Reconciliations.O.AmountMustBSmaller2OpenAmount"));
-        } else {
-            //Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-        }
-
-
 
 
         this.ValidationErrorsList = errors;

@@ -924,6 +924,7 @@
     <Compile Include="Controllers\AccountingModel\BankDepositController.cs" />
     <Compile Include="Controllers\AccountingModel\CashBookViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AccountingIntegrityCheckViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ARPaymentChequeViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AutomaticExternalReconcileMethodViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\BankPageEntryTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AccountingCompanyTypeViewsController.Generated.cs" />
