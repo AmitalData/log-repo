@@ -21,9 +21,19 @@ export class BIReportComponent {
     private InfrastructureDomainService: InfrastructureDomainService;
 
     constructor(private entityResourceService: EntityResourceService) {
-        this.LoadData();
         this.InfrastructureDomainService = new InfrastructureDomainService();
+        this.LoadData();
+        this.Listen();
     }
+
+    private Listen() {
+        SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            if (s == "BIRefresh") {
+                this.LoadData();
+            }
+        });
+    }
+
     InitComponent() {
 
     }

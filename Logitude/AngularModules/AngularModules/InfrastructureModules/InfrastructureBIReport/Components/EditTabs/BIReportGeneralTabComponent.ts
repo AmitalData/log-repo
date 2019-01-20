@@ -60,23 +60,4 @@ export class BIReportGeneralTabComponent extends BaseComponent {
             this.EntityPM.TypeCode = newValue;
         }
     }
-
-    ShowQueryBuilderClicked() {
-        var logWindow = new LogitudeWindow();
-        var windowArgs: any = {};
-        windowArgs.DWQueryId = this.DWQueryId;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Width = 1200;
-        logWindow.Height = 820;
-        logWindow.Title = "Query Builder";
-        logWindow.Show('./CommonModules/CommonOthers/Components/LoadSampleData/DWQueryBuilderComponent');
-        logWindow.ComponentLoaded.subscribe(s => {
-            logWindow.WindowClosed.subscribe(d => {
-                if (s != null) {
-                    this.DWQueryId = s.ID;
-                    this.SetUIProperties();
-                }
-            });
-        });
-    }
 }
