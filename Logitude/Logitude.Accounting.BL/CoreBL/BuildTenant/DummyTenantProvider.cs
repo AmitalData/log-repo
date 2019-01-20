@@ -1,5 +1,6 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
@@ -62,23 +63,31 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             //int forYear = 2017;
 
             Stopwatch sw = null;
-
+            var typeregular = "1"; //1	Regular	רגיל	1,Regular,רגיל	0
+            var accountingPeriodQueryService = new AccountingPeriodQueryService(tenant);
+            var accountingPeriodsByTypeRegular = accountingPeriodQueryService.GetAccountingPeriodByType(typeregular, tenant); ;
 
             var journalTesterClass = new JournalTesterClass();
             journalTesterClass.ForceRecreate();
             int count = 0;
             for (int MM = 1; MM <= 12; MM++)
             {
+                if (!JournalValidator.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), new DateTime(forYear, MM, 1)))
+                {
+                    continue;
+                }
                 for (int i = 0; i < BuildJournalEachMonth; i++)
                 {
                     try
                     {
+                        
 
 
                         sw = Stopwatch.StartNew();
                         var id = journalTesterClass.InsertRandomJournal(accountingContext, tenant, forYear, MM);
                         Debug.WriteLine("create journal " + id.ToString() + " TOOK:" + sw.Elapsed.ToString());
                         count++;
+
                     }
                     catch (Exception eee)
                     {
@@ -443,7 +452,10 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             //    .GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Customers.ToIntString(), fullAccountingSetting.Tenant)
             //    ; i < times; i++)
             int tot = _TotalPerChartOfAccountsId.Where(r => r.Key == ChartOfAccountsTypeEnum.Customers.ToIntString()).DefaultIfEmpty(new TotalPerM()).First().Value;
-
+            if (Amount2addMore)
+            {
+                tot = 0;
+            }
             while (tot++ < times)
             {
                 int iClient = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + GLAccountTypeEnum.Client.ToIntString(), fullAccountingSetting.Tenant);
@@ -476,16 +488,20 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             accountingContext.SaveChanges();
         }
 
+        bool amount2addMore = false;
+
+        public bool Amount2addMore { get => amount2addMore; set => amount2addMore = value; }
+
         private void CreateVendors(IAccountingContext accountingContext,
             ChartOfAccountProvider chartOfAccountProvider,
-            DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting, int amount, bool amount2addMore = false)
+            DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting, int amount)
         {
             var us = new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
             //for (int i = displayNumberProvider
             //    .GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Customers.ToIntString(), fullAccountingSetting.Tenant)
             //    ; i < times; i++)
             int tot = _TotalPerChartOfAccountsId.Where(r => r.Key == ChartOfAccountsTypeEnum.Vendors.ToIntString()).DefaultIfEmpty(new TotalPerM()).First().Value;
-            if (amount2addMore)
+            if (Amount2addMore)
             {
                 tot = 0;
             }

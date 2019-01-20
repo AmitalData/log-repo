@@ -8,92 +8,114 @@
 
     <tr>
         <td>
-            <table class="FixedTable" >
-                
-
-                    <tr class="FormFieldRow">
-                        <td style="width: 155px;">
-                            <LogLabel [ObjectFieldName]="'ActionType'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Action'"></LogLabel>
-                        </td>
-
-                        <td style="width: 205px;">
-                            <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 205px; cursor:pointer;" #selectControl (change)="ActionItemSelectionChanged(selectControl)">
-                                <option *ngFor="let c of ActionTypeItems" [value]="c.Id" [selected]="c.Id==SelectedIndex">{{c.Name}}</option>
-                            </select>
-                        </td>
-
-                        <td style="width: 155px;">
-                            <div></div>
-                        </td>
-
-                        <td style="width: 205px;">
-                            <div></div>
-                        </td>
-                        <td>
-                            <div></div>
-                        </td>
-
-                    </tr>
+            <table class="FixedTable">
 
 
+                <tr class="FormFieldRow">
+                    <td style="width: 155px;">
+                        <LogLabel [ObjectFieldName]="'ActionType'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Action'"></LogLabel>
+                    </td>
+
+                    <td style="width: 205px;">
+                        <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 205px; cursor:pointer;" #selectControl (change)="ActionItemSelectionChanged(selectControl)">
+                            <option *ngFor="let c of ActionTypeItems" [value]="c.Id" [selected]="c.Id==_SelectedIndexActionTypeItem">{{c.Name}}</option>
+                        </select>
+                    </td>
+
+                    <td style="width: 155px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 205px;">
+                        <div></div>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+
+                </tr>
 
 
 
-                    <tr *ngIf="!IsCreateJournalEvery" class="FormFieldRow">
-                        <td style="width: 155px;">
-                            <LogLabel [ObjectFieldName]="'Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Amount'"></LogLabel>
-                        </td>
-
-                        <td style="width: 205px;">
-                            <LogTextBox [ObjectFieldName]="'Amount'" [Text]="Amount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                        </td>
-
-                        <td style="width: 155px;">
-                            <div></div>
-                        </td>
-
-                        <td style="width: 205px;">
-                            <div></div>
-                        </td>
-                        <td>
-                            <div></div>
-                        </td>
 
 
-                    </tr>
-                    <tr *ngIf="IsCreateJournalEvery" class="FormFieldRow">
-                        <td>
-                            <LogLabel [ObjectFieldName]="'EveryMinute'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'EveryMinute'"></LogLabel>
-                        </td>
+                <tr class="FormFieldRow">
+                    <td style="width: 155px;">
+                        <LogLabel [ObjectFieldName]="'Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Amount'"></LogLabel>
+                    </td>
 
-                        <td>
-                            <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 205px; cursor:pointer;" #selectControl (change)="EveryMinuteItemSelectionChanged(selectControl)">
-                                <option *ngFor="let c of EveryMinuteItems" [value]="c" [selected]="c==SelectedIndex">{{c}}</option>
-                            </select>
+                    <td style="width: 205px;">
+                        <LogTextBox [ObjectFieldName]="'Amount'" [Text]="Amount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
 
-                        </td>
+                    <td style="width: 155px;">
+                        <div></div>
+                    </td>
 
-                        <td>
-                            <LogLabel [ObjectFieldName]="'Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Amount'"></LogLabel>
-                        </td>
-
-                        <td>
-                            <LogTextBox [ObjectFieldName]="'Amount'" [Text]="Amount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-
-                    </tr>
+                    <td style="width: 205px;">
+                        <div></div>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
 
 
-                    <tr>
-                        <td colspan="5">
-                            <div></div>
-                        </td>
-                    </tr>
-                </table>
+                </tr>
+                <tr *ngIf="IsCreateJournalEvery" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'EveryMinute'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Sleep in Minute'"></LogLabel>
+                    </td>
+
+                    <td>
+                        <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 205px; cursor:pointer;" #selectControl (change)="EveryMinuteItemSelectionChanged(selectControl)">
+                            <option *ngFor="let c of EveryMinuteItems" [value]="c" [selected]="c==SelectedIndexEveryMinuteItem">{{c}}</option>
+                        </select>
+
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                </tr>
+
+                <tr *ngIf="IsCreateJournalEvery || IsCreateJournal" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Year'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Journal Year '"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Year'" [Text]="Year" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td colspan="5">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
         </td>
     </tr>
 

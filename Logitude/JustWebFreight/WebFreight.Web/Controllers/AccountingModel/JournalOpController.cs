@@ -41,6 +41,7 @@ using Logitude.Accounting.Data.Repositories;
 using System.Transactions;
 using WebFreight.Web.AccountingModel.Reports.Journal;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.Accounting.BL.CoreBL.Batch;
 
 namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
 {
@@ -149,6 +150,41 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
             }
         }
 
-        
+
+        public HttpResponseMessage GetTaskLoadTest(int tenant, string actionType, int amount, int sleepEveryMinute, int year)
+        {
+
+
+            try
+            {
+                JournalPM journal = null;
+                using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.CheckContactFeature("Journal", "UPDATE", authToken.Tenant);
+
+                    IAccountingContext accountingContext = AccountingContext.GetContext(authToken.Tenant);
+
+                    //entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    //service.Update(entityPM, true);
+                    var myBatchAccountingLoadTestTask = new BatchAccountingLoadTestTask( new Logitude.Infrastructure.BL.EntityPMs.BatchTaskExecutionPM());
+                    myBatchAccountingLoadTestTask.CreateBatchAccountingLoadTestTask(tenant, actionType, amount, sleepEveryMinute, year);
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, journal);
+                }
+            }
+
+
+
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
     }
 }
