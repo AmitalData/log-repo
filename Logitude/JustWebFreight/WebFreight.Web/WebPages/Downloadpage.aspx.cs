@@ -232,7 +232,13 @@ namespace WebFreight.Web.WebPages
                     {
                         Uploader up = new Uploader();
 
-                        if (filestrings.Count() > 1)
+                        if 
+                            (
+                            (!LogitudeSettings.IsCostomsDeploy &&  filestrings.Count() > 1) 
+                            ||
+                            (LogitudeSettings.IsCostomsDeploy && filestrings.Count() > 2)// copy from 18r01d
+                            )
+
                         {
                             documentExtension = "pdf";
                             filename += ".pdf";
@@ -245,7 +251,11 @@ namespace WebFreight.Web.WebPages
                             bool isTenantZero = (int)tenant == 0 ? true : false;
                             if (string.IsNullOrEmpty(securityKey))
                             {
-                                documentExtension = up.GetFileExtension(documentId, (int)tenant, isTenantZero);
+                                if (LogitudeSettings.IsCostomsDeploy && filestrings.Count() == 2)// copy from 18r01d
+                                {
+                                    filename = documentId = filestrings[1].ToString();
+                                }
+                                    documentExtension = up.GetFileExtension(documentId, (int)tenant, isTenantZero);
 
                                 if (!string.IsNullOrEmpty(documentExtension))
                                 {
