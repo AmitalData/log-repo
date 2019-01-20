@@ -521,8 +521,12 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         //*********************** task 32398 new version button********************//
 
         if (this.CustomsDocument) {
+            var isSendWithCustomsDocId: boolean = false;
+            if (this.ParentEntityCode == "CustomsCollateral") {
+                isSendWithCustomsDocId = true;
+            }
 
-            if (this.CustomsDocument.CustomsDocId) {
+            if (this.CustomsDocument.CustomsDocId && !isSendWithCustomsDocId) {
                 this.IsMetaDataEditEnabled = false;
                 this.IsSendDocumentEnabled = false;
             }
