@@ -292,6 +292,8 @@ export class CounterAdvancedComponent extends BaseComponent {
                     }
                 }
             }
+            else {
+            }
 
             if (!isValidUniquePrefix) {
                 var messageWindow = new MessageWindow();
@@ -300,16 +302,32 @@ export class CounterAdvancedComponent extends BaseComponent {
 
             else {
                 var errors: string[] = [];
+                if (this.CounterSize > 15) {
+                    errors.push("Maximum size allowed for counter is 15");
+                }
+                if (this.UniquePerPrefix == true) {
+                    this.APIHelper.CounterDefinitions.forEach(item => {
+                        Validator.TryValidateObject(item, this.ObjectTableName, errors);
 
-                this.APIHelper.CounterDefinitions.forEach(item => {
-                    Validator.TryValidateObject(item, this.ObjectTableName, errors);
-
-                    if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
-                        if ((item.StartNumber + item.Prefix).length > 15) {
-                            errors.push("Maximum length allowed for [Startnumber + Prefix] is 15");
+                        if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
+                            if ((item.StartNumber).toString().length + AppTool.GetCounterPrefixLength(item.Prefix)> 15) {
+                                errors.push("Maximum length allowed for [Prefix + StartNumber] is 15");
+                            }
                         }
+                    });
+                }
+                else {
+
+                    //var m = AppTool.GetCounterPrefixLength(this.Prefix);
+                    if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) > 15) {
+                        errors.push("Maximum length allowed for [Prefix + StartNumber] is 15");
                     }
-                });
+
+                    this.APIHelper.CounterDefinitions.forEach(item => {
+                        Validator.TryValidateObject(item, this.ObjectTableName, errors);
+                    });
+                }
+            
 
                 this.ValidationErrorsList = errors;
 

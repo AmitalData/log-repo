@@ -99,6 +99,26 @@ export class FieldTemplateComponent {
                 this.FieldValue = this.Entity.StatusLocalName;
             }
         }
+
+        if (this.ObjectTableName == "OpenFormatReport" && this.FieldName == "Status") {
+
+            if (SessionLocator.LoggedUserPM.DontShowLocal) {
+                this.FieldValue = this.Entity.Status;
+            }
+            else {
+                this.FieldValue = this.Entity.StatusLocalName;
+            }
+        }
+
+        if (this.ObjectTableName == "OpenFormatReport" && this.FieldName == "CreatedByUserName") {
+
+            if (SessionLocator.LoggedUserPM.DontShowLocal) {
+                this.FieldValue = this.Entity.CreatedByUserName;
+            }
+            else {
+                this.FieldValue = this.Entity.UserLocalName;
+            }
+        }
     }
 
     Abs(num: number) {

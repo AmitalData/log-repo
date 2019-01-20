@@ -76,7 +76,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
                         entityPM.Status = status.EnglishName;
                     }
-                    else { entityPM.Status = status.LocalName; }
+                    else { entityPM.StatusLocalName = status.LocalName; }
                    
 
                 }
@@ -98,7 +98,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
                         entityPM.CreatedByUserName = contact.EnglishName;
                     }
-                    else { entityPM.CreatedByUserName = contact.LocalName; }
+                    else { entityPM.UserLocalName = contact.LocalName; }
 
 
                 }
