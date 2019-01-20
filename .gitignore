@@ -226,6 +226,7 @@ PublishScripts/
 # NuGet Packages
 *.nupkg
 **/Logitude/packages/*
+**/LogitudeTools/WorkerRoleSimulation/packages/*
 # The packages folder can be ignored because of Package Restore
 # except build/, which is used as an MSBuild target.
 
@@ -367,15 +368,29 @@ __pycache__/
 /Logitude/JustWebFreight/WebFreight.Web/Angular
 /Logitude/JustWebFreight/WebFreight.Web/Angular/out-tsc
 /Logitude/AngularModules/packages
-/Logitude/JustWebFreight/WebFreight.Web/JustConfig/Customs.ConnectionStrings.config
+/Logitude/JustWebFreight/WebFreight.Web/JustWebFreightCustomsConnectionStrings.config
+/Logitude/JustWebFreight/WebFreight.Web/JustWebFreightConnectionStrings.config
+/Logitude/JustWebFreight/WebFreight.Web/JustWebFreightCustomsappSettings.config
+/Logitude/JustWebFreight/WebFreight.Web/JustWebFreightappSettings.config
 /Logitude/JustWebFreight/WebFreight.Web/JustConfig/Master.ConnectionStrings.config
-/Logitude/JustWebFreight/WebFreight.Web/JustConfig/Customs.appSettings.config
 /Logitude/JustWebFreight/WebFreight.Web/JustConfig/Master.appSettings.config
-/Logitude/JustWebFreight/WebFreight.Web/JustConfig/CustomsR.ConnectionStrings.config
-/Logitude/JustWebFreight/WebFreight.Web/JustConfig/CustomsR.appSettings.config
-*.7z
+/Logitude/JustWebFreight/WebFreight.Web/Angular
+/Logitude/JustWebFreight/WebFreight.Web/JustConfig
+/Logitude/JustWebFreight/WebFreight.Web/Angular/out-tsc
+/Logitude/Logitude.DatabaseMigration/JustWebFreightConnectionStrings.config
+/Logitude/AngularModules/packages
+/Logitude/JustWebFreight/WebFreight.Web/JustConfig/Master.ConnectionStrings.config
+/Logitude/JustWebFreight/WebFreight.Web/JustConfig/Master.appSettings.config
+/Logitude/MetaDataGenerator/GeneratedFiles/New
+/Logitude/AngularModules/LoginModules/aot/Login
+/Logitude/AngularModules/AngularModules/Common/Services/StandardLists
+/LogitudeTools/WorkerRoleSimulation/packages
+/Logitude/Logitude.DatabaseMigration/JustWebFreightappSettings.config
 /Logitude/JustWebFreight/WebFreight.Web/582_JustWebFreightappSettings.config
 /Logitude/JustWebFreight/WebFreight.Web/582_JustWebFreightConnectionStrings.config
 /Logitude/JustWebFreight/WebFreight.Web/_JustWebFreightappSettings.config
 /Logitude/JustWebFreight/WebFreight.Web/_JustWebFreightConnectionStrings.config
-/Logitude/JustWebFreight/WebFreight.Web
+/Logitude/JustWebFreight/WebFreight.Web/JustConfig/Customs.appSettings.config
+/Logitude/JustWebFreight/WebFreight.Web/JustConfig/Customs.ConnectionStrings.config
+/Logitude/JustWebFreight/WebFreight.Web/JustAmitalCustomsWindowsServiceappSettings.config
+/Logitude/JustWebFreight/WebFreight.Web/JustAmitalCustomsWindowsServiceConnectionStrings.config
