@@ -71,6 +71,7 @@ using WebFreight.Web.DataContracts;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data.Repsitories;
 using System.IO;
+using WebFreight.Web.App_Code.AngularJS_App_Code.Global;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -1647,6 +1648,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 if (entityPM != null)
                 {
                     QueryData.BIReportPM = entityPM;
+
+                    DWSubQueryQuery dWSubQueryQuery = new DWSubQueryQuery(authToken.Tenant);
+                    DWSubQueryPM dWSubQueryPM = dWSubQueryQuery.GetSinglePMByQueryid(entityPM.DWQueryId, authToken.Tenant);
+                    DWQueryData DWQueryData = new DWQueryData();
+                    if (dWSubQueryPM != null)
+                    {
+                        var Columns = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(dWSubQueryPM.ColumnsXML);
+                        var Filters = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(dWSubQueryPM.FiltersXML);
+                        DWQueryData.SubQueryData = dWSubQueryPM;
+                        DWQueryData.Columns = Columns;
+                        DWQueryData.Filters = Filters;
+                    }
+                    QueryData.DWQueryData = DWQueryData;
+                 
                     if (!string.IsNullOrEmpty(entityPM.AGGridOptionsXML))
                     {
                         var bITabularViewSettings = LogitudeXmlSerializer.DeserializeObject<BITabularViewSettings>(entityPM.AGGridOptionsXML);

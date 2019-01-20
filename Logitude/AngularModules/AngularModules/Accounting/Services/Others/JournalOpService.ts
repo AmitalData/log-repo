@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -41,7 +41,24 @@ export class JournalOpService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    
+    GetTaskLoadTest(tenant: number, actionType: string, amount: number, sleepEveryMinute: number, year: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var url = this._apiUrl + '/GetTaskLoadTest?tenant=' + tenant.toString() + "&actionType=" + actionType + "&amount=" + amount.toString() + "&sleepEveryMinute=" + sleepEveryMinute.toString() + "&year=" + year;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+
+                var result = response.json();
+                
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: JournalPM = null) {
 
 
