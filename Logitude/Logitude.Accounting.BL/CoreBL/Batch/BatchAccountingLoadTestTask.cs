@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -37,18 +38,19 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 var displayNumberProvider = new DisplayNumberProvider();
 
 
-                switch (parameterArgs.ActionType.ToUpper())
+                switch (parameterArgs.ActionType)
                 {
                     case "CreateVendors"://, Name: "Create Vendors " });
                         {
                             dummyTenantProviderArg.CreateVendors = parameterArgs.Amount;
-                            
+                            g.Amount2addMore = true;
                             g.GenrateGLAccount(dummyTenantProviderArg, accountingContext, chartOfAccountProvider, displayNumberProvider, null, parameterArgs.Tenant);
                         }
                         break;
                     case "CreateCustomers":///, Name: "Create Suppliers " });
                         {
                             dummyTenantProviderArg.CreateVendors = parameterArgs.Amount;
+                            g.Amount2addMore = true;
                             g.GenrateGLAccount(dummyTenantProviderArg, accountingContext, chartOfAccountProvider, displayNumberProvider, null, parameterArgs.Tenant);
                         }
                         break;
@@ -62,7 +64,12 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
                     case "CreateJournalEvery"://, Name: "Create Journal Every" });
                         {
-
+                            while (true)
+                            {
+                                Thread.Sleep(TimeSpan.FromMinutes(parameterArgs.SleepEveryMinute));
+                                g = new DummyTenantProvider();
+                                g.GenrateJournals(parameterArgs.Amount, accountingContext, parameterArgs.JournalYYYY, parameterArgs.Tenant);
+                            }
                         }
                         break;
 
@@ -83,11 +90,11 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             
         }
 
-        public void CreateBatchAccountingLoadTestTask(int tenant ,string ActionType,int amount , int sleepEveryMinute)
+        public void CreateBatchAccountingLoadTestTask(int tenant ,string ActionType,int amount , int sleepEveryMinute,int year)
         {
             
             
-                var args = new BatchAccountingLoadArg() { Tenant = tenant, ActionType = ActionType,Amount= amount, SleepEveryMinute= sleepEveryMinute };
+                var args = new BatchAccountingLoadArg() { Tenant = tenant, ActionType = ActionType,Amount= amount, SleepEveryMinute= sleepEveryMinute, JournalYYYY= year };
                 var stringwriter = new System.IO.StringWriter();
                 var serializer = new XmlSerializer(typeof(BatchAccountingLoadArg));
                 serializer.Serialize(stringwriter, args);
@@ -111,6 +118,11 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 var bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
                 bteUpdateService.Update(taskExe, true);
 
+            bool immdet = false;
+            if (!immdet)
+            {
+
+
                 // 2- Send to queue
                 var queueservice = new DbQueueService();
                 queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
@@ -121,7 +133,12 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", tenant.ToString() }
                 });
-
+            }
+            else
+            {
+                var taskIt = new BatchAccountingLoadTestTask(taskExe) as BatchTaskExecutionsService;
+                taskIt.Execute();
+            }
             
         }
     }
