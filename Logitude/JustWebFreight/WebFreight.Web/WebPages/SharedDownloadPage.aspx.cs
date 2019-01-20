@@ -169,8 +169,16 @@ namespace WebFreight.Web.WebPages
 
                         if (!string.IsNullOrEmpty(token))
                         {
-                            if (document.DirectionCode == "O")
-                                continue;
+                            if (partnerType == "O")
+                            {
+                                if (document.DirectionCode == "I")
+                                    continue;
+                            }
+                            else
+                            {
+                                if (document.DirectionCode == "O")
+                                    continue;
+                            }
                         }
 
 

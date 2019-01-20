@@ -263,16 +263,30 @@ export class CounterInvoiceComponent extends BaseComponent {
 
             else {
                 var errors: string[] = [];
+                if (this.CounterSize > 20) {
+                    errors.push("Maximum size allowed for counter is 20");
+                }
+                if (this.UniquePerPrefix == true) {
+                    this.APIHelper.CounterDefinitions.forEach(item => {
+                        Validator.TryValidateObject(item, this.ObjectTableName, errors);
 
-                this.APIHelper.CounterDefinitions.forEach(item => {
-                    Validator.TryValidateObject(item, this.ObjectTableName, errors);
-
-                    if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
-                        if ((item.StartNumber + item.Prefix).length > 20) {
-                            errors.push("Maximum length allowed for [Startnumber + Prefix] is 20");
+                        if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
+                            if ((item.StartNumber).toString().length + AppTool.GetCounterPrefixLength(item.Prefix) > 20) {
+                                errors.push("Maximum length allowed for [Prefix + StartNumber] is 20");
+                            }
                         }
+                    });
+                }
+                else {
+
+                    if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) > 20) {
+                        errors.push("Maximum length allowed for [Prefix + StartNumber] is 20");
                     }
-                });
+
+                    this.APIHelper.CounterDefinitions.forEach(item => {
+                        Validator.TryValidateObject(item, this.ObjectTableName, errors);
+                    });
+                }
 
                 this.ValidationErrorsList = errors;
 
