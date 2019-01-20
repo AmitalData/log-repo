@@ -73,7 +73,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsTCS, 
 	         IsTPS, 
 	         VehicleCategory, 
-	         VehicleMaxPowerKW,
+	         VehicleMaxPowerKW, 
+	         PassportName,
 	      }
 
 
@@ -148,7 +149,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsTCS, 
 	         IsTPS, 
 	         VehicleCategory, 
-	         VehicleMaxPowerKW,
+	         VehicleMaxPowerKW, 
+	         PassportName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -410,6 +412,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleMaxPowerKW))
             {
 				entityPOCO.VehicleMaxPowerKW = entityPM.VehicleMaxPowerKW;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PassportName))
+            {
+				entityPOCO.PassportName = entityPM.PassportName;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -678,6 +685,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.VehicleMaxPowerKW = entityPOCO.VehicleMaxPowerKW;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PassportName))
+            {
+					entityPM.PassportName = entityPOCO.PassportName;
+            }
+
 		}
 
 		public void PMToOldPM(VehiclePM entityPM, VehiclePM oldEntityPM)
@@ -939,6 +951,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.VehicleMaxPowerKW = entityPM.VehicleMaxPowerKW;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PassportName))
+            {
+                oldEntityPM.PassportName = entityPM.PassportName;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(VehiclePM entityPM)
@@ -951,6 +968,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.PassportName)) //T4 find type == nText 
+            {
+                entityPM.PassportName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.PassportName));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

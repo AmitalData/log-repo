@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using System;
 using System.Collections.Generic;
@@ -20,8 +21,10 @@ namespace Logitude.CustomsMessaging.Helpers
         public UnifreightDocumentsFilingService(ICommonDataContext objectContext, int tenant,string DeclarationNumVersionId = null)
             :base(objectContext, tenant)
         {
-            base.DeclarationNumVersionId = DeclarationNumVersionId;
+            base.MetaDataVersionValue = DeclarationNumVersionId;
         }
+        public bool OnlyIfChangeUpdateAndAddVersion { get; set; }
+        
         new public void Update(DocumentsFilingPM theEntityPm, byte[] fileData = null, string loggedUserId = null, bool FromService = false)
         {
 
@@ -51,6 +54,20 @@ namespace Logitude.CustomsMessaging.Helpers
                         MD5HASH = lstGDMFILEVER.MD5HASH,
                         EXTENSION = lstGDMFILEVER.EXTENSION,
                     };
+                }
+                if (OnlyIfChangeUpdateAndAddVersion && fileData!=null && base.MyUniFileVerM!=null)
+                {
+                    if (MD5HashUtil.GetMD5Hash(fileData)== base.MyUniFileVerM.MD5HASH)
+                    {
+                        LogMessagingUtil.Instance.AppendLine("UnifreightDocumentsFilingService.update() OnlyIfChangeUpdate=true but  MD5HashUtil.GetMD5Hash(fileData)== base.MyUniFileVerM.MD5HASH nothing change => stop DocumentsFilingService.update !!== dont add task/queue hybrid message");
+                        LogMessagingUtil.Instance.AppendLine("אם אין הבדל - לא ליצור בכלל ממשק ליוניפרייט");
+                        return;
+                    }
+                    int nextVer = base.MyUniFileVerM.VERSION + 1;
+                    base.MetaDataVersionValue = $"{theEntityPm.Id}-{nextVer}";
+                    LogMessagingUtil.Instance.AppendLine("UnifreightDocumentsFilingService.update() AddVersion2MetaDataVersionValue=true base.MetaDataVersionValue =" + base.MetaDataVersionValue);
+                    LogMessagingUtil.Instance.AppendLine("c.	אם יש הבדל, יש ליצור ממשק שיצור גרסה חדשה למסמך הקיים");
+
                 }
             }
             

@@ -8,19 +8,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var http_1 = require('@angular/http');
-require('rxjs/add/operator/map');
-var SessionInfo_1 = require('./SessionInfo');
-var PasswordChangeService = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var http_1 = require("@angular/http");
+require("rxjs/add/operator/map");
+var SessionInfo_1 = require("./SessionInfo");
+var PasswordChangeService = /** @class */ (function () {
     function PasswordChangeService(_http) {
         this._http = _http;
         //this._http = ServiceHelper.Http;
         this._apiUrl = SessionInfo_1.SessionInfo.GetLogitudeURL() + 'api/PasswordChange';
     }
     PasswordChangeService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [http_1.Http])
     ], PasswordChangeService);
     return PasswordChangeService;
 }());

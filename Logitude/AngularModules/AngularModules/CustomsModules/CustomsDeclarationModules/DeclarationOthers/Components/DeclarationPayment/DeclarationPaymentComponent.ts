@@ -46,7 +46,8 @@ import {UserListService} from '../../../../../Common/Services/StandardLists/User
 import {CustomsSettingListService} from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
 import {CustomBankListService} from '../../../../../Customs/Services/StandardLists/CustomBankListService';
 import {CustomBankCardExtendedPMService} from '../../../../../Customs/Services/ExtendedPMs/CustomBankCardExtendedPMService';
-import {PaymentMethodTypeListService} from '../../../../../Customs/Services/StandardLists/PaymentMethodTypeListService';
+import { PaymentMethodTypeListService } from '../../../../../Customs/Services/StandardLists/PaymentMethodTypeListService';
+import { CustomerActivityTypeListService } from '../../../../../Customs/Services/StandardLists/CustomerActivityTypeListService';
 import { IIGGeneralMessagesService } from '../../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import {DeclarationMessagesService} from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
 import { DeclarationPaymentPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPaymentPMService';
@@ -56,6 +57,7 @@ import {CustomsSettingExtendedListService} from '../../../../../Customs/Services
 
 import {ErrorLogPMFileLoggerService} from '../../../../../Infrastructure/Services/ExtendedPMs/ErrorLogPMFileLoggerService';
 import {ErrorLogPM} from '../../../../../Infrastructure/EntityPMs/ErrorLogPM';
+import { DateTimeFormat } from '../../../../../Infrastructure/Utilities/DateTimeZone';
 
 
 @Component({
@@ -82,6 +84,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     userListService: UserListService = new UserListService();
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
     paymentMethodTypeListService: PaymentMethodTypeListService = new PaymentMethodTypeListService();
+    customerActivityTypeListService: CustomerActivityTypeListService = new CustomerActivityTypeListService();
     declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
     _CustomsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     PaymentMethodsList: ObservableCollection;
@@ -220,12 +223,16 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         if (newValue)
         {
-            if (this.paymentPM.FuturePaymentDateTime)
-                var date = new Date(Date.parse(this.paymentPM.FuturePaymentDateTime + "")); // sometimes this variable contains string value of date, so convert it to date
-            else
-                var date = new Date();
+            var date: Date = this.FuturePaymentDateTime;
+            if (this.paymentPM.FuturePaymentDateTime && typeof (this.paymentPM.FuturePaymentDateTime) == 'string') {
+                date = this.GetDateFromString(this.paymentPM.FuturePaymentDateTime);
+            }
+           
+            // var date = new Date(Date.parse(this.paymentPM.FuturePaymentDateTime + "")); // sometimes this variable contains string value of date, so convert it to date
+            //else
+            //    var date = this.GetTodaysDate();// new Date();
 
-            var datetime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), newValue.getHours(), newValue.getMinutes(), newValue.getSeconds());
+            var datetime = this.GetDate(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), newValue.getUTCHours(), newValue.getUTCMinutes(), newValue.getUTCSeconds());//new Date(date.getFullYear(), date.getMonth(), date.getDate(), newValue.getHours(), newValue.getMinutes(), newValue.getSeconds());
             this.FuturePaymentDateTime = datetime;
             this._FuturePaymentTime = datetime;
         }
@@ -243,6 +250,203 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
     //#endregion
+    GetTodaysDate() {
+        var today: Date = new Date();
+        today.setUTCFullYear(today.getFullYear());
+        today.setUTCMonth(today.getMonth());
+        today.setUTCDate(today.getDate());
+        today.setUTCHours(today.getHours());
+        today.setUTCMinutes(today.getMinutes());
+        today.setUTCSeconds(today.getSeconds());
+        today.setUTCMilliseconds(0);
+        return today;
+    }
+
+    GetDateFromString(datestring: string) {
+        //2016/08/14 05:00:00
+        //2016-08-14T05:00:00
+        //2016/08/14 05:00:00 PM
+        //console.log("this is the date string that arrived " + datestring);
+        var dateAndTime: string[];
+        var suffix: string;
+        if (datestring.indexOf('T') > -1) {
+            dateAndTime = datestring.split('T');
+        }
+        else {
+            dateAndTime = datestring.split(' ');
+        }
+        var dateArray: string[];
+        if (dateAndTime[0].indexOf('/') > -1) {
+            dateArray = dateAndTime[0].split('/');
+        }
+        else if (dateAndTime[0].indexOf('-') > -1) {
+            dateArray = dateAndTime[0].split('-');
+        }
+        else if (dateAndTime[0].indexOf('.') > -1) {
+            dateArray = dateAndTime[0].split('.');
+        }
+
+        if (dateAndTime.length > 2) {
+            suffix = dateAndTime[2];
+        }
+
+        var timeArray: string[];
+        var hour: number = 0;
+        var minute: number = 0;
+        var second: number = 0;
+        if (dateAndTime.length >= 2) {
+            if (dateAndTime[1].indexOf('.') > -1) {
+                timeArray = dateAndTime[1].split('.')[0].split(':');
+            }
+            else {
+                timeArray = dateAndTime[1].split(':');
+            }
+            var hour: number = this.GetTimeFor24Mode(Number(timeArray[0]), suffix);
+            var minute: number = Number(timeArray[1]);
+            var second: number = Number(timeArray[2].substring(0, 2));
+        }
+
+        var year: number = Number(dateArray[0]);
+        var month: number = Number(dateArray[1]) - 1;
+        var day: number = Number(dateArray[2]);
+
+        var date: Date = this.GetDate(year, month, day, hour, minute, second);
+        return date;
+    }
+
+    GetTimeFor24Mode(hours: number, suffix: string) {
+        if (suffix) {
+            var convHour;
+            if (suffix.toLowerCase() == 'am') {
+                if (hours >= 12) {
+                    switch (hours) {
+                        case 12: {
+                            convHour = 0;
+                            break;
+                        }
+                        case 13: {
+                            convHour = 1;
+                            break;
+                        }
+                        case 14: {
+                            convHour = 2;
+                            break;
+                        }
+                        case 15: {
+                            convHour = 3;
+                            break;
+                        }
+                        case 16: {
+                            convHour = 4;
+                            break;
+                        }
+                        case 17: {
+                            convHour = 5;
+                            break;
+                        }
+                        case 18: {
+                            convHour = 6;
+                            break;
+                        }
+                        case 19: {
+                            convHour = 7;
+                            break;
+                        }
+                        case 20: {
+                            convHour = 8;
+                            break;
+                        }
+                        case 21: {
+                            convHour = 9;
+                            break;
+                        }
+                        case 22: {
+                            convHour = 10;
+                            break;
+                        }
+                        case 23: {
+                            convHour = 11;
+                            break;
+                        }
+                    }
+                    return convHour.toString();
+
+                }
+                return hours.toString();
+            }
+            if (suffix.toLowerCase() == 'pm') {
+                if (hours < 12) {
+                    switch (hours) {
+                        case 0: {
+                            convHour = 12;
+                            break;
+                        }
+                        case 1: {
+                            convHour = 13;
+                            break;
+                        }
+                        case 2: {
+                            convHour = 14;
+                            break;
+                        }
+                        case 3: {
+                            convHour = 15;
+                            break;
+                        }
+                        case 4: {
+                            convHour = 16;
+                            break;
+                        }
+                        case 5: {
+                            convHour = 17;
+                            break;
+                        }
+                        case 6: {
+                            convHour = 18;
+                            break;
+                        }
+                        case 7: {
+                            convHour = 19;
+                            break;
+                        }
+                        case 8: {
+                            convHour = 20;
+                            break;
+                        }
+                        case 9: {
+                            convHour = 21;
+                            break;
+                        }
+                        case 10: {
+                            convHour = 22;
+                            break;
+                        }
+                        case 11: {
+                            convHour = 23;
+                            break;
+                        }
+                    }
+                    return convHour.toString();
+
+                }
+                return hours.toString();
+            }
+        }
+        return hours;
+    }
+
+    GetDate(year: number, month: number, day: number, hour: number, minute: number, second: number) {
+        var date: Date = new Date();
+        date.setUTCDate(1);
+        date.setUTCFullYear(year);
+        date.setUTCMonth(month);
+        date.setUTCDate(day);
+        date.setUTCHours(hour);
+        date.setUTCMinutes(minute);
+        date.setUTCSeconds(second);
+        date.setUTCMilliseconds(0);
+        return date;
+    }
 
     LoadPayment() {
         //if (!dontPerformCheckEnabled) {
@@ -337,25 +541,29 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         this.RefreshScreen();
 
-        if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
+        //if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
 
-            /*
-            Auto Filling screen data - check field Default “CGG_PAYHAND_FIL” in Unifreight  , if TRUE - WI 32966
-            PaymentMethodType - 1(Masab)
-            PaymentMethodAmount - Total Tax (same as double click on the field)
-            */
+        //    /*
+        //    Auto Filling screen data - check field Default “CGG_PAYHAND_FIL” in Unifreight  , if TRUE - WI 32966
+        //    PaymentMethodType - 1(Masab)
+        //    PaymentMethodAmount - Total Tax (same as double click on the field)
+        //    */
 
 
-            //this.OldAutoFillPaymentScreen();
-            this.AutoFillPaymentScreenByDefault();
+        //    //this.OldAutoFillPaymentScreen();
+        //    this.AutoFillPaymentScreenByDefault();
 
-        }
+        //}
 
 
 
     }
 
     private PostSendCreditToGetBank() {
+
+        if (this.DeclarationPM.PaymentDate) {
+            return;
+        }
 
         let objecttable: ObjectTablePM = window.ObjectTables.filter(d => d.Name == "Customs.Declaration")[0];
         let searchParams = new CustomFileCreditRequestParams();
@@ -404,8 +612,17 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         let bank: CustomBankList = allCustomBankList.filter(d => d.InternalCode == customFileCreditResponseData.BankCode && !d.InActive)[0];
                         if (!AppTool.IsNullOrEmpty(bank)) {
                             this.GetCreditInternalBankId = bank.Id;
+                            //if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                            //    this.JustAutoFillPaymentScreen();
+                            //}
+                            if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
+                                this.AutoFillPaymentScreenByDefault();
+                            }
                         }
                     });
+                }
+                else if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
+                    this.AutoFillPaymentScreenByDefault();
                 }
                 SessionLocator.CurrentSession.StopBusyIndicator();
             });
@@ -444,22 +661,49 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     AutoFillPaymentScreenByDefault() {
         this.NewMethodMethod();
-        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", SessionLocator.Tenant)
-            .subscribe(
-            (response: ServiceResponse) => {
-                let obj = response.Result;
-                if (obj) {
-                    let DefaultValue = obj['DefaultValue'];
 
-                    if (DefaultValue == "A") {//==AutoFillPaymentScreen //if (customsSetting.AutoFillPaymentScreen) {
-                        if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
-                            this.JustAutoFillPaymentScreen();
+        if (!AppTool.IsNullOrEmpty(this.GetCreditInternalBankId)) {
+            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                this.JustAutoFillPaymentScreen();
+                return;
+            }
+        }
+
+        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAYCASH_FIL", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant)
+            .subscribe((response: ServiceResponse) => {
+                    let obj = response.Result;
+                    if (obj) {
+                        let DefaultValue = obj['DefaultValue'];
+                        if (DefaultValue == "Y") {
+                            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                                this.JustAutoFillPaymentScreenCash();
+                            }
+                        }
+                        else {
+                            this.AutoFillPaymentScreen();
                         }
                     }
-                }
-            }
-            );
+                });
+        
     }
+
+    AutoFillPaymentScreen() {
+        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", SessionLocator.Tenant)
+            .subscribe(
+                (response: ServiceResponse) => {
+                    let obj = response.Result;
+                    if (obj) {
+                        let DefaultValue = obj['DefaultValue'];
+
+                        if (DefaultValue == "A") {//==AutoFillPaymentScreen //if (customsSetting.AutoFillPaymentScreen) {
+                            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                                this.JustAutoFillPaymentScreen();
+                            }
+                        }
+                    }
+                });
+    }
+
     JustAutoFillPaymentScreen() {
         for (let method of this.PaymentMethodsList.Collection) {
             method.Amount = this.DeclarationPM.TotalTax;
@@ -467,10 +711,23 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
                 method.MethodTypeName = response.Result.LocalName;
             });
-
-
         }
     }
+
+    JustAutoFillPaymentScreenCash() {
+        for (let method of this.PaymentMethodsList.Collection) {
+            method.Amount = this.DeclarationPM.TotalTax;
+            method.MethodTypeCode = "2";
+            this.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
+                method.MethodTypeName = response.Result.LocalName;
+            });
+            method.PayerActivityTypeCode = "0";
+            this.customerActivityTypeListService.getSingleFromCache("0").subscribe((response: ServiceResponse) => {
+                method.PayerActivityTypeName = response.Result.LocalName;
+            });
+        }
+    }
+
     OldAutoFillPaymentScreen() {
         this.customsSettingListService.getAll().subscribe((response: ServiceResponse) => {
             var list = response.Result;
@@ -2005,7 +2262,7 @@ export class PaymentMethodModel extends BaseComponent {
                                 }
                                 else {
                                     if (customsSetting != null) {
-                                        this.InternalBankId = null;
+                                        //this.InternalBankId = null;
                                         if (!AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
                                             this.InternalBankId = this.parent.GetCreditInternalBankId;
                                         }

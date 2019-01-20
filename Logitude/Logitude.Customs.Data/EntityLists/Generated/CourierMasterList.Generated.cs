@@ -76,6 +76,10 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? EstimatedArrivalDateOnly  { get; set; }
        [DataMember]
        public DateTime? EstimatedArrivalTimeOnly  { get; set; }
+       [DataMember]
+       public string WeightValueCode  { get; set; }
+       [DataMember]
+       public string WeightValueName  { get; set; }
    }
 
 }

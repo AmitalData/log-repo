@@ -53,6 +53,7 @@ using System.Timers;
 using Logitude.SystemLogs.Repositories;
 using Logitude.SystemLogs.POCOs;
 using Logitude.Server.Tools.Counters;
+using WebFreight.Web.Helpers;
 
 
 namespace WebFreight.Web
@@ -136,7 +137,7 @@ namespace WebFreight.Web
                           return amitalRestrictOwnerService;
                       };
                 }
-
+                
                 LogitudeSettings.HandleDbExceptionInject = ExceptionHandler.HandleDbException;
                 LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject = MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
 
@@ -147,8 +148,8 @@ namespace WebFreight.Web
                     return authToken.Tenant;
                     
                 };
-                InjectionUtil.Init(createAmitalRestrictOwnerModelService, getTenantFromToken, SecurityUtility.CheckContactFeature,() => (new ByteCompressorUtil()) as IByteCompressorUtil);
-
+                InjectionUtil.Init(createAmitalRestrictOwnerModelService, getTenantFromToken, SecurityUtility.CheckContactFeature, () => (new ByteCompressorUtil()) as IByteCompressorUtil, new IISManager());
+                ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
 
 
 

@@ -34,11 +34,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public DateTime? UpdateDateTime { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
-        [ForeignKey("Airline")]
+        [ForeignKey("CustomsAirline")]
         [Column("AirlineId")]
 	    public string AirlineId { get; set; }
 	      
-        public virtual Airline Airline { get; set; }
+        public virtual CustomsAirline CustomsAirline { get; set; }
         [Column("MAWB")]
 	    public string MAWB { get; set; }
         [Column("HAWB")]
@@ -81,6 +81,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string FlightNumber { get; set; }
         [Column("DepartureDate")]
 	    public DateTime? DepartureDate { get; set; }
+        [ForeignKey("FreightPaymentMethod")]
+        [Column("WeightValueCode")]
+	    public string WeightValueCode { get; set; }
+	      
+        public virtual FreightPaymentMethod FreightPaymentMethod { get; set; }
     }
 }
 	 

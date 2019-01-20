@@ -162,6 +162,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string VehicleCategory { get; set; }
         [Column("VehicleMaxPowerKW")]
 	    public decimal? VehicleMaxPowerKW { get; set; }
+        [Column("PassportName")]
+	    public string PassportName { get; set; }
     }
 }
 	 

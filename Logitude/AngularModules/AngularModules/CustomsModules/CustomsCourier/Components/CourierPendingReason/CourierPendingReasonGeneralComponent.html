@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .MyRow {
         float:right;
@@ -35,7 +35,7 @@
             <tr style="height: 150px; width: 410px;">
                 <td colspan="2" style="width: 410px;">
                     <div style="height: 150px; width: 410px; text-align:center; border: 1px solid #AAAAAA; border-radius: 5px;">
-                        <textarea style="height: 150px; width: 410px; box-shadow:none;" [disabled]="false">{{PendingRemarks}}</textarea>
+                        <textarea [(ngModel)]="PendingRemarks" style="height: 150px; width: 410px; box-shadow:none;" [disabled]="false"></textarea>
                     </div>
                 </td>
                 <td></td>

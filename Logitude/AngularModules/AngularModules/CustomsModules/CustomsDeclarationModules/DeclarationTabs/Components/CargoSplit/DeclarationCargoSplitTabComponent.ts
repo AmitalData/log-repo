@@ -1,5 +1,3 @@
-
-
 declare var System: any;
 declare var window: any;
 import { Component, OnInit } from '@angular/core';
@@ -18,10 +16,11 @@ import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';;
 import { DeclarationCargoSplitPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationCargoSplitPMService';
 import { DeclarationCargoSplitPM } from '../../../../../Customs/EntityPMs/DeclarationCargoSplitPM';
-import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';//test4
-import {CargoSplitRequestParams} from '../../../../../Customs/DataContract/RequestParams/CargoSplitRequestParams';
-import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
+import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';//test4
+import { CargoSplitRequestParams } from '../../../../../Customs/DataContract/RequestParams/CargoSplitRequestParams';
+import { INF_MSG_GenericResponseData } from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
 
+import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPMService';
 
 @Component({
     moduleId: module.id,
@@ -32,7 +31,7 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
     public EntityPM: DeclarationPM = null;
     public ObjectTableName = "Customs.Declaration";
     public DataContext: this;
-
+    _EntityPMService: EntityPMService;
     public CurrentEditComponentId: string;
     public DeclarationCargoSplitList: ObservableCollection;
 
@@ -47,7 +46,7 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
     constructor(private entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.DeclarationCargoSplitList = new ObservableCollection([]);
-
+        this._EntityPMService = new EntityPMService();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe(response => {
                 this.EntityPM = this.entityArgs.EntityPM;
@@ -62,7 +61,7 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
     ngOnInit() {
         this.EntityPM = this.entityArgs.EntityPM;
     }
-    
+
 
     private Listen() {
         if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
@@ -120,44 +119,93 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
         SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
-  EditButtonClicked(item: DeclarationCargoSplitPM) {
+    EditButtonClickedOld(item: DeclarationCargoSplitPM) {
 
-    var windowArgs: any = {};
-    windowArgs.CurrentEntity = item;
-    windowArgs.declarationPM = this.EntityPM;
+        var windowArgs: any = {};
+        windowArgs.CurrentEntity = item;
+        windowArgs.declarationPM = this.EntityPM;
 
-    var logWindow = new LogitudeWindow();
-    logWindow.Width = 770;
-    logWindow.Height = 650;
-    logWindow.ShowCloseButton = false;
-    logWindow.WindowArgs = windowArgs;
-    logWindow.Title = "בקשת פיצול מטען ";
-    if (item != null) {
-      if (!AppTool.IsNullOrEmpty(item.RequestNumber)) {
-        logWindow.Title = logWindow.Title + item.RequestNumber;
-      }
-      if (!AppTool.IsNullOrEmpty(item.ResponseStatusName)) {
-        logWindow.Title = logWindow.Title + " - " + item.ResponseStatusName;
-      }
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 770;
+        logWindow.Height = 750;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = "בקשת פיצול מטען ";
+        if (item != null) {
+            if (!AppTool.IsNullOrEmpty(item.RequestNumber)) {
+                logWindow.Title = logWindow.Title + item.RequestNumber;
+            }
+            if (!AppTool.IsNullOrEmpty(item.ResponseStatusName)) {
+                logWindow.Title = logWindow.Title + " - " + item.ResponseStatusName;
+            }
+        }
+        logWindow.Show('./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent');
+        SessionLocator.CurrentSession.StopBusyIndicator();
+
+        /*if (!AppTool.IsNullOrEmpty(item)) {
+            //SessionLocator.CurrentSession.StartBusyIndicator("");
+    
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    //this.showAlert = false;
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: item.Id, ObjectTableName: 'Customs.DeclararionCargoSplit', BackButtonLabel: 'Declararion' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                        this.RefreshEntity();
+                    });
+                });
+            
+    
+        }*/
+
     }
-    logWindow.Show('./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent');
-    SessionLocator.CurrentSession.StopBusyIndicator();
 
-    /*if (!AppTool.IsNullOrEmpty(item)) {
-        //SessionLocator.CurrentSession.StartBusyIndicator("");
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef => {
-                //this.showAlert = false;
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: item.Id, ObjectTableName: 'Customs.DeclararionCargoSplit', BackButtonLabel: 'Declararion' });
-                cmpRef.instance.BackCompleted.subscribe(bk => {
-                    this.RefreshEntity();
+
+
+    EditButtonClicked(item: DeclarationCargoSplitPM) {
+
+        var windowArgs: any = {};
+        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                this._EntityPMService.getSingle("Customs.DeclarationCargoSplit", item.Id).then((res: any) => {
+                    res.subscribe((myResponse: any) => {
+
+                        if (myResponse.HasError) {
+                            console.log("Error while getting EntityPM", myResponse);
+                        }
+                        else {
+                            windowArgs.CurrentEntity = myResponse.Result;
+                            var logWindow = new LogitudeWindow();
+
+                            logWindow.Width = 770;
+                            logWindow.Height = 750;
+                            //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditDeclarationCargoSplit");
+                            logWindow.Title = "בקשת פיצול מטען ";// + myResponse.Result != null ? ((!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber) ? myResponse.Result.RequestNumber : null) + ((!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName) ? " - " + myResponse.Result.ResponseStatusName : null))) : null;
+                            if (myResponse.Result != null) {
+                                if (!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber)) {
+                                    logWindow.Title = logWindow.Title + myResponse.Result.RequestNumber;
+                                }
+                                if (!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName)) {
+                                    logWindow.Title = logWindow.Title + " - " + myResponse.Result.ResponseStatusName;
+                                }
+                            }
+
+                            logWindow.WindowArgs = windowArgs;
+                            logWindow.ShowCloseButton = true;
+                            //logWindow.IsHideHeader = true;
+                            logWindow.Show('./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent');
+
+                            logWindow.WindowClosed.subscribe(($event1: any) => {
+                                //this.isEditControlOpened = false;
+                                //this.OnBackFromEdit(selectedEntityId, $event);
+                            });
+                        }
+                    });
+
                 });
             });
-        
 
-    }*/
-
-  }
+        });
+    }
 }

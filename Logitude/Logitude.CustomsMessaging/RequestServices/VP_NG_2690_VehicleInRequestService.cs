@@ -34,8 +34,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 List<VP_MSG100_VehicleInVehicleDetails> vehicleDetailsList = new List<VP_MSG100_VehicleInVehicleDetails>();
                 VP_MSG100_VehicleInVehicleDetails vehicleDetails = GetVehicleDetails();
-                vehicleDetailsList.Add(vehicleDetails);                   
-                    
+                vehicleDetailsList.Add(vehicleDetails);
+
                 myVP_NG_2690_MSG100_VehicleIn.VP_NG_2690_MSG100_Vehicle.VehicleDetails = vehicleDetailsList.ToArray();
                 if (string.IsNullOrWhiteSpace(_MyVehicle.RichbitFileNumber))
                 {
@@ -70,7 +70,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             var myDbContext = CustomContext.GetContext(this._MyVehicle.Tenant);
             var clientQueryService = new ClientQueryService(myDbContext);
 
-            VP_MSG100_VehicleInVehicleDetails vehicleDetails= new VP_MSG100_VehicleInVehicleDetails();
+            VP_MSG100_VehicleInVehicleDetails vehicleDetails = new VP_MSG100_VehicleInVehicleDetails();
             if (!string.IsNullOrWhiteSpace(_MyVehicle.RichbitFileNumber))
             {
                 long richbitFileNumber;
@@ -92,6 +92,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             int vehicleManufacturerId;
             int.TryParse(_MyVehicle.VehicleManufacturerCode, out vehicleManufacturerId);
             vehicleDetails.vehicleManufacturerId = vehicleManufacturerId;
+            vehicleDetails.vehicleManufacturerIdSpecified = vehicleManufacturerId > 0 ? true : false;
             if (!string.IsNullOrWhiteSpace(_MyVehicle.ModelCode))
             {
                 int modelCode;
@@ -121,18 +122,20 @@ namespace Logitude.CustomsMessaging.RequestServices
             vehicleDetails.isStabilityControl = _MyVehicle.IsStabilityControl;
             vehicleDetails.isStabilityControlSpecified = _MyVehicle.IsStabilityControl = true ? true : false;
             vehicleDetails.israelEnterDate = _MyVehicle.IsraelEnterDate;
-            if (_MyVehicle.EngineCapacity > 0)
+            vehicleDetails.israelEnterDateSpecified = _MyVehicle.IsraelEnterDate != null ? true : false;
+            if (_MyVehicle.EngineCapacity.HasValue)
             {
                 vehicleDetails.engineCapacity = (int)_MyVehicle.EngineCapacity;
+                vehicleDetails.engineCapacitySpecified = true;
             }
-            if(_MyVehicle.VehiclePowerKW.HasValue)
+            if (_MyVehicle.VehiclePowerKW.HasValue)
             {
                 int vehiclePower = Convert.ToInt32(_MyVehicle.VehiclePowerKW);
                 vehicleDetails.vehiclePowerKW = vehiclePower;
-                vehicleDetails.vehiclePowerKWSpecified = true;
+                vehicleDetails.vehiclePowerKWSpecified = vehiclePower > 0 ? true : false;
             }
-            
-            vehicleDetails.vehiclePowerKWSpecified = _MyVehicle.VehiclePowerKW > 0 ? true : false;
+
+            //vehicleDetails.vehiclePowerKWSpecified = _MyVehicle.VehiclePowerKW > 0 ? true : false;
             if (!string.IsNullOrWhiteSpace(_MyVehicle.VehicleTecnologyTypeCode))
             {
                 int vehicleTecnologyType;
@@ -140,24 +143,35 @@ namespace Logitude.CustomsMessaging.RequestServices
                 vehicleDetails.vehicleTecnologyType = vehicleTecnologyType;
                 vehicleDetails.vehicleTecnologyTypeSpecified = true;
             }
-            int fuelTypeCode;
-            int.TryParse(_MyVehicle.FuelTypeCode, out fuelTypeCode);
-            vehicleDetails.fuelTypeCode = fuelTypeCode;
+            if (!string.IsNullOrWhiteSpace(_MyVehicle.FuelTypeCode))
+            {
+                int fuelTypeCode;
+                int.TryParse(_MyVehicle.FuelTypeCode, out fuelTypeCode);
+                vehicleDetails.fuelTypeCode = fuelTypeCode;
+                vehicleDetails.fuelTypeCodeSpecified = true;
+            }
             vehicleDetails.vehicleWindowNumber = _MyVehicle.VehicleWindowNumber;
-        
+            //vehicleDetails.richbitOpenDate // not exist in DB
+            //vehicleDetails.richbitOpenDateSpecified
+
             CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(myDbContext);
             CustomsCountryPM customsCountryPM = customsCountryQueryService.GetSingle(_MyVehicle.ManufactureCountryCode, false, true);
             if (customsCountryPM != null)
             {
                 int malamId;
-                int.TryParse(customsCountryPM.MalamId,out malamId);
+                int.TryParse(customsCountryPM.MalamId, out malamId);
                 vehicleDetails.manufactureCountry = malamId;
+                vehicleDetails.manufactureCountrySpecified = malamId > 0 ? true : false;
             }
 
             int medalNumber;
             int.TryParse(_MyVehicle.MedalNumber, out medalNumber);
             vehicleDetails.medalNumber = medalNumber;
             vehicleDetails.medalNumberSpecified = medalNumber > 0 ? true : false;
+            int taxiMedalOwner;
+            int.TryParse(_MyVehicle.TaxiMedalOwner, out taxiMedalOwner);
+            vehicleDetails.taxiMedalOwner = taxiMedalOwner;
+            vehicleDetails.taxiMedalOwnerSpecified = taxiMedalOwner > 0 ? true : false;
             vehicleDetails.commercialNickname = _MyVehicle.CommercialNickname;
             vehicleDetails.modelDescription = _MyVehicle.ModelDescription;
             vehicleDetails.numberOfSeats = _MyVehicle.NumberOfSeats;
@@ -165,12 +179,14 @@ namespace Logitude.CustomsMessaging.RequestServices
             if (_MyVehicle.TotalVehicleWeight > 0)
             {
                 vehicleDetails.totalVehicleWeight = (int)_MyVehicle.TotalVehicleWeight;
+                vehicleDetails.totalVehicleWeightSpecified = true;
             }
             vehicleDetails.selfVehicleWeight = _MyVehicle.SelfVehicleWeight;
             vehicleDetails.selfVehicleWeightSpecified = _MyVehicle.SelfVehicleWeight > 0 ? true : false;
             if (_MyVehicle.NumberOfWheels > 0)
             {
                 vehicleDetails.numberOfWheels = (int)_MyVehicle.NumberOfWheels;
+                vehicleDetails.numberOfWheelsSpecified = true;
             }
             if (_MyVehicle.VehicleManufactureDate != null)
             {
@@ -179,17 +195,31 @@ namespace Logitude.CustomsMessaging.RequestServices
             int vehicleTypeId;
             int.TryParse(_MyVehicle.VehicleTypeCode, out vehicleTypeId);
             vehicleDetails.vehicleTypeId = vehicleTypeId;
+            vehicleDetails.vehicleTypeIdSpecified = vehicleTypeId > 0 ? true : false;
             if (_MyVehicle.TransmissionDateWithoutTax != null)
             {
                 vehicleDetails.transmissionDateWithoutTax = _MyVehicle.TransmissionDateWithoutTax;
                 vehicleDetails.transmissionDateWithoutTaxSpecified = true;
             }
-
-            var clientPM = clientQueryService.GetSingle(_MyVehicle.ImporterIdentityId,false,false);
-            int importerIdentity;
-            int.TryParse(clientPM.Code, out importerIdentity);
-            vehicleDetails.importerIdentity = importerIdentity;
-            vehicleDetails.importerName = clientPM.FullName;
+            if (!string.IsNullOrWhiteSpace(_MyVehicle.ImporterIdentityId))
+            {
+                var clientPM = clientQueryService.GetSingle(_MyVehicle.ImporterIdentityId, false, false);
+                int importerIdentity = 0;
+                if (clientPM != null && !string.IsNullOrWhiteSpace(clientPM.Code))
+                {
+                    int.TryParse(clientPM.Code, out importerIdentity);
+                    if (importerIdentity > 0)
+                    {
+                        vehicleDetails.importerIdentity = importerIdentity;
+                        vehicleDetails.importerName = clientPM.FullName;
+                    }
+                }
+                vehicleDetails.importerIdentitySpecified = importerIdentity > 0 ? true : false;
+            }
+            else
+            {
+                vehicleDetails.importerName = _MyVehicle.PassportName;
+            }
             if (_MyVehicle.DateOnRoadAbroad != null)
             {
                 vehicleDetails.dateOnRoadAbroad = _MyVehicle.DateOnRoadAbroad;
@@ -224,9 +254,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             vehicleDetails.VehicleMaxPowerKWSpecified = _MyVehicle.VehicleMaxPowerKW > 0 ? true : false;
             vehicleDetails.isThreeWheeledForReduction = _MyVehicle.IsThreeWheeledForReduction;
             vehicleDetails.isThreeWheeledForReductionSpecified = _MyVehicle.IsThreeWheeledForReduction == true ? true : false;
-
             //Get VehicleSafetyAccessoryInstallation Details
-            if (_MyVehicle.VehicleSafetyAccessories != null &&_MyVehicle.VehicleSafetyAccessories.Count() > 0)
+            if (_MyVehicle.VehicleSafetyAccessories != null && _MyVehicle.VehicleSafetyAccessories.Count() > 0)
             {
                 List<VP_MSG100_VehicleInVehicleDetailsVehicleSafetyAccessoryInstallation> vehicleSafetyAccessoryList = new List<VP_MSG100_VehicleInVehicleDetailsVehicleSafetyAccessoryInstallation>();
                 foreach (var safetyItem in _MyVehicle.VehicleSafetyAccessories)
@@ -244,7 +273,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
 
             //Get VehicleOwner Details
-            if (_MyVehicle.VehicleOwners != null &&_MyVehicle.VehicleOwners.Count() > 0)
+            if (_MyVehicle.VehicleOwners != null && _MyVehicle.VehicleOwners.Count() > 0)
             {
                 List<VP_MSG100_VehicleInVehicleDetailsVehicleOwner> vehicleOwnerList = new List<VP_MSG100_VehicleInVehicleDetailsVehicleOwner>();
                 foreach (var ownerItem in _MyVehicle.VehicleOwners)
@@ -261,9 +290,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                         var clientOwnerPM = clientQueryService.GetSingle(ownerItem.ClientId, false, false);
                         int.TryParse(clientOwnerPM.Code, out externalID);
                     }
-                    
-                    
+
+
                     vehicleOwner.externalID = externalID;
+                    vehicleOwner.externalIDSpecified = externalID > 0 ? true : false;
                     vehicleOwner.lastNameOrCorporationName = ownerItem.LastNameOrCorporationName;
                     vehicleOwner.firstName = ownerItem.FirstName;
                     vehicleOwner.isMain = ownerItem.IsMain;

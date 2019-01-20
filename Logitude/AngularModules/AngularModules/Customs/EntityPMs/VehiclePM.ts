@@ -439,6 +439,11 @@ export class VehiclePM {
     public set VehicleMaxPowerKW(newValue: number) { if (this.vehicleMaxPowerKW != newValue) { this.vehicleMaxPowerKW = newValue; this.MarkAsDirty("VehicleMaxPowerKW"); } }
        
 	 
+    private passportName: string;
+    public get PassportName() { return this.passportName; }
+    public set PassportName(newValue: string) { if (this.passportName != newValue) { this.passportName = newValue; this.MarkAsDirty("PassportName"); } }
+       
+	 
 
     public OldEntityPM: VehiclePM;
 		

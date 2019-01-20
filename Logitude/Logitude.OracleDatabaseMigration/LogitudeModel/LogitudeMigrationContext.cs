@@ -78,6 +78,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         }
 
         #region Common Context
+        public IDbSet<CustomsShipper> CustomsShippers { get; set; }
+        public IDbSet<SharedUserQuery> SharedUserQueries { get; set; }
         public IDbSet<DocumentFilingBackupSetting> DocumentFilingBackupSettings { get; set; }
         public IDbSet<MetodoPago> MetodoPagos { get; set; }
         public IDbSet<BlobFile> BlobFiles
@@ -892,6 +894,16 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<PointerLevel> PointerLevel { get; set; }
         public IDbSet<ClientDrivingLicense> ClientDrivingLicense { get; set; }
         public IDbSet<ClientDrivingLicenseType> ClientDrivingLicenseType { get; set; }
+        public IDbSet<PendingErrorPlace> PendingErrorPlace { get; set; }
+        public IDbSet<DecisionType> DecisionType { get; set; }
+        public IDbSet<SeizureMethodType> SeizureMethodType { get; set; }
+        public IDbSet<ClaimsRelatedEntitiesSeizure> ClaimsRelatedEntitiesSeizure { get; set; }
+        public IDbSet<ClaimsRelatedEntitiesRefund> ClaimsRelatedEntitiesRefund { get; set; }
+        public IDbSet<SeizureFactorType> SeizureFactorType { get; set; }
+        public IDbSet<MamanSpecialAction> MamanSpecialAction { get; set; }
+        public IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatus { get; set; }
+        public IDbSet<DeclarationMamanSpecialAction> PendingDeclarationMamanSpecialActionErrorPlace { get; set; }
+        public IDbSet<RefundCustomerActivityType> RefundCustomerActivityType { get; set; }
 
         #endregion
 
@@ -2829,6 +2841,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<VehicleSafeAccessoryInstlType> VehicleSafeAccessoryInstlTypes { get; set; }
         public IDbSet<SupplierInvoiceItemVehicle> SupplierInvoiceItemVehicles { get; set; }
         public IDbSet<CustomsPartnersItem> CustomsPartnersItems { get; set; }
+        public IDbSet<CustomsPartnerFtp> CustomsPartnerFtps { get; set; }
         public IDbSet<SignatureType> SignatureTypes { get; set; }
         public IDbSet<CheckEssenceLookup> CheckEssenceLookups { get; set; }
         public IDbSet<Authority> Authorities { get; set; }
@@ -3570,6 +3583,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new CustomsItemDetailsHistoryMap());
 
+            modelBuilder.Configurations.Add(new CustomsPartnerFtpMap());
+
             modelBuilder.Configurations.Add(new CustomsPaymentTermMap());
 
             modelBuilder.Configurations.Add(new CustomsRequestsSheetMap());
@@ -3884,6 +3899,16 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DecCargoSplitConsPackDetMap());
             modelBuilder.Configurations.Add(new TPGFileTypeMap());
             modelBuilder.Configurations.Add(new DecCargoSplitCargoIdentifierMap());
+            modelBuilder.Configurations.Add(new PendingErrorPlaceMap());
+            modelBuilder.Configurations.Add(new DecisionTypeMap());
+            modelBuilder.Configurations.Add(new SeizureMethodTypeMap());
+            modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesSeizureMap());
+            modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesRefundMap());
+            modelBuilder.Configurations.Add(new SeizureFactorTypeMap());
+            modelBuilder.Configurations.Add(new MamanSpecialActionMap());
+            modelBuilder.Configurations.Add(new MamanSpecialActionStatusMap());
+            modelBuilder.Configurations.Add(new DeclarationMamanSpecialActionMap());
+            modelBuilder.Configurations.Add(new RefundCustomerActivityTypeMap());
 
             #endregion
 
@@ -3964,6 +3989,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TMLocationMap());
             modelBuilder.Configurations.Add(new TMProjectMap());
             #endregion
+            modelBuilder.Configurations.Add(new SharedUserQueryMap());
+            modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new DocumentFilingBackupSettingMap());
             modelBuilder.Configurations.Add(new CustomerFieldsUpdateSettingMap());
             modelBuilder.Configurations.Add(new BlobFileMap());

@@ -16,6 +16,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WebFreight.Web.CustomModel;
 using WebFreight.Web.Security;
 
 namespace AmitalCustomsWindowsService
@@ -125,13 +126,13 @@ namespace AmitalCustomsWindowsService
                 Action<bool, bool> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
                 CustomsWorkerRole.CustomsWorkerEntryPoint.StartStatic(false, BuildObjectTablesZipFilesDataAction, prodInfo, SecurityUtility.CheckContactFeature);
 
-                InjectionUtil.Init(null, null,null, ()=> (new ByteCompressorUtil()) as IByteCompressorUtil);
+                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null);
+                ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
                 Simplog.Server.Infrastructure.LogitudeSettings.HandleLogMe("StartStatic", false, "", DateTime.MaxValue);
-                
 
+                CustomsRegistrations.Register();
                 _ThreadStartStaticLoaded = true;
-                ContainerAccessor.Container.RegisterType<ICustomsDocumentQueryServiceExt, CustomsDocumentQueryServiceExt>("CustomsDocumentQueryServiceExt", new InjectionFactory(c => new CustomsDocumentQueryServiceExt()));
-
+                
             }
             catch (Exception e)
             {

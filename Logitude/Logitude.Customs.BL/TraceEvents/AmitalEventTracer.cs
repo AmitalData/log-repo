@@ -75,7 +75,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 if (myAmitalEventTracer.MyUnifreightEventParam!=null && myAmitalEventTracer.MyUnifreightEventParam.IsValid())
                 {
 
-                    var myOpenUnifreighTask = new UnifreighEventTaskService();
+                    var myOpenUnifreighTask = new UnifreightEventTaskService();
                     myOpenUnifreighTask.UpsertEventLE2U(
                         myAmitalEventTracer.Tenant,
                         myAmitalEventTracer.UserId,

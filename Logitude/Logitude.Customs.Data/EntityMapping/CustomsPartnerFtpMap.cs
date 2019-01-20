@@ -1,0 +1,46 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class CustomsPartnerFtpMap : EntityTypeConfiguration<CustomsPartnerFtp>
+    {
+	    string dbms;
+        public CustomsPartnerFtpMap()
+        { 
+			  this.ToTable("CustomsPartnerFtps", "Customs");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.TypeCode).HasColumnName("TypeCode").IsRequired().HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.PartnerCode).HasColumnName("PartnerCode").IsRequired().HasMaxLength(32).IsUnicode(false);
+
+            this.Property(t => t.InterfaceName).HasColumnName("InterfaceName").IsRequired().HasMaxLength(32).IsUnicode(false);
+
+            this.Property(t => t.FtpDetailsId).HasColumnName("FtpDetailsId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.FileName).HasColumnName("FileName").HasMaxLength(256).IsUnicode(false);
+
+            this.Property(t => t.FileExt).HasColumnName("FileExt").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.CommunicationDetails).HasColumnName("CommunicationDetails").HasMaxLength(2000).IsUnicode(false);
+        }
+    }
+}
+	 

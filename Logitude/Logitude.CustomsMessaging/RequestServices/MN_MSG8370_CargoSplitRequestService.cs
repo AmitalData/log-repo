@@ -58,7 +58,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     this.MyRequestSheetParam.RequestDescription = "בקשת פיצול מטען תיק " + declaration.CustomFileNo;
                 }
-                if (_DeclarationCargoSplitPM.ActionTypeCode == "1" || _DeclarationCargoSplitPM.ActionTypeCode == "2")
+                if (_DeclarationCargoSplitPM.ActionTypeCode == "1")// || _DeclarationCargoSplitPM.ActionTypeCode == "2")//Task 43520
                 {
                     ICustomContext dbContext = CustomContext.GetContext(_DeclarationCargoSplitPM.Tenant);
                     var DeclarationCargoSplitUpdateService = new DeclarationCargoSplitUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _DeclarationCargoSplitPM.Tenant);

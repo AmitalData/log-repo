@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -443,6 +443,24 @@ export class CourierMasterService {
         var callTime = new Date();
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetSendALLDeclarationsStatusRequest?' + 'CourierMasterId=' + CourierMasterId, {
+                headers: authHeader
+            }).map(response => {
+                var messString = response.json();
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = messString;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    
+    GetSendECTHRDataMaman(declarationId) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSendECTHRDataMaman?' + 'declarationId=' + declarationId, {
                 headers: authHeader
             }).map(response => {
                 var messString = response.json();

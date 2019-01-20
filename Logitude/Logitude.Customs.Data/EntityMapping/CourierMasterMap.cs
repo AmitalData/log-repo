@@ -66,6 +66,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.FlightNumber).HasColumnName("FlightNumber").HasMaxLength(4).IsUnicode(true);
 
             this.Property(t => t.DepartureDate).HasColumnName("DepartureDate");
+
+            this.Property(t => t.WeightValueCode).HasColumnName("WeightValueCode").HasMaxLength(3).IsUnicode(false);
         }
     }
 }
