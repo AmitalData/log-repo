@@ -59,13 +59,6 @@ export class BIReportComponent {
         });
     }
     public NewBIReportButtonClicked() {
-        //var windowTitle = "New BI Report";
-        //var logWindow = new LogitudeWindow();
-        //logWindow.Width = 750;
-        //logWindow.Height = 600;
-        //logWindow.Title = windowTitle;
-        //logWindow.WindowClosed.subscribe(($event: any) => this.OnNewBIReportWindowClosed($event));
-        //logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1200;
         logWindow.Height = 820;
