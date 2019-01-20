@@ -28,7 +28,8 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
         private List<TotalPerM> _TotalPerChartOfAccountsId;
 
         public void GenrateGLAccount(
-            int BuildGLAccountEachType,
+            //int BuildGLAccountEachType,
+            DummyTenantProviderArg dummyTenantProviderArg,
             IAccountingContext accountingContext,
             ChartOfAccountProvider chartOfAccountProvider,
             DisplayNumberProvider displayNumberProvider,
@@ -40,7 +41,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
 
             fullSetting = fullSetting ?? GetFullSetting(accountingContext, tenant);
 
-            CreateGLAccount(accountingContext, chartOfAccountProvider, displayNumberProvider, fullSetting, BuildGLAccountEachType);
+            CreateGLAccount(accountingContext, chartOfAccountProvider, displayNumberProvider, fullSetting, dummyTenantProviderArg);
 
 
         }
@@ -147,11 +148,12 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
 
         private void CreateGLAccount(IAccountingContext accountingContext,
             ChartOfAccountProvider chartOfAccountProvider,
-            DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting
-            , int BuildGLAccountEachType)
+            DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting,
+            DummyTenantProviderArg dummyTenantProviderArg//, int BuildGLAccountEachType
+            )
         {
 
-            
+
             _TotalPerChartOfAccountsId = accountingContext.GLAccounts
                 .Where(r => r.Tenant == fullAccountingSetting.Tenant)
                 //.Where(r => r.AccountTypeCode == GLAccountTypeEnum.Job.ToIntString())
@@ -160,52 +162,64 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 .ToList();
 
 
-            bool fixSize = false;
-            TimeSpan? ts = TimeSpan.FromMinutes(30);
-            if (BuildGLAccountEachType > 1000)
+            //bool fixSize = false;
+            //TimeSpan? ts = TimeSpan.FromMinutes(30);
+            //if (BuildGLAccountEachType > 1000)
+            //{
+            //    ts = TimeSpan.FromHours(1);
+            //}
+            //if (fixSize) BuildGLAccountEachType = 100000;
+            if (dummyTenantProviderArg.CreateJobs>0)
             {
-                ts = TimeSpan.FromHours(1);
+                CreateJobs(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, dummyTenantProviderArg.CreateJobs);
+                accountingContext.SaveChanges();
             }
-            if (fixSize) BuildGLAccountEachType = 100000;
-
-            CreateJobs(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, BuildGLAccountEachType);
-            accountingContext.SaveChanges();
+            
 
 
 
 
             //using (var trans = TransactionFactory.GetTransaction(ts))
             {
-                if (fixSize) BuildGLAccountEachType = 20000;
-                CreateCustomers(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, BuildGLAccountEachType);
-                accountingContext.SaveChanges();
+                //if (fixSize) BuildGLAccountEachType = 20000;
+                if (dummyTenantProviderArg.CreateCustomers > 0)
+                {
+                    CreateCustomers(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, dummyTenantProviderArg.CreateCustomers);
+                    accountingContext.SaveChanges();
+                }
 
                 //  trans.Complete();
             }
 
+            if (dummyTenantProviderArg.CreateFiles > 0)
+            {
 
-            if (fixSize) BuildGLAccountEachType = 300000;
-            CreateFiles(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, BuildGLAccountEachType);
-            accountingContext.SaveChanges();
 
+                //if (fixSize) BuildGLAccountEachType = 300000;
+                CreateFiles(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, dummyTenantProviderArg.CreateFiles);
+                accountingContext.SaveChanges();
+            }
+            if (dummyTenantProviderArg.CreateVendors > 0)
             //using (var trans = TransactionFactory.GetTransaction(ts))
             {
-                if (fixSize) BuildGLAccountEachType = 20000;
-                CreateVendors(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, BuildGLAccountEachType);
+                //if (fixSize) BuildGLAccountEachType = 20000;
+                CreateVendors(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, dummyTenantProviderArg.CreateVendors);
                 accountingContext.SaveChanges();
                 //  trans.Complete();
             }
+            if (dummyTenantProviderArg.CreateExpanse > 0)
             ///using (var trans = TransactionFactory.GetTransaction(ts))
             {
-                if (fixSize) BuildGLAccountEachType = 2000;
-                CreateExpanse(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, BuildGLAccountEachType);
+                //if (fixSize) BuildGLAccountEachType = 2000;
+                CreateExpanse(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, dummyTenantProviderArg.CreateExpanse);
                 accountingContext.SaveChanges();
                 // trans.Complete();
             }
             //using (var trans = TransactionFactory.GetTransaction(ts))
+            if (dummyTenantProviderArg.CreateRevenue > 0)
             {
-                if (fixSize) BuildGLAccountEachType = 2000;
-                CreateRevenue(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, BuildGLAccountEachType);
+                //if (fixSize) BuildGLAccountEachType = 2000;
+                CreateRevenue(accountingContext, chartOfAccountProvider, displayNumberProvider, fullAccountingSetting, dummyTenantProviderArg.CreateRevenue);
 
                 accountingContext.SaveChanges();
                 //  trans.Complete();
@@ -279,9 +293,9 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             //    //.GetMaxDisplayNumberOfType("SPDR", fullAccountingSetting.Tenant)
             //    ; i < buildGLAccountEachType; i++)
             int tot = _TotalPerChartOfAccountsId.Where(r => r.Key == ChartOfAccountsTypeEnum.Workers.ToIntString()).DefaultIfEmpty(new TotalPerM()).First().Value;
-                
-                
-            
+
+
+
 
             while (tot++ < buildGLAccountEachType)
             {
@@ -464,15 +478,19 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
 
         private void CreateVendors(IAccountingContext accountingContext,
             ChartOfAccountProvider chartOfAccountProvider,
-            DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting, int times)
+            DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting, int amount, bool amount2addMore = false)
         {
             var us = new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
             //for (int i = displayNumberProvider
             //    .GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Customers.ToIntString(), fullAccountingSetting.Tenant)
             //    ; i < times; i++)
             int tot = _TotalPerChartOfAccountsId.Where(r => r.Key == ChartOfAccountsTypeEnum.Vendors.ToIntString()).DefaultIfEmpty(new TotalPerM()).First().Value;
-
-            while (tot++ < times) {
+            if (amount2addMore)
+            {
+                tot = 0;
+            }
+            while (tot++ < amount)
+            {
 
                 int iVendors = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Vendors.ToIntString(), fullAccountingSetting.Tenant);
 
@@ -965,5 +983,16 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
 
 
     }
-    public class TotalPerM { public string Key { get; set; } public int Value { get; set; }  }
+    public class TotalPerM { public string Key { get; set; } public int Value { get; set; } }
+    public class DummyTenantProviderArg
+    {
+        
+        public int CreateJobs { get; set; }
+        public int CreateCustomers { get; set; }
+        public int CreateFiles { get; set; }
+        public int CreateVendors { get; set; }
+        public int CreateExpanse { get; set; }
+        public int CreateRevenue { get; set; }
+    }
+
 }

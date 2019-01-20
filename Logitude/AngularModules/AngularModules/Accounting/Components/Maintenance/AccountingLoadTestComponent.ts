@@ -72,21 +72,10 @@ export class AccountingLoadTestComponent extends BaseComponent implements AfterV
     }
 
     ngAfterViewInit() {
-        this.LoadEventsTab();
+        
     }
     Amount: number
 
-    LoadEventsTab() {
-
-        let locs = this.AllLocations.toArray().filter(f => f.Code == 'EventsLocation');
-        let myLocation: LocationDirective = locs.filter(f => f.ItemCode == "1")[0];
-        if (myLocation != null) {
-            SessionLocator.DynamicLoader.Load("./Common/Components/Events/EventsTabComponent", myLocation.viewContainerRef)
-                .then(cmpRef => {
-
-                });
-        }
-
-    }
+   
 
 }
