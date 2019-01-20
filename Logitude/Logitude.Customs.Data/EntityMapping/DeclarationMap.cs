@@ -228,6 +228,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsClose).HasColumnName("IsClose");
 
             this.Property(t => t.CourierSuspentionCode).HasColumnName("CourierSuspentionCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.DepositionStatusCode).HasColumnName("DepositionStatusCode").HasMaxLength(1).IsUnicode(false);
         }
     }
 }
