@@ -244,7 +244,7 @@
                                     </log-column>
 
                                     <!-- Location  -->
-                                    <log-column *ngIf="SelectedDateFilter == 'P'" [Alignment]="'left'" [width]="'120'" [header]="'Location'">
+                                    <log-column [Alignment]="'left'" [width]="'120'" [header]="'Location'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             {{item.LocationName}}
                                         </log-cell-template>

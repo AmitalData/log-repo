@@ -13,6 +13,7 @@ import { InfrastructureDomainService, BIReportXMLData, BITabularViewSettings, Co
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMService';
 
 @Component({
     moduleId: module.id,
@@ -33,6 +34,9 @@ export class BIReportPreviewComponent implements OnInit {
     public columnDefs: any[] = [];
     public rowData: any[] = [];
     public BIReportName = "";
+
+    _EntityPMService: EntityPMService = new EntityPMService();
+
 
     constructor() {
 
@@ -361,7 +365,6 @@ export class BIReportPreviewComponent implements OnInit {
             logWindow.WindowClosed.subscribe(d => {
                 if (s != null) {
                     this.DWQueryId = s.ID;
-
                 }
             });
         });
@@ -374,10 +377,14 @@ export class BIReportPreviewComponent implements OnInit {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: 'BIReport' });
                     cmpRef.instance.BackCompleted.subscribe(bk => {
+                        this._EntityPMService.getSingle( "BIReport",this.EntityPM.Id).then((res: any) => {
+                            res.subscribe((aa: any) => {
+                                this.BIReportName = aa.Result != null ? aa.Result.Name : "";
+                            })
+                        });
                     });
                 });
         }
     }
     //#endregion
-
 }

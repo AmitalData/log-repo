@@ -90,6 +90,16 @@ export class OpenFormatReportPM {
     public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
        
 	 
+    private userLocalName: string;
+    public get UserLocalName() { return this.userLocalName; }
+    public set UserLocalName(newValue: string) { if (this.userLocalName != newValue) { this.userLocalName = newValue; this.MarkAsDirty("UserLocalName"); } }
+       
+	 
+    private statusLocalName: string;
+    public get StatusLocalName() { return this.statusLocalName; }
+    public set StatusLocalName(newValue: string) { if (this.statusLocalName != newValue) { this.statusLocalName = newValue; this.MarkAsDirty("StatusLocalName"); } }
+       
+	 
 
     public OldEntityPM: OpenFormatReportPM;
 		
