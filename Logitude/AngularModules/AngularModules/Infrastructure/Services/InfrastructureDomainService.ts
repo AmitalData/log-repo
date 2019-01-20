@@ -711,8 +711,9 @@ export class InfrastructureDomainService {
                 var pm = response.json();
                 var entity: BIReportXMLData = new BIReportXMLData();
                 if (pm) {
+                    entity.BIReportId = pm.BIReportId;
                     entity.BIReportPM = pm.BIReportPM;
-                    entity.Columns = pm.Columns;
+                    entity.BITabularViewSettings = pm.BITabularViewSettings;
                 }
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -841,15 +842,22 @@ export class BusinessRecordsSummary {
     public OpportunitiesCount: number;
 }
 
+
+
 export class BIReportXMLData {
     public BIReportId: string;
     public BIReportPM: BIReportPM;
-    public Columns: BIReportColumnData[];  
+    public BITabularViewSettings: BITabularViewSettings;
 }
 
-export class BIReportColumnData {
-    public SortColId: string;
+export class BITabularViewSettings {
+    public Columns: Column[];  
+}
+
+export class Column {
+    public Code: string;
     public SortDirction: string;
+    public SortOrder: number;
     public Width: number;
     public Index: number;
 }

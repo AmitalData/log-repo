@@ -32,6 +32,7 @@ import {AccountingPeriodEventComponent} from './Components/Maintenance/Accountin
 import {YearTransferComponent} from './Components/Maintenance/YearTransferComponent';
 import { NewTaxReportComponent } from './Components/NewEntity/NewTaxReportComponent';
 import { NewOpenFormatReportComponent } from './Components/NewEntity/NewOpenFormatReportComponent';
+import { AccountingLoadTestComponent } from './Components/Maintenance/AccountingLoadTestComponent';
 
 import {GLAccountGeneralTabComponent} from './Components/EditTabs/GLAccount/GLAccountGeneralTabComponent';
 import {GLAccountTransactionsTabComponent} from './Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent';
@@ -123,6 +124,7 @@ export const Components =
         AccountingPeriodEventComponent,
         NewTaxWithholdingAssessingOfficeComponent,
         YearTransferComponent,
+        AccountingLoadTestComponent,
 
         //Edit Tabs
         GLAccountGeneralTabComponent,
@@ -222,6 +224,7 @@ export class ModuleDeclarations {
             case "EditAccountingPeriodComponent": { myResult = EditAccountingPeriodComponent; break; }
             case "AccountingPeriodEventComponent": { myResult = AccountingPeriodEventComponent; break; }
             case "NewTaxWithholdingAssessingOfficeComponent": { myResult = NewTaxWithholdingAssessingOfficeComponent; break; }
+            case "AccountingLoadTestComponent": { myResult = AccountingLoadTestComponent; break; }
             //Edit Tabs
             case "GLAccountGeneralTabComponent": { myResult = GLAccountGeneralTabComponent; break; }
             case "GLAccountOverviewComponent": { myResult = GLAccountOverviewComponent; break; }

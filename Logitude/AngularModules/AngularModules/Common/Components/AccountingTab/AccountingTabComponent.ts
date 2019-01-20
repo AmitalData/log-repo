@@ -110,18 +110,23 @@ export class AccountingTabComponent implements OnInit {
     LoadComponent() {
         var myComponentPath: string = null;
 
-        if (this.isFullAccounting && this.ObjectTableName != 'ChargesType') {
+        if (this.isFullAccounting
+            && this.ObjectTableName != 'ChargesType'
+            && this.ObjectTableName != 'Currency'
+            && this.ObjectTableName != 'PaymentTerm'
+            && this.ObjectTableName != 'VatType'
+            && this.ObjectTableName != 'Branch'
+            && this.ObjectTableName != 'AccountingPaymentMethod'
+            && this.ObjectTableName != 'APPaymentMethod'
+            && !this.isPartnerEntity && !this.isQuickBooksOnline) {
             myComponentPath = "./Common/Components/AccountingTab/AccountingTab_Full";
         }
-
         else if (this.isQuickBooksOnline) {
             myComponentPath = "./Common/Components/AccountingTab/AccountingTab_QuickBooksOnline";
         }
-
         else if (this.isPartnerEntity) {
             myComponentPath = "./Common/Components/AccountingTab/AccountingTab_Partners";
         }
-
         else {
             switch (this.ObjectTableName) {
                 case "Currency": {
