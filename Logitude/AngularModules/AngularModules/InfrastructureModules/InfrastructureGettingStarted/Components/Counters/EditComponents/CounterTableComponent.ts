@@ -131,13 +131,22 @@ export class CounterTableComponent extends BaseComponent {
 
         else {
             var errors: string[] = [];
-            Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+             if (this.CounterSize > 15) {
+                    errors.push("Maximum size allowed for counter is 15");
+                }
+            if (this.UniquePerPrefix == true) {
+                Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
-            if (this.UniquePerPrefix && !AppTool.IsNullOrEmpty(this.Prefix) && !AppTool.IsNullOrEmpty(this.StartNumber)) {
-                if ((this.StartNumber + this.Prefix).length > 15) {
-                    errors.push("Maximum length allowed for [Startnumber + Prefix] is 15");
+                if (this.UniquePerPrefix && !AppTool.IsNullOrEmpty(this.Prefix) && !AppTool.IsNullOrEmpty(this.StartNumber)) {
+                    if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) > 15) {
+                        errors.push("Maximum length allowed for [Startnumber + Prefix] is 15");
+                    }
                 }
             }
+            else if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) > 15) {
+                errors.push("Maximum length allowed for [Prefix + StartNumber] is 15");
+            }
+        
 
             this.ValidationErrorsList = errors;
 
