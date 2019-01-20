@@ -338,6 +338,8 @@ namespace WebFreight.Web.Helpers
                 TotalPerContainersAdditionalTextDesignId = totalPerContainersAdditionalTextDesign.Id,
                 TotalPerContainersCurrencyType = "SALE",
                 TotalPerContainersTableDesignId = totalPerContainersTableDesign.Id,
+                ShowSaleMaxMinAmountContainers = true,
+                ShowSaleMaxMinAmountPackages = true,
 
             };
 
@@ -417,6 +419,12 @@ namespace WebFreight.Web.Helpers
 
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGENOTEPACKAGES", "Charge Note", "Charge Note", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGENOTECONTAINERS", "Charge Note", "Charge Note", "Containers"));
+
+
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("SALEMINMAXPACKAGES", "Min/Max", "Min/Max", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("SALEMINMAXCONTAINERS", "Min/Max", "Min/Max", "Containers"));
+
+
 
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("QUOTEDATE", "Quote Date", "Quote Date", "QuoteHeader"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("EXPIRATIONDATE", "Expiration Date", "Expiration Date", "QuoteHeader"));

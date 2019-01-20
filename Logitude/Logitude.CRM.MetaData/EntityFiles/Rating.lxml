@@ -11,4 +11,5 @@
     <Record Code="&quot;N&quot;" SearchFields="&quot;N,Neutral&quot;" IndexOrder="0" Name="&quot;Neutral&quot;" />
     <Record Code="&quot;W&quot;" SearchFields="&quot;W,Warm&quot;" IndexOrder="0" Name="&quot;Warm&quot;" />
   </Records>
+  <AdditionalFeatures />
 </entity>

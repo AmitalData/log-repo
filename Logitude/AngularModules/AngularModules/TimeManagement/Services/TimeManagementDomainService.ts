@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -218,10 +218,10 @@ export class TimeManagementDomainService {
             });
         });
     }
-    DeleteTimeSheetItem(projectId: string, description: string, wiNumber: string, employeeUserId: string, locationCode: string, periodStartDate: Date, exitDate:Date) {
+    DeleteTimeSheetItem(Id: string, employeeUserId: string, locationCode: string, periodStartDate: Date, exitDate:Date) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/GetUpdatedTimeSheetList?projectId=' + projectId + "&description=" + description + "&wiNumber=" + wiNumber + "&employeeUserId=" + employeeUserId + " &locationCode=" + locationCode + "&periodStartDate=" + ServiceHelper.GetDateString(periodStartDate) + "&exitDate=" + ServiceHelper.GetDateString(exitDate);
+        var url = this._apiUrl + '/GetUpdatedTimeSheetList?Id=' + Id + "&employeeUserId=" + employeeUserId + " &locationCode=" + locationCode + "&periodStartDate=" + ServiceHelper.GetDateString(periodStartDate) + "&exitDate=" + ServiceHelper.GetDateString(exitDate);
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
                 var myJsonResult = response.json();

@@ -46,8 +46,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.BirthDayOfYear = entityPM.Birthday != null ? entityPM.Birthday.Value.DayOfYear : 0;
             entityPOCO.ContactDoneMethodCode = entityPM.ContactDoneMethodCode;
             entityPOCO.Position = entityPM.Position;
-            entityPOCO.DontShowLocalLabels = LogitudeSettings.WorkEnvironment == "customs" ? false : true;
-            
+            //entityPOCO.DontShowLocalLabels = LogitudeSettings.WorkEnvironment == "customs" ? false : true; //bug 44449
+
             if (entityPM.CompanyName != null)
             {
                 if (entityPM.CompanyName.Length > 1000)

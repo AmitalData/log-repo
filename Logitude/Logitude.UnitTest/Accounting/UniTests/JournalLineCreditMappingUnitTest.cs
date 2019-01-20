@@ -247,7 +247,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     Tenant = tenant,
                     JournalId = id,
                     ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
-
+                    AccountingDate = jAccountingDate,
                     DueDate = jlDueDate,
                     LocalAmount = localAmount,
                     ForeignAmount = foreignAmount,
@@ -275,9 +275,15 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
 
-            Assert.AreEqual(journalPM.AccountingDate, MyLedgerTransaction.AccountingDate,
-        "MyLedgerTransaction.AccountingDate = _JournalPM.AccountingDate;");
+            Assert.AreEqual(journalPM.AccountingDate.Date.Year, MyLedgerTransaction.AccountingDate.Year,
+        "MyLedgerTransaction.AccountingDate.Date.Year = _JournalPM.AccountingDate.Date.Year;");
 
+            Assert.AreEqual(journalPM.AccountingDate.Date.Month, MyLedgerTransaction.AccountingDate.Month,
+        "MyLedgerTransaction.AccountingDate.Date.Month = _JournalPM.AccountingDate.Date.Month;");
+
+
+            Assert.AreEqual(journalLine.AccountingDate.Date, MyLedgerTransaction.AccountingDate,
+"MyLedgerTransaction.AccountingDate = journalLine.AccountingDate.Date");
 
             Assert.AreEqual(journalLine.Line, MyLedgerTransaction.JournalLineNumber,
                 "MyLedgerTransaction.Line = _JournalLine.Line;");
@@ -447,6 +453,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             //GLAccountTotalByMonthPM currGLAccountTotalByMounth, LedgerTransactionPM currLedgerTransaction
 
             DateTime jAccountingDate = new DateTime(2016, 10, 26).AddDays(-2);
+            DateTime jlAccountingDate = new DateTime(2016, 10, 26).AddDays(-3);
             DateTime jlDocumentDate = new DateTime(2016, 10, 26).AddDays(-4);
             var jlDueDate = jlDocumentDate.AddDays(1);
             string jlCurrencyId = "1-1";
@@ -469,7 +476,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                    JournalId = id,
                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                    DueDate = jlDueDate,
-                   
+                   AccountingDate= jlAccountingDate,
                    Line = jline,
                    DocumentDate = jlDocumentDate,
                    CurrencyId = jlCurrencyId,
@@ -513,6 +520,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     JournalId = "1-1",
                     ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
+                    AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
                     ForeignAmount = 1,
 
@@ -530,6 +538,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     JournalId = "1-1",
                     ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
+                    AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
                     ForeignAmount = 1,
 
@@ -591,10 +600,11 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     JournalId = "1-1",
                     ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
+                    AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
                     ForeignAmount = 1,
 
-
+                    
                     CreditAccountId = "Client",
                     CreditControlAccountId = expectedControlAccountId ,
 
@@ -612,6 +622,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     JournalId = "1-1",
                     ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
+                    AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
                     ForeignAmount = 1,
 
@@ -632,6 +643,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     JournalId = "1-1",
                     ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
+                    AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
                     ForeignAmount = 1,
 
@@ -650,6 +662,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     JournalId = "1-1",
                     ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
+                    AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
                     ForeignAmount = 1,
 
@@ -745,6 +758,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     JournalId = "1-1",
                     ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
+                    AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 11,
                     ForeignAmount = 1,
 
@@ -765,6 +779,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     JournalId = "1-1",
                     ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
+                    AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 22.54353m,
                     ForeignAmount = 1,
 
@@ -785,6 +800,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     JournalId = "1-1",
                     ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
+                    AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 231.44m,
                     ForeignAmount = 1,
                     CreditControlAccountId = expectedControlAccountId,
@@ -802,6 +818,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     JournalId = "1-1",
                     ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
+                    AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = -4531.55m,
                     ForeignAmount = 1,
 
@@ -870,6 +887,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     JournalId = "1-1",
                     ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
+                    AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 11,
                     ForeignAmount = 13121.9999m,
                     CurrencyId = null,
@@ -891,6 +909,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     JournalId = "1-1",
                     ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
+                    AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 22.54353m,
                     ForeignAmount = 1322.4355m,
                     CurrencyId = "NIS",
@@ -911,6 +930,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     JournalId = "1-1",
                     ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
+                    AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 231.44m,
                     ForeignAmount = 1234.9m,
                     CurrencyId = "EUR",
@@ -929,6 +949,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     JournalId = "1-1",
                     ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
+                    AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = -4531.55m,
                     ForeignAmount = -2341.533m,
 

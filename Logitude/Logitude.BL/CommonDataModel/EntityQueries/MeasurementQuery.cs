@@ -172,5 +172,27 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  };
             return result;
         }
+
+        public MeasurementPM GetSinglePMByCode(string code, int tenant)
+        {
+            MeasurementPM entity = (from a in repository.context.Measurements
+                          where a.Code == code && a.Tenant == tenant
+                          select new MeasurementPM()
+                          {
+                              Id = a.Id,
+                              Tenant = a.Tenant,
+                              InActive = a.InActive,
+                              IsContainer = a.IsContainer,
+                              IsContainerMeasurement = a.IsContainerMeasurement,
+                              Code = a.Code,
+                              Name = a.Name,
+                              ShortName = a.ShortName,
+                              SearchFields = a.SearchFields,
+                              LocalName = a.LocalName,
+                          }).FirstOrDefault();            
+
+            return entity;
+        }
+
     }
 }

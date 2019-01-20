@@ -56,6 +56,27 @@ namespace WebFreight.Web.ShipmentPackageModel
             public string ShipmentField18 { get; set; }
             public string ShipmentField19 { get; set; }
             public string ShipmentField20 { get; set; }
+            public string ShipmentField21 { get; set; }
+            public string ShipmentField22 { get; set; }
+            public string ShipmentField23 { get; set; }
+            public string ShipmentField24 { get; set; }
+            public string ShipmentField25 { get; set; }
+            public string ShipmentField26 { get; set; }
+            public string ShipmentField27 { get; set; }
+            public string ShipmentField28 { get; set; }
+            public string ShipmentField29 { get; set; }
+            public string ShipmentField30 { get; set; }
+            public string ShipmentField31 { get; set; }
+            public string ShipmentField32 { get; set; }
+            public string ShipmentField33 { get; set; }
+            public string ShipmentField34 { get; set; }
+            public string ShipmentField35 { get; set; }
+            public string ShipmentField36 { get; set; }
+            public string ShipmentField37 { get; set; }
+            public string ShipmentField38 { get; set; }
+            public string ShipmentField39 { get; set; }
+            public string ShipmentField40 { get; set; }
+
             public bool IsCancelled { get; set; }
             public DateTime? ETDAsDateTime { get; set; }
             public DateTime? ETAAsDateTime { get; set; }
@@ -92,6 +113,12 @@ namespace WebFreight.Web.ShipmentPackageModel
             public DateTime? LastETA { get; set; } //: datetime : will take ETA from transshipment 3 if exist, if not from trans. 2, if not from trans. 1 and then from the main carriage if no transshipments.
             public DateTime? LastATA { get; set; } // :datetime : same logic as above, but for ATA
             public string LastVessel { get; set; }  //: string : same logic but for the vessel name
+
+            public string BookingConfirmationNumber { get; set; }
+
+            public string ContainerPackageItemsDescription { get; set; }
+            public string ContainerPackageItemsValue { get; set; }
+            public string ContainerPackageItemsQuantity { get; set; }
         }
     }
 }

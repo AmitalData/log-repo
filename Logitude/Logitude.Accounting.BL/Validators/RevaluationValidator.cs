@@ -1,6 +1,10 @@
-﻿using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.Accounting.BL.Validators
@@ -21,6 +25,13 @@ namespace Logitude.Accounting.BL.Validators
                     && !(myRevaluationPM.RevaluationEnabled.HasValue && myRevaluationPM.RevaluationEnabled.Value == true))
             {
                 return new ValidationResult(TextCodesTranslator.TranslateText("Revaluations.Q.DataMissing", myRevaluationPM.Tenant));
+            }
+            IAccountingContext accountingContext = AccountingContext.GetContext(myRevaluationPM.Tenant);
+            RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(accountingContext);
+            List<RevaluationList> revaluations = revaluationListQueryService.GetOpenRevaluationList(myRevaluationPM.Tenant);
+            if (revaluations != null && revaluations.Count > 0)
+            {
+                return new ValidationResult(TextCodesTranslator.TranslateText("Revaluations.Q.OpenRevaluations", myRevaluationPM.Tenant));
             }
             return null;
         }

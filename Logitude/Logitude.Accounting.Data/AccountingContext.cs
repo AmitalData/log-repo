@@ -72,6 +72,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new AccountingEntityMap());
 	
+            modelBuilder.Configurations.Add(new AccountingIntegrityCheckMap());
+	
             modelBuilder.Configurations.Add(new AccountingPeriodMap());
 	
             modelBuilder.Configurations.Add(new ARPaymentChequeMap());
@@ -134,9 +136,13 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new GLAccountWithholdingTaxMap());
 	
+            modelBuilder.Configurations.Add(new IntegrityCheckStatusMap());
+	
             modelBuilder.Configurations.Add(new JournalMap());
 	
             modelBuilder.Configurations.Add(new JournalActionTypeMap());
+	
+            modelBuilder.Configurations.Add(new JournalAdditionalDataMap());
 	
             modelBuilder.Configurations.Add(new JournalLineMap());
 	
@@ -149,6 +155,10 @@ namespace Logitude.Accounting.Data
             modelBuilder.Configurations.Add(new JournalTypeMap());
 	
             modelBuilder.Configurations.Add(new LedgerTransactionMap());
+	
+            modelBuilder.Configurations.Add(new OpenFormatReportMap());
+	
+            modelBuilder.Configurations.Add(new OpenFormatReportStatusMap());
 	
             modelBuilder.Configurations.Add(new PaymentChequeMap());
 	
@@ -222,6 +232,8 @@ namespace Logitude.Accounting.Data
 			modelBuilder.Entity<GLAccountMoreData>().Property(x => x.LocalBalanceInDue).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountMoreData>().Property(x => x.TotalOpenChequesInLocalCur).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<GLAccountMoreData>().Property(x => x.TotFutureOpenChequesInLocalCur).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountTotalByMonth>().Property(x => x.LocalAmountDebit).HasPrecision(16, 2);
 				
@@ -528,6 +540,7 @@ namespace Logitude.Accounting.Data
             modelBuilder.Configurations.Add(new AirlineStatisticsMap());
 			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
 			modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
+			modelBuilder.Configurations.Add(new CustomsShipperMap());
 			#endregion
 
             base.OnModelCreating(modelBuilder);
@@ -569,6 +582,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<AccountingEntity> AccountingEntities 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<AccountingIntegrityCheck> AccountingIntegrityChecks 
 	 {
 	      get; set;
 	 
@@ -760,6 +779,12 @@ namespace Logitude.Accounting.Data
 	 
 	 }
 	
+	 public IDbSet<IntegrityCheckStatus> IntegrityCheckStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<Journal> Journals 
 	 {
 	      get; set;
@@ -767,6 +792,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<JournalActionType> JournalActionTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<JournalAdditionalData> JournalAdditionalDatas 
 	 {
 	      get; set;
 	 
@@ -803,6 +834,18 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<LedgerTransaction> LedgerTransactions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<OpenFormatReport> OpenFormatReports 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<OpenFormatReportStatus> OpenFormatReportStatuses 
 	 {
 	      get; set;
 	 

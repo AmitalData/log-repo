@@ -303,6 +303,188 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
+                if (!string.IsNullOrEmpty(entityPM.ShipmentNumber) && !string.IsNullOrEmpty(entityPOCO.ShipmentNumber) && entityPM.ShipmentNumber != entityPOCO.ShipmentNumber)
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "TSDC",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "Ticket",
+                        Notes = "Shipment " + entityPOCO.ShipmentNumber + " Disconnected"
+                    });
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "STDC",
+                        UserId = loggedContactId,
+                        EntityId = entityPOCO.ShipmentId,
+                        ObjectTableName = "Shipment",
+                        Notes = "Shipment disconnected from Ticket " + entityPM.TicketNumber
+                    });
+
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "TSCN",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "Ticket",
+                        Notes = "Shipment " + entityPM.ShipmentNumber + " Connected"
+                    });
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "STCN",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.ShipmentId,
+                        ObjectTableName = "Shipment",
+                        Notes = "Shipment connected to Ticket " + entityPM.TicketNumber
+                    });
+                }
+
+                if (string.IsNullOrEmpty(entityPM.ShipmentNumber) && !string.IsNullOrEmpty(entityPOCO.ShipmentNumber))
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "TSDC",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "Ticket",
+                        Notes = "Shipment " + entityPOCO.ShipmentNumber + " Disconnected"
+                    });
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "STDC",
+                        UserId = loggedContactId,
+                        EntityId = entityPOCO.ShipmentId,
+                        ObjectTableName = "Shipment",
+                        Notes = "Shipment disconnected from Ticket " + entityPM.TicketNumber
+                    });
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.ShipmentNumber) && string.IsNullOrEmpty(entityPOCO.ShipmentNumber))
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "TSCN",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "Ticket",
+                        Notes = "Shipment " + entityPM.ShipmentNumber + " Connected"
+                    });
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "STCN",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.ShipmentId,
+                        ObjectTableName = "Shipment",
+                        Notes = "Shipment connected to Ticket " + entityPM.TicketNumber
+                    });
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber) && entityPOCO.QuoteNumber != entityPM.QuoteNumber)
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "TQDC",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "Ticket",
+                        Notes = "Quote " + entityPOCO.QuoteNumber + " Disconnected"
+                    });
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "QTDC",
+                        UserId = loggedContactId,
+                        EntityId = entityPOCO.QuoteId,
+                        ObjectTableName = "Quote",
+                        Notes = "Quote disconnected from Ticket " + entityPOCO.TicketNumber
+                    });
+
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "TQCN",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "Ticket",
+                        Notes = "Quote " + entityPM.QuoteNumber + " Connected"
+                    });
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "QTCN",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.QuoteId,
+                        ObjectTableName = "Quote",
+                        Notes = "Quote connected to Ticket " + entityPM.TicketNumber
+                    });
+
+                }
+
+                if (string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber))
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "TQDC",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "Ticket",
+                        Notes = "Quote "+ entityPOCO.QuoteNumber + " Disconnected"
+                    });
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "QTDC",
+                        UserId = loggedContactId,
+                        EntityId = entityPOCO.QuoteId,
+                        ObjectTableName = "Quote",
+                        Notes = "Quote disconnected from Ticket " + entityPM.TicketNumber
+                    });
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && string.IsNullOrEmpty(entityPOCO.QuoteNumber))
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "TQCN",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "Ticket",
+                        Notes = "Quote " + entityPM.QuoteNumber + " Connected"
+                    });
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "QTCN",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.QuoteId,
+                        ObjectTableName = "Quote",
+                        Notes = "Quote connected to Ticket " + entityPM.TicketNumber
+                    });
+                }
+
+
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
                     Tenant = entityPM.Tenant,

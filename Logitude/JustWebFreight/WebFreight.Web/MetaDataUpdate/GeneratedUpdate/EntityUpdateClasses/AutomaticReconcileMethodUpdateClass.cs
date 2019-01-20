@@ -177,11 +177,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
-					  						FullLocalDefaultText =  "קוד",
+					  						DefaultText =  @"Code",
+					  						FullLocalDefaultText =  @"קוד",
 					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
-					  						ListLocalDefaultText =  "קוד",
+					  						ListLableDefaultText =  @"Code",
+					  						ListLocalDefaultText =  @"קוד",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -237,11 +237,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutomaticReconcile1",
-					  						DefaultText =  "Automatic Reconcile 1",
-					  						FullLocalDefaultText =  "התאמה אוטומטית 1",
+					  						DefaultText =  @"Automatic Reconcile 1",
+					  						FullLocalDefaultText =  @"התאמה אוטומטית 1",
 					  						ListFieldLable =  "AutomaticReconcile1ListLable",
-					  						ListLableDefaultText =  "Automatic Reconcile 1",
-					  						ListLocalDefaultText =  "התאמה אוטומטית 1",
+					  						ListLableDefaultText =  @"Automatic Reconcile 1",
+					  						ListLocalDefaultText =  @"התאמה אוטומטית 1",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -297,11 +297,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutomaticReconcile2",
-					  						DefaultText =  "Automatic Reconcile 2",
-					  						FullLocalDefaultText =  "התאמה אוטומטית 2",
+					  						DefaultText =  @"Automatic Reconcile 2",
+					  						FullLocalDefaultText =  @"התאמה אוטומטית 2",
 					  						ListFieldLable =  "AutomaticReconcile2ListLable",
-					  						ListLableDefaultText =  "Automatic Reconcile 2",
-					  						ListLocalDefaultText =  "התאמה אוטומטית 2",
+					  						ListLableDefaultText =  @"Automatic Reconcile 2",
+					  						ListLocalDefaultText =  @"התאמה אוטומטית 2",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -357,11 +357,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutomaticReconcile3",
-					  						DefaultText =  "Automatic Reconcile 3",
-					  						FullLocalDefaultText =  "התאמה אוטומטית 3",
+					  						DefaultText =  @"Automatic Reconcile 3",
+					  						FullLocalDefaultText =  @"התאמה אוטומטית 3",
 					  						ListFieldLable =  "AutomaticReconcile3ListLable",
-					  						ListLableDefaultText =  "Automatic Reconcile 3",
-					  						ListLocalDefaultText =  "התאמה אוטומטית 3",
+					  						ListLableDefaultText =  @"Automatic Reconcile 3",
+					  						ListLocalDefaultText =  @"התאמה אוטומטית 3",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -416,11 +416,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutomaticReconcileName1",
-					  						DefaultText =  "Automatic Reconcile 1",
-					  						FullLocalDefaultText =  "התאמה הוטומטית 1",
+					  						DefaultText =  @"Automatic Reconcile 1",
+					  						FullLocalDefaultText =  @"התאמה הוטומטית 1",
 					  						ListFieldLable =  "AutomaticReconcileName1ListLable",
-					  						ListLableDefaultText =  "Automatic Reconcile 1",
-					  						ListLocalDefaultText =  "התאמה הוטומטית 1",
+					  						ListLableDefaultText =  @"Automatic Reconcile 1",
+					  						ListLocalDefaultText =  @"התאמה הוטומטית 1",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -475,11 +475,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutomaticReconcileName2",
-					  						DefaultText =  "Automatic Reconcile 2",
-					  						FullLocalDefaultText =  "התאמה הוטומטית 2",
+					  						DefaultText =  @"Automatic Reconcile 2",
+					  						FullLocalDefaultText =  @"התאמה הוטומטית 2",
 					  						ListFieldLable =  "AutomaticReconcileName2ListLable",
-					  						ListLableDefaultText =  "Automatic Reconcile 2",
-					  						ListLocalDefaultText =  "התאמה הוטומטית 2",
+					  						ListLableDefaultText =  @"Automatic Reconcile 2",
+					  						ListLocalDefaultText =  @"התאמה הוטומטית 2",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -534,11 +534,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutomaticReconcileName3",
-					  						DefaultText =  "Automatic Reconcile 3",
-					  						FullLocalDefaultText =  "התאמה הוטומטית 3",
+					  						DefaultText =  @"Automatic Reconcile 3",
+					  						FullLocalDefaultText =  @"התאמה הוטומטית 3",
 					  						ListFieldLable =  "AutomaticReconcileName3ListLable",
-					  						ListLableDefaultText =  "Automatic Reconcile 3",
-					  						ListLocalDefaultText =  "התאמה הוטומטית 3",
+					  						ListLableDefaultText =  @"Automatic Reconcile 3",
+					  						ListLocalDefaultText =  @"התאמה הוטומטית 3",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -593,11 +593,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
-					  						FullLocalDefaultText =  "שם",
+					  						DefaultText =  @"Name",
+					  						FullLocalDefaultText =  @"שם",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
-					  						ListLocalDefaultText =  "שם",
+					  						ListLableDefaultText =  @"Name",
+					  						ListLocalDefaultText =  @"שם",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -652,11 +652,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
-					  						DefaultText =  "Inactive",
-					  						FullLocalDefaultText =  "חסום",
+					  						DefaultText =  @"Inactive",
+					  						FullLocalDefaultText =  @"חסום",
 					  						ListFieldLable =  "InactiveListLable",
-					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultText =  "חסום",
+					  						ListLableDefaultText =  @"Inactive",
+					  						ListLocalDefaultText =  @"חסום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -710,9 +710,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search ...",
+					  						DefaultText =  @"Search ...",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "Search ...",
+					  						ListLableDefaultText =  @"Search ...",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -766,11 +766,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
-					  						DefaultText =  "Local Name",
-					  						FullLocalDefaultText =  "שם מקומי",
+					  						DefaultText =  @"Local Name",
+					  						FullLocalDefaultText =  @"שם מקומי",
 					  						ListFieldLable =  "LocalNameListLable",
-					  						ListLableDefaultText =  "Local Name",
-					  						ListLocalDefaultText =  "שם מקומי",
+					  						ListLableDefaultText =  @"Local Name",
+					  						ListLocalDefaultText =  @"שם מקומי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -788,7 +788,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup AutomaticReconcileMethodQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ARCM", Name = "AutomaticReconcileMethod" }, queryGroupRepository);
 						QueryGroup AutomaticReconcileMethodQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ce36", Name = " Query Group" }, queryGroupRepository);
@@ -804,17 +804,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AutomaticReconcileMethodsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AutomaticReconcileMethodTextCode_0.Id, Code = "Automatic Reconcile Methods",  QueryGroupCode = "ARCM", IndexOrder = 0, Tenant = 0, ObjectTableId = AutomaticReconcileMethodObjectTable.Id, QuerySection = "AutomaticReconcileMethod", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AutomaticReconcileMethodFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AutomaticReconcileMethodsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AutomaticReconcileMethodTextCode_0.Id, Code = "Automatic Reconcile Methods",  QueryGroupCode = "ARCM", IndexOrder = 0, Tenant = 0, ObjectTableId = AutomaticReconcileMethodObjectTable.Id, QuerySection = "AutomaticReconcileMethod", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AutomaticReconcileMethodFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AutomaticReconcileMethodsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id, IndexOrder = 0, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 73 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AutomaticReconcileMethodsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id, IndexOrder = 1, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcileName1" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AutomaticReconcileMethodsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id, IndexOrder = 1, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcileName1" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AutomaticReconcileMethodsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id, IndexOrder = 2, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcileName2" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AutomaticReconcileMethodsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id, IndexOrder = 2, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcileName2" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AutomaticReconcileMethodsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id, IndexOrder = 3, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcileName3" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AutomaticReconcileMethodsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id, IndexOrder = 3, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcileName3" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AutomaticReconcileMethodsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id, IndexOrder = 4, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AutomaticReconcileMethodsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id, IndexOrder = 4, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -848,8 +848,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable AutomaticReconcileMethodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AutomaticReconcileMethod" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable AutomaticReconcileMethodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AutomaticReconcileMethod" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode AutomaticReconcileMethodGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AutomaticReconcileMethod.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = AutomaticReconcileMethodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature AutomaticReconcileMethodGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AutomaticReconcileMethod.Tab.General", ObjectTableId = AutomaticReconcileMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutomaticReconcileMethod.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -859,12 +860,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature AutomaticReconcileMethodEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = AutomaticReconcileMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutomaticReconcileMethod.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARMG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "AutomaticReconcileMethod.Tab.General" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AutomaticReconcileMethodObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "AutomaticReconcileMethod.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARMG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AutomaticReconcileMethodGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AutomaticReconcileMethodObjectTable.Id, TabNameTextCodeId = AutomaticReconcileMethodGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AREV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AutomaticReconcileMethodObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "AutomaticReconcileMethod.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AREV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AutomaticReconcileMethodEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AutomaticReconcileMethodObjectTable.Id, TabNameTextCodeId = AutomaticReconcileMethodEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -923,7 +924,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

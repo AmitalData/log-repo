@@ -1,4 +1,4 @@
-﻿import {Component}  from '@angular/core';
+import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {BankDepositPM} from '../../../EntityPMs/BankDepositPM';
 import {BankDepositLinePM} from '../../../EntityPMs/BankDepositLinePM';
@@ -57,19 +57,18 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             this.GetCashBook();
             this.BankDepositLines = this.EntityPM.BankDepositLines;
             this.BankDepositLines = [];
-            
+
 
         } else { // view mode
             SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
             this.GetCashBook();
             this.BankDepositLines = this.EntityPM.BankDepositLines;
-            this.CalculateTotals();
             this.SetUIProperty();
 
             console.log("Deposit: ", this.EntityPM);
 
         }
-        
+
 
         // Subscribe save event
         SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -77,6 +76,14 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 console.log("Deposited Success", this.EntityPM);
                 this.RedrawScreen();
                 this.ShowAlert();
+            }
+        });
+        SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            if (isLoadSuccess) {
+                this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                console.log("Entity Reloaded");
+                console.log("Deposited Success", this.EntityPM);
+                this.RedrawScreen();
             }
         });
 
@@ -375,45 +382,59 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     //#region Get Methods
     GetCashBook() {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         this._CashBookPMService.get(this.EntityPM.CashBookId).subscribe(myResult => {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {
                 this.CashBookPM = myResponse.Result;
                 console.log("Cashbook: ", this.CashBookPM);
 
-                this.CashBookLines = this.CashBookPM.CashBookLines;
-                this.ComputeTotals();
-                if (this.IsLinesSelection) {
-                    this.RemoveDepositedLines();
-                    this.CalculateTotals();
-                    this.FilterLines();
-                    if (this.CashBookLines.length > 0) {
-                        this.NoCashBookRows = false;
-                    } else {
-                        this.NoCashBookRows = true;
-                    }
-
-                    this.SetUIProperty();
-                    if (this.CashBookPM.CashBookTypeCode == "1") { // 1- Cash
+                if (this.IsLinesSelection)
+                {
+                    if (this.CashBookPM.CashBookTypeCode == "1") // 1- Cash
+                    {
+                        this.SetUIProperty();
                         this.EntityPM.IsCashDeposit = true;
 
-                        //copy amount 
+                        this._CashbookTotal = this.CashBookPM.TotalAmount;
+
+                        //copy amount
                         //this.EntityPM.LocalDepositAmount = this.CashBookPM.TotalAmount;
                         this.EntityPM.ForeignAmount = this.CashBookPM.TotalAmount;
 
                         if (this.isCurrencyRateLoaded)
                             this.CalculateLocal(this.ForeignAmount);
-                            //this.CalculateForeign(this.LocalDepositAmount);
 
                         this.UIProperties.SetValidity("LocalDepositAmount", this.ObjectTableName, true, "");
                         this.UIProperties.SetValidity("ForeignAmount", this.ObjectTableName, true, "");
+                    }
+                    else
+                    {  // Cheque
 
-                    } else { // 2- Cheque
+                        this.CashBookLines = this.CashBookPM.CashBookLines;
+                        this.ComputeTotals();
+
+                        this.RemoveDepositedLines();
+                        this.CalculateTotals();
+                        this.FilterLines();
+                        if (this.CashBookLines.length > 0) {
+                            this.NoCashBookRows = false;
+                        } else {
+                            this.NoCashBookRows = true;
+                        }
+
+                        this.SetUIProperty();
                         this.EntityPM.IsCashDeposit = false;
                     }
+
+
                 } else {
                     this._CashbookTotal = this.CashBookPM.TotalAmount;
+                    this.CalculateTotals();
+
                 }
             }
         }
@@ -447,6 +468,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 // local currecny
                 this.currencyRate = 1;
                 this.CalculateLocal(this.EntityPM.ForeignAmount);
+                this.isCurrencyRateLoaded = true;
+
             }
             else
             {
@@ -498,16 +521,22 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     CalculateTotals() {
         this.CashBookTotal = 0;
-        if (!AppTool.IsNullOrEmpty(this.CashBookLines)) {
 
-            if (this.CashBookPM.CashBookTypeCode == "1") { // 1-cash
-                this.CashBookTotal = this.CashBookPM.TotalAmount;
-            } else {
+        if (this.CashBookPM.CashBookTypeCode == "1")
+        {
+            this.CashBookTotal = this.CashBookPM.TotalAmount;
+        }
+        else
+        {
+            if (!AppTool.IsNullOrEmpty(this.CashBookLines))
+            {
                 for (let line of this.CashBookLines) {
                     this.CashBookTotal += line.ForeignAmount == null ? 0 : line.ForeignAmount;
                 }
             }
         }
+
+
 
         this.SelectedTotal = 0;
         var localSum = 0.0;
@@ -517,16 +546,17 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 this.SelectedTotal += line2.ForeignAmount == null ? 0 : line2.ForeignAmount;
             }
 
-            if (this.IsLinesSelection && !this.EntityPM.IsCashDeposit)
-            {
-                this.EntityPM.LocalDepositAmount = localSum;
-                this.EntityPM.ForeignAmount = this.SelectedTotal;
+            if (this.IsLinesSelection) {
+                if (this.IsLinesSelection && !this.EntityPM.IsCashDeposit) {
+                    this.EntityPM.LocalDepositAmount = localSum;
+                    this.EntityPM.ForeignAmount = this.SelectedTotal;
 
-            } else if (this.IsLinesSelection) {
-                this.EntityPM.ForeignAmount = this.SelectedTotal;
-                //this.CalculateForeign(this.SelectedTotal);
-                this.CalculateLocal(this.SelectedTotal);
+                } else if (this.IsLinesSelection) {
+                    this.EntityPM.ForeignAmount = this.SelectedTotal;
+                    //this.CalculateForeign(this.SelectedTotal);
+                    this.CalculateLocal(this.SelectedTotal);
 
+                }
             }
         }
     }
@@ -534,7 +564,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     Abs(number: number) {
         return number < 0 ? number * -1 : number;
     }
-    
+
     RemoveDepositedLines() { // remove deposited lines from cashbook lines
         if (!AppTool.IsNullOrEmpty(this.CashBookLines)) {
 
@@ -554,7 +584,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                     return false;
                 else
                     return true;
-            }); //// 5- Returned to Customer 
+            }); //// 5- Returned to Customer
 
             this.CashBookLines = nonDepositedlines;
         }
@@ -696,7 +726,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             if (el.DueDate != null) {
                 var date = new Date(el.DueDate.toString());
                 if (date > todayDate) {
-                    return true; 
+                    return true;
                 }
                 return false;
 

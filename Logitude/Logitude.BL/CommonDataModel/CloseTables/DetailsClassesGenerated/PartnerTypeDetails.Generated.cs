@@ -125,6 +125,13 @@ namespace Logitude.BL.CommonDataModel
                 Id = "WH", 
                 Name = "Warehouse", 
 			});
+			 
+            all.Add(new PartnerTypeDetails()
+            {    
+                SearchFields = "ch,customs shipper", 
+                Id = "CH", 
+                Name = "Customs Shipper", 
+			});
 			
             return all;
        }
@@ -144,11 +151,11 @@ namespace Logitude.BL.CommonDataModel
         {
             get
             {
-                throw new NotImplementedException();
+                return this.Id;
             }
             set
             {
-                throw new NotImplementedException();
+                this.Id = value;
             }
         }
    }

@@ -1,13 +1,14 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
-import {AWBMessagingStockList} from '../EntityLists/AWBMessagingStockList';
+import {MessagingStockList} from '../EntityLists/MessagingStockList';
 import {ShipmentPM} from '../EntityPMs/ShipmentPM';
 import {ShipmentPMService} from './StandardPMs/ShipmentPMService';
 import {ShipmentList} from '../EntityLists/ShipmentList';
+import { MessagingStockUsageHistoryList } from '../EntityLists/MessagingStockUsageHistoryList';
 
 @Injectable()
 
@@ -131,21 +132,21 @@ export class ShipmentDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    GetLoggedTenantAWBMessagingStockLists() {
+    GetLoggedTenantMessagingStockLists() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetLoggedTenantAWBMessagingStockLists';
+        var url = this._apiUrl + '/GetLoggedTenantMessagingStockLists';
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
 
                 var listJason = response.json();
-                var listMapped: Array<AWBMessagingStockList> = [];
+                var listMapped: Array<MessagingStockList> = [];
 
                 for (var itemJeson in listJason) {
 
-                    var itemMapped: AWBMessagingStockList = this.MapAWBMessagingStockList(listJason[itemJeson]);
+                    var itemMapped: MessagingStockList = this.MapMessagingStockList(listJason[itemJeson]);
 
                     listMapped.push(itemMapped);
                 }
@@ -154,21 +155,21 @@ export class ShipmentDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    GetLoggedTenantAWBStockUsageHistoryLists(stockId: string) {
+    GetLoggedTenantMessagingStockUsageHistoryLists(stockId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetLoggedTenantAWBStockUsageHistoryLists?stockId=' + stockId;
+        var url = this._apiUrl + '/GetLoggedTenantMessagingStockUsageHistoryLists?stockId=' + stockId;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
 
                 var listJason = response.json();
-                var listMapped: Array<AWBStockUsageHistoryList> = [];
+                var listMapped: Array<MessagingStockUsageHistoryList> = [];
 
                 for (var itemJeson in listJason) {
 
-                    var itemMapped: AWBStockUsageHistoryList = this.MapAWBStockUsageHistoryList(listJason[itemJeson]);
+                    var itemMapped: MessagingStockUsageHistoryList = this.MapMessagingStockUsageHistoryList(listJason[itemJeson]);
 
                     listMapped.push(itemMapped);
                 }
@@ -545,11 +546,11 @@ export class ShipmentDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    GetAWBMessagingStockListForTenantManagmentTab(tenantManagementId: number) {
+    GetMessagingStockListForTenantManagmentTab(tenantManagementId: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetAWBMessagingStockListForTenantManagmentTab?tenantManagementId=' + tenantManagementId;
+        var url = this._apiUrl + '/GetMessagingStockListForTenantManagmentTab?tenantManagementId=' + tenantManagementId;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
@@ -617,9 +618,9 @@ export class ShipmentDomainService {
 
         return entityList;
     }
-    MapAWBMessagingStockList(jsonList: any) {
-        var entityList: AWBMessagingStockList;
-        entityList = new AWBMessagingStockList();
+    MapMessagingStockList(jsonList: any) {
+        var entityList: MessagingStockList;
+        entityList = new MessagingStockList();
         var jsonListKeys = Object.keys(jsonList);
 
         for (var key in jsonListKeys) {
@@ -629,9 +630,9 @@ export class ShipmentDomainService {
 
         return entityList;
     }
-    MapAWBStockUsageHistoryList(jsonList: any) {
-        var entityList: AWBStockUsageHistoryList;
-        entityList = new AWBStockUsageHistoryList();
+    MapMessagingStockUsageHistoryList(jsonList: any) {
+        var entityList: MessagingStockUsageHistoryList;
+        entityList = new MessagingStockUsageHistoryList();
         var jsonListKeys = Object.keys(jsonList);
 
         for (var key in jsonListKeys) {
@@ -735,6 +736,7 @@ export class ShipmentsSummary {
     public CreditLimitBlockedCount: number;
     public ExpectedDeparturesNotTransmittedCount: number;
     public ShippingInstructionsLast7DaysCount: number;
+    public ContainerStatusLast7DaysCount: number;
 }
 export class FlightSummary {
     public Id: string;
@@ -775,22 +777,7 @@ export class ShipmentCarrierStatusList {
     public TimeOfDepartureInfo: string;
     public TimeOfArrivalInfo: string;
 }
-export class AWBStockUsageHistoryList {
-    public Id: string;
-    public Tenant: number;
-    public StockId: string;
-    public ShipmentId: string;
-    public ShipmentNumber: string;
-    public MessageType: string;
-    public MAWB: string;
-    public HAWB: string;
-    public ActionType: string;
-    public FirstActionByUserId: string;
-    public LastActionByUserId: string;
-    public LastActionByUserName: string;
-    public FirstActionDate: Date;
-    public LastActionDate: Date;
-}
+
 export class ValidateShipmentMasterArgs {
     public ShipmentId: string;
     public BookingId: string;

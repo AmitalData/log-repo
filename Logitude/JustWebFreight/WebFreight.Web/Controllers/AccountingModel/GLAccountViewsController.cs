@@ -94,6 +94,70 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+        public HttpResponseMessage GetCheckBalanceByAccountDisplayNumber(int tenant, string accountDisplayNumber, string totalDateType, DateTime theDate)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                //int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
+
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                ContactPM contact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
+                var qs = new GLAccountQueryService(1);
+                var list=qs.GetByDisplayNumber(accountDisplayNumber, tenant);
+                var pm =list.First();
+                var ac = new Logitude.Accounting.BL.CoreBL.AccountBalanceByDateCodeService(null, tenant, pm.Id, null);
+                ac.ReSetAccountList(false, false);
+                ac.CalculateBalance(totalDateType, theDate, true, false);
+
+                ac.AccountBalance.LogMessage = null;
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, ac.AccountBalance);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetCheckBalance(int tenant, string accountId, string totalDateType, DateTime theDate)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                //int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
+
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                ContactPM contact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
+
+                var ac = new Logitude.Accounting.BL.CoreBL.AccountBalanceByDateCodeService(null, tenant, accountId, null);
+                ac.ReSetAccountList(false, false);
+                ac.CalculateBalance(totalDateType, theDate, true, false);
+
+                ac.AccountBalance.LogMessage = null;
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, ac.AccountBalance);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetByAccountType(string accountTypeCode , string searchFields = "")
         {
             try
@@ -350,7 +414,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     Aging4AccountTypeCode = isCustomer == true ? AgingReportParam.Aging4AccountTypeCodeEnum.Customer2 : AgingReportParam.Aging4AccountTypeCodeEnum.ControlAccountOnly1,
 
                     GroupByDate = groupByDate == "AccountingDate" ? AgingReportParam.DateEnum.AccountingDate : AgingReportParam.DateEnum.DueDate,
-                    AgingMethod = AgingReportParam.MethodEnum.TotalByMonthFIFOMethod.ToString(),
+                    AgingMethod = AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString(),
 
                     AgingMethod_Options = Enum.GetNames(typeof(AgingReportParam.MethodEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
                     GroupByDate_Options = Enum.GetNames(typeof(AgingReportParam.DateEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
@@ -454,9 +518,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         private decimal CalculateLocalAmount(decimal amount, string currencyId)
         {
+            if (tenantCurrency == currencyId)
+                return amount;
+
             RatesTableList rateList = ratesList.Find(d => d.BaseCurrencyId == tenantCurrency && d.ForeignCurrencyId == currencyId);
             var rate = rateList == null ? 0 : rateList.Rate;
-
+            
             return amount * (decimal)rate;
 
         }

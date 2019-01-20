@@ -79,7 +79,8 @@ namespace WebFreight.Web.Helpers
             {
                 foreach (var error in modValue.Errors)
                 {
-                    ErrorMessage += error.ErrorMessage + Environment.NewLine;
+                    //ErrorMessage += error.ErrorMessage + Environment.NewLine;
+                    ErrorMessage += (String.IsNullOrWhiteSpace(error.ErrorMessage) ? error.Exception.Message : error.ErrorMessage ) + Environment.NewLine;
                     ShortErrorMessage += error.ErrorMessage + Environment.NewLine;
                 }
             }

@@ -92,6 +92,41 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else
             {
+
+
+                LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
+                ReconcileExternalPageLineQueryService pageLineQuery = new ReconcileExternalPageLineQueryService(entityPM.Tenant);
+                    LedgerTransactionUpdateService transactionService = new LedgerTransactionUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
+                    ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
+
+                    //List<string> LedgerTransactionIds = EntityPM.ReconciliationLines.Where(d => d.TransactionId  != null).Select(d => d.TransactionId).ToList();
+
+                //List<LedgerTransactionPM> LedgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(LedgerTransactionIds, entityPM.Tenant);
+              
+             
+
+                    //foreach (var transactionPM in LedgerTransactions)
+                    //{
+                                        
+                    //    if (transactionPM.SourceTypeCode == "3")
+                    //    {
+                    //        List<ARPaymentChequePM> aRPaymentChequePMs = aRPaymentChequeQueryService.GetListByPaymentId(transactionPM.SourceId, entityPM.Tenant);
+
+                    //        foreach (ARPaymentChequePM item in aRPaymentChequePMs)
+                    //        {
+                    //            item.StatusCode = "8";
+                    //        item.ChangeSetOp = ChangeSetOperation.Update;
+                    //            ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
+                    //            aRPaymentChequeUpdateService.Update(item, true);
+                    //        }
+                    //    }
+                       
+                    //}
+
+                 
+
+
+                
                 var validContext = AccountingValidationContextServiceProvider.NewReconciliationValidatorContext((MainContext as IAccountingContext), entityPM);
                 var validationResult = ReconciliationValidator.IsReconciliationValid(entityPM, validContext);
                 if (validationResult != null)
@@ -114,10 +149,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
             }
-
-
-
-
+            
 
         }
 

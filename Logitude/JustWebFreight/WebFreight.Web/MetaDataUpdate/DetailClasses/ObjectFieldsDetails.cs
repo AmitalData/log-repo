@@ -25,6 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string ControlField2 { get; set; }
         public string ControlField3 { get; set; }
         public bool DisplayOnLookUp { get; set; }
+        public bool DisplayOnLookUpLocal { get; set; }
         public bool Isoveridden { get; set; }
         public int Tenant { get; set; }
         public string ObjectTableName { get; set; }
@@ -116,5 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public bool IsSpellCheckedShortLocalDefaultText { get; set; }
         public bool IsSpellCheckedListLocalDefaultText { get; set; }
         public bool CopyToDW { get; set; }
+        public string DataTypeCode { get; set; }
+        public bool AllowedInAirlineMessaging { get;  set; }
     }
 }

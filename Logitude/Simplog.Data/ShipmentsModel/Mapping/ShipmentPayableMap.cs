@@ -71,7 +71,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CorrectionByUserId).HasColumnName("CorrectionByUserId");
             this.Property(t => t.CorrectionDate).HasColumnName("CorrectionDate");
             this.Property(t => t.IATACodeId).HasColumnName("IATACodeId");
-            this.Property(t => t.QuoteCostMinPrice).HasColumnName("QuoteCostMinPrice");
+            this.Property(t => t.QuoteCostMinAmount).HasColumnName("QuoteCostMinAmount");
+            this.Property(t => t.QuoteCostMaxAmount).HasColumnName("QuoteCostMaxAmount");
             this.Property(t => t.OpenAmountInLocalCurrency).HasColumnName("OpenAmountInLocalCurrency");
             this.Property(t => t.VatTypeId).HasColumnName("VatTypeId");
             this.Property(t => t.ReceivableId).HasColumnName("ReceivableId");

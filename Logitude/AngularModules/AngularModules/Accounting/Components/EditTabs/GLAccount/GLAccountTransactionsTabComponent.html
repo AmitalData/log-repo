@@ -260,7 +260,7 @@
 
 
         }
-    
+
      .DisbleBox{
         display: inline-block;
         border: 1px solid #ffd800;
@@ -270,6 +270,11 @@
         margin: 5px;
         color: gray;
         font-family: sans-serif;
+     }
+
+     .FiltersMenu li{
+         width: fit-content !important;
+         padding: 0 7px;
      }
 </style>
 
@@ -314,7 +319,24 @@
                                             <!-- Date -->
                                             <tr class="FormFieldRow">
                                                 <td style="width:10px"></td>
-                                                <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'" >{{'Accounting.General.O.Datefrom' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 120px;" [style.text-align]="isRTL ? 'right' : 'left'" >{{'Accounting.General.O.Datefrom' | TextCodeTranslationPipe}}</td>
+
+                                                <td style="width: 200px;">
+                                                        <ul class="FiltersMenu">
+                                                                <li id="filter_accounting" (click)="FilterItemClicked('filter_accounting')" style="width: 105px; height: 22px;"
+                                                                [class.SelectedFilter]="filterSelectedValue === 'filter_accounting'">
+                                                                {{'GLAccounts.O.filter_accounting' | TextCodeTranslationPipe}}
+                                                            </li>
+                                                            <li id="filter_reference" (click)="FilterItemClicked('filter_reference')" style="width: 135px; height: 22px;"
+                                                                [class.SelectedFilter]="filterSelectedValue === 'filter_reference'">
+                                                                {{'GLAccounts.O.filter_reference' | TextCodeTranslationPipe}}
+                                                            </li>
+                                                            <li id="filter_due" (click)="FilterItemClicked('filter_due')" style="width: 135px; height: 22px;"
+                                                                [class.SelectedFilter]="filterSelectedValue === 'filter_due'">
+                                                                {{'GLAccounts.O.filter_due' | TextCodeTranslationPipe}}
+                                                            </li>
+                                                        </ul>
+                                                </td>
 
                                                 <td style="width: 130px;">
                                                     <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
@@ -322,11 +344,11 @@
                                                                    [SelectedDateValue]="FromDate"></LogDatePicker>
                                                 </td>
 
-                                                <td style="width: 50px;">
+                                                <td style="width:15px;">
                                                     <div></div>
                                                 </td>
-                                          
-                                                <td style="width: 50px;" [style.text-align]="isRTL ? 'right' : 'left'" >{{'Accounting.General.O.To' | TextCodeTranslationPipe}}</td>
+
+                                                <td style="width: 30px;" [style.text-align]="isRTL ? 'right' : 'left'" >{{'Accounting.General.O.To' | TextCodeTranslationPipe}}</td>
 
                                                 <td style="width: 130px;">
                                                     <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
@@ -359,15 +381,15 @@
                                                                     </div>
                                                                 </div>
                                                                 </td>
-                                                           
+
                                                         </tr>
                                                         <tr>
 
-                                                           
+
                                                         </tr>
                                                         <tr></tr>
                                                     </table>
-                                                 
+
 
 
                                                 </td>
@@ -378,11 +400,11 @@
 
                                             <!-- CurrencyId -->
                                             <tr class="FormFieldRow">
-                                                <td style="width:330px" colspan="6">
+                                                <td style="width:330px" colspan="7">
                                                     <table>
 
                                                         <tr>
-                                                            <td style="width:160px">
+                                                            <td style="width:130px">
                                                                 <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
                                                                           [DataContext]="DataContext"></LogLabel>
                                                             </td>
@@ -402,20 +424,20 @@
                                                             </td>
                                                             <td>
                                                             <td>
-                                                                
+
                                                             </td>
 
                                                         </tr>
                                                     </table>
                                                 </td>
-                                            
+
                                             </tr>
 
                                             <!-- Open Balance for -->
 
                                             <tr class="FormFieldRow">
                                                 <td style="width:10px"></td>
-                                                <td style="width: 150px;"  [style.text-align]="isRTL ? 'right' : 'left'"  >
+                                                <td style="width: 120px;"  [style.text-align]="isRTL ? 'right' : 'left'"  >
                                                     {{'Accounting.General.O.OpenAmount' | TextCodeTranslationPipe}}
                                                 </td>
 
@@ -515,7 +537,7 @@
                             <div style="width: 30px;" [style.float]="isRTL ? 'left' : 'right'">
                                 <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
                             </div>
-                            
+
                             <!-- With Splitted by currency checkbox -->
                             <!--<div *ngIf="EntityPM.AccountTypeCode == '2' || EntityPM.AccountTypeCode == '3'" [style.float]="isRTL ? 'left' : 'right'">
                                 <div [style.float]="isRTL ? 'right' : 'left'" style="width: 20px; padding-top: 2px;">
@@ -587,11 +609,11 @@
             </div>
         </div>
 
-        <div [style.float]="isRTL ? 'right' : 'left'" style="width: calc(100% - 300px); overflow: auto;" *ngIf="EntityPM.IsMultiCurrency == true">
+        <div [style.float]="isRTL ? 'right' : 'left'" style="width: calc(100% - 300px); overflow: auto;"  *ngIf="TenantCurrency != EntityPM.CurrencyCode" >
             <div class="footer-title">
                 {{'Accounting.General.O.TotalInCurrencies' | TextCodeTranslationPipe}}
             </div>
-            <div class="footer-cell" [style.float]="isRTL ? 'right' : 'left'" *ngFor="let currency of LTBSummery.EndBalanceForeignList; let i=index;">
+            <div class="footer-cell" [style.float]="isRTL ? 'right' : 'left'" *ngFor="let currency of LTBSummery.EndBalanceForeignList; let i=index;"  >
 
                 <div *ngIf="i>0" style="border-left: 1px solid #c1c1c1;width: 2px; margin: 0px 15px; height: 37px"  [style.float]="isRTL ? 'right' : 'left'" ></div>
 

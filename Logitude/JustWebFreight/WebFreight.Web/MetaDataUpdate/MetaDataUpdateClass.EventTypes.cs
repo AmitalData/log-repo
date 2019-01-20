@@ -77,7 +77,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTablePM CompetitorObject = ObjectTableQuery.GetObjectTableByCode("Competitor", 0);
             ObjectTablePM ProductTypeObject = ObjectTableQuery.GetObjectTableByCode("ProductType", 0);
             ObjectTablePM QuoteStageObject = ObjectTableQuery.GetObjectTableByCode("QuoteStage", 0);
-            ObjectTablePM AWBMessagingStockTable = ObjectTableQuery.GetObjectTableByCode("AWBMessagingStock", 0);
+            ObjectTablePM MessagingStockTable = ObjectTableQuery.GetObjectTableByCode("MessagingStock", 0);
             ObjectTablePM participantObject = ObjectTableQuery.GetObjectTableByCode("Participant", 0);
             ObjectTablePM automationObject = ObjectTableQuery.GetObjectTableByCode("Automation", 0);
             ObjectTablePM ARPaymentMethodObject = ObjectTableQuery.GetObjectTableByCode("ARPaymentMethod", 0);
@@ -134,6 +134,32 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             #region Quote eventTypes
+
+            #region Ticket Events 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "QTCN",
+                EnglishName = "Ticket Connected",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "Ticket Connected",
+                ObjectTableId = quoteObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "OPE",
+            }, EventTypeRepository, tenantEventTypes);
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "QTDC",
+                EnglishName = "Ticket Disconnected",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "Ticket Disconnected",
+                ObjectTableId = quoteObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "OPE",
+            }, EventTypeRepository, tenantEventTypes);
+            #endregion 
+
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code = "UPQT",
@@ -377,6 +403,32 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             #region Shipment
+
+            #region Ticket Events 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "STCN",
+                EnglishName = "Ticket Connected",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "Ticket Connected",
+                ObjectTableId = shipmentObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "OPE",
+            }, EventTypeRepository, tenantEventTypes);
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "STDC",
+                EnglishName = "Ticket Disconnected",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "Ticket Disconnected",
+                ObjectTableId = shipmentObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "OPE",
+            }, EventTypeRepository, tenantEventTypes);
+
+            #endregion 
 
             #region With Status
             AddEventTypes.AddEventType(new EventTypeDetails()
@@ -914,7 +966,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 LocalName = "ETD",
                 ObjectTableId = shipmentObject.Id,
-                EntityStatusId = tenantEntityStatus.Where(d => d.Tenant == 0 && d.Code == "ETD").FirstOrDefault().Id,
+                //EntityStatusId = tenantEntityStatus.Where(d => d.Tenant == 0 && d.Code == "ETD").FirstOrDefault().Id,
                 ShortView = true,
                 EventTypeCategoryCode = "LEG",
                 IsSharedLogisticsEnabled = true,
@@ -928,7 +980,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 LocalName = "ETA",
                 ObjectTableId = shipmentObject.Id,
-                EntityStatusId = tenantEntityStatus.Where(d => d.Tenant == 0 && d.Code == "ETA").FirstOrDefault().Id,
+                //EntityStatusId = tenantEntityStatus.Where(d => d.Tenant == 0 && d.Code == "ETA").FirstOrDefault().Id,
                 ShortView = true,
                 EventTypeCategoryCode = "LEG",
                 IsSharedLogisticsEnabled = true,
@@ -3808,15 +3860,15 @@ namespace WebFreight.Web.MetaDataUpdate
             }, EventTypeRepository, tenantEventTypes);
             #endregion
 
-            #region AWBMessagingStock
+            #region MessagingStock
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code = "UPMS",
-                EnglishName = "AWB Stock Updated",
+                EnglishName = "Updated",
                 Tenant = 0,
                 AddedManually = false,
-                LocalName = "AWB Stock Updated",
-                ObjectTableId = AWBMessagingStockTable.Id,
+                LocalName = "Updated",
+                ObjectTableId = MessagingStockTable.Id,
                 ShortView = false,
             }, EventTypeRepository, tenantEventTypes);
 
@@ -3828,7 +3880,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 AddedManually = false,
                 IsManualEntry = false,
                 LocalName = "Created",
-                ObjectTableId = AWBMessagingStockTable.Id,
+                ObjectTableId = MessagingStockTable.Id,
                 ShortView = true,
             }, EventTypeRepository, tenantEventTypes);
             #endregion

@@ -1,4 +1,4 @@
-﻿
+
 
 <style type="text/css">
     .RatioBox .NumericButtonDisabled {
@@ -50,24 +50,31 @@
         box-shadow: inset 0 0 3px #AAAAAA;
         overflow: hidden;
     }
-         .amcharts-pie-slice {
-  cursor: default;
-}
+
+    .amcharts-pie-slice {
+        cursor: default;
+    }
 </style>
-<table style="z-index:3;position:absolute;left: 0px; height:102%;width:100%;background-color:white">
-    <tr style="height:5px"><td></td></tr>
+
+<table style="z-index:3; position:absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; background-color:white">
+
+    <tr style="height:5px">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
     <tr style="height:30px">
         <td>
             <table>
                 <tr>
                     <td style="width:60px">
                         <BackButton [Text]="'Back'" (click)="BackButtonClicked()"></BackButton>
-
                     </td>
+
                     <td>
                         <label style="font-size:medium;color:#1B90CB;padding-left:7px">{{Customer.EnglishName}} </label>
                     </td>
-                    <td></td>
                 </tr>
             </table>
         </td>
@@ -77,67 +84,57 @@
         <td>
             <table>
                 <tr>
-                    <td style="width:50%">
-                        <div class="CellContent">
-                            <table>
-                                <tr>
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td style="width:120px">
-                                                    <ComboBox (SelectedItemChanged)="SelectedDateTypeItem = $event" [ItemsSource]="DateTypeFilterList" [SelectedItem]="SelectedDateTypeItem" [Binding]="'Title'"></ComboBox>
-                                                </td>
-                                                <td style="width:3px"></td>
 
-                                                <td style="width:120px">
-                                                    <ComboBox (SelectedItemChanged)="SelectedTimeRangeItem = $event" [ItemsSource]="TimeRangeFilterList" [SelectedItem]="SelectedTimeRangeItem" [Binding]="'Title'"></ComboBox>
-                                                </td>
-                                                <td style="width:3px"></td>
-
-                                                <td style="width:120px">
-                                                    <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityToDate" [HideColumns]="true" [ObjectFieldName]="'ActivityToDate'" [ObjectTableName]="'Shipment'" [DataContext]="DataContext"></LogDatePicker>
-                                                </td>
-                                                <td style="width:3px"></td>
-
-                                                <td style="width:120px">
-                                                    <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityFromDate" [HideColumns]="true" [ObjectFieldName]="'ActivityFromDate'" [ObjectTableName]="'Shipment'" [DataContext]="DataContext"></LogDatePicker>
-                                                </td>
-                                                <td></td>
-
-                                            </tr>
-                                        </table>
-
-                                    </td>
-
-                                </tr>
-                            </table>
-
-
-                        </div>
-
+                    <td style="width:120px">
+                        <ComboBox (SelectedItemChanged)="SelectedDateTypeItem = $event" [ItemsSource]="DateTypeFilterList" [SelectedItem]="SelectedDateTypeItem" [Binding]="'Title'"></ComboBox>
                     </td>
+
+                    <td style="width:3px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:120px">
+                        <ComboBox (SelectedItemChanged)="SelectedTimeRangeItem = $event" [ItemsSource]="TimeRangeFilterList" [SelectedItem]="SelectedTimeRangeItem" [Binding]="'Title'"></ComboBox>
+                    </td>
+
+                    <td style="width:3px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:120px">
+                        <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityToDate" [HideColumns]="true" [ObjectFieldName]="'ActivityToDate'" [ObjectTableName]="'Shipment'" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <td style="width:3px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:120px">
+                        <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityFromDate" [HideColumns]="true" [ObjectFieldName]="'ActivityFromDate'" [ObjectTableName]="'Shipment'" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <td style="width:150px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:1px">Show:</td>
+
+                    <td style="width:130px">
+                        <ComboBox (SelectedItemChanged)="SelectedShowItem = $event" [ItemsSource]="ShowFilterList" [SelectedItem]="SelectedShowItem" [Binding]="'Title'"></ComboBox>
+                    </td>
+
                     <td>
-                        <table>
-                            <tr>
-                                <td style="width:50px">Show:</td>
-                                <td style="width:130px">
-                                    <ComboBox (SelectedItemChanged)="SelectedShowItem = $event" [ItemsSource]="ShowFilterList" [SelectedItem]="SelectedShowItem" [Binding]="'Title'"></ComboBox>
-                                </td>
-                                <td></td>
-                            </tr>
-                        </table>
+                        <div></div>
                     </td>
                 </tr>
             </table>
         </td>
-
-
     </tr>
+
     <tr>
         <td>
             <table>
                 <tr>
-
                     <td colspan="3">
                         <table>
                             <tr class="SectionHeader" style="height:27px">
@@ -194,8 +191,6 @@
                             </tr>
                         </table>
                     </td>
-                
-
                 </tr>
 
                 <tr>
@@ -316,15 +311,14 @@
                                             </td>
                                         </tr>
                                     </table>
-                                </td>                                    
+                                </td>
                             </tr>
                         </table>
-
                     </td>
+
                     <td style="width:10px;max-width:10px;min-width:10px"></td>
 
                     <td style="width:50%">
-
                         <table>
                             <tr class="SectionHeader" style="height:27px">
                                 <td>
@@ -345,7 +339,7 @@
                             <tr style="height:10px">
                                 <td></td>
                             </tr>
-                           
+
                             <tr>
 
                                 <td>
@@ -371,18 +365,18 @@
                                             </td>
                                         </tr>
                                     </table>
-                                </td>                                             
+                                </td>
                             </tr>
                         </table>
-
                     </td>
-
                 </tr>
             </table>
         </td>
     </tr>
 
-    <tr style="height:10px;width:100%">
-        <td></td>
+    <tr style="height:10px;">
+        <td>
+            <div></div>
+        </td>
     </tr>
 </table>

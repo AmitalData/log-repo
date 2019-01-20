@@ -1870,6 +1870,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddSATTransferStatus(new SATTransferStatusDetails() { Code = "TD", Name = "Transferred" }, entityRepository);
             AddClosedTables.AddSATTransferStatus(new SATTransferStatusDetails() { Code = "TE", Name = "Transferred with Errors" }, entityRepository);
             AddClosedTables.AddSATTransferStatus(new SATTransferStatusDetails() { Code = "ND", Name = "No Transfer Needed" }, entityRepository);
+            AddClosedTables.AddSATTransferStatus(new SATTransferStatusDetails() { Code = "CS", Name = "Cancellation Request Sent" }, entityRepository);
 
 
             entityRepository.SubmitChanges();

@@ -36,5 +36,8 @@ export class TruckerList {
 		SATForeignRFC: string;
 		MetodoPagoCode: string;
 		UsoCFDICode: string;
+		PrimaryContactName: string;
+		PrimaryContactEmail: string;
+		PrimaryContactPhone: string;
 	
 }

@@ -1,4 +1,5 @@
-﻿import {Component, OnInit, Output, EventEmitter,AfterViewInit,ChangeDetectorRef}  from '@angular/core';
+﻿import { DateTool } from './../../../../Infrastructure/Tools';
+import {Component, OnInit, Output, EventEmitter,AfterViewInit,ChangeDetectorRef}  from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -23,6 +24,7 @@ import {GLAccountExtendedListService} from '../../../Services/ExtendedLists/GLAc
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
 import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
 import {RatesTableListService} from '../../../../Infrastructure/Services/StandardLists/RatesTableListService';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     moduleId: module.id,
@@ -35,7 +37,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     public EntityPM: GLAccountPM = null;
     public ObjectTableName = "GLAccount";
     public DataContext = this;
-   
+
     // Services
     private _entityListService: EntityListService;
     private _CurrencyListService: CurrencyListService = new CurrencyListService();
@@ -60,7 +62,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     ForeignSums: number[];
     isSingleCurrency: boolean = false;
     isControlAccount: boolean = false;
-    
+
     public isRTL: boolean = false;
 
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef){
@@ -125,7 +127,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
 
         this.CD.detectChanges();
-       
+
     }
 
     LoadDefaultValues() {
@@ -155,7 +157,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             this.openAmountHint = value;
         }
     }
-    
+
     private fromDate: Date;
     get FromDate() { return this.fromDate; }
     set FromDate(value: Date) {
@@ -213,7 +215,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             }
             this.GetLTB();
 
-            
+
 
         }
     }
@@ -281,6 +283,15 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             IsCustomTemplate: true
         });
         this.columns.push({
+            FieldName: 'DueDate',
+            DataTypeCode: 'DateTime',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.DueDate"), // 'Due Date',
+            Styles: { width: '90px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+            IsCustomTemplate: true
+        });
+        this.columns.push({
             FieldName: 'Source',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Source"), // 'Source',
@@ -296,15 +307,6 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         //    Styles: { width: '113px' },
         //    IsCustomTemplate: true
         //});
-        this.columns.push({
-            FieldName: 'DueDate',
-            DataTypeCode: 'DateTime',
-            Display: TextCodeTranslator.Translate("LedgerTransaction.F.DueDate"), // 'Due Date',
-            Styles: { width: '90px' },
-            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
-        });
         this.columns.push({
             FieldName: 'LocalAmountCredit',
             DataTypeCode: 'String',
@@ -392,7 +394,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
-        
+
         //this.CustomColumnsReady.emit(this.columns);
     }
 
@@ -422,8 +424,16 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         if (this.searchFieldFilter) {
             filters.AdditionalFilters.push(this.searchFieldFilter);
         }
-        
-        filters.PageSize = 30;
+        if (this._dateTypeCode) {
+            var dummyFilter =  new FilterItem("DateTypeCode", this._dateTypeCode, null, null, "Equals", false, false, false, "string", false);
+            filters.AdditionalFilters.push(dummyFilter);
+        }else{
+            var msg = new MessageWindow();
+            msg.Show("No filter selected!!!!");
+            return;
+        }
+
+        filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetAll = false;
         filters.GetCount = true;
@@ -465,9 +475,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                             this.isSingleCurrency = false;
                     }
 
-                    // Calculate commulative sums 
+                    // Calculate commulative sums
                     for (var i = 0; i < this.ItemsSource.length; i++) {
-                        
+
                         if (i == 0) {
                             this.LocalSums[i] = this.ItemsSource[i].LocalAmountCredit - this.ItemsSource[i].LocalAmountDebit;
                             this.ForeignSums[i] = this.ItemsSource[i].ForeignAmountCredit - this.ItemsSource[i].ForeignAmountDebit;
@@ -498,7 +508,10 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         if (this.searchFieldFilter) {
             filters.AdditionalFilters.push(this.searchFieldFilter);
         }
-
+        if (this._dateTypeCode) {
+            var dummyFilter =  new FilterItem("DateTypeCode", this._dateTypeCode, null, null, "Equals", false, false, false, "string", false);
+            filters.AdditionalFilters.push(dummyFilter);
+        }
         filters.PageSize = 30;
         filters.GetAll = false;
         filters.GetCount = true;
@@ -520,7 +533,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                             if (!myResponse.HasError) {
                                 this.LTBSummery = myResult.Result;
 
-                                if (this.EntityPM.IsMultiCurrency) {
+                                // if (this.EntityPM.IsMultiCurrency) {
                                     var text = " &nbsp;";
 
                                     for (let item of this.LTBSummery.EndBalanceForeignList) {
@@ -530,37 +543,39 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
                                     for (let item of this.LTBSummery.StartBalanceForeignList) {
                                         item.CurrencyCode = this.GetCurrencyCode(item.CurrencyId);
-                                        item.CurrencySign = this.GetCurrencySign(item.CurrencyId);   
+                                        item.CurrencySign = this.GetCurrencySign(item.CurrencyId);
 
                                         //text += item.CurrencyCode + ' ' + item.BalanceForeign + ' ' + item.CurrencyCode + '<br>';
                                     }
 
                                     this.OpenAmountHint = text;
-                                }
+                                // }
 
                                 console.log("Result: ", myResult.Result);
                             }
                         }
                     });
-        
+
     }
 
+    currencyFilterValues;
     OnDataLoaded(result) {
         if (result && this.EntityPM.IsMultiCurrency) {
             var transactions = result;
 
-            var currencyFilterValues = "";
-            // Create filter string that maintain values of current curreincies in the list
-            transactions.forEach((item) => {
-                if (item.rowData) {
-                    currencyFilterValues += (item.rowData.CurrencyId + ",");
-                }
-            });
+            if (!this.currencyFilterValues) {
+                // Create filter string that maintain values of current curreincies in the list
+                transactions.forEach((item) => {
+                    if (item.rowData) {
+                        this.currencyFilterValues += (item.rowData.CurrencyId + ",");
+                    }
+                });
 
-            this.CurrencyFilters = new ApiQueryFilters(true);
-            this.CurrencyFilters.addAdditionalFilter("Id", currencyFilterValues, null, null, "InListExact", false, false, false, "string", false, true);
+                this.CurrencyFilters = new ApiQueryFilters(true);
+                this.CurrencyFilters.addAdditionalFilter("Id", this.currencyFilterValues, null, null, "InListExact", false, false, false, "string", false, true);
+            }
 
-            console.log(currencyFilterValues);
+            console.log(this.currencyFilterValues);
         } else {
             this.CurrencyFilters = new ApiQueryFilters(true);
         }
@@ -602,9 +617,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 this.CD.detectChanges();
             }, 200);
 
-            
 
-            //// Change dates 
+
+            //// Change dates
             //this.timerToken = setTimeout(() => {
             //    this.isValidate = true;
             //    this.FromDate = this.oldFromDate;
@@ -629,7 +644,13 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     //load data after validate date
     LoadData() {
         if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate)) {
-            this.dateFilter = new FilterItem("CreateDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
+
+            var _fromDate = DateTool.GetDate(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0);
+            var _toDate = DateTool.GetDate(this.toDate.getFullYear(), this.toDate.getMonth(), this.toDate.getDate(), 23, 59, 59);
+            this.dateFilter = new FilterItem("AccountingDate", _fromDate, _toDate, null, "Between", false, false, false, "Date", false);
+            console.log(">> Date Filter: ", _fromDate, _toDate);
+
+            // this.dateFilter = new FilterItem("AccountingDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
             this.RefreshButtonClicked();
 
         }
@@ -652,7 +673,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") originalAmountCurrency = SessionLocator.TenantPM.CurrencySign;
                 else if (ReconcileEventManager.GLAccountReconcileMethodCode == "1") originalAmountCurrency = transaction.CurrencySign;
 
-               
+
                 var windowArgs: any = {};
                 windowArgs.GLAccountPM = this.EntityPM;
                 windowArgs.openAmountCurrency = openAmountCurrency;
@@ -675,7 +696,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
 
             }
-        }); 
+        });
     }
 
     RefreshButtonClicked() {
@@ -742,7 +763,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 if (this.isMouseIn) {
                     var i = document.getElementById("tooltip-body-1");
                     if (AppTool.IsNullOrEmpty(i))
-                        return; 
+                        return;
                     document.getElementById("tooltip-body-1").style.position = "fixed";
                     document.getElementById("tooltip-body-1").style.top = (itemRect.top - 70) + 'px';
                     document.getElementById("tooltip-body-1").style.left = (itemRect.left + 22) + 'px';
@@ -882,6 +903,43 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
     }
 
+    //#endregion
+
+    //#region Filter Methods
+    public filterSelectedValue: string = 'filter_accounting';
+    public _dateTypeCode: string = '1';
+    FilterItemClicked(itemValue: string) {
+        if (this.filterSelectedValue != itemValue) {
+            this.filterSelectedValue = itemValue;
+            this.FilterLines();
+        }
+    }
+    FilterLines() {
+
+        //Task 46666: Transaction Tab - date filter new design
+        // <DateTypeCode>2</DateTypeCode> 1/2/3
+        // Accounting- - code 1- חשבונאי
+        // Due - code 2 - לגביה
+        // Reference -code-3-  אסמכתא
+
+        switch (this.filterSelectedValue) {
+            case 'filter_accounting':
+                this._dateTypeCode = '1';
+                break;
+            case 'filter_due':
+                this._dateTypeCode = '2';
+                break;
+            case 'filter_reference':
+                this._dateTypeCode = '3';
+                break;
+            default:
+                break;
+        }
+
+        this.RefreshButtonClicked();
+
+
+    }
     //#endregion
 
 }

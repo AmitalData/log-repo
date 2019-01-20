@@ -81,6 +81,18 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.StatusCode = entityPM.StatusCode;
             }
 
+            if (entityPM.SetApproved)
+            {
+                if (entity.FirstApproveDate == null)
+                {
+                    if (entityPM.ApprovedDateTime != null)
+                    {
+                        entity.FirstApproveDate = entityPM.ApprovedDateTime;
+                        entityPM.FirstApproveDate = entityPM.ApprovedDateTime;
+                    }
+                }
+            }
+
             entityPM.SetVoided = false;
             entityPM.SetApproved = false;
             entityPM.SetCancelApproval = false;

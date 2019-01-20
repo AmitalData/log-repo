@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -507,19 +508,32 @@ namespace WebFreight.Web.Helpers.APIHelpers
             if (entityPM.ShipmentPackages.Count == 0)
             {
                 entityPM.NumberOfPackages = null;
+                entityPM.NumberOfContainers = null;
                 entityPM.GrossWeight = null;
                 entityPM.Volume = null;
                 entityPM.VolumetricWeight = null;
                 entityPM.ChargeableWeight = null;
+                entityPM.GrossWeightInKG = null;
+                entityPM.GrossWeightPerTon = null;
             }
 
             else
             {
-                entityPM.NumberOfPackages = entityPM.ShipmentPackages.Sum(s => s.Quantity);
+                if(MethodHelper.IsLCLEntity(entityPM.TransportModeId, entityPM.ShipmentTypeId))
+                {
+                    entityPM.NumberOfPackages = entityPM.ShipmentPackages.Sum(s => s.Quantity);
+                }
+
+                else
+                {
+                    entityPM.NumberOfContainers = entityPM.ShipmentPackages.Sum(s => s.Quantity);
+                }
+                                
                 entityPM.GrossWeight = Round(entityPM.ShipmentPackages.Sum(s => s.Weight), 3);
                 entityPM.Volume = Round(entityPM.ShipmentPackages.Sum(s => s.Volume), 3);
                 entityPM.VolumetricWeight = Round(entityPM.ShipmentPackages.Sum(s => s.VolumetricWeight), 3);
                 entityPM.ChargeableWeight = CalculateChargeableWeight(entityPM.GrossWeight, entityPM.VolumetricWeight, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode, entityPM.DirectionId, entityPM.TransportModeId);
+                ComputeGrossWeigh_Kg_Ton(entityPM);
             }
         }
         public static double? CalculateChargeableWeight(double? grossWeight, double? volumetricWeight, string grossWeightUnitCode, string chargeableWeightUnitCode, string directionId, string transportModeId)
@@ -685,6 +699,131 @@ namespace WebFreight.Web.Helpers.APIHelpers
             }
 
             return myResult;
+        }
+
+        private static void ComputeGrossWeigh_Kg_Ton(ShipmentPM entityPM)
+        {
+            double? weigh_Kg = null;
+            double? weigh_Ton = null;
+
+            if (entityPM.GrossWeight != null)
+            {
+                double factorOfConvert = 1;
+
+                if (!string.IsNullOrEmpty(entityPM.GrossWeightUnitCode))
+                {
+                    switch (entityPM.GrossWeightUnitCode.ToUpper())
+                    {
+                        case "KG": { factorOfConvert = 1; break; }
+                        case "LB": { factorOfConvert = 0.45359237; break; }
+                        case "MT": { factorOfConvert = 1000; break; }
+                    }
+                }
+
+                weigh_Kg = entityPM.GrossWeight * factorOfConvert;
+            }
+
+            if (weigh_Kg != null)
+            {
+                weigh_Kg = Round(weigh_Kg, 3);
+
+                weigh_Ton = weigh_Kg / 1000;
+            }
+
+            if (weigh_Ton != null)
+            {
+                weigh_Ton = Round(weigh_Ton, 3);
+            }
+
+            entityPM.GrossWeightInKG = weigh_Kg;
+            entityPM.GrossWeightPerTon = weigh_Ton;
+        }
+
+        public static void ComputeReceivablesPayablesTotals(ShipmentPM entityPM)
+        {
+            // Payables
+            double? openPayablesLocal = null;
+            double? openPayablesProfit = null;
+            if (entityPM.ShipmentLevelCode == "C" && entityPM.ShipmentConsoleShipments.Count > 0)
+            {
+                openPayablesLocal = entityPM.ShipmentConsoleShipments.Sum(s => s.OAMTPayables_Local);
+                openPayablesProfit = entityPM.ShipmentConsoleShipments.Sum(s => s.OAMTPayables_Profit);
+            }
+
+            else
+            {
+                openPayablesLocal = entityPM.ShipmentPayables.Sum(s => s.OpenAmountInLocalCurrency);
+                openPayablesProfit = entityPM.ShipmentPayables.Sum(s => s.OpenAmountInProfitCurrency);
+            }
+
+            // Receivables
+            double? openReceivablesLocal = null;
+            double? openReceivablesProfit = null;
+            if (entityPM.ShipmentLevelCode == "C" && entityPM.ShipmentConsoleShipments.Count > 0)
+            {
+                if (entityPM.ProrateReceivables)
+                {
+                    openReceivablesLocal = entityPM.ShipmentConsoleShipments.Sum(s => s.OAMTReceivables_Local);
+                    openReceivablesProfit = entityPM.ShipmentConsoleShipments.Sum(s => s.OAMTReceivables_Profit);
+                }
+
+                else
+                {
+                    openReceivablesLocal = entityPM.ShipmentReceivables.Where(f => f.ShipmentReceivableLineStatusCode != "ACCT").Sum(s => s.TotalAmountLocal);
+                    openReceivablesProfit = entityPM.ShipmentReceivables.Where(f => f.ShipmentReceivableLineStatusCode != "ACCT").Sum(s => s.AmountInProfitCurrency);
+                    
+                    openReceivablesLocal += entityPM.ShipmentConsoleShipments.Sum(s => s.OAMTReceivables_Local_NoParent);
+                    openReceivablesProfit += entityPM.ShipmentConsoleShipments.Sum(s => s.OAMTReceivables_Profit_NoParent);
+                }
+            }
+
+            else
+            {
+                openReceivablesLocal = entityPM.ShipmentReceivables.Where(f => f.ShipmentReceivableLineStatusCode != "ACCT").Sum(s => s.TotalAmountLocal);
+                openReceivablesProfit = entityPM.ShipmentReceivables.Where(f => f.ShipmentReceivableLineStatusCode != "ACCT").Sum(s => s.AmountInProfitCurrency);
+            }
+
+            var allPayablesLocal = openPayablesLocal;
+            var allPayablesProfit = openPayablesProfit;
+            var allReceivablesLocal = openReceivablesLocal;
+            var allReceivablesProfit = openReceivablesProfit;
+
+            // New Design
+            var profitInLocal = allReceivablesLocal - allPayablesLocal;
+            var profitInProfit = allReceivablesProfit - allPayablesProfit;
+            
+            /* Payables */
+            if (entityPM.OpenPayablesInLocalCurrency != openPayablesLocal)
+            {
+                entityPM.OpenPayablesInLocalCurrency = (openPayablesLocal == null) ? 0 : Round(openPayablesLocal, 2);
+            }
+
+            if (entityPM.OpenPayablesInProfitCurrency != openPayablesProfit)
+            {
+                entityPM.OpenPayablesInProfitCurrency = (openPayablesProfit == null) ? 0 : Round(openPayablesProfit, 2);
+            }
+            
+            /* Receivables */
+            if (entityPM.OpenReceivablesInLocalCurrency != openReceivablesLocal)
+            {
+                entityPM.OpenReceivablesInLocalCurrency = (openReceivablesLocal == null) ? 0 : Round(openReceivablesLocal, 2);
+            }
+
+            if (entityPM.OpenReceivablesInProfitCurrency != openReceivablesProfit)
+            {
+                entityPM.OpenReceivablesInProfitCurrency = (openReceivablesProfit == null) ? 0 : Round(openReceivablesProfit, 2);
+            }
+            
+            /* Profit */
+            if (entityPM.ProfitInLocalCurrency != profitInLocal)
+            {
+                entityPM.ProfitInLocalCurrency = ((profitInLocal == null) ? 0 : Round(profitInLocal, 2)).Value;
+            }
+
+            if (entityPM.ProfitInProfitCurrency != profitInProfit)
+            {
+                entityPM.ProfitInProfitCurrency = (profitInProfit == null) ? 0 : Round(profitInProfit, 2);
+            }
         }
     }
 }

@@ -98,7 +98,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
                 if(ObjectTable.Name == "Shipment" || ObjectTable.Name == "Master")
                 {
-                    allowedCount = 20;
+                    allowedCount = 40;
                 }
 
                 if (count < allowedCount)

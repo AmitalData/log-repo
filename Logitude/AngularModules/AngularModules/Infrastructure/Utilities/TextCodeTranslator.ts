@@ -1,12 +1,14 @@
-﻿declare var window: any;
+declare var window: any;
 import {SessionLocator} from '../Utilities/SessionLocator';
+import { AppTool } from '../Tools';
+import { retry } from 'rxjs/operator/retry';
 
 export class TextCodeTranslator {
 
-    static Translate(value: string): string {
+    static Translate(value: string, Fix: boolean = true): string {
         if (SessionLocator.UseCachedData) {
 
-            return this.TranslateCached(value);
+            return this.TranslateCached(value, Fix);
         }
         //console.log('88888888888888:', value);
 
@@ -29,13 +31,15 @@ export class TextCodeTranslator {
             window.TranslationsCache.splice(0, 50);
         }
 
-         return translation;
-        //return "!" + translation;
+        if (Fix == true) {
+            return TextCodeTranslator.FixTranslation(translation);
+        }
+
+        else {
+            return translation;
+        }
     }
-
-
-
-    static TranslateCached(value: string): string {
+    static TranslateCached(value: string, Fix: boolean = true): string {
 
         //console.log('88888888888888:', value);
 
@@ -103,11 +107,14 @@ export class TextCodeTranslator {
             window.TextCodesCache.splice(0, 50);
         }
 
-        return translation;
-        //return "!" + translation;
+        if (Fix == true) {
+            return TextCodeTranslator.FixTranslation(translation);
+        }
+
+        else {
+            return translation;
+        }
     }
-
-
     static TranslateTable(value: string): string {
 
         if (SessionLocator.UseCachedData) {
@@ -133,10 +140,8 @@ export class TextCodeTranslator {
             window.TranslationsCache.splice(0, 50);
         }
 
-        return translation;
-        //return "!" + translation;
+        return TextCodeTranslator.FixTranslation(translation);
     }
-
     static TranslateTablePlural(value: string): string {
 
         if (SessionLocator.UseCachedData) {
@@ -162,11 +167,8 @@ export class TextCodeTranslator {
             window.TranslationsCache.splice(0, 50);
         }
 
-        return translation;
-        //return "!" + translation;
+        return TextCodeTranslator.FixTranslation(translation);
     }
-
-
     static TranslatePluralCached(value: string): string {
 
         //console.log('88888888888888:', value);
@@ -213,10 +215,8 @@ export class TextCodeTranslator {
             window.TextCodesCache.splice(0, 50);
         }
 
-        return translation;
-        //return "!" + translation;
+        return TextCodeTranslator.FixTranslation(translation);
     }
-
     static GetRequiredFieldForTableMessageTranslation(requiredTextCodeCode: string, fieldNameTextCode: string, tableNameTextCode: string, entityReference: string) {
         var message = TextCodeTranslator.Translate("Customs.General.O.FieldForTableIsRequired");
         var fieldName = TextCodeTranslator.Translate(fieldNameTextCode);
@@ -229,5 +229,15 @@ export class TextCodeTranslator {
         return message;
     }
 
+    static FixTranslation(value: string) {
+        var myResult: string = "";
 
+        if (value) {
+            myResult = AppTool.Replace(value, "%n", "\n");
+        }
+
+                //return "!" + translation;
+
+        return myResult;
+    }
 }

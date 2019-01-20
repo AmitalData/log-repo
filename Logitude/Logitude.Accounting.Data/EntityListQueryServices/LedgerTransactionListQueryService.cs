@@ -90,8 +90,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return iQueryable;
         }
 
-        public List<LedgerTransactionList> GetLedgerTransactionListForceOrderByAccDateAndId(
-            IQueryable<LedgerTransaction> LedgerTransactionQuery, int pageSize, int pageStartAtRecordIndex)
+        public List<LedgerTransactionList> GetLedgerTransactionListForceOrderByDateTypeCodeAndId(
+            IQueryable<LedgerTransaction> LedgerTransactionQuery, string DateTypeCode, int pageSize, int pageStartAtRecordIndex)
         {
             //var skip = pageSize * curPageZeroBase;
             var skip = pageStartAtRecordIndex;
@@ -105,8 +105,26 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             {
                 ledgerTransactionListQuery = GetIqueryableList(q);
             }
+
+            switch (DateTypeCode)
+            {
+                case "2":// GLAccountTotalDateTypeValues.DueDate:
+                    {
+                        ledgerTransactionListQuery = ledgerTransactionListQuery.OrderBy(rec => rec.DueDate).ThenBy(rec => rec.Id);
+                    }
+                    break;
+                case "3":// GLAccountTotalDateTypeValues.DocumentDate: 
+                    {
+                        ledgerTransactionListQuery = ledgerTransactionListQuery.OrderBy(rec => rec.DocumentDate).ThenBy(rec => rec.Id);
+                    } break;
+                case "1":// GLAccountTotalDateTypeValues.Accountingdate:
+                default:
+                    {
+                        ledgerTransactionListQuery = ledgerTransactionListQuery.OrderBy(rec => rec.AccountingDate).ThenBy(rec => rec.Id);
+                    }
+                    break;
+            }
             
-            ledgerTransactionListQuery = ledgerTransactionListQuery.OrderBy(rec => rec.AccountingDate).ThenBy(rec => rec.Id);
 
 
             return ledgerTransactionListQuery.ToList();
@@ -501,9 +519,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public string SearchFields { get; set; }
 
         public LedgerTransactionBalanceFilterCallBack CallBack { get; set; }
-
-
-
+        public string DateTypeCode { get; set; }
     }
     public class LedgerTransactionBalanceResponse : LedgerTransactionBalanceFilterCallBack
     {
@@ -628,7 +644,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public string Category3Id { get; set; }
         public string Category4Id { get; set; }
         public string Category5Id { get; set; }
-
+        public string AccountTypeCode { get; set; }
 
         public string SearchFields { get; set; }
 

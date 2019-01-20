@@ -31,6 +31,16 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("GeneralData")]
 	    public string GeneralData { get; set; }
+        [ForeignKey("TaxReport")]
+        [Column("TaxReportId")]
+	    public string TaxReportId { get; set; }
+	      
+        public virtual TaxReport TaxReport { get; set; }
+        [ForeignKey("TaxReportStatus")]
+        [Column("TaxReportStatusCode")]
+	    public string TaxReportStatusCode { get; set; }
+	      
+        public virtual TaxReportStatus TaxReportStatus { get; set; }
     }
 }
 	 

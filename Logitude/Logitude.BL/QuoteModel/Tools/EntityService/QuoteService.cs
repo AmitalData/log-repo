@@ -125,6 +125,13 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.entityPM.Id = IdCounter.GetNumber("Quote", tenant).ToString();
             this.entityPoco = new Quote() { Id = this.entityPM.Id };
 
+            QuoteSettingRepository iQuoteSettingRepository = new QuoteSettingRepository(objectContext);
+            QuoteSetting iQuoteSetting = iQuoteSettingRepository.GetSingleQuoteSetting(tenant);
+            if(iQuoteSetting != null)
+            {
+                this.entityPM.IsSaleCurrencySameAsCost = iQuoteSetting.IsSaleAsCostCurrency;
+            }
+
             this.InitializeComponent();
 
             QuotetValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext);
@@ -911,11 +918,31 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                 this.CreateQuoteFollowUp(itemPM);
                                 followUpRepository.SubmitChanges();
 
+                                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                {
+                                    Tenant = tenant,
+                                    EventTypeCode = "QFCR",
+                                    UserId = this.loggedContact.Id,
+                                    EntityId = this.entityPM.Id,
+                                    ObjectTableName = "Quote",
+                                    Notes = itemPM.EventTypeFollowUpName,
+                                });
+
                                 if (itemPM.Done)
                                 {
                                     itemPM.Deleted = true;
                                     FollowUp follow = followUpRepository.GetSingleFollowUp(itemPM.Id, tenant);
                                     doneFollowUps.Add(follow);
+
+                                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                    {
+                                        Tenant = tenant,
+                                        EventTypeCode = "QFCM",
+                                        UserId = this.loggedContact.Id,
+                                        EntityId = this.entityPM.Id,
+                                        ObjectTableName = "Quote",
+                                        Notes = itemPM.EventTypeFollowUpName,
+                                    });
                                 }
 
                                 break;
@@ -954,6 +981,16 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                         this.DeleteQuoteFollowUp(itemPM);
                         followUpRepository.SubmitChanges();
+
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            Tenant = tenant,
+                            EventTypeCode = "QFCM",
+                            UserId = this.loggedContact.Id,
+                            EntityId = this.entityPM.Id,
+                            ObjectTableName = "Quote",
+                            Notes = itemPM.EventTypeFollowUpName,
+                        });
                     }
 
                     else

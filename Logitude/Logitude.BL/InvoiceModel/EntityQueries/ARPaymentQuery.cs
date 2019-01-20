@@ -97,12 +97,14 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        SATTransferStatusCode = a.SATTransferStatusCode,
                                        TransmissionError = a.TransmissionError,
                                        BankAccountLiteId = a.BankAccountLiteId,
+                                       BankAccountName = a.BankAccountLite != null ? a.BankAccountLite.EnglishName : null,
                                        SATTransferStatusName = a.SATTransferStatus != null ? a.SATTransferStatus.Name : null,
                                        MetodoPagoCode = a.MetodoPagoCode,
                                        TipoCadenaPago = a.TipoCadenaPago,
                                        CadPago = a.CadPago,
                                        CertPago = a.CertPago,
                                        SelloPago = a.SelloPago,
+                                       SATApprovalDate = a.SATApprovalDate,
                                    }).FirstOrDefault();
 
 
@@ -179,6 +181,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        CreditCardTypeId = a.CreditCardTypeId,
                                        BankAccountId = a.BankAccountId,
                                        BankAccountLiteId = a.BankAccountLiteId,
+                                       BankAccountName = a.BankAccountLite != null ? a.BankAccountLite.EnglishName : null,
                                        CashbookId = a.CashbookId,
                                        TransferTries = a.TransferTries,
                                        TransferError = a.TransferError,
@@ -198,7 +201,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        CadPago = a.CadPago,
                                        CertPago = a.CertPago,
                                        SelloPago = a.SelloPago,
-
+                                       SATApprovalDate = a.SATApprovalDate,
                                    }).FirstOrDefault();
 
             Currency currency = CurrencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, payment.Tenant, true);
@@ -222,7 +225,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public IQueryable<ARPaymentList> GetIQueryableEntityList(IQueryable<ARPayment> iQueryable)
         {
-            IQueryable<ARPaymentList> query2 = from entity in iQueryable.Include("ARAccount").Include("AccountingPaymentMethod").Include("BillToCard").Include("CreatedByUser.Contact").Include("DebitAccount").Include("LocalCurrency").Include("PaymentCurrency").Include("Status").Include("TransferStatus").Include("SATTransferStatus").Include("Branch")
+            IQueryable<ARPaymentList> query2 = from entity in iQueryable.Include("ARAccount").Include("AccountingPaymentMethod").Include("BillToCard").Include("CreatedByUser.Contact").Include("DebitAccount").Include("LocalCurrency").Include("PaymentCurrency").Include("Status").Include("TransferStatus").Include("SATTransferStatus").Include("Branch").Include("BankAccountLite")
                                                select new ARPaymentList()
                                                {
                                                    ARAccountId = entity.ARAccountId,
@@ -273,6 +276,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    ProfitCurrencyExchangeRate = entity.ProfitCurrencyExchangeRate,
                                                    BankAccountId = entity.BankAccountId,
                                                    BankAccountLiteId = entity.BankAccountLiteId,
+                                                   BankAccountName = entity.BankAccountLite != null ? entity.BankAccountLite.EnglishName : null,
                                                    CashbookId = entity.CashbookId,
                                                    TransferTries = entity.TransferTries,
                                                    TransferError = entity.TransferError,
@@ -292,6 +296,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    CadPago = entity.CadPago,
                                                    CertPago = entity.CertPago,
                                                    SelloPago = entity.SelloPago,
+                                                   SATApprovalDate = entity.SATApprovalDate,
 
                                                };
             return query2;
@@ -299,7 +304,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public IQueryable<ARPaymentList> GetOpenedARPayments(int tenant)
         {
-            var query = from entity in repository.context.ARPayments.Include("ARAccount").Include("AccountingPaymentMethod").Include("BillToCard").Include("CreatedByUser.Contact").Include("DebitAccount").Include("LocalCurrency").Include("PaymentCurrency").Include("Status").Include("TransferStatus")
+            var query = from entity in repository.context.ARPayments.Include("ARAccount").Include("AccountingPaymentMethod").Include("BillToCard").Include("CreatedByUser.Contact").Include("DebitAccount").Include("LocalCurrency").Include("PaymentCurrency").Include("Status").Include("TransferStatus").Include("BankAccountLite")
                         where entity.Tenant == tenant && entity.StatusCode != "DR" && entity.StatusCode != "VD" && entity.StatusCode != "LL" && !entity.IsClosed
                         select new ARPaymentList()
                         {
@@ -368,6 +373,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             CadPago = entity.CadPago,
                             CertPago = entity.CertPago,
                             SelloPago = entity.SelloPago,
+                            SATApprovalDate = entity.SATApprovalDate,
+                            BankAccountName = entity.BankAccountLite != null ? entity.BankAccountLite.EnglishName : null,
 
                         };
 
@@ -376,7 +383,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public IQueryable<ARPaymentList> GetARPaymentsList_00(int tenant)
         {
-            var query = from entity in repository.context.ARPayments.Include("AccountingPaymentMethod").Include("CreatedByUser.Contact").Include("TransferStatus")
+            var query = from entity in repository.context.ARPayments.Include("AccountingPaymentMethod").Include("CreatedByUser.Contact").Include("TransferStatus").Include("BankAccountLite")
                         where entity.Tenant == tenant
                         select new ARPaymentList()
                         {
@@ -445,6 +452,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             CadPago = entity.CadPago,
                             CertPago = entity.CertPago,
                             SelloPago = entity.SelloPago,
+                            SATApprovalDate = entity.SATApprovalDate,
+                            BankAccountName = entity.BankAccountLite != null ? entity.BankAccountLite.EnglishName : null,
                         };
 
             return query;
@@ -452,7 +461,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public ARPaymentList GetPaymentByPaymentNumber(string paymentNo, int tenant)
         {
-            ARPaymentList payment = (from a in repository.context.ARPayments.Include("TransferStatus")
+            ARPaymentList payment = (from a in repository.context.ARPayments.Include("TransferStatus").Include("BankAccountLite")
                                      where a.PaymentNo == paymentNo && a.Tenant == tenant
                                      select new ARPaymentList()
                                      {
@@ -507,6 +516,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                          CadPago = a.CadPago,
                                          CertPago = a.CertPago,
                                          SelloPago = a.SelloPago,
+                                         SATApprovalDate = a.SATApprovalDate,
+                                         BankAccountName = a.BankAccountLite != null ? a.BankAccountLite.EnglishName : null,
 
                                      }).FirstOrDefault();
 

@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ARInvoicePM} from '../../EntityPMs/ARInvoicePM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
@@ -16,6 +16,7 @@ import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHe
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
+import { SessionComponent } from '../../../Infrastructure/Components/Session/SessionComponent';
 
 export class ARInvoiceMenuButtonsHandler {
     public EntityPM: ARInvoicePM;
@@ -118,38 +119,38 @@ export class ARInvoiceMenuButtonsHandler {
 
                         case "AutoCredit":
                             {
-                                if (SessionLocator.TenantPM.AccountingActivated == true) {
-                                    if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
-                                        myButtonIsDisabled = true;
-                                    }
+                                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                    myButtonIsDisabled = true;
                                 }
-                                else {
-                                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                                        myButtonIsDisabled = true;
-                                    }
 
-                                    else if (this.EntityPM.StatusCode == "LL" || this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "AC" || this.EntityPM.StatusCode == "AR") {
-                                        myButtonIsDisabled = true;
-                                    }
+                                else if (this.EntityPM.StatusCode == "LL" || this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "AC" || this.EntityPM.StatusCode == "AR") {
+                                    myButtonIsDisabled = true;
+                                }
 
-                                    else if (this.EntityPM.ARInvoiceTypeCode == "IN") {
-                                        var isEnabled = false;
+                                else if (this.EntityPM.ARInvoiceTypeCode == "IN") {
+                                    var isEnabled = false;
 
-                                        if (!this.EntityPM.IsCancelled) {
-                                            if (this.EntityPM.IsConstituentInvoice) {
-                                                if (AppTool.IsNullOrEmpty(this.EntityPM.ConsolidationInvoiceId)) {
-                                                    isEnabled = true;
-                                                }
-                                            }
-
-                                            else {
-                                                if (this.EntityPM.StatusCode == "PP" || this.EntityPM.StatusCode == "PD" || this.EntityPM.StatusCode == "AD") {
-                                                    isEnabled = true;
-                                                }
+                                    if (!this.EntityPM.IsCancelled) {
+                                        if (this.EntityPM.IsConstituentInvoice) {
+                                            if (AppTool.IsNullOrEmpty(this.EntityPM.ConsolidationInvoiceId)) {
+                                                isEnabled = true;
                                             }
                                         }
 
-                                        myButtonIsDisabled = !isEnabled;
+                                        else {
+                                            if (this.EntityPM.StatusCode == "PP" || this.EntityPM.StatusCode == "PD" || this.EntityPM.StatusCode == "AD") {
+                                                isEnabled = true;
+                                            }
+                                        }
+                                    }
+
+                                    myButtonIsDisabled = !isEnabled;
+                                }
+
+
+                                if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                    if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
+                                        myButtonIsDisabled = true;
                                     }
                                 }
 
@@ -181,6 +182,52 @@ export class ARInvoiceMenuButtonsHandler {
                                             myButtonIsDisabled = false;
                                         }
                                     }
+                                }
+
+                                break;
+                            }
+
+                        case "CheckSATStatus":
+                            {
+                                if (this.EntityPM.SATTransferStatusCode == "CS") {
+                                    myButtonIsDisabled = false;
+                                }
+                                else {
+                                    myButtonIsDisabled = true;
+                                }
+                                if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE") {
+                                    button.IsHidden = true;
+                                }
+
+
+                                break;
+                            }
+
+
+
+                        case "SendToQBO":
+                            {
+                                if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG" ) {
+                                    button.IsHidden = false;
+                                }
+                                else {
+                                    button.IsHidden = true;
+                                }
+                                if (this.EntityPM.TransferStatusCode == "RD" || this.EntityPM.TransferStatusCode == "NR") {
+                                    button.DisplayText = "Send to QBO";
+                                }
+                                else if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
+                                    button.LabelTextCodeCode = null;
+                                   button.DisplayText = "Resend to QBO";
+                                }
+                                if (this.EntityPM.ApprovedDate == null) {
+                                    if (this.EntityPM.ARInvoiceTypeCode == "CD")
+                                        myButtonIsDisabled = false;
+                                    else
+                                    myButtonIsDisabled = true;
+                                }
+                                else {
+                                    myButtonIsDisabled = false;
                                 }
 
                                 break;
@@ -247,8 +294,80 @@ export class ARInvoiceMenuButtonsHandler {
                         this.ReTransferClicked();
                         break;
                     }
+                case "CheckSATStatus":
+                    {
+                        this.CheckSATStatus();
+                        break;
+                    }
+
+                case "SendToQBO":
+                    {
+                        this.SendToQBO();
+                        break;
+                    }
             }
         }
+    }
+
+    CheckSATStatus() {
+        var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+        invoiceDomainService.GetARInvoiceSATCancellationStatus(this.EntityPM.Id).subscribe(response => {
+
+        });
+
+    }
+
+
+    SendToQBO() {
+
+        var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+        invoiceDomainService.getConnectedARPayments(this.EntityPM.Id).subscribe(response => {
+            if (!response.HasError) {
+                if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
+                    var messageText: string = "Resend this invoice to QBO?";
+                    if (response.Result) {
+                        messageText = messageText.concat(" Please note that any connected Transferred payments will be resend after the successful transfer of this invoice");
+                    }
+                    var myConfirmWindow = new ConfirmWindow();
+                    myConfirmWindow.Width = 400;
+                    myConfirmWindow.Show(messageText);
+                    myConfirmWindow.WindowClosed.subscribe(s => {
+                        this.StopFlags();
+                        if (myConfirmWindow.Yes) {
+                            this.SendToQBOApproved("Resending Invoice to QBO");
+
+                        }
+                    });
+                }
+                else {
+                    if (response.Result) {
+                        var messageText: string = "Please note that any connected Transferred payments will be resend after the successful transfer of this invoice";
+                        myConfirmWindow.Width = 400;
+                        myConfirmWindow.Show(messageText);
+                        myConfirmWindow.WindowClosed.subscribe(s => {
+                            this.StopFlags();
+                            if (myConfirmWindow.Yes) {
+                                this.SendToQBOApproved("Sending Invoice to QBO");
+                            }
+                        });
+                    }
+                    else {
+                        this.SendToQBOApproved("Sending Invoice to QBO");
+                    }
+                    this.StopFlags();
+                }
+            }                                           
+        });
+    }
+
+
+    SendToQBOApproved(Text: string) {
+        this.EntityPM.SetReSendQBO = true;
+        this.EntityPM.SetVoided = false;
+        this.EntityPM.SetApproved = false;
+        this.EntityPM.SetReTransfer = false;
+        this.EntityPM.SetCancelDraft = false;
+        this.entityArgs.EditComponent.SaveChanges(Text);
     }
 
     isValid: boolean = false;
@@ -336,7 +455,7 @@ export class ARInvoiceMenuButtonsHandler {
                     this.EntityPM.SetApproved = false;
                     this.EntityPM.SetReTransfer = false;
                     this.EntityPM.SetCancelDraft = false;
-
+                    this.EntityPM.SetReSendQBO = false;
                     this.entityArgs.EditComponent.SaveChanges();
                 }
 
@@ -471,6 +590,7 @@ export class ARInvoiceMenuButtonsHandler {
         this.EntityPM.SetApproved = true;
         this.EntityPM.SetReTransfer = false;
         this.EntityPM.SetCancelDraft = false;
+        this.EntityPM.SetReSendQBO = false;
         this.entityArgs.EditComponent.SaveChanges("Approving...");
     }
 
@@ -614,6 +734,7 @@ export class ARInvoiceMenuButtonsHandler {
                 this.EntityPM.SetApproved = false;
                 this.EntityPM.SetReTransfer = false;
                 this.EntityPM.SetCancelDraft = false;
+                this.EntityPM.SetReSendQBO = false;
                 this.entityArgs.EditComponent.SaveChanges("Voiding...");
             }
         });
@@ -626,7 +747,7 @@ export class ARInvoiceMenuButtonsHandler {
             this.EntityPM.SetApproved = false;
             this.EntityPM.SetReTransfer = true;
             this.EntityPM.SetCancelDraft = false;
-
+            this.EntityPM.SetReSendQBO = false;
             this.entityArgs.EditComponent.SaveChanges();
         }
 
@@ -769,11 +890,20 @@ export class ARInvoiceMenuButtonsHandler {
         });
     }
     OpenAutoCreditScreen() {
+
+        if (this.EntityPM.IsConsolidationInvoice) {
+            SessionLocator.CurrentSession.FireEvent("ResetARInvoiceBaseDeailsTab");
+        }
+
         if (!AppTool.IsNullOrEmpty(this.AutoCreditId)) {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.AutoCreditId, ObjectTableName: 'ARInvoice', BackButtonLabel: "Invoice: " + this.EntityPM.InvoiceNumber });
+
+                    if (this.EntityPM.IsConsolidationInvoice) {
+                        SessionLocator.CurrentSession.FireEvent("ResetARInvoiceBaseDeailsTab");
+                    }
                 });
         }
     }
@@ -808,7 +938,15 @@ export class ARInvoiceMenuButtonsHandler {
             myReference = !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber;
             this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
         }
-
+        else if (this.EntityPM.IsGeneralInvoice) {
+            myEntityId = this.EntityPM.Id;
+            myChildEntityId = null;
+            mychildObjectTableId = null;
+            myObjectTableName = "ARInvoice";
+            myDocumentTypeCode = "999G";
+            myReference = !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber;
+            this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
+        }
         else {
 
             mychildObjectTableId = window.ObjectTables.filter(d => d.Name == "ARInvoice")[0].Id;

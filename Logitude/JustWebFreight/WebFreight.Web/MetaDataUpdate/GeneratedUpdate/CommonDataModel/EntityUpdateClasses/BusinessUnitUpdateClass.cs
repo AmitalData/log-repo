@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class BusinessUnitUpdateClass
@@ -84,7 +87,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsNewWizard =  true,
 			      				    NewWizardControlName =  "Simplog.Infrastructure.NewBusinessUnitCommand",
 			      				    LookUp1 =  "Name",
-			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -110,16 +112,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
 			      				    IsEditable =  true,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
 			      				    ClientModuleName =  "Common",
 			      				    NewWizardComponentPath =  "./Common/Components/Maintenance/BusinessUnit/NewBusinessUnitComponent",
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
 			      				    Code =  "BUQG",
+			      				    DescriptionDefaultText =  "Define the business units you want to work with for controlling access to information and sharing of information.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -133,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "BusinessUnit",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Name",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  40,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -157,10 +153,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  1,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "BusinessUnit",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "BusinessUnit",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -171,16 +166,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "Name",
+					  						DefaultText =  @"Name",
+					  						ListFieldLable =  "NameListLable",
+					  						ListLableDefaultText =  @"Name",
+					  						HelpTextCode =  "Name",
+					  						Code =  "Name",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
-					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
-					  						HelpTextCode =  "Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -191,7 +189,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "ParentId",
 					  						ObjectTableName =  "BusinessUnit",
 					  						FieldsDataType =  "Text",
-					  						Code =  "ParentId",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  50,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -215,10 +213,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "BusinessUnit",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "BusinessUnit",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -229,14 +226,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "ParentId",
+					  						DefaultText =  @"Parent",
+					  						HelpTextCode =  "ParentId",
+					  						Code =  "ParentId",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "ParentId",
-					  						DefaultText =  "Parent",
-					  						HelpTextCode =  "ParentId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -247,7 +247,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "ParentName",
 					  						ObjectTableName =  "BusinessUnit",
 					  						FieldsDataType =  "Text",
-					  						Code =  "ParentName",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  40,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -271,10 +271,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "BusinessUnit",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "BusinessUnit",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -285,16 +284,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "ParentName",
+					  						DefaultText =  @"Parent",
+					  						ListFieldLable =  "ParentListLable",
+					  						ListLableDefaultText =  @"Parent",
+					  						HelpTextCode =  "ParentName",
+					  						Code =  "ParentName",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "ParentName",
-					  						DefaultText =  "Parent",
-					  						ListFieldLable =  "ParentListLable",
-					  						ListLableDefaultText =  "Parent",
-					  						HelpTextCode =  "ParentName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -305,7 +307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "InActive",
 					  						ObjectTableName =  "BusinessUnit",
 					  						FieldsDataType =  "Boolean",
-					  						Code =  "InActive",
+					  						DataTypeCode =  "Boolean",
 					  						MaxLength =  1,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -329,10 +331,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "BusinessUnit",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "BusinessUnit",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -343,16 +344,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "InActive",
+					  						DefaultText =  @"Inactive",
+					  						ListFieldLable =  "InActiveListLable",
+					  						ListLableDefaultText =  @"Inactive",
+					  						HelpTextCode =  "InActive",
+					  						Code =  "InActive",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "InActive",
-					  						DefaultText =  "Inactive",
-					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  "Inactive",
-					  						HelpTextCode =  "InActive",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -363,7 +367,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "BusinessUnit",
 					  						FieldsDataType =  "nText",
-					  						Code =  "SearchFields",
+					  						DataTypeCode =  "nText",
 					  						MaxLength =  1000,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -389,7 +393,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -400,14 +403,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  @"Search..",
+					  						HelpTextCode =  "SearchFields",
+					  						Code =  "SearchFields",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search..",
-					  						HelpTextCode =  "SearchFields",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -416,7 +422,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup BusinessUnitQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "BUQG", Name = "Business Unit" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -431,7 +437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllBusinessUnitsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BusinessUnitTextCode_0.Id, Code = "All Business Units",  QueryGroupCode = "BUQG", IndexOrder = 0, Tenant = 0, ObjectTableId = BusinessUnitObjectTable.Id, QuerySection = "BusinessUnit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BusinessUnitFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			  Query AllBusinessUnitsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BusinessUnitTextCode_0.Id, Code = "All Business Units",  QueryGroupCode = "BUQG", IndexOrder = 0, Tenant = 0, ObjectTableId = BusinessUnitObjectTable.Id, QuerySection = "BusinessUnit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BusinessUnitFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllBusinessUnitsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBusinessUnitsQuery.Id, IndexOrder = 1, ObjectFieldId = BusinessUnitObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == BusinessUnitObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -459,8 +465,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable BusinessUnitObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BusinessUnit" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable BusinessUnitObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BusinessUnit" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode BusinessUnitGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = BusinessUnitObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature BusinessUnitGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BusinessUnit.Tab.General", ObjectTableId = BusinessUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessUnit.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -470,12 +477,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature BusinessUnitEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BusinessUnit.Tab.Events", ObjectTableId = BusinessUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessUnit.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BUGN",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/Maintenance/BusinessUnit/BusinessUnitGeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "BusinessUnit.Tab.General" && d.ObjectTableId == BusinessUnitObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.BusinessUnit.BusinessUnitGeneralTabControl", ObjectTableId = BusinessUnitObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "BusinessUnit.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BUGN",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/Maintenance/BusinessUnit/BusinessUnitGeneralTabComponent", FeatureId = BusinessUnitGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.BusinessUnit.BusinessUnitGeneralTabControl", ObjectTableId = BusinessUnitObjectTable.Id, TabNameTextCodeId = BusinessUnitGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BUEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "BusinessUnit.Tab.Events" && d.ObjectTableId == BusinessUnitObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = BusinessUnitObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "BusinessUnit.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BUEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = BusinessUnitEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = BusinessUnitObjectTable.Id, TabNameTextCodeId = BusinessUnitEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -485,7 +492,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature BusinessUnitFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = BusinessUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessUnit.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature BusinessUnitFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = BusinessUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessUnit.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature BusinessUnitFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = BusinessUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessUnit.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BusinessUnitFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = BusinessUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessUnit.Features.PackageFeature", NameTextCodeDefaultText = "BusinessUnit Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature BusinessUnitFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = BusinessUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessUnit.Features.PackageFeature", NameTextCodeDefaultText = "BusinessUnit Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature BusinessUnitFeature_BusinessUnit_M_BusinessUnits = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BusinessUnit.M.BusinessUnits", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BusinessUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessUnit.Features.BusinessUnits", NameTextCodeDefaultText = @"Business Units" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -534,7 +547,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

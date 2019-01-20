@@ -174,7 +174,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 AutomaticReconcileMethodQueryService automaticReconcileMethodQueryService = new AutomaticReconcileMethodQueryService(entityPOCO.Tenant);
                 AutomaticReconcileMethodPM automaticReconcileMethod = automaticReconcileMethodQueryService.GetSingle(entityPOCO.AutomaticReconcileId, false, true);
-                if (automaticReconcileMethod != null) entityPM.AutomaticReconcileName = automaticReconcileMethod.Name;
+                if (automaticReconcileMethod != null) entityPM.AutomaticReconcileName = showLocals? automaticReconcileMethod.LocalName: automaticReconcileMethod.Name;
             }
 
 

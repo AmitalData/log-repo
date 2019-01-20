@@ -16,9 +16,18 @@ export class DirectShipment {
     var AWBToggle = this.Helper.WaitByIdAndClick('NEWSHIP');
     this.Helper.WaitByIdAndClick('NEWDIRECT');
     this.ShipmentModes.SelectDicrctionTransportMode(LogitudeShipType, Direction, TransportMode, ShipmentType);
+
+
+
     this.FillDirectShipmentFields(ReferenceNumber);
 
     this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
+  }
+
+  public CreateAndCloseNewShipment(){
+    var AWBToggle = this.Helper.WaitByIdAndClick('NEWSHIP');
+    this.Helper.WaitByIdAndClick('NEWDIRECT');
+    this.Helper.WaitByIdAndClick('ShipmentCancelbtn');
   }
 
 
@@ -37,8 +46,8 @@ export class DirectShipment {
     // browser.driver.sleep(1000);
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-    // this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'mvd');
-    // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'mvd');
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
     this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'a');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 2);

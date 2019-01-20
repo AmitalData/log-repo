@@ -345,6 +345,12 @@ qAccumulateTranactionBeginOfMonthFromTillFromDateNotIncludeControl);
 
 
             IQueryable<TrailReportTemp> _QUnionAllMoneyData = qAccumulateTotalsFrom0BCTilNotIncludeStartOfMonthFromDate.Union(qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude).Union(qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo).Union(qAccumulateTranactionBeginOfMonthToDateTillToDateInculde);
+            bool addAllChatOfAccountTyps = true;
+            if (addAllChatOfAccountTyps)
+            {
+                _QUnionAllMoneyData = AddAllChatOfAccountTypEmptyRows(_QUnionAllMoneyData);
+            }
+
             if (testNow)
             {
                 var test1111 = _QUnionAllMoneyData.ToList();
@@ -698,14 +704,42 @@ qAccumulateTranactionBeginOfMonthFromTillFromDateNotIncludeControl);
 
         }
 
+        
+        IQueryable<TrailReportTemp> AddAllChatOfAccountTypEmptyRows(IQueryable<TrailReportTemp> _QUnionAllMoneyData)
+        {
+            _QUnionAllMoneyData = _QUnionAllMoneyData.Concat(
+            _AccountingContext.ChartOfAccountsTypes.Select(r => new TrailReportTemp()
+            {
+                AccountId_COAType = r.Code,
+
+                CurrencyId = "",
+
+                ForeignAmountCreditTotalStart = 0,
+                ForeignAmountDebitTotalStart = 0,
+                LocalAmountCreditTotalStart = 0,
+                LocalAmountDebitTotalStart = 0,
 
 
 
-  
-     
- 
-   
+                ForeignAmountCreditTransStart = 0,
+                ForeignAmountDebitTransStart = 0,
+                LocalAmountCreditTransStart = 0,
+                LocalAmountDebitTransStart = 0,
 
+
+                ForeignAmountCreditTotalDelta2End = 0,
+                ForeignAmountDebitTotalDelta2End = 0,
+                LocalAmountCreditTotalDelta2End = 0,
+                LocalAmountDebitTotalDelta2End = 0,
+
+
+                ForeignAmountCreditTransEnd = 0,
+                ForeignAmountDebitTransEnd = 0,
+                LocalAmountCreditTransEnd = 0,
+                LocalAmountDebitTransEnd = 0,
+            }));
+            return _QUnionAllMoneyData;
+        }
     }
     public class CleanKeyM
     {

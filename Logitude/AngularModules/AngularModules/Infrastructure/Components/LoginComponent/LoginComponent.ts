@@ -16,7 +16,6 @@ import {EntityListService} from '../../Services/EntityListService';
 import {LoginService, LoginParameters} from '../../Services/LoginService';
 import {UserPMService} from '../../../Common/Services/StandardPMs/UserPMService';
 import {TenantPMService} from '../../../Common/Services/StandardPMs/TenantPMService';
-import {TenantManagementPMService} from '../../Services/StandardPMs/TenantManagementPMService';
 import {AccountingSettingPMService} from '../../../Common/Services/StandardPMs/AccountingSettingPMService';
 import { CustomsInterfaceSettingPMService } from '../../../Common/Services/StandardPMs/CustomsInterfaceSettingPMService';
 import { SharedLogisticsSettingPMService } from '../../Services/StandardPMs/SharedLogisticsSettingPMService';
@@ -28,7 +27,8 @@ import {ObjectTableRuleFieldPMService} from '../../Services/StandardPMs/ObjectTa
 import {UserLastLoginPMService}  from '../../../Common/Services/StandardPMs/UserLastLoginPMService';
 import {UserLastLoginPM}  from '../../../Common/EntityPMs/UserLastLoginPM';
 import {InfrastructureDomainService} from '../../Services/InfrastructureDomainService';
-import {CommonDomainService} from '../../../Common/Services/CommonDomainService';
+import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
+import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 import {SATInterfaceSettingPMService} from '../../../Invoice/Services/StandardPMs/SATInterfaceSettingPMService';
 import {DateTool, FileLoader} from '../../Tools';
 import { Guid } from '../../Utilities/Guid';
@@ -219,9 +219,12 @@ export class LoginComponent implements OnInit {
             SessionInfo.Token = userData.Token;
             SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
             SessionInfo.SessionTimeout = userData.SessionTimeout;
-            SessionInfo.WebTokenExpirationWarning = userData.WebTokenExpirationWarning;
-            SessionInfo.WebTokenLifeTime = userData.WebTokenLifeTime;
+            SessionInfo.WebTokenExpirationWarningInMinutes = userData.WebTokenExpirationWarningInMinutes;
+            SessionInfo.WebTokenLifeTimeInMinutes = userData.WebTokenLifeTimeInMinutes;
             SessionInfo.KeepUserLoggedIn = userData.KeepUserLoggedIn;
+            SessionInfo.LastLoginDateTime = userData.LastLoginDateTime;
+            
+
 
             AmitalGatewayUtil.Instance.AmitalBrowserInUse = userData.AmitalBrowserInUse;
             this.authHeader.append('token', userData.Token);
@@ -241,13 +244,14 @@ export class LoginComponent implements OnInit {
                 this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
 
                 this.loginService.GetLoggedUser().subscribe(myResult => {
-                    this.loginService.GetTenantManagement().subscribe(myResult2 => {
 
+                    var iGlobalDomainService = new GlobalDomainService();
+
+                    iGlobalDomainService.GetTenantManagementJS().subscribe((myResponse: ServiceResponse) => {
                         ObjectsUpdater.UpdateLoggedUserPM(myResult);
-                        ObjectsUpdater.UpdateTenantManagementPM(myResult2);
+                        ObjectsUpdater.UpdateTenantManagementJS(myResponse.Result);
 
                         SessionInfo.LoggedUserPM = myResult;
-                        InfraSettings.TenantManagementPM = myResult2;
 
                         if (ObjectsLocator.LoggedUserPM.ExpirationDate != null && DateTool.GetDateParts(ObjectsLocator.LoggedUserPM.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
                             this.Blocking.emit("user");
@@ -422,8 +426,10 @@ export class LoginComponent implements OnInit {
 
             var f = { valid: true };
             this.ChooseTenant(f, null);
-        }
 
+            SessionInfo.LoggedUserCardId = this.SelectedCompany.CardId;
+            SessionInfo.LoggedUserCardType = this.SelectedCompany.CardType;
+        }
     }
     ChooseTenant(f, values) {
         if (f.valid) {
@@ -524,13 +530,13 @@ export class LoginComponent implements OnInit {
                 });
 
                 // TenantManagementPM
-                this.loginService.GetTenantManagement().subscribe(myResult => {
-                    var myTenantManagementPMService = new TenantManagementPMService();
-                    InfraSettings.TenantManagementPM = myTenantManagementPMService.MapJsonToEntityPM(myResult);
+                var iGlobalDomainService = new GlobalDomainService();
+                iGlobalDomainService.GetTenantManagementJS().subscribe((myResponse: ServiceResponse) => {
+                    ObjectsUpdater.UpdateTenantManagementJS(myResponse.Result);
                     this.IncreaseProgressBar();
                     //4
 
-                    this.loginService.GetPrivateLableById(SessionLocator.TenantManagementPM.PrivateLabelId).subscribe(Result => {
+                    this.loginService.GetPrivateLableById(SessionLocator.TenantManagementJS.PrivateLabelId).subscribe(Result => {
                         ObjectsLocator.UpdatePrivateLableSettings(Result);
                         SessionLocator.PrivateLableSettings = Result;
                         this.IncreaseProgressBar();
@@ -538,6 +544,10 @@ export class LoginComponent implements OnInit {
                         //5
                     });
                 });
+
+                //this.loginService.GetTenantManagement().subscribe(myResult => {
+   
+                //});
 
                 this.myInfrastructureDomainService.GetAllowedFeaturesForLoggedUser().subscribe((myResponse: ServiceResponse) => {
                     this.IncreaseProgressBar();
@@ -828,14 +838,14 @@ export class LoginComponent implements OnInit {
         var isCheckedCompleted = false;
         var todayDateTicks = DateTool.GetCurrentDateAsUtc().valueOf();
 
-        if (InfraSettings.TenantManagementPM.PaymentFailure) {
+        if (SessionLocator.TenantManagementJS.PaymentFailure) {
 
-            if (AppTool.IsNullOrEmpty(InfraSettings.TenantManagementPM.SuspendDate)) {
+            if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.SuspendDate)) {
                 isCheckedCompleted = true;
                 this.Blocking.emit("company");
             }
 
-            else if (DateTool.GetDateParts(InfraSettings.TenantManagementPM.SuspendDate).DateTicks < todayDateTicks) {
+            else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.SuspendDate).DateTicks < todayDateTicks) {
                 isCheckedCompleted = true;
                 this.Blocking.emit("suspend");
             }
@@ -847,14 +857,14 @@ export class LoginComponent implements OnInit {
         }
 
         if (!isCheckedCompleted) {
-            if (InfraSettings.TenantManagementPM.IsTrial) {
+            if (SessionLocator.TenantManagementJS.IsTrial) {
 
-                if (AppTool.IsNullOrEmpty(InfraSettings.TenantManagementPM.TrialEndDate)) {
+                if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TrialEndDate)) {
                     isCheckedCompleted = true;
                     this.Blocking.emit("company");
                 }
 
-                else if (DateTool.GetDateParts(InfraSettings.TenantManagementPM.TrialEndDate).DateTicks < todayDateTicks) {
+                else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.TrialEndDate).DateTicks < todayDateTicks) {
                     isCheckedCompleted = true;
                     this.Blocking.emit("company");
                 }
@@ -867,9 +877,9 @@ export class LoginComponent implements OnInit {
         }
 
         if (!isCheckedCompleted) {
-            if (!AppTool.IsNullOrEmpty(InfraSettings.TenantManagementPM.PaidUntilDate)) {
+            if (!AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PaidUntilDate)) {
 
-                if (DateTool.GetDateParts(InfraSettings.TenantManagementPM.PaidUntilDate).DateTicks < todayDateTicks && !InfraSettings.TenantManagementPM.IsRecurring) {
+                if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.PaidUntilDate).DateTicks < todayDateTicks && !SessionLocator.TenantManagementJS.IsRecurring) {
                     isCheckedCompleted = true;
                     this.Blocking.emit("company");
                 }

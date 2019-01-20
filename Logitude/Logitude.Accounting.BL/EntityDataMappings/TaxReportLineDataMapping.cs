@@ -50,29 +50,29 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 result = string.IsNullOrEmpty(result) ? entityPM.Reference : result + "," + entityPM.Reference;
 
             }
-            if (!string.IsNullOrEmpty(entityPM.ReferecneGroup))
-            {
-                result = string.IsNullOrEmpty(result) ? entityPM.ReferecneGroup : result + "," + entityPM.ReferecneGroup;
+            //if (!string.IsNullOrEmpty(entityPM.ReferecneGroup))
+            //{
+            //    result = string.IsNullOrEmpty(result) ? entityPM.ReferecneGroup : result + "," + entityPM.ReferecneGroup;
 
-            }
-            if (!string.IsNullOrEmpty(entityPM.JournalNumber))
-            {
-                result = string.IsNullOrEmpty(result) ? entityPM.JournalNumber : result + "," + entityPM.JournalNumber;
-
-
-            }
-            if (!string.IsNullOrEmpty(entityPM.StatusEnglishName))
-            {
-                result = string.IsNullOrEmpty(result) ? entityPM.StatusEnglishName : result + "," + entityPM.StatusEnglishName;
+            //}
+            //if (!string.IsNullOrEmpty(entityPM.JournalNumber))
+            //{
+            //    result = string.IsNullOrEmpty(result) ? entityPM.JournalNumber : result + "," + entityPM.JournalNumber;
 
 
-            }
-            if (!string.IsNullOrEmpty(entityPM.StatusLocalName))
-            {
-                result = string.IsNullOrEmpty(result) ? entityPM.StatusLocalName : result + "," + entityPM.StatusLocalName;
+            //}
+            //if (!string.IsNullOrEmpty(entityPM.StatusEnglishName))
+            //{
+            //    result = string.IsNullOrEmpty(result) ? entityPM.StatusEnglishName : result + "," + entityPM.StatusEnglishName;
 
 
-            }
+            //}
+            //if (!string.IsNullOrEmpty(entityPM.StatusLocalName))
+            //{
+            //    result = string.IsNullOrEmpty(result) ? entityPM.StatusLocalName : result + "," + entityPM.StatusLocalName;
+
+
+            //}
 
             entityPM.SearchFields = result;
             poco.SearchFields = result;

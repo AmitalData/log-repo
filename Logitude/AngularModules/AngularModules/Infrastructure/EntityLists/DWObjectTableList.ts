@@ -12,5 +12,7 @@ export class DWObjectTableList {
 		Name: string;
 		Code: string;
 		TypeCode: string;
+		IsClosed: boolean;
+		DefaultFilterBy: string;
 	
 }

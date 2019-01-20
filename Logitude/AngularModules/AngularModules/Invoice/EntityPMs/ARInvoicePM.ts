@@ -653,6 +653,11 @@ export class ARInvoicePM {
     public set Intercompany(newValue: boolean) { if (this.intercompany != newValue) { this.intercompany = newValue; this.MarkAsDirty("Intercompany"); } }
        
 	 
+    private sATApprovalDate: Date;
+    public get SATApprovalDate() { return this.sATApprovalDate; }
+    public set SATApprovalDate(newValue: Date) { if (this.sATApprovalDate != newValue) { this.sATApprovalDate = newValue; this.MarkAsDirty("SATApprovalDate"); } }
+       
+	 
     private bankAccountLiteId: string;
     public get BankAccountLiteId() { return this.bankAccountLiteId; }
     public set BankAccountLiteId(newValue: string) { if (this.bankAccountLiteId != newValue) { this.bankAccountLiteId = newValue; this.MarkAsDirty("BankAccountLiteId"); } }
@@ -860,6 +865,11 @@ export class ARInvoicePM {
     private isExternalAPI: boolean;
     public get IsExternalAPI() { return this.isExternalAPI; }
     public set IsExternalAPI(newValue: boolean) { if (this.isExternalAPI != newValue) { this.isExternalAPI = newValue; this.MarkAsDirty("IsExternalAPI"); } }
+       
+	 
+    private setReSendQBO: boolean;
+    public get SetReSendQBO() { return this.setReSendQBO; }
+    public set SetReSendQBO(newValue: boolean) { if (this.setReSendQBO != newValue) { this.setReSendQBO = newValue; this.MarkAsDirty("SetReSendQBO"); } }
        
 	 
     private journalId: string;

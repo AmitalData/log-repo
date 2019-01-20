@@ -21,6 +21,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.Name = entityPM.Name;
             entityPOCO.Code = entityPM.Code;
             entityPOCO.TypeCode = entityPM.TypeCode;
+            entityPOCO.DefaultFilterBy = entityPM.DefaultFilterBy;
 
         }
     }

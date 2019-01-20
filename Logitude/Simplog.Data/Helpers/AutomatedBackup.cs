@@ -32,7 +32,6 @@ namespace Simplog.Data.Helpers
         public string Description { get; set; }
 
 
-
         [DataMember]
         public int Delaytime { get; set; }
 
@@ -42,6 +41,8 @@ namespace Simplog.Data.Helpers
         [DataMember]
         public string Type { get; set; }
 
+        [DataMember]
+        public bool IsAutomationResultEmailAllActiveUsers { get; set; }
 
         [DataMember]
         public AutomationFollowUp AutomationFollowUp { get; set; }

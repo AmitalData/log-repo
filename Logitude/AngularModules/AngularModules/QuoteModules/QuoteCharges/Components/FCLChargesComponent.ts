@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {QuoteChargePM} from '../../../Quote/EntityPMs/QuoteChargePM';
 import {QuoteTotalVATPM} from '../../../Quote/EntityPMs/QuoteTotalVATPM';
@@ -6,7 +6,6 @@ import {QuoteUtilities} from '../../../Quote/Utilities/QuoteUtilities';
 import {AppTool, DateTool, FontTool, ArrayTool} from '../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {DecimalFormatter} from '../../../Infrastructure/Utilities/DecimalFormatter';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
@@ -71,6 +70,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.SetLabels();
         this.SetUIProperties();
         this.CheckUpdateQuantities();
+        this.SetGridColumns();
         this.BuildItemsSource();
         this.InitializeProfit();
         this.Listen();
@@ -221,12 +221,20 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public Sale3Header: any[] = [];
     public Sale4Header: any[] = [];
     public Sale5Header: any[] = [];
+    public CostMinAmountHeader: any = [];
+    public CostMaxAmountHeader: any = [];
+    public SaleMinAmountHeader: any = [];
+    public SaleMaxAmountHeader: any = [];
     SetLabels() {
         this.CostQuentityHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostQuantity").split('%n');
         this.CostPriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostPrice").split('%n');
         this.CostAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostAmount").split('%n');
         this.SaleQuantityHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleQuantity").split('%n');
         this.SaleLocalAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmountLocal").replace("%LocalCurrencyCode", this.LocalCurrencyCode).split('%n');
+        this.CostMinAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostMinAmount", false).split('%n');
+        this.CostMaxAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostMaxAmount", false).split('%n');
+        this.SaleMinAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleMinAmount", false).split('%n');
+        this.SaleMaxAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleMaxAmount", false).split('%n');
         this.SetLabelsAttached();
     }
     SetLabelsAttached() {
@@ -330,6 +338,23 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     }
 
     public VATColumnWidth: number = 100;
+    public IsCostMinMaxColumnVisible: boolean = false;
+    public IsSaleMinMaxColumnVisible: boolean = false;
+    SetGridColumns() {
+        var isCostMinMaxColumnVisible: boolean = false;
+        var isSaleMinMaxColumnVisible: boolean = false;
+
+        if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode != "BCNT").length > 0) {
+            isCostMinMaxColumnVisible = true;
+        }
+
+        if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode != "BCNT").length > 0) {
+            isSaleMinMaxColumnVisible = true;
+        }
+
+        this.IsCostMinMaxColumnVisible = isCostMinMaxColumnVisible;
+        this.IsSaleMinMaxColumnVisible = isSaleMinMaxColumnVisible;
+    }
     SetGridColumnsWidth() {
         var myVATColumnWidth = 100;
 
@@ -347,6 +372,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
 
         this.VATColumnWidth = myVATColumnWidth;
     }
+
 
     // SetUIProperties
     public IsEditingEnabled: boolean = false;
@@ -366,14 +392,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         var isExchangeRateEnabled = false;
 
         if (this.IsEditingEnabled) {
-            isExchangeRateEnabled = true;
+            if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
+                isExchangeRateEnabled = true;
 
-            if (AppTool.IsNullOrEmpty(this.SaleCurrencyId)) {
-                isExchangeRateEnabled = false;
-            }
+                if (AppTool.IsNullOrEmpty(this.SaleCurrencyId)) {
+                    isExchangeRateEnabled = false;
+                }
 
-            else if (this.SaleCurrencyId == SessionLocator.LocalCurrencyId) {
-                isExchangeRateEnabled = false;
+                else if (this.SaleCurrencyId == SessionLocator.LocalCurrencyId) {
+                    isExchangeRateEnabled = false;
+                }
             }
         }
 
@@ -488,6 +516,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         })
 
         this.ItemsSource.InsertCollection(itemsCollection);
+
         this.SetGridColumnsWidth();
     }
 
@@ -544,6 +573,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                         this.OnFreightAmountChanged();
                     }
 
+                    this.SetGridColumns();
                     this.BuildItemsSource();
                     this.ComputeTotals();
                 }
@@ -560,6 +590,12 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         logitudeWindow.Height = 550;
         logitudeWindow.DataContext = itemComponent;
         logitudeWindow.Show('./QuoteModules/QuoteCharges/Components/AddEditFCLChargeComponent');
+
+        logitudeWindow.WindowClosed.subscribe(s => {
+            if (s) {
+                this.SetGridColumns();
+            }
+        });
     }
     GetCurrencyCode(myCurrencyId: string) {
         var myCode = null;
@@ -1124,7 +1160,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     }
     VATDetailsClicked() {
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Title = "VAT Details";
+        logitudeWindow.Title = TextCodeTranslator.Translate("Quote.O.Charges.VATDetails");
         logitudeWindow.WindowArgs = { IsLocalCurrency: this.IsLocalCurrency, SaleCurrencyCode: this.SaleCurrencyCode, IsCurrencyFilterVisible: this.IsCurrencyFilterVisible, TotalVATs: this.EntityPM.TotalVATs };
         logitudeWindow.Show('./QuoteModules/QuoteCharges/Components/QuoteVATDetailsComponent');
     }
@@ -1174,7 +1210,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
     public IsEditingEnabled: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     SetUIProperties() {
-        if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
+        if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {          
             if (this.IsAdhoc) {
                 this.IsEditExchangeRateVisible = true;
             }
@@ -1187,6 +1223,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.SetUIProperties_SaleFields();
         this.SetUIProperties_CellsColors();
         this.SetUIProperties_VAT();
+        this.SetUIProperties_CostMinMax();
+        this.SetUIProperties_SaleMinMax();
 
         this.UIProperties.SetEnabled("ChargesTypeId", this.ObjectTableName, (this.IsEditingEnabled && !this.IsAllIN) ? true : false);
         this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, (this.IsEditingEnabled && !this.IsAllIN) ? true : false);
@@ -1310,6 +1348,10 @@ export class FCLQuoteChargeItem extends BaseComponent {
             if (this.ChargesGroupCode == "FRT") {
                 isEnabled_CostMeasurement = false;
             }
+
+            if (this.CostMeasurementCode == "BCNT") {
+                isEnabled_CostMinAmount = false;
+            }
         }
 
         this.IsEnabled_CostQuantity = isEnabled_CostQuantity;
@@ -1317,28 +1359,33 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.IsEnabled_CostMinAmount = isEnabled_CostMinAmount;
         this.IsEnabled_CostUnitPriceFCL = isEnabled_CostUnitPriceFCL;
         this.UIProperties.SetEnabled("CostMeasurementId", this.ObjectTableName, isEnabled_CostMeasurement);
+        this.UIProperties.SetEnabled("CostMinAmount", this.ObjectTableName, isEnabled_CostMinAmount);
+        this.UIProperties.SetEnabled("CostMaxAmount", this.ObjectTableName, isEnabled_CostMinAmount);
         this.SetUIProperties_CostRate();
     }
     SetUIProperties_CostRate() {
         var isEnabled = false;
 
         if (this.IsEditingEnabled) {
-            isEnabled = true;
+            if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
+                isEnabled = true;
 
-            if (AppTool.IsNullOrEmpty(this.CostCurrencyId)) {
-                isEnabled = false;
-            }
+                if (AppTool.IsNullOrEmpty(this.CostCurrencyId)) {
+                    isEnabled = false;
+                }
 
-            else if (this.CostCurrencyId == SessionLocator.LocalCurrencyId) {
-                isEnabled = false;
-            }
+                else if (this.CostCurrencyId == SessionLocator.LocalCurrencyId) {
+                    isEnabled = false;
+                }
 
-            else if (this.CostCurrencyId == this.fatherComponent.SaleCurrencyId) {
-                isEnabled = false;
+                else if (this.CostCurrencyId == this.fatherComponent.SaleCurrencyId) {
+                    isEnabled = false;
+                }
             }
         }
 
-        this.IsEnabled_CostExchangeRate = isEnabled;
+        //this.IsEnabled_CostExchangeRate = isEnabled;
+        this.IsEnabled_CostExchangeRate = true;
         this.UIProperties.SetEnabled("CostExchangeRate", this.ObjectTableName, isEnabled);
     }
 
@@ -1410,6 +1457,10 @@ export class FCLQuoteChargeItem extends BaseComponent {
             if (this.ChargesGroupCode == "FRT") {
                 isEnabled_SaleMeasurement = false;
             }
+
+            if (this.SaleMeasurementCode == "BCNT") {
+                isEnabled_SaleMinAmount = false;
+            }
         }
 
         this.IsEnabled_SaleQuantity = isEnabled_SaleQuantity;
@@ -1417,6 +1468,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.IsEnabled_SaleMinAmount = isEnabled_SaleMinAmount;
         this.IsEnabled_SaleUnitPriceFCL = isEnabled_SaleUnitPriceFCL;
         this.UIProperties.SetEnabled("SaleMeasurementId", this.ObjectTableName, isEnabled_SaleMeasurement);
+        this.UIProperties.SetEnabled("SaleMinAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
+        this.UIProperties.SetEnabled("SaleMaxAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
     }
 
     public SaleUnitPriceColor: string = FontTool.Black;
@@ -1605,6 +1658,76 @@ export class FCLQuoteChargeItem extends BaseComponent {
         }
 
         this.UIProperties.SetRequired("VatPercentage", this.ObjectTableName, isVatPercentageRequired);
+    }
+
+    public CostMinMaxIconTitle: string = "";
+    public CostMinMaxIconIsVisibile: boolean = false;
+    SetUIProperties_CostMinMax() {
+        var iTitle: string = null;
+        var iVisible: boolean = false;
+
+        if (this.CostMeasurementCode != "BCNT") {
+            var iAmount = null;
+            if (this.EntityPM.CostQuantity != null && this.EntityPM.CostUnitPrice != null) {
+                iAmount = AppTool.Round(this.EntityPM.CostQuantity * this.EntityPM.CostUnitPrice, 2);
+            }
+
+            if (iAmount != null) {
+                if (this.CostMinAmount != null) {
+                    if (iAmount < this.CostMinAmount) {
+                        iAmount = this.CostMinAmount;
+                        iVisible = true;
+                        iTitle = "Amount is due to Charge Min Amount";
+                    }
+                }
+
+                if (this.CostMaxAmount != null) {
+                    if (iAmount > this.CostMaxAmount) {
+                        iAmount = this.CostMaxAmount;
+                        iVisible = true;
+                        iTitle = "Amount is due to Charge Max Amount";
+                    }
+                }
+            }
+        }
+
+        this.CostMinMaxIconTitle = iTitle;
+        this.CostMinMaxIconIsVisibile = iVisible;
+    }
+
+    public SaleMinMaxIconTitle: string = "";
+    public SaleMinMaxIconIsVisibile: boolean = false;
+    SetUIProperties_SaleMinMax() {
+        var iTitle: string = null;
+        var iVisible: boolean = false;
+
+        if (this.SaleMeasurementCode != "BCNT") {
+            var iAmount = null;
+            if (this.EntityPM.SaleQuantity != null && this.EntityPM.SaleUnitPrice != null) {
+                iAmount = AppTool.Round(this.EntityPM.SaleQuantity * this.EntityPM.SaleUnitPrice, 2);
+            }
+
+            if (iAmount != null) {
+                if (this.SaleMinAmount != null) {
+                    if (iAmount < this.SaleMinAmount) {
+                        iAmount = this.SaleMinAmount;
+                        iVisible = true;
+                        iTitle = "Amount is due to Charge Min Amount";
+                    }
+                }
+
+                if (this.SaleMaxAmount != null) {
+                    if (iAmount > this.SaleMaxAmount) {
+                        iAmount = this.SaleMaxAmount;
+                        iVisible = true;
+                        iTitle = "Amount is due to Charge Max Amount";
+                    }
+                }
+            }
+        }
+
+        this.SaleMinMaxIconTitle = iTitle;
+        this.SaleMinMaxIconIsVisibile = iVisible;
     }
 
     // Charges Type
@@ -1902,13 +2025,22 @@ export class FCLQuoteChargeItem extends BaseComponent {
     }
 
     get CostMeasurementCode() { return this.EntityPM.CostMeasurementCode; }
-    set CostMeasurementCode(newValue: string) {
-        if (this.EntityPM.CostMeasurementCode != newValue) {
-            this.EntityPM.CostMeasurementCode = newValue;
+    set CostMeasurementCode(value: string) {
+        if (this.EntityPM.CostMeasurementCode != value) {
+            this.EntityPM.CostMeasurementCode = value;
+
+            if (value == "BCNT") {
+                this.EntityPM.CostMinAmount = null;
+                this.EntityPM.CostMaxAmount = null;
+            }
+
+            this.SetUIProperties_CostMinMax();
+            this.fatherComponent.SetGridColumns();
+
             this.SetCostQuantity();
             this.SetUIProperties_CostFields();
             this.SetUIProperties_AllIn();
-            this.UpdateCostSaleDataVisibility();      
+            this.UpdateCostSaleDataVisibility();            
         }
     }
 
@@ -2136,7 +2268,23 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.ComputeCostInSalePrice5();
         }
     }
-    
+
+    get CostMinAmount() { return this.EntityPM.CostMinAmount; }
+    set CostMinAmount(newValue: number) {
+        if (this.EntityPM.CostMinAmount != newValue) {
+            this.EntityPM.CostMinAmount = newValue;
+            this.ComputeCostAmounts();
+        }
+    }
+
+    get CostMaxAmount() { return this.EntityPM.CostMaxAmount; }
+    set CostMaxAmount(newValue: number) {
+        if (this.EntityPM.CostMaxAmount != newValue) {
+            this.EntityPM.CostMaxAmount = newValue;
+            this.ComputeCostAmounts();
+        }
+    }
+
     get CostIsFixedRate() { return this.EntityPM.CostIsFixedRate; }
     set CostIsFixedRate(value: boolean) {
         if (this.EntityPM.CostIsFixedRate != value) {
@@ -2242,6 +2390,21 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                 else {
                     myTotalAmount = this.CostQuantity * this.CostUnitPrice;
+                }
+            }
+
+            /* MinMax */
+            if (myTotalAmount != null) {
+                if (this.CostMinAmount != null) {
+                    if (myTotalAmount < this.CostMinAmount) {
+                        myTotalAmount = this.CostMinAmount;
+                    }
+                }
+
+                if (this.CostMaxAmount != null) {
+                    if (myTotalAmount > this.CostMaxAmount) {
+                        myTotalAmount = this.CostMaxAmount;
+                    }
                 }
             }
         }
@@ -2412,9 +2575,18 @@ export class FCLQuoteChargeItem extends BaseComponent {
     }
 
     get SaleMeasurementCode() { return this.EntityPM.SaleMeasurementCode; }
-    set SaleMeasurementCode(newValue: string) {
-        if (this.EntityPM.SaleMeasurementCode != newValue) {
-            this.EntityPM.SaleMeasurementCode = newValue;
+    set SaleMeasurementCode(value: string) {
+        if (this.EntityPM.SaleMeasurementCode != value) {
+            this.EntityPM.SaleMeasurementCode = value;
+
+            if (value == "BCNT") {
+                this.EntityPM.SaleMinAmount = null;
+                this.EntityPM.SaleMaxAmount = null;
+            }
+
+            this.SetUIProperties_SaleMinMax();
+            this.fatherComponent.SetGridColumns();
+
             this.SetSaleQuantity();
             this.SetUIProperties_SaleFields();
         }
@@ -2525,6 +2697,22 @@ export class FCLQuoteChargeItem extends BaseComponent {
         }
     }
 
+    get SaleMinAmount() { return this.EntityPM.SaleMinAmount; }
+    set SaleMinAmount(newValue: number) {
+        if (this.EntityPM.SaleMinAmount != newValue) {
+            this.EntityPM.SaleMinAmount = newValue;
+            this.ComputeSaleAmounts();
+        }
+    }
+
+    get SaleMaxAmount() { return this.EntityPM.SaleMaxAmount; }
+    set SaleMaxAmount(newValue: number) {
+        if (this.EntityPM.SaleMaxAmount != newValue) {
+            this.EntityPM.SaleMaxAmount = newValue;
+            this.ComputeSaleAmounts();
+        }
+    }
+
     SetSaleQuantity() {
         var myResult = null;
 
@@ -2603,6 +2791,21 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                 else {
                     myTotalAmount = this.SaleQuantity * this.SaleUnitPrice;
+                }
+            }
+
+            /* MinMax */
+            if (myTotalAmount != null) {
+                if (this.SaleMinAmount != null) {
+                    if (myTotalAmount < this.SaleMinAmount) {
+                        myTotalAmount = this.SaleMinAmount;
+                    }
+                }
+
+                if (this.SaleMaxAmount != null) {
+                    if (myTotalAmount > this.SaleMaxAmount) {
+                        myTotalAmount = this.SaleMaxAmount;
+                    }
                 }
             }
         }

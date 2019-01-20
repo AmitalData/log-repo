@@ -53,11 +53,16 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IsHiddenFromView).HasColumnName("IsHiddenFromView");
             this.Property(t => t.IsNewFromTenantZeroOnly).HasColumnName("IsNewFromTenantZeroOnly");
             this.Property(t => t.EditWizardComponentPath).HasColumnName("EditWizardComponentPath");
+            this.Property(t => t.SharedWithAll).HasColumnName("SharedWithAll");
+            this.Property(t => t.SharedWithSpecificUsers).HasColumnName("SharedWithSpecificUsers");
+            this.Property(t => t.SharedByUserId).HasColumnName("SharedByUserId");
+            this.Property(t => t.SpotlightModeActivated).HasColumnName("SpotlightModeActivated");
 
             // Relationships
             this.HasOptional(t => t.Feature).WithMany().HasForeignKey(d => d.FeatureId);
             this.HasOptional(t => t.OriginalQuery).WithMany(t => t.CopiedQueries).HasForeignKey(d => d.OriginalQueryId);
             this.HasOptional(t => t.User).WithMany().HasForeignKey(d => d.UserId);
+            this.HasOptional(t => t.SharedByUser).WithMany().HasForeignKey(d => d.SharedByUserId);
         }
     }
 }

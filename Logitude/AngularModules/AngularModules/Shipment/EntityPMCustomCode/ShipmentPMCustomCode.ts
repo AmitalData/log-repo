@@ -1,4 +1,4 @@
-﻿import { ShipmentPM } from '../EntityPMs/ShipmentPM';
+import { ShipmentPM } from '../EntityPMs/ShipmentPM';
 import { IncotermListService } from '../../Common/Services/StandardLists/IncotermListService';
 import { IncotermList } from '../../Common/EntityLists/IncotermList';
 export class ShipmentPMCustomCode {

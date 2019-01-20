@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {CustomerPM} from '../../EntityPMs/CustomerPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -10,14 +10,11 @@ import {PartnersDomainService} from '../../Services/PartnersDomainService';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ActionStepsTemplate, ActionStepsTemplateArgs} from '../../../CommonModules/CommonPartners/Components/Templates/ActionStepsTemplate';
-import {EntityPMService} from '../../../Infrastructure/Services/EntityPMService';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {CustomerActivationArgs} from '../../../Common/Args';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
-import {ContactListService} from '../../../Common/Services/StandardLists/ContactListService';
-import {ContactList} from '../../../Common/EntityLists/ContactList';
+
 import {CreateTenantHelper} from '../../../InfrastructureModules/InfrastructureOthers/Components/CreateTenant/CreateTenantHelper';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {TenantManagementPMService} from '../../../Infrastructure/Services/StandardPMs/TenantManagementPMService';
@@ -548,20 +545,21 @@ export class CustomerMenuButtonsHandler {
             var id: number = parseInt(this.EntityPM.ReceivablesAccountingCard);
 
             var managementService: TenantManagementPMService = new TenantManagementPMService();
-            managementService.get(id).subscribe(result => {
-
-                var ten: TenantManagementPM = result.Result;
-
-                if (ten != null) {
-                    this.StartEditing(ten.Id);
-                }
-                else {
+            managementService.get(id).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse.HasError) {
                     var window: MessageWindow = new MessageWindow();
                     window.Width = 350;
                     window.Height = 180;
-                    window.Show("Invalid Tenant !");
+                    window.Show(myResponse.ErrorsArray[0]);
                 }
 
+                else {
+                    var ten: TenantManagementPM = myResponse.Result;
+
+                    if (ten != null) {
+                        this.StartEditing(ten.Id);
+                    }
+                }
             });
 
         }

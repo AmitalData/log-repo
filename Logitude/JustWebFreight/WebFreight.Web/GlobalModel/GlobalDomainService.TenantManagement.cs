@@ -948,31 +948,28 @@ namespace WebFreight.Web.GlobalModel
             return query2;
         }
 
-        public List<TenantManagementList> GetAWBMessagingStockTenantsList(int tenant)
-        {
-            List<TenantManagementList> myResult = new List<TenantManagementList>();
+        //public List<TenantManagementList> GetAWBMessagingStockTenantsList(int tenant)
+        //{
+        //    SecurityUtility.AuthenticationOnTenant(tenant);
 
-            SecurityUtility.AuthenticationOnTenant(tenant);
+        //    IGlobalContext objectContext = GlobalContext.GetContext();
 
-            IQueryable<TenantManagement> iQueryable1 = tenantManagementRepository.GetAWBStockPrepaidTenants();
-            IQueryable<GlobalTenant> iQueryable2 = globalTenantsRepository.GetAllGlobalTenant().Where(d => d.IsActive);
+        //    List<TenantManagementList> myResult = (from d in objectContext.TenantManagements.Include("GlobalTenant")
+        //                                           where
+        //                                           (d.IsAWBStockPrepaid || d.IsINTTRAStockPrepaid)
+        //                                           &&
+        //                                           (d.GlobalTenant != null && d.GlobalTenant.IsActive)
+        //                                           select new TenantManagementList()
+        //                                           {
+        //                                               Id = d.Id,
+        //                                               Name = d.Name,
+        //                                               PackageCode = d.PackageCode,
+        //                                               IsAWBStockPrepaid = d.IsAWBStockPrepaid,
+        //                                               IsINTTRAStockPrepaid = d.IsINTTRAStockPrepaid,
+        //                                           }).ToList();
 
-            foreach (TenantManagement item in iQueryable1)
-            {
-                if (iQueryable2.Where(d => d.Id == item.Id).Any())
-                {
-                    myResult.Add(new TenantManagementList()
-                    {
-                        Id = item.Id,
-                        Name = item.Name,
-                        PackageCode = item.PackageCode,
-                        PackageName = item.PackageName,
-                    });
-                }
-            }
-
-            return myResult;
-        }
+        //    return myResult;
+        //}
         
         public TenantManagementPM GetSingleTenantManagementPMBySupportEmail(string supportEmail)
         {

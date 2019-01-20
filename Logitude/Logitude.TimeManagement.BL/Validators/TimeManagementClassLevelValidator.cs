@@ -223,7 +223,7 @@ namespace Logitude.TimeManagement.BL.Validators
 
                 switch (objectTableName)
                 {
-                    case "AWBMessagingStock":
+                    case "MessagingStock":
                         {
                             tenantProp = type.GetProperty("TenantNumber");
                             tenant = (int)tenantProp.GetValue(context.ObjectInstance, null);

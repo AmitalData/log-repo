@@ -198,10 +198,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
 
                             <tr>
                                 <td style="background:white;">
-                                    <table style="width:100%; height:226px; border-collapse:collapse; border-spacing:0; ">
+                                    <table style="width:100%; height:260px; border-collapse:collapse; border-spacing:0; ">
 
                             <tr>
-                                            <td style="background:white;">
+                                <td>
+                                    <table>
+                                        <tr style="height:245px">
+                                                 <td style="background:white;">
                                     <div style="float: left;margin-left:60px;width:300px" id="myform">
                                       
                                         <table >
@@ -233,11 +236,29 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                                                              </td>
                                                          </tr>
 
+<%--         
+                                            <tr style="height:5px;"><td></td></tr>--%>
+
+                                                
+                                     
+                                                  <tr id="Areacaptcha" style ="height:30px;margin-top:3px;display:none;">
+                                                 <td>
+                                              <img id="CaptchaImage" style="height:auto;width:auto;float:left;" />
+                                                <input oninput="onCaptchaInPutChanged()" style="height:19px;width:260px;margin-bottom:5px;margin-top:5px;float:left;" type="text" placeholder="type the text you see" id="captchaTextBox"/>
+                                                
+
+
+                                            </td>
+                                            </tr>
+
+
+
+
                                                          <tr>
                                                              <td class="column1">
                                                                   <%--<asp:Button ID="Button1" runat="server" Text="Submit" Width="94px" OnClick="btnReset_Click" />--%>
                                                                  <input class="cmdSubmit"  type="submit" value="Submit >" runat="server" id="cmdSubmit" data-bind="click: submitMethod"/>
-                                                                  <a style="margin-left:10px;color:#4B4A4A;font-size:12px;font-family:Arial;vertical-align:central;cursor:pointer;" onclick="backToLoginClick()">Back to login page</a>
+                                                    
                                                              </td>
                                                          </tr>
 
@@ -245,7 +266,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
 
                                                          <tr style="vertical-align:bottom;" >
                                                              <td >
-                                                                  <p style="font-family:Arial; font-size:12px; color:#4B4A4A" class="column1"> 
+                                                                  <p id="HavingtroubleId" style="font-family:Arial; font-size:12px;height:12px; color:#4B4A4A" class="column1"> 
                                                                          Having trouble logging in? 
                                                                          <a id="DefaultContactUs" href="mailto:info@logitudeworld.com" >Contact us</a>  
                                                                          <a id="LogBoxContactUs" style="display:none" href="mailto:sales@logbox.co.il" >Contact us</a>  
@@ -273,9 +294,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                                                          </tr> 
 
 
-                                                         <tr>
+                                                         <tr id="BusyindicatorArea">
                                                              <td>
-                                                                  <p id="busyIndicator" style="display:none"><img width="50" height="50" src="images/LoginScreen/indicator.gif" alt='loading' /></p>
+                                                                  <p id="busyIndicator" style="display:none"><img id="ImagebusyIndicator" width="50" height="50" src="images/LoginScreen/indicator.gif" alt='loading' /></p>
 
                                                              </td>
                                                          </tr>                                                           
@@ -283,6 +304,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                                                      </table>
 
                                     </div>
+                                </td>
+                                        </tr>
+                                        <tr style="height:15px;vertical-align:top">
+                                            
+                                            <td style="vertical-align:top">
+
+                                               <a style="margin-left:10px;font-size:12px;font-family:Arial;cursor:pointer;float:left;margin-left:60px;margin-top:-10px;vertical-align:top;text-decoration:underline" onclick="backToLoginClick()">Back to login page</a>
+                                            </td>
+
+
+                                        </tr>
+                                    </table>
                                 </td>
 
                                             <td style=" width:2px; text-align:right;border:0;"><img src="images/LoginScreen/line.png" style="width:2px;height:260px;margin-right:-3px;border:thick"/></td>
@@ -433,6 +466,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
             }
         }
 
+       var captchaKey = "";
+
         var IsChampLogin = false;
         function setCaretToPos(id, cursorPosition) {
             document.getElementById(id).selectionStart = cursorPosition;
@@ -461,11 +496,44 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
             }
         }
 
+
+            onCaptchaInPutChanged = function () {
+            var x = document.getElementById("errorsList").innerHTML;
+            if ( x == "Please re-enter the characters you see in the <br> image above") {
+                if ($("#captchaTextBox").val())
+                    $("#errorsList").hide();
+            }
+        }
+
+        function HideCaptchaArea() {
+            captchaKey = null;
+            document.getElementById("captchaTextBox").value = null;
+            document.getElementById("Areacaptcha").style.display = "none";
+            document.getElementById("BusyindicatorArea").style.height = "";
+            document.getElementById("BusyindicatorArea").style.width = "";
+            document.getElementById("ImagebusyIndicator").width = "";
+            document.getElementById("ImagebusyIndicator").height = "";
+            document.getElementById("busyIndicator").style.marginTop = "0px";
+            document.getElementById("HavingtroubleId").style.height = "";
+            
+        }
+
+
         function viewModel() {
 
             this.submitMethod = function () {
-
+                $("#errorsList").hide();
                 var validatable = $("#myform").kendoValidator().data("kendoValidator");
+             var areacaptcha = document.getElementById("Areacaptcha");
+
+                var hasError = false;
+
+
+                if (areacaptcha.style.display == "block") {
+                    document.getElementById("BusyindicatorArea").style.width = "0px";
+                    document.getElementById("BusyindicatorArea").style.height = "0px";
+                }
+
 
                 if (validatable.validate() === false) {
                     // get the errors and write them out to the "errors" html container
@@ -475,6 +543,25 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                     });
                     return;
                 }
+       
+                var heightWidthbusyIndicator = "40px";
+                if (areacaptcha.style.display == "block") {
+                    heightWidthbusyIndicator = "35px";
+                    document.getElementById("busyIndicator").style.marginTop = "-8px";
+
+                    if (!document.getElementById("captchaTextBox").value) {
+                        document.getElementById("errorsList").innerHTML = "Please re-enter the characters you see in the <br /> image above"; 
+                        $("#errorsList").show();
+                        return;
+                    }
+                }
+                
+                document.getElementById("ImagebusyIndicator").width = heightWidthbusyIndicator.replace("px","");
+                document.getElementById("ImagebusyIndicator").height = heightWidthbusyIndicator.replace("px","");
+
+                document.getElementById("BusyindicatorArea").style.height = heightWidthbusyIndicator;
+                document.getElementById("BusyindicatorArea").style.width = heightWidthbusyIndicator;
+
 
                 disableForm(true);
                 $("#busyIndicator").show();
@@ -485,55 +572,64 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                     email = email + "^" + Tenant;
                 }
 
-                var url = "api/Authentication/?email=" + email + "&ischamplogin=" + IsChampLogin;
+                 var url = "api/ResetPassword?PostResetPassword";
+                function ResetPasswordParameters() {
 
+                    this.Email = email;
+                    this.IsChampLogin =IsChampLogin;
+                    this.CaptchaKey = captchaKey;
+                    this.CaptchaCode = document.getElementById("captchaTextBox").value;
+                };
+
+                
+                var param = new ResetPasswordParameters();
                 $.ajax({
                     url: url,
-                    type: 'GET',
+                    type: 'POST',
+                    data: JSON.stringify(param),
                     contentType: 'application/json',
-
                     success: function (userdata) {
-
 
                         $("#busyIndicator").hide();
 
                         if (!userdata.HasError) {
-
-                            //string logindata = user.UserName + ":" + user.Id + ":" + user.CurrentTenant + ":" + computerId + ":" + user.IsAuthenticated;
-
                             $("#message").show();
-                            //alert("submit completed");
-                            //document.location.href = "login.aspx";
+                            HideCaptchaArea();
 
                         }
                         else {
 
+                            captchaKey = userdata.CaptchaKey;
 
                             disableForm(false);
 
                             var errorMessage = "Submit failed! invalid email." + "<br/>";
+                             
+                            if (userdata.InValidCaptcha) {
+                                if (areacaptcha.style.display == "block") {
+                                    document.getElementById("captchaTextBox").value = "";
+                                }
 
+                                document.getElementById("BusyindicatorArea").style.width = "0px";
+                                document.getElementById("BusyindicatorArea").style.height = "0px";
 
-                            if (userdata.IpRestricted) {
-
-                                errorMessage = "Trying to submit in from unauthorised station!" + "<br/>" + "(The IP address you are trying to " + "<br/>" + "submit from is restricted for this user)";//
-
+                                areacaptcha.style.display = "block";
+                                $("#CaptchaImage").attr("src", userdata.CaptchaImage);
+                                 document.getElementById("captchaTextBox").value = "";
                             }
 
-                            if (userdata.IsLocked) {
+                            var errorMessage = "Submit failed! invalid email." + "<br/>";
 
-                                errorMessage = "Your account has been locked out!" + "<br/>" + "please contact your administrator.";
+                            if (userdata.ExceptionMessage) alert(userdata.ExceptionMessage);
+                            else {
+                                if (userdata.InValidCaptcha) errorMessage = "Please re-enter the characters you see in the <br /> image above";
+                                if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
+                                if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+                                if (userdata.InValidMailOrPassword) errorMessage = "Submit failed! invalid email." + "<br/>";
+
+                                document.getElementById("errorsList").innerHTML = errorMessage;
+                                $("#errorsList").show();
                             }
-
-
-                            if (userdata.InActive) {
-                                errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                            }
-
-                            document.getElementById("errorsList").innerHTML = errorMessage;
-                            // $("#errorsList").text(errorMessage);
-                            $("#errorsList").show();
-
                         }
 
 

@@ -177,11 +177,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תאריך יצירה",
+					  						DefaultText =  @"Create Date",
+					  						FullLocalDefaultText =  @"תאריך יצירה",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תאריך יצירה",
+					  						ListLableDefaultText =  @"Create Date",
+					  						ListLocalDefaultText =  @"תאריך יצירה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -235,7 +235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  "Created By",
+					  						DefaultText =  @"Created By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -289,10 +289,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search ...",
-					  						FullLocalDefaultText =  "חיפוש",
+					  						DefaultText =  @"Search ...",
+					  						FullLocalDefaultText =  @"חיפוש",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "Search ...",
+					  						ListLableDefaultText =  @"Search ...",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -347,11 +347,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RevaluationNumber",
-					  						DefaultText =  "Revaluation Number",
-					  						FullLocalDefaultText =  "מספר שערוך",
+					  						DefaultText =  @"Revaluation Number",
+					  						FullLocalDefaultText =  @"מספר שערוך",
 					  						ListFieldLable =  "RevaluationNumberListLable",
-					  						ListLableDefaultText =  "Revaluation Number",
-					  						ListLocalDefaultText =  "מספר שערוך",
+					  						ListLableDefaultText =  @"Revaluation Number",
+					  						ListLocalDefaultText =  @"מספר שערוך",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -406,11 +406,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RevaluationDate",
-					  						DefaultText =  "Revaluation Date",
-					  						FullLocalDefaultText =  "תאריך שערוך",
+					  						DefaultText =  @"Revaluation Date",
+					  						FullLocalDefaultText =  @"תאריך שערוך",
 					  						ListFieldLable =  "RevaluationDateListLable",
-					  						ListLableDefaultText =  "Revaluation Date",
-					  						ListLocalDefaultText =  "תאריך שערוך",
+					  						ListLableDefaultText =  @"Revaluation Date",
+					  						ListLocalDefaultText =  @"תאריך שערוך",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -466,11 +466,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsId",
-					  						DefaultText =  "Chart of account",
-					  						FullLocalDefaultText =  "מזהה קבוצת מאזן",
+					  						DefaultText =  @"Chart of account",
+					  						FullLocalDefaultText =  @"מזהה קבוצת מאזן",
 					  						ListFieldLable =  "ChartOfAccountsIdListLable",
-					  						ListLableDefaultText =  "Chart of account",
-					  						ListLocalDefaultText =  "מזהה קבוצת מאזן",
+					  						ListLableDefaultText =  @"Chart of account",
+					  						ListLocalDefaultText =  @"מזהה קבוצת מאזן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -525,11 +525,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsName",
-					  						DefaultText =  "Chart of Accounts Name",
-					  						FullLocalDefaultText =  "מזהה קבוצת מאזן",
+					  						DefaultText =  @"Chart of Accounts Name",
+					  						FullLocalDefaultText =  @"מזהה קבוצת מאזן",
 					  						ListFieldLable =  "ChartOfAccountsNameListLable",
-					  						ListLableDefaultText =  "Chart of Accounts Name",
-					  						ListLocalDefaultText =  "מזהה קבוצת מאזן",
+					  						ListLableDefaultText =  @"Chart of Accounts Name",
+					  						ListLocalDefaultText =  @"מזהה קבוצת מאזן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -585,11 +585,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountId",
-					  						DefaultText =  "GL Account ",
-					  						FullLocalDefaultText =  "כרטיס",
+					  						DefaultText =  @"GL Account ",
+					  						FullLocalDefaultText =  @"כרטיס",
 					  						ListFieldLable =  "GLAccountIdListLable",
-					  						ListLableDefaultText =  "GL Account ",
-					  						ListLocalDefaultText =  "כרטיס",
+					  						ListLableDefaultText =  @"GL Account ",
+					  						ListLocalDefaultText =  @"כרטיס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -644,11 +644,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountName",
-					  						DefaultText =  "GL Account Name",
-					  						FullLocalDefaultText =  "שם חשבון",
+					  						DefaultText =  @"GL Account Name",
+					  						FullLocalDefaultText =  @"שם חשבון",
 					  						ListFieldLable =  "GLAccountNameListLable",
-					  						ListLableDefaultText =  "GL Account Name",
-					  						ListLocalDefaultText =  "שם חשבון",
+					  						ListLableDefaultText =  @"GL Account Name",
+					  						ListLocalDefaultText =  @"שם חשבון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -703,11 +703,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountNumber",
-					  						DefaultText =  "GL Account Number",
-					  						FullLocalDefaultText =  "מספר חשבון",
+					  						DefaultText =  @"GL Account Number",
+					  						FullLocalDefaultText =  @"מספר חשבון",
 					  						ListFieldLable =  "GLAccountNumberListLable",
-					  						ListLableDefaultText =  "GL Account Number",
-					  						ListLocalDefaultText =  "מספר חשבון",
+					  						ListLableDefaultText =  @"GL Account Number",
+					  						ListLocalDefaultText =  @"מספר חשבון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -762,11 +762,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RevaluationEnabled",
-					  						DefaultText =  "Revaluation Enabled",
-					  						FullLocalDefaultText =  "מוגדר לשערוך אוטומטי",
+					  						DefaultText =  @"Revaluation Enabled",
+					  						FullLocalDefaultText =  @"מוגדר לשערוך אוטומטי",
 					  						ListFieldLable =  "RevaluationEnabledListLable",
-					  						ListLableDefaultText =  "Revaluation Enabled",
-					  						ListLocalDefaultText =  "מוגדר לשערוך אוטומטי",
+					  						ListLableDefaultText =  @"Revaluation Enabled",
+					  						ListLocalDefaultText =  @"מוגדר לשערוך אוטומטי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -821,11 +821,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserName",
-					  						DefaultText =  "Created by",
-					  						FullLocalDefaultText =  "נוצר על ידי",
+					  						DefaultText =  @"Created by",
+					  						FullLocalDefaultText =  @"נוצר על ידי",
 					  						ListFieldLable =  "CreatedByUserNameListLable",
-					  						ListLableDefaultText =  "Created by",
-					  						ListLocalDefaultText =  "נוצר על ידי",
+					  						ListLableDefaultText =  @"Created by",
+					  						ListLocalDefaultText =  @"נוצר על ידי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -879,11 +879,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Status",
-					  						DefaultText =  "Status",
-					  						FullLocalDefaultText =  "סטטוס",
+					  						DefaultText =  @"Status",
+					  						FullLocalDefaultText =  @"סטטוס",
 					  						ListFieldLable =  "StatusListLable",
-					  						ListLableDefaultText =  "Status",
-					  						ListLocalDefaultText =  "סטטוס",
+					  						ListLableDefaultText =  @"Status",
+					  						ListLocalDefaultText =  @"סטטוס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -937,11 +937,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Message",
-					  						DefaultText =  "Message",
-					  						FullLocalDefaultText =  "הודעה",
+					  						DefaultText =  @"Message",
+					  						FullLocalDefaultText =  @"הודעה",
 					  						ListFieldLable =  "MessageListLable",
-					  						ListLableDefaultText =  "Message",
-					  						ListLocalDefaultText =  "הודעה",
+					  						ListLableDefaultText =  @"Message",
+					  						ListLocalDefaultText =  @"הודעה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -996,11 +996,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RevaluationsGLAccountId",
-					  						DefaultText =  "Revaluation GL Account",
-					  						FullLocalDefaultText =  "כרטיס לשערוך",
+					  						DefaultText =  @"Revaluation GL Account",
+					  						FullLocalDefaultText =  @"כרטיס לשערוך",
 					  						ListFieldLable =  "RevaluationsGLAccountIdListLable",
-					  						ListLableDefaultText =  "Revaluation GL Account",
-					  						ListLocalDefaultText =  "כרטיס לשערוך",
+					  						ListLableDefaultText =  @"Revaluation GL Account",
+					  						ListLocalDefaultText =  @"כרטיס לשערוך",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1054,11 +1054,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RevaluationsGLAccountName",
-					  						DefaultText =  "Revaluations GL Account",
-					  						FullLocalDefaultText =  "כרטיס לשערוך",
+					  						DefaultText =  @"Revaluations GL Account",
+					  						FullLocalDefaultText =  @"כרטיס לשערוך",
 					  						ListFieldLable =  "RevaluationsGLAccountNameListLable",
-					  						ListLableDefaultText =  "Revaluations GL Account",
-					  						ListLocalDefaultText =  "כרטיס לשערוך",
+					  						ListLableDefaultText =  @"Revaluations GL Account",
+					  						ListLocalDefaultText =  @"כרטיס לשערוך",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1113,11 +1113,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusName",
-					  						DefaultText =  "Status",
-					  						FullLocalDefaultText =  "סטטוס",
+					  						DefaultText =  @"Status",
+					  						FullLocalDefaultText =  @"סטטוס",
 					  						ListFieldLable =  "StatusNameListLable",
-					  						ListLableDefaultText =  "Status",
-					  						ListLocalDefaultText =  "סטטוס",
+					  						ListLableDefaultText =  @"Status",
+					  						ListLocalDefaultText =  @"סטטוס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1135,7 +1135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup RevaluationQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "026a", Name = "Revaluation Query Group" }, queryGroupRepository);
 						QueryGroup RevaluationQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "4733", Name = " Query Group" }, queryGroupRepository);
@@ -1151,7 +1151,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllRevaluationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RevaluationTextCode_0.Id, Code = "AllRevaluations",  QueryGroupCode = "026a", IndexOrder = 0, Tenant = 0, ObjectTableId = RevaluationObjectTable.Id, QuerySection = "Revaluation", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RevaluationFeature_0.Id, DefaultSortName = "RevaluationNumber", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query AllRevaluationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RevaluationTextCode_0.Id, Code = "AllRevaluations",  QueryGroupCode = "026a", IndexOrder = 0, Tenant = 0, ObjectTableId = RevaluationObjectTable.Id, QuerySection = "Revaluation", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RevaluationFeature_0.Id, DefaultSortName = "RevaluationNumber", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllRevaluationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRevaluationsQuery.Id, IndexOrder = 0, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "RevaluationNumber" && d.ObjectTableId == RevaluationObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1191,8 +1191,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable RevaluationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Revaluation" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable RevaluationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Revaluation" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode RevaluationDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature RevaluationDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Revaluation.Tab.Details", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -1202,12 +1203,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature RevaluationEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "REVD",HtmlComponentName = "RevaluationDetailsComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/Revaluation/RevaluationDetailsComponent", FeatureId = tenantFeatures.Where(d => d.Code == "Revaluation.Tab.Details" && d.ObjectTableId == RevaluationObjectTable.Id).FirstOrDefault().Id, ControlPath = "Logitude.Accounting.ViewModels.Tabs.REV.RevaluationDetailsTabControl", ObjectTableId = RevaluationObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Revaluation.TH.Details" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "REVD",HtmlComponentName = "RevaluationDetailsComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/Revaluation/RevaluationDetailsComponent", FeatureId = RevaluationDetailsFeature_TH0.Id, ControlPath = "Logitude.Accounting.ViewModels.Tabs.REV.RevaluationDetailsTabControl", ObjectTableId = RevaluationObjectTable.Id, TabNameTextCodeId = RevaluationDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RVEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == RevaluationObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = RevaluationObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Revaluation.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RVEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = RevaluationEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = RevaluationObjectTable.Id, TabNameTextCodeId = RevaluationEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1285,7 +1286,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

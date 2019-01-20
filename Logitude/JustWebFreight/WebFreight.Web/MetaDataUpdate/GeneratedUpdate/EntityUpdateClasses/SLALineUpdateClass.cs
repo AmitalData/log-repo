@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SLALineUpdateClass
@@ -146,7 +149,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SLAHeaderId",
-					  						DefaultText =  "SLA Header",
+					  						DefaultText =  @"SLA Header",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -191,7 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SeverityId",
-					  						DefaultText =  "Ticket Severity",
+					  						DefaultText =  @"Ticket Severity",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -236,7 +239,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BusinessHoursId",
-					  						DefaultText =  "Business Hour",
+					  						DefaultText =  @"Business Hour",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -284,9 +287,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FirstResponseTime",
-					  						DefaultText =  "First Response Time",
+					  						DefaultText =  @"First Response Time",
 					  						ListFieldLable =  "FirstResponseTimeListLable",
-					  						ListLableDefaultText =  "First Response Time",
+					  						ListLableDefaultText =  @"First Response Time",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -332,9 +335,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FirstResponseTimeUnit",
-					  						DefaultText =  "First Response Time Unit",
+					  						DefaultText =  @"First Response Time Unit",
 					  						ListFieldLable =  "FirstResponseTimeUnitListLable",
-					  						ListLableDefaultText =  "First Response Time Unit",
+					  						ListLableDefaultText =  @"First Response Time Unit",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -380,9 +383,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FirstResponseTimeInMinute",
-					  						DefaultText =  "First Response Time In Minute",
+					  						DefaultText =  @"First Response Time In Minute",
 					  						ListFieldLable =  "FirstResponseTimeInMinuteListLable",
-					  						ListLableDefaultText =  "First Response Time In Minute",
+					  						ListLableDefaultText =  @"First Response Time In Minute",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -430,9 +433,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ResolveWithinTime",
-					  						DefaultText =  "Resolve Within Time",
+					  						DefaultText =  @"Resolve Within Time",
 					  						ListFieldLable =  "ResolveWithinTimeListLable",
-					  						ListLableDefaultText =  "Resolve Within Time",
+					  						ListLableDefaultText =  @"Resolve Within Time",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -478,9 +481,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ResolveWithinTimeUnit",
-					  						DefaultText =  "Resolve Within Time Unit",
+					  						DefaultText =  @"Resolve Within Time Unit",
 					  						ListFieldLable =  "ResolveWithinTimeUnitListLable",
-					  						ListLableDefaultText =  "Resolve Within Time Unit",
+					  						ListLableDefaultText =  @"Resolve Within Time Unit",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -526,9 +529,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ResolveWithinTimeInMinute",
-					  						DefaultText =  "Resolve Within Time Minutes",
+					  						DefaultText =  @"Resolve Within Time Minutes",
 					  						ListFieldLable =  "ResolveWithinTimeInMinuteListLable",
-					  						ListLableDefaultText =  "Resolve Within Time Minutes",
+					  						ListLableDefaultText =  @"Resolve Within Time Minutes",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -574,9 +577,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FirstResponseEscalate",
-					  						DefaultText =  "First Response Escalate",
+					  						DefaultText =  @"First Response Escalate",
 					  						ListFieldLable =  "FirstResponseEscalateListLable",
-					  						ListLableDefaultText =  "First Response Escalate",
+					  						ListLableDefaultText =  @"First Response Escalate",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -622,9 +625,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ResolveWithinEscalate",
-					  						DefaultText =  "Resolve Within Escalate",
+					  						DefaultText =  @"Resolve Within Escalate",
 					  						ListFieldLable =  "ResolveWithinEscalateListLable",
-					  						ListLableDefaultText =  "Resolve Within Escalate",
+					  						ListLableDefaultText =  @"Resolve Within Escalate",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -669,9 +672,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SeverityName",
-					  						DefaultText =  "Severity",
+					  						DefaultText =  @"Severity",
 					  						ListFieldLable =  "SeverityNameListLable",
-					  						ListLableDefaultText =  "Severity",
+					  						ListLableDefaultText =  @"Severity",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -748,7 +751,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable SLALineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SLALine" && d.Tenant == 0).FirstOrDefault();  
 
 		   TextCodeRepository.SubmitChanges();
@@ -760,7 +763,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					ObjectTableId = SLALineObjectTable.Id,
 					Tenant = 0
 				}, menuButtonGroupRepository, tenantMenuButtonGroups); 
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

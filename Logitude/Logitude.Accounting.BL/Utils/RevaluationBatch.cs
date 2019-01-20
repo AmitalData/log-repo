@@ -46,11 +46,21 @@ namespace Logitude.Accounting.BL.Utils
             return _StatusCode;
         }
 
+        //private bool AnyAccountingQueued(IQueryable<string> gLAccountIDList, int tenant, IAccountingContext context)
+        //{
+        //    var myJournalQueryService = new JournalQueryService(context);
+        //    var have = myJournalQueryService.GetAnyPendingApprovedDev(gLAccountIDList, tenant);
+        //    return have;
+        //}
+
+
 
         public void RunAllOpenRevaluations(int tenant)
 
         {
             IAccountingContext context = AccountingContext.GetContext(tenant);
+
+ 
             RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(context);
             List<RevaluationList> revaluations = revaluationListQueryService.GetOpenRevaluationList(tenant);
             if (revaluations != null)
@@ -68,12 +78,12 @@ namespace Logitude.Accounting.BL.Utils
 
         public void RunOneRevaluation(string id, int tenant)
         {
-            IAccountingContext context = AccountingContext.GetContext(tenant);
             try
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
                 {
-                    if (!String.IsNullOrEmpty(id))
+                   IAccountingContext context = AccountingContext.GetContext(tenant);
+                   if (!String.IsNullOrEmpty(id))
                     {
 
                         RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(context);
@@ -104,7 +114,8 @@ namespace Logitude.Accounting.BL.Utils
                             List<GLAccountPM> gLAccountPMList = gLAccountQueryService.GetByRevaluationEnabled_OtherParams(revaluation.RevaluationEnabled, null, revaluation.ChartOfAccountsId, null, revaluation.GLAccountId, accountingCurrencyId, tenant);
                             if (gLAccountPMList != null)
                             {
-
+                                IQueryable<string> gLAccountIDList = gLAccountPMList.Select(l => l.Id).AsQueryable();
+                                //bool have = AnyAccountingQueued(gLAccountIDList, tenant, context);
                                 foreach (GLAccountPM gLAccountPM in gLAccountPMList)
                                 {
                                     RunOneAccount(gLAccountPM, gLAccountQueryService, journalUpdateService, ratesTableQuery, revaluation.RevaluationDate,
@@ -132,7 +143,7 @@ namespace Logitude.Accounting.BL.Utils
                         string errorMessage = e.Message.Split(new[] { '\r', '\n' }).FirstOrDefault();
                         _ResponseText = errorMessage;
                         _StatusCode = HttpStatusCode.InternalServerError;
-                        UpdateRevaluationStatus(id, tenant, "2", errorMessage, context);
+              //          UpdateRevaluationStatus(id, tenant, "2", errorMessage, context);
                     }
                     excScope.Complete();
                 }
@@ -149,6 +160,7 @@ namespace Logitude.Accounting.BL.Utils
             {
                 revaluationPM.Status = status;
                 revaluationPM.Message = message;
+                revaluationPM.ChangeSetOp = ChangeSetOperation.Update;
                 RevaluationUpdateService myRevaluationUpdateService = new RevaluationUpdateService(context, new Dictionary<string, IContext>(), tenant);
                 myRevaluationUpdateService.Update(revaluationPM, true);
             }
@@ -194,7 +206,7 @@ namespace Logitude.Accounting.BL.Utils
                         double localFromForeign_double = (double)item.ForeignAmount * (double)lastRate.Rate;
                         localFromForeign_double = Math.Round(localFromForeign_double, 2);
                         decimal localFromForeign_decimal = (decimal)localFromForeign_double;
-                        decimal difference = (decimal)item.LocalAmount - localFromForeign_decimal;
+                        decimal difference = localFromForeign_decimal - (decimal)item.LocalAmount;
                         AccountingLogger.LogMe(" Local(foreign) = " + localFromForeign_decimal, false, "REV");
                         AccountingLogger.LogMe(" Local = " + (decimal)item.LocalAmount, false, "REV");
                         AccountingLogger.LogMe(" Difference = " + difference, false, "REV");
@@ -216,7 +228,9 @@ namespace Logitude.Accounting.BL.Utils
                                     LocalAmount = difference,
                                     CurrencyId = item.CurrencyId, // was     ... = accountingCurrencyId,
                                     ForeignAmount = 0m, // was     ... = difference, 
-                                };
+                                    Reference1 = revaluation.RevaluationNumber.ToString(),
+                                    Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", gLAccountPM.Tenant),
+                            };
                                 AccountingLogger.LogMe("Credit Difference = " + difference, false, "REV");
                                 lineList.Add(journalLine_credit);
                             }
@@ -235,12 +249,15 @@ namespace Logitude.Accounting.BL.Utils
                                 AccountingDate = revaluationDate,
                                 Tenant = gLAccountPM.Tenant,
                                 DebitAccountId = gLAccountPM.Id,
-                                DebitControlAccountId = gLAccountPM.ControlAccountId,
+                                CreditAccountId = diffAccountId,
+                                // DebitControlAccountId = gLAccountPM.ControlAccountId,
                                 DocumentDate = revaluationDate,
                                 DueDate = revaluationDate,
                                 LocalAmount = difference,
                                 CurrencyId = item.CurrencyId,
                                 ForeignAmount = 0m,
+                                Reference1 = revaluation.RevaluationNumber.ToString(),
+                                Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", gLAccountPM.Tenant),
                             };
                             AccountingLogger.LogMe("Debit Difference = " + difference, false, "REV");
                             lineList.Add(journalLine_debit);
@@ -250,7 +267,7 @@ namespace Logitude.Accounting.BL.Utils
                             {
                                 WriteJournal(journalUpdateService, lineList, revaluation);
                                 lineList.Clear();
-                                scope.Complete();
+                              //  scope.Complete();
                             }
                         }
                     }
@@ -268,7 +285,7 @@ namespace Logitude.Accounting.BL.Utils
         private static void WriteJournal(JournalUpdateService journalUpdateService, List<JournalLineList> lineList, RevaluationList revaluation)
         {
             // Start
-            JournalPM newJournal = new JournalPM();
+                JournalPM newJournal = new JournalPM();
 
             // Head
             newJournal.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -280,6 +297,7 @@ namespace Logitude.Accounting.BL.Utils
             newJournal.CreatedByUserId = revaluation.CreatedByUserId;
             newJournal.AccountingEntityCode = "8"; //Revaluation
             newJournal.AccountingEntityId = revaluation.Id;
+            newJournal.AccountingEntityReference = revaluation.RevaluationNumber.ToString();
             newJournal.ExternalNo = null;
             newJournal.UpdateDate = DateTime.Now;
             newJournal.UpdatedByUserId = revaluation.CreatedByUserId;
@@ -298,10 +316,10 @@ namespace Logitude.Accounting.BL.Utils
                     Line = LineNumber,
                     ActionCode = line.ActionCode,
                     CreditAccountId = line.CreditAccountId,
-                    CreditControlAccountId = line.CreditControlAccountId,
+                  //  CreditControlAccountId = line.CreditControlAccountId,
                     CurrencyId = line.CurrencyId,
                     DebitAccountId = line.DebitAccountId,
-                    DebitControlAccountId = line.DebitControlAccountId,
+                 //   DebitControlAccountId = line.DebitControlAccountId,
                     DocumentDate = line.DocumentDate,
                     AccountingDate = newJournal.AccountingDate,
                     DueDate = line.DueDate,

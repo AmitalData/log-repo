@@ -2,6 +2,7 @@
 using Logitude.BL.Helpers;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -167,14 +168,16 @@ namespace WebFreight.Web.App_Code
 
                     System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
                     HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-                
+                    EncodedHtmlHelper encodedHtmlHelper = new EncodedHtmlHelper();
                     string htmlstring = "";
                     if (!string.IsNullOrEmpty(filter.Htmlstring))
                     {
                         htmlstring = filter.Htmlstring;
                         htmlstring = htmlEditorHelper.GetLogoHtmlString(htmlstring);
-
+                        htmlstring = encodedHtmlHelper.EncodedHtmlScript(htmlstring);
                     }
+
+
                     byte[] bytedata = enc.GetBytes(htmlstring);
                     if (!filter.IsCRM)
                     {
@@ -182,11 +185,14 @@ namespace WebFreight.Web.App_Code
                     }
                     else
                     {
+                        
                         string htmlPlainString = "";
                         if (!string.IsNullOrEmpty(filter.HtmlPlainString))
                         {
                             htmlPlainString = htmlEditorHelper.GetLogoHtmlString(filter.HtmlPlainString);
+                            htmlPlainString = encodedHtmlHelper.EncodedHtmlScript(htmlPlainString);
                         }
+
                         byte[] bytePlainTextdata = enc.GetBytes(htmlPlainString);
 
                         reslut = htmlEditorHelper.SendEmailOutActivityForEntity(bytedata, bytePlainTextdata, filter.Tenant, filter.ToEmail, filter.Subject, filter.Cc, filter.Bcc, filter.UserId, filter.EntityId, filter.CustomerId, filter.ObjectTableId, filter.Attachments, filter.EntityReference, filter.DocumentTypeCode, filter.EventTypeCode);

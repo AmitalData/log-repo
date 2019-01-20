@@ -56,10 +56,9 @@ var LoginService = /** @class */ (function () {
             return response.json();
         });
     };
-    LoginService.prototype.GetRequestResetUserPassword = function (email, IsChampLogin) {
-        var url = this.baseUrlApi + "Authentication?email=" + email + "&ischamplogin=" + IsChampLogin;
-        ;
-        return this._http.get(url, { headers: this.AuthHeader }).map(function (response) {
+    LoginService.prototype.PostRequestResetUserPassword = function (resetPasswordParameters) {
+        var url = this.baseUrlApi + "ResetPassword?PostResetPassword";
+        return this._http.post(url, JSON.stringify(resetPasswordParameters), { headers: this.AuthHeader }).map(function (response) {
             var result = response.json();
             return result;
         });
@@ -98,7 +97,9 @@ var LoginService = /** @class */ (function () {
     };
     LoginService.prototype.GetTenantManagement = function () {
         var url = this.baseUrlApi + 'TenantManagement/GetSingleTenantManagementPM?id=' + this.CurrentTenant;
-        return this._http.get(url, { headers: this.AuthHeader }).map(function (response) {
+        var authHeader = new http_1.Headers();
+        authHeader.append('Token', SessionInfo_1.SessionInfo.Token);
+        return this._http.get(url, { headers: authHeader }).map(function (response) {
             return response.json();
         });
     };

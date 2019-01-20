@@ -56,15 +56,26 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                bool isAuthentication = id == authToken.Tenant ? true : false;
+                if (!isAuthentication)
+                {
+                    isAuthentication = SecurityUtility.CheckIsUserCustomerCare(authToken.Email);
+                }
 
-                SecurityUtility.CheckContactFeature("TenantManagement", "READ", authToken.Tenant);
-                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
-                TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(id);
-                
-				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
-                return Request.CreateResponse(HttpStatusCode.OK, tenantManagementPM);
-			 
+                if (isAuthentication)
+                {
+                    SecurityUtility.CheckContactFeature("TenantManagement", "READ", authToken.Tenant);
+                    TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
+                    TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(id);
+                    PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                    return Request.CreateResponse(HttpStatusCode.OK, tenantManagementPM);
+                }
+                else
+                {
+                    throw new Exception("Sorry you’re not authenticated to view company info.");
+                }
+
 			}
             catch (Exception ex)
             {

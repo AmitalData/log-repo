@@ -34,12 +34,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        if (!signupInfo.IsWithOutValidation)
-                        {
-                            string token = HttpContext.Current.Request.Headers["Token"];
-                            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        }
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature(signupInfo.ObjecttableName, "CREATETENANT", authToken.Tenant);
 
                         FilterSerializer serializer = new FilterSerializer();
                         MemoryStream memstream = new MemoryStream();
@@ -50,8 +48,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         string content = reader.ReadToEnd();
                         byte[] bytearray = memstream.ToArray();
 
-                        SignUpService signUpService = new SignUpService();
-                        signUpService.SendMessageToQueue(bytearray);
+                        SignUpHelper signUpHelper = new SignUpHelper();
+                        signUpHelper.SendMessageToQueue(bytearray);
 
                         scope.Complete();
 

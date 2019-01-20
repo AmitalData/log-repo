@@ -2596,7 +2596,6 @@ namespace WebFreight.Web.WebServices
                     packageline.MethodUsed = package.MethodUsed;
                     packageline.ContainerNumber = package.ContainerNumber;
                     packageline.SealNumber = package.ShipperSeal;
-                    packageline.HSCode = package.Harmonize;
                     packageline.CeficClass = package.CeficClass;
                     packageline.IMDGCode = package.IMDGCode;
                     packageline.KemlerCode = package.KelmerCode;
@@ -2609,7 +2608,32 @@ namespace WebFreight.Web.WebServices
                     packageline.FlashPoint = package.FlashPoint;
                     packageline.NetWeight = package.Weight - package.Tare;
                     packageline.Description = package.Description;
+                    packageline.Notes = package.Notes;
                     packageline.PackageTare = package.Tare != null ? String.Format("{0:0,0.00}", package.Tare.Value) : null;
+
+                    #region Harmonize
+                    if (package.IsMultiHarmonize)
+                    {
+                        List<ShipmentPackageHarmonize> allHarmonizes = shipmentsContext.ShipmentPackageHarmonizes.Where(d => d.PackageId == package.Id && d.Tenant == package.Tenant).ToList();
+                        foreach (ShipmentPackageHarmonize itemHarmonize in allHarmonizes)
+                        {
+                            if (string.IsNullOrEmpty(packageline.HSCode))
+                            {
+                                packageline.HSCode = itemHarmonize.Harmonize;
+                            }
+
+                            else
+                            {
+                                packageline.HSCode += "," + itemHarmonize.Harmonize;
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        packageline.HSCode = package.Harmonize;
+                    }
+                    #endregion
 
                     if (package.Length != null && package.Width != null && package.Height != null)
                     {
@@ -2631,13 +2655,14 @@ namespace WebFreight.Web.WebServices
                         packageline.IsDangerous = "No";
                     }
 
-                    if (!string.IsNullOrEmpty(package.Harmonize))
+                    if (!string.IsNullOrEmpty(packageline.HSCode))
                     {
                         if (!string.IsNullOrEmpty(packageline.PackageDescriptionOfGoods))
                         {
                             packageline.PackageDescriptionOfGoods += Environment.NewLine;
                         }
-                        packageline.PackageDescriptionOfGoods += "HS Code: " + package.Harmonize;
+
+                        packageline.PackageDescriptionOfGoods += "HS Code:" + packageline.HSCode;
                     }
 
                     if (string.IsNullOrEmpty(myDataProvider.GeneralPackageslinesDescriptionOfGoods))
@@ -2787,6 +2812,7 @@ namespace WebFreight.Web.WebServices
                     packageline.Reference1 = package.Reference1;
                     packageline.Reference2 = package.Reference2;
                     packageline.Reference3 = package.Reference3;
+                    packageline.Reference4 = package.Reference4;
                     packageline.CommodityNumber = package.CommodityNumber;
 
                     if (myDataProvider.HasAttachmentList == "True")
@@ -2935,7 +2961,6 @@ namespace WebFreight.Web.WebServices
                             newPackage.PackageDescriptionOfGoods = package.Description;
                             newPackage.ContainerNumber = package.ContainerNumber;
                             newPackage.SealNumber = package.ShipperSeal;
-                            newPackage.HSCode = package.Harmonize;
                             newPackage.PackageQuantity = package.Quantity.ToString();
                             newPackage.PackageTypeName = package.PackageTypeName;
                             newPackage.PackageVolume_Double = package.Volume;
@@ -2945,6 +2970,28 @@ namespace WebFreight.Web.WebServices
                             {
                                 newPackage.Dimensions = package.Length + "x" + package.Width + "x" + package.Height;
                             }
+
+                            #region Harmonize
+                            if (package.IsMultiHarmonize)
+                            {
+                                List<PickUpDeliveryPackageHarmonize> allHarmonizes = shipmentsContext.PickUpDeliveryPackageHarmonizes.Where(d => d.PackageId == package.Id && d.Tenant == package.Tenant).ToList();
+                                foreach (PickUpDeliveryPackageHarmonize itemHarmonize in allHarmonizes)
+                                {
+                                    if (string.IsNullOrEmpty(newPackage.HSCode))
+                                    {
+                                        newPackage.HSCode = itemHarmonize.Harmonize;
+                                    }
+                                    else
+                                    {
+                                        newPackage.HSCode += "," + itemHarmonize.Harmonize;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                newPackage.HSCode = package.Harmonize;
+                            }
+                            #endregion
 
                             newItem.PickUpDeliveryPackages.Add(newPackage);
                         }
@@ -3031,7 +3078,6 @@ namespace WebFreight.Web.WebServices
                             newPackage.PackageDescriptionOfGoods = package.Description;
                             newPackage.ContainerNumber = package.ContainerNumber;
                             newPackage.SealNumber = package.ShipperSeal;
-                            newPackage.HSCode = package.Harmonize;
                             newPackage.PackageQuantity = package.Quantity.ToString();
                             newPackage.PackageTypeName = package.PackageTypeName;
                             newPackage.PackageVolume_Double = package.Volume;
@@ -3040,7 +3086,29 @@ namespace WebFreight.Web.WebServices
                             if (package.Length != null && package.Width != null && package.Height != null)
                             {
                                 newPackage.Dimensions = package.Length + "x" + package.Width + "x" + package.Height;
-                            }                           
+                            }
+
+                            #region Harmonize
+                            if (package.IsMultiHarmonize)
+                            {
+                                List<PickUpDeliveryPackageHarmonize> allHarmonizes = shipmentsContext.PickUpDeliveryPackageHarmonizes.Where(d => d.PackageId == package.Id && d.Tenant == package.Tenant).ToList();
+                                foreach (PickUpDeliveryPackageHarmonize itemHarmonize in allHarmonizes)
+                                {
+                                    if (string.IsNullOrEmpty(newPackage.HSCode))
+                                    {
+                                        newPackage.HSCode = itemHarmonize.Harmonize;
+                                    }
+                                    else
+                                    {
+                                        newPackage.HSCode += "," + itemHarmonize.Harmonize;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                newPackage.HSCode = package.Harmonize;
+                            }
+                            #endregion
 
                             newItem.PickUpDeliveryPackages.Add(newPackage);
                         }

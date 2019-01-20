@@ -78,7 +78,10 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     dataProvider = GetConsolidationInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
                 }
-
+                else if (myInvoice.IsGeneralInvoice)
+                {
+                    dataProvider = GetConsolidationInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
+                }
                 else
                 {
                     dataProvider = GetARInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
@@ -135,6 +138,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.State = tenantAddress.StateEnglishName;
                         invoicedataprovider.ZipCode = tenantAddress.ZipCode;
                         invoicedataprovider.State = tenantAddress.StateEnglishName;
+                        invoicedataprovider.TenantStateCode = tenantAddress.StateCode;
                     }
                 }
 
@@ -630,6 +634,26 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                     #endregion
 
+                    #region Notify1
+                    if (!string.IsNullOrEmpty(shipment.Notify1Id))
+                    {
+                        Card myCard = CardRepository.GetSingleCard(shipment.Notify1Id, tenant, true);
+                        if (myCard != null)
+                        {
+                            invoicedataprovider.Notify1VATNumber = myCard.VatNumber;
+                            
+                            if (!string.IsNullOrEmpty(shipment.Notify1AddressId))
+                            {
+                                Address myAddress = addressRepository.GetSingleAddress(shipment.Notify1AddressId, tenant);
+                                if (myAddress != null)
+                                {
+                                    invoicedataprovider.Notify1Address = DataProviders.General.GetAddress(myAddress);
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+
                     if (shipment.DirectionId == "E")
                     {
                         invoicedataprovider.MainCarriageExpectedDate = shipment.MainCarriageETD != null ? String.Format("{0:dd.MMM.yy}", shipment.MainCarriageETD) : "";
@@ -911,8 +935,16 @@ namespace WebFreight.Web.ReportsWebServices
                     else
                     {
                         invoicedataprovider.FromLocation = mainCarriageFromPort.Code + " " + mainCarriageFromPort.EnglishName;
+                        invoicedataprovider.FromLocation_PortName = mainCarriageFromPort.EnglishName;
+                        invoicedataprovider.FromLocation_CountryName = mainCarriageFromPort.Country == null ? null : mainCarriageFromPort.Country.EnglishName;
+
                         invoicedataprovider.ToLocation = mainCarriageToPort.Code + " " + mainCarriageToPort.EnglishName;
+                        invoicedataprovider.ToLocation_PortName = mainCarriageToPort.EnglishName;
+                        invoicedataprovider.ToLocation_CountryName = mainCarriageToPort.Country == null ? null : mainCarriageToPort.Country.EnglishName;
+
                         invoicedataprovider.FinalLocation = finalDistinationPort != null ? (finalDistinationPort.Code + " " + finalDistinationPort.EnglishName) : "";
+                        invoicedataprovider.FinalLocation_PortName = finalDistinationPort != null ? finalDistinationPort.EnglishName : "";
+                        invoicedataprovider.FinalLocation_CountryName = finalDistinationPort != null ? (finalDistinationPort.Country == null ? null : finalDistinationPort.Country.EnglishName) : "";
                     }
 
                     if (shipment.Transshipment1FromPortId == null && shipment.Transshipment2FromPortId == null && shipment.Transshipment3FromPortId == null && finalDistinationPort == null)
@@ -1131,6 +1163,7 @@ namespace WebFreight.Web.ReportsWebServices
                         if (billToCardAddress != null)
                         {
                             invoicedataprovider.BillToAddress_NoName = DataProviders.General.GetAddress(billToCardAddress);
+                            invoicedataprovider.BillToStateCode = billToCardAddress.State == null ? null : billToCardAddress.State.Code;
 
                             if (billToCardAddress.IsLocalLanguage && !string.IsNullOrEmpty(invoicedataprovider.BillTo_LocalName))
                             {
@@ -3241,187 +3274,189 @@ namespace WebFreight.Web.ReportsWebServices
                 #endregion
 
                 #region Constituents
-
-                invoiceDataProvider.ConstituentInvoicesList = new List<ReportConstituentInvoiceLine>();
-
-                List<ARInvoice> myInvoices = invoiceRepository.GetConnectedInvoices(tenant, entityPOCO.Id).ToList();
-
-                if (myInvoices.Count > 0)
+                if (!entityPOCO.IsGeneralInvoice)
                 {
-                    List<string> invoicesIds = myInvoices.Select(s => s.Id).ToList();
-                    List<string> shipmentsIds = myInvoices.Where(d => d.MainEntityId != null).Select(s => s.MainEntityId).ToList();
+                    invoiceDataProvider.ConstituentInvoicesList = new List<ReportConstituentInvoiceLine>();
 
-                    List<ARInvoiceTotalVAT> myTotalVATs = new List<ARInvoiceTotalVAT>();
-                    if (invoicesIds.Count > 0)
+                    List<ARInvoice> myInvoices = invoiceRepository.GetConnectedInvoices(tenant, entityPOCO.Id).ToList();
+
+                    if (myInvoices.Count > 0)
                     {
-                        ARInvoiceTotalVATRepository vatRepository = new ARInvoiceTotalVATRepository(tenant);
-                        myTotalVATs = vatRepository.GetTotalVATsFromInvoiceIdList(invoicesIds, tenant);
-                    }
+                        List<string> invoicesIds = myInvoices.Select(s => s.Id).ToList();
+                        List<string> shipmentsIds = myInvoices.Where(d => d.MainEntityId != null).Select(s => s.MainEntityId).ToList();
 
-                    List<ShipmentDataView> myShipments = new List<ShipmentDataView>();
-                    List<ShipmentPackage> allShipmentsPackages = new List<ShipmentPackage>();
-
-                    if (shipmentsIds.Count > 0)
-                    {
-                        ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                        myShipments = shipmentRepository.GetShipmentsFromIdList(shipmentsIds, tenant);
-
-                        ShipmentPackageRepository packageRepository = new ShipmentPackageRepository(tenant);
-                        allShipmentsPackages = packageRepository.GetPackagesFromShipmentsIds(shipmentsIds, tenant).ToList();
-                    }
-
-                    foreach (ARInvoice item in myInvoices)
-                    {
-                        ReportConstituentInvoiceLine myRecord = new ReportConstituentInvoiceLine()
+                        List<ARInvoiceTotalVAT> myTotalVATs = new List<ARInvoiceTotalVAT>();
+                        if (invoicesIds.Count > 0)
                         {
-                            InvoiceId = item.Id,
-                            InvoiceNumber = item.InvoiceNumber,
-                            CustomerRef = item.CustomerRef,
-                            InvoiceDate = item.InvoiceDate == null ? "" : String.Format("{0:dd.MMM.yyyy}", item.InvoiceDate),
-                            BillToName = item.BillTo == null ? "" : item.BillTo.EnglishName,
-                            InvoiceCurrencyCode = item.InvoiceCurrency == null ? "" : item.InvoiceCurrency.Code,
-                            HouseNumber = item.HouseNumber,
-                            MasterNumber = item.MasterNumber,
-                            MainEntityReference = item.MainEntityReference,
-                            SubTotalInInvoiceCurrency = item.SubTotalInInvoiceCurrency == null ? "" : String.Format("{0:N2}", item.SubTotalInInvoiceCurrency.Value),
-                            SubTotalInLocalCurrency = item.SubTotalInLocalCurrency == null ? "" : String.Format("{0:N2}", item.SubTotalInLocalCurrency.Value),
-                            AmountInInvoiceCurrency = item.AmountInInvoiceCurrency == null ? "" : String.Format("{0:N2}", item.AmountInInvoiceCurrency.Value),
-                            AmountInLocalCurrency = item.AmountInLocalCurrency == null ? "" : String.Format("{0:N2}", item.AmountInLocalCurrency.Value),
-                            AmountInProfitCurrency = item.AmountInProfitCurrency == null ? "" : String.Format("{0:N2}", item.AmountInProfitCurrency.Value),
-                        };
+                            ARInvoiceTotalVATRepository vatRepository = new ARInvoiceTotalVATRepository(tenant);
+                            myTotalVATs = vatRepository.GetTotalVATsFromInvoiceIdList(invoicesIds, tenant);
+                        }
 
-                        double? myTotalVAT = myTotalVATs.Where(d => d.ARInvoiceId == item.Id).Sum(s => s.InvoiceCurrencyVATAmount);
-                        double? myTotalVATLocal = myTotalVATs.Where(d => d.ARInvoiceId == item.Id).Sum(s => s.LocalVATAmount);
-                        double? myVatableAmount = myTotalVATs.Where(d => d.ARInvoiceId == item.Id).Sum(s => s.InvoiceCurrencyVatableAmount);
-                        double? myVatableAmountLocal = myTotalVATs.Where(d => d.ARInvoiceId == item.Id).Sum(s => s.LocalVatableAmount);
+                        List<ShipmentDataView> myShipments = new List<ShipmentDataView>();
+                        List<ShipmentPackage> allShipmentsPackages = new List<ShipmentPackage>();
 
-                        myRecord.TotalVAT = myTotalVAT == null ? "" : String.Format("{0:N2}", myTotalVAT);
-                        myRecord.TotalVATLocal = myTotalVATLocal == null ? "" : String.Format("{0:N2}", myTotalVATLocal);
-                        myRecord.VatableAmount = myVatableAmount == null ? "" : String.Format("{0:N2}", myVatableAmount);
-                        myRecord.VatableAmountLocal = myVatableAmountLocal == null ? "" : String.Format("{0:N2}", myVatableAmountLocal);
-
-                        if (!string.IsNullOrEmpty(item.MainEntityId))
+                        if (shipmentsIds.Count > 0)
                         {
-                            ShipmentDataView myShipment = myShipments.Where(d => d.Id == item.MainEntityId).FirstOrDefault();
-                            if (myShipment != null)
+                            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                            myShipments = shipmentRepository.GetShipmentsFromIdList(shipmentsIds, tenant);
+
+                            ShipmentPackageRepository packageRepository = new ShipmentPackageRepository(tenant);
+                            allShipmentsPackages = packageRepository.GetPackagesFromShipmentsIds(shipmentsIds, tenant).ToList();
+                        }
+
+                        foreach (ARInvoice item in myInvoices)
+                        {
+                            ReportConstituentInvoiceLine myRecord = new ReportConstituentInvoiceLine()
                             {
-                                myRecord.MainCarriageATD = myShipment.MainCarriageATD;
-                                myRecord.Shipper = myShipment.ShipperName;
-                                myRecord.Consignee = myShipment.ConsigneeName;
-                                myRecord.Carrier = myShipment.MainCarriageCarrierName;
-                                myRecord.CarrierNumber = myShipment.MainCarriageCarrierNumber;
-                                myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
-                                myRecord.Volume = myShipment.Volume == null ? "" : String.Format("{0:N2}", myShipment.Volume.Value);
-                                myRecord.GrossWeight = myShipment.GrossWeight == null ? "" : String.Format("{0:N2}", myShipment.GrossWeight.Value);
-                                myRecord.ChargeableWeight = myShipment.ChargeableWeight == null ? "" : String.Format("{0:N2}", myShipment.ChargeableWeight.Value);
-                                myRecord.PackagesQuantity = myShipment.PackagesQuantity == null ? "" : String.Format("{0:N0}", myShipment.PackagesQuantity.Value);
-                                myRecord.ShipmentNumber = myShipment.ShipmentNumber;
-                                myRecord.ShipmentRouting = myShipment.Routing;
+                                InvoiceId = item.Id,
+                                InvoiceNumber = item.InvoiceNumber,
+                                CustomerRef = item.CustomerRef,
+                                InvoiceDate = item.InvoiceDate == null ? "" : String.Format("{0:dd.MMM.yyyy}", item.InvoiceDate),
+                                BillToName = item.BillTo == null ? "" : item.BillTo.EnglishName,
+                                InvoiceCurrencyCode = item.InvoiceCurrency == null ? "" : item.InvoiceCurrency.Code,
+                                HouseNumber = item.HouseNumber,
+                                MasterNumber = item.MasterNumber,
+                                MainEntityReference = item.MainEntityReference,
+                                SubTotalInInvoiceCurrency = item.SubTotalInInvoiceCurrency == null ? "" : String.Format("{0:N2}", item.SubTotalInInvoiceCurrency.Value),
+                                SubTotalInLocalCurrency = item.SubTotalInLocalCurrency == null ? "" : String.Format("{0:N2}", item.SubTotalInLocalCurrency.Value),
+                                AmountInInvoiceCurrency = item.AmountInInvoiceCurrency == null ? "" : String.Format("{0:N2}", item.AmountInInvoiceCurrency.Value),
+                                AmountInLocalCurrency = item.AmountInLocalCurrency == null ? "" : String.Format("{0:N2}", item.AmountInLocalCurrency.Value),
+                                AmountInProfitCurrency = item.AmountInProfitCurrency == null ? "" : String.Format("{0:N2}", item.AmountInProfitCurrency.Value),
+                            };
 
-                                #region From:To Location
-                                if (myShipment.TransportModeId == "I" && myShipment.DirectionId == "D")
+                            double? myTotalVAT = myTotalVATs.Where(d => d.ARInvoiceId == item.Id).Sum(s => s.InvoiceCurrencyVATAmount);
+                            double? myTotalVATLocal = myTotalVATs.Where(d => d.ARInvoiceId == item.Id).Sum(s => s.LocalVATAmount);
+                            double? myVatableAmount = myTotalVATs.Where(d => d.ARInvoiceId == item.Id).Sum(s => s.InvoiceCurrencyVatableAmount);
+                            double? myVatableAmountLocal = myTotalVATs.Where(d => d.ARInvoiceId == item.Id).Sum(s => s.LocalVatableAmount);
+
+                            myRecord.TotalVAT = myTotalVAT == null ? "" : String.Format("{0:N2}", myTotalVAT);
+                            myRecord.TotalVATLocal = myTotalVATLocal == null ? "" : String.Format("{0:N2}", myTotalVATLocal);
+                            myRecord.VatableAmount = myVatableAmount == null ? "" : String.Format("{0:N2}", myVatableAmount);
+                            myRecord.VatableAmountLocal = myVatableAmountLocal == null ? "" : String.Format("{0:N2}", myVatableAmountLocal);
+
+                            if (!string.IsNullOrEmpty(item.MainEntityId))
+                            {
+                                ShipmentDataView myShipment = myShipments.Where(d => d.Id == item.MainEntityId).FirstOrDefault();
+                                if (myShipment != null)
                                 {
-                                    if (!string.IsNullOrEmpty(myShipment.MainCarriageFromAddressId))
+                                    myRecord.MainCarriageATD = myShipment.MainCarriageATD;
+                                    myRecord.Shipper = myShipment.ShipperName;
+                                    myRecord.Consignee = myShipment.ConsigneeName;
+                                    myRecord.Carrier = myShipment.MainCarriageCarrierName;
+                                    myRecord.CarrierNumber = myShipment.MainCarriageCarrierNumber;
+                                    myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
+                                    myRecord.Volume = myShipment.Volume == null ? "" : String.Format("{0:N2}", myShipment.Volume.Value);
+                                    myRecord.GrossWeight = myShipment.GrossWeight == null ? "" : String.Format("{0:N2}", myShipment.GrossWeight.Value);
+                                    myRecord.ChargeableWeight = myShipment.ChargeableWeight == null ? "" : String.Format("{0:N2}", myShipment.ChargeableWeight.Value);
+                                    myRecord.PackagesQuantity = myShipment.PackagesQuantity == null ? "" : String.Format("{0:N0}", myShipment.PackagesQuantity.Value);
+                                    myRecord.ShipmentNumber = myShipment.ShipmentNumber;
+                                    myRecord.ShipmentRouting = myShipment.Routing;
+
+                                    #region From:To Location
+                                    if (myShipment.TransportModeId == "I" && myShipment.DirectionId == "D")
                                     {
-                                        Address myAddress = addressRepository.GetSingleAddress(myShipment.MainCarriageFromAddressId, tenant);
-                                        if (myAddress != null)
+                                        if (!string.IsNullOrEmpty(myShipment.MainCarriageFromAddressId))
                                         {
-                                            myRecord.FromLocation = myAddress.City + " " + (myAddress.Country != null ? myAddress.Country.Code : "");
-                                        }
-                                    }
-
-                                    if (!string.IsNullOrEmpty(myShipment.MainCarriageToAddressId))
-                                    {
-                                        Address myAddress = addressRepository.GetSingleAddress(myShipment.MainCarriageToAddressId, tenant);
-                                        if (myAddress != null)
-                                        {
-                                            myRecord.ToLocation = myAddress.City + " " + (myAddress.Country != null ? myAddress.Country.Code : "");
-                                            myRecord.FinalDestination = myAddress.City;
-                                        }
-                                    }
-                                }
-
-                                else
-                                {
-                                    myRecord.FromLocation = myShipment.MainCarriageFromPortCode + " " + myShipment.MainCarriageFromPortName;
-                                    myRecord.ToLocation = myShipment.MainCarriageToPortCode + " " + myShipment.MainCarriageToPortName;
-                                    myRecord.FinalDestination = myShipment.MainCarriageFinalDestinationPortCode;
-                                }
-                                #endregion
-
-                                #region LoadingPlace
-
-                                ShipmentPickUpDelivery myFirstPickup = (from d in shipmentsContext.ShipmentPickUpDeliveries
-                                                                        where d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "PICK"
-                                                                        select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
-
-                                myRecord.LoadingPlace = myServicHelper.GetPlaceOfLoading(myShipment, myFirstPickup);
-
-                                #endregion
-
-                                #region PlaceOfDelivery
-
-                                ShipmentPickUpDelivery myDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
-                                                                     where d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV"
-                                                                     select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
-
-                                myRecord.PlaceOfDelivery = myServicHelper.GetPlaceOfDelivery(myShipment, myDelivery);
-                                myRecord.DeliveryFrom = myServicHelper.GetFromDeliveryName(myShipment, myDelivery);
-                                myRecord.DeliveryTo = myServicHelper.GetToDeliveryName(myShipment, myDelivery);
-                                myRecord.Incoterm = myShipment.IncotermCode;
-
-                                if (myDelivery != null)
-                                {
-                                    ShipmentPickUpDeliveryPackageRepository rep = new ShipmentPickUpDeliveryPackageRepository(tenant);
-                                    List<ShipmentPickUpDeliveryPackage> deliveryPackages = rep.GetPackagesByDeliveryId(myDelivery.Id, tenant).ToList();
-
-                                    if (deliveryPackages != null)
-                                    {
-                                        myRecord.DeliveryPackagesQuantity = deliveryPackages.Sum(d => d.Quantity);
-                                        myRecord.DeliveryPackagesWeight = deliveryPackages.Sum(d => d.Weight);
-                                    }
-
-                                    myRecord.DeliveryTrailerNo = myDelivery.TrailerNumber;
-                                    myRecord.DeliveryDriverName = myDelivery.Driver;
-                                }
-
-                                #endregion
-
-                                #region PackagesType
-                                List<ShipmentPackage> myPackages = (from a in allShipmentsPackages where a.ShipmentId == myShipment.Id select a).ToList();
-                                if (myPackages.Count > 0)
-                                {
-                                    var myGroup = (from a in myPackages
-                                                   where a.PackageTypeId != null
-                                                   group a by a.PackageTypeId into g
-                                                   select new
-                                                   {
-                                                       PackageTypeId = g.Key,
-                                                       Count = g.Count()
-                                                   });
-
-                                    string myPackagesTypesText = "";
-
-                                    if (myGroup.Count() > 0)
-                                    {
-                                        foreach (var s in myGroup)
-                                        {
-                                            PackageType myPackageType = PackageTypeRepository.GetSinglePackageType(s.PackageTypeId, tenant, true);
-                                            if (myPackageType != null)
+                                            Address myAddress = addressRepository.GetSingleAddress(myShipment.MainCarriageFromAddressId, tenant);
+                                            if (myAddress != null)
                                             {
-                                                myPackagesTypesText = string.IsNullOrEmpty(myPackagesTypesText) ? myPackageType.EnglishName : myPackagesTypesText + "," + myPackageType.EnglishName;
+                                                myRecord.FromLocation = myAddress.City + " " + (myAddress.Country != null ? myAddress.Country.Code : "");
+                                            }
+                                        }
+
+                                        if (!string.IsNullOrEmpty(myShipment.MainCarriageToAddressId))
+                                        {
+                                            Address myAddress = addressRepository.GetSingleAddress(myShipment.MainCarriageToAddressId, tenant);
+                                            if (myAddress != null)
+                                            {
+                                                myRecord.ToLocation = myAddress.City + " " + (myAddress.Country != null ? myAddress.Country.Code : "");
+                                                myRecord.FinalDestination = myAddress.City;
                                             }
                                         }
                                     }
 
-                                    myRecord.PackagesType = myPackagesTypesText;
-                                }
-                                #endregion
-                            }
-                        }
+                                    else
+                                    {
+                                        myRecord.FromLocation = myShipment.MainCarriageFromPortCode + " " + myShipment.MainCarriageFromPortName;
+                                        myRecord.ToLocation = myShipment.MainCarriageToPortCode + " " + myShipment.MainCarriageToPortName;
+                                        myRecord.FinalDestination = myShipment.MainCarriageFinalDestinationPortCode;
+                                    }
+                                    #endregion
 
-                        invoiceDataProvider.ConstituentInvoicesList.Add(myRecord);
-                        invoiceDataProvider.ConstituentInvoices = string.IsNullOrEmpty(invoiceDataProvider.ConstituentInvoices) ? item.InvoiceNumber : (invoiceDataProvider.ConstituentInvoices + "," + item.InvoiceNumber);
+                                    #region LoadingPlace
+
+                                    ShipmentPickUpDelivery myFirstPickup = (from d in shipmentsContext.ShipmentPickUpDeliveries
+                                                                            where d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "PICK"
+                                                                            select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+                                    myRecord.LoadingPlace = myServicHelper.GetPlaceOfLoading(myShipment, myFirstPickup);
+
+                                    #endregion
+
+                                    #region PlaceOfDelivery
+
+                                    ShipmentPickUpDelivery myDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
+                                                                         where d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV"
+                                                                         select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+                                    myRecord.PlaceOfDelivery = myServicHelper.GetPlaceOfDelivery(myShipment, myDelivery);
+                                    myRecord.DeliveryFrom = myServicHelper.GetFromDeliveryName(myShipment, myDelivery);
+                                    myRecord.DeliveryTo = myServicHelper.GetToDeliveryName(myShipment, myDelivery);
+                                    myRecord.Incoterm = myShipment.IncotermCode;
+
+                                    if (myDelivery != null)
+                                    {
+                                        ShipmentPickUpDeliveryPackageRepository rep = new ShipmentPickUpDeliveryPackageRepository(tenant);
+                                        List<ShipmentPickUpDeliveryPackage> deliveryPackages = rep.GetPackagesByDeliveryId(myDelivery.Id, tenant).ToList();
+
+                                        if (deliveryPackages != null)
+                                        {
+                                            myRecord.DeliveryPackagesQuantity = deliveryPackages.Sum(d => d.Quantity);
+                                            myRecord.DeliveryPackagesWeight = deliveryPackages.Sum(d => d.Weight);
+                                        }
+
+                                        myRecord.DeliveryTrailerNo = myDelivery.TrailerNumber;
+                                        myRecord.DeliveryDriverName = myDelivery.Driver;
+                                    }
+
+                                    #endregion
+
+                                    #region PackagesType
+                                    List<ShipmentPackage> myPackages = (from a in allShipmentsPackages where a.ShipmentId == myShipment.Id select a).ToList();
+                                    if (myPackages.Count > 0)
+                                    {
+                                        var myGroup = (from a in myPackages
+                                                       where a.PackageTypeId != null
+                                                       group a by a.PackageTypeId into g
+                                                       select new
+                                                       {
+                                                           PackageTypeId = g.Key,
+                                                           Count = g.Count()
+                                                       });
+
+                                        string myPackagesTypesText = "";
+
+                                        if (myGroup.Count() > 0)
+                                        {
+                                            foreach (var s in myGroup)
+                                            {
+                                                PackageType myPackageType = PackageTypeRepository.GetSinglePackageType(s.PackageTypeId, tenant, true);
+                                                if (myPackageType != null)
+                                                {
+                                                    myPackagesTypesText = string.IsNullOrEmpty(myPackagesTypesText) ? myPackageType.EnglishName : myPackagesTypesText + "," + myPackageType.EnglishName;
+                                                }
+                                            }
+                                        }
+
+                                        myRecord.PackagesType = myPackagesTypesText;
+                                    }
+                                    #endregion
+                                }
+                            }
+
+                            invoiceDataProvider.ConstituentInvoicesList.Add(myRecord);
+                            invoiceDataProvider.ConstituentInvoices = string.IsNullOrEmpty(invoiceDataProvider.ConstituentInvoices) ? item.InvoiceNumber : (invoiceDataProvider.ConstituentInvoices + "," + item.InvoiceNumber);
+                        }
                     }
                 }
                 #endregion

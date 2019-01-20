@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {ShipmentPM} from '../../EntityPMs/ShipmentPM';
 import {ShipmentOrderPackagePM} from '../../EntityPMs/ShipmentOrderPackagePM';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -467,11 +467,11 @@ export class WizardDimensionItem extends BaseComponent {
         }
     }
 
-    OnGrossWeightLostFocus(input: number) {
+    OnGrossWeightLostFocus(input1: number) {
         if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
             if (this.Width == null || this.Height == null || this.Length == null) {
                 this.EntityPM.VolumetricWeight = AppTool.GetWeightFromWeight(this.ShipmentPM.GrossWeightUnitCode, this.ShipmentPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeight);
-                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.GrossWeight, this.ShipmentPM.Ratio);
+                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.ShipmentPM.Ratio);
 
                 this.SetUIProperties();
                 this.fatherComponent.ComputeTotals();

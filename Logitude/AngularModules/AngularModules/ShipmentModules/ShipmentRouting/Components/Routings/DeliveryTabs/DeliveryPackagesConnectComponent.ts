@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -8,6 +8,8 @@ import {InsideShipmentPackagePM} from '../../../../../Shipment/EntityPMs/InsideS
 import {ShipmentPickUpDeliveryPackagePM} from '../../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 import {DeliveryPackagesTabComponent} from './DeliveryPackagesTabComponent';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { PickUpDeliveryPackageHarmonizePM } from '../../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
+import { retry } from 'rxjs/operators';
 
 @Component({
     moduleId: module.id,
@@ -113,6 +115,15 @@ export class DeliveryPackagesConnectComponent {
             newPickUpPackPM.Length = item.Length;
             newPickUpPackPM.ShipmentPickUpDeliveryId = this.EntityPM.Id;
             newPickUpPackPM.OriginalShipmentPackageId = item.EntityPM.Id;
+            newPickUpPackPM.IsMultiHarmonize = item.IsMultiHarmonize;
+
+            item.EntityPM.ShipmentPackageHarmonizes.forEach(harmonizeItem => {
+                var harmonize = new PickUpDeliveryPackageHarmonizePM(newPickUpPackPM);
+                harmonize.Harmonize = harmonizeItem.Harmonize;
+                harmonize.Tenant = harmonizeItem.Tenant;
+                newPickUpPackPM.AddPickUpDeliveryPackageHarmonizePM(harmonize);
+            });
+
             this.EntityPM.AddPackage(newPickUpPackPM);
         });
 
@@ -157,6 +168,7 @@ export class DeliveryPackagesConnectItem {
     get Width() { return this.InsideEntityPM != null ? this.InsideEntityPM.Width : this.EntityPM.Width; }
     get Height() { return this.InsideEntityPM != null ? this.InsideEntityPM.Height : this.EntityPM.Height; }
     get ShipperSeal() { return this.EntityPM.ShipperSeal; }
+    get IsMultiHarmonize() { return this.EntityPM.IsMultiHarmonize; }
 
     get Dimensions() {
         var myDimensions: string;

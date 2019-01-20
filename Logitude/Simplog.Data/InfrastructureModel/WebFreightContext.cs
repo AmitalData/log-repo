@@ -352,11 +352,13 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new DWObjectFieldMap());
 
             modelBuilder.Configurations.Add(new DWQueryMap());
+            modelBuilder.Configurations.Add(new DWSubQueryMap());
             modelBuilder.Configurations.Add(new DWQueryColumnMap());
             modelBuilder.Configurations.Add(new DWQueryFilterMap());
+            modelBuilder.Configurations.Add(new CustomsShipperMap());
+            modelBuilder.Configurations.Add(new SharedUserQueryMap());
 
-
-        modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
+            modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
             base.OnModelCreating(modelBuilder);
         }
@@ -805,6 +807,12 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
+        public IDbSet<SharedUserQuery> SharedUserQueries
+        {
+            get;
+            set;
+        }
+
         public void SetAsModified(object entity)
         {
             this.Entry(entity).State = EntityState.Modified;
@@ -939,6 +947,12 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
+        public IDbSet<DWSubQuery> DWSubQueries
+        {
+            get;
+            set;
+        }
+
         public IDbSet<DWQueryColumn> DWQueryColumns
         {
             get;
@@ -949,10 +963,6 @@ namespace Simplog.Data.InfrastructureModel
         {
             get;
             set;
-        }
-
+        }        
     }
-
 }
-
-

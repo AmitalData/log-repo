@@ -79,8 +79,10 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     updatedFeature.Code = featureDetails.Code;
                     updatedFeature.Packagable = featureDetails.Packagable;
                     updatedFeature.IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled;
+                    updatedFeature.IsOld = featureDetails.IsOld;
+                    updatedFeature.IsCoreFeature = featureDetails.IsCoreFeature;
 
-                    TextCode updatedTextCode = null;
+                TextCode updatedTextCode = null;
                     if (textCodes.Keys.Contains(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId))
                     {
                         updatedTextCode = textCodes[featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId];
@@ -155,6 +157,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         Packagable = featureDetails.Packagable,
                         IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled,
                         IsOld = false,
+                        IsCoreFeature = featureDetails.IsCoreFeature,
                     };
 
                     featuresRepository.Add(newFeature);

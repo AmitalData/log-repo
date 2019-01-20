@@ -58,6 +58,25 @@ using Simplog.Data.ShipmentsModel;
             }
         }
 		
+		public Customs GetCustomsByShipmentNumber(string ShipmentNumber,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByShipmentNumber(ShipmentNumber,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("Shipment with ShipmentNumber " + ShipmentNumber + " doesn't exist");
+
+				return CustomsDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
 		public Customs CustomsDataMapping(ShipmentPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -207,7 +226,8 @@ using Simplog.Data.ShipmentsModel;
 				 
 				   
 				   temp.ShipperName = MyEntityPM.ShipperName;
-				   temp.DeclarationXMLData = MyEntityPM.DeclarationXMLData;					
+				   temp.DeclarationXMLData = MyEntityPM.DeclarationXMLData;
+				   temp.DeclarationDate = MyEntityPM.DeclarationDate;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -226,10 +246,14 @@ using Simplog.Data.ShipmentsModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
+					
+					if (!string.IsNullOrEmpty(MyEntity.ShipmentNumber))
+					{
+						temp = query.GetSinglePMByShipmentNumber(MyEntity.ShipmentNumber, Tenant);
+					} 					   
 					if(temp == null)
 					{
-					    throw new ApplicationException("Shipment with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("Shipment with ShipmentNumber " + MyEntity.ShipmentNumber + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -436,7 +460,8 @@ using Simplog.Data.ShipmentsModel;
 			
 					
 					temp.ShipperName = MyEntity.ShipperName;
-					temp.DeclarationXMLData = MyEntity.DeclarationXMLData;					   
+					temp.DeclarationXMLData = MyEntity.DeclarationXMLData;
+					temp.DeclarationDate = MyEntity.DeclarationDate;					   
 					   return temp;
 		    }
             catch (Exception ex)

@@ -1,9 +1,7 @@
-﻿
+import { Component } from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {Component}  from '@angular/core';
-import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
-import {TenantManagementPMService} from '../../../Infrastructure/Services/StandardPMs/TenantManagementPMService';
-import {TenantManagementPM} from '../../../Infrastructure/EntityPMs/TenantManagementPM';
+import { TenantManagementPM } from '../../../Infrastructure/EntityPMs/TenantManagementPM';
+import { TenantManagementPMService } from '../../../Infrastructure/Services/StandardPMs/TenantManagementPMService';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -12,36 +10,61 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 
 @Component({
     moduleId: module.id,
-
     selector: 'SupportManagement',
     templateUrl: './SupportManagementComponent.html',
-    providers: [TenantManagementPMService]
- 
-
 })
 
 export class SupportManagementComponent extends BaseComponent  {
-    TenantManagementPM: TenantManagementPM = new TenantManagementPM();
-
-    IsSystemSupportEnabled: boolean = false;
-    IsDistributorSupportEnabled: boolean = false;
-    IsSystemSupportEnabledCheck: boolean = false;
-    IsDistributorSupportEnabledCheck: boolean = false;
-    private tenantManagementPMService: TenantManagementPMService;
-    public ValidationErrorsList: string[];
+    public ObjectTableName: string = "TenantManagement";
+    public EntityPM: TenantManagementPM = null;
+    public IsResourcesReady: boolean = false;
+    public ValidationErrorsList: string[] = [];
+    private iService: TenantManagementPMService;
     SystemSupportEnabledKey: string = "";
     DistributorSupportEnabledKey: string = "";
     constructor() {
         super();
 
-        if (this.tenantManagementPMService == null) {
-            this.tenantManagementPMService = new TenantManagementPMService();
-        }
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+
+        this.iService = new TenantManagementPMService();
+        this.iService.get(SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError) {
+                this.ValidationErrorsList = myResponse.ErrorsArray;
+            }
+
+            else {
+                this.EntityPM = myResponse.Result;
+                this.IsSystemSupportEnabledCheck = this.EntityPM.IsSystemSupportEnabled;
+                this.IsDistributorSupportEnabledCheck = this.EntityPM.IsDistributorSupportEnabled;
+                this.IsResourcesReady = true;
+            }
+
+            SessionLocator.CurrentSession.StopBusyIndicator();
+        });
+
+        
         this.SystemSupportEnabledKey = Guid.newGuid();
         this.DistributorSupportEnabledKey = Guid.newGuid();
-        this.LoadData();
     }
 
+    get IsSystemSupportEnabled() { return this.EntityPM.IsSystemSupportEnabled; }
+    set IsSystemSupportEnabled(value: boolean) {
+        if (this.EntityPM.IsSystemSupportEnabled != value) {
+            this.EntityPM.IsSystemSupportEnabled = value;
+        }
+    }
+
+    get IsDistributorSupportEnabled() { return this.EntityPM.IsDistributorSupportEnabled; }
+    set IsDistributorSupportEnabled(value: boolean) {
+        if (this.EntityPM.IsDistributorSupportEnabled != value) {
+            this.EntityPM.IsDistributorSupportEnabled = value;
+        }
+    }
+
+
+    IsSystemSupportEnabledCheck: boolean = false;
+    IsDistributorSupportEnabledCheck: boolean = false;
     SystemSupportEnabledChecked() {
         this.IsSystemSupportEnabledCheck = this.IsSystemSupportEnabledCheck; 
     }
@@ -51,51 +74,20 @@ export class SupportManagementComponent extends BaseComponent  {
 
     }
     
-    LoadData() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-        this.tenantManagementPMService.get(SessionLocator.Tenant).subscribe(res=> {
-            var pmResponse: ServiceResponse = res;
-            if (!pmResponse.HasError) {
-                var myResult = pmResponse.Result;
-                if (myResult) {
-                    this.TenantManagementPM = myResult;
-                    this.IsDistributorSupportEnabled = this.TenantManagementPM.IsDistributorSupportEnabled;
-                    this.IsSystemSupportEnabled = this.TenantManagementPM.IsSystemSupportEnabled; 
-                    this.IsSystemSupportEnabledCheck = this.TenantManagementPM.IsSystemSupportEnabled;
-                    this.IsDistributorSupportEnabledCheck = this.TenantManagementPM.IsDistributorSupportEnabled;
-
-                }
-            }
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-        
-
-
-        });
-
-    }
-
-
-
     CloseButtonClicked() {
-
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }
 
-
-
     SaveButtonClicked() {
-
         ServiceLocator.SendTotangoUserActivity("SupportManagement", "Edit");
     
         if ((!this.IsSystemSupportEnabledCheck && this.IsSystemSupportEnabled) || (!this.IsDistributorSupportEnabledCheck && this.IsDistributorSupportEnabled)) {
             this.ShowConfirmationWindow();
         }
+
         else {
             this.SaveChanges();
-        }
-
-     
-        
+        }            
     }
 
 
@@ -122,32 +114,24 @@ export class SupportManagementComponent extends BaseComponent  {
     SaveChanges() {
 
         this.ValidationErrorsList = [];
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
-        this.TenantManagementPM.IsSystemSupportEnabled = this.IsSystemSupportEnabledCheck;
-        this.TenantManagementPM.IsDistributorSupportEnabled = this.IsDistributorSupportEnabledCheck;
-        this.tenantManagementPMService.update(this.TenantManagementPM).subscribe(res=> {
+        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-            var pmResponse: ServiceResponse = res;
-            if (pmResponse.HasError) {
-                pmResponse.ErrorsArray.forEach((item) => {
-                    this.ValidationErrorsList.push(item);
-                });
+        this.EntityPM.IsSystemSupportEnabled = this.IsSystemSupportEnabledCheck;
+        this.EntityPM.IsDistributorSupportEnabled = this.IsDistributorSupportEnabledCheck;
+
+        this.iService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+
+            SessionLocator.CurrentSession.StopBusyIndicator();
+
+            if (myResponse.HasError) {
+                this.ValidationErrorsList = myResponse.ErrorsArray;
             }
+
             else {
-                SessionLocator.TenantManagementPM = this.TenantManagementPM;
                 SessionLocator.CurrentSession.CloseCurrentWindow();
-            }
-            
-      
-
+            }                 
         });
     }
-
-
-    
-
-
 
 }

@@ -25,6 +25,7 @@ using System.Linq;
 using System.Web;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel;
+using Logitude.BL.InvoiceModel.EntityQueries;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -45,6 +46,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private APInvoicePaymentRepository invoicePaymentRepository;
         private APPaymentRepository paymentRepository;
         private ShipmentPayableRepository shipmentPayableRepository;
+        private string QBOAPPaymentId;
+
         public APInvoiceMultipleShipmentService(IInvoiceContext objectContext, APInvoicePM entityPM)
         {
             this.tenant = entityPM.Tenant;
@@ -141,8 +144,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.UpdateInvoiceEntities();
             this.BuildSearchFields();
             var IsSetApproved = entityPM.SetApproved;
+
+
             APInvoiceMultipleShipmentsHelper helper = new APInvoiceMultipleShipmentsHelper();
-            helper.APInvoiceMultipleShipmentsQuickbooksValidating(entityPM, IsSetApproved, isNewEntity, this.objectContext, this.myCommonContext);
+            if (entityPM.SetReSendQBO)
+            {
+                helper.APInvoiceMultipleShipmentsQuickbooksValidating(entityPM, true, isNewEntity, this.objectContext, this.myCommonContext);
+
+            }
+            else
+            {
+                helper.APInvoiceMultipleShipmentsQuickbooksValidating(entityPM, IsSetApproved, isNewEntity, this.objectContext, this.myCommonContext);
+            }
+
+
+
+
 
             APInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity);
             invoiceRepository.Update(invoice);
@@ -155,6 +172,21 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.BuildSearchFields();
                 invoiceRepository.Update(invoice);
                 invoiceRepository.SubmitChanges();
+            }
+
+            if (!String.IsNullOrEmpty(QBOAPPaymentId))
+            {
+
+                APPaymentHelper service = new APPaymentHelper();
+                APPaymentQuery PaymentQuery = new APPaymentQuery(paymentRepository);
+                APPaymentPM paymentPM = PaymentQuery.GetSinglePM(QBOAPPaymentId, tenant);
+                if (paymentPM.TransferStatusCode == "TR")
+                {
+                    APPaymentRepository repository = new APPaymentRepository(tenant);
+                    APPayment payment = repository.GetSingleAPPayment(paymentPM.Id, tenant);
+                    service.APPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, false);
+                }
+
             }
 
             this.GetForeignFields();
@@ -906,6 +938,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
 
+            if (this.entityPM.TransferStatusCode == "TR")
+            {
+                QBOAPPaymentId = itemPM.APPaymentId;
+            }
+
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 Tenant = tenant,
@@ -942,6 +979,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                 }
             }
+
+
+            if (this.entityPM.TransferStatusCode == "TR")
+            {
+                QBOAPPaymentId = itemPM.APPaymentId;
+            }
+      
 
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {

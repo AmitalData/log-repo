@@ -75,7 +75,7 @@ namespace Simplog.Data.ShipmentsModel
             Database.SetInitializer<ShipmentsContext>(null);
             //string databasename = DatabaseInitializer.GetDatabaseName();
             //Database.DefaultConnectionFactory.CreateConnection(databasename);
-
+            modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
             modelBuilder.Configurations.Add(new Accounts1Map());
@@ -295,8 +295,8 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new CustomerStatusMap());
             modelBuilder.Configurations.Add(new ShipmentCommodityMap());
             modelBuilder.Configurations.Add(new SpecialServicesTypeMap());
-            modelBuilder.Configurations.Add(new AWBMessagingStockMap());
-            modelBuilder.Configurations.Add(new AWBStockUsageHistoryMap());
+            modelBuilder.Configurations.Add(new MessagingStockMap());
+            modelBuilder.Configurations.Add(new MessagingStockUsageHistoryMap());
             modelBuilder.Configurations.Add(new AccountingInformationIdentifierMap());
             modelBuilder.Configurations.Add(new ManifestStatusMap());
             modelBuilder.Configurations.Add(new AWBAdditionalHandlingInfoMap());
@@ -319,7 +319,9 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ShipmentContainerStatusMap());
             modelBuilder.Configurations.Add(new PickUpDeliveryTransportModeMap());
             modelBuilder.Configurations.Add(new INTTRADocumentTypeMap());
-
+            modelBuilder.Configurations.Add(new ShipmentPackageHarmonizeMap());
+            modelBuilder.Configurations.Add(new PickUpDeliveryPackageHarmonizeMap());
+            modelBuilder.Configurations.Add(new CustomsShipperMap());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -356,8 +358,8 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<AWBInformation> AWBInformations { get; set; }
         public IDbSet<ShipmentPackageItem> ShipmentPackageItems { get; set; }
         public IDbSet<ShipmentCommodity> ShipmentCommodities { get; set; }
-        public IDbSet<AWBMessagingStock> AWBMessagingStocks { get; set; }
-        public IDbSet<AWBStockUsageHistory> AWBStockUsageHistories { get; set; }
+        public IDbSet<MessagingStock> MessagingStocks { get; set; }
+        public IDbSet<MessagingStockUsageHistory> MessagingStockUsageHistories { get; set; }
         public IDbSet<AccountingInformationIdentifier> AccountingInformationIdentifiers { get; set; }
         public IDbSet<SpecialServicesType> SpecialServicesTypes { get; set; }
         public IDbSet<ManifestStatus> ManifestStatus { get; set; }
@@ -377,6 +379,8 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ShipmentContainerStatus> ShipmentContainerStatuses { get; set; }
         public IDbSet<PickUpDeliveryTransportMode> PickUpDeliveryTransportModes { get; set; }
         public IDbSet<INTTRADocumentType> INTTRADocumentTypes { get; set; }
+        public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; set; }
+        public IDbSet<PickUpDeliveryPackageHarmonize> PickUpDeliveryPackageHarmonizes { get; set; }
 
         [DbFunction("ShipmentsContext", "udf_ShipmentSearch")]
         public IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields)

@@ -29,7 +29,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string SearchFields  { get; set; }
        [DataMember]
-       public int? ReportNumber  { get; set; }
+       public string ReportNumber  { get; set; }
        [DataMember]
        public string StatusTypeCode  { get; set; }
        [DataMember]
@@ -44,6 +44,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CreatedByUser  { get; set; }
        [DataMember]
        public string Status  { get; set; }
+       [DataMember]
+       public string StatusLocalName  { get; set; }
    }
 
 }
