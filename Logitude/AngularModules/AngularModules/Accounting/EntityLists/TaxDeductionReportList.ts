@@ -15,7 +15,7 @@ export class TaxDeductionReportList {
 	UpdateDate: Date;
 	UpdatedByUserId: string;
 	SearchFields: string;
-	ReportNumber: number;
+	ReportNumber: string;
 	StatusTypeCode: string;
 	IsAdditionalReportExist: boolean;
 	TaxYear: number;
@@ -23,6 +23,7 @@ export class TaxDeductionReportList {
 	ErrorMessage: string;
 	CreatedByUser: string;
 	Status: string;
+	StatusLocalName: string;
 	
 }
  

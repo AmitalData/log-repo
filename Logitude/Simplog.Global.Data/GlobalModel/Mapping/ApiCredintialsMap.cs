@@ -20,7 +20,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.UsedFor).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.CreatedBy).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.UpdatedBy).IsRequired().HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.ComputingPartnerId).HasMaxLength(15).IsUnicode(false);
+            //this.Property(t => t.ComputingPartnerId).HasMaxLength(15).IsUnicode(false);
             
             this.ToTable("ApiCredintials");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -35,7 +35,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.UpdatedBy).HasColumnName("UpdatedBy");
             this.Property(t => t.maskedPrimaryAccessKey).HasColumnName("maskedPrimaryAccessKey");
             this.Property(t => t.maskedSeconderyAccessKey).HasColumnName("maskedSeconderyAccessKey");
-            this.Property(t => t.ComputingPartnerId).HasColumnName("ComputingPartnerId");
+            //this.Property(t => t.ComputingPartnerId).HasColumnName("ComputingPartnerId");
             
 
 

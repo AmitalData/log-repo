@@ -7,7 +7,6 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {TaxReportLinePM} from './TaxReportLinePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -170,20 +169,6 @@ export class TaxReportPM {
     public set Year(newValue: number) { if (this.year != newValue) { this.year = newValue; this.MarkAsDirty("Year"); } }
        
 	 
-     
-	private taxReportLines: TaxReportLinePM[];
-    get  TaxReportLines() {
-        if (this.taxReportLines == null) {
-            this.taxReportLines = [];
-        }
-
-        return this.taxReportLines;
-    }
-    set  TaxReportLines(newValue: TaxReportLinePM[]) {
-        if (this.taxReportLines != newValue) {
-            this.taxReportLines = newValue;
-        }
-    }
     private statusEnglishName: string;
     public get StatusEnglishName() { return this.statusEnglishName; }
     public set StatusEnglishName(newValue: string) { if (this.statusEnglishName != newValue) { this.statusEnglishName = newValue; this.MarkAsDirty("StatusEnglishName"); } }
@@ -197,6 +182,11 @@ export class TaxReportPM {
     private needsRebulid: boolean;
     public get NeedsRebulid() { return this.needsRebulid; }
     public set NeedsRebulid(newValue: boolean) { if (this.needsRebulid != newValue) { this.needsRebulid = newValue; this.MarkAsDirty("NeedsRebulid"); } }
+       
+	 
+    private isNew: boolean;
+    public get IsNew() { return this.isNew; }
+    public set IsNew(newValue: boolean) { if (this.isNew != newValue) { this.isNew = newValue; this.MarkAsDirty("IsNew"); } }
        
 	 
 

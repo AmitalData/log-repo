@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter} from '@angular/core';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool, DateTool, FormatTool} from '../../../Infrastructure/Tools';
 import {AWBUtilities, AWBFFRValidator} from '../../Utilities/AWBUtilities';
@@ -46,7 +46,6 @@ export class BookingWizardComponent implements AfterViewInit {
     @Output() SaveCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     public TenantPM: TenantPM;
     public EntityPM: BookingPM;
-    public TenantManagmentPM: any;
     public DataContext: BookingWizardComponent = this;
     public WindowArgs: BookingWizardArgs;
     public IsNewEntity: boolean = false;
@@ -57,7 +56,6 @@ export class BookingWizardComponent implements AfterViewInit {
     private myPartnersDomainService: PartnersDomainService;
     constructor(public entityArgs: EntityArgs) {
         this.TenantPM = InfraSettings.TenantPM;
-        this.TenantManagmentPM = InfraSettings.TenantManagementPM;
         this.myPartnersDomainService = new PartnersDomainService();
 
         if (FeatureLocator.HasFeaturePermession("Booking", "BOOKINGSENDRESPONSE")) {
@@ -494,7 +492,7 @@ export class BookingWizardComponent implements AfterViewInit {
                 }
             }
 
-            else if (this.TenantManagmentPM.IsRestrictedByAirline) {
+            else if (SessionLocator.TenantManagementJS.IsRestrictedByAirline) {
                 this.myPartnersDomainService.GetAllowedAirlineId().subscribe((myResponse: ServiceResponse) => {
                     if (myResponse != null) {
                         if (myResponse.HasError) {
@@ -1658,7 +1656,7 @@ export class BookingWizardComponent implements AfterViewInit {
     }
 
     private SetDemoMessage() {
-        if (InfraSettings.TenantPM.Id == 65 || InfraSettings.TenantManagementPM.IsEAWBOnlyDemo) {
+        if (InfraSettings.TenantPM.Id == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Please note that this message will not be sent to the airline since it is a demo environment. You can still review the built message");
         }

@@ -204,9 +204,12 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<DocumentFilingBackupSetting> DocumentFilingBackupSettings { get; set; }
         IDbSet<HybridPartnersPermission> HybridPartnersPermissions { get; set; }
         IDbSet<DWHSetting> DWHSettings { get; set; }
+        IDbSet<PaymentGatewayPartners> PaymentGatewayPartners { get; set; }
 
         IDbSet<TemperatureUnit> TemperatureUnits { get; set; }
 
+        IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
+        IDbSet<CustomsShipper> CustomsShippers { get; }
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();

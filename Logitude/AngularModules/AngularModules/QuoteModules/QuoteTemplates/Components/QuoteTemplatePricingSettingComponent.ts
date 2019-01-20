@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuoteTemplatePM} from '../../../Quote/EntityPMs/QuoteTemplatePM';
 import {QuoteTemplateSettingPM} from '../../../Quote/EntityPMs/QuoteTemplateSettingPM';
@@ -16,7 +16,7 @@ import {QuoteTemplateTextCodeExtendedPMService} from '../../../Quote/Services/Ex
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     selector: 'QuoteTemplatePricingSettingComponent',
     moduleId: module.id,
@@ -107,13 +107,13 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
     LoadData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
         this.QuoteTemplateTextDesignPMLists = [];
         this.LoadTableDesign();
     }
 
 
-    LoadTextDesgin() {
+    LoadTextDesign() {
         var totalsLabelTextDesignId: string = (this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.TotalsPackagesLabelDesignId : this.QuoteTemplateSettingPM.TotalsContainsersLabelDesignId);
 
         var totalValueTextDesignId = (this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.TotalsPackagesValueDesignId : this.QuoteTemplateSettingPM.TotalsContainsersValueDesignId);
@@ -208,7 +208,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.TableDesignPM = pmResponse.Result;
             }
-            this.LoadTextDesgin();
+            this.LoadTextDesign();
 
         });
     }
@@ -450,7 +450,13 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
 
     get ShowPrice1Label() {
-        return this.QuoteTemplateSectionTypeName == "Packages" ? "Show Units" : "Show Fixed Price"; 
+
+        var showPrice1Label = "";
+        if (this.QuoteTemplateSectionTypeName == "Packages") {
+            showPrice1Label = TextCodeTranslator.Translate("QuoteTemplate.S.ShowUnits"); 
+        } else showPrice1Label = TextCodeTranslator.Translate("QuoteTemplate.S.ShowFixedPrice"); 
+
+        return showPrice1Label;
     }
 
 
@@ -474,10 +480,16 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
 
     get ShowPrice2Label() {
-        return this.QuoteTemplateSectionTypeName == "Packages" ? "Show Unit Price" : "Show Price By Container";
+
+        var showPrice2Label = "";
+        if (this.QuoteTemplateSectionTypeName == "Packages") {
+            showPrice2Label = TextCodeTranslator.Translate("QuoteTemplate.S.ShowUnitPrice");
+        } else showPrice2Label = TextCodeTranslator.Translate("QuoteTemplate.S.ShowPriceByContainer");
+
+        return showPrice2Label;
     }
 
-
+ 
 
     ShowPrice2Key: string = Guid.newGuid();
     get ShowPrice2() {
@@ -571,19 +583,31 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     }
 
 
-    
+    ShowSaleMaxMinAmountColumnKey: string = Guid.newGuid();
+    get ShowSaleMaxMinAmountColumn() {
+        var showSaleMaxMinAmountColumn: boolean = false;
+        if (this.QuoteTemplateSettingPM) showSaleMaxMinAmountColumn = this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.ShowSaleMaxMinAmountPackages : this.QuoteTemplateSettingPM.ShowSaleMaxMinAmountContainers;
+        return showSaleMaxMinAmountColumn;
+    }
+    set ShowSaleMaxMinAmountColumn(value: boolean) {
+        if (this.QuoteTemplateSettingPM != null) {
+            if (this.QuoteTemplateSectionTypeName == "Packages") this.QuoteTemplateSettingPM.ShowSaleMaxMinAmountPackages = value;
+            else this.QuoteTemplateSettingPM.ShowSaleMaxMinAmountContainers = value;
+        }
+    }
+
 
 
     DisablePricingSetting() {
-            this.ShowChargeCode = false;
-            this.ShowChargeName = false;
-            this.ShowMeasurement = false;
-            this.ShowPrice1 = false;
-            this.ShowPrice2 = false;
-            this.ShowSaleCurrencyColumn = false;
-            this.ShowLocalCurrencyColumn = false;
-            this.ShowChargeDescription = false;
-
+        this.ShowChargeCode = false;
+        this.ShowChargeName = false;
+        this.ShowMeasurement = false;
+        this.ShowPrice1 = false;
+        this.ShowPrice2 = false;
+        this.ShowSaleCurrencyColumn = false;
+        this.ShowLocalCurrencyColumn = false;
+        this.ShowChargeDescription = false;
+        this.ShowSaleMaxMinAmountColumn = false;
     }
 
 
@@ -606,7 +630,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
         if (this.IsSaveQuoteTemplateTextDesignRuning || this.IsSaveQuoteTemplateTableDesignRuning || this.IsSaveQuoteTemplateTextCodeRuning) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
             if (this.QuoteTemplateSettingPM.IsDirty) {
                 this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
@@ -672,7 +696,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     }
 
     SaveQuoteTemplateSetting() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
         this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
             this.QuoteTemplateSettingPM.IsDirty = false;
             this.SaveCompleted();
@@ -709,7 +733,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 930;
         logWindow.Height = 580;
-        logWindow.Title = "Total Per Containers Settings";
+        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.TotalPerContainerSettings")  ;
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/QuoteTemplateTotalPerContainerSetting");
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "Refresh") {
@@ -783,8 +807,9 @@ export class TextCodeData extends BaseComponent {
             if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginalEnglishName)) {
                 if (this.EntityPM.OriginalEnglishName != this.EntityPM.EnglishName) {
                     isShowRestoreOriginalEnglishName = true;
-                    this.ToolTipEnglishNameMessage = "Value edited by user, double click to reset to {" + this.EntityPM.OriginalEnglishName + "}";
-       
+
+                    this.ToolTipEnglishNameMessage = TextCodeTranslator.Translate("QuoteTemplate.M.ValueEditedByUserMessage") + " {" + this.EntityPM.OriginalEnglishName + "}";
+                    
                 }
 
             }

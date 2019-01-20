@@ -9,6 +9,9 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Server.Tools.Helpers;
+using System.Linq;
 
 namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 {
@@ -212,13 +215,17 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.LastUpdateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
                 temp.StatusDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
                 temp.AWBCurrencyId = MyTenantPM.FreightCurrencyId;
-                temp.ProfitCurrencyId = MyTenantPM.ProfitCurrencyId;
-                temp.ValueOfGoodsCurrencyId = MyTenantPM.FreightCurrencyId;                           
+                temp.ProfitCurrencyId = MyTenantPM.ProfitCurrencyId;                                   
                 temp.VolumeUnitCode = MyTenantPM.VolumeUnitCode;
                 temp.DimensionsUnitCode = MyTenantPM.DimensionsUnitCode;
                 temp.GrossWeightUnitCode = MyTenantPM.GrossWeightUnitCode;
                 temp.ChargeableWeightUnitCode = MyTenantPM.ChargeableWeightUnitCode;
                 temp.OnCarriageAdditionalTransportModeCode = "BYTR";
+
+                if(string.IsNullOrEmpty(temp.ValueOfGoodsCurrencyId))
+                {
+                    temp.ValueOfGoodsCurrencyId = MyTenantPM.FreightCurrencyId;
+                }
 
                 switch (temp.DirectionId)
                 {
@@ -320,7 +327,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                         item.PickUpDeliveryToTypeCode = "PORT";
                     }
                 }
-
                 return temp;
             }
 

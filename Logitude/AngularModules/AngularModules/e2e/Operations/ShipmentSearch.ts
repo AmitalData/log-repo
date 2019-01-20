@@ -1,7 +1,7 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../Helpers/FieldsHelper';
 import { GeneralFunctions } from './../Helpers/GeneralFunctions';
-import { Driver } from 'selenium-webdriver/safari';
+// import { Driver } from 'selenium-webdriver/safari';
 
 
 export class ShipmentSearch {
@@ -18,7 +18,7 @@ export class ShipmentSearch {
     this.operationTab.GoToMainMenu('General.MH.Operations');
     var shipmentsTab = this.Helper.WaitByCssAndClick_SelectItemFromList('.PagesMenu', 1);
 
-    this.UseQuickSearch('1000');
+    this.UseSearchBox('searchFeildId','1000');
     // this.LeaveEntity('.BackBottonBody', 'Operations');
     // this.EnterViews();
     // this.EditShipmentFromList();
@@ -27,16 +27,13 @@ export class ShipmentSearch {
 
   }
      
-  UseQuickSearch(searchByRef:string) {
+  UseSearchBox(searchFeildId:string,searchByRef:string) {
     
-     this.Helper.WaitByIdAndFill('Shipment_Search',searchByRef);
+     this.Helper.WaitByIdAndFill(searchFeildId,searchByRef);
      this.Helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem',0);
 
-    //  this.Helper.WaitByIdAndFill('SearchInputId2',searchByRef);
-    //  this.Helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem',0);
-
-
   }
+  
 
 
 

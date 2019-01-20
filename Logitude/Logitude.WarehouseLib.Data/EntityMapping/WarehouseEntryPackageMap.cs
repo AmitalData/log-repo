@@ -66,6 +66,8 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
             this.Property(t => t.Location).HasColumnName("Location").HasMaxLength(500).IsUnicode(false);
 
             this.Property(t => t.IsConnectedToShipment).HasColumnName("IsConnectedToShipment");
+
+            this.Property(t => t.VolumetricWeight).HasColumnName("VolumetricWeight");
         }
     }
 }

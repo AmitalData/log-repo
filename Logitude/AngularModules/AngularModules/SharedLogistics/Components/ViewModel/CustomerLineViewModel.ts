@@ -24,7 +24,7 @@ export class CustomerLineViewModel {
 
     public HasAccessPath: boolean;
     public HasAccressFill: boolean;
- 
+    IsEnableEditContact: boolean = false;
 
     public get InviteButtonContent() {
 
@@ -185,7 +185,7 @@ export class CustomerLineViewModel {
                 var myResult = pmResponse.Result;
                 if (myResult) {
                     this.contactPM = myResult;
-            
+                    this.IsEnableEditContact = true;
                 }
             }
         });

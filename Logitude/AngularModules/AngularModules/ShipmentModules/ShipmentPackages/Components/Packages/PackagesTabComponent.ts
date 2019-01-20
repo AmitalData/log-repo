@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Output, EventEmitter, OnDestroy}  from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPackagePM';
@@ -10,11 +10,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {PortList} from '../../../../Common/EntityLists/PortList';
-import {AddressList} from '../../../../Common/EntityLists/AddressList';
 import {PackageTypeList} from '../../../../Common/EntityLists/PackageTypeList';
-import {PortListService} from '../../../../Common/Services/StandardLists/PortListService';
-import {AddressListService} from '../../../../Common/Services/StandardLists/AddressListService';
 import {PackageTypeListService} from '../../../../Common/Services/StandardLists/PackageTypeListService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
@@ -26,6 +22,7 @@ import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {ShipmentDeliveryPM} from '../../../../Shipment/EntityPMs/ShipmentDeliveryPM';
 import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 import {WarehouseReleasePackageListExtendedService} from '../../../../Warehouse/Services/ExtendedLists/WarehouseReleasePackageListExtendedService';
+import {PickUpDeliveryPackageHarmonizePM} from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
 
 @Component({
     moduleId: module.id,
@@ -198,7 +195,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         if (this.IsFCLEntity) {
             if (FeatureLocator.HasFeaturePermession("Shipment", "ShippingInstructions")) {
-                if (this.EntityPM.TransportModeId == "O" && this.EntityPM.DirectionId == "E") {
+                if (this.EntityPM.TransportModeId == "O" && (this.EntityPM.DirectionId == "E" || this.EntityPM.DirectionId == "I")) {
                     if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "C") {
                         this.IsShippingInstructionsVisible = true;
                     }
@@ -605,6 +602,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         });
 
         if (!AppTool.IsNullOrEmpty(input)) {
+            input = AppTool.Replace(input, ",", "");
             valueInserted = Number(input);
         }
 
@@ -622,6 +620,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
 
         if (!AppTool.IsNullOrEmpty(input)) {
+            input = AppTool.Replace(input, ",", "");
             valueInserted = Number(input);
         }
 
@@ -1430,6 +1429,7 @@ export class ShipmentPackageItem extends BaseComponent {
         this.SetUIProperties_Container();
         this.SetUIProperties_Dangerous();
         this.SetUIProperties_BuildButton();
+        this.SetUIProperties_Harmonize();
     }
     SetUIProperties_Package() {
         if (this.ShipmentPM.TransportModeId == "A") {
@@ -1507,7 +1507,6 @@ export class ShipmentPackageItem extends BaseComponent {
             this.UIProperties.SetEnabled("Weight", this.ObjectTableName, isGrossWeightEnabled);
             this.UIProperties.SetEnabled("ShipperSeal", this.ObjectTableName, this.IsEditingFieldsEnabled);
             this.UIProperties.SetEnabled("Tare", this.ObjectTableName, this.IsEditingFieldsEnabled);
-            this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, this.IsEditingFieldsEnabled);
             this.UIProperties.SetEnabled("MarksAndNumbers", this.ObjectTableName, this.IsEditingFieldsEnabled);
             this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingFieldsEnabled);
             this.UIProperties.SetEnabled("Reference1", this.ObjectTableName, this.IsEditingFieldsEnabled);
@@ -1631,6 +1630,20 @@ export class ShipmentPackageItem extends BaseComponent {
         }
 
         this.UIProperties.SetEnabled("NonActiveContainer", this.ObjectTableName, isFieldEnabled);
+    }
+    SetUIProperties_Harmonize() {
+
+        var isFieldEnabled: boolean = true;
+        if (this.IsEditingEnabled) {
+
+            isFieldEnabled = true;
+
+            if (this.IsMultiHarmonize == true) {
+                isFieldEnabled = false;
+            }
+        }
+
+        this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, isFieldEnabled);
     }
 
     public PackageTypeList: PackageTypeList;
@@ -1858,12 +1871,12 @@ export class ShipmentPackageItem extends BaseComponent {
         }
     }
 
-    OnGrossWeightLostFocus(input: number) {
+    OnGrossWeightLostFocus(input1: number) {
         if (this.fatherComponent.IsLCLEntity) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
                 if (this.Width == null || this.Height == null || this.Length == null) {
                     this.EntityPM.VolumetricWeight = AppTool.GetWeightFromWeight(this.ShipmentPM.GrossWeightUnitCode, this.ShipmentPM.ChargeableWeightUnitCode, this.EntityPM.Weight);
-                    this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.Weight, this.ShipmentPM.Ratio);
+                    this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.ShipmentPM.Ratio);
 
                     this.SetUIProperties();
                     this.fatherComponent.ResetTotalEditedValues();
@@ -1985,6 +1998,13 @@ export class ShipmentPackageItem extends BaseComponent {
     set Harmonize(newValue: string) {
         if (this.EntityPM.Harmonize != newValue) {
             this.EntityPM.Harmonize = newValue;
+        }
+    }
+
+    get IsMultiHarmonize() { return this.EntityPM.IsMultiHarmonize }
+    set IsMultiHarmonize(newValue: boolean) {
+        if (this.EntityPM.IsMultiHarmonize != newValue) {
+            this.EntityPM.IsMultiHarmonize = newValue;
         }
     }
 
@@ -2645,11 +2665,25 @@ export class ShipmentPackageItem extends BaseComponent {
         newDeliveryPackagePM.Length = this.EntityPM.Length;
         newDeliveryPackagePM.Harmonize = this.EntityPM.Harmonize;
         newDeliveryPackagePM.OriginalShipmentPackageId = this.EntityPM.Id;
+        newDeliveryPackagePM.IsMultiHarmonize = this.EntityPM.IsMultiHarmonize;
+
+        this.EntityPM.ShipmentPackageHarmonizes.forEach(harmonizeItem => {
+            var harmonize = new PickUpDeliveryPackageHarmonizePM(null);
+            harmonize.Harmonize = harmonizeItem.Harmonize;
+            harmonize.Tenant = harmonizeItem.Tenant;
+            newDeliveryPackagePM.AddPickUpDeliveryPackageHarmonizePM(harmonize);
+        });
+
         newDeliveryPM.AddPackage(newDeliveryPackagePM);
+
+        var isCreatingContainerDelivery = false;
+        if (typeCode == "D") {
+            isCreatingContainerDelivery = true;
+        }
 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = myWindowTitle;
-        logitudeWindow.WindowArgs = { ShipmentPM: this.ShipmentPM, EntityPM: newDeliveryPM, IsNewEntity: true, ContainerReturnDeliveryId: this.DeliveryId };
+        logitudeWindow.WindowArgs = { ShipmentPM: this.ShipmentPM, EntityPM: newDeliveryPM, IsNewEntity: true, ContainerReturnDeliveryId: this.DeliveryId, IsCreatingContainerDelivery: isCreatingContainerDelivery };
         logitudeWindow.Width = 950;
         logitudeWindow.Height = 595;
 
@@ -2720,7 +2754,6 @@ export class ShipmentPackageItem extends BaseComponent {
             logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditDeliveryComponent');
         }
     }
-
     ChooseCommodityClicked() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 775;
@@ -2729,7 +2762,6 @@ export class ShipmentPackageItem extends BaseComponent {
         logitudeWindow.Title = TextCodeTranslator.TranslateTablePlural("Commodity") + " Search";
         logitudeWindow.Show("./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBChooseCommodityComponent");
     }
-
     AdvancedDangerousClicked() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 500;
@@ -2737,6 +2769,13 @@ export class ShipmentPackageItem extends BaseComponent {
         logitudeWindow.WindowArgs = this.EntityPM;
         logitudeWindow.Title = "Dangerous Goods Advanced";
         logitudeWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/AdvancedDangerousGoodsComponent");
+    }
+
+    get HasContainerException() { return this.EntityPM.HasContainerException; }
+    set HasContainerException(value: boolean) {
+        if (this.EntityPM.HasContainerException != value) {
+            this.EntityPM.HasContainerException = value;            
+        }
     }
 }
 export class InsideShipmentPackageItem extends BaseComponent {
@@ -2930,11 +2969,11 @@ export class InsideShipmentPackageItem extends BaseComponent {
         }
     }
 
-    OnGrossWeightLostFocus(input: number) {
+    OnGrossWeightLostFocus(input1: number) {
         if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
             if (this.Width == null || this.Height == null || this.Length == null) {
                 this.EntityPM.VolumetricWeight = AppTool.GetWeightFromWeight(this.ShipmentPM.GrossWeightUnitCode, this.ShipmentPM.ChargeableWeightUnitCode, this.EntityPM.Weight);
-                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.Weight, this.ShipmentPM.Ratio);
+                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.ShipmentPM.Ratio);
 
                 this.SetUIProperties();
 

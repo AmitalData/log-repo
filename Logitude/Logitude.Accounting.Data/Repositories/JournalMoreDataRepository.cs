@@ -21,7 +21,18 @@ namespace Logitude.Accounting.Data.Repositories
 			throw new NotImplementedException();
         }
 
-   }
+        public JournalMoreData GetSingleJournalMoreData(string journalId, int tenant)
+        {
+            return (from a in context.JournalMoreDatas
+
+                    where a.JournalId == journalId && a.Tenant == tenant
+
+
+                    select a).FirstOrDefault();
+        }
+
+
+    }
 
 }
    

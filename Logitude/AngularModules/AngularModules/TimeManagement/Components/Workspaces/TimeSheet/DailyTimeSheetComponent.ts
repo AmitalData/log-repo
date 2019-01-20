@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList} from '@angular/core';
+import {Component, ViewChildren, QueryList} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -7,12 +7,12 @@ import {TimeManagementDomainService, TimeManagementAPIHelper, TimeSheetItem, Tim
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {DateTool, AppTool} from '../../../../Infrastructure/Tools';
 import {GroupByPipe} from '../../../../Infrastructure/Pipes/GroupByPipe';
-import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow'; 
+import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
-import {DateTimePipe} from '../../../../Controls/Pipes/DateTimePipe'; 
+import {DateTimePipe} from '../../../../Controls/Pipes/DateTimePipe';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
-import {TMEmployeeTimePM} from '../../../EntityPMs/TMEmployeeTimePM'; 
+import {TMEmployeeTimePM} from '../../../EntityPMs/TMEmployeeTimePM';
 
 @Component({
     selector: 'DailyTimeSheetComponent',
@@ -72,7 +72,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         this.employeeUserId = SessionLocator.LoggedUserId;
         var pipe = new DateTimePipe();
         this.LoggedUserName = SessionLocator.LoggedUserPM.EnglishName + " " + pipe.transform(DateTool.GetCurrentDateAsUtc(), "SD");
-        this.locationCode = this.SelectedLocationFilter;
+        this.locationCodeFilter = this.SelectedLocationFilter;
         this.startDate = DateTool.GetCurrentDateTimeAsUtc();
         this.endDate = this.startDate;
         this.myDomainService = new TimeManagementDomainService();
@@ -91,7 +91,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         if (this.myDomainService == null) {
             this.myDomainService = new TimeManagementDomainService();
         }
-        this.myDomainService.GetPeriodTimeSheetList(this.EmployeeUserId, this.LocationCode, this.StartDate, this.EndDate).subscribe((myResponse: ServiceResponse) => {
+        this.myDomainService.GetPeriodTimeSheetList(this.EmployeeUserId, this.LocationCodeFilter, this.StartDate, this.EndDate).subscribe((myResponse: ServiceResponse) => {
             // this.ItemSource = [];
             this.ItemSource.Clear();
             if (myResponse.HasError) {
@@ -136,13 +136,13 @@ export class DailyTimeSheetComponent extends BaseComponent {
         }
     }
 
-    private locationCode: string;
-    get LocationCode() {
-        return this.locationCode;
+    private locationCodeFilter: string;
+    get LocationCodeFilter() {
+        return this.locationCodeFilter;
     }
-    set LocationCode(value: string) {
-        if (this.locationCode != value) {
-            this.locationCode = value;
+    set LocationCodeFilter(value: string) {
+        if (this.locationCodeFilter != value) {
+            this.locationCodeFilter = value;
             this.SaveChanges();
         }
     }
@@ -167,13 +167,13 @@ export class DailyTimeSheetComponent extends BaseComponent {
         }
     }
 
-    // Filters 
+    // Filters
     private mySelectedLocationFilter: string = "O";
     get SelectedLocationFilter() { return this.mySelectedLocationFilter; }
     set SelectedLocationFilter(value: string) {
         if (this.mySelectedLocationFilter != value) {
             this.mySelectedLocationFilter = value;
-            this.LocationCode = value;
+            this.LocationCodeFilter = value;
         }
     }
 
@@ -215,7 +215,8 @@ export class DailyTimeSheetComponent extends BaseComponent {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "New Line";
         var args: any = {};
-        args.LocationCode = this.LocationCode;
+        args.IsNew = true;
+        args.LocationCode = this.LocationCodeFilter != "A" ? this.LocationCodeFilter : "O";
         args.EmployeeUserId = this.EmployeeUserId;
         args.Father = this;
         var date = DateTool.GetCurrentDateTimeAsUtc();
@@ -234,7 +235,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Copy Line";
         var args: any = {};
-        args.LocationCode = this.LocationCode;
+        args.LocationCode = item.LocationCode;
         args.EmployeeUserId = this.EmployeeUserId;
         var date = DateTool.GetCurrentDateTimeAsUtc();
         if (this.SelectedDateFilter == "Y") {
@@ -242,8 +243,10 @@ export class DailyTimeSheetComponent extends BaseComponent {
         }
         args.DateOfWork = date;
         args.Father = this;
+        args.IsNew = true;
         args.WINumber = item.WINumber;
         args.ProjectId = item.ProjectId;
+        args.SprintId = item.SprintId;
         args.Description = item.Description;
         logWindow.WindowArgs = args;
         logWindow.Show('./TimeManagement/Components/NewEntity/NewLineComponent');
@@ -269,17 +272,17 @@ export class DailyTimeSheetComponent extends BaseComponent {
         var items: ItemSourceItem[] = this.ItemSource.Collection;
         var itemsChanges: ItemSourceItem[] = this.ItemSource.Collection.filter(f => f.HasChanges == true);
         if (itemsChanges.length > 0) {
-            if (items.filter(f => f.TimeInMinutes == 0 || AppTool.IsNullOrEmpty(f.Description)).length > 0) {
-                this.IsValid = false;
-                this.ShowMessage("Time and Description fields are required for each line");
-            }
+            //if (items.filter(f => f.TimeInMinutes == 0 || AppTool.IsNullOrEmpty(f.Description)).length > 0) {
+            //    this.IsValid = false;
+            //    this.ShowMessage("Time and Description fields are required for each line");
+            //}
             if (this.IsValid) {
                 SessionLocator.CurrentSession.StartBusyIndicatorSaving();
                 this.HasChanges = false;
                 var myServiceHelper = new TimeManagementAPIHelper();
                 myServiceHelper.Id = SessionLocator.Tenant;
                 myServiceHelper.EmployeeUserId = this.EmployeeUserId;
-                myServiceHelper.LocationCode = this.LocationCode;
+                myServiceHelper.LocationCode = this.LocationCodeFilter;
                 myServiceHelper.StartDate = this.StartDate;
                 myServiceHelper.EndDate = this.EndDate;
                 itemsChanges.forEach(item => {
@@ -304,17 +307,17 @@ export class DailyTimeSheetComponent extends BaseComponent {
         var itemsChanges: ItemSourceItem[] = this.ItemSource.Collection.filter(f => f.HasChanges == true);
         if (itemsChanges.length > 0) {
 
-            if (items.filter(f => f.TimeInMinutes == 0|| AppTool.IsNullOrEmpty(f.Description)).length > 0) {
-                this.IsValid = false;
-                this.ShowMessage("Time and Description fields are required for each line");
-            }
+            //if (items.filter(f => f.TimeInMinutes == 0 || AppTool.IsNullOrEmpty(f.Description)).length > 0) {
+            //    this.IsValid = false;
+            //    this.ShowMessage("Time and Description fields are required for each line");
+            //}
             if (this.IsValid) {
                 SessionLocator.CurrentSession.StartBusyIndicatorSaving();
                 this.HasChanges = false;
                 var myServiceHelper = new TimeManagementAPIHelper();
                 myServiceHelper.Id = SessionLocator.Tenant;
                 myServiceHelper.EmployeeUserId = this.EmployeeUserId;
-                myServiceHelper.LocationCode = this.LocationCode;
+                myServiceHelper.LocationCode = this.LocationCodeFilter;
                 myServiceHelper.StartDate = this.StartDate;
                 myServiceHelper.EndDate = this.EndDate;
                 itemsChanges.forEach(item => {
@@ -360,39 +363,55 @@ export class DailyTimeSheetComponent extends BaseComponent {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 if (item != null) {
-                   // var isValid = true;
+                    // var isValid = true;
                     //if (this.ItemSource.Collection.filter(f => AppTool.IsNullOrEmpty(f.ProjectId) || AppTool.IsNullOrEmpty(f.Description)).length > 0) {
                     //    isValid = false;
                     //    this.ShowMessage("Project and Description fields are required for each line");
                     //}
-                   // if (isValid) {
-                        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-                        this.HasChanges = false;
-                        if (this.myDomainService == null) {
-                            this.myDomainService = new TimeManagementDomainService();
+                    // if (isValid) {
+                    SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                    this.HasChanges = false;
+                    if (this.myDomainService == null) {
+                        this.myDomainService = new TimeManagementDomainService();
+                    }
+                    this.myDomainService.DeleteTimeSheetItem(item.Id, item.EmployeeUserId, item.LocationCode, this.StartDate, this.EndDate).subscribe((myResponse: ServiceResponse) => {
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        if (!myResponse.HasError) {
+                            this.OnDataLoaded(myResponse.Result);
                         }
-                        this.myDomainService.DeleteTimeSheetItem(item.ProjectId, item.Description, item.WINumber, item.EmployeeUserId, item.LocationCode, this.StartDate, this.EndDate).subscribe((myResponse: ServiceResponse) => {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
-                            if (!myResponse.HasError) {
-                                this.OnDataLoaded(myResponse.Result);
-                            }
-                        });
+                    });
                     //}
                 }
             }
         });
+    }
+    EditLineClicked(item: ItemSourceItem) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Edit Line";
+        var args: any = {};
+        args.EntityPM = item.entityPM;
+        args.Father = this;
+        args.IsNew = false;
+        args.LocationCode = item.LocationCode;
+        logWindow.WindowArgs = args;
+        logWindow.Show('./TimeManagement/Components/NewEntity/NewLineComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
+    }
+    RefreshButtonClicked(){
+        this.RefreshTab();
     }
 }
 
 export class ItemSourceItem extends BaseComponent {
     public DataContext = this;
     public Index: number;
-  
+    public entityPM: TMEmployeeTimePM;
     public IsCopy: boolean = false;
     private TMProjectListService: TMProjectListService;
 
     constructor(public entity: TMEmployeeTimePM, private father: DailyTimeSheetComponent, index: number) {
         super();
+        this.entityPM = entity;
         this.TMProjectListService = new TMProjectListService();
         this.Index = index;
         this.DayDateFormat = this.ApplyTimeFormat(this.TimeInMinutes);
@@ -426,6 +445,13 @@ export class ItemSourceItem extends BaseComponent {
     set Id(value: string) {
         if (this.entity.Id != value) {
             this.entity.Id = value;
+        }
+    }
+
+    get SprintId() { return this.entity.SprintId; }
+    set SprintId(value: string) {
+        if (this.entity.SprintId != value) {
+            this.entity.SprintId = value;
         }
     }
 
@@ -509,7 +535,7 @@ export class ItemSourceItem extends BaseComponent {
     }
 
 
-    private dayDateFormat: string; 
+    private dayDateFormat: string;
     get DayDateFormat() { return this.dayDateFormat; }
     set DayDateFormat(value: string) {
         if (this.dayDateFormat != value) {

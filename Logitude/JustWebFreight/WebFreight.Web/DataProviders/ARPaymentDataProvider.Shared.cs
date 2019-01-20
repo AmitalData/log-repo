@@ -118,13 +118,7 @@ namespace WebFreight.Web.DataProviders
             public string MetodoPagoCode { get; set; }
             public string Serie { get; set; }
 
-
-            //            UUID
-            //            CurrencyCode
-            //TipoCambio: exchange rate
-            //MetodoPagoCode
-            //Serie
-
+            public DateTime? InvocieDate { get; set; }
         }
     }
 

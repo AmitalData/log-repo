@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .ReportsSectionHead {
         height: 20px;
@@ -17,8 +17,6 @@
         <td>
             <table>
                 <tr>
-                    <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">Search:</td>
-
                     <td style="width: 300px;">
                         <SearchBox (TextChanged)="SearchTextChanged($event)"></SearchBox>
                     </td>
@@ -48,7 +46,19 @@
                                 <tr>
                                     <td style="width: 1px;">
                                         <div *ngFor="let Report of item.ItemsSource">
-                                            <HyperlinkQuery (click)="ViewReportClicked(item.GroupList, Report)">{{showLocal ? (Report.LocalName?Report.LocalName:Report.Name) : Report.Name}}</HyperlinkQuery>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <HyperlinkQuery (click)="ViewReportClicked(item.GroupList, Report)">{{showLocal ? (Report.LocalName?Report.LocalName:Report.Name) : Report.Name}}</HyperlinkQuery>
+                                                    </td>
+                                                    <td style="width:5px;" *ngIf="Report.Code == 'DSCA'">
+                                                        <div></div>
+                                                    </td>
+                                                    <td style="width:18px;" *ngIf="Report.Code == 'DSCA'">
+                                                        <HelpIcon [Text]="'Allow to analyze receivables and payables, actual and forecast on Charge level filtered by Register Date or by Operational Date'"></HelpIcon>
+                                                    </td>
+                                                </tr>
+                                            </table>                                           
                                         </div>
                                     </td>
 

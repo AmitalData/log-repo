@@ -32,7 +32,7 @@ using System.Web;
 using System.Web.Http;
 using System.Xml;
 using WebFreight.Web.Helpers;
-using WebFreight.Web.Security;
+using WebFreight.Web.Security;  
 
 namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 {
@@ -778,8 +778,29 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 }
                 if (data != null && !string.IsNullOrEmpty(data.PaymentRequestXML))
                 {
-                    var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(data.PaymentRequestXML);
-                    CustomData.RequestPaymentData = MyPaymentData;
+                    TenantAdditionalDataRepository TADR = new TenantAdditionalDataRepository(tenant);
+                    var MyAdditionalData = TADR.GetSingleTenantAdditionalData(tenant);
+                    if (MyAdditionalData != null)
+                    {
+                        var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(data.PaymentRequestXML);
+                        CustomData.RequestPaymentData = MyPaymentData;
+                        //var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(data.PaymentRequestXML);
+                        var myId = Path.GetRandomFileName().Replace("&", "").Replace(".", "").Replace("=", "");
+                        //"sum=199.9&supplier=amitaltest&TranzilaPW=4Jwdsb&currency=1&op=1&DCdisable="
+                        var MyConString = MyAdditionalData.PaymentGatewayConnectionString;
+                        MyConString = MyConString.Replace("*sum*", MyPaymentData.TotalChargesInNIS);
+                        MyConString = MyConString.Replace("*DCdisable*", myId);
+                        MyConString = MyConString.Replace("*DclickTK*", myId);
+                        string myParams = MyConString;// "sum=" + MyPaymentData.TotalChargesInNIS + "&supplier=amitaltest&TranzilaPW=4Jwdsb&currency=1&op=1&DCdisable=" + myId + "&DclickTK=" + myId;
+                        Dictionary<string, string> dict = GetParamsAsDict(myParams);
+                        string result = "";
+                        var success = GetRequestToken(dict, out result);
+                        if (success)
+                        {
+                            CustomData.PaymentData = ForwardToPaymentLink(result, myParams);
+                        }
+                    }
+                 
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, CustomData);
@@ -791,6 +812,113 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
         }
 
+        private static readonly HttpClient client = new HttpClient();
+        //public HttpResponseMessage GetPaymentData(string id, int tenant)
+        //{
+        //    try
+        //    {   
+        //        ShipmentAdditionalCloudDataRepository Repository = new ShipmentAdditionalCloudDataRepository(tenant);
+
+        //        ShipmentAdditionalCloudData data = Repository.GetSingleShipmentAdditionalCloudData(id, tenant); 
+        //        if (data != null && !string.IsNullOrEmpty(data.PaymentRequestXML))
+        //        {
+        //            var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(data.PaymentRequestXML);
+        //            var myId = Path.GetRandomFileName().Replace("&", "").Replace(".", "").Replace("=", "");
+        //            //"sum=199.9&supplier=amitaltest&TranzilaPW=4Jwdsb&currency=1&op=1&DCdisable="
+        //            string myParams = "sum=" + MyPaymentData.TotalChargesInNIS + "&supplier=amitaltest&TranzilaPW=4Jwdsb&currency=1&op=1&DCdisable=" + myId + "&DclickTK=" + myId;
+        //            Dictionary<string, string> dict = GetParamsAsDict(myParams);
+        //            string result = "";
+        //            var success = GetRequestToken(dict, out result);
+        //            if (success)
+        //            {
+        //                var MyPaymentInfo = ForwardToPaymentLink(result,myParams);
+        //                //return Request.CreateResponse(HttpStatusCode.OK, MyPaymentInfo);
+        //            }  
+        //        }
+
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest, "No Data");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+        //    }
+
+        //}
+
+        private PaymentData ForwardToPaymentLink(string thtk,string MyParams)
+        {
+            PaymentData MyPaymentData = new PaymentData();
+           
+            string postbackUrl = @"https://direct.tranzila.com/amitaltest/";
+            //StringBuilder sb = new StringBuilder();
+            //if (!textbox_result.Text.Contains("thtk="))
+            //{
+            //    MsgBox("HandShake parameter 'thtk' is missing !!!", this.Page, this);
+            //    return;
+            //}
+            Dictionary<string, string> dict = GetParamsAsDict(MyParams + "&" + thtk); 
+            MyPaymentData.currency = dict["currency"];
+            MyPaymentData.sum = dict["sum"];
+            MyPaymentData.op = dict["op"];
+            MyPaymentData.DCdisable = dict["DCdisable"];
+            MyPaymentData.DclickTK = dict["DclickTK"];
+            MyPaymentData.thtk = dict["thtk"];
+            return MyPaymentData;
+            //sb.Append("<html>");
+            //sb.AppendFormat(@"<body onload='document.forms[""form""].submit()'>");
+            //sb.AppendFormat("<form name='form' action='{0}' method='post'>", postbackUrl);
+
+            //foreach (var item in dict)
+            //{
+            //    if (item.Key != "supplier" && item.Key != "TranzilaPW")
+            //        sb.AppendFormat("<input type='hidden' name='{0}' value='{1}'>", item.Key, item.Value);
+            //}
+            //sb.AppendLine(thtk);
+
+
+            ////Response.Clear();
+
+            //// Other params go here
+            //sb.Append("</form>");
+            //sb.Append("</body>");
+            //sb.Append("</html>");
+
+            //Response.Write(sb.ToString());
+
+            //Response.End();
+        }
+
+        private Dictionary<string, string> GetParamsAsDict(string text)
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            var list = text.Split('&');
+            foreach (var item in list)
+            {
+                dict.Add(item.Split('=')[0], item.Split('=')[1]);
+            }
+            return (dict);
+        }
+
+        private bool GetRequestToken(Dictionary<string, string> myDict, out string result)
+        {
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var content = new FormUrlEncodedContent(myDict);
+            var response = client.PostAsync("https://secure5.tranzila.com/cgi-bin/tranzila71dt.cgi", content);
+            var httpResponse = response.Result.Content.ReadAsStringAsync();// .Content.ReadAsStringAsync();
+            result = httpResponse.Result;
+            return (result.Contains("thtk") ? true : false);
+        }
+
 
     }
+
+    //class PaymentData
+    //{
+    //    public string sum { get; set; }
+    //    public string currency { get; set; }
+    //    public string op { get; set; }
+    //    public string DCdisable { get; set; }
+    //    public string DclickTK { get; set; }
+    //    public string thtk { get; set; }
+    //}
 }

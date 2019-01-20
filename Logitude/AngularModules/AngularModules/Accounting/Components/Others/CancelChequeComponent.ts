@@ -1,4 +1,4 @@
-﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Component}  from '@angular/core';
 import {PaymentChequePM} from '../../EntityPMs/PaymentChequePM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -6,6 +6,7 @@ import {PaymentChequePMService} from '../../Services/StandardPMs/PaymentChequePM
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { JournalExtendedPMService } from '../../Services/ExtendedPMs/JournalExtendedPMService';
 
 
 
@@ -71,14 +72,27 @@ export class CancelChequeComponent extends BaseComponent {
             this.entityPM.CancelledDate = new Date();
             this.entityPM.PaymentChequeStatusCode = "4";
             this.entityPM.CancelledByUserId = SessionLocator.LoggedUserId;
+            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
             this.paymentChequePMService.update(this.entityPM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     var entity = mm.Result;
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                   
+                    let myJournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
+                    myJournalExtendedPMService
+                        .VoidJournal(this.entityPM.Tenant, this.entityPM.JournalId, "", "", "")
+                        .subscribe((res: ServiceResponse) => {
+                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                            SessionLocator.CurrentSession.StopBusyIndicator();
 
+                            if (res.HasError) {
+                                this.ValidationErrorsList = res.ErrorsArray;
+
+                            }
+                            
+                        });
+                  
 
                 }
                 else {

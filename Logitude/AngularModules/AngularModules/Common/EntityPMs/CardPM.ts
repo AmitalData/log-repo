@@ -8,6 +8,8 @@
 //------------------------------------------------------------------------------
 
 
+import {ContactPM} from './ContactPM';
+
 import {AddressPM} from './AddressPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -40,6 +42,11 @@ export class CardPM {
     private code: string;
     public get Code() { return this.code; }
     public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
+       
+	 
+    private partnerCode: string;
+    public get PartnerCode() { return this.partnerCode; }
+    public set PartnerCode(newValue: string) { if (this.partnerCode != newValue) { this.partnerCode = newValue; this.MarkAsDirty("PartnerCode"); } }
        
 	 
     private bankName: string;
@@ -155,6 +162,11 @@ export class CardPM {
     private mainAddressId: string;
     public get MainAddressId() { return this.mainAddressId; }
     public set MainAddressId(newValue: string) { if (this.mainAddressId != newValue) { this.mainAddressId = newValue; this.MarkAsDirty("MainAddressId"); } }
+       
+	 
+    private billingAddressId: string;
+    public get BillingAddressId() { return this.billingAddressId; }
+    public set BillingAddressId(newValue: string) { if (this.billingAddressId != newValue) { this.billingAddressId = newValue; this.MarkAsDirty("BillingAddressId"); } }
        
 	 
     private website: string;
@@ -288,6 +300,21 @@ export class CardPM {
        
 	 
      
+	private contacts: ContactPM[];
+    get  Contacts() {
+        if (this.contacts == null) {
+            this.contacts = [];
+        }
+
+        return this.contacts;
+    }
+    set  Contacts(newValue: ContactPM[]) {
+        if (this.contacts != newValue) {
+            this.contacts = newValue;
+        }
+    }
+    //public Contacts: Array<ContactPMPM>= [];
+      
 	private addresses: AddressPM[];
     get  Addresses() {
         if (this.addresses == null) {
@@ -380,6 +407,16 @@ export class CardPM {
     private usoCFDICode: string;
     public get UsoCFDICode() { return this.usoCFDICode; }
     public set UsoCFDICode(newValue: string) { if (this.usoCFDICode != newValue) { this.usoCFDICode = newValue; this.MarkAsDirty("UsoCFDICode"); } }
+       
+	 
+    private isInternationalPartner: boolean;
+    public get IsInternationalPartner() { return this.isInternationalPartner; }
+    public set IsInternationalPartner(newValue: boolean) { if (this.isInternationalPartner != newValue) { this.isInternationalPartner = newValue; this.MarkAsDirty("IsInternationalPartner"); } }
+       
+	 
+    private isAutonomy: boolean;
+    public get IsAutonomy() { return this.isAutonomy; }
+    public set IsAutonomy(newValue: boolean) { if (this.isAutonomy != newValue) { this.isAutonomy = newValue; this.MarkAsDirty("IsAutonomy"); } }
        
 	 
 

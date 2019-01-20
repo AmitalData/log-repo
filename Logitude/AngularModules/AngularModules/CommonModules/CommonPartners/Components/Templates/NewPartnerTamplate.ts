@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool, FormatTool} from '../../../../Infrastructure/Tools';
@@ -424,15 +424,27 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
     }
 
     get Name() { return this.Address.Name; }
-    set Name(newValue: string) {
+    set Name(value: string) {
+        if (this.Address.Name != value) {
+            this.Address.Name = value;
+            this.LocalName = value;
 
-            if (this.Address.Name != newValue) {
-                this.Address.Name = newValue;
-                if (!this.DefaultValues) {
-                    this.SearchText = newValue;
-                } else this.DefaultValues = "";
+            if (!this.DefaultValues) {
+                this.SearchText = value;
             }
-     
+
+            else {
+                this.DefaultValues = "";
+            }
+        }
+    }
+
+    private localName: string;
+    get LocalName() { return this.localName; }
+    set LocalName(newValue: string) {
+        if (this.localName != newValue) {
+            this.localName = newValue;           
+        }
     }
 
     get Description() { return this.Address.Description; }

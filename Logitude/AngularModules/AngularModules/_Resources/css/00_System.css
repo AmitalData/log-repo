@@ -56,6 +56,11 @@ img {
     margin: auto;*/
 }
 
+button {
+    font-size: 11px;
+    color: #45494A;
+}
+
 .LogitudeSmallScrollViewer::-webkit-scrollbar {
     width: 6px;
     height: 6px;

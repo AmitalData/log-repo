@@ -20,7 +20,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private readonly string const_DifftotBalanceInLocalCurrencyMinusaccBalanceInLocalCurrency= "Diff = tot.BalanceInLocalCurrency-acc.BalanceInLocalCurrency";
         private readonly string const_ThereIsntAnyGLAccountTotalByMonths= "There Isn't Any GLAccountTotalByMonths";
 
-        public ReverseEngineerGLAccountBalance(DateTime seedDate, int currTenant)
+        public ReverseEngineerGLAccountBalance(int currTenant)
         {
             // TODO: Complete member initialization
 
@@ -109,7 +109,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     from tot in quaryablMonthTotals
                     join acc in quaryAllGLAccount
                     on tot.AccountId equals acc.AccountId
-                    where (tot.BalanceInLocalCurrency - acc.BalanceInLocalCurrency != 0)
+                    where (tot.BalanceInLocalCurrency - acc.BalanceInLocalCurrency >= 0.001m  || tot.BalanceInLocalCurrency - acc.BalanceInLocalCurrency <= -0.001m )
                     select new GLAccountBalanceDTO
                     {
                         AccountId = tot.AccountId,
@@ -120,7 +120,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     );
 
                 var q = qNotInTot.Union(qNotInGLAcc).Union(qDiff);
-                var l = q.ToList();
+                bool UnionreturnsDistinctvalues = true;
+                if (UnionreturnsDistinctvalues)
+                {
+                    q = qNotInTot.Concat(qNotInGLAcc).Concat(qDiff);
+                }
+                    var l = q.ToList();
                 CompareReport = new CompareReportM()
                 {
                     CompareReportName = "ReverseEngineerGLAccountBalance",

@@ -50,6 +50,15 @@ namespace Logitude.TimeManagement.Data.Repositories
                     && d.AnalyzeQueueId == analyzeQueueId
                     select d).Any();
         }
+
+        public IQueryable<TMEmployeeTime> GetTasksWithoutProject(int tenant)
+        {
+            return (from d in context.TMEmployeeTimes
+                    where d.Tenant == tenant
+                    && d.ProjectId == null
+                    select d);
+
+        }
     }
 }
    

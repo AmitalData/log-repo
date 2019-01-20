@@ -776,19 +776,19 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public decimal? ForeignAmountCreditTransStart { get; set; }
         public decimal? ForeignAmountDebitTransStart { get; set; }
         public decimal? LocalAmountCreditTransStart { get; set; }
-        public decimal? LocalAmountDebitTransStart { get; set; }
+        public decimal? LocalAmountDebitTransStart { get; set; }//// תנעות מכולל תחילת החודש  של מתאריך עד למתאריך -לא כולל    
 
 
         public decimal? ForeignAmountCreditTotalDelta2End { get; set; }
         public decimal? ForeignAmountDebitTotalDelta2End { get; set; }
         public decimal? LocalAmountCreditTotalDelta2End { get; set; }
-        public decimal? LocalAmountDebitTotalDelta2End { get; set; }
+        public decimal? LocalAmountDebitTotalDelta2End { get; set; }//// מצטברים מחודש כולל ועד חודש לא כולל
 
 
         public decimal? ForeignAmountCreditTransEnd { get; set; }
         public decimal? ForeignAmountDebitTransEnd { get; set; }
         public decimal? LocalAmountCreditTransEnd { get; set; }
-        public decimal? LocalAmountDebitTransEnd { get; set; }
+        public decimal? LocalAmountDebitTransEnd { get; set; }// תנעות מתחילת חודש אחרון כולל עד  תאריך הסיום + 1 לא כולל
 
 
         public bool? TotalDelta2End_AnyActivity { get; set; }

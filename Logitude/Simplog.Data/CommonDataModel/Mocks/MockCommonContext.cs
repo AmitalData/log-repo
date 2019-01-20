@@ -2524,6 +2524,43 @@ namespace Simplog.Data.CommonDataModel.Mocks
 
 
 
+        public IDbSet<PaymentGatewayPartners> PaymentGatewayPartners
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
 
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
+
+        public IDbSet<CustomsShipper> CustomsShippers
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<CustomerDeposition> CustomerDepositions
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        } 
+    }
 }

@@ -15,6 +15,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? RegisterDate { get; set; }
         public DateTime? PaymentDate { get; set; }
         public string PaymentMethodName { get; set; }
+        public string PaymentMethodLocalName { get; set; }
         public string PaidBy { get; set; } // custom
         public string ClientNumber { get; set; }
         public string PaymentCurrencyCode { get; set; }
@@ -47,7 +48,7 @@ namespace WebFreight.Web.DataProviders
         public string Bank { get; set; }
         public string Branch { get; set; }
         public string Account { get; set; }
-
+        public string VATNumber { get; set; }
         public string CustomerField1 { get; set; }
         public string CustomerField2 { get; set; }
         public string CustomerField3 { get; set; }

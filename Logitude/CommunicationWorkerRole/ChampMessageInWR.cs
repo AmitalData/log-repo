@@ -43,6 +43,11 @@ namespace CommunicationWorkerRole
         public ChampMessageInWR(string gateWay)
         {
             this.gateWay = gateWay;
+
+            if (LogitudeSettings.ChampEnv == "TEST")
+            {
+                gateWay = "amazon";
+            }
         }
 
         public override void Run()
@@ -149,30 +154,6 @@ namespace CommunicationWorkerRole
             myRepository.SubmitChanges();
         }
 
-        //private void SaveMessageToAnalyzeQueue(string messageData)
-        //{
-        //    AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
-        //    byte[] messageBytes = Encoding.ASCII.GetBytes(messageData);
-        //    //string mmm = Encoding.ASCII.GetString(messageBytes);
-
-        //    AnalyzeQueue analyzeQueue = new AnalyzeQueue()
-        //    {
-        //        CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
-        //        From = "Champ",
-        //        Id = IdCounter.GetNumber("AnalyzeQueue", 0),
-        //        MessageBody = messageBytes,
-        //        Status = "W",
-        //        Retries = 0,
-        //        ConnectedToEntity = false,
-        //        ConnectedToTenant = false,
-        //        FileSize = messageData.Length,               
-        //    };
-
-        //    analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
-        //    analyzeQueueReposiory.Add(analyzeQueue);
-        //    analyzeQueueReposiory.SubmitChanges();
-        //}
-
         public override bool OnStart()
         {
             // Set the maximum number of concurrent connections 
@@ -187,7 +168,7 @@ namespace CommunicationWorkerRole
 
             // For information on handling configuration changes
             // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
-            RoleEnvironment.Changing += RoleEnvironmentChanging;
+            //RoleEnvironment.Changing += RoleEnvironmentChanging;
             TopicDescription champMessageInTopic;
 
             try
@@ -202,19 +183,19 @@ namespace CommunicationWorkerRole
                     champMessageInTopic = StorageAcountDetails.NameSpaceManager.GetTopic("champmessageintopic");
                 }
 
-                string subscribtionName;
+                string subscribtionName = "ChampSubScription";
                 SubscriptionDescription myAgentSubscription;
-                string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
+                //string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
 
-                if (LogitudeSettings.DeploymentStage == "Dev")
-                {
-                    subscribtionName = Environment.MachineName + "_" + roleId[roleId.Length - 1];
-                }
+                //if (LogitudeSettings.DeploymentStage == "Dev")
+                //{
+                //    subscribtionName = Environment.MachineName + "_" + roleId[roleId.Length - 1];
+                //}
 
-                else
-                {
-                    subscribtionName = roleId[roleId.Length - 1];
-                }
+                //else
+                //{
+                //    subscribtionName = roleId[roleId.Length - 1];
+                //}
 
                 if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(champMessageInTopic.Path, subscribtionName))
                 {

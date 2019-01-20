@@ -41,6 +41,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.ContactEmail).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.CustomerURL).HasMaxLength(250).IsUnicode(false);
             this.Property(t => t.StockTypeCode).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.PackageCodeSearchField).HasMaxLength(250).IsUnicode(true);
 
             this.ToTable("TenantManagements");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -127,8 +128,9 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.IsParentTenant).HasColumnName("IsParentTenant");
             this.Property(t => t.ParentTenantId).HasColumnName("ParentTenantId");
             this.Property(t => t.StockTypeCode).HasColumnName("StockTypeCode");
-
-
+            this.Property(t => t.IsINTTRAStockPrepaid).HasColumnName("IsINTTRAStockPrepaid");
+            this.Property(t => t.PackageCodeSearchField).HasColumnName("PackageCodeSearchField");
+            this.Property(t => t.IsINTTRAOnlyDemo).HasColumnName("IsINTTRAOnlyDemo");
 
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -147,9 +149,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             }
 
 
-
-
-                this.HasRequired(t => t.GlobalTenant).WithOptional(t => t.TenantManagement);
+            this.HasRequired(t => t.GlobalTenant).WithOptional(t => t.TenantManagement);
             this.HasOptional(t => t.PaymentChannel).WithMany().HasForeignKey(d => d.PaymentChannelCode);
             this.HasOptional(t => t.PaymentMethod).WithMany().HasForeignKey(d => d.PaymentMethodCode);
             this.HasOptional(t => t.RecurringPeriod).WithMany().HasForeignKey(d => d.RecurringPeriodCode);
@@ -157,7 +157,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapContractCode);
             this.HasOptional(t => t.AWBMessagesCCSType).WithMany().HasForeignKey(d => d.AWBMessagesCCSTypeCode);
             this.HasOptional(t => t.TenantType).WithMany().HasForeignKey(d => d.TenantTypeCode);
-           
+
         }
     }
 }

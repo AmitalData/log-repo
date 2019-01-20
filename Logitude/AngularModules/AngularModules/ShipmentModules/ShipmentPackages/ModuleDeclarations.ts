@@ -1,17 +1,16 @@
-﻿
+
 import {PackagesTabComponent} from './Components/Packages/PackagesTabComponent';
 import {AddEditAirPackageComponent} from './Components/Packages/AddEditAirPackageComponent';
 import {AddEditOceanPackageComponent} from './Components/Packages/AddEditOceanPackageComponent';
 import {AddEditInsidePackageComponent} from './Components/Packages/AddEditInsidePackageComponent';
 import {AdvancedDangerousGoodsComponent} from './Components/Packages/AdvancedDangerousGoodsComponent';
-
 import {ContainerFollowupActionsComponent} from './Components/Packages/ContainerFU/ContainerFollowupActionsComponent';
 import {ContainerFollowupWindowComponent} from './Components/Packages/ContainerFU/ContainerFollowupWindowComponent';
 import {ContainerFollowupWindowTemplate} from './Components/Packages/ContainerFU/ContainerFollowupWindowTemplate';
 import {ContainerFollowupWizardComponent} from './Components/Packages/ContainerFU/ContainerFollowupWizardComponent';
 import {ContainerFollowupWizardTemplate} from './Components/Packages/ContainerFU/ContainerFollowupWizardTemplate';
-import {LastStatusComponent} from './Components/Packages/LastStatusComponent';
-
+import { LastStatusComponent } from './Components/Packages/LastStatusComponent';
+import { AddEditPackageHarmonizeComponent } from './Components/Packages/AddEditPackageHarmonizeComponent';
 
 export const Components =
     [
@@ -26,6 +25,7 @@ export const Components =
         ContainerFollowupWizardComponent,
         ContainerFollowupWizardTemplate,
         LastStatusComponent,
+        AddEditPackageHarmonizeComponent,
     ];
 
 export class ModuleDeclarations {
@@ -44,7 +44,8 @@ export class ModuleDeclarations {
             case "ContainerFollowupWindowTemplate": { myResult = ContainerFollowupWindowTemplate; break; }
             case "ContainerFollowupWizardComponent": { myResult = ContainerFollowupWizardComponent; break; }
             case "ContainerFollowupWizardTemplate": { myResult = ContainerFollowupWizardTemplate; break; }  
-            case "LastStatusComponent": { myResult = LastStatusComponent; break; }  
+            case "LastStatusComponent": { myResult = LastStatusComponent; break; }
+            case "AddEditPackageHarmonizeComponent": { myResult = AddEditPackageHarmonizeComponent; break; }  
         }
 
         return myResult;

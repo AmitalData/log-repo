@@ -30,7 +30,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public ARPayment GetSingleARPayment(string id, int tenant)
         {
-            return (from a in context.ARPayments.Include("ARAccount").Include("AccountingPaymentMethod").Include("BillToCard").Include("CreatedByUser.Contact").Include("DebitAccount").Include("LocalCurrency").Include("PaymentCurrency").Include("Status").Include("SATTransferStatus").Include("TransferStatus").Include("Branch")
+            return (from a in context.ARPayments.Include("ARAccount").Include("AccountingPaymentMethod").Include("BillToCard").Include("CreatedByUser.Contact").Include("DebitAccount").Include("LocalCurrency").Include("PaymentCurrency").Include("Status").Include("SATTransferStatus").Include("TransferStatus").Include("Branch").Include("BankAccountLite")
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
@@ -49,6 +49,19 @@ namespace Simplog.Data.InvoiceModel.Repositories
                     select a).FirstOrDefault();
         }
 
+        public List<string> GetCardIdsFromPayments(List<string> ids, int tenant)
+        {
+            List<string> list = new List<string>();
+
+            if (ids.Count > 0)
+            {
+                list = (from a in context.ARPayments
+                        where a.Tenant == tenant && ids.Contains(a.Id) && a.StatusCode != "VD"
+                        select a.BillToId).ToList();
+            }
+
+            return list;
+        }
 
         public IQueryable<ARPayment> GetDraftsARPayments(int tenant)
         {
@@ -69,7 +82,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public List<ARPayment> GetARPaymentsByBillTo(string billToId, int tenant)
         {
-            return (from a in context.ARPayments where a.BillToId == billToId && a.Tenant == tenant select a).ToList();
+            return (from a in context.ARPayments where a.BillToId == billToId && a.Tenant == tenant && a.StatusCode!="CL" select a).ToList();
         }
 
         public List<ARPayment> GetPaymentsListFromIdList(List<string> ids, int tenant)

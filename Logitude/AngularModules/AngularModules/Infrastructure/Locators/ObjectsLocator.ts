@@ -1,6 +1,6 @@
 import {UserPM} from '../../Common/EntityPMs/UserPM';
 import {TenantPM} from '../../Common/EntityPMs/TenantPM';
-import {TenantManagementPM} from '../EntityPMs/TenantManagementPM';
+import { TenantManagementJS } from '../DataContracts/TenantManagementJS';
 import {AccountingSettingPM} from '../../Common/EntityPMs/AccountingSettingPM';
 import {CreditLimitSettingPM} from '../../Common/EntityPMs/CreditLimitSettingPM';
 import { CustomsInterfaceSettingPM } from '../../Common/EntityPMs/CustomsInterfaceSettingPM';
@@ -10,17 +10,14 @@ import {Settings} from '../Settings';
 export class ObjectsLocator {
     public static TenantPM: TenantPM;
     public static LoggedUserPM: UserPM;
-    public static TenantManagementPM: TenantManagementPM;
+    public static TenantManagementJS: TenantManagementJS;
     public static AccountingSettingPM: AccountingSettingPM;
-    //public static CreditLimitSettingPM: CreditLimitSettingPM = new CreditLimitSettingPM()
     public static CustomsInterfaceSettingPM: CustomsInterfaceSettingPM = new CustomsInterfaceSettingPM();
     public static SharedLogisticsSettingPM: SharedLogisticsSettingPM = new SharedLogisticsSettingPM()
 
     public static LoggedUserId: string;
     public static GlobalSetting: any;
     public static PrivateLableSettings: any;
-
-
 
     private static creditLimitSettingPM: CreditLimitSettingPM;
     public static get CreditLimitSettingPM() {

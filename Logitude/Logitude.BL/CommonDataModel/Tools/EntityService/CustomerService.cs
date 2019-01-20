@@ -116,21 +116,21 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private void GetLoggedContact()
         {
-
-            
             if (!string.IsNullOrWhiteSpace(this.OverrideLoggingUserId))
             {
-                
                 this.loggedContact = contactRepository.GetSingleContact(this.OverrideLoggingUserId, tenant);
             }
             else
             {
-
-                string email = //HttpContext.Current.User.Identity.Name;
-                    AuthenticationUtil.ResolveLoggingUserId(tenant);
+                string email = HttpContext.Current.User.Identity.Name;
+                AuthenticationUtil.ResolveLoggingUserId(tenant);
                 this.loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
             }
-            
+
+            if (this.loggedContact == null)
+            {
+                this.loggedContact = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant);
+            }
         }
 
         private List<CustomerSalesNotePM> salesNotesChangeSet;
@@ -479,6 +479,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }  
         }
 
+        private void CreateGLAccount()
+        {
+
+        }
+
         private void AddCustomerToQueue()
         {
             if (LogitudeSettings.EnableHybridQueue)
@@ -566,15 +571,20 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 entityPM.CreateDate = (entityPM.IsHybrid && entityPM.CreateDate != null) ? entityPM.CreateDate : TenantServerConfigration.GetCurrentDateTime(tenant);
                 entityPM.UpdateDate = (entityPM.IsHybrid && entityPM.CreateDate != null) ? entityPM.CreateDate : TenantServerConfigration.GetCurrentDateTime(tenant);
-                entityPM.CreatedByUserId = loggedContact.Id;
-                entityPM.UpdatedByUserId = loggedContact.Id;
 
-                if (!entityPM.IsHybrid)
+                if (string.IsNullOrEmpty(entityPM.CreatedByUserId))
+                {
+                    entityPM.CreatedByUserId = loggedContact.Id;
+                    entityPM.UpdatedByUserId = loggedContact.Id;
+                }                  
+                
+                if (!entityPM.IsHybrid && (string.IsNullOrEmpty(entityPM.Code) || entityPM.Code == "new"))
                 {
                     entityPM.Code = CodeCounter.GetNumber("Customer", tenant).ToString();
                 }
 
-                CreatePotentialMainAddress();
+                this.CreatePotentialMainAddress();
+                this.CreateGLAccount();
             }
 
             else
@@ -813,6 +823,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CustomerStatusCode = "ACT";
                 entityPM.CustomerStatusName = "Active";
                 entityPM.PartnerTypeId = "CS";
+                entityPM.ActivationDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                entityPM.ActivatedByUserId = loggedContact.Id;
             }
 
             else if (entityPM.SetReady)
@@ -820,6 +832,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CustomerStatusCode = "WAC";
                 entityPM.CustomerStatusName = "Waiting for Activation";
                 entityPM.ReadyForActivationDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                entityPM.ActivationRequestDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                entityPM.ActivationRequestedByUserId = loggedContact.Id;
 
                 CustomerEmailAlert customerEmailAlert = new CustomerEmailAlert();
                 customerEmailAlert.SendEmailAlert(entityPM, entityPM.Tenant, "GCAC", false);
@@ -830,6 +844,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.BeforeDeactiveStatusCode = entityPM.CustomerStatusCode;
                 entityPM.CustomerStatusCode = "INA";
                 entityPM.CustomerStatusName = "Inactive";
+                entityPM.InactiveDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                entityPM.SetAsInactiveByUserId = loggedContact.Id;
                 entityPM.InActive = true;
             }
 
@@ -839,6 +855,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 CustomerStatusRepository rep = new CustomerStatusRepository(tenant);
                 CustomerStatus status = rep.GetSingleCustomerStatus(entityPM.CustomerStatusCode);
                 entityPM.CustomerStatusName = status.Name;
+                entityPM.ActivationDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                entityPM.ActivatedByUserId = loggedContact.Id;
                 entityPM.InActive = false;
             }
 

@@ -39,6 +39,8 @@ namespace Logitude.Server.Tools
         protected IRepository<TEntityPOCO> Repository;
         protected IContext MainContext;
         protected TEntityParentPM EntityParentPM;
+        protected List<string> ErrorsList;
+        protected bool ThrowValidationException;
         public EntityUpdateService()
         {
 
@@ -49,6 +51,8 @@ namespace Logitude.Server.Tools
             this.Tenant = tenant;
             this.AdditionalContexts = additionalContexts;
             this.MainContext = mainContext;
+            this.ErrorsList = new List<string>();
+            this.ThrowValidationException = true;
         }
 
         public void UpdateMulti(List<TEntityPM> entityPMList, List<TEntityPM> deletedEntityPMList, TEntityParentPM entityParentPM, bool commit)
@@ -160,6 +164,22 @@ namespace Logitude.Server.Tools
                 AddStepTrace("Trace");
                 Validate(entityPM);
                 AddStepTrace("Validate");
+                if (ErrorsList!=null && ErrorsList.Count > 0)
+                {
+                    if (ThrowValidationException)
+                    {
+                        string errors = "";
+                        foreach (string error in ErrorsList)
+                        {
+                            errors = errors + Environment.NewLine + error;
+                        }
+                        throw new Exception(errors);
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
                 Mapping.CustomPMToPOCO(EntityPM, EntityPOCO);
                 Mapping.PMToPOCO(EntityPM, EntityPOCO);
                 AddStepTrace("Mapping");

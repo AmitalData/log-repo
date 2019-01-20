@@ -1,11 +1,9 @@
-﻿import {Component, OnInit, AfterViewInit} from '@angular/core';
-import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TenantManagementPM} from '../../../../Infrastructure/EntityPMs/TenantManagementPM';
 import {TenantManagementPMService} from '../../../../Infrastructure/Services/StandardPMs/TenantManagementPMService';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     selector: 'AirlineSettingsComponent',
@@ -16,27 +14,39 @@ import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings'
 export class AirlineSettingsComponent extends BaseComponent {
     public DataContext: AirlineSettingsComponent = this;
     public ObjectTableName: string = "TenantManagement";
-    private entityPM: TenantManagementPM;
-
+    public EntityPM: TenantManagementPM = null;
+    public IsResourcesReady: boolean = false;
+    public ValidationErrorsList: string[] = [];
+    private iService: TenantManagementPMService;
     constructor() {
         super();
-        this.entityPM = SessionLocator.TenantManagementPM;
+
+        this.iService = new TenantManagementPMService();
+        this.iService.get(SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError) {
+                this.ValidationErrorsList = myResponse.ErrorsArray;
+            }
+
+            else {
+                this.EntityPM = myResponse.Result;
+                this.IsResourcesReady = true;
+            }
+        });
     }
 
-    // Props
-    get SignupRequestRecipients() { return this.entityPM.SignupRequestRecipients; }
+    get SignupRequestRecipients() { return this.EntityPM.SignupRequestRecipients; }
     set SignupRequestRecipients(value: string)
     {
-        if (this.entityPM.SignupRequestRecipients != value) {
-            this.entityPM.SignupRequestRecipients = value;
+        if (this.EntityPM.SignupRequestRecipients != value) {
+            this.EntityPM.SignupRequestRecipients = value;
         }
     }
 
-    get LoginPageNotes() { return this.entityPM.LoginPageNotes; }
+    get LoginPageNotes() { return this.EntityPM.LoginPageNotes; }
     set LoginPageNotes(value:string)
     {
-        if (this.entityPM.LoginPageNotes != value) {
-            this.entityPM.LoginPageNotes = value;
+        if (this.EntityPM.LoginPageNotes != value) {
+            this.EntityPM.LoginPageNotes = value;
         }
     }
 
@@ -46,15 +56,17 @@ export class AirlineSettingsComponent extends BaseComponent {
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-        var service = new TenantManagementPMService();
-        service.update(this.entityPM).subscribe((res:ServiceResponse) => {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-            var pmResponse: ServiceResponse = res;
-            if (!pmResponse.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
-                InfraSettings.TenantManagementPM = this.entityPM;
+        this.ValidationErrorsList = [];
+        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+
+        this.iService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+
+            SessionLocator.CurrentSession.StopBusyIndicator();
+
+            if (myResponse.HasError) {
+                this.ValidationErrorsList = myResponse.ErrorsArray;
             }
+
             else {
                 SessionLocator.CurrentSession.CloseCurrentWindow();
             }

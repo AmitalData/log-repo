@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Component, OnInit}  from '@angular/core';
@@ -25,7 +25,7 @@ import {DocumentTypeTemplatePM} from '../../../../Common/EntityPMs/DocumentTypeT
 @Component({
     moduleId: module.id,
     selector: 'DocumentTypeGeneral',
-    templateUrl: './DocumentTypeGeneralTabComponent.html',   
+    templateUrl: './DocumentTypeGeneralTabComponent.html',
     providers: [DocumentTypeTemplatePMExtendedService],
 })
 
@@ -86,7 +86,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
                 });
 
 
-     
+
             }
         });
 
@@ -138,8 +138,17 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
                 case "BankDeposit":
                 case "GLAccount":
                 case "WarehouseEntry":
+                case "TaxReport":
                 case "PaymentCheque":
                 case "WarehouseRelease":
+                case "Airline":
+                case "CustomAgent":
+                case "Participant":
+                case "ShippingAgent":
+                case "ShippingLine":
+                case "Trucker":
+                case "Vendor":
+                case "Warehouse":
                     {
 
                     if (tempList.filter(f => f.Name == item.Name).length == 0) {
@@ -175,7 +184,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
             this.SelectedFormat = "Print";
             this.PointerEventsAreaStimulDocument = "auto";
             this.OpacityAreaStimulDocument = "1";
- 
+
 
         }
         else if (this.EntityPM.TemplateFormatCode == "M") {
@@ -202,10 +211,9 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
         }
         else this.IsShowAdvanceLink = false;
 
-
-        this.IsEnableFormat = true;
-
-
+        if (this.EntityPM.IsDocOut) {
+            this.IsEnableFormat = true;
+        }
 
     }
 
@@ -237,7 +245,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
         else {
 
             this.EntityPM.TemplateFormatCode = "M";
-   
+
         }
 
 
@@ -258,7 +266,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
             this.EntityPM.ObjectTableId = null;
             this.SelectedObjectTable = null;
         }
-        
+
     }
 
 
@@ -280,12 +288,12 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
         }
         else {
             this.IsEnableFormat = false;
-    
+
             this.PointerEventsAreaStimulDocument = "none";
             this.PointerEventsHTMLDocument = "none";
             this.OpacityAreaStimulDocument = "0.5";
             this.OpacityAreaHTMLDocument = "0.5";
- 
+
         }
 
 
@@ -328,7 +336,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
         }
     }
 
-  
+
 
 
     LoadTemplate() {
@@ -346,8 +354,8 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
             }
             this.IsLoadTemplate = true;
             SessionLocator.CurrentSession.StopBusyIndicator();
-   
-      
+
+
         });
 
 

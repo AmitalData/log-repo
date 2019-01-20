@@ -11,4 +11,5 @@
     <Record Code="&quot;I&quot;" SearchFields="&quot;I,Incoming&quot;" Name="&quot;Incoming&quot;" />
     <Record Code="&quot;O&quot;" SearchFields="&quot;O,Outgoing&quot;" Name="&quot;Outgoing&quot;" />
   </Records>
+  <AdditionalFeatures />
 </entity>

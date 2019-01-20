@@ -221,6 +221,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.CustomerShipmentNumber = entityPM.CustomerShipmentNumber;
                 entityPoco.CustomerTenantNumber = entityPM.CustomerTenantNumber;
             }
+
+            if (entityPM.IsAccountingClosed)
+            {
+                if (entityPM.AccountingCloseDate == null)
+                {
+                    entityPM.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                }
+            }
+
+            else
+            {
+                entityPM.AccountingCloseDate = null;
+            }
+
             entityPoco.CASSCode = entityPM.CASSCode;
             entityPoco.OrderGrossWeight = entityPM.OrderGrossWeight;
             entityPoco.BookingVolume = entityPM.BookingVolume;
@@ -263,6 +277,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.Field18 = entityPM.Field18 != null ? entityPM.Field18.Value : null;
             entityPoco.Field19 = entityPM.Field19 != null ? entityPM.Field19.Value : null;
             entityPoco.Field20 = entityPM.Field20 != null ? entityPM.Field20.Value : null;
+            entityPoco.Field21 = entityPM.Field21 != null ? entityPM.Field21.Value : null;
+            entityPoco.Field22 = entityPM.Field22 != null ? entityPM.Field22.Value : null;
+            entityPoco.Field23 = entityPM.Field23 != null ? entityPM.Field23.Value : null;
+            entityPoco.Field24 = entityPM.Field24 != null ? entityPM.Field24.Value : null;
+            entityPoco.Field25 = entityPM.Field25 != null ? entityPM.Field25.Value : null;
+            entityPoco.Field26 = entityPM.Field26 != null ? entityPM.Field26.Value : null;
+            entityPoco.Field27 = entityPM.Field27 != null ? entityPM.Field27.Value : null;
+            entityPoco.Field28 = entityPM.Field28 != null ? entityPM.Field28.Value : null;
+            entityPoco.Field29 = entityPM.Field29 != null ? entityPM.Field29.Value : null;
+            entityPoco.Field30 = entityPM.Field30 != null ? entityPM.Field30.Value : null;
+            entityPoco.Field31 = entityPM.Field31 != null ? entityPM.Field31.Value : null;
+            entityPoco.Field32 = entityPM.Field32 != null ? entityPM.Field32.Value : null;
+            entityPoco.Field33 = entityPM.Field33 != null ? entityPM.Field33.Value : null;
+            entityPoco.Field34 = entityPM.Field34 != null ? entityPM.Field34.Value : null;
+            entityPoco.Field35 = entityPM.Field35 != null ? entityPM.Field35.Value : null;
+            entityPoco.Field36 = entityPM.Field36 != null ? entityPM.Field36.Value : null;
+            entityPoco.Field37 = entityPM.Field37 != null ? entityPM.Field37.Value : null;
+            entityPoco.Field38 = entityPM.Field38 != null ? entityPM.Field38.Value : null;
+            entityPoco.Field39 = entityPM.Field39 != null ? entityPM.Field39.Value : null;
+            entityPoco.Field40 = entityPM.Field40 != null ? entityPM.Field40.Value : null;
             entityPoco.SpecialServicesTypeId = entityPM.SpecialServicesTypeId;
             entityPoco.Notes = entityPM.Notes;
             entityPoco.House = entityPM.House;
@@ -376,6 +410,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.Notify2Reference = entityPM.Notify2Reference;
             entityPoco.ShipperNotExporterReference = entityPM.ShipperNotExporterReference;
             entityPoco.ConsigneeNotImporterReference = entityPM.ConsigneeNotImporterReference;
+            entityPoco.ProjectNumber = entityPM.ProjectNumber;
+            entityPoco.ContainerLastStatusDate = entityPM.ContainerLastStatusDate;
+            entityPoco.BasicFreightId = entityPM.BasicFreightId;
+            entityPoco.DestinationPortChargesId = entityPM.DestinationPortChargesId;
+            entityPoco.DestinationHaulageChargesId = entityPM.DestinationHaulageChargesId;
+            entityPoco.AdditionalChargesId = entityPM.AdditionalChargesId;
+            entityPoco.FreightPayerId = entityPM.FreightPayerId;
+            entityPoco.FreightPayerAddressId = entityPM.FreightPayerAddressId;
+            entityPoco.HasContainerException = entityPM.HasContainerException;
 
             // No need to map these fields
             // they are computed via PROCEDURE
@@ -2128,6 +2171,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CarrierTransportDocumentNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ShipperName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ConsigneeName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Transshipment1AdditionalMAWBOBLBL);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Transshipment2AdditionalMAWBOBLBL);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Transshipment3AdditionalMAWBOBLBL);
 
             #region Quote
             if (!string.IsNullOrEmpty(entityPM.QuoteId))
@@ -2502,6 +2548,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field18, pm.Field18, "Field18", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field19, pm.Field19, "Field19", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field20, pm.Field20, "Field20", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field21, pm.Field21, "Field21", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field22, pm.Field22, "Field22", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field23, pm.Field23, "Field23", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field24, pm.Field24, "Field24", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field25, pm.Field25, "Field25", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field26, pm.Field26, "Field26", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field27, pm.Field27, "Field27", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field28, pm.Field28, "Field28", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field29, pm.Field29, "Field29", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field30, pm.Field30, "Field30", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field31, pm.Field31, "Field31", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field32, pm.Field32, "Field32", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field33, pm.Field33, "Field33", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field34, pm.Field34, "Field34", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field35, pm.Field35, "Field35", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field36, pm.Field36, "Field36", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field37, pm.Field37, "Field37", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field38, pm.Field38, "Field38", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field39, pm.Field39, "Field39", notifyPropertyChangeValuesList);
+            AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field40, pm.Field40, "Field40", notifyPropertyChangeValuesList);
 
             return notifyPropertyChangeValuesList;
         }
@@ -2575,6 +2641,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.Field18 = houseShipment.Field18;
             shipmentPM.Field19 = houseShipment.Field19;
             shipmentPM.Field20 = houseShipment.Field20;
+            shipmentPM.Field21 = houseShipment.Field21;
+            shipmentPM.Field22 = houseShipment.Field22;
+            shipmentPM.Field23 = houseShipment.Field23;
+            shipmentPM.Field24 = houseShipment.Field24;
+            shipmentPM.Field25 = houseShipment.Field25;
+            shipmentPM.Field26 = houseShipment.Field26;
+            shipmentPM.Field27 = houseShipment.Field27;
+            shipmentPM.Field28 = houseShipment.Field28;
+            shipmentPM.Field29 = houseShipment.Field29;
+            shipmentPM.Field30 = houseShipment.Field30;
+            shipmentPM.Field31 = houseShipment.Field31;
+            shipmentPM.Field32 = houseShipment.Field32;
+            shipmentPM.Field33 = houseShipment.Field33;
+            shipmentPM.Field34 = houseShipment.Field34;
+            shipmentPM.Field35 = houseShipment.Field35;
+            shipmentPM.Field36 = houseShipment.Field36;
+            shipmentPM.Field37 = houseShipment.Field37;
+            shipmentPM.Field38 = houseShipment.Field38;
+            shipmentPM.Field39 = houseShipment.Field39;
+            shipmentPM.Field30 = houseShipment.Field30;
 
             shipmentPM.MainCarriageCarrierId = masterShipment.MainCarriageCarrierId;
             shipmentPM.MainCarriageETA = masterShipment.MainCarriageETA;

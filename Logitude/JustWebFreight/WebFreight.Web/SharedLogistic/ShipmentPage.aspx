@@ -226,17 +226,23 @@ img {
                                         <div id="EntityHeaderArea" style="margin:0 10px;">
                                             <table style="width:100%; margin:0; padding:0px;">
                                                 <tr>
-                                                    <td style="width:250px; vertical-align:top;">
+                                                    <td style="width:270px; vertical-align:top;">
                                                         <%--<p class="BlueLabel">General</p>--%>
                                                         <div style="margin:0 0 0 5px;">
                                                         <div>
-                                                        <span class="LabelTextStyle" style="display:inline-block; width:40px;">Ref.:</span>
+                                                        <span class="LabelTextStyle" style="display:inline-block; width:75px;" data-bind="text: MyReferenceLabel"></span>
                                                         <span class="ValueTextStyle" data-bind="text: MyReference"></span>
                                                         </div>
                                                         <div>
-                                                        <span class="LabelTextStyle" style="display:inline-block; width:40px;">House:</span>
+                                                        <span class="LabelTextStyle" style="display:inline-block; width:75px;">House:</span>
                                                         <span class="ValueTextStyle" data-bind="text: House"></span>
                                                         </div>
+
+                                                        <div class="ShowTenant1495Data">
+                                                        <span class="LabelTextStyle" style="display:inline-block; width:75px;">Delivery Date:</span>
+                                                        <span class="ValueTextStyle" data-bind="text: DeliveryDate"></span>
+                                                        </div>
+                                                            
                                                         </div>
                                                     </td>
 
@@ -803,12 +809,12 @@ img {
                         <td style="width:250px; vertical-align:central; text-align:left;">
                             <div style="width:250px; margin:0; padding:0">
 
-                                <div>
+                                <div style="visibility: #= CarrierVisibility #;">
                                   <span style="width:40px;">Carrier:</span>
                                   <span class="ValueTextStyle" style="display:inline-block; vertical-align: middle; font-size: 11px; width:200px; max-width:200px; white-space:nowrap; overflow: hidden; text-overflow: ellipsis; margin:auto;">${Carrier}</span>                                   
                                 </div>
 
-                                <div>
+                                <div style="visibility: #= CarrierVisibility #;">
                                   <span style="display:inline-block; width:40px;">No:</span>
                                   <span class="ValueTextStyle" style="font-size: 11px">${CarrierNumber}</span>
                                 </div>

@@ -1,7 +1,6 @@
-﻿import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Component}  from '@angular/core';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
-import {TenantManagementPMService} from '../../../../Infrastructure/Services/StandardPMs/TenantManagementPMService';
 import {TenantManagementPM} from '../../../../Infrastructure/EntityPMs/TenantManagementPM';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -9,7 +8,8 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {HybridTenantThresholdPM} from '../../../../Common/EntityPMs/HybridTenantThresholdPM';
 import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
-import {HybridTenantThresholdPMService} from'../../../../Common/Services/StandardPMs/HybridTenantThresholdPMService';
+import { HybridTenantThresholdPMService } from '../../../../Common/Services/StandardPMs/HybridTenantThresholdPMService';
+
 @Component({
     moduleId: module.id,
     selector: 'HybridTenantThresholdComponent',

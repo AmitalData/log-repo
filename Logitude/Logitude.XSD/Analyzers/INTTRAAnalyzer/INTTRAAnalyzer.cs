@@ -357,6 +357,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             {
                 case "CONTRL":
                     {
+                        #region
                         iMessageTenantError = "Unknown message tenant";
 
                         if (this.iMessage != null)
@@ -364,7 +365,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                             INTTRA.Header iHeader = this.iMessage.Header;
 
                             if (iHeader != null)
-                            {                               
+                            {
                                 string HeaderDocumentIdentifier = iHeader.DocumentIdentifier;
 
                                 if (!string.IsNullOrEmpty(HeaderDocumentIdentifier))
@@ -382,12 +383,13 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                 }
                             }
                         }
-
+                        #endregion
                         break;
                     }
 
                 case "ApplicationAcknowledgment":
                     {
+                        #region
                         iMessageTenantError = "Unknown message tenant";
 
                         if (this.iMessage != null)
@@ -407,10 +409,11 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                             {
                                                 if (Requestor.PartnerIdentifier.Value != null)
                                                 {
-                                                    INTTRASetting myINTTRASetting = this.myCommonContext.INTTRASettings.Where(d => d.INTTRAAlias == Requestor.PartnerIdentifier.Value).FirstOrDefault();
-                                                    if (myINTTRASetting != null)
+                                                    Branch iBranch = this.myCommonContext.Branches.Where(d => d.INTTRAAlias == Requestor.PartnerIdentifier.Value).FirstOrDefault();
+                                                    //INTTRASetting myINTTRASetting = this.myCommonContext.INTTRASettings.Where(d => d.INTTRAAlias == Requestor.PartnerIdentifier.Value).FirstOrDefault();
+                                                    if (iBranch != null)
                                                     {
-                                                        iMessageTenant = myINTTRASetting.Tenant;
+                                                        iMessageTenant = iBranch.Tenant;
                                                     }
 
                                                     else
@@ -429,10 +432,111 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                 }
                             }
                         }
-
+                        #endregion
                         break;
                     }
 
+                case "Status":
+                    {
+                        iMessageTenantError = "Unknown message tenant";
+
+                        if (this.iMessage_Status != null)
+                        {
+                            INTTRA_Status.MessageBodyType iMessageBody = iMessage_Status.MessageBody;
+
+                            if (iMessageBody != null)
+                            {
+                                INTTRA_Status.MessageDetailsType iMessageDetails = iMessageBody.MessageDetails;
+
+                                if (iMessageDetails != null)
+                                {
+                                    INTTRA_Status.EquipmentDetailsType equipmentDetails = iMessageDetails.EquipmentDetails;
+
+                                    if (equipmentDetails != null)
+                                    {
+                                        if (equipmentDetails.EquipmentIdentifier != null)
+                                        {
+                                            if (!string.IsNullOrEmpty(equipmentDetails.EquipmentIdentifier.Value))
+                                            {
+                                                string iContainerNumber = equipmentDetails.EquipmentIdentifier.Value;
+
+                                                if (iContainerNumber != null)
+                                                {
+                                                    iContainerNumber = iContainerNumber.Trim();
+                                                }
+
+                                                if (!string.IsNullOrEmpty(iContainerNumber))
+                                                {
+                                                    if (!string.IsNullOrEmpty(this.ShipmentNumber))
+                                                    {
+                                                        #region By Shipment number
+                                                        List<Shipment> iShipments = (from d in myShipmentContext.Shipments where d.ShipmentNumber == this.ShipmentNumber select d).ToList();
+
+                                                        foreach (Shipment item in iShipments)
+                                                        {
+                                                            ShipmentPackage iPackage = (from d in myShipmentContext.ShipmentPackages where d.ShipmentId == item.Id && d.ContainerNumber == iContainerNumber select d).FirstOrDefault();
+
+                                                            if (iPackage != null)
+                                                            {
+                                                                iMessageTenant = item.Tenant;
+                                                                break;
+                                                            }
+                                                        }
+                                                        #endregion
+                                                    }
+
+                                                    else
+                                                    {
+                                                        #region By Booking number
+                                                        INTTRA_Status.MessagePropertiesType iMessageProperties = iMessageBody.MessageProperties;
+
+                                                        if (iMessageProperties != null)
+                                                        {
+                                                            if (iMessageProperties.ReferenceInformation != null)
+                                                            {
+                                                                INTTRA_Status.MessagePropertiesTypeReferenceInformation iReferenceInformation = iMessageProperties.ReferenceInformation.Where(d => d.ReferenceType == INTTRA_Status.ReferenceInformationTypeReferenceType.BookingNumber).FirstOrDefault();
+                                                                if (iReferenceInformation != null)
+                                                                {
+                                                                    string iBookingNumber = iReferenceInformation.Value;
+
+                                                                    if (!string.IsNullOrEmpty(iBookingNumber))
+                                                                    {
+                                                                        List<ShipmentMasterData> iShipmentMasterDatas = (from d in myShipmentContext.ShipmentMasterDatas where d.BookingConfirmationNumber == iBookingNumber select d).ToList();
+
+                                                                        foreach (ShipmentMasterData item in iShipmentMasterDatas)
+                                                                        {
+                                                                            ShipmentPackage iPackage = (from d in myShipmentContext.ShipmentPackages where d.ShipmentId == item.Id && d.ContainerNumber == iContainerNumber select d).FirstOrDefault();
+
+                                                                            if (iPackage != null)
+                                                                            {
+                                                                                iMessageTenant = item.Tenant;
+
+                                                                                Shipment iShipment = (from d in myShipmentContext.Shipments where d.Id == item.Id select d).FirstOrDefault();
+
+                                                                                if (iShipment != null)
+                                                                                {
+                                                                                    this.ShipmentNumber = iShipment.ShipmentNumber;
+                                                                                }
+
+                                                                                break;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        #endregion
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        break;
+                    }
 
                 default:
                     {
@@ -464,7 +568,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                     }
             }
 
-            if(iMessageTenant != null)
+            if (iMessageTenant != null)
             {
                 this.Tenant = iMessageTenant.Value;
                 this.myAnalyzeQueue.Tenant = this.Tenant;

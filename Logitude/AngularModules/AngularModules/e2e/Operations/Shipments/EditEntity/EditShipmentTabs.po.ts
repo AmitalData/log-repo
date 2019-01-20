@@ -10,7 +10,6 @@ import { PayablesTabComponent } from './PayablesTab';
 import { ReceivablesTabComponent } from './RecievablesTab';
 import { DocsOutTabComponent } from './DocsOutTab';
 import { ShipmentsTabComponent } from './ShipmentsTab';
-
 import { ShipmentSearch } from '../../ShipmentSearch';
 
 export class EditTabsComponent {
@@ -45,8 +44,8 @@ export class EditTabsComponent {
   }
   GoToShipment(){
     this.Operation.GoToMainMenu('General.MH.Operations');
-    this.Operation.SelectOperationsTab('SHIP');
-    this.QuickSearch.UseQuickSearch('M1038');
+    this.Operation.SelectMenuWorkSpaceTabs('SHIP');
+    this.QuickSearch.UseQuickSearch('SR1545342');
   }
 
   EditTabs(shipperRef1:string,LogitudeShipType:string,ShipmentType: string) {

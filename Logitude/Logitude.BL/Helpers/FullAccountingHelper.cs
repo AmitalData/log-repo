@@ -36,6 +36,14 @@ namespace Logitude.BL.Helpers
                 }
             }
         }
+
+        public string CreateGLAccount(GLAccountPM account)
+        {
+            IGLAccountUpdateServiceExt glaccountCreate = ContainerAccessor.Container.Resolve(typeof(IGLAccountUpdateServiceExt), "GLAccountUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountUpdateServiceExt;
+            glaccountCreate.Create(account);
+
+            return account.Id;
+        }
     }
 
     public class GLAccountData

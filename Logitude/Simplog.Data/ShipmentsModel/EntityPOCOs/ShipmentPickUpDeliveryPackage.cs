@@ -22,6 +22,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ShipperSeal { get; set; }
         public string Harmonize { get; set; }
         public string OriginalShipmentPackageId { get; set; }
+        public bool IsMultiHarmonize { get; set; }
 
         [ForeignKey("PackageTypeId")]
         public virtual PackageType PackageType { get; set; }

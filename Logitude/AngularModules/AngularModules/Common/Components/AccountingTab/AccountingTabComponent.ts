@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -33,7 +33,7 @@ export class AccountingTabComponent implements OnInit {
         this.EntityPM = entityArgs.EntityPM;
         this.ObjectTableName = entityArgs.ObjectTableName;
         this.TabTitleTextCode = this.ObjectTableName + ".TH.Accounting";
-        this.InitializeComponent();        
+        this.InitializeComponent();
     }
 
     ngOnInit() {
@@ -99,7 +99,7 @@ export class AccountingTabComponent implements OnInit {
                 }
         }
 
-        if (this.IsAccountingActivated && this.isPartnerEntity) {
+        if (this.IsAccountingActivated) {
             this.isFullAccounting = true;
         }
 
@@ -110,7 +110,7 @@ export class AccountingTabComponent implements OnInit {
     LoadComponent() {
         var myComponentPath: string = null;
 
-        if (this.isFullAccounting) {
+        if (this.isFullAccounting && this.ObjectTableName != 'ChargesType') {
             myComponentPath = "./Common/Components/AccountingTab/AccountingTab_Full";
         }
 

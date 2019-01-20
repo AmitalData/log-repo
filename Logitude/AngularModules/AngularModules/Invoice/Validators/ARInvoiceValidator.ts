@@ -53,9 +53,7 @@ export class ARInvoiceValidator {
 
         else {
             this.ValidateNormalInvoice()
-        }
-
-        
+        }        
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             if (AppTool.IsNullOrEmpty(this.EntityPM.SATPaymentMethodCode)) {
@@ -182,13 +180,20 @@ export class ARInvoiceValidator {
         }
     }
     private ValidateConsolidationInvoice() {
+
         if (!AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
             if (!this.EntityPM.IsBillToAllowConsolidation) {
                 this.Errors.push(InvoiceTool.GetBillToNotAllowConsolidation());
             }
         }
 
-        if (this.EntityPM.ConstituentInvoices.length == 0) {
+        if (this.EntityPM.StatusCode == "AC" || this.EntityPM.StatusCode == "AR") {
+            if (this.EntityPM.InvoiceLines.length == 0) {
+                this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldHaveOneLineAtLeast"));
+            }
+        }
+
+        else if (this.EntityPM.ConstituentInvoices.length == 0) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldHaveOneLineAtLeast"));
         }
 

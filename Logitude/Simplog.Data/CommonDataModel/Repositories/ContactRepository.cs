@@ -486,7 +486,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return entity;
         }
 
-        public IQueryable<Contact> GetContactListsForShipmentFollow(List<string> trackedIds, int tenant)
+        public IQueryable<Contact> GetContactsByIds(List<string> trackedIds, int tenant)
         {
             IQueryable<Contact> contactlist = (from a in context.Contacts
                                                where trackedIds.Contains(a.Id)

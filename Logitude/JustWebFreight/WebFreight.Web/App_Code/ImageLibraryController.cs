@@ -25,28 +25,30 @@ namespace WebFreight.Web.App_Code
     //[EnableCors(origins: "http://localhost:9996", headers: "*", methods: "*")]
     public class ImageLibraryController : ApiController
     {
-        public HttpResponseMessage GetLinkImages(int tenant, string url)
+        public HttpResponseMessage GetLinkImages(int tenant)
         {
             List<LinkImage> LinkImages = new List<LinkImage>();
-            ImageLibraryRepository imageLibraryRepository = new ImageLibraryRepository(tenant);
-            List<ImageLibrary> ImageLibraryLists = imageLibraryRepository.GetImageLibraryListsByTenant(tenant);
-            foreach (ImageLibrary item in ImageLibraryLists)
+            //ImageLibraryRepository imageLibraryRepository = new ImageLibraryRepository(tenant);
+            //List<ImageLibrary> ImageLibraryLists = imageLibraryRepository.GetImageLibraryListsByTenant(tenant);
+            //foreach (ImageLibrary item in ImageLibraryLists)
+            //{
+            //    LinkImages.Add(new LinkImage()
+            //    {
+
+            //        thumb = url + "WebPages/DownLoadImage.aspx?imageId=" + item.Id + "&tenant=" + item.Tenant.ToString(),
+            //        url = url + "WebPages/DownLoadImage.aspx?imageId=" + item.Id + "&tenant=" + item.Tenant.ToString(),
+            //        tag = "flower"
+            //    });
+
+
+
+            //}
+
+            LinkImages.Add(new LinkImage()
             {
-                LinkImages.Add(new LinkImage()
-                {
-
-                    thumb = url + "WebPages/DownLoadImage.aspx?imageId=" + item.Id + "&tenant=" + item.Tenant.ToString(),
-                    url = url + "WebPages/DownLoadImage.aspx?imageId=" + item.Id + "&tenant=" + item.Tenant.ToString(),
-                    tag = "flower"
-                });
-
-
-                //LinkImages.Add(new LinkImage()
-                //{
-                //    thumb = "https://www.froala.com/assets/editor/media_files/photo9.jpg",
-                //    url = "https://www.froala.com/assets/editor/media_files/photo9.jpg",
-                //});
-            }
+                thumb = "https://www.froala.com/assets/editor/media_files/photo9.jpg",
+                url = "https://www.froala.com/assets/editor/media_files/photo9.jpg",
+            });
             return Request.CreateResponse(HttpStatusCode.OK, LinkImages);
 
 
@@ -541,12 +543,25 @@ namespace WebFreight.Web.App_Code
 
         }
 
+
+        public HttpResponseMessage GetImageUrl(string name)
+        {
+           
+            return Request.CreateResponse(HttpStatusCode.OK, "https://www.froala.com/assets/editor/media_files/photo9.jpg");
+
+        }
+        
+
+
+
+
+
         //[ActionName("PostUploadPdfFile")]
         //public HttpResponseMessage PostUploadImage(ImageParameter filter)
         //{
         //    Uploader uploaderService = new Uploader(); 
         //    var temp = uploaderService.UploadImage(filter.FileName, filter.buffer, filter.FileSize, filter.SentSize, filter.BlockIdsList.ToArray(),filter.BufferNumber,filter.Tenant, "jpg", null, null, filter.EntityId);
-             
+
         //}
 
 

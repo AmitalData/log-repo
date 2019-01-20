@@ -46,6 +46,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return entity;
         }
 
+        public TenantAdditionalData GetSingleTenantAdditionalDataByGateWayPartnerCode(string Code)
+        {
+            TenantAdditionalData entity = (from a in context.TenantAdditionalDatas where a.PaymentGatewayPartnerCode == Code select a).FirstOrDefault();
+            return entity;
+        }
+
         public TenantAdditionalData GetSingleTenantAdditionalDataByUID(string UID)
         {
             TenantAdditionalData entity = (from a in context.TenantAdditionalDatas where a.DropBoxUID == UID select a).FirstOrDefault();

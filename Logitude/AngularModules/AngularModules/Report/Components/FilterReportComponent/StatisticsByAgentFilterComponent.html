@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
         <td>
@@ -107,6 +107,53 @@
                                 <td>
                                     <div></div>
                                 </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:28px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:100px;">Transport Mode</td>
+
+                                <td style="width:117px;">
+                                    <TransportsFilter [SelectedValue]="SelectedTransportFilter" (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
+                                </td>
+                                <td style="width:20px;"><div style="width:15px;"></div></td>
+
+                                <td style="width:60px;">Direction:</td>
+                                <td style="width:1px;">
+                                    <div>
+                                        <DirectionsFilter [SelectedValue]="SelectedDirectionFilter" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
+                                    </div>
+                                </td>
+                                <td style="width:20px;"><div style="width:15px;"></div></td>
+
+                                <td style="width:40px;">Level:</td>
+                                <td style="width:117px; vertical-align:middle;">
+                                    <ul class="FiltersMenu">
+                                        <li (click)="LevelCodeitemClicked('All')" (mouseover)="LevelCodeMouseOver('All')" [class.SelectedFilter]="LevelCodeSelectedValue === 'All'">
+                                            All
+                                        </li>
+                                        <li (click)="LevelCodeitemClicked('D')" (mouseover)="LevelCodeMouseOver('D')" (mouseleave)="LevelCodeMouseLeave('D')" [class.SelectedFilter]="LevelCodeSelectedValue === 'D'" title="Direct">
+                                            D
+                                        </li>
+                                        <li (click)="LevelCodeitemClicked('H')" (mouseover)="LevelCodeMouseOver('H')" (mouseleave)="LevelCodeMouseLeave('H')" [class.SelectedFilter]="LevelCodeSelectedValue === 'H'" title="House">
+                                            H
+                                        </li>
+                                        <li (click)="LevelCodeitemClicked('C')" (mouseover)="LevelCodeMouseOver('C')" (mouseleave)="LevelCodeMouseLeave('C')" [class.SelectedFilter]="LevelCodeSelectedValue === 'C'" title="Master">
+                                            M
+                                        </li>
+                                    </ul>
+                                </td>
+
+                                <td><div></div></td>
                             </tr>
                         </table>
                     </td>

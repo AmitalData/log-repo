@@ -59,10 +59,12 @@ export class TenantLoginPolicyPM {
     public get AllowedIPs() { return this.allowedIPs; }
     public set AllowedIPs(newValue: string) { if (this.allowedIPs != newValue) { this.allowedIPs = newValue; this.MarkAsDirty("AllowedIPs"); } }
        
+	 
     private sessionTimeout: number;
     public get SessionTimeout() { return this.sessionTimeout; }
     public set SessionTimeout(newValue: number) { if (this.sessionTimeout != newValue) { this.sessionTimeout = newValue; this.MarkAsDirty("SessionTimeout"); } }
-
+       
+	 
 
     public OldEntityPM: TenantLoginPolicyPM;
 		

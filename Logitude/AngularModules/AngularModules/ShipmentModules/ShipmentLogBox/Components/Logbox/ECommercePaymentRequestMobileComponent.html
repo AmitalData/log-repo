@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .BlueTitle{
         font-size:20px;
@@ -16,10 +16,14 @@
     margin-top:3px;
     width:50px;
     }
-    
+
     .LogitudeWindow {
-        position: absolute;
-        max-width:600px;
+        /*position: absolute;*/
+        max-width: 600px;
+        margin-left: auto;
+        float: none;
+        margin-right: auto;
+       
         /*top: 0;
         left: 0;
         right: 0;
@@ -95,49 +99,53 @@
 }
 
 .MyLabel{
-    font-size:13px;
+    font-size:17px;
     padding-left:10px;
     color: rgb(110, 113, 114);
      font-family: sans-serif;
 }
 </style>
-<table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == false">
-    <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList != ''" style="height:1px;">
-        <td>
-           <div class="WarningSummary" style="margin-bottom: 3px;">{{ValidationWarningsList}}</div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <table style="direction:rtl;">
-                <tr style="height:150px;border-top:1px solid #BCBEC0;">
-                    <td>
-                        <table>
-                            <tr>
-                                <td>
+<div class="MediaFillAbsolute" style="background:white;">
+    <table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == false">
+        <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList != ''" style="height:1px;">
+            <td>
+                <div class="WarningSummary" style="margin-bottom: 3px;">{{ValidationWarningsList}}</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="direction:rtl; border: 1px solid #BCBEC0;">
+                    <tr style="height:150px;border-top:1px solid #BCBEC0;">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
                                         <table style="height:60px;border-bottom:1px solid #BCBEC0;">
-                                        <tr>
-                                            <td style="height: 22px;width:40%;">
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;padding-right:10px;">תשלום דיגיטלי למשלוח</span> 
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;padding-right:10px;">{{Hawb}}</span> 
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                
-                                            </td>
-                                            <td style="height: 55px;">
-                                                <img [attr.src]="CompanyLogo" style="position:absolute;top:3px;left:5px;padding-left:10px;height:55px;" />
-                                            </td>
-                                        </tr>
-                                        </table> 
-                                        <table style="height:65px;margin-right:5px;">
+                                            <tr>
+                                                <td style="height: 22px;width:40%;">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;padding-right:10px;">תשלום דיגיטלי למשלוח</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;padding-right:10px;">{{Hawb}}</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+                                                <td style="height: 55px;width:20px;">
+                                                    <!--<img [attr.src]="CompanyLogo" style="position:absolute;top:3px;left:5px;padding-left:10px;height:55px;" />-->
+                                                </td>
+                                                <td style="height: 55px;">
+                                                    <img [attr.src]="CompanyLogo" style="position:absolute;top:3px;left:5px;padding-left:10px;height:55px;" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table style="height:70px;margin-right:5px;">
                                             <tr>
                                                 <td style="height: 22px;width:40%;">
                                                     <label class="MyLabel">
@@ -168,7 +176,7 @@
                                                 <td colspan="2" style="font-size:20px;border-bottom:1px solid #BCBEC0;width:100%;float:left;font-family:sans-serif;padding-right:10px;"></td>
                                             </tr>
                                         </table>
-                                        <table style="height:65px;margin-right:5px;">
+                                        <table style="height:70px;margin-right:5px;">
                                             <tr>
                                                 <td style="height: 22px;width:40%;">
                                                     <label class="MyLabel">
@@ -199,8 +207,56 @@
                                                 <td colspan="2" style="font-size:20px;border-bottom:1px solid #BCBEC0;width:100%;float:left;font-family:sans-serif;padding-right:10px;"></td>
                                             </tr>
                                         </table>
-                                        <table style="height:65px;margin-right:5px;">
+                                        <table style="height:130px;margin-right:5px;">
                                             <tr>
+                                                <td style="height: 22px;width:40%;">
+                                                    <label class="MyLabel">
+                                                        ערך משלוח בש"ח
+                                                    </label>
+                                                </td>
+                                                <td style="height: 22px;">
+                                                    <label class="MyLabel">
+                                                        {{ShipmentValueInNIS}}
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height: 22px;width:40%;">
+                                                    <label class="MyLabel">
+                                                        כמות
+                                                    </label>
+                                                </td>
+                                                <td style="height: 22px;">
+                                                    <label class="MyLabel">
+                                                        {{Quantity}}
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height: 22px;width:40%;">
+                                                    <label class="MyLabel">
+                                                        משקל
+                                                    </label>
+                                                </td>
+                                                <td style="height: 22px;">
+                                                    <label class="MyLabel">
+                                                        {{Weight}}
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height: 22px;width:40%;">
+                                                    <label class="MyLabel">
+                                                        סה"כ לתשלום בש"ח
+                                                    </label>
+                                                </td>
+                                                <td style="height: 22px;">
+                                                    <label style="text-decoration: underline;color: lightskyblue;font-size:17px;" (click)="PaymentDetailsClick()">
+                                                        {{TotalChargesInNIS}}
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <!--<tr>
                                                 <td style="height: 22px;width:70%;">
                                                     <table>
                                                         <tr>
@@ -233,9 +289,9 @@
                                                             </td>
                                                     </table>
                                                 </td>
-                                            </tr>
+                                            </tr>-->
 
-                                            <tr>
+                                            <!--<tr>
                                                 <td style="height: 22px;width:70%;">
                                                     <table>
                                                         <tr>
@@ -268,160 +324,184 @@
                                                             </td>
                                                     </table>
                                                 </td>
+                                            </tr>-->
+                                        </table>
+                                         <!--<table style="height:1px;margin-right:5px;">
+                                            <tr>
+                                                <td colspan="2" style="font-size:20px;border-bottom:1px solid #BCBEC0;width:100%;float:left;font-family:sans-serif;padding-right:10px;"></td>
+                                            </tr>
+                                        </table>-->
+                                        <table style="height:60px;margin-right:5px;">
+                                            <tr>
+                                                <td>
+                                                    <!--<div style="width:100%;height:1px;border-bottom:1px solid #BCBEC0;"></div>-->
+                                                </td>
+                                            </tr>
+                                            <tr style="height:12px;">
+                                                <td>
+                                                    <div style="width:100%;height:1px;border-bottom:1px solid #BCBEC0;"></div>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:22px;">
+                                                <td>
+                                                    <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="float:right;padding-right: 20px;direction: rtl;">
+                                                        <label style="margin-right:-10px;font-size:12px;font-family:sans-serif;" class="TextTrimming">לבירורים בנושא עלויות או כל מידע נוםף אודות המשלוח <span style="text-decoration: underline;color: lightskyblue;">לחץ כאן</span></label><br />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:12px;">
+                                                <td>
+                                                    <div style="width:100%;height:1px;border-bottom:1px solid #BCBEC0;"></div>
+                                                </td>
                                             </tr>
                                         </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr style="height:3px;">
-                    <td>
-                        <div style="width:100%;height:3px;"></div><!--border-bottom:1px solid #BCBEC0;-->
-                    </td>
-                </tr>
-                <tr style="min-height: 458px;height: 73%;">
-                    <td style="top: 255px;bottom: 8px;overflow-y: auto;overflow-x: hidden;" class="MediaFill">
-                        <div style="overflow-y:auto;overflow-x:hidden;border: 1px solid #BCBEC0;border-radius: 4px;height:100%;">
-                            <div style="padding:5px;float:right;width:100%;height:92%;">
-                                <span style="font-size:13px;border-bottom:1px solid #BCBEC0;color:#1B90CB;width:100%;float:left;font-family:sans-serif;">בחר אמצעי תשלום</span>
-                                <div style="height:99%;margin-top:21px;"> <!--class="emptyticket" style="max-width:164px;margin-top:10px;direction:ltr;float:right;">-->
-                                    <iframe  name="PaymentDetailsFrame" src="https://form.jotform.me/82453472847465" style="width:100%;height:100%;margin-bottom:5px;">Loading...</iframe>
-                                    <!--<iframe id="JotFormIFrame-82453472847465" onload="window.parent.scrollTo(0,0)" allowtransparency="true" allowfullscreen="true" allow="geolocation; microphone; camera" src="https://form.jotform.me/82453472847465" frameborder="0" style="width: 1px; min-width: 100%; height:539px; border:none;" scrolling="no"> </iframe>-->
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
+
+                                        <table style="height:60px;margin-right:5px;">
+                                            <tr>
+                                                <td style="height: 22px;width:40%;">
+                                                    <div style="vertical-align:middle;text-align:center;">
+                                                        <div (click)="OnPayClick()" style="width:145px;height:30px;background-color:cornflowerblue;display:inline-block;font-size:13px;padding-top:5px;">
+                                                            <span style="text-align:center;font-size:13px;">
+                                                                <a style="color:white;font-size:14px;font-family: sans-serif;">לתשלום מאובטח</a>
+                                                            </span>
+                                                        </div> 
+                                                    </div>
+                                                </td> 
+                                            </tr> 
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                   
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr style="height:12px;">
+            <td>
+                <div style="width:100%;height:1px;border-bottom:1px solid #BCBEC0;"></div>
+            </td>
+        </tr>
+         
+        <tr style="height:3px;">
+            <td>
+              
+            </td>
+        </tr>
+    </table>
+</div>
+<table class="LogitudeWindow" style="direction:rtl;border: 1px solid #BCBEC0;" *ngIf="ShowFinalMessage == true">
+    <tr>
+        <td>
+            <table style="direction:rtl;border: 1px solid #BCBEC0;">
                 <tr>
-                    <td>
-                        <div></div>
+                    <td style="text-align:center;" *ngIf="ShowFinalMessage == true">
+                        <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;word-wrap: break-word;white-space: normal;">
+                            {{FinalMessage}}
+                        </span>
                     </td>
                 </tr>
             </table>
         </td>
     </tr>
-    <tr style="height:22px;">
-        <td>
-            <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="float:right;padding-right: 20px;direction: rtl;">
-                <!--<LogCheckBox [Checked]="IsAccepted" (ValueChanged)="IsAcceptedChanged($event)" [ObjectFieldName]="'IsAccepted'" [DataContext]="DataContext" style="float:right;margin-top:2px;"></LogCheckBox>-->
-                <label style="margin-right:-10px;font-size:12px;font-family:sans-serif;" class="TextTrimming">לבירורים בנושא עלויות או כל מידע נוםף אודות המשלוח <span style="text-decoration: underline;color: lightskyblue;">לחץ כאן</span></label><br />
-            </div>
-            <!--<div style="float:right;width:25px;margin-right: 5px;direction: rtl;" class="tooltip">
-                <div class="tooltiptext">
-                    <table>
-                        <tr><td> I, the undersigned, hereby declare that I am aware of the</td></tr>
-                        <tr><td> goods and of the attachments submitted to Customs in </td></tr>
-                        <tr><td> the attached declaration</td></tr>
-                    </table>
-                </div>
-                <img src="./Images/SharedNote.png" style="width:22px;height:22px;float:left" class="ActionButtons" />
-            </div>-->
-        </td>
-    </tr>
-    <tr style="height:12px;">
-        <td>
-            <div style="width:100%;height:1px;border-bottom:1px solid #BCBEC0;"></div>
-        </td>
-    </tr>
-    <!--<tr style="height:32px;">
-        <td>
-           
-            <div style="float:left;margin-left:10px;">
-                <button class="Button" [class.Disable]="DimApproveButton == true || DimDenyButton == true" (click)="DenyButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;" title="Deny Declaration">דחה הצהרה</button>
-            </div>
-            <div style="float:left;margin-left:10px;">
-                <button class="GreenButton" [class.Disable]="DimApproveButton == true || IsAccepted == false || DimDenyButton == true" (click)="ApproveButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;" title="Approve Declaration">אשר הצהרה</button>
-            </div>
-         
-           
-           
-        </td>
-    </tr>-->
-    <tr style="height:3px;">
-        <td>
-            <!--<div style="width:100%;height:1px;border-bottom:1px solid #BCBEC0;"></div>-->
-        </td>
-    </tr>
-</table>
-<table class="LogitudeWindow" style="direction:rtl;" *ngIf="ShowFinalMessage == true">
-    <tr> 
-        <td style="text-align:center;" *ngIf="ShowFinalMessage == true">
-            <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;word-wrap: break-word;white-space: normal;">
-                {{FinalMessage}}
-            </span>
-        </td>
-    </tr>
+   
 </table>
  
 <table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == true" style="direction:rtl;">
-    <tr style="height:30px;">
-        <td>
-            <div>
-                <span class="BlueTitle">פירוט חיובים</span>
-                <button class="Button BackButton" (click)="ClosePaymentDetailsButtonClicked()">חזרה</button>
-            </div> 
-        </td>
-    </tr>
-    <tr style="height:7px;">
-        <td>
-            <div style="width:100%;height:1px;border-bottom:1px solid #BCBEC0;"></div>
-        </td>
-    </tr> 
     <tr>
         <td>
-            <table>
-                <tr style="height:60px;border-bottom:1px solid #BCBEC0;width:100%;font-family:sans-serif;" *ngFor="let item of AdditionalData.RequestPaymentData.ServiceTypes; let i=index;">
+            <table style="direction:rtl;border: 1px solid #BCBEC0;">
+                <tr style="height:30px;">
                     <td>
-                        <table>
-                            <tr>
-                                <td style="width: 125px; max-width: 125px;padding-right: 4px;color:#1B90CB;">סעיף חיוב</td>
-                                <td class="CellStretched TextTrimming" style="width: 125px; max-width: 125px;padding-right: 4px;">
-                                    {{item.LocalName}}
-                                </td>
-                            </tr> 
-                            <tr>
-
-                                <td></td>
-                                <td></td>
-
-                            </tr>
-                        </table>
-                    </td>
-                    <td>
-                        <table>
-                            <tr>
-                                <td style="width: 110px; max-width: 110px;padding-right: 4px;color:#1B90CB;">סכום</td>
-                                <td class="CellStretched TextTrimming" style="width: 110px; max-width: 110px;padding-right: 4px;">
-                                    {{item.AmountInNIS}}
-                                </td>
-                            </tr> 
-
-                            <tr>
-
-                                <td></td>
-                                <td></td>
-
-                            </tr>
-                        </table>
+                        <div>
+                            <span class="BlueTitle">פירוט חיובים</span>
+                            <button class="Button BackButton" (click)="ClosePaymentDetailsButtonClicked()">חזרה</button>
+                        </div>
                     </td>
                 </tr>
-                <tr style="height:30px;border-bottom:1px solid #BCBEC0;width:100%;font-family:sans-serif;">
-                    <td colspan="2">
-                        <div style="padding-right: 4px;color:#1B90CB;text-align:center;font-weight:bold;height:16px; text-align:left;float:right;">
-                            <span style="">סה"כ בש"ח</span>
-                            <span style="font-weight:bold;margin-right: 20px;">{{TotalAmount | CustomNumbersPipe:0}}</span>
-                        </div>
-                    </td> 
-                </tr> 
+                <tr style="height:7px;">
+                    <td>
+                        <div style="width:100%;height:1px;border-bottom:1px solid #BCBEC0;"></div>
+                    </td>
+                </tr>
                 <tr>
-                    <td colspan="2">
-                        <div></div>
+                    <td>
+                        <table>
+                            <tr style="height:60px;border-bottom:1px solid #BCBEC0;width:100%;font-family:sans-serif;">
+                                <td style="width: 125px; max-width: 125px;padding-right: 4px;color:#1B90CB;font-size: 13px;font-weight: bold;">סעיף חיוב</td>
+                                <td style="width: 110px; max-width: 110px;padding-right: 4px;color:#1B90CB;font-size: 13px;font-weight: bold;">סכום</td>
+                            </tr>
+                            <tr style="height:60px;border-bottom:1px solid #BCBEC0;width:100%;font-family:sans-serif;" *ngFor="let item of AdditionalData.RequestPaymentData.ServiceTypes; let i=index;">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <!--<td style="width: 125px; max-width: 125px;padding-right: 4px;color:#1B90CB;">סעיף חיוב</td>-->
+                                            <td class="CellStretched TextTrimming" style="width: 125px; max-width: 125px;padding-right: 4px;">
+                                                {{item.LocalName}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                            <!--<td></td>-->
+                                            <td></td>
+
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <!--<td style="width: 110px; max-width: 110px;padding-right: 4px;color:#1B90CB;">סכום</td>-->
+                                            <td class="CellStretched TextTrimming" style="width: 110px; max-width: 110px;padding-right: 4px;">
+                                                {{item.AmountInNIS}}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+
+                                            <!--<td></td>-->
+                                            <td></td>
+
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr style="height:30px;border-bottom:1px solid #BCBEC0;width:100%;font-family:sans-serif;">
+                                <td colspan="2">
+                                    <div style="padding-right: 4px;color:#1B90CB;text-align:center;font-weight:bold;height:16px; text-align:left;float:right;">
+                                        <span style="">סה"כ בש"ח</span>
+                                        <span style="font-weight:bold;margin-right: 20px;">{{TotalAmount | CustomNumbersPipe:0}}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
             </table>
         </td>
-    </tr> 
+    </tr>
+   
 </table>
+
+<form name='form' action='https://direct.tranzila.com/amitaltest/' method='post' style="width:0px;height:0px;">
+    <input type='hidden' name='sum' [attr.value]="sum">
+    <input type='hidden' name='currency' [attr.value]="currency">
+    <input type='hidden' name='op' [attr.value]="op">
+    <input type='hidden' name='DCdisable' [attr.value]="DCdisable">
+    <input type='hidden' name='DclickTK' [attr.value]="DclickTK">
+    <input type='hidden' name='thtk' [attr.value]="thtk">
+</form>
 
 

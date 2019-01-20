@@ -423,6 +423,11 @@ export class APInvoicePM {
     public set IsGeneralInvoice(newValue: boolean) { if (this.isGeneralInvoice != newValue) { this.isGeneralInvoice = newValue; this.MarkAsDirty("IsGeneralInvoice"); } }
        
 	 
+    private firstApproveDate: Date;
+    public get FirstApproveDate() { return this.firstApproveDate; }
+    public set FirstApproveDate(newValue: Date) { if (this.firstApproveDate != newValue) { this.firstApproveDate = newValue; this.MarkAsDirty("FirstApproveDate"); } }
+       
+	 
      
 	private invoiceLines: APInvoiceLinePM[];
     get  InvoiceLines() {
@@ -657,6 +662,11 @@ export class APInvoicePM {
     private setReTransfer: boolean;
     public get SetReTransfer() { return this.setReTransfer; }
     public set SetReTransfer(newValue: boolean) { if (this.setReTransfer != newValue) { this.setReTransfer = newValue; this.MarkAsDirty("SetReTransfer"); } }
+       
+	 
+    private setReSendQBO: boolean;
+    public get SetReSendQBO() { return this.setReSendQBO; }
+    public set SetReSendQBO(newValue: boolean) { if (this.setReSendQBO != newValue) { this.setReSendQBO = newValue; this.MarkAsDirty("SetReSendQBO"); } }
        
 	 
     private journalNumber: string;

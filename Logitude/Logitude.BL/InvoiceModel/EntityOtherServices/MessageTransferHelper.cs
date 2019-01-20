@@ -243,6 +243,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public decimal UnitPrice { get; set; }
         public decimal Quantity { get; set; }
         public string MeasurementCode { get; set; }
+        public string PrepaidCollect { get; set; }
 
         [XmlElement(ElementName = "Advanced")]
         public LineAdvancedElement Advanced { get; set; }
@@ -523,6 +524,26 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string ShipmentField18Name { get; set; }
         public string ShipmentField19Name { get; set; }
         public string ShipmentField20Name { get; set; }
+        public string ShipmentField21Name { get; set; }
+        public string ShipmentField22Name { get; set; }
+        public string ShipmentField23Name { get; set; }
+        public string ShipmentField24Name { get; set; }
+        public string ShipmentField25Name { get; set; }
+        public string ShipmentField26Name { get; set; }
+        public string ShipmentField27Name { get; set; }
+        public string ShipmentField28Name { get; set; }
+        public string ShipmentField29Name { get; set; }
+        public string ShipmentField30Name { get; set; }
+        public string ShipmentField31Name { get; set; }
+        public string ShipmentField32Name { get; set; }
+        public string ShipmentField33Name { get; set; }
+        public string ShipmentField34Name { get; set; }
+        public string ShipmentField35Name { get; set; }
+        public string ShipmentField36Name { get; set; }
+        public string ShipmentField37Name { get; set; }
+        public string ShipmentField38Name { get; set; }
+        public string ShipmentField39Name { get; set; }
+        public string ShipmentField40Name { get; set; }
 
         public string ShipmentField1Value { get; set; }
         public string ShipmentField2Value { get; set; }
@@ -544,6 +565,27 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string ShipmentField18Value { get; set; }
         public string ShipmentField19Value { get; set; }
         public string ShipmentField20Value { get; set; }
+        public string ShipmentField21Value { get; set; }
+        public string ShipmentField22Value { get; set; }
+        public string ShipmentField23Value { get; set; }
+        public string ShipmentField24Value { get; set; }
+        public string ShipmentField25Value { get; set; }
+        public string ShipmentField26Value { get; set; }
+        public string ShipmentField27Value { get; set; }
+        public string ShipmentField28Value { get; set; }
+        public string ShipmentField29Value { get; set; }
+        public string ShipmentField30Value { get; set; }
+        public string ShipmentField31Value { get; set; }
+        public string ShipmentField32Value { get; set; }
+        public string ShipmentField33Value { get; set; }
+        public string ShipmentField34Value { get; set; }
+        public string ShipmentField35Value { get; set; }
+        public string ShipmentField36Value { get; set; }
+        public string ShipmentField37Value { get; set; }
+        public string ShipmentField38Value { get; set; }
+        public string ShipmentField39Value { get; set; }
+        public string ShipmentField40Value { get; set; }
+
         #endregion
 
         #region Customer
@@ -665,6 +707,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string DebitAccount { get; set; }
         public decimal Quantity { get; set; }
         public string MeasurementCode { get; set; }
+        public string PrepaidCollect { get; set; }
 
         [XmlElement(ElementName = "Advanced")]
         public LineAdvancedElement Advanced { get; set; }
@@ -945,6 +988,26 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string ShipmentField18Name { get; set; }
         public string ShipmentField19Name { get; set; }
         public string ShipmentField20Name { get; set; }
+        public string ShipmentField21Name { get; set; }
+        public string ShipmentField22Name { get; set; }
+        public string ShipmentField23Name { get; set; }
+        public string ShipmentField24Name { get; set; }
+        public string ShipmentField25Name { get; set; }
+        public string ShipmentField26Name { get; set; }
+        public string ShipmentField27Name { get; set; }
+        public string ShipmentField28Name { get; set; }
+        public string ShipmentField29Name { get; set; }
+        public string ShipmentField30Name { get; set; }
+        public string ShipmentField31Name { get; set; }
+        public string ShipmentField32Name { get; set; }
+        public string ShipmentField33Name { get; set; }
+        public string ShipmentField34Name { get; set; }
+        public string ShipmentField35Name { get; set; }
+        public string ShipmentField36Name { get; set; }
+        public string ShipmentField37Name { get; set; }
+        public string ShipmentField38Name { get; set; }
+        public string ShipmentField39Name { get; set; }
+        public string ShipmentField40Name { get; set; }
 
         public string ShipmentField1Value { get; set; }
         public string ShipmentField2Value { get; set; }
@@ -966,6 +1029,26 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string ShipmentField18Value { get; set; }
         public string ShipmentField19Value { get; set; }
         public string ShipmentField20Value { get; set; }
+        public string ShipmentField21Value { get; set; }
+        public string ShipmentField22Value { get; set; }
+        public string ShipmentField23Value { get; set; }
+        public string ShipmentField24Value { get; set; }
+        public string ShipmentField25Value { get; set; }
+        public string ShipmentField26Value { get; set; }
+        public string ShipmentField27Value { get; set; }
+        public string ShipmentField28Value { get; set; }
+        public string ShipmentField29Value { get; set; }
+        public string ShipmentField30Value { get; set; }
+        public string ShipmentField31Value { get; set; }
+        public string ShipmentField32Value { get; set; }
+        public string ShipmentField33Value { get; set; }
+        public string ShipmentField34Value { get; set; }
+        public string ShipmentField35Value { get; set; }
+        public string ShipmentField36Value { get; set; }
+        public string ShipmentField37Value { get; set; }
+        public string ShipmentField38Value { get; set; }
+        public string ShipmentField39Value { get; set; }
+        public string ShipmentField40Value { get; set; }
         #endregion
 
         #region Customer

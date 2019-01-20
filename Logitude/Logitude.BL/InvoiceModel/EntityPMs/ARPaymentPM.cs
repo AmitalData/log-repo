@@ -80,6 +80,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string ShipmentNumber { get; set; }
         public string TransmissionError { get; set; }
         public string SATTransferStatusName { get; set; }
+        public DateTime? SATApprovalDate { get; set; }
 
         private List<ARPaymentInvoicePM> paymentInvoices;
         [Include]
@@ -112,6 +113,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool SetCancelApproval { get; set; }
         public bool HasInvoicesErrors { get; set; }
         public bool SetReTransfer { get; set; }
+        public bool SetReSendQBO { get; set; }
 
         public string BankAccountId { get; set; }
         public string CashbookId { get; set; }
@@ -121,6 +123,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string SATTransferStatusCode { get; set; }
 
         public string BankAccountLiteId { get; set; }
+        public string BankAccountName { get; set; }
         public string MetodoPagoCode { get; set; }
         public string TipoCadenaPago { get; set; }
         public string CertPago { get; set; }

@@ -463,6 +463,36 @@ export class CustomerPM {
     public set BeforeDeactiveStatusCode(newValue: string) { if (this.beforeDeactiveStatusCode != newValue) { this.beforeDeactiveStatusCode = newValue; this.MarkAsDirty("BeforeDeactiveStatusCode"); } }
        
 	 
+    private activationDate: Date;
+    public get ActivationDate() { return this.activationDate; }
+    public set ActivationDate(newValue: Date) { if (this.activationDate != newValue) { this.activationDate = newValue; this.MarkAsDirty("ActivationDate"); } }
+       
+	 
+    private inactiveDate: Date;
+    public get InactiveDate() { return this.inactiveDate; }
+    public set InactiveDate(newValue: Date) { if (this.inactiveDate != newValue) { this.inactiveDate = newValue; this.MarkAsDirty("InactiveDate"); } }
+       
+	 
+    private activationRequestDate: Date;
+    public get ActivationRequestDate() { return this.activationRequestDate; }
+    public set ActivationRequestDate(newValue: Date) { if (this.activationRequestDate != newValue) { this.activationRequestDate = newValue; this.MarkAsDirty("ActivationRequestDate"); } }
+       
+	 
+    private activatedByUserId: string;
+    public get ActivatedByUserId() { return this.activatedByUserId; }
+    public set ActivatedByUserId(newValue: string) { if (this.activatedByUserId != newValue) { this.activatedByUserId = newValue; this.MarkAsDirty("ActivatedByUserId"); } }
+       
+	 
+    private setAsInactiveByUserId: string;
+    public get SetAsInactiveByUserId() { return this.setAsInactiveByUserId; }
+    public set SetAsInactiveByUserId(newValue: string) { if (this.setAsInactiveByUserId != newValue) { this.setAsInactiveByUserId = newValue; this.MarkAsDirty("SetAsInactiveByUserId"); } }
+       
+	 
+    private activationRequestedByUserId: string;
+    public get ActivationRequestedByUserId() { return this.activationRequestedByUserId; }
+    public set ActivationRequestedByUserId(newValue: string) { if (this.activationRequestedByUserId != newValue) { this.activationRequestedByUserId = newValue; this.MarkAsDirty("ActivationRequestedByUserId"); } }
+       
+	 
     private setReActivated: boolean;
     public get SetReActivated() { return this.setReActivated; }
     public set SetReActivated(newValue: boolean) { if (this.setReActivated != newValue) { this.setReActivated = newValue; this.MarkAsDirty("SetReActivated"); } }
@@ -1282,6 +1312,21 @@ export class CustomerPM {
     private customerTenant: number;
     public get CustomerTenant() { return this.customerTenant; }
     public set CustomerTenant(newValue: number) { if (this.customerTenant != newValue) { this.customerTenant = newValue; this.MarkAsDirty("CustomerTenant"); } }
+       
+	 
+    private mainAddressId: string;
+    public get MainAddressId() { return this.mainAddressId; }
+    public set MainAddressId(newValue: string) { if (this.mainAddressId != newValue) { this.mainAddressId = newValue; this.MarkAsDirty("MainAddressId"); } }
+       
+	 
+    private billingAddressId: string;
+    public get BillingAddressId() { return this.billingAddressId; }
+    public set BillingAddressId(newValue: string) { if (this.billingAddressId != newValue) { this.billingAddressId = newValue; this.MarkAsDirty("BillingAddressId"); } }
+       
+	 
+    private gLAccountId: string;
+    public get GLAccountId() { return this.gLAccountId; }
+    public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
        
 	 
 

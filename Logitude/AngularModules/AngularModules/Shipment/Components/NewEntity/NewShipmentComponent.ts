@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool, DateTool, FormatTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -73,13 +73,12 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
             this.CardDependencyProperty1IsList = true;
         }
     }
-
+    public ScreenIsReady: boolean = false;
     ngOnInit() {
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
             res.subscribe(resp => {
-
                 this.BuildFiltersLists();
 
                 if (this.IsCopyFromShipment == false && this.IsBuildFromQuote == false) {
@@ -88,6 +87,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
 
                 this.BuildAdditionalFields();
                 this.LoadAllowedAirline();
+                this.ScreenIsReady = true;
+
             });
         });
 
@@ -112,7 +113,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
         this.myShippingLineService = new ShippingLinePMService();
     }
     LoadAllowedAirline() {
-        if (SessionLocator.TenantManagementPM.IsRestrictedByAirline) {
+        if (SessionLocator.TenantManagementJS.IsRestrictedByAirline) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageCarrierId)) {
                     if (this.EntityPM.TransportModeId == "A") {

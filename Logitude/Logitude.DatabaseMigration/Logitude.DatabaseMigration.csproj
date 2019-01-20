@@ -186,6 +186,330 @@
     <Compile Include="Migrations\201810220655058_ChangeFieldsType_Refs.Designer.cs">
       <DependentUpon>201810220655058_ChangeFieldsType_Refs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810230534351_UpdateFieldLength_ExternalReconciliation.cs" />
+    <Compile Include="Migrations\201810230534351_UpdateFieldLength_ExternalReconciliation.Designer.cs">
+      <DependentUpon>201810230534351_UpdateFieldLength_ExternalReconciliation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810230951486_AddDisplayInQBFieldToDWObjectFields_Rabaia.cs" />
+    <Compile Include="Migrations\201810230951486_AddDisplayInQBFieldToDWObjectFields_Rabaia.Designer.cs">
+      <DependentUpon>201810230951486_AddDisplayInQBFieldToDWObjectFields_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810250535297_AddOtherPartnersToSharedLogisticsSettings_Samar.cs" />
+    <Compile Include="Migrations\201810250535297_AddOtherPartnersToSharedLogisticsSettings_Samar.Designer.cs">
+      <DependentUpon>201810250535297_AddOtherPartnersToSharedLogisticsSettings_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810251004526_AbedAddNewFieldTenantEmailSendingQuotaToTenantTable.cs" />
+    <Compile Include="Migrations\201810251004526_AbedAddNewFieldTenantEmailSendingQuotaToTenantTable.Designer.cs">
+      <DependentUpon>201810251004526_AbedAddNewFieldTenantEmailSendingQuotaToTenantTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810250853052_AddActivationPropertiesToCustomer_Samar.cs" />
+    <Compile Include="Migrations\201810250853052_AddActivationPropertiesToCustomer_Samar.Designer.cs">
+      <DependentUpon>201810250853052_AddActivationPropertiesToCustomer_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810301407197_AddDeclarationWCOXmlToshipmentAdditionalCloudData_Rabaia.cs" />
+    <Compile Include="Migrations\201810301407197_AddDeclarationWCOXmlToshipmentAdditionalCloudData_Rabaia.Designer.cs">
+      <DependentUpon>201810301407197_AddDeclarationWCOXmlToshipmentAdditionalCloudData_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810310725135_AddExternalProjectnumberToTMProject_Maheera.cs" />
+    <Compile Include="Migrations\201810310725135_AddExternalProjectnumberToTMProject_Maheera.Designer.cs">
+      <DependentUpon>201810310725135_AddExternalProjectnumberToTMProject_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810310812037_AddNeedsProratingToTMEmployeeTime_Maheera.cs" />
+    <Compile Include="Migrations\201810310812037_AddNeedsProratingToTMEmployeeTime_Maheera.Designer.cs">
+      <DependentUpon>201810310812037_AddNeedsProratingToTMEmployeeTime_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810311144451_AddNewQuoteSettingsFields.cs" />
+    <Compile Include="Migrations\201810311144451_AddNewQuoteSettingsFields.Designer.cs">
+      <DependentUpon>201810311144451_AddNewQuoteSettingsFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811060740329_JournalMoreDataFieldsMigration.cs" />
+    <Compile Include="Migrations\201811060740329_JournalMoreDataFieldsMigration.Designer.cs">
+      <DependentUpon>201811060740329_JournalMoreDataFieldsMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811070848046_AddTwentyCustomeFieldsOnShipment_Maheera.cs" />
+    <Compile Include="Migrations\201811070848046_AddTwentyCustomeFieldsOnShipment_Maheera.Designer.cs">
+      <DependentUpon>201811070848046_AddTwentyCustomeFieldsOnShipment_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811070816153_GlAccountExcludeFromDeductionReportMigration.cs" />
+    <Compile Include="Migrations\201811070816153_GlAccountExcludeFromDeductionReportMigration.Designer.cs">
+      <DependentUpon>201811070816153_GlAccountExcludeFromDeductionReportMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811071049058_TaxReportSearchFieldsMigration.cs" />
+    <Compile Include="Migrations\201811071049058_TaxReportSearchFieldsMigration.Designer.cs">
+      <DependentUpon>201811071049058_TaxReportSearchFieldsMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811071124306_TaxDeductionReportMenuButtonMigration.cs" />
+    <Compile Include="Migrations\201811071124306_TaxDeductionReportMenuButtonMigration.Designer.cs">
+      <DependentUpon>201811071124306_TaxDeductionReportMenuButtonMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811071254428_TaxDeductionReportCounterMigration.cs" />
+    <Compile Include="Migrations\201811071254428_TaxDeductionReportCounterMigration.Designer.cs">
+      <DependentUpon>201811071254428_TaxDeductionReportCounterMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811071439112_AbedEditFieldSessionTimeoutTableTenantLoginPolicy.cs" />
+    <Compile Include="Migrations\201811071439112_AbedEditFieldSessionTimeoutTableTenantLoginPolicy.Designer.cs">
+      <DependentUpon>201811071439112_AbedEditFieldSessionTimeoutTableTenantLoginPolicy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811081200180_JournalLineExternalReconcileNumberMigration.cs" />
+    <Compile Include="Migrations\201811081200180_JournalLineExternalReconcileNumberMigration.Designer.cs">
+      <DependentUpon>201811081200180_JournalLineExternalReconcileNumberMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811071326248_AddShipmentPackageHarmonize.cs" />
+    <Compile Include="Migrations\201811071326248_AddShipmentPackageHarmonize.Designer.cs">
+      <DependentUpon>201811071326248_AddShipmentPackageHarmonize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811071639283_AddShipmentPackageHarmonizeModification.cs" />
+    <Compile Include="Migrations\201811071639283_AddShipmentPackageHarmonizeModification.Designer.cs">
+      <DependentUpon>201811071639283_AddShipmentPackageHarmonizeModification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.cs" />
+    <Compile Include="Migrations\201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.Designer.cs">
+      <DependentUpon>201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811110707419_SATApprovalDate_ARPayment_ARInvoice.cs" />
+    <Compile Include="Migrations\201811110707419_SATApprovalDate_ARPayment_ARInvoice.Designer.cs">
+      <DependentUpon>201811110707419_SATApprovalDate_ARPayment_ARInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811111058568_AddCategory1and2toDWObjectFields_Rabaia.cs" />
+    <Compile Include="Migrations\201811111058568_AddCategory1and2toDWObjectFields_Rabaia.Designer.cs">
+      <DependentUpon>201811111058568_AddCategory1and2toDWObjectFields_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811111329021_DeletePDFMenuButtonMigration.cs" />
+    <Compile Include="Migrations\201811111329021_DeletePDFMenuButtonMigration.Designer.cs">
+      <DependentUpon>201811111329021_DeletePDFMenuButtonMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811111357332_TaxReportSearchFieldMigration.cs" />
+    <Compile Include="Migrations\201811111357332_TaxReportSearchFieldMigration.Designer.cs">
+      <DependentUpon>201811111357332_TaxReportSearchFieldMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811110910092_AddMinMaxModofication.cs" />
+    <Compile Include="Migrations\201811110910092_AddMinMaxModofication.Designer.cs">
+      <DependentUpon>201811110910092_AddMinMaxModofication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811111132436_AddMinMaxModofication2.cs" />
+    <Compile Include="Migrations\201811111132436_AddMinMaxModofication2.Designer.cs">
+      <DependentUpon>201811111132436_AddMinMaxModofication2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811120753156_AddProjectNumberToShipment_Maheera.cs" />
+    <Compile Include="Migrations\201811120753156_AddProjectNumberToShipment_Maheera.Designer.cs">
+      <DependentUpon>201811120753156_AddProjectNumberToShipment_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811140626215_AddShipmentContainerLastStatusDate.cs" />
+    <Compile Include="Migrations\201811140626215_AddShipmentContainerLastStatusDate.Designer.cs">
+      <DependentUpon>201811140626215_AddShipmentContainerLastStatusDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811140829532_updateField_Journal.cs" />
+    <Compile Include="Migrations\201811140829532_updateField_Journal.Designer.cs">
+      <DependentUpon>201811140829532_updateField_Journal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811180847283_AddPackageReferencesLengthModifications.cs" />
+    <Compile Include="Migrations\201811180847283_AddPackageReferencesLengthModifications.Designer.cs">
+      <DependentUpon>201811180847283_AddPackageReferencesLengthModifications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811180938423_JournalAdditionalDataMigration.cs" />
+    <Compile Include="Migrations\201811180938423_JournalAdditionalDataMigration.Designer.cs">
+      <DependentUpon>201811180938423_JournalAdditionalDataMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811181208402_AddNewShipmentFields.cs" />
+    <Compile Include="Migrations\201811181208402_AddNewShipmentFields.Designer.cs">
+      <DependentUpon>201811181208402_AddNewShipmentFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811181401529_AddFreightPayerAddressId.cs" />
+    <Compile Include="Migrations\201811181401529_AddFreightPayerAddressId.Designer.cs">
+      <DependentUpon>201811181401529_AddFreightPayerAddressId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811181329366_OpenFormatReportMigration.cs" />
+    <Compile Include="Migrations\201811181329366_OpenFormatReportMigration.Designer.cs">
+      <DependentUpon>201811181329366_OpenFormatReportMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811190809263_AddEntityTypeToTicket_Maheera.cs" />
+    <Compile Include="Migrations\201811190809263_AddEntityTypeToTicket_Maheera.Designer.cs">
+      <DependentUpon>201811190809263_AddEntityTypeToTicket_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811191001479_OpenFormatClosedTablesMigration.cs" />
+    <Compile Include="Migrations\201811191001479_OpenFormatClosedTablesMigration.Designer.cs">
+      <DependentUpon>201811191001479_OpenFormatClosedTablesMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811191041580_OpenFormatForeignKeysMigration.cs" />
+    <Compile Include="Migrations\201811191041580_OpenFormatForeignKeysMigration.Designer.cs">
+      <DependentUpon>201811191041580_OpenFormatForeignKeysMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811210833410_OpenFormatUpdatedByUserMigration.cs" />
+    <Compile Include="Migrations\201811210833410_OpenFormatUpdatedByUserMigration.Designer.cs">
+      <DependentUpon>201811210833410_OpenFormatUpdatedByUserMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811211128336_AddSubQueries_Rabaia.cs" />
+    <Compile Include="Migrations\201811211128336_AddSubQueries_Rabaia.Designer.cs">
+      <DependentUpon>201811211128336_AddSubQueries_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811211426578_FixSubQueryTableName_Rabaia.cs" />
+    <Compile Include="Migrations\201811211426578_FixSubQueryTableName_Rabaia.Designer.cs">
+      <DependentUpon>201811211426578_FixSubQueryTableName_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811251315249_NewField_BTE.cs" />
+    <Compile Include="Migrations\201811251315249_NewField_BTE.Designer.cs">
+      <DependentUpon>201811251315249_NewField_BTE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.cs" />
+    <Compile Include="Migrations\201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.Designer.cs">
+      <DependentUpon>201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.cs" />
+    <Compile Include="Migrations\201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.Designer.cs">
+      <DependentUpon>201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811291126498_DeleteOpenFormatCreatedByUserIdQueryColumnMigration.cs" />
+    <Compile Include="Migrations\201811291126498_DeleteOpenFormatCreatedByUserIdQueryColumnMigration.Designer.cs">
+      <DependentUpon>201811291126498_DeleteOpenFormatCreatedByUserIdQueryColumnMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812020847085_AddLocalAddressToTenantLevel_Samar.cs" />
+    <Compile Include="Migrations\201812020847085_AddLocalAddressToTenantLevel_Samar.Designer.cs">
+      <DependentUpon>201812020847085_AddLocalAddressToTenantLevel_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812031004553_JournalAdditionalDataTaxRepostTransmitStatusCodeMigration.cs" />
+    <Compile Include="Migrations\201812031004553_JournalAdditionalDataTaxRepostTransmitStatusCodeMigration.Designer.cs">
+      <DependentUpon>201812031004553_JournalAdditionalDataTaxRepostTransmitStatusCodeMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812041135359_GLAccountMoreDataTotalFutureOpenChequeInLocalCurrencyMigration.cs" />
+    <Compile Include="Migrations\201812041135359_GLAccountMoreDataTotalFutureOpenChequeInLocalCurrencyMigration.Designer.cs">
+      <DependentUpon>201812041135359_GLAccountMoreDataTotalFutureOpenChequeInLocalCurrencyMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812091142449_AddPaymentsGatewayFieldsAndTable_Rabaia.cs" />
+    <Compile Include="Migrations\201812091142449_AddPaymentsGatewayFieldsAndTable_Rabaia.Designer.cs">
+      <DependentUpon>201812091142449_AddPaymentsGatewayFieldsAndTable_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812101205391_AddDefaultSortByToDWObjectTable_Rabaia.cs" />
+    <Compile Include="Migrations\201812101205391_AddDefaultSortByToDWObjectTable_Rabaia.Designer.cs">
+      <DependentUpon>201812101205391_AddDefaultSortByToDWObjectTable_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812110737024_AddLOVAdditionalColumnsToDWObjectField_Rabaia.cs" />
+    <Compile Include="Migrations\201812110737024_AddLOVAdditionalColumnsToDWObjectField_Rabaia.Designer.cs">
+      <DependentUpon>201812110737024_AddLOVAdditionalColumnsToDWObjectField_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812111246336_AbedAddNewTablesCustomerDepositionAndCustomsShipper.cs" />
+    <Compile Include="Migrations\201812111246336_AbedAddNewTablesCustomerDepositionAndCustomsShipper.Designer.cs">
+      <DependentUpon>201812111246336_AbedAddNewTablesCustomerDepositionAndCustomsShipper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812130602472_AbedAddCreateDateToTableCustomerDepositions.cs" />
+    <Compile Include="Migrations\201812130602472_AbedAddCreateDateToTableCustomerDepositions.Designer.cs">
+      <DependentUpon>201812130602472_AbedAddCreateDateToTableCustomerDepositions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812131134518_AbedAddCardToCustomsShippers.cs" />
+    <Compile Include="Migrations\201812131134518_AbedAddCardToCustomsShippers.Designer.cs">
+      <DependentUpon>201812131134518_AbedAddCardToCustomsShippers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812160751200_textcodes_fixes.cs" />
+    <Compile Include="Migrations\201812160751200_textcodes_fixes.Designer.cs">
+      <DependentUpon>201812160751200_textcodes_fixes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812121518263_RenameAWBMessagingStockTable.cs" />
+    <Compile Include="Migrations\201812121518263_RenameAWBMessagingStockTable.Designer.cs">
+      <DependentUpon>201812121518263_RenameAWBMessagingStockTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812161218256_AddMessagingStockType.cs" />
+    <Compile Include="Migrations\201812161218256_AddMessagingStockType.Designer.cs">
+      <DependentUpon>201812161218256_AddMessagingStockType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812130259504_AddPackageCodeSearchFieldInTenantManagement_Maheera.cs" />
+    <Compile Include="Migrations\201812130259504_AddPackageCodeSearchFieldInTenantManagement_Maheera.Designer.cs">
+      <DependentUpon>201812130259504_AddPackageCodeSearchFieldInTenantManagement_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812180645307_textcode_fixes.cs" />
+    <Compile Include="Migrations\201812180645307_textcode_fixes.Designer.cs">
+      <DependentUpon>201812180645307_textcode_fixes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812181345516_textcode_fixes2.cs" />
+    <Compile Include="Migrations\201812181345516_textcode_fixes2.Designer.cs">
+      <DependentUpon>201812181345516_textcode_fixes2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812191006531_AddMoreSettingsToSharedLogistics.cs" />
+    <Compile Include="Migrations\201812191006531_AddMoreSettingsToSharedLogistics.Designer.cs">
+      <DependentUpon>201812191006531_AddMoreSettingsToSharedLogistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812230937269_AbedDeleteFieldFutureDepositionExistFromCustomShipper.cs" />
+    <Compile Include="Migrations\201812230937269_AbedDeleteFieldFutureDepositionExistFromCustomShipper.Designer.cs">
+      <DependentUpon>201812230937269_AbedDeleteFieldFutureDepositionExistFromCustomShipper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812230838425_AddBIReportsDB_Maheera.cs" />
+    <Compile Include="Migrations\201812230838425_AddBIReportsDB_Maheera.Designer.cs">
+      <DependentUpon>201812230838425_AddBIReportsDB_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812231037225_UpdateBIReportType_Maheera.cs" />
+    <Compile Include="Migrations\201812231037225_UpdateBIReportType_Maheera.Designer.cs">
+      <DependentUpon>201812231037225_UpdateBIReportType_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812231253165_AddSharedPropertiesToQueryTable_Samar.cs" />
+    <Compile Include="Migrations\201812231253165_AddSharedPropertiesToQueryTable_Samar.Designer.cs">
+      <DependentUpon>201812231253165_AddSharedPropertiesToQueryTable_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812240733569_RemoveDWSubQueryDWObjectTableRelation_Rabaia.cs" />
+    <Compile Include="Migrations\201812240733569_RemoveDWSubQueryDWObjectTableRelation_Rabaia.Designer.cs">
+      <DependentUpon>201812240733569_RemoveDWSubQueryDWObjectTableRelation_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812240733528_AddSharedUserQueryTable_Samar.cs" />
+    <Compile Include="Migrations\201812240733528_AddSharedUserQueryTable_Samar.Designer.cs">
+      <DependentUpon>201812240733528_AddSharedUserQueryTable_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812241223276_FixDWSubQueryObjectTableRelation_Rabaia.cs" />
+    <Compile Include="Migrations\201812241223276_FixDWSubQueryObjectTableRelation_Rabaia.Designer.cs">
+      <DependentUpon>201812241223276_FixDWSubQueryObjectTableRelation_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812241039017_AbedAddSearchFieldsToCustomsShipper.cs" />
+    <Compile Include="Migrations\201812241039017_AbedAddSearchFieldsToCustomsShipper.Designer.cs">
+      <DependentUpon>201812241039017_AbedAddSearchFieldsToCustomsShipper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812241826236_AddFirstApproveDate.cs" />
+    <Compile Include="Migrations\201812241826236_AddFirstApproveDate.Designer.cs">
+      <DependentUpon>201812241826236_AddFirstApproveDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812260830476_spotlightShowBoolean_Query_Khalid.cs" />
+    <Compile Include="Migrations\201812260830476_spotlightShowBoolean_Query_Khalid.Designer.cs">
+      <DependentUpon>201812260830476_spotlightShowBoolean_Query_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812301245209_userAndObjectFieldNewFieldsMM.cs" />
+    <Compile Include="Migrations\201812301245209_userAndObjectFieldNewFieldsMM.Designer.cs">
+      <DependentUpon>201812301245209_userAndObjectFieldNewFieldsMM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901080552530_JLIsExternalReconcile.cs" />
+    <Compile Include="Migrations\201901080552530_JLIsExternalReconcile.Designer.cs">
+      <DependentUpon>201901080552530_JLIsExternalReconcile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901100656219_AbedAddVolumetricWeighFieldToWarehouseEntryAndReleasePackage.cs" />
+    <Compile Include="Migrations\201901100656219_AbedAddVolumetricWeighFieldToWarehouseEntryAndReleasePackage.Designer.cs">
+      <DependentUpon>201901100656219_AbedAddVolumetricWeighFieldToWarehouseEntryAndReleasePackage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901101120433_AbedAddVolumetricVolumetricWeightUnitCodeFieldToWarehouseEntryAndRelease.cs" />
+    <Compile Include="Migrations\201901101120433_AbedAddVolumetricVolumetricWeightUnitCodeFieldToWarehouseEntryAndRelease.Designer.cs">
+      <DependentUpon>201901101120433_AbedAddVolumetricVolumetricWeightUnitCodeFieldToWarehouseEntryAndRelease.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901091509470_AddContainerNewFields.cs" />
+    <Compile Include="Migrations\201901091509470_AddContainerNewFields.Designer.cs">
+      <DependentUpon>201901091509470_AddContainerNewFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901100753027_JLIsExtReconcileNull2.cs" />
+    <Compile Include="Migrations\201901100753027_JLIsExtReconcileNull2.Designer.cs">
+      <DependentUpon>201901100753027_JLIsExtReconcileNull2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901101033050_DeleteOpenFormatDateTypeMigration.cs" />
+    <Compile Include="Migrations\201901101033050_DeleteOpenFormatDateTypeMigration.Designer.cs">
+      <DependentUpon>201901101033050_DeleteOpenFormatDateTypeMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901121913356_AddAGGridOptionsXMLToBiReportTable_Maheera.cs" />
+    <Compile Include="Migrations\201901121913356_AddAGGridOptionsXMLToBiReportTable_Maheera.Designer.cs">
+      <DependentUpon>201901121913356_AddAGGridOptionsXMLToBiReportTable_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901130712173_DeleteOpenFormatRportDatetypeMigration.cs" />
+    <Compile Include="Migrations\201901130712173_DeleteOpenFormatRportDatetypeMigration.Designer.cs">
+      <DependentUpon>201901130712173_DeleteOpenFormatRportDatetypeMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901130934417_NewField_SoftwareVersion_FullAccountingSettings.cs" />
+    <Compile Include="Migrations\201901130934417_NewField_SoftwareVersion_FullAccountingSettings.Designer.cs">
+      <DependentUpon>201901130934417_NewField_SoftwareVersion_FullAccountingSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901131510531_NewTables_AccountingIntegrityCheck.cs" />
+    <Compile Include="Migrations\201901131510531_NewTables_AccountingIntegrityCheck.Designer.cs">
+      <DependentUpon>201901131510531_NewTables_AccountingIntegrityCheck.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201811060825038_missingCustoms-MM.cs" />
     <Compile Include="Migrations\201811060825038_missingCustoms-MM.Designer.cs">
       <DependentUpon>201811060825038_missingCustoms-MM.cs</DependentUpon>
@@ -193,6 +517,14 @@
     <Compile Include="Migrations\201901071344200_newcusotmsmigrations.cs" />
     <Compile Include="Migrations\201901071344200_newcusotmsmigrations.Designer.cs">
       <DependentUpon>201901071344200_newcusotmsmigrations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901161128192_AddPackageHasContainerExcField_MM_Fix.cs" />
+    <Compile Include="Migrations\201901161128192_AddPackageHasContainerExcField_MM_Fix.Designer.cs">
+      <DependentUpon>201901161128192_AddPackageHasContainerExcField_MM_Fix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901200830579_missingcustomsmigratinos_MM_20012019.cs" />
+    <Compile Include="Migrations\201901200830579_missingcustomsmigratinos_MM_20012019.Designer.cs">
+      <DependentUpon>201901200830579_missingcustomsmigratinos_MM_20012019.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -281,8 +613,257 @@
     <EmbeddedResource Include="Migrations\201811060825038_missingCustoms-MM.resx">
       <DependentUpon>201811060825038_missingCustoms-MM.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811071326248_AddShipmentPackageHarmonize.resx">
+      <DependentUpon>201811071326248_AddShipmentPackageHarmonize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811071639283_AddShipmentPackageHarmonizeModification.resx">
+      <DependentUpon>201811071639283_AddShipmentPackageHarmonizeModification.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901071344200_newcusotmsmigrations.resx">
       <DependentUpon>201901071344200_newcusotmsmigrations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810230534351_UpdateFieldLength_ExternalReconciliation.resx">
+      <DependentUpon>201810230534351_UpdateFieldLength_ExternalReconciliation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810230951486_AddDisplayInQBFieldToDWObjectFields_Rabaia.resx">
+      <DependentUpon>201810230951486_AddDisplayInQBFieldToDWObjectFields_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810250535297_AddOtherPartnersToSharedLogisticsSettings_Samar.resx">
+      <DependentUpon>201810250535297_AddOtherPartnersToSharedLogisticsSettings_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810251004526_AbedAddNewFieldTenantEmailSendingQuotaToTenantTable.resx">
+      <DependentUpon>201810251004526_AbedAddNewFieldTenantEmailSendingQuotaToTenantTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810250853052_AddActivationPropertiesToCustomer_Samar.resx">
+      <DependentUpon>201810250853052_AddActivationPropertiesToCustomer_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810301407197_AddDeclarationWCOXmlToshipmentAdditionalCloudData_Rabaia.resx">
+      <DependentUpon>201810301407197_AddDeclarationWCOXmlToshipmentAdditionalCloudData_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810310725135_AddExternalProjectnumberToTMProject_Maheera.resx">
+      <DependentUpon>201810310725135_AddExternalProjectnumberToTMProject_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810310812037_AddNeedsProratingToTMEmployeeTime_Maheera.resx">
+      <DependentUpon>201810310812037_AddNeedsProratingToTMEmployeeTime_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810311144451_AddNewQuoteSettingsFields.resx">
+      <DependentUpon>201810311144451_AddNewQuoteSettingsFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811060740329_JournalMoreDataFieldsMigration.resx">
+      <DependentUpon>201811060740329_JournalMoreDataFieldsMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811070816153_GlAccountExcludeFromDeductionReportMigration.resx">
+      <DependentUpon>201811070816153_GlAccountExcludeFromDeductionReportMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811071049058_TaxReportSearchFieldsMigration.resx">
+      <DependentUpon>201811071049058_TaxReportSearchFieldsMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811071124306_TaxDeductionReportMenuButtonMigration.resx">
+      <DependentUpon>201811071124306_TaxDeductionReportMenuButtonMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811071254428_TaxDeductionReportCounterMigration.resx">
+      <DependentUpon>201811071254428_TaxDeductionReportCounterMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811071439112_AbedEditFieldSessionTimeoutTableTenantLoginPolicy.resx">
+      <DependentUpon>201811071439112_AbedEditFieldSessionTimeoutTableTenantLoginPolicy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811070848046_AddTwentyCustomeFieldsOnShipment_Maheera.resx">
+      <DependentUpon>201811070848046_AddTwentyCustomeFieldsOnShipment_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811081200180_JournalLineExternalReconcileNumberMigration.resx">
+      <DependentUpon>201811081200180_JournalLineExternalReconcileNumberMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811110707419_SATApprovalDate_ARPayment_ARInvoice.resx">
+      <DependentUpon>201811110707419_SATApprovalDate_ARPayment_ARInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811111058568_AddCategory1and2toDWObjectFields_Rabaia.resx">
+      <DependentUpon>201811111058568_AddCategory1and2toDWObjectFields_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811111329021_DeletePDFMenuButtonMigration.resx">
+      <DependentUpon>201811111329021_DeletePDFMenuButtonMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811111357332_TaxReportSearchFieldMigration.resx">
+      <DependentUpon>201811111357332_TaxReportSearchFieldMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.resx">
+      <DependentUpon>201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811110910092_AddMinMaxModofication.resx">
+      <DependentUpon>201811110910092_AddMinMaxModofication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811111132436_AddMinMaxModofication2.resx">
+      <DependentUpon>201811111132436_AddMinMaxModofication2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811120753156_AddProjectNumberToShipment_Maheera.resx">
+      <DependentUpon>201811120753156_AddProjectNumberToShipment_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811140626215_AddShipmentContainerLastStatusDate.resx">
+      <DependentUpon>201811140626215_AddShipmentContainerLastStatusDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811140829532_updateField_Journal.resx">
+      <DependentUpon>201811140829532_updateField_Journal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811180847283_AddPackageReferencesLengthModifications.resx">
+      <DependentUpon>201811180847283_AddPackageReferencesLengthModifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811180938423_JournalAdditionalDataMigration.resx">
+      <DependentUpon>201811180938423_JournalAdditionalDataMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811181208402_AddNewShipmentFields.resx">
+      <DependentUpon>201811181208402_AddNewShipmentFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811181401529_AddFreightPayerAddressId.resx">
+      <DependentUpon>201811181401529_AddFreightPayerAddressId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811181329366_OpenFormatReportMigration.resx">
+      <DependentUpon>201811181329366_OpenFormatReportMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811190809263_AddEntityTypeToTicket_Maheera.resx">
+      <DependentUpon>201811190809263_AddEntityTypeToTicket_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811191001479_OpenFormatClosedTablesMigration.resx">
+      <DependentUpon>201811191001479_OpenFormatClosedTablesMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811191041580_OpenFormatForeignKeysMigration.resx">
+      <DependentUpon>201811191041580_OpenFormatForeignKeysMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811210833410_OpenFormatUpdatedByUserMigration.resx">
+      <DependentUpon>201811210833410_OpenFormatUpdatedByUserMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811211128336_AddSubQueries_Rabaia.resx">
+      <DependentUpon>201811211128336_AddSubQueries_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811211426578_FixSubQueryTableName_Rabaia.resx">
+      <DependentUpon>201811211426578_FixSubQueryTableName_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.resx">
+      <DependentUpon>201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811251315249_NewField_BTE.resx">
+      <DependentUpon>201811251315249_NewField_BTE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.resx">
+      <DependentUpon>201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811291126498_DeleteOpenFormatCreatedByUserIdQueryColumnMigration.resx">
+      <DependentUpon>201811291126498_DeleteOpenFormatCreatedByUserIdQueryColumnMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812020847085_AddLocalAddressToTenantLevel_Samar.resx">
+      <DependentUpon>201812020847085_AddLocalAddressToTenantLevel_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812031004553_JournalAdditionalDataTaxRepostTransmitStatusCodeMigration.resx">
+      <DependentUpon>201812031004553_JournalAdditionalDataTaxRepostTransmitStatusCodeMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812041135359_GLAccountMoreDataTotalFutureOpenChequeInLocalCurrencyMigration.resx">
+      <DependentUpon>201812041135359_GLAccountMoreDataTotalFutureOpenChequeInLocalCurrencyMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812091142449_AddPaymentsGatewayFieldsAndTable_Rabaia.resx">
+      <DependentUpon>201812091142449_AddPaymentsGatewayFieldsAndTable_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812101205391_AddDefaultSortByToDWObjectTable_Rabaia.resx">
+      <DependentUpon>201812101205391_AddDefaultSortByToDWObjectTable_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812110737024_AddLOVAdditionalColumnsToDWObjectField_Rabaia.resx">
+      <DependentUpon>201812110737024_AddLOVAdditionalColumnsToDWObjectField_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812111246336_AbedAddNewTablesCustomerDepositionAndCustomsShipper.resx">
+      <DependentUpon>201812111246336_AbedAddNewTablesCustomerDepositionAndCustomsShipper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812130602472_AbedAddCreateDateToTableCustomerDepositions.resx">
+      <DependentUpon>201812130602472_AbedAddCreateDateToTableCustomerDepositions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812131134518_AbedAddCardToCustomsShippers.resx">
+      <DependentUpon>201812131134518_AbedAddCardToCustomsShippers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812160751200_textcodes_fixes.resx">
+      <DependentUpon>201812160751200_textcodes_fixes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812121518263_RenameAWBMessagingStockTable.resx">
+      <DependentUpon>201812121518263_RenameAWBMessagingStockTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812161218256_AddMessagingStockType.resx">
+      <DependentUpon>201812161218256_AddMessagingStockType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812130259504_AddPackageCodeSearchFieldInTenantManagement_Maheera.resx">
+      <DependentUpon>201812130259504_AddPackageCodeSearchFieldInTenantManagement_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812180645307_textcode_fixes.resx">
+      <DependentUpon>201812180645307_textcode_fixes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812181345516_textcode_fixes2.resx">
+      <DependentUpon>201812181345516_textcode_fixes2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812191006531_AddMoreSettingsToSharedLogistics.resx">
+      <DependentUpon>201812191006531_AddMoreSettingsToSharedLogistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812230937269_AbedDeleteFieldFutureDepositionExistFromCustomShipper.resx">
+      <DependentUpon>201812230937269_AbedDeleteFieldFutureDepositionExistFromCustomShipper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812230838425_AddBIReportsDB_Maheera.resx">
+      <DependentUpon>201812230838425_AddBIReportsDB_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812231037225_UpdateBIReportType_Maheera.resx">
+      <DependentUpon>201812231037225_UpdateBIReportType_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812231253165_AddSharedPropertiesToQueryTable_Samar.resx">
+      <DependentUpon>201812231253165_AddSharedPropertiesToQueryTable_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812240733569_RemoveDWSubQueryDWObjectTableRelation_Rabaia.resx">
+      <DependentUpon>201812240733569_RemoveDWSubQueryDWObjectTableRelation_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812240733528_AddSharedUserQueryTable_Samar.resx">
+      <DependentUpon>201812240733528_AddSharedUserQueryTable_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812241223276_FixDWSubQueryObjectTableRelation_Rabaia.resx">
+      <DependentUpon>201812241223276_FixDWSubQueryObjectTableRelation_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812241039017_AbedAddSearchFieldsToCustomsShipper.resx">
+      <DependentUpon>201812241039017_AbedAddSearchFieldsToCustomsShipper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812241826236_AddFirstApproveDate.resx">
+      <DependentUpon>201812241826236_AddFirstApproveDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812260830476_spotlightShowBoolean_Query_Khalid.resx">
+      <DependentUpon>201812260830476_spotlightShowBoolean_Query_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812301245209_userAndObjectFieldNewFieldsMM.resx">
+      <DependentUpon>201812301245209_userAndObjectFieldNewFieldsMM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901080552530_JLIsExternalReconcile.resx">
+      <DependentUpon>201901080552530_JLIsExternalReconcile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901091509470_AddContainerNewFields.resx">
+      <DependentUpon>201901091509470_AddContainerNewFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901100753027_JLIsExtReconcileNull2.resx">
+      <DependentUpon>201901100753027_JLIsExtReconcileNull2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901101033050_DeleteOpenFormatDateTypeMigration.resx">
+      <DependentUpon>201901101033050_DeleteOpenFormatDateTypeMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901100656219_AbedAddVolumetricWeighFieldToWarehouseEntryAndReleasePackage.resx">
+      <DependentUpon>201901100656219_AbedAddVolumetricWeighFieldToWarehouseEntryAndReleasePackage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901101120433_AbedAddVolumetricVolumetricWeightUnitCodeFieldToWarehouseEntryAndRelease.resx">
+      <DependentUpon>201901101120433_AbedAddVolumetricVolumetricWeightUnitCodeFieldToWarehouseEntryAndRelease.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901130712173_DeleteOpenFormatRportDatetypeMigration.resx">
+      <DependentUpon>201901130712173_DeleteOpenFormatRportDatetypeMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901121913356_AddAGGridOptionsXMLToBiReportTable_Maheera.resx">
+      <DependentUpon>201901121913356_AddAGGridOptionsXMLToBiReportTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901130934417_NewField_SoftwareVersion_FullAccountingSettings.resx">
+      <DependentUpon>201901130934417_NewField_SoftwareVersion_FullAccountingSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901131510531_NewTables_AccountingIntegrityCheck.resx">
+      <DependentUpon>201901131510531_NewTables_AccountingIntegrityCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901161128192_AddPackageHasContainerExcField_MM_Fix.resx">
+      <DependentUpon>201901161128192_AddPackageHasContainerExcField_MM_Fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901200830579_missingcustomsmigratinos_MM_20012019.resx">
+      <DependentUpon>201901200830579_missingcustomsmigratinos_MM_20012019.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

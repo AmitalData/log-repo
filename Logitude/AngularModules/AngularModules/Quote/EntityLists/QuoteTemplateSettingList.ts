@@ -168,4 +168,10 @@ export class QuoteTemplateSettingList {
 
         ShowChargeNotePackages: boolean;
         ShowChargeNoteContainers: boolean;
+
+
+        ShowSaleMaxMinAmountPackages: boolean;
+        ShowSaleMaxMinAmountContainers: boolean;
+
+
 }     

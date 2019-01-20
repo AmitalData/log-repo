@@ -57,6 +57,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("TenantManagmentPrivateLabels", "READ", authToken.Tenant);
 				
 		    	IGlobalContext MyContext = GlobalContext.GetContext();
 				TenantManagmentPrivateLabelsRepository  tenantManagmentPrivateLabelsRepository = new TenantManagmentPrivateLabelsRepository(MyContext);
@@ -94,6 +95,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("TenantManagmentPrivateLabels", "READ", authToken.Tenant);
 
 
 				IGlobalContext MyContext = GlobalContext.GetContext();
@@ -126,7 +128,9 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 				int tenant = authToken.Tenant;
 				if(filters.Tenant != null)
 					tenant = filters.Tenant.Value;
-				
+				                
+				SecurityUtility.CheckContactFeature("TenantManagmentPrivateLabels", "READ", authToken.Tenant);
+	
                 QueryOperations queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "TenantManagmentPrivateLabels",

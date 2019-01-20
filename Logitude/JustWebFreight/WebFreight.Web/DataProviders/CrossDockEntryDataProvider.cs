@@ -50,8 +50,9 @@ namespace WebFreight.Web.DataProviders
         public string ShipperAddress { get; set; }
         public string ConsigneeName { get; set; }
         public string ConsigneeAddress { get; set; }
-     
-        
+
+        public string ShipmentNumber { get; set; }
+        public string EntryNumber { get; set; }
     }
 
 
@@ -69,7 +70,10 @@ namespace WebFreight.Web.DataProviders
         public string DescriptionOfGoods { get; set; }
         public string ContainerNumber { get; set; }
         public string Seal { get; set; }
-        
+
+        public double? VolumetricWeight { get; set; }
+        public string VolumetricWeightUnit { get; set; }
+
 
     }
 }

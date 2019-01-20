@@ -1,4 +1,4 @@
-﻿
+
 declare var System: any;
 declare var window: any;
 import {UserRolesItemClass} from './EditTabs/UserRolesTabComponent';
@@ -347,7 +347,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
 
     SetUiProperties_Visibility() {
 
-        if (InfraSettings.TenantManagementPM.ManageLicencesPerUser) this.LicencedUserVisible = true;
+        if (SessionLocator.TenantManagementJS.ManageLicencesPerUser) this.LicencedUserVisible = true;
         else this.LicencedUserVisible = false;
 
 

@@ -1031,7 +1031,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<ContactList> GetContactListsFollowShipment(List<string> trackedIds, int tenant)
         {
-            IQueryable<Contact> contacts = repository.GetContactListsForShipmentFollow(trackedIds, tenant);
+            IQueryable<Contact> contacts = repository.GetContactsByIds(trackedIds, tenant);
 
             IQueryable<ContactList> contactLists = (from a in contacts
                                                     where trackedIds.Contains(a.Id)
@@ -1066,28 +1066,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return contactLists;
         }
 
-        public List<ContactList> GetContactEmailsListsByIds(List<string> trackedIds, int tenant)
+        public List<string> GetContactEmailsListsByIds(List<string> contactIds, int tenant)
         {
-
-
-            IQueryable<Contact> contacts = repository.GetContactListsForShipmentFollow(trackedIds, tenant);
-
-            List<ContactList> contactLists = (from a in contacts
-                                              where trackedIds.Contains(a.Id)
-                                              select new ContactList()
-                                              {
-
-                                                  Email = a.Email,
-                                                  Id = a.Id,
-                                                  CompanyName = a.CompanyName,
-
-                                              }).ToList();
-            return contactLists;
+            IQueryable<Contact> contacts = repository.GetContactsByIds(contactIds, tenant);
+            List<string> contactEmailLists = (from a in contacts
+                                              where contactIds.Contains(a.Id) && !a.InActive
+                                             select a.Email).ToList();
+            return contactEmailLists;
         }
+
+
+
 
         public List<ContactList> GetContactListsByIds(List<string> trackedIds, int tenant)
         {
-            IQueryable<Contact> contacts = repository.GetContactListsForShipmentFollow(trackedIds, tenant);
+            IQueryable<Contact> contacts = repository.GetContactsByIds(trackedIds, tenant);
 
             List<ContactList> contactLists = (from a in contacts
                                               where trackedIds.Contains(a.Id)
@@ -1406,7 +1399,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public IQueryable<ContactList> GetContactListsByListIdsForTenantReport(List<string> contactIds)
         {
             IQueryable<ContactList> contactLists = (from a in repository.context.Contacts
-                                                    where contactIds.Contains(a.Id)
+                                                    where contactIds.Contains(a.Id) && a.UserType == "R"
                                                     select new ContactList()
                                                     {
                                                         Id = a.Id,

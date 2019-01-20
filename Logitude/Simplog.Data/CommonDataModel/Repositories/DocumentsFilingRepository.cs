@@ -40,11 +40,20 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return d;
         }
 
+
         public List<DocumentsFiling> GetDocumentsFilingsByEntityId(string entityId, int tenant)
         {
             List<DocumentsFiling> externalDocuments = (from a in context.DocumentsFilings.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
                                                   where (a.EntityId == entityId || a.ChildEntityId == entityId)  && a.Tenant == tenant
                                                   select a).ToList();
+            return externalDocuments;
+        }
+
+        public List<DocumentsFiling> GetRequestedDocumentsFilingPMsByEntityId(string entityId, int tenant)
+        {
+            List<DocumentsFiling> externalDocuments = (from a in context.DocumentsFilings.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
+                                                       where (a.EntityId == entityId) && a.Tenant == tenant && (a.IsDigitalSignRequired == true || a.IsRequested == true)
+                                                       select a).ToList();
             return externalDocuments;
         }
 

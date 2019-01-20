@@ -1,5 +1,9 @@
-﻿
+
 <style type="text/css">
+    button:active{
+        color: red;
+        background:blue
+    }
     .DeparturesArrivalsRow td label {
         width: 100%;
         font-size: 16px;
@@ -119,16 +123,6 @@
                                                 <ToggleButtonItem id="{{'NEWHOUSE' | IdGeneratorPipe}}" [Text]="'House'" (click)="RunNewShipmentWizard('H')"></ToggleButtonItem>
                                                 <ToggleButtonItem id="{{'NEWMASTER' | IdGeneratorPipe}}" [Text]="'Master'" (click)="RunNewShipmentWizard('C')"></ToggleButtonItem>
                                             </ToggleButton>
-
-                                            <!--<div tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
-                                                <label>New</label>
-                                                <img src="./Images/ToggleIcon.png" />
-                                                <div class="ToggleButtonMenu" style="width: 80px">
-                                                    <button (click)="RunNewShipmentWizard('D')">Direct</button>
-                                                    <button (click)="RunNewShipmentWizard('H')">House</button>
-                                                    <button (click)="RunNewShipmentWizard('C')">Master</button>
-                                                </div>
-                                            </div>-->
                                         </div>
                                         <div *ngIf="IsCloudDeployment == true">
                                             <p class="QueryLink" id="{{'SHIPMENTS-Q' | IdGeneratorPipe}}" (click)="ViewShipmentQuery('Shipments')">{{'Shipment.Q.Shipments' | TextCodeTranslationPipe}}</p>
@@ -198,10 +192,13 @@
                                         <div *ngIf="IsCloudDeployment == true">
                                             <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ExpDepNotTransmitted')" *ngIf="IsQueryVisible_ExpectedDeparturesNotTransmitted">{{'Shipment.Q.ExpectedDeparturesNotTransmitted' | TextCodeTranslationPipe}}</p>
                                             <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ShippingInstructionsLast7Days')" *ngIf="IsQueryVisible_ShippingInstructionsLast7Days">{{'Shipment.Q.ShippingInstructionsLast7Days' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ContainerStatusLast7Days')" *ngIf="IsQueryVisible_ContainerStatusLast7Days">{{'Shipment.Q.ContainerStatusLast7Days' | TextCodeTranslationPipe}}</p>
+
                                         </div>
                                         <div *ngIf="IsCloudDeployment == false">
                                             <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ExpDepNotTransmitted')" *ngIf="IsQueryVisible_ExpectedDeparturesNotTransmitted">{{'Shipment.Q.ExpectedDeparturesNotTransmitted' | TextCodeTranslationPipe}} ({{ExpectedDeparturesNotTransmittedCount}})</p>
                                             <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ShippingInstructionsLast7Days')" *ngIf="IsQueryVisible_ShippingInstructionsLast7Days">{{'Shipment.Q.ShippingInstructionsLast7Days' | TextCodeTranslationPipe}} ({{ShippingInstructionsLast7DaysCount}})</p>
+                                            <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ContainerStatusLast7Days')" *ngIf="IsQueryVisible_ContainerStatusLast7Days">{{'Shipment.Q.ContainerStatusLast7Days' | TextCodeTranslationPipe}} ({{ContainerStatusLast7DaysCount}})</p>
                                         </div>
                                     </div>
 

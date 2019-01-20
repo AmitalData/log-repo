@@ -7,6 +7,7 @@ namespace WebFreight.Web.DataProviders
 {
     public class InvoiceDataProvider : BaseDataProvider
     {
+        public string TenantStateCode { get; set; }
         public string BranchSignature { get; set; }
         public string PackageDetails { get; set; }
         public string Type { get; set; }
@@ -31,6 +32,7 @@ namespace WebFreight.Web.DataProviders
         public string BillToVatNumber { get; set; }
         public string BillToCustomerCode { get; set; }
         public string BillToTelephone { get; set; }
+        public string BillToStateCode { get; set; }
         public string DebitAccount { get; set; }
         public string AccountingNumber { get; set; }
         public string InvoiceDate { get; set; }
@@ -193,8 +195,14 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeRef1 { get; set; }
         public string ConsigneeRef2 { get; set; }
         public string FromLocation { get; set; }
+        public string FromLocation_PortName { get; set; }
+        public string FromLocation_CountryName { get; set; }
         public string ToLocation { get; set; }
+        public string ToLocation_PortName { get; set; }
+        public string ToLocation_CountryName { get; set; }
         public string FinalLocation { get; set; }
+        public string FinalLocation_PortName { get; set; }
+        public string FinalLocation_CountryName { get; set; }
         public string OriginalInvoiceNumber { get; set; }
         public string OriginalInvoiceNumber_label { get; set; }
         public string LocalCurrencyExchangeRates { get; set; }
@@ -229,6 +237,27 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField18 { get; set; }
         public string ShipmentField19 { get; set; }
         public string ShipmentField20 { get; set; }
+        public string ShipmentField21 { get; set; }
+        public string ShipmentField22 { get; set; }
+        public string ShipmentField23 { get; set; }
+        public string ShipmentField24 { get; set; }
+        public string ShipmentField25 { get; set; }
+        public string ShipmentField26 { get; set; }
+        public string ShipmentField27 { get; set; }
+        public string ShipmentField28 { get; set; }
+        public string ShipmentField29 { get; set; }
+        public string ShipmentField30 { get; set; }
+        public string ShipmentField31 { get; set; }
+        public string ShipmentField32 { get; set; }
+        public string ShipmentField33 { get; set; }
+        public string ShipmentField34 { get; set; }
+        public string ShipmentField35 { get; set; }
+        public string ShipmentField36 { get; set; }
+        public string ShipmentField37 { get; set; }
+        public string ShipmentField38 { get; set; }
+        public string ShipmentField39 { get; set; }
+        public string ShipmentField40 { get; set; }
+
         public string ARInvoiceField1 { get; set; }
         public string ARInvoiceField2 { get; set; }
         public string ARInvoiceField3 { get; set; }
@@ -385,6 +414,9 @@ namespace WebFreight.Web.DataProviders
 
         public double TotalProfitCurr { get; set; }
         
+        public string Notify1Address { get; set; }
+        public string Notify1VATNumber { get; set; }
+
         public class InvoicesReport
         {
             public string InvoiceType { get; set; }
@@ -419,6 +451,8 @@ namespace WebFreight.Web.DataProviders
             public string ARInvoiceField8 { get; set; }
             public string ARInvoiceField9 { get; set; }
             public string ARInvoiceField10 { get; set; }
+
+            public string Salesman { get; set; }
         }
 
         public class InvoiceTotals

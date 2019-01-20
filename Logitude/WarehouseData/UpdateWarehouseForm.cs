@@ -146,7 +146,7 @@ namespace WarehouseData
                                 SetControlPropertyValue("Text", "Updating ...", table.DBTableName, "Dim");
                                 SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "Dim");
 
-                                warehouseHelper.ExecuteScript(table.IncrementalScriptName , "IncrementalWarehouse", destinationConnectionString);
+                                warehouseHelper.ExecuteScript("IncrementalWarehouse", destinationConnectionString , table);
 
                                 stopWatchDimensionsTable.Stop();
                                 TimeSpan stopWatchDimensionsTableTs = stopWatchDimensionsTable.Elapsed;
@@ -172,7 +172,7 @@ namespace WarehouseData
                                 }
 
                                 warehouseHelper.RemoveDataFromFactShipment(table, destinationConnectionString);
-                                warehouseHelper.ExecuteScript(table.IncrementalScriptName, "IncrementalWarehouse", destinationConnectionString);
+                                warehouseHelper.ExecuteScript( "IncrementalWarehouse", destinationConnectionString, table);
 
 
                                 if (table.TableName == "Shipment")

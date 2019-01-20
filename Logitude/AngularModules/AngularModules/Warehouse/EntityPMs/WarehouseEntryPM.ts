@@ -359,6 +359,11 @@ export class WarehouseEntryPM {
     public set ToPartnerId(newValue: string) { if (this.toPartnerId != newValue) { this.toPartnerId = newValue; this.MarkAsDirty("ToPartnerId"); } }
        
 	 
+    private chargeableWeightUnitCode: string;
+    public get ChargeableWeightUnitCode() { return this.chargeableWeightUnitCode; }
+    public set ChargeableWeightUnitCode(newValue: string) { if (this.chargeableWeightUnitCode != newValue) { this.chargeableWeightUnitCode = newValue; this.MarkAsDirty("ChargeableWeightUnitCode"); } }
+       
+	 
 
     public OldEntityPM: WarehouseEntryPM;
 		

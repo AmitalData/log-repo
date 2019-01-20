@@ -273,7 +273,7 @@ export class BankAccountToRefundComponent
 
             if (value != null) {
                 this.BankCode = value.BankCode;
-                this.AccountBranch = value.BranchCode + "," + value.BankCode;
+                this.AccountBranch = Number(value.BranchCode).toString() + "," + value.BankCode;
                 this.AccountNumber = value.AccountNumber;
             }
             else {

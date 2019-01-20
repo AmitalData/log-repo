@@ -80,5 +80,22 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public List<CustomField> CustomFields { get; set; }
     
     public List<House> Houses { get; set; }
+    
+    public bool IsOperationalClosed { get; set; }
+    
+    public Vessel Vessel { get; set; }
+    
+    public DateTime? MainCarriageATA { get; set; }
+    
+    public DateTime? MainCarriageATD { get; set; }
+    
+    public bool IsAccountingClosed { get; set; }
+    
+    public List<Receivable> Receivables { get; set; }
+    
+    public List<Payable> Payables { get; set; }
+
+    public  string  ComputingPartnerCode { get; set; }
+
     }
 } 

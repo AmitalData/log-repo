@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {ApiCredintialsPM} from '../../../../Infrastructure/EntityPMs/ApiCredintialsPM';
 import {ApiCredintialsPMService} from '../../../../Infrastructure/Services/StandardPMs/ApiCredintialsPMService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -173,12 +173,12 @@ export class ApiCredintialsComponent extends BaseComponent {
         }
     }
 
-    get ComputingPartnerId() { return this.EntityPM.ComputingPartnerId; }
-    set ComputingPartnerId(value: string) {
-        if (this.EntityPM.ComputingPartnerId != value) {
-            this.EntityPM.ComputingPartnerId = value;
-        }
-    }
+    //get ComputingPartnerId() { return this.EntityPM.ComputingPartnerId; }
+    //set ComputingPartnerId(value: string) {
+    //    if (this.EntityPM.ComputingPartnerId != value) {
+    //        this.EntityPM.ComputingPartnerId = value;
+    //    }
+    //}
     
 
     GeneratePrimaryKeyClicked() {

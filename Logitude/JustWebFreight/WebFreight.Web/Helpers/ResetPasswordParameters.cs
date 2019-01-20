@@ -18,6 +18,15 @@ namespace WebFreight.Web.Helpers
         public string MobilePageType { get; set; }
         public string VerificationCode { get; set; }
 
+
         
+        public bool IsChampLogin { get; set; }
+        public bool IsMobile { get; set; }
+        public string ClientType { get; set; }
+        public string CaptchaKey { get; set; }
+        public string CaptchaCode { get; set; }
+
+
+
     }
 }

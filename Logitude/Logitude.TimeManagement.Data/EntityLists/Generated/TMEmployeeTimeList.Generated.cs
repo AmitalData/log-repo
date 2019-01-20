@@ -52,6 +52,8 @@ namespace Logitude.TimeManagement.Data.EntityLists
        public double ProratedDuration  { get; set; }
        [DataMember]
        public double FullDuration  { get; set; }
+       [DataMember]
+       public bool NeedsProrating  { get; set; }
    }
 
 }

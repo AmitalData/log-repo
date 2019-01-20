@@ -206,7 +206,18 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             IQueryable<TrailReportTemp> _QUnionAllCurrSummary =
                 (qTempTotal).Union(qTempTrans);
-
+            bool UnionreturnsDistinctvalues = true;
+            if (UnionreturnsDistinctvalues)
+            {
+                _QUnionAllCurrSummary =
+                    (qTempTotal).Concat(qTempTrans);
+            }
+            string debugAccId = "";//"1-216621"
+            if (!string.IsNullOrWhiteSpace(debugAccId))
+            {
+                var myData = _QUnionAllCurrSummary.Where(r => r.AccountId_COAType == debugAccId).ToList();
+            }
+            
 
             IQueryable<RevenueExpenseReportM> qAllMoneySideRevenueExpenseReportM
                 =

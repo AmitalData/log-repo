@@ -35,6 +35,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Height).HasColumnName("Height");
             this.Property(t => t.Length).HasColumnName("Length");
             this.Property(t => t.OriginalShipmentPackageId).HasColumnName("OriginalShipmentPackageId");
+            this.Property(t => t.IsMultiHarmonize).HasColumnName("IsMultiHarmonize");
 
             // Relationships
             this.HasOptional(t => t.PackageType).WithMany().HasForeignKey(d => d.PackageTypeId);

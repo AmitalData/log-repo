@@ -153,7 +153,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             RatesTablePM myResult = null;
 
             RatesTable lastRecord =
-                (from r in repository.context.RatesTable
+                (from r in repository.context.RatesTable.Include("ForeignCurrency")
                  where r.Tenant == tenant
                  && r.ForeignCurrencyId == foreignCurrencyId
                  && r.BaseCurrencyId == baseCurrencyId
@@ -164,7 +164,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             if (lastRecord == null)
             {
                 lastRecord =
-                    (from r in repository.context.RatesTable
+                    (from r in repository.context.RatesTable.Include("ForeignCurrency")
                      where r.Tenant == tenant
                      && r.ForeignCurrencyId == foreignCurrencyId
                      && r.BaseCurrencyId == baseCurrencyId
@@ -176,7 +176,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 DateTime? lastExistingDateTime = lastRecord.ValueDate;
                 RatesTable resultRecord =
-                    (from r in repository.context.RatesTable
+                    (from r in repository.context.RatesTable.Include("ForeignCurrency")
                      where r.Tenant == tenant
                      && r.ForeignCurrencyId == foreignCurrencyId
                      && r.BaseCurrencyId == baseCurrencyId
