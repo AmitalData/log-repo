@@ -164,7 +164,7 @@ namespace Logitude.Server.Tools
                 AddStepTrace("Trace");
                 Validate(entityPM);
                 AddStepTrace("Validate");
-                if (ErrorsList.Count > 0)
+                if (ErrorsList!=null && ErrorsList.Count > 0)
                 {
                     if (ThrowValidationException)
                     {
