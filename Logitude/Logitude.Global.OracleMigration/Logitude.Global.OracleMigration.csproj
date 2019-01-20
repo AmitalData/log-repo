@@ -74,6 +74,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalModel\GlobalContext.cs" />
+    <Compile Include="Migrations\201901200943267_missingGlobalMigraions.cs" />
+    <Compile Include="Migrations\201901200943267_missingGlobalMigraions.Designer.cs">
+      <DependentUpon>201901200943267_missingGlobalMigraions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -92,6 +96,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201901200943267_missingGlobalMigraions.resx">
+      <DependentUpon>201901200943267_missingGlobalMigraions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
