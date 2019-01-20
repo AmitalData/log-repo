@@ -742,88 +742,103 @@ export class NewViewComponent {
     }
 
     DeleteButtonClicked() {
-        if (this.EntityPM.UserId == SessionInfo.LoggedUserId) {
-            this.GeneralEntitiesArgs = new GeneralEntitiesArgs();
-            this.GeneralEntitiesArgs.RemovedQueryColumnsPMs = [];
-            this.GeneralEntitiesArgs.RemovedQueryFilters = [];
-            var ObjectTable = window.ObjectTables.filter(a => a.Name == this.CurrentObjectTable)[0];
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.DeletQuery");
 
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Title = TextCodeTranslator.Translate("General.O.DeletQuery");
+        if (this.EntityPM.UserId == SessionInfo.LoggedUserId) {
             confirmWindow.Show(TextCodeTranslator.Translate("General.M.WantToDeleteThisQuery"));
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
-                    SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-                    this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
-                    var myQCService: QueryColumnsPMService = new QueryColumnsPMService();
-                    myQCService.setServiceArgs(this.serviceArgs);
-                    myQCService.GetQueryColumnPMs(SessionInfo.LoggedUserTenant, this.EntityPM.Id, ObjectTable.Id, SessionInfo.LoggedUserId).subscribe(myResult => {
-                        var queryColumns = myResult;
-
-                        queryColumns.forEach((column, key) => {
-                            this.GeneralEntitiesArgs.RemovedQueryColumnsPMs.push(column);
-                        });
-
-                        if (this.myAdvancedQueryFiltersPMService == null) {
-                            this.myAdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
-                        }
-
-                        this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
-                        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, this.EntityPM.Id).subscribe(myResult => {
-                            if (myResult == null) {
-                                this.AdvancedQueryFilterPMs = [];
-                            }
-
-                            else {
-                                this.AdvancedQueryFilterPMs = myResult;
-                                var advanceQueryFilters = this.AdvancedQueryFilterPMs.filter(c => c.QueryId == this.EntityPM.Id);
-                                advanceQueryFilters.forEach((filter, key) => {
-                                    this.GeneralEntitiesArgs.RemovedQueryFilters.push(filter);
-                                });
-                            }
-
-                            var query = window.Queries.filter(q => q.Id == this.EntityPM.Id)[0];
-                            var myService: QueriesPMService = new QueriesPMService();
-                            myService.setServiceArgs(this.serviceArgs);
-                            var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
-                            myGeneralService.setServiceArgs(this.serviceArgs);
-                            myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
-                                myService.delete(query).subscribe(myResult => {
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
-                                    window.Queries = window.Queries.filter(a => a.Id != query.Id);
-                                    var ObjectTable = window.ObjectTables.filter(x => x.Name === this.CurrentObjectTable)[0];
-                                    var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];
-
-                                    SessionLocator.CurrentSession.CloseCurrentWindow();
-                                });
-                            });
-                        });
-                    });
+                    this.DoDelete(SessionInfo.LoggedUserId);
                 }
             });
         }
 
         else {
-            var myService: QueriesPMService = new QueriesPMService();
-            myService.setServiceArgs(this.serviceArgs);
-
-            var sharedUserQuery: SharedUserQueryPM = this.EntityPM.SharedUserQueries.filter(s => s.UserId == SessionInfo.LoggedUserId)[0];
-            var index = this.EntityPM.SharedUserQueries.indexOf(sharedUserQuery);
-
-            if (index > -1) {
-                this.EntityPM.RemoveSharedUserQueryPM(sharedUserQuery);
-            }
-
-            myService.update(this.EntityPM).subscribe(myResult1 => {
-                window.Queries = window.Queries.filter(a => a.Id != this.EntityPM.Id);
-                var ObjectTable = window.ObjectTables.filter(x => x.Name === this.CurrentObjectTable)[0];
-                var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];
-
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+            confirmWindow.Show("This view has been shared with users other than you. Are you sure you want to delete it?");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.DoDelete(this.EntityPM.SharedByUserId);
+                }
             });
         }
     }
-    
+    private DoDelete(userId: string) {
+        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        var query = window.Queries.filter(q => q.Id == this.EntityPM.Id)[0];
+
+        var myService: QueriesPMService = new QueriesPMService();
+        myService.setServiceArgs(this.serviceArgs);
+        var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
+        myService.delete(query, userId).subscribe(myResult => {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            window.Queries = window.Queries.filter(a => a.Id != query.Id);
+            var ObjectTable = window.ObjectTables.filter(x => x.Name === this.CurrentObjectTable)[0];
+            var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];
+
+            SessionLocator.CurrentSession.CloseCurrentWindow();
+        });
+
+
+
+
+
+
+
+
+
+        //this.GeneralEntitiesArgs = new GeneralEntitiesArgs();
+        //this.GeneralEntitiesArgs.RemovedQueryColumnsPMs = [];
+        //this.GeneralEntitiesArgs.RemovedQueryFilters = [];
+        //var ObjectTable = window.ObjectTables.filter(a => a.Name == this.CurrentObjectTable)[0];
+
+        //SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        //this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
+        //var myQCService: QueryColumnsPMService = new QueryColumnsPMService();
+        //myQCService.setServiceArgs(this.serviceArgs);
+        //myQCService.GetQueryColumnPMs(SessionInfo.LoggedUserTenant, this.EntityPM.Id, ObjectTable.Id, userId).subscribe(myResult => {
+        //    var queryColumns = myResult;
+
+        //    queryColumns.forEach((column, key) => {
+        //        this.GeneralEntitiesArgs.RemovedQueryColumnsPMs.push(column);
+        //    });
+
+        //    if (this.myAdvancedQueryFiltersPMService == null) {
+        //        this.myAdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
+        //    }
+
+        //    this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
+        //    this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, userId, this.EntityPM.Id).subscribe(myResult => {
+        //        if (myResult == null) {
+        //            this.AdvancedQueryFilterPMs = [];
+        //        }
+
+        //        else {
+        //            this.AdvancedQueryFilterPMs = myResult;
+        //            var advanceQueryFilters = this.AdvancedQueryFilterPMs.filter(c => c.QueryId == this.EntityPM.Id);
+        //            advanceQueryFilters.forEach((filter, key) => {
+        //                this.GeneralEntitiesArgs.RemovedQueryFilters.push(filter);
+        //            });
+        //        }
+
+        //        var query = window.Queries.filter(q => q.Id == this.EntityPM.Id)[0];
+        //        var myService: QueriesPMService = new QueriesPMService();
+        //        myService.setServiceArgs(this.serviceArgs);
+        //        var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
+        //        myGeneralService.setServiceArgs(this.serviceArgs);
+        //        myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
+        //            myService.delete(query).subscribe(myResult => {
+        //                SessionLocator.CurrentSession.StopBusyIndicator();
+        //                window.Queries = window.Queries.filter(a => a.Id != query.Id);
+        //                var ObjectTable = window.ObjectTables.filter(x => x.Name === this.CurrentObjectTable)[0];
+        //                var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];
+
+        //                SessionLocator.CurrentSession.CloseCurrentWindow();
+        //            });
+        //        });
+        //    });
+        //});
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     NEWallFilterFieldsClass: FilterFieldsClass;
@@ -862,7 +877,6 @@ export class NewViewComponent {
         this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryID).subscribe(myResult => {
             this.GetFiltersComplete(myResult, QueryID);
         });
-
     }
 
     GetFiltersComplete(myResult: any, QueryID: any) {
@@ -1371,6 +1385,10 @@ export class NewViewComponent {
                         this.EntityPM.SharedWithAll = true;
                         this.EntityPM.SharedWithSpecificUsers = false;
 
+                        if (AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId)) {
+                            this.EntityPM.SharedByUserId = SessionInfo.LoggedUserId;
+                        }
+
                         if (this.EntityPM.SharedUserQueries != null && this.EntityPM.SharedUserQueries.length > 0) {
                             for (var i = this.EntityPM.SharedUserQueries.length - 1; i >= 0; i--) {
                                 var item = this.EntityPM.SharedUserQueries[i];
@@ -1383,6 +1401,10 @@ export class NewViewComponent {
                     case "SPF": {
                         this.EntityPM.SharedWithAll = false;
                         this.EntityPM.SharedWithSpecificUsers = true;
+
+                        if (AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId)) {
+                            this.EntityPM.SharedByUserId = SessionInfo.LoggedUserId;
+                        }
                         break;
                     }
 

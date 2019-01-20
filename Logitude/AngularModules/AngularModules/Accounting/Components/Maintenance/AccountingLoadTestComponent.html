@@ -1,0 +1,130 @@
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table class="FixedTable" >
+                
+
+                    <tr class="FormFieldRow">
+                        <td style="width: 155px;">
+                            <LogLabel [ObjectFieldName]="'ActionType'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Action'"></LogLabel>
+                        </td>
+
+                        <td style="width: 205px;">
+                            <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 205px; cursor:pointer;" #selectControl (change)="ActionItemSelectionChanged(selectControl)">
+                                <option *ngFor="let c of ActionTypeItems" [value]="c.Id" [selected]="c.Id==SelectedIndex">{{c.Name}}</option>
+                            </select>
+                        </td>
+
+                        <td style="width: 155px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 205px;">
+                            <div></div>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+
+                    </tr>
+
+
+
+
+
+                    <tr *ngIf="!IsCreateJournalEvery" class="FormFieldRow">
+                        <td style="width: 155px;">
+                            <LogLabel [ObjectFieldName]="'Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Amount'"></LogLabel>
+                        </td>
+
+                        <td style="width: 205px;">
+                            <LogTextBox [ObjectFieldName]="'Amount'" [Text]="Amount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td style="width: 155px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 205px;">
+                            <div></div>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+
+
+                    </tr>
+                    <tr *ngIf="IsCreateJournalEvery" class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'EveryMinute'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'EveryMinute'"></LogLabel>
+                        </td>
+
+                        <td>
+                            <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 205px; cursor:pointer;" #selectControl (change)="EveryMinuteItemSelectionChanged(selectControl)">
+                                <option *ngFor="let c of EveryMinuteItems" [value]="c" [selected]="c==SelectedIndex">{{c}}</option>
+                            </select>
+
+                        </td>
+
+                        <td>
+                            <LogLabel [ObjectFieldName]="'Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Amount'"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'Amount'" [Text]="Amount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+                        <td colspan="5">
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SendButtonClicked()">Send</button>
+                    </td>
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SendandNewButtonClicked()">Send and New</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+

@@ -12,7 +12,7 @@
                 <table>
                     <!-- Name -->
                     <tr class="FormFieldRow">
-                        <td style="width:153px;">
+                        <td style="width:110px;">
                             <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
@@ -33,7 +33,7 @@
                         <td colspan="2">
                             <table>
                                 <tr>
-                                    <td style="width:370px;height:85px;">
+                                    <td style="width:260px;height:85px;">
                                         <div class="MediaFill">
                                             <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
                                         </div>
@@ -61,29 +61,6 @@
                             <div></div>
                         </td>
                     </tr>
-
-                    <!-- DWQueryId -->
-                    <tr class="FormFieldRow">
-                        <td>
-                            <LogLabel [ObjectFieldName]="'DWQueryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
-                        <td>
-                            <table>
-                                <tr>
-                                    <td style="width: 57px;">
-                                        <button class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
-                                    </td>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-
 
                     <tr>
                         <td colspan="3">
