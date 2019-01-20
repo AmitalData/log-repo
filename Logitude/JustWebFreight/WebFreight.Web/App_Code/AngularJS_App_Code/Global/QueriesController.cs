@@ -109,30 +109,62 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
             }
         }
 
-        public HttpResponseMessage Delete(string id,int tenant)
+        public HttpResponseMessage Delete(string id, string userId)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = authToken.Tenant;
+
                 IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
-                QueryRepository Repo = new QueryRepository(objectContext);
+                QueryRepository queryRepository = new QueryRepository(objectContext);
                 SharedUserQueryRepository sharedUserQueryRepository = new SharedUserQueryRepository(objectContext);
+                QueryColumnRepository queryColumnRepository = new QueryColumnRepository(objectContext);
+                AdvancedQueryFilterRepository advancedQueryFilterRepository = new AdvancedQueryFilterRepository(objectContext);
 
-                Query entity = Repo.GetSingleQuery(id);
+                Query myQuery = queryRepository.GetSingleQuery(id);
                 List<SharedUserQuery> sharedUserQueries = sharedUserQueryRepository.GetAllByQueryId(id);
+                List<QueryColumn> queryColumns = null;
+                List<AdvancedQueryFilter> advancedQueryFilters = null;
 
-                foreach (SharedUserQuery item in sharedUserQueries)
+                if (myQuery != null)
                 {
-                    sharedUserQueryRepository.Remove(item);                    
+                    if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(myQuery.SharedByUserId) && myQuery.SharedByUserId != userId)
+                    {
+                        queryColumns = queryColumnRepository.GetQueryColumnsByQueryIdAndUser(tenant, myQuery.SharedByUserId, id);
+                        advancedQueryFilters = advancedQueryFilterRepository.GetAdvancedQueryFiltersByTenantAndUserAndQuery(tenant, myQuery.SharedByUserId, id);
+                    }
+
+                    else
+                    {
+                        queryColumns = queryColumnRepository.GetQueryColumnsByQueryIdAndUser(tenant, userId, id);
+                        advancedQueryFilters = advancedQueryFilterRepository.GetAdvancedQueryFiltersByTenantAndUserAndQuery(tenant, userId, id);
+                    }
+
+                    foreach (QueryColumn column in queryColumns)
+                    {
+                        queryColumnRepository.Remove(column);
+                    }
+
+                    foreach (AdvancedQueryFilter filter in advancedQueryFilters)
+                    {
+                        advancedQueryFilterRepository.Remove(filter);
+                    }
+                    
+                    foreach (SharedUserQuery item in sharedUserQueries)
+                    {
+                        sharedUserQueryRepository.Remove(item);
+                    }
+
+                    queryRepository.Remove(myQuery);
+                    objectContext.SaveChanges();
                 }
 
-                Repo.Remove(entity);
-                Repo.SubmitChanges();
-
-                return Request.CreateResponse(HttpStatusCode.OK, entity);
+                return Request.CreateResponse(HttpStatusCode.OK, myQuery);
             }
+
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
