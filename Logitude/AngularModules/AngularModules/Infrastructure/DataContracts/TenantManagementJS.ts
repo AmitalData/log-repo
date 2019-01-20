@@ -35,7 +35,7 @@ export class TenantManagementJS {
     public TemporalPackageCode: string;
     public PackagesCodes_PK: Array<string> = [];
     public PackagesCodes_BS: Array<string> = [];
-
+    public CountryName: string;
     private tenantManagementLicenses: TenantManagementLicensePM[];
     get TenantManagementLicenses() {
         if (this.tenantManagementLicenses == null) {
