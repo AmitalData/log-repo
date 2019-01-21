@@ -48,6 +48,7 @@ import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import {ServiceLocator} from '../../Locators/ServiceLocator';
 import {AmitalGatewayUtil} from '../../Utilities/AmitalGatewayUtil';
+import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/AccountingIntegrityCheckPM';
 
 @Component({
     moduleId: module.id,
@@ -491,7 +492,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             var TodayCustomDate = new Date();
             TodayCustomDate.setHours(0, 0, 0, 0);
             var TodayEndDate = new Date();
-            TodayEndDate.setHours(23, 59, 59, 0); 
+            TodayEndDate.setHours(23, 59, 59, 0);
             //TodayDate.setHours(0, 0, 0, 0);
             var YesterdayDate = DateTool.AddDays((new Date()), -1);
             YesterdayDate.setUTCHours(0, 0, 0, 0);
@@ -663,7 +664,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 800;
         logWindow.Height = 550;
-        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.NewQuoteTemplate"); 
+        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.NewQuoteTemplate");
         logWindow.WindowArgs = windowArgs;
         logWindow.IsShowCloseButton = true;
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/AddQuoteTemplateFromLibraryComponent");
@@ -1147,7 +1148,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
 
             this.GetQueryColumns(this.SelectedQuery.Id, this.UserId);
-        }   
+        }
         //if (!AppTool.IsNullOrEmpty(this.SelectedQuery.SpotlightDataTemplate)) {
         //    this.EnableSpotLight = true;
         //    //this.CD.detectChanges();
@@ -2252,7 +2253,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 return;
             }
 
-        
+
             if (this.TenantPM.Id != 0 && this.ObjectTableName == "Port") {
 
 
@@ -2276,14 +2277,12 @@ export class ListComponent implements OnInit, AfterViewInit {
                 messageWindow.Show(message);
                 return;
             }
-
             else {
                 var isNewWizard = this.SelectedQuery.ObjectTableIsNewWizard;
                 this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
                     if (isNewWizard) {
                         this.RunNewEntityWizard(this.SelectedQuery.ObjectTableNewWizardControlName);
                     }
-
                     else {
 
                         if (this.ObjectTableName == "APPayment") {
@@ -2291,6 +2290,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                             // APPaymentTools.Create(eventAggregator, viewInjectionService, regionManager, container);
                         } else if (this.ObjectTableName == "Journal") {
                             this.RunNewJournalWizard();
+                        } else if (this.ObjectTableName == "AccountingIntegrityCheck") {
+                            this.RunNewAccountingIntegrityCheckWizard();
                         }
                         else {
 
@@ -2417,7 +2418,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                   }
 
                 case "TaxDeductionReport":
-               
+
                     {
 
                         logWindow.Width = 400;
@@ -2512,9 +2513,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                 var ChangedText = GeneralText.split('%')[0];
                 var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
                 FinalText = NewText + " " + ChangedText;
-                
+
             }
-           
+
 
             var windowTitle = FinalText; //TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName));
             logWindow.WindowArgs = args;
@@ -2786,6 +2787,21 @@ export class ListComponent implements OnInit, AfterViewInit {
                     //this.isWindowOpened = false;
                 });
             });
+    }
+    RunNewAccountingIntegrityCheckWizard() {
+        var __entity: AccountingIntegrityCheckPM = new AccountingIntegrityCheckPM();
+        __entity.StatusCode = "1";
+        __entity.HasException = false;
+        __entity.CreateDateTimeUTC = new Date();
+        __entity.Tenant = this.Tenant;
+
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        .then(cmpRef => {
+            cmpRef.instance.ComponentRef = cmpRef;
+            cmpRef.instance.Run({ EntityPM: __entity, ObjectTableName: 'AccountingIntegrityCheck' });
+            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+            });
+        });
     }
 
     // Run New APPaymnet

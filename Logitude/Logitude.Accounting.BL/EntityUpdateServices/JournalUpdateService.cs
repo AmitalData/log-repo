@@ -452,7 +452,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 if (String.IsNullOrWhiteSpace( _JornalPmSource.QueueId ))
                 {
-                    throw new Exception("I must/Need??? Ledger to Reconcile - but journal did not Stream yet ...");
+                    throw new Exception(
+                        //"I must/Need??? Ledger to Reconcile - but journal did not Stream yet ..."
+                        "רישום הקבלה בהנהלת החשבונות טרם הסתיים , אנא נסה בעוד מספר דקות עד שיושלם התהליך"
+
+                        );
                 }
 
                 _JornalPmSource.ChangeSetOp = ChangeSetOperation.Update;

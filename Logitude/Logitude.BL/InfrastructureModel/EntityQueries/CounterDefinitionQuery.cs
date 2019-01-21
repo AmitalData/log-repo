@@ -45,6 +45,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 														  StartNumber = a.StartNumber,
 														  StartNumber_Old = a.StartNumber,
 														  CounterSize = a.CounterSize,
+														  Suffix = a.Suffix,
 													  }
        );
             //List<CounterDefinitionPM> defList = result.Where(
@@ -78,6 +79,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        StartNumber = a.StartNumber,
                        StartNumber_Old = a.StartNumber,
 					   CounterSize = a.CounterSize,
+					   Suffix = a.Suffix,
 				   });
 
             return result;
