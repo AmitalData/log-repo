@@ -47,6 +47,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                            TapagNumber = a.TapagNumber,
                                                 Numeral = a.Numeral,
                                                 CustomsBranchCode = a.CustomsBranchCode,
+                                                DecisionCode = a.DecisionCode,
+                                                DecisionNote = a.DecisionNote,
+                                                EilatVatRefoundDecision = a.EilatVatRefoundDecision,
+                                                DepositingAmount = a.DepositingAmount,
+                                                RefundAmount = a.RefundAmount,
 		                    	            });
             return query;
 		}
@@ -85,7 +90,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                         TapagNumber = a.TapagNumber,
                                                         Numeral = a.Numeral,
                                                         CustomsBranchCode = a.CustomsBranchCode,
-                                                        ClaimEntityTypeName=a.ClaimEntityType.LocalName,
+                                                        ClaimEntityTypeName = a.ClaimEntityType.LocalName,
+                                                        DecisionCode = a.DecisionCode,
+                                                        DecisionNote = a.DecisionNote,
+                                                        EilatVatRefoundDecision = a.EilatVatRefoundDecision,
+                                                        DepositingAmount = a.DepositingAmount,
+                                                        RefundAmount = a.RefundAmount,
                                                     }).ToList();
 
             return result;

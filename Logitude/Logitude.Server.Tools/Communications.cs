@@ -40,12 +40,12 @@ namespace Logitude.Server.Tools
         public static CommunicationLog GetCommunicationLog(int tenant, string requestCommunicationLogId)
         {
 
-            CommunicationLog communicationLog = null;
+            //CommunicationLog communicationLog = null;
             var myContext = CommonDataContext.GetContext(tenant);
             CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(myContext);
 
             var myCommLog = communicationLogRep.GetSingleCommunicationLog(requestCommunicationLogId, tenant);
-            return communicationLog;
+            return myCommLog;
         }
         public static string GetData(CommunicationLog myCommLog)
         {

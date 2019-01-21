@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import { Component, AfterViewInit, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { EntityArgs } from  '../../../../Infrastructure/DataContracts/EntityArgs';
 import { LogTab } from      '../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
@@ -45,11 +45,13 @@ export class VehicleGeneralComponent extends BaseComponent {
 
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
+        
         this.EntityResourceService.getEntityResourceByTableName("Customs.Vehicle").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.Listen();
+                this.SetFieldsEditability();
             });
         });
 
@@ -77,7 +79,7 @@ export class VehicleGeneralComponent extends BaseComponent {
                 SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                        //this.DisplayOnlyCheck();
+                        this.RefreshEntity();
                     }
                 })
             );
@@ -85,7 +87,7 @@ export class VehicleGeneralComponent extends BaseComponent {
                 SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
                     if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DEGC") {
-                            //this.DisplayOnlyCheck();
+                            this.RefreshEntity();
                         }
                     }
                 })
@@ -104,10 +106,62 @@ export class VehicleGeneralComponent extends BaseComponent {
         this.SetFieldsEditability();
     }
 
+    RefreshEntity() {
+        if (SessionLocator.CurrentSession.CurrentEditComponent) {
+            SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
+            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        }
+        this.SetFieldsEditability();
+    }
 
     SetFieldsEditability() {
-        //this.UIProperties.SetEnabled("VehicleTypeCode", this.ObjectTableName, this.IsNewEntity);
-        //this.UIProperties.SetEnabled("SubCountryCode", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.EntityPM.CountryCode));
+        
+        this.SetImporterIdentityIdFieldsEditability();
+
+        this.SetImporterPassportNumberFieldsEditability();
+
+    }
+
+    SetImporterIdentityIdFieldsEditability() {
+        
+        if (!AppTool.IsNullOrEmpty(this.ImporterIdentityId)){
+
+            this.ImporterPassportNumber = null;
+            this.ImporterPassCountryCode = null;
+            this.ImporterPassportTypeCode = null;
+            this.PassportName = null;
+            this.UIProperties.SetEnabled("ImporterPassportNumber", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ImporterPassCountryCode", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ImporterPassportTypeCode", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("PassportName", this.ObjectTableName, false);
+            
+            this.UIProperties.SetEnabled("ImporterIdentityId", this.ObjectTableName, true);
+            
+        }
+        else{
+            this.UIProperties.SetEnabled("ImporterPassportNumber", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("ImporterPassCountryCode", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("ImporterPassportTypeCode", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("PassportName", this.ObjectTableName, true);
+        }
+    }
+
+    SetImporterPassportNumberFieldsEditability() {
+        if (!AppTool.IsNullOrEmpty(this.ImporterPassportNumber)){
+            this.EntityPM.ImporterIdentityId = null;
+            this.ImporterIdentityId = null;
+            this.UIProperties.SetEnabled("ImporterIdentityId", this.ObjectTableName, false);
+
+            this.UIProperties.SetEnabled("ImporterPassportNumber", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("ImporterPassCountryCode", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("ImporterPassportTypeCode", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("PassportName", this.ObjectTableName, true);
+            
+        }
+        else{
+            this.UIProperties.SetEnabled("ImporterIdentityId", this.ObjectTableName, true);
+        }
+
     }
 
 
@@ -190,7 +244,11 @@ export class VehicleGeneralComponent extends BaseComponent {
     set VehicleTypeCode(value: string){this.EntityPM.VehicleTypeCode = value;  }
 
     get ImporterPassportNumber() { return this.EntityPM != null ? this.EntityPM.ImporterPassportNumber : null; }
-    set ImporterPassportNumber(value: string) { this.EntityPM.ImporterPassportNumber = value; }
+    set ImporterPassportNumber(value: string)
+    {
+        this.EntityPM.ImporterPassportNumber = value;
+        this.SetImporterPassportNumberFieldsEditability();
+    }
 
     get ImporterPassCountryCode() { return this.EntityPM != null ? this.EntityPM.ImporterPassCountryCode : null; }
     set ImporterPassCountryCode(value: string) { this.EntityPM.ImporterPassCountryCode = value; }
@@ -205,9 +263,12 @@ export class VehicleGeneralComponent extends BaseComponent {
     }
     set ImporterIdentityId(value:string)
     {
-        this.EntityPM.ImporterIdentityId = value;        
+        this.EntityPM.ImporterIdentityId = value;
+        this.SetImporterIdentityIdFieldsEditability(); 
     }
 
+    get PassportName() { return this.EntityPM != null ? this.EntityPM.PassportName : null; }
+    set PassportName(value: string) { this.EntityPM.PassportName = value; }
 
 
 //#endregion

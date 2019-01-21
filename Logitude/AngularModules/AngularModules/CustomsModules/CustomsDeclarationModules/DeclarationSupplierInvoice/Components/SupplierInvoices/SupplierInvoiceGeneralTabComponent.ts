@@ -2651,10 +2651,17 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(value)) {
             this.InvoiceQuantityTypeName = value.LocalName;
 
-
         } else {
             this.InvoiceQuantityTypeName = null;
             this.InvoiceQuantityType = null;
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.ItemCode) && GITITEMCacheService.Instance.IsUnitPURForItems) {
+            var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponent(this.ItemCode);// .ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+            if (itemCodeDetails != null) {
+                itemCodeDetails.InvoiceQuantityType = this.InvoiceQuantityType;
+                itemCodeDetails.IsNew = true;
+            }
         }
     }
 
@@ -2687,10 +2694,10 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.OriginCountryName = value.LocalName;
-          if (!AppTool.IsNullOrEmpty(this.ItemCode) && GITITEMCacheService.Instance.IsCountryPURForItems) {
+            if (!AppTool.IsNullOrEmpty(this.ItemCode) && GITITEMCacheService.Instance.IsCountryPURForItems) {
                 //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-              var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-              
+                var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponent(this.ItemCode);// .ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+
                 if (itemCodeDetails != null) {
                     itemCodeDetails.OriginCountryCode = value.Code;
                     itemCodeDetails.OriginCountryName = value.LocalName;
@@ -2700,9 +2707,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         } else {
             this.OriginCountryName = null;
             this.OriginCountryCode = null;
-          if (!AppTool.IsNullOrEmpty(this.ItemCode) && GITITEMCacheService.Instance.IsCountryPURForItems) {
+            if (!AppTool.IsNullOrEmpty(this.ItemCode) && GITITEMCacheService.Instance.IsCountryPURForItems) {
                 //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-              var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+                var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponent(this.ItemCode)//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
                 if (itemCodeDetails != null) {
                     itemCodeDetails.OriginCountryCode = null;
                     itemCodeDetails.OriginCountryName = null;
@@ -3140,27 +3147,22 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
             if (!AppTool.IsNullOrEmpty(this.ItemCode)) {
               //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-              var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+                var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponent(this.ItemCode);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
                 if (itemCodeDetails == null) {
-                    var originCountryCode: string = null;
-                    var originCountryName: string = null;
-                  if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
-                        originCountryCode = this.OriginCountryCode;
-                        originCountryName = this.OriginCountryName;
-                  }
 
-                  
-                  
-                    //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, this.InvoiceQuantityType));
-                  GITITEMCacheService.Instance.ItemCode_LocalCache.push(new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, this.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode));
+
+                    this.AdditemCodeDetail();
+
                 }
                 else {
                     if (itemCodeDetails.ClassificationCode != this.ClassificationCode || itemCodeDetails.ItemDescription != this.ItemDescription) {
                         itemCodeDetails.ClassificationCode = this.ClassificationCode;
                         itemCodeDetails.ItemDescription = this.ItemDescription;
                         itemCodeDetails.VendorNumber = this.Parent.vendorNumber;
-                        itemCodeDetails.InvoiceQuantityType = this.InvoiceQuantityType;
-                      if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+                        if (GITITEMCacheService.Instance.IsUnitPURForItems) {
+                            itemCodeDetails.InvoiceQuantityType = this.InvoiceQuantityType;
+                        }
+                      if (GITITEMCacheService.Instance.IsCountryPURForItems) {
                             itemCodeDetails.OriginCountryCode = this.OriginCountryCode;
                             itemCodeDetails.OriginCountryName = this.OriginCountryName;
                         }
@@ -3190,6 +3192,22 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
     }
 
+    private AdditemCodeDetail() {
+        var originCountryCode: string = null;
+        var originCountryName: string = null;
+        var invoiceQuantityType: string = null;
+        if ( /*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+            originCountryCode = this.OriginCountryCode;
+            originCountryName = this.OriginCountryName;
+        }
+        if (GITITEMCacheService.Instance.IsUnitPURForItems) {
+            invoiceQuantityType = this.InvoiceQuantityType;
+        }
+        //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, this.InvoiceQuantityType));
+        GITITEMCacheService.Instance. /*ItemCode_LocalCache.push*/AddItemCodeComponent(
+            new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, invoiceQuantityType, this.Parent.declarationPM.CustomerCode));
+    }
+
     OnOriginCountryCodeLostFocus(logCellTemplate: any, originCountryCodeLov: any) {
       if (!/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
             return;
@@ -3197,7 +3215,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
         if (!AppTool.IsNullOrEmpty(this.ItemCode)) {
             //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-          var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+            var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponent(this.ItemCode);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
           
             if (itemCodeDetails != null) {
                 itemCodeDetails.OriginCountryCode = this.OriginCountryCode != null ? this.OriginCountryCode : this.customsCountry != null ? this.customsCountry.Code : null;
@@ -3216,19 +3234,59 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
 
       //if (this.Parent.Parent.ItemCode_LocalCache != null && this.Parent.Parent.ItemCode_LocalCache.length > 0) {
-      if (GITITEMCacheService.Instance.ItemCode_LocalCache != null && GITITEMCacheService.Instance.ItemCode_LocalCache.length > 0) {
+        //if (GITITEMCacheService.Instance.ItemCode_LocalCache != null && GITITEMCacheService.Instance.ItemCode_LocalCache.length > 0)
+        {
             //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
 
-            var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+            var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponent(this.ItemCode);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
             if (itemCodeDetails != null) {
-                this.ClassificationCode = itemCodeDetails.ClassificationCode;
-                this.ItemDescription = itemCodeDetails.ItemDescription;
-                this.InvoiceQuantityType = itemCodeDetails.InvoiceQuantityType;
-              if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
-                    this.OriginCountryCode = itemCodeDetails.OriginCountryCode;
-                    this.OriginCountryName = itemCodeDetails.OriginCountryName;
+                let b = true;
+                if (b) {
+                    GITITEMCacheService.Instance.OnItemCodeAdd(this.entityPM, itemCodeDetails)
+                        .then(myOnItemCodeAddResult => {
+                            switch (myOnItemCodeAddResult) {
+
+                                case 2/*OnItemCodeAddResult.AddTaskToUpdateDB*/:
+                                    {
+                                        GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(
+                                            new ItemCodeComponent(
+                                                this.ItemCode,
+                                                this.ClassificationCode,
+                                                this.ItemDescription,
+                                                this.Parent.vendorNumber,
+                                                this.OriginCountryCode,
+                                                this.OriginCountryName, true,
+                                                this.InvoiceQuantityType,
+                                                this.Parent.declarationPM.CustomerCode
+                                            )
+                                        );
+                                    }
+                                    break;
+                                //case OnItemCodeAddResult.OverwriteRowFromDB:
+                                //case OnItemCodeAddResult.voidDoNothing:
+                                default:
+                                    {
+                                        itemCodeDetails.IsNew = true;
+                                        this.ClassificationCode = itemCodeDetails.ClassificationCode;
+                                        this.ItemDescription = itemCodeDetails.ItemDescription;
+                                        if (GITITEMCacheService.Instance.IsUnitPURForItems) {
+                                            this.InvoiceQuantityType = itemCodeDetails.InvoiceQuantityType;
+                                        }
+                                        if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+                                            this.OriginCountryCode = itemCodeDetails.OriginCountryCode;
+                                            this.OriginCountryName = itemCodeDetails.OriginCountryName;
+                                        }
+                                        this.GetQuantityType();
+                                    }
+                                    break;
+                            }
+                            return;
+                        });
                 }
-                this.GetQuantityType();
+
+
+
+
                 return;
             }
         }
@@ -3255,7 +3313,15 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                         if (!AppTool.IsNullOrEmpty(res) && res.length == 1) {
                                             this.PartnerItemsSelectionCompleted(this.entityPM, res[0]);
                                             return;
+                                        } else {
+                                            //Eitancommented 15 minutes ago
+                                            //@odelia devashi @itzik M סיכום:
+                                            //גם כאשר מזינים קודם פרט מכס ואח"כ קוד פריט (מקט), עדיין צריך ליצור TASK של לימוד עצמי + שימוש ב-CACHE ברמת SESSION
+                                            if (!AppTool.IsNullOrEmpty(this.ClassificationCode)) {
+                                                this.AdditemCodeDetail();//Task 43218: שיפור במנגנון לימוד עצמי
+                                            }
                                         }
+
                                     });
                             }
                         });
@@ -3297,17 +3363,55 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(partnersItem)) {
             console.log("Response returned: ", partnersItem);
             if (!AppTool.IsNullOrEmpty(partnersItem.ItemCode) || !AppTool.IsNullOrEmpty(partnersItem.ClassificationCode)) {
-                item.ItemCode = partnersItem.ItemCode;
-                item.ClassificationCode = partnersItem.ClassificationCode;
-                item.ItemDescription = partnersItem.Name;
-              if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
-                    item.OriginCountryCode = partnersItem.OriginCountryCode;
-                    item.OriginCountryName = partnersItem.OriginCountryName;
+                let b = true;
+                if (b) {
+                    GITITEMCacheService.Instance.OnItemCodeAdd(this.entityPM, partnersItem)
+                        .then(myOnItemCodeAddResult => {
+                            switch (myOnItemCodeAddResult) {
+
+                                case 2: //OnItemCodeAddResult.AddTaskToUpdateDB:
+                                    {
+                                        GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(
+                                            new ItemCodeComponent(
+                                                item.ItemCode,
+                                                item.ClassificationCode,
+                                                item.ItemDescription,
+                                                this.Parent.vendorNumber,
+                                                item.OriginCountryCode,
+                                                item.OriginCountryName, true,
+                                                item.InvoiceQuantityType,
+                                                this.Parent.declarationPM.CustomerCode
+                                            )
+                                        );
+                                        this.GetQuantityType();
+
+                                    }
+                                    break;
+                                //case OnItemCodeAddResult.OverwriteRowFromDB:
+                                //case OnItemCodeAddResult.voidDoNothing:
+                                default:
+                                    {
+                                        item.ItemCode = partnersItem.ItemCode;
+                                        item.ClassificationCode = partnersItem.ClassificationCode;
+                                        item.ItemDescription = partnersItem.Name;
+                                        if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+                                            item.OriginCountryCode = partnersItem.OriginCountryCode;
+                                            item.OriginCountryName = partnersItem.OriginCountryName;
+                                        }
+                                        if (GITITEMCacheService.Instance.IsUnitPURForItems) {
+                                            item.InvoiceQuantityType = partnersItem.InvoiceQuantityType;
+                                        }
+
+                                        //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType));
+                                        GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode));
+                                        this.GetQuantityType();
+
+                                    }
+                                    break;
+                            }
+                            return;
+                        });
                 }
-                item.InvoiceQuantityType = partnersItem.InvoiceQuantityType;
-              //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType));
-              GITITEMCacheService.Instance.ItemCode_LocalCache.push(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode));
-                this.GetQuantityType();
             }
         }
     }

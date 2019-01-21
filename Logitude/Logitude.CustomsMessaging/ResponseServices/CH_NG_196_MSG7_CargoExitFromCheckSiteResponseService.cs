@@ -95,7 +95,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     switch (customResponse.generalDetails.typeDestination)
                     {
                         case 1: // End - moved to another site
-                            phsicalCheckPM.StorageSiteCode = customResponse.generalDetails.typeDestination.ToString();
+                            //phsicalCheckPM.StorageSiteCode = customResponse.generalDetails.typeDestination.ToString();
                             phsicalCheckPM.OperationCode = "6";
                             //<--- Yuval Chalup 08.03.2016 TASK-19919 - Check if the Date has been changed - To raise also "STC" status
                             myEventContextTagModel2 = new EventContextTagModel()
@@ -110,7 +110,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             //Yuval Chalup 08.03.2016 TASK-19919 --->
                             break;
                         case 2: // End - Moved to Custom
-                            phsicalCheckPM.StorageSiteCode = customResponse.generalDetails.typeDestination.ToString();
+                            //phsicalCheckPM.StorageSiteCode = customResponse.generalDetails.typeDestination.ToString();
                             phsicalCheckPM.OperationCode = "5";
                             //<--- Yuval Chalup 08.03.2016 TASK-19919 - Check if the Date has been changed - To raise also "STC" status
                             myEventContextTagModel2 = new EventContextTagModel()

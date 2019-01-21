@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .subTitle{
         color: #1b90cb;
         font-size: 15px;
@@ -57,7 +57,7 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'AirlinePrefix'" [ObjectTableName]="ObjectTableName" 
+                        <LogTextBox [ObjectFieldName]="'AirlinePrefix'" [ObjectTableName]="ObjectTableName"
                                     [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                     </td>
 
@@ -79,6 +79,21 @@
                     <td></td>
                 </tr>
 
+                <!-- ICAO -->
+                <tr class="FormFieldRow">
+
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ICAO'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'ICAO'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    </td>
+
+                    <td></td>
+                </tr>
+
                 <!-- LocalName -->
                 <tr class="FormFieldRow">
 
@@ -87,7 +102,7 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName" 
+                        <LogTextBox [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName"
                                     [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
                     </td>
 
@@ -103,7 +118,7 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName" 
+                        <LogTextBox [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName"
                                     [DataContext]="DataContext" [HideColumns]="true" [InputType]="'Text'"></LogTextBox>
                     </td>
 

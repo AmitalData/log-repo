@@ -1,4 +1,4 @@
-﻿
+
 
 <table *ngIf="IsVisibile">
 
@@ -16,7 +16,7 @@
         </td>
 
         <td style="width: 25px;height: 20px;padding: 5px;padding-bottom: 0px;">
-            <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="Add(null)" style="float:left;"></IconButton></div>
+            <div><IconButton [IsEnabled]="!IsDisplayOnly&&!IsReleaseFileDisplay" [IsSmall]="true" [Name]="'Add'" (click)="Add(null)" style="float:left;"></IconButton></div>
         </td>
     </tr>
     <tr style="height:5px"></tr>
@@ -48,10 +48,10 @@
 
                                 <log-column [header]="'Customs.SupplierInvoiceItemVehicle.F.RichbitFileNumber' | TextCodeTranslationPipe" [binding]="'RichbitFileNumber'" [width]="'140'" [Editable]="true" [Alignment]="'right'">
                                     <log-cell-template template="let item" #logcelltemplate>
-                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode || (item.RichbitFileNumber && item.VehicleChassisNumber)">
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode || IsReleaseFileDisplay">
                                             <span>{{item.RichbitFileNumber}}</span>
                                         </div>
-                                        <div *ngIf="logcelltemplate.IsEditMode && (!item.RichbitFileNumber || !item.VehicleChassisNumber)">
+                                        <div *ngIf="logcelltemplate.IsEditMode && !IsReleaseFileDisplay">
                                             <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'RichbitFileNumber'" [DataContext]="item"
                                                         [Text]="item.RichbitFileNumber" [ObjectTableName]="'Customs.SupplierInvoiceItemVehicle'" 
                                                         #RichbitFileNumbernTextBox (LostFocus)="item.OnRichbitFileNumbernLostFocus(logcelltemplate,RichbitFileNumbernTextBox)" [DebounceTime]="1"
@@ -78,10 +78,10 @@
                                 </log-column>
                                 <log-column [header]="'Customs.SupplierInvoiceItemVehicle.F.VehicleChassisNumber' | TextCodeTranslationPipe" [binding]="'VehicleChassisNumber'" [width]="'140'" [Editable]="true" [Alignment]="'right'">
                                     <log-cell-template template="let item" #logcelltemplate>
-                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode || (item.RichbitFileNumber && item.VehicleChassisNumber)">
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode || (IsReleaseFileDisplay)">
                                             <span>{{item.VehicleChassisNumber}}</span>
                                         </div>
-                                        <div *ngIf="logcelltemplate.IsEditMode && (!item.RichbitFileNumber || !item.VehicleChassisNumber)">
+                                        <div *ngIf="logcelltemplate.IsEditMode && (!IsReleaseFileDisplay)">
                                             <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'VehicleChassisNumber'" [DataContext]="item"
                                                         [Text]="item.VehicleChassisNumber" [ObjectTableName]="'Customs.SupplierInvoiceItemVehicle'" [HideColumns]="true"
                                                         (LostFocus)="item.OnVehicleChassisNumberLostFocus(logcelltemplate,VehicleChassisNumberTextBox)" [DebounceTime]="1"
@@ -108,7 +108,7 @@
                                 <log-column [width]="'50'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
                                     <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                         <div style="width: 30px; float: right; height:20px;padding-top:3px">
-                                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="!IsDisplayOnly&&!IsReleaseFileDisplay"></IconButton>
                                         </div>
 
 
@@ -138,7 +138,7 @@
             <table style="height: 22px;">
                 <tr>
                     <td style="width: 57px;" *ngIf="VehiclesFilesButtonVisibility">
-                        <button class="Button" (click)="VehiclesFilesButtonClicked()" [disabled]="IsDisplayOnly">{{'Customs.Vehicle.O.VehiclesFiles' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="VehiclesFilesButtonClicked()" [disabled]="IsDisplayOnly||IsReleaseFileDisplay">{{'Customs.Vehicle.O.VehiclesFiles' | TextCodeTranslationPipe}}</button>
                     </td>
                     <td>
                         <div></div>
@@ -161,7 +161,7 @@
                     </td>
 
                     <td style="width: 57px;" *ngIf="SearchButtonVisibility">
-                        <button class="Button" (click)="SearchButtonClicked()"  [disabled]="IsDisplayOnly">{{'Customs.Vehicle.O.Search' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="SearchButtonClicked()"  [disabled]="IsDisplayOnly||IsReleaseFileDisplay">{{'Customs.Vehicle.O.Search' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

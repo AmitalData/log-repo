@@ -71,6 +71,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool IsHOLDTab  { get; set; }
        [DataMember]
+       public bool IsACCTab  { get; set; }
+       [DataMember]
        public string CourierSearchFields  { get; set; }
        [DataMember]
        public string CourierCustomStatusCode  { get; set; }
@@ -90,6 +92,18 @@ namespace Logitude.Customs.Data.EntityLists
        public string CourierSuspentionReasonName  { get; set; }
        [DataMember]
        public string AcceptanceStatusCode  { get; set; }
+       [DataMember]
+       public string MamanStatusCode  { get; set; }
+       [DataMember]
+       public string MamanErrorXml  { get; set; }
+       [DataMember]
+       public string CourierSuspentionCode  { get; set; }
+       [DataMember]
+       public string CourierSuspentionName  { get; set; }
+       [DataMember]
+       public string SpecialActionStatus  { get; set; }
+       [DataMember]
+       public string SpecialActionsErrorXml  { get; set; }
    }
 
 }

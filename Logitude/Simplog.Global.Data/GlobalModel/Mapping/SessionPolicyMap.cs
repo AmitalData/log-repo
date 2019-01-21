@@ -27,7 +27,19 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.ToTable("SessionPolicies");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.WebTokenLifeTimeInMinutes).HasColumnName("WebTokenLifeTimeInMinutes");
-            this.Property(t => t.WebTokenExpirationWarningInMinutes).HasColumnName("WebTokenExpirationWarningInMinutes");
+
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.WebTokenExpirationWarningInMinutes).HasColumnName("WebTokenExpirationWarningInMin");
+
+            }
+            else
+            {
+                this.Property(t => t.WebTokenExpirationWarningInMinutes).HasColumnName("WebTokenExpirationWarningInMinutes");
+
+            }
+
 
         }
     }

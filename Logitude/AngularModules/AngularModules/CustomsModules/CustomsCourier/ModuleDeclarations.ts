@@ -1,4 +1,4 @@
-﻿import { CMConnectedDeclarationTabComponent} from './Components/EditTabs/CMConnectedDeclarationTabComponent';
+import { CMConnectedDeclarationTabComponent} from './Components/EditTabs/CMConnectedDeclarationTabComponent';
 import { CourierPendingReasonGeneralComponent } from './Components/CourierPendingReason/CourierPendingReasonGeneralComponent';
 import { NewCourierComponent} from './Components/NewEntity/NewCourierComponent';
 import { AddEditCouriersVatComponent } from './Components/CourierVat/AddEditCouriersVatComponent';
@@ -7,8 +7,8 @@ import { DropdownMenuFilterComponent} from './Components/CourierWorkSheet/Dropdo
 import { CourierMasterGeneralTabComponent} from './Components/EditTabs/CourierMasterGeneralTabComponent';
 import { CourierWorksheetComponent} from './Components/CourierWorkSheet/CourierWorksheetComponent';
 import { GetInternalBankComponent} from './Components/CourierWorkSheet/GetInternalBankComponent';
-
-
+import { AddEditMamanStickerComponent } from './Components/MamanSpecialAction/AddEditMamanStickerComponent';
+import { AddCourierPendingToUnifreightStatusComponent } from './Components/CourierPendingReason/AddCourierPendingToUnifreightStatusComponent';
 
 
 export const Components =
@@ -22,6 +22,8 @@ export const Components =
         CourierMasterGeneralTabComponent,
         CourierWorksheetComponent,
         GetInternalBankComponent,
+        AddEditMamanStickerComponent,
+        AddCourierPendingToUnifreightStatusComponent,
 
     ];
 
@@ -40,6 +42,8 @@ export class ModuleDeclarations {
             case "CourierMasterGeneralTabComponent": { myResult = CourierMasterGeneralTabComponent; break; }
             case "CourierWorksheetComponent": { myResult = CourierWorksheetComponent; break; }
             case "GetInternalBankComponent": { myResult = GetInternalBankComponent; break; }
+            case "AddEditMamanStickerComponent": { myResult = AddEditMamanStickerComponent; break; }
+            case "AddCourierPendingToUnifreightStatusComponent": { myResult = AddCourierPendingToUnifreightStatusComponent; break; }
         }
 
         return myResult;

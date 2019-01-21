@@ -48,15 +48,20 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="SecondCargoID" />
         <xs:element minOccurs="0" maxOccurs="1" ref="ThirdCargoID" />
         <xs:element minOccurs="0" maxOccurs="1" ref="UnloadDate" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="AirlineId" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="EstimatedArrivelDate" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="GatewayPortCode" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="OriginPortCode" />
         <xs:element minOccurs="0" maxOccurs="1" ref="IsCourierDeclaration" />
         <xs:element minOccurs="0" maxOccurs="1" ref="CasualSupplierName" />
         <xs:element minOccurs="0" maxOccurs="1" ref="CasualSupplierAddress" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CourierHawb" />
         <xs:element minOccurs="0" maxOccurs="1" ref="HAWBDATE" />
         <xs:element minOccurs="0" maxOccurs="1" ref="COUWTVAL" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterAddress1" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterAddress2" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterCity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterZipCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterFax" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterEmail" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CasualImportelTel" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterContact" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -98,13 +103,18 @@
   <xs:element name="SecondCargoID" type="xs:string" />
   <xs:element name="ThirdCargoID" type="xs:string" />
   <xs:element name="UnloadDate" type="xs:string" />
-  <xs:element name="AirlineId" type="xs:string" />
-  <xs:element name="EstimatedArrivelDate" type="xs:string" />
-  <xs:element name="GatewayPortCode" type="xs:string" />
-  <xs:element name="OriginPortCode" type="xs:string" />
   <xs:element name="IsCourierDeclaration" type="xs:string" />
   <xs:element name="CasualSupplierName" type="xs:string" />
   <xs:element name="CasualSupplierAddress" type="xs:string" />
+  <xs:element name="CourierHawb" type="xs:string" />
   <xs:element name="HAWBDATE" type="xs:string" />
   <xs:element name="COUWTVAL" type="xs:string" />
+  <xs:element name="CasualImporterAddress1" type="xs:string" />
+  <xs:element name="CasualImporterAddress2" type="xs:string" />
+  <xs:element name="CasualImporterCity" type="xs:string" />
+  <xs:element name="CasualImporterZipCode" type="xs:string" />
+  <xs:element name="CasualImporterFax" type="xs:string" />
+  <xs:element name="CasualImporterEmail" type="xs:string" />
+  <xs:element name="CasualImportelTel" type="xs:string" />
+  <xs:element name="CasualImporterContact" type="xs:string" />
 </xs:schema>

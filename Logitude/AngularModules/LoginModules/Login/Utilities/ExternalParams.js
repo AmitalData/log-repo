@@ -1,5 +1,6 @@
 "use strict";
-var ExternalParams = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var ExternalParams = /** @class */ (function () {
     function ExternalParams() {
         this.OneTimePasswordId = "";
         this.Args = [];
@@ -7,7 +8,7 @@ var ExternalParams = (function () {
     return ExternalParams;
 }());
 exports.ExternalParams = ExternalParams;
-var ExternalParamsArg = (function () {
+var ExternalParamsArg = /** @class */ (function () {
     function ExternalParamsArg() {
     }
     return ExternalParamsArg;

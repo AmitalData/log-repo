@@ -21,8 +21,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CourierPendingReasonList> GetIqueryableList(IQueryable<CourierPendingReason> iQueryable)
         {
-		IQueryable<CourierPendingReasonList> query = (from a in iQueryable
-                                            select new CourierPendingReasonList()
+		IQueryable<CourierPendingReasonList> query = (from a in iQueryable.Include("PendingErrorPlace")
+                                                      select new CourierPendingReasonList()
 											{
 					                            Code = a.Code,
 					                            LocalName = a.LocalName,
@@ -30,7 +30,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                            SearchFields = a.SearchFields,
 					                            Inactive = a.Inactive,
                                                 ErrorPlace = a.ErrorPlace,
+                                                ErrorPlaceName = a.PendingErrorPlace != null ? a.PendingErrorPlace.LocalName : null,
                                                 Tenant = a.Tenant,
+                                                UnifreightStatusCode = a.UnifreightStatusCode,
 		                    	            });
             return query;
 		}

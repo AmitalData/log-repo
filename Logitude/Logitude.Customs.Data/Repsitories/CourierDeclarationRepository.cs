@@ -64,6 +64,15 @@ namespace Logitude.Customs.Data.Repsitories
             }
             return MAWBCourierMaster;
         }
+
+        public List<string> GetCourierConnectedDeclaratinsList(string CourierMasterId, int tenant)
+        {
+            List<string> courierDeclarations = (from a in context.CourierDeclarations
+                                                where a.CourierMasterId == CourierMasterId && a.Tenant == tenant
+                                                select a.DeclarationId).ToList();
+
+            return courierDeclarations;
+        }
     }
 
 }

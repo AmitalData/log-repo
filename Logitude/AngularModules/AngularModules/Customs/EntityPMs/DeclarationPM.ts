@@ -929,6 +929,21 @@ export class DeclarationPM {
     public set AcceptanceStatusName(newValue: string) { if (this.acceptanceStatusName != newValue) { this.acceptanceStatusName = newValue; this.MarkAsDirty("AcceptanceStatusName"); } }
        
 	 
+    private courierSuspentionCode: string;
+    public get CourierSuspentionCode() { return this.courierSuspentionCode; }
+    public set CourierSuspentionCode(newValue: string) { if (this.courierSuspentionCode != newValue) { this.courierSuspentionCode = newValue; this.MarkAsDirty("CourierSuspentionCode"); } }
+       
+	 
+    private courierSuspentionName: string;
+    public get CourierSuspentionName() { return this.courierSuspentionName; }
+    public set CourierSuspentionName(newValue: string) { if (this.courierSuspentionName != newValue) { this.courierSuspentionName = newValue; this.MarkAsDirty("CourierSuspentionName"); } }
+       
+	 
+    private depositionStatusCode: string;
+    public get DepositionStatusCode() { return this.depositionStatusCode; }
+    public set DepositionStatusCode(newValue: string) { if (this.depositionStatusCode != newValue) { this.depositionStatusCode = newValue; this.MarkAsDirty("DepositionStatusCode"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

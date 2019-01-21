@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Customs\CustomFile\FileAdditionalData.cs" />
     <Compile Include="Customs\CustomFile\CargoQueryContext.cs" />
     <Compile Include="Customs\CustomFile\CellFile\LOGICELLFILE.cs">
       <DependentUpon>LOGICELLFILE.xsd</DependentUpon>
@@ -117,6 +118,9 @@
     </Compile>
     <Compile Include="Customs\CustomFile\ReleaseFile\LOGIBONDREL.cs">
       <DependentUpon>LOGIBONDREL.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\MasterCourier\LOGIMASTERCOUR.cs">
+      <DependentUpon>LOGIMASTERCOUR.xsd</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\FuStatus\gfusts.cs">
       <DependentUpon>gfusts.xsd</DependentUpon>
@@ -234,6 +238,10 @@
     </None>
     <None Include="Customs\CustomFile\CFIPACKS.dtd" />
     <None Include="Customs\CustomFile\ReleaseFile\LOGIBONDREL.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\MasterCourier\LOGIMASTERCOUR.dtd" />
+    <None Include="Customs\MasterCourier\LOGIMASTERCOUR.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Infrastructure\FuStatus\gfusts.dtd" />

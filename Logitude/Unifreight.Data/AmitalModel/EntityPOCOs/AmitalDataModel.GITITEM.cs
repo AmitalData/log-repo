@@ -447,6 +447,26 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         }
         private string _ORIGINCOUNTRY;
 
+        /// <summary>
+        /// There are no comments for UNITID in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string UNITID
+        {
+            get
+            {
+                return _UNITID;
+            }
+            set
+            {
+                if (_UNITID != value)
+                {
+                    _UNITID = value;
+                    OnPropertyChanged("UNITID");
+                }
+            }
+        }
+        private string _UNITID;
 
         #endregion
 

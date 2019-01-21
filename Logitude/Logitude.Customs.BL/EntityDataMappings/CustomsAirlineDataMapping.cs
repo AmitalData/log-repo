@@ -20,13 +20,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPMToPOCO(CustomsAirlinePM entityPM, CustomsAirline entityPOCO)
         {
             entityPOCO.Id = entityPM.Id;
-            entityPOCO.SearchFields = entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.AirlineCode + "," + entityPM.AirlinePrefix;
-            entityPM.SearchFields = entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.AirlineCode + "," + entityPM.AirlinePrefix;
+            entityPOCO.SearchFields = entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.AirlineCode + "," + entityPM.AirlinePrefix + "," + entityPM.ICAO;
+            entityPM.SearchFields = entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.AirlineCode + "," + entityPM.AirlinePrefix + "," + entityPM.ICAO;
         }
 
         public void CustomPOCOToPM(CustomsAirlinePM entityPM, CustomsAirline entityPOCO)
         {
-            entityPM.SearchFields = entityPOCO.EnglishName + "," + entityPOCO.LocalName + "," + entityPOCO.AirlineCode + "," + entityPOCO.AirlinePrefix;
+            entityPM.SearchFields = entityPOCO.EnglishName + "," + entityPOCO.LocalName + "," + entityPOCO.AirlineCode + "," + entityPOCO.AirlinePrefix + "," + entityPOCO.ICAO;
         }
    }
 

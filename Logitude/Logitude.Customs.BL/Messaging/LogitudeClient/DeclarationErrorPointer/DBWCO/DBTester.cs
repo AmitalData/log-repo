@@ -46,9 +46,19 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
         }
         private void dd()
         {
+            string[] lines;
+            string text;
             string ResourceStreamPath="Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO.DB.csv";
-            string text = GetResource(ResourceStreamPath);
-            var lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            bool fromResource = true;
+            if (fromResource)
+            {
+                text = WCOResource.DB;
+            }
+            else
+            {
+                text = GetResource(ResourceStreamPath);
+            }
+            lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             var rows= lines.Skip(1);//remove header
             int MyIndex=0;
             //var query = from line in rows
@@ -137,5 +147,6 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
             var text = reader.ReadToEnd();
             return text;
         }
+       
     }
 }

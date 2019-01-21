@@ -13,7 +13,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
        public CustomsAirlinePM GetSingleCustomsAirlineByCodeAndPrefix(string code, string prefix, int tenant)
        {
-           CustomsAirline entity = repository.GetByAirlineAndPrefix(code, prefix, null);
+           CustomsAirline entity = repository.GetByAirlineAndPrefix(code, prefix, tenant);
           
            CustomsAirlinePM entityPM = null;
 
@@ -29,6 +29,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     EnglishName = entity.EnglishName,
                     SearchFields = entity.SearchFields,
                     InActive = entity.InActive,
+                    ICAO = entity.ICAO,
                 };
 
            }

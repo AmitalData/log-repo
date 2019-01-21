@@ -484,7 +484,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         
     }
     CancelButtonClicked() {
-        if (this.EntityPM.IsDirty && !this.IsDisplayOnly && !this.IsFromCustomsAnswer) {
+        if ((this.EntityPM.IsDirty || this.ForceSave) && !this.IsDisplayOnly && !this.IsFromCustomsAnswer) {
             var confirm = new ConfirmWindow();
 
             confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
@@ -1206,8 +1206,8 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         this.ValidationErrorsList = [];
         this._FinishPromiseDoWhatPlannedDone = false;
         this._LastUnifreightMessageM = null;
-      
-        if (!this.EntityPM.IsDirty) {
+
+        if (!this.EntityPM.IsDirty && !this.ForceSave) {
             this.FinishPromiseDoWhatPlanned(true);
             return; 
         }
@@ -1216,7 +1216,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
       GITITEMCacheService.Instance.SaveItemCodeLocalCache();
 
         if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-            if (this.EntityPM.IsDirty) {
+            if (this.EntityPM.IsDirty || this.ForceSave) {
                 return this.SavingPromise(true);
             }
             else {
@@ -1228,7 +1228,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             .then((res) => {
                 ///Just Saving  .....
                 this.LogMe("this.SavingPromise();")
-                if (this.EntityPM.IsDirty) {
+                if (this.EntityPM.IsDirty || this.ForceSave) {
                     return this.SavingPromise(false);
                 }
                 else {
@@ -1648,13 +1648,14 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     CopyInvoiceWithItemsClicked() {
         this.copyInvoice = true;
         this.copyInvoiceWithItem = true;
+
         this.SaveAndNewButtonClicked();
         this.DropdownDisplayClose();
 
     }
-
+    ForceSave: boolean=false;
     InitiateNewInstance() {
-
+        this.ForceSave = true;
         var itemPM = new SupplierInvoicePM();
         this.TextValue = null;
         if (this.EntityPM) {
@@ -1695,13 +1696,14 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         itemPM.IsAccumalated = false;
         this.TotalForeignCurrency = 0;
         this.IsNewEntity = true;
+        var counterKey = this.EntityPM.InvoiceCounterKey;
         this.EntityPM = itemPM;
         this.WindowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.NewInvoice");
 
         if (this.copyInvoiceWithItem) {
            
             
-                this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, this.entity.InvoiceCounterKey, 0, this.NumberOfLoadedItems, "child").subscribe(response => {
+                this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, counterKey, 0, this.NumberOfLoadedItems, "child").subscribe(response => {
                     if (!response.HasError) {
                         this.OldEntityPM = response.Result;
                         var supplierinvoiceitems: SupplierInvoiceItemPM[] = [];
@@ -1729,13 +1731,13 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                          newItem.CounterKey = itemPM.InvoiceCounterKey;
                          newItem.SequenceNumeric = sequence;
                          newItem.Tenant = this.OldEntityPM.Tenant;
-                         itemPM.AddSupplierInvoiceItem(newItem);
+                         this.EntityPM.AddSupplierInvoiceItem(newItem);
                          line += 1;
                          sequence += 1;
                         }
 
 
-                        this.GENERAL.InitTab(this.EntityPM, this, this.IsDisplayOnly, false);
+                        this.GENERAL.InitTab(this.EntityPM, this, this.IsDisplayOnly, false,true);
 
                     }
                     else {
@@ -1746,7 +1748,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         }
 
         else {
-            this.GENERAL.InitTab(this.EntityPM, this, this.IsDisplayOnly, false);
+            this.GENERAL.InitTab(this.EntityPM, this, this.IsDisplayOnly, false,true);
         }
         //select general tab
         this.SelectedTabCode = "GENERAL";

@@ -1,4 +1,4 @@
-﻿import {Component, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
+import {Component, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -25,10 +25,10 @@ import {DeclarationCourierStatusPMService} from '../../../../Customs/Services/St
 export class CourierPendingReasonGeneralComponent extends BaseComponent {
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.DeclarationCourierStatus";
-    //public EntityPM: DeclarationCourierStatus;
     DeclarationsList: DeclarationCourierStatusPM[] = [];
     ValidationErrorsList: any[] = [];
     _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
+    _IsNewPending: boolean = true;
 
     constructor() {
         super();
@@ -38,11 +38,33 @@ export class CourierPendingReasonGeneralComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.CourierHawb = args.CourierHawb;
-            if (args.DeclarationIdList != null) {
-                args.DeclarationIdList.forEach((declarationCourierStatusPM: DeclarationCourierStatusPM) => {
-                    this.DeclarationsList.push(declarationCourierStatusPM);
+            if (args.Mode == "FromDeclaration") {
+                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this._DeclarationCourierStatusPMService.get(args.DeclarationId).subscribe((response: ServiceResponse) => {
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    var declarationCourierStatusPM: DeclarationCourierStatusPM = response.Result;
+                    if (declarationCourierStatusPM != null) {
+                        this.DeclarationsList.push(declarationCourierStatusPM);
+                        if (!AppTool.IsNullOrEmpty(declarationCourierStatusPM.CourierPendingReasonCode) || !AppTool.IsNullOrEmpty(declarationCourierStatusPM.PendingRemarks)) {
+                            this._IsNewPending = false;
+                            this.CourierPendingReasonCode = declarationCourierStatusPM.CourierPendingReasonCode;
+                            this.PendingRemarks = declarationCourierStatusPM.PendingRemarks;
+                        }
+                    }
                 });
-            }    
+            }
+            else {
+                if (args.Mode == "Update") {
+                    this._IsNewPending = false;
+                    this.CourierPendingReasonCode = args.CourierPendingReasonCode;
+                    this.PendingRemarks = args.PendingRemarks;
+                }
+                if (args.DeclarationIdList != null) {
+                    args.DeclarationIdList.forEach((declarationCourierStatusPM: DeclarationCourierStatusPM) => {
+                        this.DeclarationsList.push(declarationCourierStatusPM);
+                    });
+                }
+            }
         }
     }
 

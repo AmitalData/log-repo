@@ -16,12 +16,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
+using Unifreight.Data.AmitalModel;
+using Unifreight.BL.EntityUpdateServices;
+using Unifreight.BL.EntityPMs;
+using Logitude.Customs.Data.EntityPOCOs;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.BL.EntityPMs.UGenerated;
+using System.Xml.Linq;
+using Logitude.Customs.BL.EntityDataMappings;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
    public partial class ImporterDespositionUpdateService
     {
-       protected override void OnCreating(ImporterDespositionPM entityPM, EntityPM entityParentPM)
+        public CustomsVendor Vendor { get; private set; }
+
+        private Boolean toSendTask = false;
+        private AmitalContext _AmitalContext;
+
+        protected override void OnCreating(ImporterDespositionPM entityPM, EntityPM entityParentPM)
        {
           entityPM.Id = IdCounter.GetNumber("Customs.ImporterDesposition", entityPM.Tenant);
        }
@@ -129,5 +145,174 @@ namespace Logitude.Customs.BL.EntityUpdateServices
            NotificationBase.CloseAllRelatedNotification(dbContext, newNotificationPM, newNotificationPM.NotificationDefinitionCode);
            notificationUpdateService.Update(newNotificationPM, true);
        }
+
+        protected override void OnUpdating(ImporterDespositionPM entityPM, ImporterDesposition entityPOCO)
+        {
+            CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant);
+            var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
+            if (setting.IsConnectedToUniFreight)
+            {
+                string defValue = GetDefault("ISRAEL", "CGG_SHARE_DESPO", "NON", "NON", entityPM.Tenant);
+                if (defValue == "Y")
+                {
+                    this.Vendor = entityPOCO.Vendor;
+                    this.toSendTask = true;
+                }
+            }
+        }
+
+
+        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
+        }
+
+
+        protected override void AfterUpdating(ImporterDespositionPM entityPM, EntityPM entityParentPM)
+        {
+            if (this.toSendTask == true)
+            {
+                OpenUnifreighTask(entityPM, "LD2C", "", false, "");
+            }
+        }
+
+
+        private void OpenUnifreighTask(ImporterDespositionPM dirtyImporterDespositionPM, string taskType, string status, bool raiseStatus, string xmlStatus)
+        {
+            var sw = Stopwatch.StartNew();
+            TransactionScope scope = null;
+            var statusDateTime = DateTime.Now;
+
+            if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
+            {
+                scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
+            }
+            try
+            {
+                using (_AmitalContext = AmitalContext.GetContext(dirtyImporterDespositionPM.Tenant))
+                {
+                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                    myGGGQUpdateService.DontAddTransaction = true;
+                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+                    myYCULTASKUpdateService.DontAddTransaction = true;
+                    var requestData = "";
+                    string importerCode = dirtyImporterDespositionPM.ImporterCode;
+                    if(importerCode == null && dirtyImporterDespositionPM.ImporterlId != null) importerCode = TranslateClient(dirtyImporterDespositionPM.ImporterlId, dirtyImporterDespositionPM.Tenant);
+                    if(this.Vendor == null && !string.IsNullOrWhiteSpace(dirtyImporterDespositionPM.VendorID))
+                    {
+                        if(this.currentContext == null) this.currentContext = CustomContext.GetContext(dirtyImporterDespositionPM.Tenant);
+                        var myQueryService = new CustomsVendorQueryService(this.currentContext);
+                        var custVendor = myQueryService.GetSingle(dirtyImporterDespositionPM.VendorID, false, true);
+                        if(custVendor != null)
+                        {
+                            this.Vendor = new CustomsVendor();
+                            var mapping = new CustomsVendorDataMapping();
+                            mapping.PMToPOCO(custVendor, this.Vendor);
+                        }
+                    }
+                    var XMLData = new XDocument(
+                        new XElement("ImporterDepositionPM",
+                            new XElement("ShipperCode", this.Vendor != null ? this.Vendor.VendorNumber : null),
+                            new XElement("ShipperName", this.Vendor != null ? this.Vendor.VendorName : null),
+                            new XElement("ShipperCountry", this.Vendor != null ? this.Vendor.CountryCode : null),
+                            new XElement("ShipperVAT", this.Vendor != null ? this.Vendor.VATNumber : null),
+                            new XElement("DepositionNumber", dirtyImporterDespositionPM.DepositionNumber),
+                            new XElement("ValidityStartDate", dirtyImporterDespositionPM.StartDate != null ? dirtyImporterDespositionPM.StartDate.Value.ToString("o") : null),
+                            new XElement("ValidityEndDate", dirtyImporterDespositionPM.EndDate != null ? dirtyImporterDespositionPM.EndDate.Value.ToString("o") : null),
+                            new XElement("ImporterVat", importerCode)
+                            )
+                            );
+        
+   
+                    requestData = XMLData.ToString(SaveOptions.None);
+                    string unifreightUser = null;
+
+                    if (String.IsNullOrWhiteSpace(unifreightUser))
+                    {
+                        unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyImporterDespositionPM.Tenant);
+                    }
+
+                    var myYCULTASKPM = new YCULTASKPM()
+                    {
+                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                        STATUS = "W",
+                        REQUESTDATA = requestData,
+                        ENTNAME = "DEPOSITION",
+                        PRIMARYNUM = dirtyImporterDespositionPM.Id,
+                        PRIORITY = YCULTASKPM.calcPriority(taskType),
+                        TYPE = taskType,
+                        USRCODE = unifreightUser,
+                        ARCHIVE = "F",
+                    };
+
+                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+
+                    var myGGGQPM = new GGGQPM()
+                    {
+                        ChangeSetOp = ChangeSetOperation.Insert,
+                        ORIGINQUE = "LGT", 
+                        STATUS = "1",
+                        EXPTASKTIME = 5,
+                        EXECDATE = (new DualQueryService(_AmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20), 
+                        TRY = 9,
+                        PRIORITY = 8,
+                        ENTNAME = "DEPOSITION",
+                        PRIMARYNUM = "0",
+                        FORMID = "LGT_UPDATE_FCI",
+                        DEBUG = "F",
+                        DONEOPERATION = "A",
+                        //GSTRING1 = myYCULTASKPM.TASKID,
+                    };
+                    myGGGQUpdateService.Update(myGGGQPM, true);
+
+                    if (scope != null)
+                    {
+                        scope.Complete();
+                    }
+                }
+            }
+            finally
+            {
+                if (scope != null)
+                {
+                    scope.Dispose();
+                }
+            }
+
+            LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask:Took:" + sw.ElapsedMilliseconds);
+        }
+
+
+        private string TranslateClient(string amitalImporterId, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(amitalImporterId))
+            {
+                return null;
+            }
+            {
+                ClientQueryService clientQueryService = new ClientQueryService(tenant);
+
+                var clientId = clientQueryService.GetSingle(amitalImporterId, false, true);
+
+                if (clientId == null)
+                {
+                    return null;
+                }
+                return clientId.Code;
+            }
+        }
     }
 }

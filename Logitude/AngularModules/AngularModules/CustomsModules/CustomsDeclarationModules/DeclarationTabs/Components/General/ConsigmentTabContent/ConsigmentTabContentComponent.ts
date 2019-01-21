@@ -500,7 +500,8 @@ export class ConsigmentTabContentComponent
             "Date": this.EntityPM.ManifestNumber,
             "MasterBillOfLading": this.EntityPM.SecondCargoID,
             "InternalIdentifier": this.EntityPM.ThirdCargoID,
-            "ReturnAllInernalCargos": this.EntityPM.ThirdCargoID ? false : true,
+            //"ReturnAllInernalCargos": this.EntityPM.ThirdCargoID ? false : true,//task 44705 21.11.18
+            "ReturnAllInernalCargos": true,
             "DeclarationId": this.EntityPM.DeclarationId,
         };
         customsRequestMenuService.WindowClosed.subscribe(($event: any) => this.OnMasterBOLRequestWindowClosed($event));

@@ -114,7 +114,9 @@ export class DeclarationPaymentOrderTabComponent
 
     EditButtonClicked(item: PaymentOrderList) {
         if (!AppTool.IsNullOrEmpty(item)) {
+            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
             this.paymentOrderPMService.get(item.Id).subscribe(response => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
                 var windowArgs: any = {};
                 windowArgs.EntityPM = response.Result;
                 windowArgs.declarationPM = this.EntityPM;

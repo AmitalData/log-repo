@@ -15,6 +15,7 @@ using Logitude.Server.Tools;
 using Simplog.Global.Data.GlobalModel;
 using System.Configuration;
 using Devart.Data.Oracle;
+using CustomsWorkerRole;
 
 namespace AmitalCustomsWindowsService
 {
@@ -168,6 +169,10 @@ namespace AmitalCustomsWindowsService
             var listOfWorkerEntryPoint = CustomsWorkerRole.ThreadedRoleEntryPoint.GetAllWorkerEntryPointType();
             ///itzik +  ihab  listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
+            listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
+            listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
+            listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
+            
 
 
 

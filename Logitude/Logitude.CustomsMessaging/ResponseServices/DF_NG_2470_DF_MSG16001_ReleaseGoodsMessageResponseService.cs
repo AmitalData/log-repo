@@ -18,6 +18,10 @@ using UnifreightIIG.Common.MessageLib.DeclarationDeal;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Server.Tools.Utils;
 using System.Configuration;
+using Logitude.AmitalMessaging.Utils;
+using Logitude.Customs.BL.Messaging.Maman;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -79,7 +83,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate,
                     };
 
-                    DateTime statusDateTime = customResponse.GeneralData.releaseDate;
+                    DateTime statusDateTime = customResponse.GeneralData.releaseDate.GetValueOrDefault();
                     if (statusDateTime == null)
                     {
                         statusDateTime = customResponse.RequestContentHeader.TransmitionDateTime;
@@ -89,11 +93,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         case 1: // released
                             LogMessagingUtil.Instance.AppendLine("released");
                             //hataraDate = customResponse.GeneralData.releaseDate;
-                            declarationPM.HatraDate = customResponse.GeneralData.releaseDate; //Yuval Chalup 17.01.2018 - Update date from response
+                            declarationPM.HatraDate = customResponse.GeneralData.releaseDate.GetValueOrDefault(); //Yuval Chalup 17.01.2018 - Update date from response
                             myEventContextTagModel.EventCode = "RSG";
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "7";
                             declarationPM.CourierCustomStatusCode = "1";
+                            declarationPM.IsClose = true;
                             MyRequestSheetParam.RequestDescription = "התרה לתיק. מספר הצהרה: " + declarationNumber;//eitan h 26/2/15 task 11525
                             break;
                         case 5: // released cancelled
@@ -102,6 +107,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "6";
                             declarationPM.HatraDate = null; //Yuval Chalup 17.01.2018 - Delete date
+                            declarationPM.IsClose = false;
                             MyRequestSheetParam.RequestDescription = "ביטול התרה. תיק מספר: " + declarationPM.CustomFileNo;//eitan h 26/2/15 task 11525
                             break;
                         case 9: // Pre clearance
@@ -111,6 +117,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             //hataraDate = declarationPM.HatraDate; Yuval Chalup 17.01.2018 Remarked - Do NOT change date
                             MyRequestSheetParam.RequestDescription = "הודעה מוקדמת לסוכן מכס: " + declarationPM.CustomFileNo;
                             declarationPM.CourierCustomStatusCode = "1";
+                            Send2470ToMaman(declarationPM,customResponse, requestParams);
                             break;
                         case 14: // Release When Arrived
                             LogMessagingUtil.Instance.AppendLine("Release When Arrived");
@@ -147,7 +154,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         Succeeded = true,
                         HasException = false,
-                        DeclarationNumber = declarationPM.Id,
+                        DeclarationNumber = declarationPM.DeclarationNumber,
                         UserMessage = MyRequestSheetParam.RequestDescription,
                     };
                     GetResponseData(this.MyResponseData,customResponse, declarationPM);
@@ -167,6 +174,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
+        private void Send2470ToMaman(DeclarationPM declarationPM, DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, GenericRequestParams requestParams)
+        {
+            LogMessagingUtil.Instance.AppendLine("הגדרת ברירת מחדל חדשה ביוניפרייט ברמת מערכת עמילות כפתור בלדרות: שליחה של מסר הודעה מוקדמת לממן עם אופציות .");
+
+            var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
+            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_2470", "NON", "NON", false, true);
+
+            bool sendMaman2470 = def.DEFDATA /*DefaultValue*/ == "Y";
+
+
+            LogMessagingUtil.Instance.AppendLine("default value CGO_2470 ==" + def.DEFDATA ?? "N");
+            if (!sendMaman2470)
+            {
+                return;
+            }
+            var customsResponseXml = XmlGenericUtil<DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage>.SerializeObject(customResponse);
+            var customsResponseBytes = System.Text.UTF8Encoding.UTF8.GetBytes(customsResponseXml);
+            var myFTPOutMaman2470ReleaseGoodService = new FTPOutMaman2470ReleaseGoodService();
+            myFTPOutMaman2470ReleaseGoodService
+                .BuildCommunicationLog(customsResponseBytes, requestParams.Tenant, declarationPM.Id, requestParams.DCAFileName, false);
+
+        }
+
         private void GetResponseData(ReleaseGoodsResponseData myResponseData, DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, DeclarationPM declarationPM)
         {
             if(declarationPM != null)
@@ -174,7 +204,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 DeclarationQueryService declarationQueryService = new DeclarationQueryService(declarationPM.Tenant);
                 DeclarationPM fullDeclarationPM = declarationQueryService.GetSingle(declarationPM.Id, true, false);
                 MyResponseData.FileNumber = fullDeclarationPM.CustomFileNo;
-                if(fullDeclarationPM.SupplierInvoices != null && fullDeclarationPM.SupplierInvoices.Count() > 0)
+                
+                if (fullDeclarationPM.SupplierInvoices != null && fullDeclarationPM.SupplierInvoices.Count() > 0)
                 {
                     MyResponseData.GoodsItemsList = new List<GoodsItems>();
                     foreach (var supplierInvoice in fullDeclarationPM.SupplierInvoices)
@@ -187,6 +218,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             goodsItems.CustomItemID = supplierInvoiceItem.ClassificationCode;
                             MyResponseData.GoodsItemsList.Add(goodsItems);
                         }
+                        if (supplierInvoice.IsPrimarySupplierInvoice)
+                        {
+                            MyResponseData.CurrencyTypeCode = supplierInvoice.InvoiceCurrencyTypeCode;
+                            
+                        }
                     }
                 }
                 if(declarationPM.TaxationDateTime.HasValue)MyResponseData.TaxationDate = declarationPM.TaxationDateTime.Value.Date.ToString("dd/MM/yyyy");
@@ -196,12 +232,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if(customResponse.GeneralData != null)
                 {
                     MyResponseData.governmentProcedureType = customResponse.GeneralData.governmentProcedureType.ToString();
-                    MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.Date.ToString("dd/MM/yyyy");
-                    //if (customResponse.GeneralData.releaseDate.TimeOfDay.Hours != 0)
-                    //{
-                    //    MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.TimeOfDay.ToString("hh:mm") + "   " + MyResponseData.releaseDate;
-                    //}
-                    if(customResponse.GeneralData.dealValueNISSpecified)MyResponseData.dealValueNIS = customResponse.GeneralData.dealValueNIS.ToString();
+                    if(customResponse.GeneralData.releaseDate != null)
+                    {
+                        MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.GetValueOrDefault().Date.ToString("dd/MM/yyyy");
+                        if (customResponse.GeneralData.releaseDate.GetValueOrDefault().TimeOfDay.Hours != 0)
+                        {
+                            MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.GetValueOrDefault().TimeOfDay.ToString("hh:mm") + "   " + MyResponseData.releaseDate;
+                        }
+                    }
+
+                    if (customResponse.GeneralData.dealValueNISSpecified)MyResponseData.dealValueNIS = customResponse.GeneralData.dealValueNIS.ToString();
+                    if (customResponse.GeneralData.CifValueNisSpecified) MyResponseData.CifValueNis = customResponse.GeneralData.CifValueNis.ToString();
+                    if (customResponse.GeneralData.ExchangeRate > 0) MyResponseData.ExchangeRate = customResponse.GeneralData.ExchangeRate.ToString();
                 }
                 if (customResponse.Consignment != null && customResponse.Consignment[0] != null)
                 {
