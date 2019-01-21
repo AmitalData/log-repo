@@ -1679,6 +1679,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 }
                             }
                         }
+
+                        foreach(var item in Columns)
+                        {
+                            var queryColumn = bITabularViewSettings.Columns.Where(a => a.Code == item.Name).FirstOrDefault();
+                            if (queryColumn == null)
+                            {
+                                isUpdated = true;
+                                bITabularViewSettings.Columns.Add(new Column
+                                {
+                                    Code = item.Name,
+                                    IsChecked = true,
+                                    Width = 150,
+                                    DataTypeCode = item.DataTypeCode,
+                                });
+                            }
+                        }
+
                         QueryData.BITabularViewSettings = bITabularViewSettings;
                         if (isUpdated)
                         {
