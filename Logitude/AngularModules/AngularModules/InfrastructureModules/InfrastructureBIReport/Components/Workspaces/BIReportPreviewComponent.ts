@@ -46,38 +46,7 @@ export class BIReportPreviewComponent implements OnInit {
     constructor() {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
     }
-    ngOnInit() {
-        this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe(myResult => {
-            if (!myResult.HasError) {
-                this.DWQueryData = myResult.Result;
-             
-                if (this.DWQueryData.Filters) {
-                    var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
-                    var temp = [];
-                    temp.push(MyFilter);
-                    this.SelectedFiltersDataSource = temp;
-                    var QueryData = new DWQueryData();
-                    QueryData.Columns = this.DWQueryData.Columns;
-                    QueryData.Filters = this.DWQueryData.Filters;
-                    this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
-                        if (!myResult.HasError) {
-                            this.rowData = myResult.Result;
-                            this.StopBusyIndicator();
-                        }
-                        else {
-                            this.StopBusyIndicator();
-                        }
-
-                        this.LoadBIReportData();
-                    });
-                }
-
-                //this.SelectedFiltersDataSource.push(myRootFilter);
-                this.BuildColumns();
-                this.BuildRows();
-            }
-        });
-    
+    ngOnInit() { 
         this.LoadBIReportData();
     }
     public Run(args: any) {
@@ -446,11 +415,11 @@ export class BIReportPreviewComponent implements OnInit {
     }
 
     RunReportButtonClicked() {
-        this.RunReportCommand.emit(this.SelectedFiltersDataSource);
+        this.RunReportCommand.emit(this.DWQueryId);
     }
 
-    OnRunReportComplete() {
-        alert('Running Completed !');
+    OnRunReportComplete(MyData) {
+        this.rowData = MyData;
     }
     CountClicked() {
         alert("Count : " + this.agGrid.api.getDisplayedRowCount());

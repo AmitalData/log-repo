@@ -2,7 +2,10 @@ import { Component, Input, OnInit, ChangeDetectorRef, OnDestroy, Directive, Outp
 import { DWObjectFieldsDetails } from '../../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent'; 
 import { DWObjectTablePMService } from '../../../../Infrastructure/Services/StandardPMs/DWObjectTablePMService';
 import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
- 
+import { DWQueryBuilderService } from '../../../../Infrastructure/Services/ExtendedPMs/DWQueryBuilderService'; 
+import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
+import { DWQueryData } from '../../../../Common/DataContracts/DWQueryData';
+import { DWSubQueryPMService } from '../../../../Infrastructure/Services/StandardPMs/DWSubQueryPMService';
 
 @Component({
     selector: 'DWAskUserFiltersComponent',
@@ -23,26 +26,61 @@ export class DWAskUserFiltersComponent implements OnInit{
     public _DWObjectFieldPMService: DWObjectFieldExtendedPMService;
     public RunReportCommand: EventEmitter<any>;
     @Output() RunReportComplete = new EventEmitter();
+    public _DWQueryBuilderService: DWQueryBuilderService;
+    public _DWQueryBuilderHelper: DWQueryBuilderHelper;
+    public _DWSubQueryPMService: DWSubQueryPMService;
+     
+    public DWQueryData: DWQueryData;
+
     constructor() {
-        
+        this._DWQueryBuilderService = new DWQueryBuilderService();
+        this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
     }
 
     ngOnInit() {
         var ObsList = [];
         this._DWObjectTablePMService = new DWObjectTablePMService();
         this._DWObjectFieldPMService = new DWObjectFieldExtendedPMService();
-         
+        this._DWSubQueryPMService = new DWSubQueryPMService();
+
         if (this.RunReportCommand) {
-            this.RunReportCommand.subscribe((selectedFilters) => {
+            this.RunReportCommand.subscribe((QueryId) => {
                 //this.SelectedFiltersDataSource = selectedFilters;
-                this.RunReport();
+                this.RunReport(QueryId);
             });
         }
     }
 
-    RunReport() {
-        alert("I'm Running ..");
-        this.RunReportComplete.emit();
+    RunReport(DWQueryId) {
+        this._DWSubQueryPMService.getByQueryId(DWQueryId).subscribe(myResult => {
+            if (!myResult.HasError) {
+                this.DWQueryData = myResult.Result;
+
+                if (this.DWQueryData.Filters) {
+                    var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
+                    var temp = [];
+                    temp.push(MyFilter);
+                    this.SelectedFiltersDataSource = temp;
+                    var QueryData = new DWQueryData();
+                    QueryData.Columns = this.DWQueryData.Columns;
+                    QueryData.Filters = this.DWQueryData.Filters;
+                    QueryData.PageIndex = 0;
+                    QueryData.PageSize = 100;
+                    this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
+                        if (!myResult.HasError) {
+                            //this.rowData = myResult.Result;
+                            this.RunReportComplete.emit(myResult.Result);
+                        }
+                        else {
+                            //this.StopBusyIndicator();
+                        }
+
+                        //this.LoadBIReportData();
+                    });
+                } 
+            }
+        });
+       
     }
 
     AddFilterToGroup(item) {

@@ -278,6 +278,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     }).FirstOrDefault();
         }
 
+        public string GetFactTableCode(string DWDimTableCode)
+        {
+            return (from a in repository.webFreightContext.DWObjectFields
+                    where a.DimensionTableCode == DWDimTableCode && a.IsPrimaryKey == true
+                    select a.DWObjectTableCode).FirstOrDefault();
+        }
+
         public DWObjectFieldPM GetFactKeyFieldForDWDimTable(string DWDimTableCode)
         {
             return (from a in repository.webFreightContext.DWObjectFields

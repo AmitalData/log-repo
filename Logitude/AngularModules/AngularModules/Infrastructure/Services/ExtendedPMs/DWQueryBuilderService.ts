@@ -18,9 +18,9 @@ import { PerformanceLogger } from '../../Utilities/PerformanceLogger';
 import { CustomFieldClass } from '../../DataContracts/CustomFieldClass'
 import { ApiQueryFilters } from '../../DataContracts/ApiQueryFilters';
 import { DWObjectFieldPM } from '../../EntityPMs/DWObjectFieldPM';
-//import { DWObjectFieldsDetails } from '../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent';
+import { DWObjectFieldsDetails } from '../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent';
 import { DWQueryData } from '../../../Common/DataContracts/DWQueryData';
-import { DWObjectFieldsDetails } from '../../../Infrastructure/Helpers/DWQueryBuilderHelper';
+//import { DWObjectFieldsDetails } from '../../../Infrastructure/Helpers/DWQueryBuilderHelper';
 
 
 @Injectable()
