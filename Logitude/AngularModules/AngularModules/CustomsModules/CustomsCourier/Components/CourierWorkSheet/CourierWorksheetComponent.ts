@@ -1457,6 +1457,36 @@ implements OnDestroy
             });
     }
 
+    GatepassRequestMethod() {
+
+        if (AppTool.IsNullOrEmpty(this.entityPM.MAWB)) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show("לא ניתן לבצע גייטפס העברות ללא מזהה מטען"); //TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            return;
+        }
+
+        //this._DeclarationCourierStatusPMService.get(declarationId).subscribe((response: ServiceResponse) => {
+            //if (!response.HasError) {
+                var logitudeWindow = new LogitudeWindow();
+                var windowArgs: any = {};
+                windowArgs.CourierMasterPM = this.entityPM;
+                //windowArgs.Mode = mode;
+
+                logitudeWindow.Width = 500;
+                logitudeWindow.Height = 500;
+                logitudeWindow.IsShowCloseButton = false;
+                logitudeWindow.Title = "גייטפס העברות";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+                logitudeWindow.WindowArgs = windowArgs;
+                logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/GatepassRequest/GatepassRequestComponent');
+                logitudeWindow.WindowClosed.subscribe(($event: any) => {
+                    //this.RefreshData();
+                });
+            //}
+        //});
+    }
+
     private GetMamanPUR() {
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", SessionLocator.Tenant)
