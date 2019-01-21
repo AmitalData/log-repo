@@ -1,18 +1,13 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { CustomMessageWrapperComponent} from '../../../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
+import { CustomMessageWrapperComponent } from '../../../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { AppTool, DateTool } from '../../../../../../Infrastructure/Tools';
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from '../../../../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
 import { CustomSendOptionsArgs } from '../../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
-import { CustomMessageProgressComponent } from '../../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';import { EntityArgs } from '../../../../../../Infrastructure/DataContracts/EntityArgs';
-import { FeatureLocator } from '../../../../../../Infrastructure/Utilities/FeatureLocator';
+import { CustomMessageProgressComponent } from '../../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent'; import { EntityArgs } from '../../../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { DepositPM } from '../../../../../../Customs/EntityPMs/DepositPM';
-import { DeclarationList } from '../../../../../../Customs/EntityLists/DeclarationList';
-import { EntityPMService } from '../../../../../../Infrastructure/Services/EntityPMService';
-import { BaseComponent } from '../../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ObservableCollection } from '../../../../../../Infrastructure/Utilities/ObservableCollection';
 import { CustomBankListService } from '../../../../../../Customs/Services/StandardLists/CustomBankListService';
 import { BankAccountToRefundRequestParams } from '../../../../../../Customs/DataContract/RequestParams/BankAccountToRefundRequestParams';
 import { EntityResourceService } from '../../../../../../Infrastructure/Services/EntityResourceService';
@@ -40,6 +35,7 @@ export class BankAccountToRefundComponent
     _TapagMessagesService: TapagMessagesService = new TapagMessagesService();
     _CustomBankListService: CustomBankListService = new CustomBankListService();
     public banksList: CustomBankList[] = [];
+    private declarationId: string;
 
     @ViewChild(CustomMessageWrapperComponent)
     SuperCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();
@@ -59,8 +55,8 @@ export class BankAccountToRefundComponent
 
         if (!AppTool.IsNullOrEmpty(entityArgs)) {
             this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response: any) => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.Deposit").subscribe((response: any) => {
-                                this.LoadBanks();
+                this.EntityResourceService.getEntityResourceByTableName("Customs.Deposit").subscribe((response: any) => {
+                    this.LoadBanks();
                 });
             });
         }
@@ -84,7 +80,7 @@ export class BankAccountToRefundComponent
 
     SetMenuArg(MenuArg) {
         this.OnMassageDisplayMethod();
-        //this.DeclarationNumber = MenuArg.DeclarationNumber;
+        this.declarationId = MenuArg.DeclarationId;
     }
 
     get FileTypeCode() { return this.RequestParams ? this.RequestParams.FileType : null; }
@@ -181,6 +177,8 @@ export class BankAccountToRefundComponent
         else {
             this.UIProperties.SetRequired("BankCode", null, true);
         }
+        this.AccountBranch = null;
+        this.AccountNumber = null;
     }
 
     get AccountBranch() { return this.RequestParams ? this.RequestParams.AccountBranch : null; }
@@ -194,6 +192,7 @@ export class BankAccountToRefundComponent
         else {
             this.UIProperties.SetRequired("AccountBranch", null, true);
         }
+        this.AccountNumber = null;
     }
 
     get AccountNumber() { return this.RequestParams ? this.RequestParams.AccountNumber : null; }
@@ -235,12 +234,18 @@ export class BankAccountToRefundComponent
             return;
         }
 
+        this.InternalBankId = null;
+        this.SelectedBankIndex = null;
+        this.BankCode = null;
+        this.AccountBranch = null;
+        this.AccountNumber = null;
+        this.AccountCurrency = null;
+
         switch (this.CountryCode) {
             case "IL": // Israel
                 this.SetIsraelBankFieldsEnabled();
                 break;
             default: // Foreign
-                this.InternalBankId = null;
                 this.SetIsraelBankFieldsDisabled();
                 break;
         }
@@ -248,13 +253,15 @@ export class BankAccountToRefundComponent
 
     SetIsraelBankFieldsDisabled() {
         this.IsraelBankFieldsEnabled = false;
-        this.UIProperties.SetEnabled("InternalBankId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("InternalBankId", null, false);
+        this.UIProperties.SetEnabled("AccountCurrency", null, true);
         this.UIProperties.SetRequired("AccountCurrency", null, true);
     }
 
     SetIsraelBankFieldsEnabled() {
         this.IsraelBankFieldsEnabled = true;
-        this.UIProperties.SetEnabled("InternalBankId", this.ObjectTableName, true);
+        this.UIProperties.SetEnabled("InternalBankId", null, true);
+        this.UIProperties.SetEnabled("AccountCurrency", null, false);
         this.UIProperties.SetRequired("AccountCurrency", null, false);
     }
 
@@ -266,7 +273,7 @@ export class BankAccountToRefundComponent
 
             if (value != null) {
                 this.BankCode = value.BankCode;
-                this.AccountBranch = value.BranchCode + "," + value.BankCode;
+                this.AccountBranch = Number(value.BranchCode).toString() + "," + value.BankCode;
                 this.AccountNumber = value.AccountNumber;
             }
             else {
@@ -297,7 +304,7 @@ export class BankAccountToRefundComponent
 
         if (AppTool.IsNullOrEmpty(this.RequestParams.FileType)) {
             var msg = TextCodeTranslator.Translate("Customs.BankAccountToRefundQuery.O.FileTypeMandatory");
-            //this.ValidationErrorsList.push(msg);
+            this.ValidationErrorsList.push(msg);
         }
 
         if (AppTool.IsNullOrEmpty(this.RequestParams.FileNumber)) {
@@ -359,20 +366,21 @@ export class BankAccountToRefundComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
         currRequestParams.Tenant = SessionLocator.Tenant;
 
-        currRequestParams.FileType = "2";//this.FileTypeCode;
+        currRequestParams.FileType = this.FileTypeCode;
         currRequestParams.FileNumber = this.FileNumber;
         currRequestParams.Numeral = this.Numeral;
         currRequestParams.IdentifierType = this.IdentifierType;
         currRequestParams.IdentifierCode = this.IdentifierCode;
         currRequestParams.CountryCode = this.CountryCode;
         currRequestParams.BankCode = this.BankCode;
-        currRequestParams.AccountBranch = this.AccountBranch;       
+        currRequestParams.AccountBranch = this.AccountBranch;
         currRequestParams.AccountNumber = this.AccountNumber;
         currRequestParams.AccountCurrency = this.AccountCurrency;
+        currRequestParams.DeclarationId = this.declarationId;
 
         CustomMessageProgressComponent
             .ShowProgressBar(currRequestParams.PBId,
-            "שליחת בקשה להחזר פקדון", true)
+                "שליחת בקשה להחזר פקדון", true)
             .then((res) => {
                 this.ResponseData = res;
                 this.OnMassageDisplayMethod();

@@ -937,7 +937,7 @@ namespace Logitude.Customs.BL.Validators
         }
 
 
-        public static CustomsRequiredFieldErrors GetRequiredFieldErrorsForCourierDeclaration(string declarationId, int tenant, DeclarationPM declarationPM = null)
+        public static CustomsRequiredFieldErrors GetRequiredFieldErrorsForCourierDeclaration(string declarationId, int tenant, DeclarationPM paramDeclarationPM = null)
         {
             DeclarationPM declaration = null;
             CustomsRequiredFieldErrors requiredErrors = new CustomsRequiredFieldErrors() { RequiredFields = new List<CustomsRequiredFieldsErrorItem>(), };
@@ -960,24 +960,24 @@ namespace Logitude.Customs.BL.Validators
             ClientAddressRepository clientAddressRep = new ClientAddressRepository(context);
 
             CustomsVendorQueryService vendorQueryService = new CustomsVendorQueryService(context);
-           
-     
-            var fromCache = true;
-            if (fromCache)
-            {
-                var cacheKey = "DeclarationPM.RequiredVldAfterUpdate" + declarationId;
-                declaration = CacheManager.CacheWrapper.Remove(cacheKey) as DeclarationPM;
 
-            }
+            var fromCache = true;
+            declaration = paramDeclarationPM;
+            
             if (declaration == null)
             {
-                declarationQueryService.LoadSupplierInvoicesWithItems = false;
-                declaration = declarationQueryService.GetSingle(declarationId, true, false);
-            }
+                
+                if (fromCache)
+                {
+                    var cacheKey = "DeclarationPM.RequiredVldAfterUpdate" + declarationId;
+                    declaration = CacheManager.CacheWrapper.Remove(cacheKey) as DeclarationPM;
 
-            if (declarationPM != null)
-            {
-                declaration = declarationPM;
+                }
+                if (declaration == null)
+                {
+                    declarationQueryService.LoadSupplierInvoicesWithItems = false;
+                    declaration = declarationQueryService.GetSingle(declarationId, true, false);
+                }
             }
 
             DeclarationPaymentQueryService DeclarationPaymentQuery = new DeclarationPaymentQueryService(context);
@@ -992,8 +992,9 @@ namespace Logitude.Customs.BL.Validators
             bool IsImporterCodeNull = false;
             foreach (PropertyInfo info in properties)
             {
-                if(info.Name == "AgentId" || info.Name == "WeightValue")
-                {
+                //if(info.Name == "AgentId" || info.Name == "WeightValue")
+                if (info.Name == "AgentId")//task 46459
+                { 
                     if (info.GetValue(declaration) == null )
                     {
                         requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.Declaration" });
@@ -1105,6 +1106,15 @@ namespace Logitude.Customs.BL.Validators
                     }
 
                     if (info.Name == "AirlineId")
+                    {
+                        if (info.GetValue(courierMaster) == null)
+                        {
+
+                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
+
+                        }
+                    }
+                    if (info.Name == "WeightValueCode")//task 46459
                     {
                         if (info.GetValue(courierMaster) == null)
                         {
@@ -1225,7 +1235,8 @@ namespace Logitude.Customs.BL.Validators
             {
                 foreach (PropertyInfo info in ConsignmentProperties)
                 {
-                    if(info.Name == "StorageSiteCode" || info.Name == "LoadingPortCode" || info.Name == "ThirdCargoID"|| info.Name == "ManifestNumber" || info.Name== "UnloadDate" || info.Name== "CargoDescription" || info.Name == "DeliveryPlaceName")
+                    //if(info.Name == "StorageSiteCode" || info.Name == "LoadingPortCode" || info.Name == "ThirdCargoID"|| info.Name == "ManifestNumber" || info.Name== "UnloadDate" || info.Name== "CargoDescription" || info.Name == "DeliveryPlaceName")
+                    if (info.Name == "StorageSiteCode" || info.Name == "LoadingPortCode" || info.Name == "ThirdCargoID" || info.Name == "ManifestNumber" || info.Name == "UnloadDate" || info.Name == "CargoDescription")//task 46459
                     {
                         if (info.GetValue(Consignment) == null)
                         {

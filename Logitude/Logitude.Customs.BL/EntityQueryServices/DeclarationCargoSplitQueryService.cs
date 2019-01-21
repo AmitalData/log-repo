@@ -29,6 +29,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 }
             }
 
+            DecCargoSplitCargoIdentifierQueryService decCargoSplitCargoIdentifierQueryService = new DecCargoSplitCargoIdentifierQueryService(context);
+            entityPM.DecCargoSplitCargoIdentifiers = decCargoSplitCargoIdentifierQueryService.GetMulti(DeclarationCargoSplitKeys, true);
             if (entityPM.DecCargoSplitCargoIdentifiers != null)
             {
                 if (entityPM.DecCargoSplitCargoIdentifiers.Count > 0)
@@ -50,15 +52,27 @@ namespace Logitude.Customs.BL.EntityQueryServices
             List<DeclarationCargoSplitPM> DeclarationCargoSplitList = new List<DeclarationCargoSplitPM>();
             if (DeclarationCargoSplits != null)
             {
+                /*
                 foreach (var DeclarationCargoSplitItem in DeclarationCargoSplits)
                 {
                     DeclarationCargoSplitPM DeclarationCargoSplitPM = this.GetSingle(DeclarationCargoSplitItem.Id,true,false);
                     DeclarationCargoSplitList.Add(DeclarationCargoSplitPM);
                 }
+                */
+                var pocos = DeclarationCargoSplits.ToList();
+                var pmList = pocos.Select(poco => this.GetEntityPM(poco, true, new DeclarationCargoSplitKeys() { Id = poco.Id } ))
+                   .ToList();
+                DeclarationCargoSplitList = pmList;
             }
 
 
             return DeclarationCargoSplitList;
+        }
+
+        public string GetIdByCargoIdentifiers(string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3, int cargoIdentifierType, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(cargoIdentifierKey1) || String.IsNullOrWhiteSpace(cargoIdentifierKey2) || String.IsNullOrWhiteSpace(cargoIdentifierKey3)) return "";
+            return repository.GetIdByCargoIdentifiers(cargoIdentifierKey1, cargoIdentifierKey2, cargoIdentifierKey3, cargoIdentifierType, tenant);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<table>
+<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -16,8 +16,11 @@
                                 <td style="width: 130px; min-width: 130px; max-width: 130px;">Event Date</td>
                                 <td style="width: 130px; min-width: 130px; max-width: 130px;">Received date</td>
                                 <td style="width: 80px; min-width: 80px; max-width: 80px;">Location</td>
-                                <td style="width: 130px; min-width: 130px; max-width: 130px;">Departure</td>
-                                <td style="width: 130px; min-width: 130px; max-width: 130px;">Arrival</td>
+                                <td style="width: 200px; min-width: 200px; max-width: 200px;">Departure</td>
+                                <td style="width: 200px; min-width: 200px; max-width: 200px;">Arrival</td>
+
+                                <td style="width: 130px; min-width: 130px; max-width: 130px;">Vessel / Voyage</td>
+
                                 <td class="LastChild">
                                     <div></div>
                                 </td>
@@ -45,12 +48,16 @@
                                     {{item.LocationCode}}
                                 </td>
 
-                                <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">
-                                    {{item.DepartureDate | DateTimePipe:'DT'}}
+                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                    {{item.DepartureDate | DateTimePipe:'DT'}} {{item.DepartureDateInfo}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                    {{item.ArrivalDate | DateTimePipe:'DT'}} {{item.ArrivalDateInfo}}
                                 </td>
 
                                 <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">
-                                    {{item.ArrivalDate | DateTimePipe:'DT'}}
+                                    {{item.VesselName}} / {{item.VoyageNumber}}
                                 </td>
 
                                 <td>

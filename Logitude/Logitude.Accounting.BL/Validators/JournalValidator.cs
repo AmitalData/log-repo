@@ -128,7 +128,7 @@ namespace Logitude.Accounting.BL.Validators
                         transText = "Closed Month";
                     }
 
-                    if (!IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), myJournalPM))
+                    if (!IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), myJournalPM.AccountingDate))
                     {
                         errorsList.Add(transText);
                         valid = false;
@@ -435,12 +435,13 @@ namespace Logitude.Accounting.BL.Validators
 
         public static bool IsMonthOpenForAccountingDate(
             IQueryable<AccountingPeriodPM> accountingPeriodsByTypeRegular,
-            JournalPM myJournalPM
+            //JournalPM myJournalPM
+            DateTime AccountingDate
             )
         {
             bool valid = true;
             var currentAccountingPeriodPM = accountingPeriodsByTypeRegular.FirstOrDefault(periods =>  
-                periods.PeriodTypeCode=="1" && periods.Year == myJournalPM.AccountingDate.Date.Year);
+                periods.PeriodTypeCode=="1" && periods.Year == /*myJournalPM.*/AccountingDate.Date.Year);
             if (currentAccountingPeriodPM == null)
             {
                 valid = false;
@@ -448,7 +449,7 @@ namespace Logitude.Accounting.BL.Validators
             }
             else
             {
-                var accountingDateMonth = myJournalPM.AccountingDate.Date.Month;
+                var accountingDateMonth = /*myJournalPM.*/AccountingDate.Date.Month;
 
                 if (accountingDateMonth > currentAccountingPeriodPM.ClosedMonth.GetValueOrDefault())
                 {

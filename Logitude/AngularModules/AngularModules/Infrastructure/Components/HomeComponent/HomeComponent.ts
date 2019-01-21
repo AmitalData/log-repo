@@ -989,12 +989,12 @@ export class HomeComponent implements OnDestroy{
                         this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
                         var contractId: string = SessionLocator.TenantManagementJS.BluesnapContractId;
                         if (AppTool.IsNullOrEmpty(contractId)) {
-                            //if (SessionLocator.TenantManagementJS.CountryName == "Israel") {
-                            //    contractId = "3256464";
-                            //}
-                            //else {
+                            if (SessionLocator.TenantManagementJS.CountryName == "Israel") {
+                                contractId = "3256464";
+                            }
+                            else {
                                 contractId = "3507474";
-                            //}
+                            }
                         }
 
                         var numberofUsers: number = SessionLocator.TenantManagementJS.NumberOfUsers;                       

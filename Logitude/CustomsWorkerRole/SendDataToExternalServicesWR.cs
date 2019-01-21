@@ -326,7 +326,8 @@ namespace CustomsWorkerRole
 
                     if (receivedMessage == null || String.IsNullOrWhiteSpace(receivedMessage.MessageId))
                     {
-                        Thread.Sleep(TimeSpan.FromSeconds(5));
+                        //Thread.Sleep(TimeSpan.FromSeconds(5));
+                        Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
                         break;
                     }
 

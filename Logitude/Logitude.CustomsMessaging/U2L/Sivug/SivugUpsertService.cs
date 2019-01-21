@@ -25,6 +25,9 @@ using Logitude.BL.Security;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.Data.Repsitories;
+using Unifreight.Data.AmitalModel;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.BL.EntityPMs.UGenerated;
 
 namespace Logitude.CustomsMessaging.U2L.Sivug
 {
@@ -42,6 +45,8 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
         private string mode;
         List<LineToSequenceNumeric> lineToSequence;
         private int? lastSequenceNumeric = 0;
+
+        private bool _IsBuildItemsUnit = false;
 
         protected override int ResolvedTenant()
         {
@@ -190,6 +195,13 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     // moran 18.3.15 - Task 11540 - commented <-- */
+
+                    string defValue = GetDefault("ISRAEL", "CGG_BUILD_UNIT", "NON", "NON", ResolvedTenant());
+                    if (defValue == "Y")
+                    {
+                        _IsBuildItemsUnit = true;
+                    }
+
                     foreach (var itemINVOICE in this._SIVUG.INVOICE)
                     {
                         this._INVOICE = itemINVOICE;
@@ -631,6 +643,10 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
         private List<SupplierInvoiceItemPM> GetSupplierInvoiceItemPM(INVOICE invoice)
         {
             var SupplierInvoiceItemPMList = new List<SupplierInvoiceItemPM>();
+
+            Dictionary<string, string> ClasificationQtyTypes = new Dictionary<string, string>() { };
+            CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(ResolvedTenant());
+
             foreach (var invoiceItem in invoice.INVOICEITEMS)
             {
                 int int1 = 0;
@@ -733,7 +749,19 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     SupplierInvoiceItemPM.ClasifiedRemarks = invoiceItem.CLASIFIEDREMARKS;
                 }
 
-                if (!string.IsNullOrWhiteSpace(invoiceItem.UNIT_ID))
+                if (_IsBuildItemsUnit && !string.IsNullOrEmpty(SupplierInvoiceItemPM.ClassificationCode))
+                {
+                    if (ClasificationQtyTypes.Keys.Contains(SupplierInvoiceItemPM.ClassificationCode))
+                    {
+                        SupplierInvoiceItemPM.InvoiceQuantityType = ClasificationQtyTypes[SupplierInvoiceItemPM.ClassificationCode];
+                    }
+                    else
+                    {
+                        SupplierInvoiceItemPM.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(SupplierInvoiceItemPM.ClassificationCode, ResolvedTenant());
+                        ClasificationQtyTypes.Add(SupplierInvoiceItemPM.ClassificationCode, SupplierInvoiceItemPM.InvoiceQuantityType);
+                    }
+                }
+                if(string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.InvoiceQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.UNIT_ID))
                 {
                     SupplierInvoiceItemPM.InvoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.UNIT_ID);
                 }
@@ -883,6 +911,24 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
         {
             public int line { get; set; }
             public int sequenceNumeric { get; set; }
+        }
+
+        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
         }
     }
 }

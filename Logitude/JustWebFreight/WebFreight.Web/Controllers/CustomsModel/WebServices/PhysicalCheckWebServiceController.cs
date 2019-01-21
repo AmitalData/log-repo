@@ -1,6 +1,10 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.Models;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.Def.EntityPMs;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +27,38 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 List<PhysicalCheckList> physicalCheckList = queryService.GetPhysicalChecksByDeclarationId(declarationId, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, physicalCheckList);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage PostClosePhysicalCheck(string physicalCheckId, int tenant)
+        {
+            try
+            {
+                PhysicalCheckQueryService physicalCheckQueryService = new PhysicalCheckQueryService(tenant);
+                PhysicalCheckPM physicalCheckPM = physicalCheckQueryService.GetSingle(physicalCheckId, false, false);
+                if (physicalCheckPM != null)
+                {
+                    physicalCheckPM.ChangeSetOp = ChangeSetOperation.Update;
+                    physicalCheckPM.IsClosed = true;
+                    var myEventContextTagModel = new EventContextTagModel()
+                    {
+                        CallProccessID = EventContextTagModel.ProccessEnum.CH_NG_196_MSG7_CargoExitFromCheckSiteResponseServiceUpdate,
+                        EventCode = "PCE",
+                        EventRemarks = "Limit date: " + physicalCheckPM.LimitDate + ", Destination type: " + physicalCheckPM.StorageSiteName,
+                        FUStatusCode = "PCE",
+                        FUStatusRemarks = "Limit date: " + physicalCheckPM.LimitDate + ", Destination type: " + physicalCheckPM.StorageSiteName,
+                    };
+
+                    ICustomContext dbContext = CustomContext.GetContext(tenant);
+                    PhysicalCheckUpdateService updateService = new PhysicalCheckUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+                    updateService.Update(physicalCheckPM, true);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, "");
             }
 
             catch (Exception ex)

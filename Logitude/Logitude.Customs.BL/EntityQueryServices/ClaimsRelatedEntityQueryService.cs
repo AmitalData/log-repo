@@ -17,10 +17,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
             ClaimsRelatedEntitiesAmountQueryService claimsRelatedEntitiesAmountQueryService = new ClaimsRelatedEntitiesAmountQueryService(context);
             ClaimsRelatedEntitiesReasonQueryService claimsRelatedEntitiesReasonQueryService = new ClaimsRelatedEntitiesReasonQueryService(context);
             ClaimsRelatedEntsExpDeclarQueryService claimsRelatedEntsExpDeclarQueryService = new ClaimsRelatedEntsExpDeclarQueryService(context);
+            ClaimsRelatedEntitiesSeizureQueryService claimsRelatedEntitiesSeizureQueryService = new ClaimsRelatedEntitiesSeizureQueryService(context);
+            ClaimsRelatedEntitiesRefundQueryService claimsRelatedEntitiesRefundQueryService = new ClaimsRelatedEntitiesRefundQueryService(context);
 
             entityPM.ClaimsRelatedEntitiesAmounts = claimsRelatedEntitiesAmountQueryService.GetMulti(claimKeys, true);
             entityPM.ClaimsRelatedEntitiesReasons = claimsRelatedEntitiesReasonQueryService.GetMulti(claimKeys, true);
             entityPM.ClaimsRelatedEntsExpDeclars = claimsRelatedEntsExpDeclarQueryService.GetMulti(claimKeys, true);
+            entityPM.ClaimsRelatedEntitiesSeizures = claimsRelatedEntitiesSeizureQueryService.GetMulti(claimKeys, true);
+            entityPM.ClaimsRelatedEntitiesRefunds = claimsRelatedEntitiesRefundQueryService.GetMulti(claimKeys, true);
 
             base.GetComposition(entityKeys, entityPM);
         }

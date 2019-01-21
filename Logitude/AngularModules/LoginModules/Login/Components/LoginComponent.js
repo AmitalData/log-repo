@@ -8,15 +8,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var LoginService_1 = require('../LoginService');
-var SessionInfo_1 = require('../SessionInfo');
-var Tools_1 = require('../Utilities/Tools');
-var LoginComponent = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var LoginService_1 = require("../LoginService");
+var SessionInfo_1 = require("../SessionInfo");
+var Tools_1 = require("../Utilities/Tools");
+var LoginComponent = /** @class */ (function () {
     //private _objectTableRulePMService: ObjectTableRulePMService = new ObjectTableRulePMService();
     //private _objectTableRuleFieldPMService: ObjectTableRuleFieldPMService = new ObjectTableRuleFieldPMService();
     function LoginComponent(loginService //, public IndexedDbService: IndexedDbService, private entityResourceService: EntityResourceService, private _applicationTimersManager: ApplicationTimersManager, public entityListService: EntityListService,
-        ) {
+    //private _userLastLoginPMService: UserLastLoginPMService
+    ) {
         this.loginService = loginService;
         this.IsShowTenantList = false;
         this.IsProduction = false;
@@ -201,6 +203,18 @@ var LoginComponent = (function () {
                 this.loginService.CurrentTenant = userData.CurrentTenant;
                 this.loginService.LoggedUserId = SessionInfo_1.SessionInfo.LoggedUserId;
                 this.loginService.LoggedUserEmail = SessionInfo_1.SessionInfo.LoggedUserEmail;
+                //this.loginService.GetLoggedUser().subscribe(myResult => {
+                //    this.loginService.GetTenantManagement().subscribe(myResult2 => {
+                //        SessionInfo.LoggedUserPM = myResult;
+                //        InfraSettings.TenantManagementPM = myResult2;
+                //        if (SessionInfo.LoggedUserPM.ExpirationDate != null && DateTool.GetDateParts(SessionInfo.LoggedUserPM.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
+                //            this.Blocking.emit("user");
+                //        }
+                //        else {
+                //            this.CheckTenantBlocking(userData);
+                //        }
+                //    });
+                //});
             }
         }
         window.sessionStorage.setItem("userdata", "");
@@ -492,8 +506,10 @@ var LoginComponent = (function () {
             moduleId: './Login/Components/',
             templateUrl: 'LoginComponent.html',
             styleUrls: ['LoginComponent.css']
-        }), 
-        __metadata('design:paramtypes', [LoginService_1.LoginService])
+        }),
+        __metadata("design:paramtypes", [LoginService_1.LoginService //, public IndexedDbService: IndexedDbService, private entityResourceService: EntityResourceService, private _applicationTimersManager: ApplicationTimersManager, public entityListService: EntityListService,
+            //private _userLastLoginPMService: UserLastLoginPMService
+        ])
     ], LoginComponent);
     return LoginComponent;
 }());

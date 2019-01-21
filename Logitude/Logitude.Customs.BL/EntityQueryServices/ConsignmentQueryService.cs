@@ -60,5 +60,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (String.IsNullOrWhiteSpace(manifestNumber) && String.IsNullOrWhiteSpace(secondCargoID) && String.IsNullOrWhiteSpace(thirdCargoID)) return null;
             return repository.GetDeclarationIdByConsignmentCargoId(manifestNumber, secondCargoID, thirdCargoID, tenant);
         }
+        public string GetDeclarationIdBythirdCargoID(string thirdCargoID, int tenant, List<string> idList = null)
+        {
+            return repository.GetDeclarationIdBythirdCargoID(thirdCargoID, tenant, idList);
+        }
     }
 }
