@@ -33,18 +33,18 @@
                 <td></td>
             </tr>
 
-            <tr *ngIf="SelectedFiltersDataSource">
+            <tr *ngIf="SelectedFiltersDataSource" style="height: 1px;">
                 <td>
                     <table class="BodyBackground">
                         <tr>
                             <td>
-                                <div class="EmailBoxMultiLinesText" style="white-space: normal;max-width: 815px;max-height:345px;overflow: auto;">
+                                <div class="EmailBoxMultiLinesText" style="white-space: normal;">
                                     <div style="margin:5px;">
                                         <table>
                                             <tr>
                                                 <td>
                                                     <div class="EmailBoxMultiLinesText" style="white-space: normal;">
-                                                        <DWAskUserFiltersComponent [SelectedFiltersDataSource]="SelectedFiltersDataSource" ></DWAskUserFiltersComponent>
+                                                        <DWAskUserFiltersComponent [SelectedFiltersDataSource]="SelectedFiltersDataSource" [RunReportCommand]="RunReportCommand" (RunReportComplete)="OnRunReportComplete()"></DWAskUserFiltersComponent>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -53,7 +53,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr><td style="height:100%;"></td></tr>
+                        <!--<tr><td style="height:100%;"></td></tr>-->
                     </table>
                 </td>
             </tr>
@@ -69,6 +69,14 @@
 
                             <td style="width: 120px;">
                                 <button [disabled]="IsNewEntity" style="width:120px;float:left;" class="Button" (click)="ExportToExcelClicked()">Export To Excel</button>
+                            </td>
+
+                            <td style="width: 5px;">
+                                <div></div>
+                            </td>
+
+                            <td style="width: 57px;">
+                                <button class="GreenButton" (click)="RunReportButtonClicked()">Run Report</button>
                             </td>
 
                             <td style="width: 5px;">
@@ -102,7 +110,7 @@
                                                 <img [ngStyle]="{'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="LeftCenter" />
                                                 <span style="line-height: 19px;vertical-align:middle;" [ngStyle]="{'margin-left': '3px'}">Save</span>
                                             </button>
-                                            <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveBIReport()" >
+                                            <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveBIReport()">
                                                 <img src="./Images/Buttons/Save.Red.png" [className]="LeftCenter" [ngStyle]="{'margin-left': '2px'}" />
                                                 <span style="line-height: 19px;vertical-align:middle;" [ngStyle]="{'margin-left': '3px'}">Save</span>
                                             </button>

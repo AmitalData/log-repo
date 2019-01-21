@@ -1,4 +1,4 @@
-import { Component, ComponentRef, OnInit, ViewChild} from '@angular/core';
+import { Component, ComponentRef, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
 //import { AgGridModule } from "ag-grid-angular/main";
 import { BIReportPM } from '../../../../Infrastructure/EntityPMs/BIReportPM';
 import { BIReportPMService } from '../../../../Infrastructure/Services/StandardPMs/BIReportPMService';
@@ -13,6 +13,10 @@ import { InfrastructureDomainService, BIReportXMLData, BITabularViewSettings, Co
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
+import { DWObjectFieldsDetails } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
+
+
 
 @Component({
     moduleId: module.id,
@@ -29,20 +33,44 @@ export class BIReportPreviewComponent implements OnInit {
     SelectedFiltersDataSource: any[] = [];
     public _DWSubQueryPMService: DWSubQueryPMService;
     public _DWQueryBuilderService: DWQueryBuilderService;
+    public _DWQueryBuilderHelper: DWQueryBuilderHelper
     public _BIReportPMService: BIReportPMService;
     public _InfrastructureDomainService: InfrastructureDomainService;
     public columnDefs: any[] = [];
     public rowData: any[] = [];
     public BIReportName = "";
+    @Output() RunReportCommand = new EventEmitter();
 
     constructor() {
-
+        this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
     }
     ngOnInit() {
         this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe(myResult => {
             if (!myResult.HasError) {
                 this.DWQueryData = myResult.Result;
-                this.SelectedFiltersDataSource.push(this.DWQueryData.Filters);
+             
+                if (this.DWQueryData.Filters) {
+                    var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
+                    var temp = [];
+                    temp.push(MyFilter);
+                    this.SelectedFiltersDataSource = temp;
+                    var QueryData = new DWQueryData();
+                    QueryData.Columns = this.DWQueryData.Columns;
+                    QueryData.Filters = this.DWQueryData.Filters;
+                    this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
+                        if (!myResult.HasError) {
+                            this.rowData = myResult.Result;
+                            this.StopBusyIndicator();
+                        }
+                        else {
+                            this.StopBusyIndicator();
+                        }
+
+                        this.LoadBIReportData();
+                    });
+                }
+
+                //this.SelectedFiltersDataSource.push(myRootFilter);
                 this.BuildColumns();
                 this.BuildRows();
             }
@@ -379,6 +407,14 @@ export class BIReportPreviewComponent implements OnInit {
                     });
                 });
         }
+    }
+
+    RunReportButtonClicked() {
+        this.RunReportCommand.emit(this.SelectedFiltersDataSource);
+    }
+
+    OnRunReportComplete() {
+        alert('Running Completed !');
     }
     //#endregion
 

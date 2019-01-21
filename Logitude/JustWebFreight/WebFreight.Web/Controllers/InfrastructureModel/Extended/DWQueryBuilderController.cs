@@ -47,7 +47,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
     {
 
 
-        public HttpResponseMessage GetDWQueryData(string SQL,string Table)
+        public HttpResponseMessage GetDWQueryData(string SQL, string Table)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 {
                     SQL = SQL + " where " + Table + ".[Parent Tenant] = " + authToken.Tenant;
                 }
-                
+
                 using (var scope = TransactionFactory.GetNewTransaction())
                 {
                     var currentDb = GlobalDbHelper.GetGlobalDBWithNoCache(0);
@@ -108,7 +108,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
         }
 
-        public HttpResponseMessage GetDWDataForDimTabel(string Tabel, string Field,string SearchData)
+        public HttpResponseMessage GetDWDataForDimTabel(string Tabel, string Field, string SearchData)
         {
             try
             {
@@ -183,9 +183,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 var Field8 = "";
                 var Field9 = "";
                 var Field10 = "";
-                var LovAdditionalFields = !string.IsNullOrEmpty(temp) ? temp.Split(','):null;
-               
-                var SearchData = filters.Filter2Value; 
+                var LovAdditionalFields = !string.IsNullOrEmpty(temp) ? temp.Split(',') : null;
+
+                var SearchData = filters.Filter2Value;
                 DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(authToken.Tenant);
                 DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(Tabel, authToken.Tenant);
                 bool IsClosed = dWObjectTablePM.IsClosed;
@@ -201,14 +201,14 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     if (Tabel != "DIM_Tenants")
                     {
                         WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + ".[Parent Tenant] = " + authToken.Tenant); //authToken.Tenant
-                    } 
-                   
+                    }
+
                     //if (!string.IsNullOrEmpty(SearchData))
                     //{
                     //    WhereStmt = WhereStmt + (" and " + Field + " like '%" + SearchData + "'");
                     //}
                 }
-               
+
                 using (var scope = TransactionFactory.GetNewTransaction())
                 {
                     var currentDb = GlobalDbHelper.GetGlobalDBWithNoCache(0);
@@ -279,19 +279,19 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     object Count = 0;
                     using (SqlConnection sourceConnection = new SqlConnection(connection.ConnectionString))
                     {
-                         
+
                         var CountSQL = "select Count(DISTINCT " + Field + ") from " + Tabel + WhereStmt;
                         sourceConnection.Open();
                         SqlCommand commandSourceData = new SqlCommand(CountSQL, sourceConnection);
-                        Count = commandSourceData.ExecuteScalar(); 
+                        Count = commandSourceData.ExecuteScalar();
                     }
 
                     scope.Complete();
-                    
+
                     ServiceResponse response = new ServiceResponse();
                     List<FactDataTable> FactDataList = new List<FactDataTable>();
                     var TempFactDataList = (from DataRow dr in dataTable.Rows
-                                    select dr);
+                                            select dr);
                     //new FactDataTable()
                     //{ 
                     //    Name = dr[Field.Replace("[","").Replace("]","")].ToString(), 
@@ -340,7 +340,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         {
                             temprec.Field10 = dr[Field10.Replace("[", "").Replace("]", "")].ToString();
                         }
-                         
+
                         FactDataList.Add(temprec);
                     }
                     if (filters.GetCount)
@@ -366,6 +366,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
         }
 
+        [ActionName("PostQueryData")]
         public HttpResponseMessage Post(DWQueryData QueryData)
         {
             try
@@ -373,7 +374,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-               
+
                 var XML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Columns);
                 var FilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Filters);
                 var temp = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(XML);
@@ -391,6 +392,322 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             }
         }
 
+        [ActionName("PostGetDWQueryData")]
+        public HttpResponseMessage PostGetDWQueryData(DWQueryData DWQueryParam)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Shipment", "READ", authToken.Tenant);
+                DWObjectFieldQuery OFieldQuery = new DWObjectFieldQuery(authToken.Tenant);
+
+
+
+                var ColumnsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(DWQueryParam.Columns);
+                var FilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(DWQueryParam.Filters);
+                var Columns = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(ColumnsXML);
+                var Filters = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(FilterXML);
+
+                bool HasMeasurement = Columns.Where(a => a.IsMeasurement == true).Count() > 0;
+                var InnerTables = new List<DWObjectFieldsDetails>();
+                //this.SampleData = [];
+
+                var SelectStmt = new StringBuilder();
+                SelectStmt.Append("Select ");
+                var GroupByStmt = new StringBuilder();
+                GroupByStmt.Append(" group by ");
+                //var Wheremt = " Where ";
+                string WhereStmt = " where "; 
+                
+                var FromTables = new List<string>();
+                foreach (var field in Columns)
+                {
+                    if (field.IsMeasurement)
+                    { 
+                        SelectStmt.Append(field.AggregationTypeCode + "(" + field.DWObjectTableCode + "." + field.Code + ")" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+                    }
+                    else
+                    {
+                        SelectStmt.Append(field.DWObjectTableCode + "." + field.Code + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+                        GroupByStmt.Append(field.DWObjectTableCode + "." + field.Code + ",");
+                    }
+
+                    if (FromTables.Where(a => a == field.DWObjectTableCode).Count() == 0)
+                    {
+                        FromTables.Add(field.DWObjectTableCode);
+                    }
+                    if (field.ParentDimTabelName != null && InnerTables.Where(a => a.ParentDimTabelName == field.ParentDimTabelName).Count() == 0)
+                    {
+                        InnerTables.Add(field);
+                    }
+                }
+              
+
+                string FinalSelectStmt = SelectStmt.ToString().Substring(0, SelectStmt.Length - 1);
+                string FinalGroupByStmt = GroupByStmt.ToString().Substring(0, GroupByStmt.Length - 1);
+                string Fact = FromTables.Find(a => a == "Fact");
+                if (string.IsNullOrEmpty(Fact))
+                {
+                    Fact = "Fact_Shipments";
+                }
+                FinalSelectStmt += " from " + Fact;
+
+                //this.SelectedFieldsDataSource.forEach((field) => {
+                //    if (field.ParentDimTabelName != null && this.InnerTables.filter(a => a.ParentDimTabelName == field.ParentDimTabelName).length == 0)
+                //    {
+                //        this.InnerTables.push(field);
+                //    }
+                //});
+
+                //this.SelectedFiltersDataSource.forEach((Myfilter) => {
+                //    Myfilter.FilterItems.forEach((filter) => {
+                //        if (filter.ParentDimTabelName != null && this.InnerTables.filter(a => a.ParentDimTabelName == filter.ParentDimTabelName).length == 0) {
+                //            this.InnerTables.push(filter);
+                //        }
+                //    }); 
+                //});
+                if (Filters != null)
+                {
+                    var MyFilterList = new List<DWObjectFieldsDetails>();
+                    MyFilterList.Add(Filters);
+                    GetWhereJoined(MyFilterList,InnerTables);
+                    GetWhereStmtForFiltersList(MyFilterList, Filters.AndOr, WhereStmt);
+                }
+
+                //this.Notes = SelectStmt;
+                FromTables = FromTables.Where(a => a != Fact).ToList();
+
+                foreach (var mytbl in InnerTables)
+                {
+                    //var Key = this.AllFieldsObsList.filter(a => a.DWObjectTableCode == mytbl.ParentDimTabelName && a.IsPrimaryKey == true)[0];
+                    var Key = OFieldQuery.GetPrimaryKeyFieldForDWObjectTable(mytbl.ParentDimTabelName);
+                    var FactKey = OFieldQuery.GetFactKeyFieldForDWDimTable(mytbl.ParentDimTabelName);
+                        //this.AllFieldsDataSource.filter(a => a.DimensionTableCode == mytbl.ParentDimTabelName)[0];
+                    FinalSelectStmt += " inner join " + mytbl.ParentDimTabelName + " on " + Fact + "." + ((FactKey.DataTypeCode.ToLower() == "lookup" || FactKey.DataTypeCode.ToLower() == "dimension") ? FactKey.DisplayName : FactKey.Code) + " = " + mytbl.ParentDimTabelName + "." + Key.Code;
+
+
+                }
+                string FinalQuery = "";
+                if (Filters != null)
+                {
+                    FinalQuery = FinalSelectStmt + WhereStmt + ((HasMeasurement && FinalGroupByStmt != " group by") ? FinalGroupByStmt : "");
+                }
+                else
+                {
+                    FinalQuery = FinalSelectStmt + (HasMeasurement && FinalGroupByStmt != " group by" ? FinalGroupByStmt : "");
+                    
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, FinalQuery);
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        private void GetWhereJoined(List<DWObjectFieldsDetails> FiltersList, List<DWObjectFieldsDetails> InnerTables)
+        {
+
+            foreach (var Myfilter in FiltersList)
+            {
+                if (Myfilter.FilterItems.Count > 0)
+                {
+                    GetWhereJoined(Myfilter.FilterItems, InnerTables);
+                }
+                else
+                {
+                    if (Myfilter.ParentDimTabelName != null && InnerTables.Where(a => a.ParentDimTabelName == Myfilter.ParentDimTabelName).Count() == 0)
+                    {
+                        InnerTables.Add(Myfilter);
+                    }
+                }
+            }
+            
+        }
+
+        private void GetWhereStmtForFiltersList(List<DWObjectFieldsDetails> FiltersList, string AndOr,string WhereStmt)
+        {
+            foreach (var Myfilter in FiltersList)
+            {
+                var isHaveMultiSelect = false;
+                if (Myfilter.FilterItems.Count > 0)
+                {
+                    if (this.GetIfFiltersHaveValues(Myfilter.FilterItems) == true)
+                    {
+                        WhereStmt = WhereStmt + " ( ";
+                    }
+                    GetWhereStmtForFiltersList(Myfilter.FilterItems, Myfilter.AndOr, WhereStmt);
+                    if (WhereStmt == " where ")
+                    {
+                        WhereStmt = "";
+                    }
+                    else if (WhereStmt.Substring(WhereStmt.Length - 4).Contains("And") || WhereStmt.Substring(WhereStmt.Length - 4).Contains("Or"))
+                    {
+                        WhereStmt = WhereStmt.Substring(0, WhereStmt.Length - 4);
+                    }
+                    if (WhereStmt != "" && GetIfFiltersHaveValues(Myfilter.FilterItems) == true)
+                    {
+                        WhereStmt = WhereStmt + " ) ";
+                    }
+
+                }
+                else
+                {
+                    //Myfilter.FilterItems.filter(a => a.TextValue != null).forEach((filter) => {
+                    if (Myfilter.TextValue != null)
+                    {
+                        var filter = Myfilter;
+                        var OperationSimpol = "";
+                        if (filter.Operation.Code == equalsOp.Code)
+                        {
+                            if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
+                            {
+                                OperationSimpol = " = @@ ";
+                            }
+                            else
+                            {
+
+                                OperationSimpol = " IN ( '";
+                                OperationSimpol = this.BuildMultiValueSql(filter.TextValue.ToString(), OperationSimpol);
+                                isHaveMultiSelect = true;
+
+
+                            }
+                        }
+                        else if (filter.Operation.Code == notEqualsOp.Code)
+                        {
+                            if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
+                            {
+                                OperationSimpol = " <> @@ ";
+                            }
+                            else
+                            {
+
+                                OperationSimpol = " not IN ( '";
+                                OperationSimpol = BuildMultiValueSql(filter.TextValue.ToString(), OperationSimpol);
+                                isHaveMultiSelect = true;
+
+                                //abed
+                            }
+                        }
+                        else if (filter.Operation.Code == startsWithOp.Code)
+                        {
+                            OperationSimpol = " like '@@%' ";
+                        }
+                        //else if (filter.Operation.Code == filter.IsNullOp.Code) {
+                        //    OperationSimpol = " like '%@@' ";
+                        //}
+                        else if (filter.Operation.Code == IsNullOp.Code)
+                        {
+                            OperationSimpol = " is null ";
+                        }
+                        else if (filter.Operation.Code == IsNotNullOp.Code)
+                        {
+                            OperationSimpol = " is not null ";
+                        }
+                        else if (filter.Operation.Code == greaterThanOrEqualOp.Code)
+                        {
+                            OperationSimpol = " >= @@ ";
+                        }
+                        else if (filter.Operation.Code == largerThanOp.Code)
+                        {
+                            OperationSimpol = " > @@ ";
+                        }
+                        else if (filter.Operation.Code == lessThanOp.Code)
+                        {
+                            OperationSimpol = " < @@ ";
+                        }
+                        else if (filter.Operation.Code == lessThanOrEqualOp.Code)
+                        {
+                            OperationSimpol = " <= @@ ";
+                        }
+
+
+
+                        if (filter.Operation.Code == IsNullOp.Code)
+                        {
+                            WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is null or " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " = '' " + " " + AndOr + " ";
+                        }
+                        else if (filter.Operation.Code == IsNotNullOp.Code)
+                        {
+                            WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is not null and " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " <> '' " + " " + AndOr + " ";
+                        }
+                        else
+                        {
+                            var operation = !isHaveMultiSelect ? OperationSimpol.Replace("@@", filter.TextValue.ToString()) : OperationSimpol;
+                            WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + operation + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
+                        }
+                    }
+                    else
+                    {
+                        //if (this.WhereStmt == " where  ( ") {
+                        //    this.WhereStmt = "";
+                        //}
+                    }
+                    //});
+                }
+            }
+             
+        }
+
+        private string BuildMultiValueSql(string textValue, string operationSimpol)
+        {
+
+            var result = operationSimpol;
+            if (!string.IsNullOrEmpty(textValue))
+            {
+                var values = textValue.Split(';');
+                if (values.Length > 0)
+                {
+                    foreach (var item in values)
+                    {
+                        if (!string.IsNullOrEmpty(item))
+                        {
+                            result += (item + "','");
+                        }
+                    }
+
+
+                    result += ")";
+                    result = result.Replace(",')", ")");
+
+                }
+                else
+                {
+                    result += " ')";
+                }
+
+            }
+            else
+            {
+                result += " ')";
+            }
+
+            return result;
+        }
+
+        private bool GetIfFiltersHaveValues(List<DWObjectFieldsDetails> FiltersList)
+        {
+            return FiltersList.Where(a => a.TextValue != null).Count() > 0;
+        }
+
+        ObjectFieldOperator startsWithOp = new ObjectFieldOperator("StartsWith", "Starts With");
+        ObjectFieldOperator equalsOp = new ObjectFieldOperator("Equals", "Equals to");
+        ObjectFieldOperator notEqualsOp = new ObjectFieldOperator("NotEqual", "Not Equal to");
+        ObjectFieldOperator largerThanOp = new ObjectFieldOperator("LargerThan", "Greater Than");
+        ObjectFieldOperator lessThanOp = new ObjectFieldOperator("LessThan", "Less Than");
+        ObjectFieldOperator greaterThanOrEqualOp  = new ObjectFieldOperator("GreaterThanOrEqual", "Greater Than Or Equal");
+        ObjectFieldOperator lessThanOrEqualOp  = new ObjectFieldOperator("LessThanOrEqual", "Less Than Or Equal");
+        ObjectFieldOperator BetweenOp = new ObjectFieldOperator("Between", "Between");
+        ObjectFieldOperator IsNullOp = new ObjectFieldOperator("IsNull", "Is Empty");
+        ObjectFieldOperator IsNotNullOp = new ObjectFieldOperator("IsNotNull", "Has Value");
+
     }
 
     class FactDataTable
@@ -405,6 +722,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
         public string Field7 { get; set; }
         public string Field8 { get; set; }
         public string Field9 { get; set; }
-        public string Field10 { get; set; } 
+        public string Field10 { get; set; }
     }
 }

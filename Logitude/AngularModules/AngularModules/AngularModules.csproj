@@ -108,7 +108,6 @@
     <Content Include="CommonModules\CommonFlightsSchedules\Components\FlightsSchedules\XMLFlightsSimulatorComponent.html" />
     <Content Include="CommonModules\CommonOthers\Components\Depositions\EditTab\CustomsShipperGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderComponent.html" />
-    <Content Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWAskUserFiltersComponent.html" />
     <Content Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.html" />
     <Content Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWFilterSettings.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\CustomAgent\CustomAgentDocsInTabComponent.html" />
@@ -351,7 +350,6 @@
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\Depositions\EditTab\CustomsShipperGeneralTabComponent.ts" />
-    <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWAskUserFiltersComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWFilterSettings.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\CustomAgent\CustomAgentDocsInTabComponent.ts" />
@@ -655,6 +653,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\TeamPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BusinessRolePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\WebhookKeysPM.ts" />
+    <TypeScriptCompile Include="Infrastructure\Helpers\DWQueryBuilderHelper.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BusinessRoleExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWQueryBuilderService.ts" />

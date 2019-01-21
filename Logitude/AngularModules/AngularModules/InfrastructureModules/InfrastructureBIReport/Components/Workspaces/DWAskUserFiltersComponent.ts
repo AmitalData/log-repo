@@ -8,7 +8,7 @@ import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Servi
     selector: 'DWAskUserFiltersComponent',
     moduleId: module.id,
     templateUrl: './DWAskUserFiltersComponent.html',
-    inputs: ['SelectedFiltersDataSource', 'DataContext','SelectedFiltersDataSourceChanged']
+    inputs: ['SelectedFiltersDataSource', 'ShowRunButton','RunReportCommand']
 })
 
 export class DWAskUserFiltersComponent implements OnInit{
@@ -18,9 +18,11 @@ export class DWAskUserFiltersComponent implements OnInit{
     public AndOrOps = ["And", "Or"];
     public Types = ["Fixed Filter", "Ask User"];
     DataContext: any;
+    ShowRunButton: boolean = false;
     public _DWObjectTablePMService: DWObjectTablePMService;
     public _DWObjectFieldPMService: DWObjectFieldExtendedPMService;
-    public SelectedFiltersDataSourceChanged: EventEmitter<any>;
+    public RunReportCommand: EventEmitter<any>;
+    @Output() RunReportComplete = new EventEmitter();
     constructor() {
         
     }
@@ -29,30 +31,18 @@ export class DWAskUserFiltersComponent implements OnInit{
         var ObsList = [];
         this._DWObjectTablePMService = new DWObjectTablePMService();
         this._DWObjectFieldPMService = new DWObjectFieldExtendedPMService();
-        //this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
-        //    this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(myResult.Result.Code).subscribe(Result => {
-        //        if (!Result.HasError) {
-        //            Result.Result.forEach((field) => {
-        //                if (field.DisplayInQueryBuilder == true) {
-        //                    var view = new DWObjectFieldsDetails(field);
-        //                    view.DisplayName = field.DisplayName;
-        //                    view.ParentDataTypeCode = field.DataTypeCode;
-        //                    ObsList.push(view); 
-        //                }
-        //            });
-        //            //this.DataSource = this.ObsList;
-        //            this.AllFieldsWithChildrenDataSource = ObsList;
-        //        }
-
-        //    });
-        //});
-
-        if (this.SelectedFiltersDataSourceChanged) {
-            this.SelectedFiltersDataSourceChanged.subscribe((res) => {
-                this.SelectedFiltersDataSource = res;
-                //alert(res.length);
+         
+        if (this.RunReportCommand) {
+            this.RunReportCommand.subscribe((selectedFilters) => {
+                //this.SelectedFiltersDataSource = selectedFilters;
+                this.RunReport();
             });
         }
+    }
+
+    RunReport() {
+        alert("I'm Running ..");
+        this.RunReportComplete.emit();
     }
 
     AddFilterToGroup(item) {
