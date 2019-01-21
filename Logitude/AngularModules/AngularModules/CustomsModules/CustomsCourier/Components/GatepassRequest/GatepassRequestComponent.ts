@@ -21,7 +21,7 @@ export class GatepassRequestComponent extends BaseComponent {
     OriginPortCode: string;
     OkButtonEnabled: boolean;
     //_DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
-    UpdateCodeList = [ { 'EnumId': 0, 'New': 'חדש' }, { 'EnumId': 1, 'Cancel': 'ביטול' } ];
+    UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' } ];
 
     constructor() {
         super();            

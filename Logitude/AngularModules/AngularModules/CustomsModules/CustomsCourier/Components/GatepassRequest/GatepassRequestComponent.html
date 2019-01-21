@@ -1,15 +1,15 @@
-<table>
+<table >
 
-    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+    <!--<tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
         </td>
-    </tr>
+    </tr>-->
 
     <!-- HeaderScreen -->
-    <tr style="height: 70px;">
-        <td>
-            <div style="height: 70px;" class="HeaderScreen">
+    <tr style="height: 40px;">
+        <td colspan="4">
+            <div style="height: 40px;" class="HeaderScreen">
                 <table *ngIf="CourierMasterPM">
                     <tr>
                         <!-- col 1 -->
@@ -128,96 +128,85 @@
         </td>
     </tr>
 
-    <tr style="height:40px; width:700px">
-        <td>
-            <table>
-                <tr>
-                    <td style="width:110px">
-                        <LogLabel [NoObjectField]="true"
-                                  [ObjectFieldName]="'UpdateCode'"
-                                  [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"
-                                  [Text]="'קוד פעולה'"></LogLabel>
-                    </td>
-                    <td style="width: 150px; ">
-                        <select (change)="ResetUpdateCodeListChangeSelected($event.target.value)"
-                                style="width:150px;border:1px solid gray;border-radius:3px">
-                            <option *ngFor="let item of UpdateCodeList" [value]="item.EnumId">{{item.Name}}</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
+    <tr class="FormFieldRow" style="height: 30px; width:700px">
+        <td style="width:110px">
+            <LogLabel [NoObjectField]="true"
+                        [ObjectFieldName]="'UpdateCode'"
+                        [ObjectTableName]="ObjectTableName"
+                        [DataContext]="DataContext"
+                        [Text]="'קוד פעולה'"></LogLabel>
+        </td>
+        <td style="width: 150px; ">
+            <select (change)="ResetUpdateCodeListChangeSelected($event.target.value)"
+                    style="width:150px;border:1px solid gray;border-radius:3px">
+                <option *ngFor="let item of UpdateCodeList" [value]="item.EnumId">{{item.Name}}</option>
+            </select>
         </td>
 
         <td><div></div></td>
     </tr>
 
-    <tr style="height:40px; width:700px">
-        <td>
-            <table>
-                <tr>
-                    <td>
-                        <table>
-                            <tr>
-                                <td style="width:110px">
-                                    <LogLabel [ObjectFieldName]="'OriginPortCode'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td style="width:150px">
-                                    <LogLov [ObjectFieldName]="'OriginPortCode'"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext"
-                                            [HideColumns]="true"
-                                            [SelectedValue]="OriginPortCode"
-                                            [LookUpTableName]="'Customs.InternationalSite'">
-                                    </LogLov>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
+    <tr class="FormFieldRow" style="width:700px">
+        <td style="width:110px">
+            <!--<LogLabel [ObjectFieldName]="'OriginPortCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>-->
+            <LogLabel [NoObjectField]="true"
+                      [ObjectFieldName]="'OriginPortCode'"
+                      [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"
+                      [Text]="'אתר אחסון'"></LogLabel>
+        </td>
+        <td style="width:150px">
+            <LogLov [ObjectFieldName]="'OriginPortCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [HideColumns]="true"
+                    [SelectedValue]="OriginPortCode"
+                    [LookUpTableName]="'Customs.InternationalSite'">
+            </LogLov>
+        </td>
 
-                    <td style="width:110px">
-                        <LogLabel [ObjectFieldName]="'DesignateSiteCode'" [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td style="width:150px">
-                        <LogLov [ObjectFieldName]="'DesignateSiteCode'"
-                                [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"
-                                [HideColumns]="true"
-                                [SelectedValue]="DesignateSiteCode"
-                                [LookUpTableName]="'Customs.InternationalSite'">
-                        </LogLov>
-                    </td>
-                    <td ></td>
-                </tr>
-            </table>
+        <td style="width:110px">
+            <!--<LogLabel [ObjectFieldName]="'DesignateSiteCode'" [ObjectTableName]="ObjectTableName"
+                [DataContext]="DataContext"></LogLabel>-->
+            <LogLabel [NoObjectField]="true"
+                      [ObjectFieldName]="'DesignateSiteCode'"
+                      [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"
+                      [Text]="'לאתר אחסון'"></LogLabel>
+        </td>
+        <td style="width:150px">
+            <LogLov [ObjectFieldName]="'DesignateSiteCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [HideColumns]="true"
+                    [SelectedValue]="DesignateSiteCode"
+                    [LookUpTableName]="'Customs.InternationalSite'">
+            </LogLov>
         </td>
 
         <td></td>
         <td><div></div></td>
     </tr>
 
-    <tr style="height:40px; width:700px">
-        <td>
-            <table>
-                <tr>
-                    <td style="width:110px">
-                        <LogLabel [ObjectFieldName]="'TransportationTypeCode'" [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td style="width:150px">
-                        <LogLov [ObjectFieldName]="'TransportationTypeCode'"
-                                [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"
-                                [HideColumns]="true"
-                                [SelectedValue]="TransportationTypeCode"
-                                [LookUpTableName]="'Customs.InternationalSite'">
-                        </LogLov>
-                    </td>
-                    <td style="width:30px"></td>
-                </tr>
-            </table>
+    <tr class="FormFieldRow" style="width:700px">
+        <td style="width:110px">
+            <!--<LogLabel [ObjectFieldName]="'TransportationTypeCode'" [ObjectTableName]="ObjectTableName"
+                [DataContext]="DataContext"></LogLabel>-->
+            <LogLabel [NoObjectField]="true"
+                      [ObjectFieldName]="'TransportationTypeCode'"
+                      [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"
+                      [Text]="'הובלה'"></LogLabel>
+        </td>
+        <td style="width:150px">
+            <LogLov [ObjectFieldName]="'TransportationTypeCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [HideColumns]="true"
+                    [SelectedValue]="TransportationTypeCode"
+                    [LookUpTableName]="'Customs.InternationalSite'">
+            </LogLov>
         </td>
 
         <td><div></div></td>
