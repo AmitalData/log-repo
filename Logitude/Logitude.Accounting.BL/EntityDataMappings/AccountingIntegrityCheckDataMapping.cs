@@ -21,6 +21,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         public void CustomPMToPOCO(AccountingIntegrityCheckPM entityPM, AccountingIntegrityCheck entityPOCO)
         {
 
+            entityPOCO.Id = entityPM.Id;
+
         }
 
         public void CustomPOCOToPM(AccountingIntegrityCheckPM entityPM, AccountingIntegrityCheck entityPOCO)
