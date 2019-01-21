@@ -298,7 +298,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 TimeSheetItemDay newItemDay = new TimeSheetItemDay();
                 newItemDay.Index = i;
                 newItemDay.Date = date;
-                this.FillOfficeHours(newItemDay, date);
+                this.FillOfficeHours(newItemDay, date,false);
                 myResult.OfficeClockDays.Add(newItemDay);
 
             }
@@ -361,7 +361,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 TimeSheetItemDay newItemDay = new TimeSheetItemDay();
                 newItemDay.Index = i;
                 newItemDay.Date = date;
-                this.FillOfficeHours(newItemDay, date);
+                if (count == 0)
+                    this.FillOfficeHours(newItemDay, date,true);
+                else
+                {
+                    this.FillOfficeHours(newItemDay, date,false);
+                }
                 totalOfficeHours += newItemDay.TotalFromClock;
             }
 
@@ -397,7 +402,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
 
 
-        private void FillOfficeHours(TimeSheetItemDay newItem, DateTime date)
+        private void FillOfficeHours(TimeSheetItemDay newItem, DateTime date,bool OneDay)
         {
             List<TMOfficeHour> officeDays = officeHours.Where(a => System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) == System.Data.Entity.DbFunctions.TruncateTime(date)).ToList();
             double total = 0;
@@ -405,9 +410,18 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 DateTime? entry = item.EntryTime != null ? item.EntryTime : item.RecordedEntryTime;
                 DateTime? exit = item.ExitTime != null ? item.ExitTime : item.RecordedExitTime;
-                if (entry != null && exit != null)
+                if (OneDay && officeDays.Count==1 && entry!=null && exit!=null)
                 {
+                    exit = TenantServerConfigration.GetCurrentDateTime(item.Tenant);
                     total += Math.Round((exit.Value - entry.Value).TotalHours, 2);
+
+                }
+                else
+                {
+                    if (entry != null && exit != null)
+                    {
+                        total += Math.Round((exit.Value - entry.Value).TotalHours, 2);
+                    }
                 }
             }
 
