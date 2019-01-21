@@ -158,6 +158,16 @@
                                                 <td>
                                                     <div></div>
                                                 </td>
+                                                <td style="width: 30px;">
+                                                    <button class="Button" style="height:25px;width:25px;" (click)="RefreshButtonClicked()">
+                                                        <img class="CenterCenter" style="padding-left:2px;padding-right:2px;" src="./Images/Buttons/Refresh.png" />
+                                                    </button>
+                                                </td>
+
+                                                <td style="width: 5px;">
+                                                    <div></div>
+                                                </td>
+
 
                                                 <td style="width: 90px;">
                                                     <button class="Button" style="height:25px;" (click)="AddLineClicked()">
@@ -236,6 +246,13 @@
                                         </log-cell-template>
                                     </log-column>
 
+                                    <!-- Location  -->
+                                    <log-column [Alignment]="'left'" [width]="'120'" [header]="'Location'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            {{item.LocationName}}
+                                        </log-cell-template>
+                                    </log-column>
+                                   
                                     <!-- Hours -->
                                     <log-column [width]="'120'" [Alignment]="'center'" [header]="'Hours'">
                                         <log-cell-template template="let item" #logcelltemplate>

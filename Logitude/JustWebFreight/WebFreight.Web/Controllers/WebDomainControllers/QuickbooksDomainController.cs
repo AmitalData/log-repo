@@ -22,6 +22,7 @@ using WebFreight.Web.Security;
 using Logitude.BL.InvoiceModel.Tools;
 using WebFreight.Web.Helpers.Quickbooks;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -33,6 +34,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 Simplog.Data.CommonDataModel.EntityPOCOs.AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -104,6 +106,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             catch (Exception ex)
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                Simplog.Data.CommonDataModel.EntityPOCOs.AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                ExceptionHandler.HandleException(ex, DateTime.Now, authToken.Tenant, "", "Quickbooks "+ LogitudeCardName, "", null);
 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
 
