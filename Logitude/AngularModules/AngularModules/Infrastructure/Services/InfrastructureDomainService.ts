@@ -700,13 +700,13 @@ export class InfrastructureDomainService {
         });
     }
 
-    GetByBIReportId(Queryid: string) {
+    GetByBIReportId(Queryid: string, DWQueryId : string ) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetByBIReportId?' + 'Id=' + Queryid, {
+            return this._http.get(this._apiUrl + '/GetByBIReportId?' + 'Id=' + Queryid + '&dWQueryId=' + DWQueryId, {
                 headers: authHeader
             }).map(response => {
                 var pm = response.json();

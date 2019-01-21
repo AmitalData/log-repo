@@ -1633,7 +1633,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetByBIReportId(string Id)
+        public HttpResponseMessage GetByBIReportId(string Id, string dWQueryId)
         {
             try
             {
@@ -1645,23 +1645,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 BIReportPM entityPM = query.GetSingle(Id, false, false);
                 BIReportXMLData QueryData = new BIReportXMLData();
 
+                DWSubQueryQuery dWSubQueryQuery = new DWSubQueryQuery(authToken.Tenant);
+                DWSubQueryPM dWSubQueryPM = dWSubQueryQuery.GetSinglePMByQueryid(dWQueryId, authToken.Tenant);
+                DWQueryData DWQueryData = new DWQueryData();
+                if (dWSubQueryPM != null)
+                {
+                    var Columns = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(dWSubQueryPM.ColumnsXML);
+                    var Filters = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(dWSubQueryPM.FiltersXML);
+                    DWQueryData.SubQueryData = dWSubQueryPM;
+                    DWQueryData.Columns = Columns;
+                    DWQueryData.Filters = Filters;
+                }
+                QueryData.DWQueryData = DWQueryData;
+
                 if (entityPM != null)
                 {
                     QueryData.BIReportPM = entityPM;
-
-                    DWSubQueryQuery dWSubQueryQuery = new DWSubQueryQuery(authToken.Tenant);
-                    DWSubQueryPM dWSubQueryPM = dWSubQueryQuery.GetSinglePMByQueryid(entityPM.DWQueryId, authToken.Tenant);
-                    DWQueryData DWQueryData = new DWQueryData();
-                    if (dWSubQueryPM != null)
-                    {
-                        var Columns = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(dWSubQueryPM.ColumnsXML);
-                        var Filters = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(dWSubQueryPM.FiltersXML);
-                        DWQueryData.SubQueryData = dWSubQueryPM;
-                        DWQueryData.Columns = Columns;
-                        DWQueryData.Filters = Filters;
-                    }
-                    QueryData.DWQueryData = DWQueryData;
-                 
                     if (!string.IsNullOrEmpty(entityPM.AGGridOptionsXML))
                     {
                         var bITabularViewSettings = LogitudeXmlSerializer.DeserializeObject<BITabularViewSettings>(entityPM.AGGridOptionsXML);
