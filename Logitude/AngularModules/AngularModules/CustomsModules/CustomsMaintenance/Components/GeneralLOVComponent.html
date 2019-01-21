@@ -1,0 +1,107 @@
+
+<style>
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+</style>
+
+<div style="position: absolute; top:0px; bottom:0; left:0; right:0; margin:auto; padding: 10px; background: white;border-radius:0 5px 5px 0;">
+    <table class="noselect" *ngIf="Loaded && EntityResource">
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="3">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+            </td>
+        </tr>
+
+        <!--<tr>
+            <td colspan="3">
+                <div class="DisbleBox">
+                    הזן סוג מסמך מכס ל {{DocumentTypeId}}-{{UnifaceNAME_HEB}}
+                </div>
+            </td>
+        </tr>-->
+
+
+
+        <tr>
+            <td colspan="3">
+                <table>
+                    <tr class="FormFieldRow">
+                        <td class="tbl1Label" style="width: 150px;">
+                            <LogLabel [NoObjectField]="true"
+                                      [ObjectFieldName]="'Code'"
+                                      [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext">
+
+                            </LogLabel>
+                        </td>
+
+
+
+
+                        <td style="width: 200px; padding-right: 36px;">
+                            <!--[LookUpTableName]="'Customs.TermsOfSaleType'"-->
+                            <LogLov [ObjectFieldName]="'Code'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [HideColumns]="true"
+                                    [LookUpTableName]="ObjectTableName"
+                                    [DisplayMemberPath]="'LocalName'">
+                            </LogLov>
+                        </td>
+
+                        <td>
+                            
+                        </td>
+
+
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+
+
+
+
+
+        <tr class="FormFieldRow">
+            <td colspan="3"></td>
+        </tr>
+
+        <tr>
+            <td colspan="3"></td>
+        </tr>
+        <!-- footer -->
+        <tr class="FormFieldRow">
+            <td colspan="3">
+                <table>
+                    <tr>
+                        <td></td>
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                        </td>
+
+
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+

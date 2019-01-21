@@ -21,9 +21,19 @@ export class BIReportComponent {
     private InfrastructureDomainService: InfrastructureDomainService;
 
     constructor(private entityResourceService: EntityResourceService) {
-        this.LoadData();
         this.InfrastructureDomainService = new InfrastructureDomainService();
+        this.LoadData();
+        this.Listen();
     }
+
+    private Listen() {
+        SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            if (s == "BIRefresh") {
+                this.LoadData();
+            }
+        });
+    }
+
     InitComponent() {
 
     }
@@ -49,13 +59,6 @@ export class BIReportComponent {
         });
     }
     public NewBIReportButtonClicked() {
-        //var windowTitle = "New BI Report";
-        //var logWindow = new LogitudeWindow();
-        //logWindow.Width = 750;
-        //logWindow.Height = 600;
-        //logWindow.Title = windowTitle;
-        //logWindow.WindowClosed.subscribe(($event: any) => this.OnNewBIReportWindowClosed($event));
-        //logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1200;
         logWindow.Height = 820;

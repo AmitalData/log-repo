@@ -30,6 +30,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public string AirlinePrefix  { get; set; }
+       [DataMember]
+       public string ICAO  { get; set; }
    }
 
 }

@@ -30,6 +30,8 @@ namespace Logitude.Customs.Data.EntityLists
        public int Tenant  { get; set; }
        [DataMember]
        public string UnifreightStatusCode  { get; set; }
+       [DataMember]
+       public string ErrorPlaceName  { get; set; }
    }
 
 }

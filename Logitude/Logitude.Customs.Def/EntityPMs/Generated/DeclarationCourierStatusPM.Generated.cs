@@ -664,6 +664,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isACCTab ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsACCTab  
+	   {
+	    
+	     get
+		{
+		   return isACCTab;
+		 }
+		 set
+		 {
+		   if(isACCTab != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsACCTab",OldValue=isACCTab,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isACCTab=value;
+		   }
+			
+		 }
+	   }
 	  private string courierSearchFields ;
 	  	  
        
@@ -890,6 +913,144 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AcceptanceStatusCode",OldValue=acceptanceStatusCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   acceptanceStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string mamanStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MamanStatusCode  
+	   {
+	    
+	     get
+		{
+		   return mamanStatusCode;
+		 }
+		 set
+		 {
+		   if(mamanStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MamanStatusCode",OldValue=mamanStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   mamanStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string mamanErrorXml ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MamanErrorXml  
+	   {
+	    
+	     get
+		{
+		   return mamanErrorXml;
+		 }
+		 set
+		 {
+		   if(mamanErrorXml != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MamanErrorXml",OldValue=mamanErrorXml,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   mamanErrorXml=value;
+		   }
+			
+		 }
+	   }
+	  private string courierSuspentionCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierSuspentionCode  
+	   {
+	    
+	     get
+		{
+		   return courierSuspentionCode;
+		 }
+		 set
+		 {
+		   if(courierSuspentionCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierSuspentionCode",OldValue=courierSuspentionCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierSuspentionCode=value;
+		   }
+			
+		 }
+	   }
+	  private string courierSuspentionName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierSuspentionName  
+	   {
+	    
+	     get
+		{
+		   return courierSuspentionName;
+		 }
+		 set
+		 {
+		   if(courierSuspentionName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierSuspentionName",OldValue=courierSuspentionName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierSuspentionName=value;
+		   }
+			
+		 }
+	   }
+	  private string specialActionStatus ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SpecialActionStatus  
+	   {
+	    
+	     get
+		{
+		   return specialActionStatus;
+		 }
+		 set
+		 {
+		   if(specialActionStatus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SpecialActionStatus",OldValue=specialActionStatus,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   specialActionStatus=value;
+		   }
+			
+		 }
+	   }
+	  private string specialActionsErrorXml ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SpecialActionsErrorXml  
+	   {
+	    
+	     get
+		{
+		   return specialActionsErrorXml;
+		 }
+		 set
+		 {
+		   if(specialActionsErrorXml != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SpecialActionsErrorXml",OldValue=specialActionsErrorXml,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   specialActionsErrorXml=value;
 		   }
 			
 		 }

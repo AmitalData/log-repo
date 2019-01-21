@@ -363,7 +363,11 @@ namespace CommunicationWorkerRole
 
 
 
+    /*
+Insert into BATCHSERVICESDEFINITIONS (CODE,CLASSNAME) values ('FTPCommunicationWorkerRoleWinService','FTPCommunicationWorkerRoleWinService');
+Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values ('FTPCommunicationWorkerRoleWinService',0,1);
 
+     */
     public class FTPCommunicationWorkerRoleWinService : Logitude.Server.Tools.WorkerEntryPointDoneLog
     {
         FTPCommunicationWorkerRole _FTPCommunicationWorkerRole;

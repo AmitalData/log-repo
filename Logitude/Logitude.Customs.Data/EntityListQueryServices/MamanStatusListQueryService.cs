@@ -41,7 +41,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         {
             return iQueryable;
 		}
-			}
+	}
 
 
 }

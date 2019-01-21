@@ -2263,10 +2263,19 @@ namespace Logitude.CustomsMessaging.RequestServices
             var declarationImporter = new DeclarationImporter();
             declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(ImporterId, declarationPM.ImporterTypeCode); // new ImporterIdentificationIDType() // moran 24.3.15 - Task 11461 - use declarationPM.ImporterTypeCode instead of hard coded "1"
 
+            string importerAddress=null;
+            string importerName = null;
+            if (string.IsNullOrWhiteSpace(ImporterId))//task 45505
+            {
+                if (!string.IsNullOrWhiteSpace(declarationPM.ImporterAddress)) { importerAddress = declarationPM.ImporterAddress; }
+                if (!string.IsNullOrWhiteSpace(declarationPM.ImporterName)) { importerName = declarationPM.ImporterName; }
+            }
             declarationImporter.DMExtensions = new DeclarationImporterDMExtensions()
             {
-                Address = declarationPM.ImporterAddress,
-                Name = declarationPM.ImporterName,
+//                Address = declarationPM.ImporterAddress,
+                //Name = declarationPM.ImporterName,
+                Address = importerAddress,//task 45505
+                Name = importerName,
                 EntitlementTypeCode = new EntitlementTypeCodeType()
                 {
                     Value = declarationPM.MainImporterEntitlemntTypeCode

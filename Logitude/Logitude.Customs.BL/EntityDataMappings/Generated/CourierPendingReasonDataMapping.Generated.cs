@@ -43,7 +43,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Inactive, 
 	         ErrorPlace, 
 	         Tenant, 
-	         UnifreightStatusCode,
+	         UnifreightStatusCode, 
+	         ErrorPlaceName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

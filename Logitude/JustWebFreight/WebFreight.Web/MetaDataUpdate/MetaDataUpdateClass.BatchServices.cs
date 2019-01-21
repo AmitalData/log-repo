@@ -69,6 +69,9 @@ namespace WebFreight.Web.MetaDataUpdate
             AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "SendToCustoms", ClassName = "SendToCustomsWorkerRole", InActive = false, NumberOfThreads = 1 }, batchServicesDefinitionRepository);
 
 
+            AddBatchServicesDefinitions.AddBatchServicesDefinition(new BatchServicesDefinitionPM() { Code = "SendToCustoms", ClassName = "SendToCustomsWorkerRole", InActive = false, NumberOfThreads = 1 }, batchServicesDefinitionRepository);
+
+
 
             batchServicesDefinitionRepository.SubmitChanges();
         }

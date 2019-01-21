@@ -24,6 +24,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? EventDate { get; set; }
         public bool Partial { get; set; }
         public string VoyageNumber { get; set; }
+        public string VesselName { get; set; }
         public string Location { get; set; }
         public string StatusName { get; set; }
         public string LocationCode { get; set; }

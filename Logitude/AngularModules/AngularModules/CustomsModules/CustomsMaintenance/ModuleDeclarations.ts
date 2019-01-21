@@ -1,4 +1,4 @@
-﻿import { AddEditRequiredFieldsComponent } from './Components/RequiredFields/AddEditRequiredFieldsComponent';
+import { AddEditRequiredFieldsComponent } from './Components/RequiredFields/AddEditRequiredFieldsComponent';
 import { CustomsClosedTablesComponent } from './Components/CustomsClosedTablesComponent';
 import { ClosedTableNotExistedComponent } from './Components/ClosedTableNotExistedComponent';
 import { CustomsSettingsComponent } from './Components/CustomsSettingsComponent';
@@ -8,8 +8,13 @@ import { AddEditInterfaceManagementComponent } from './Components/AddEditInterfa
 import { LoadTestComponent } from './Components/LoadTestComponent';
 import { SignStationsComponent } from './Components/SignStationsComponent';
 import { DocumentTypeCustomsDataComponent } from './Components/DocumentTypeCustomsDataComponent';
+import { GeneralLOVComponent } from './Components/GeneralLOVComponent';
+
 import { CustomsDocumentsDefinitionComponent } from './Components/CustomsDocumentsDefinitionComponent';
 import { AddEditCustomsAirlineComponent } from './Components/AddEditCustomsAirlineComponent';
+import { CustomsPartnerFtpListComponent } from './Components/CustomsPartnerFtpListComponent';
+//import { CustomsPartnerFtpEditComponent } from './Components/CustomsPartnerFtpEditComponent';
+
 
 export const Components =
     [
@@ -23,8 +28,11 @@ export const Components =
         LoadTestComponent,
         SignStationsComponent,
         DocumentTypeCustomsDataComponent,
+        GeneralLOVComponent,
         CustomsDocumentsDefinitionComponent,
         AddEditCustomsAirlineComponent,
+        CustomsPartnerFtpListComponent,
+        //CustomsPartnerFtpEditComponent,
     ];
 
 export class ModuleDeclarations {
@@ -43,8 +51,13 @@ export class ModuleDeclarations {
             case "LoadTestComponent": { myResult = LoadTestComponent; break; }
             case "SignStationsComponent": { myResult = SignStationsComponent; break; }
             case "DocumentTypeCustomsDataComponent": { myResult = DocumentTypeCustomsDataComponent; break; }
+            case "GeneralLOVComponent": { myResult = GeneralLOVComponent; break; }
+                
             case "CustomsDocumentsDefinitionComponent": { myResult = CustomsDocumentsDefinitionComponent; break; }
             case "AddEditCustomsAirlineComponent": { myResult = AddEditCustomsAirlineComponent; break; }
+            case "CustomsPartnerFtpListComponent": { myResult = CustomsPartnerFtpListComponent; break; }
+            //case "CustomsPartnerFtpEditComponent": { myResult = CustomsPartnerFtpEditComponent; break; }
+                
 
         }
 

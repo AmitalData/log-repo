@@ -316,6 +316,13 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ItemsProcessTypesList { get; set; }
         [Column("IsClose")]
 	    public bool IsClose { get; set; }
+        [ForeignKey("CourierSuspention")]
+        [Column("CourierSuspentionCode")]
+	    public string CourierSuspentionCode { get; set; }
+	      
+        public virtual DeclarationStatusType CourierSuspention { get; set; }
+        [Column("DepositionStatusCode")]
+	    public string DepositionStatusCode { get; set; }
     }
 }
 	 

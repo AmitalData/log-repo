@@ -21,13 +21,24 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public CustomsAirline GetByAirlineAndPrefix(string code, string prefix, string entityId)
+        public CustomsAirline GetByAirlineAndPrefix(string code, string prefix, int tenant, string entityId = null)
         {
 
             var Airline = (from a in context.CustomsAirlines
                        where a.AirlineCode == code && a.AirlinePrefix == prefix
-                          && a.Id != entityId
-                       select a).FirstOrDefault();
+                          && a.Tenant == tenant && a.Id != entityId
+                           select a).FirstOrDefault();
+
+            return Airline;
+        }
+
+        public CustomsAirline GetByPrefix(string prefix, int tenant)
+        {
+
+            var Airline = (from a in context.CustomsAirlines
+                           where a.AirlinePrefix == prefix
+                              && a.Tenant == tenant
+                           select a).FirstOrDefault();
 
             return Airline;
         }

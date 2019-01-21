@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,6 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationCorrection
 
        public List<AdditionalInformationView> AdditionalInformation { get; set; }
        public List<AmendmentView> AmendmentViews { get; set; }
+        public List<error> SystemMessageViews { get; set; }
     }
 }

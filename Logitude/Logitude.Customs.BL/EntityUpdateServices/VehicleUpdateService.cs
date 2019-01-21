@@ -34,6 +34,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             base.UpdateComposition(entityPM);
         }
 
+        protected override void OnUpdating(VehiclePM entityPM, Vehicle entityPOCO)
+        {
+            if (entityPM.DateOnRoadAbroad != null)
+            {
+                entityPM.DateOnRoadAbroad = entityPM.DateOnRoadAbroad.Value.Date;
+            }
+        }
        protected override void CheckConcurrency(VehiclePM entityPM, Vehicle entityPOCO)
        {
            //if (!entityPM.ConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID))

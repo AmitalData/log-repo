@@ -98,17 +98,26 @@ export class DropdownMenuFilterComponent implements OnInit {
 
   }
     DropdowndisplayToggle(event) {
-        if (!AppTool.IsNullOrEmpty(event)){
-           // event.stopPropagation();
-        }
+
+        
+        //MouseEvent
+
         DropdownMenuFilterComponent.LastDropdownMenuFilterId = this.MyDropdownMenuFilterId;
         if (this._DropdownDisplay == 'none') {
             var item = document.getElementById(this._DropdownMenuFilterComponentId);
             var itemRect = item.getBoundingClientRect();
+            let myTop = itemRect.top;
+            let myleft = itemRect.left;
+            if (!AppTool.IsNullOrEmpty(event)) {
+                myleft = event.clientX;//: 19
+                myTop = event.clientY;//: 19
+                // event.stopPropagation();
+            }
+            
             document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
-                (itemRect.top + 27) + 'px';
+                (myTop/*itemRect.top*/ /*+ 27*/ /*-5*/) + 'px';
             document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
-                (itemRect.left - 50) + 'px';//min-width: 80px
+                (myleft/*itemRect.left*/ /*- 50*/ - 100 /*+5*/) + 'px';//min-width: 80px
             this._DropdownDisplay = 'block';
         } else {
             this._DropdownDisplay = 'none';

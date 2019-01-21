@@ -150,7 +150,7 @@ export class QueriesPMService {
         );
     }
 
-    delete(entityPM: QueryPM) {
+    delete(entityPM: QueryPM, userId:string) {
 
         return Observable.defer(() => {
 
@@ -159,11 +159,8 @@ export class QueriesPMService {
             authHeader.append('Content-Type', 'application/json');
 
             var validator: ClassLevelValidator;
-
             validator = new ClassLevelValidator();
-
-            var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
-
+            var errorsArray = [];
 
             var response: EntityPMServiceResponse;
             response = new EntityPMServiceResponse();
@@ -171,7 +168,7 @@ export class QueriesPMService {
                 var mappedEntity: QueryPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.delete(this._apiUrl + '?id=' + entityPM.Id + '&tenant=' + entityPM.Tenant,
+                return this._http.delete(this._apiUrl + '?id=' + entityPM.Id + '&userId=' + userId,
                     { headers: authHeader }).map((res) => {
                         var pm = res.json();
                         if (pm) {
@@ -180,23 +177,16 @@ export class QueriesPMService {
                             response.Result = mappedResult;
                         }
 
-
-
                         return response;
-
                     });
             }
-            else {
 
+            else {
                 response.HasError = true;
                 response.ErrorsArray = errorsArray;
-
                 return Observable.of(response);
-
             }
-        }
-
-        );
+        });
     }
 
     public MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: QueryPM = null) {        

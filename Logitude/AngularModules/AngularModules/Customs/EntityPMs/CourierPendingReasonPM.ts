@@ -64,6 +64,11 @@ export class CourierPendingReasonPM {
     public set UnifreightStatusCode(newValue: string) { if (this.unifreightStatusCode != newValue) { this.unifreightStatusCode = newValue; this.MarkAsDirty("UnifreightStatusCode"); } }
        
 	 
+    private errorPlaceName: string;
+    public get ErrorPlaceName() { return this.errorPlaceName; }
+    public set ErrorPlaceName(newValue: string) { if (this.errorPlaceName != newValue) { this.errorPlaceName = newValue; this.MarkAsDirty("ErrorPlaceName"); } }
+       
+	 
 
     public OldEntityPM: CourierPendingReasonPM;
 		

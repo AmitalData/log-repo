@@ -1,5 +1,6 @@
 "use strict";
-var DynamicLoaderTSC = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var DynamicLoaderTSC = /** @class */ (function () {
     function DynamicLoaderTSC() {
     }
     DynamicLoaderTSC.Load = function (myComponentPath, location) {

@@ -165,6 +165,7 @@
     <Compile Include="CoreBL\AccountingSettingResolver.cs" />
     <Compile Include="CoreBL\AutomaticExternalReconcileService.cs" />
     <Compile Include="CoreBL\AutomaticReconcileService.cs" />
+    <Compile Include="CoreBL\Batch\BatchAccountingLoadTestTask.cs" />
     <Compile Include="CoreBL\Batch\BatchOpenFormatReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxDeductionReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxReportService.cs" />

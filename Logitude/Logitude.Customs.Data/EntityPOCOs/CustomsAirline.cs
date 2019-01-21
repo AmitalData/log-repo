@@ -35,6 +35,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("AirlinePrefix")]
 	    public string AirlinePrefix { get; set; }
+        [Column("ICAO")]
+	    public string ICAO { get; set; }
     }
 }
 	 

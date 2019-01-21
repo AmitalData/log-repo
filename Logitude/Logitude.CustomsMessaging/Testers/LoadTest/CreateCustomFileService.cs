@@ -17,7 +17,13 @@ namespace Logitude.CustomsMessaging.Testers.LoadTest
 {
     public class CreateCustomFileService
     {
+        void testc()
+        {
+            var a =  UnifreightIIG.Common.WCOResource.DB;
+            var a1 = UnifreightIIG.Common.WCOResource.DBManifest_18;
 
+
+        }
         public string SendHybridInterface(ShipmentAM  shipmentAM)
         {
             //var shipmentAM  = GetShipmentAM();

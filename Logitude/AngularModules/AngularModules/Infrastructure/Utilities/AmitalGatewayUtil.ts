@@ -1,4 +1,4 @@
-﻿
+
 
 declare var window: any;
 import { UserPM } from '../../Common/EntityPMs/UserPM';
@@ -206,6 +206,23 @@ export class AmitalGatewayUtil {
                     mapDocumentTypeCustomsData .Run(myParam);
                 }
                 break;
+            case "ShowGeneralLOVReturnSelected": {
+
+                
+                this.SelectCustomsRequestMenu(MaintenanceMenu);
+
+                let mapGeneralLOV = new ShowGeneralLOVReturnSelected();
+                mapGeneralLOV.Run(myParam);
+            }
+                break;
+            case "MapPendingReasonCodeData":
+                {
+                    this.SelectCustomsRequestMenu(MaintenanceMenu);
+                    
+                    let mapPendingReasonCodeData = new MapPendingReasonCodeData();
+                    mapPendingReasonCodeData.Run(myParam);
+                }
+                break;
             case "ShowDeclarationStatusQuery":
                 {
                     this.SelectCustomsRequestMenu();
@@ -373,7 +390,22 @@ export class AmitalGatewayUtil {
 
         //CloseEditWindow(false, false);
     }
-    
+    ShowGeneralLOVReturnSelectedCallBack(event: string) {
+
+        
+        this._LastUnifreightMessageM.Requset.push(["ShowGeneralLOVReturnSelectedCancel", (event == "ShowGeneralLOVReturnSelectedCancel").toString()]);
+        this._LastUnifreightMessageM.Requset.push(["ShowGeneralLOVReturnSelectedValue", event]);
+
+        this.SendRequestToUnifreightAsync(
+            "UnifreightMassageHandler.ShowGeneralLOVReturnSelectedCallBack",
+            "CFIHMAIN.LogitudeTask",
+            "ShowGeneralLOVReturnSelectedCallBack",
+            this._LastUnifreightMessageM,
+            "Task ???");
+
+        //CloseEditWindow(false, false);
+    }
+
     ShowDeclarationByIdReturnCloseSaveMethod(
         myParam,
         myEditTab,
@@ -484,7 +516,8 @@ export class AmitalGatewayUtil {
 
                                 });
 
-                                logWindow.Show('./Customs/Components/Declaration/DeclarationPayment/SupplierInvoiceSelectionComponent');
+                                //logWindow.Show('./Customs/Components/Declaration/DeclarationPayment/SupplierInvoiceSelectionComponent');
+                                logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/SupplierInvoiceSelectionComponent');
                             });
                         return;
                     }
@@ -933,7 +966,46 @@ export class ClientAction {
 
    
 }
+export class ShowGeneralLOVReturnSelected {
+    public Run(unifreightMessage: UnifreightMessageM) {
+        //"UnifreightEntity=GNDCARD·;UnifreightEntityNumber=10009065·;LogitudeEntity=Customs.Client·;LogitudeEntityNumber=049028392·;LogitudeViewModel=UnifreightMassageHandler·;LogitudeCommandId=ShowClientReturnIfExist·;formtitle=Client"
+        let UnifreightEntityNumber = unifreightMessage.UnifreightEntityNumber;
+        //let ImporterVat = unifreightMessage.LogitudeEntityNumber;
+        //let formtitle: string=            = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.formtitle");
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        let LOVText: string
+            = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.LOVText");
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 450;
+        logWindow.Height = 250;
+        logWindow.Title = 'הזן ' + LOVText ;
+        logWindow.WindowArgs = {
+            "LogitudeEntityNumber": unifreightMessage.LogitudeEntityNumber,
+            "LogitudeEntity": unifreightMessage.LogitudeEntity,
+            "LOVText": LOVText,
 
+        };
+        logWindow.ShowCloseButton = true;
+        logWindow.Show(
+            //'./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent'
+            //'./Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
+            './CustomsModules/CustomsMaintenance/Components/GeneralLOVComponent'
+        );
+
+        logWindow.WindowClosed.subscribe((event1: any) => {
+            ///AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
+            if (event1 == "Cancel") {
+
+            }
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            AmitalGatewayUtil.Instance.ShowGeneralLOVReturnSelectedCallBack(event1);
+
+
+            //SessionLocator.CurrentSession.StopBusyIndicator();
+        });
+
+    }
+}
 
 
 export class MapDocumentTypeCustomsData {
@@ -955,7 +1027,8 @@ export class MapDocumentTypeCustomsData {
         logWindow.ShowCloseButton = true;
         logWindow.Show(
             //'./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent'
-            './Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
+            //'./Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
+            './CustomsModules/CustomsMaintenance/Components/DocumentTypeCustomsDataComponent'
         );
 
         logWindow.WindowClosed.subscribe(($event1: any) => {
@@ -964,6 +1037,27 @@ export class MapDocumentTypeCustomsData {
         });
 
     }
+}
   
+
+export class MapPendingReasonCodeData {
+    public Run(unifreightMessage: UnifreightMessageM) {
+        let UnifreightEntityNumber = unifreightMessage.UnifreightEntityNumber;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 400;
+        logWindow.Title = 'קשר סטטוס לסיבת Pending';
+        logWindow.WindowArgs = {
+            "UnifreightStatusCode": UnifreightEntityNumber,
+            "FromUnifreight": true,
+        };
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/AddCourierPendingToUnifreightStatusComponent');
+        logWindow.WindowClosed.subscribe(($event1: any) => {
+            AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
+        });
+
+    }
 
 }

@@ -26,7 +26,7 @@ namespace Unifreight.BL.EntityQueryServices
         public GDFDATAPM GetSingle(string DISTRID, string DEFID, string BRANCHID, string CARDID, bool getComposition, bool getFromCache)
         {
             var keys = new GDFDATAKeys() { DISTRID = DISTRID, DEFID = DEFID, BRANCHID = BRANCHID, CARDID = CARDID };
-            return base.GetSingle(keys, getComposition, getFromCache);
+            return base.GetSingle(keys, getComposition, getFromCache) ?? new GDFDATAPM();
         }
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(GDFDATA entityPOCO)
