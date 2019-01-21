@@ -8,7 +8,7 @@
 
     <!-- HeaderScreen -->
     <tr style="height: 70px;">
-        <td colspan="4">
+        <td>
             <div style="height: 70px;" class="HeaderScreen">
                 <table *ngIf="CourierMasterPM">
                     <tr>
@@ -73,7 +73,7 @@
                             <table style="table-layout: fixed;">
 
                                 <!-- TaxationDateTime -->
-                                <tr style="height: 28px;">
+                                <!--<tr style="height: 28px;">
                                     <td class="HeaderScreenLable" style="width: 110px;">
                                         <LogLabel [ObjectFieldName]="'TaxationDateTime'" [ObjectTableName]="'Customs.Declaration'" [DataContext]="DataContext"></LogLabel>
                                     </td>
@@ -82,7 +82,7 @@
                                             {{CourierMasterPM.TaxationDateTime | DateTimeToDatePipe}}
                                         </div>
                                     </td>
-                                </tr>
+                                </tr>-->
 
                                 <tr>
                                     <td colspan="2">
@@ -101,7 +101,7 @@
                             <table style="table-layout: fixed;">
 
                                 <!-- DeclarationStatusTypeName -->
-                                <tr style="height: 28px;">
+                                <!--<tr style="height: 28px;">
                                     <td class="HeaderScreenLable" style="width: 90px;">
                                         <LogLabel [ObjectFieldName]="'DeclarationStatusTypeName'" [ObjectTableName]="'Customs.Declaration'" [DataContext]="DataContext"></LogLabel>
                                     </td>
@@ -110,7 +110,7 @@
                                             {{CourierMasterPM.DeclarationStatusTypeName}}
                                         </div>
                                     </td>
-                                </tr>
+                                </tr>-->
 
                                 <tr>
                                     <td colspan="2">
@@ -130,12 +130,14 @@
 
     <tr style="height:40px; width:700px">
         <td>
-
             <table>
                 <tr>
                     <td style="width:110px">
-                        <LogLabel [ObjectFieldName]="'UpdateCode'" [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"></LogLabel>
+                        <LogLabel [NoObjectField]="true"
+                                  [ObjectFieldName]="'UpdateCode'"
+                                  [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"
+                                  [Text]="'קוד פעולה'"></LogLabel>
                     </td>
                     <td style="width: 150px; ">
                         <select (change)="ResetUpdateCodeListChangeSelected($event.target.value)"
@@ -154,40 +156,40 @@
         <td>
             <table>
                 <tr>
-                    <td style="width:110px">
-                        <LogLabel [ObjectFieldName]="'GatewayPortCode'" [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"></LogLabel>
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:110px">
+                                    <LogLabel [ObjectFieldName]="'OriginPortCode'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:150px">
+                                    <LogLov [ObjectFieldName]="'OriginPortCode'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [HideColumns]="true"
+                                            [SelectedValue]="OriginPortCode"
+                                            [LookUpTableName]="'Customs.InternationalSite'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
-                    <td style="width:150px">
-                        <LogLov [ObjectFieldName]="'GatewayPortCode'"
-                                [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"
-                                [HideColumns]="true"
-                                [SelectedValue]="GatewayPortCode"
-                                [LookUpTableName]="'Customs.InternationalSite'">
-                        </LogLov>
-                    </td>
-                    <td style="width:30px"></td>
-                </tr>
-            </table>
-        </td>
 
-        <td>
-            <table>
-                <tr>
                     <td style="width:110px">
-                        <LogLabel [ObjectFieldName]="'OriginPortCode'" [ObjectTableName]="ObjectTableName"
+                        <LogLabel [ObjectFieldName]="'DesignateSiteCode'" [ObjectTableName]="ObjectTableName"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width:150px">
-                        <LogLov [ObjectFieldName]="'OriginPortCode'"
+                        <LogLov [ObjectFieldName]="'DesignateSiteCode'"
                                 [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"
                                 [HideColumns]="true"
-                                [SelectedValue]="OriginPortCode"
+                                [SelectedValue]="DesignateSiteCode"
                                 [LookUpTableName]="'Customs.InternationalSite'">
                         </LogLov>
                     </td>
+                    <td ></td>
                 </tr>
             </table>
         </td>

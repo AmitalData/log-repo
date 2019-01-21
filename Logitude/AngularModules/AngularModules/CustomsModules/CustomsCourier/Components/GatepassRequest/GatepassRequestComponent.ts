@@ -15,20 +15,15 @@ import { DeclarationCourierStatusPMService } from '../../../../Customs/Services/
 export class GatepassRequestComponent extends BaseComponent {
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.GatepassRequest";
+    //public EntityPM: GatepassRequestPM;
     CourierMasterPM: CourierMasterPM = new CourierMasterPM();
     ValidationErrorsList: any[] = [];
 
     //_DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
-    UpdateCodeList;
-    constructor() {
-        super();
+    UpdateCodeList = [ { 'EnumId': 0, 'New': 'חדש' }, { 'EnumId': 1, 'Cancel': 'ביטול' } ];
 
-        this.UpdateCodeList =
-            [
-                { 'EnumId': 0, 'Name': 'No' },
-                { 'EnumId': 1, 'Name': 'Yes' },
-                { 'EnumId': 2, 'Name': 'All' }
-            ];
+    constructor() {
+        super();            
     }
 
     SetWindowArgs(args: any) {
@@ -56,19 +51,32 @@ export class GatepassRequestComponent extends BaseComponent {
         this.EntityPM.GatepassNumber = newValue;
     }
 
-    public get OriginSiteCode() { return this.EntityPM.OriginSiteCode; }
+    //public get OriginSiteCode() { return this.EntityPM.OriginSiteCode; }
+    //public set OriginSiteCode(newValue: string) {
+    //    this.EntityPM.OriginSiteCode = newValue;
+    //}
+
+    private _OriginSiteCode: string;
+    public get OriginSiteCode() { return this._OriginSiteCode; }
     public set OriginSiteCode(newValue: string) {
-        this.EntityPM.OriginSiteCode = newValue;
+        this._OriginSiteCode = newValue;
     }
 
-    public get DesignateSiteCode() { return this.EntityPM.DesignateSiteCode; }
+    //public get DesignateSiteCode() { return this.EntityPM.DesignateSiteCode; }
+    //public set DesignateSiteCode(newValue: string) {
+    //    this.EntityPM.DesignateSiteCode = newValue;
+    //}
+
+    private _DesignateSiteCode: string;
+    public get DesignateSiteCode() { return this._DesignateSiteCode; }
     public set DesignateSiteCode(newValue: string) {
-        this.EntityPM.DesignateSiteCode = newValue;
+        this._DesignateSiteCode = newValue;
     }
 
-    public get TransportationTypeCode() { return this.EntityPM.TransportationTypeCode; }
+    private _TransportationTypeCode: string;
+    public get TransportationTypeCode() { return this._TransportationTypeCode; }
     public set TransportationTypeCode(newValue: string) {
-        this.EntityPM.TransportationTypeCode = newValue;
+        this._TransportationTypeCode = newValue;
     }
 
     //#endregion\
@@ -79,9 +87,30 @@ export class GatepassRequestComponent extends BaseComponent {
 
     }
 
+    FillErrors() {
+
+        var errors: string[] = [];
+        this.ValidationErrorsList = errors;
+
+        if (AppTool.IsNullOrEmpty(this.OriginSiteCode)) {
+            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.CustomsBlockListInWarehouse.O.FromDateMandatory"));
+        }
+        if (AppTool.IsNullOrEmpty(this.DesignateSiteCode)) {
+            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.CustomsBlockListInWarehouse.O.ToDateMandatory"));
+        }
+        if (AppTool.IsNullOrEmpty(this.TransportationTypeCode)) {
+            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.CustomsBlockListInWarehouse.O.StorageSiteNumberMandatory"));
+        }
+
+
+    }
+
     OkButtonClicked() {
 
-        
+        this.FillErrors();
+        if (this.ValidationErrorsList.length > 0) {
+            return;
+        }
 
     }
 
