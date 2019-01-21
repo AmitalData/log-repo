@@ -72,7 +72,7 @@
                                         </td>
                                     </tr>
 
-                                    <!-- Prefix -->
+                                    <!-- CounterSize -->
                                     <tr class="FormFieldRow">
                                         <td style="width: 100px;">
                                             <LogLabel [ObjectFieldName]="'CounterSize'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -102,6 +102,21 @@
                                         </td>
                                     </tr>
 
+                                    <!-- Suffix -->
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 100px;">
+                                            <LogLabel [ObjectFieldName]="'Suffix'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td style="width: 150px;">
+                                            <LogTextBox [ObjectFieldName]="'Suffix'" [Text]="Suffix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
                                     <tr style="height: 10px;">
                                         <td colspan="3">
                                             <div></div>
@@ -111,7 +126,7 @@
                                     <tr style="height: 1px;">
                                         <td colspan="3">
                                             <div class="NoDataTextStyle" style="text-align: left;">The created numbers have the following format:</div>
-                                            <div class="Value" style="padding-left: 15px;">[Prefix]Number</div>
+                                            <div class="Value" style="padding-left: 15px;">[Prefix]Number[Suffix]</div>
                                         </td>
                                     </tr>
 
@@ -152,7 +167,7 @@
                                                 <div class="MarginAbsolute10" style="top: 5px;">
                                                     <ScrollViewer>
                                                         <ul>
-                                                            <li style="height: 60px; margin-bottom: 5px;" *ngFor="let item of ItemsSource">
+                                                            <li style="height: 100px; margin-bottom: 5px;" *ngFor="let item of ItemsSource">
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width: 110px; border: 1px solid #D1D1D1; text-align: center; padding: 5px;" class="CounterItemBackground">
@@ -181,7 +196,7 @@
                                                                                     </td>
                                                                                 </tr>
 
-                                                                                <!-- Prefix -->
+                                                                                <!-- CounterSize -->
                                                                                 <tr>
                                                                                     <td style="width: 100px;">
                                                                                         <LogLabel [ObjectFieldName]="'CounterSize'" [ObjectTableName]="ObjectTableName" [DataContext]="item.DataContext"></LogLabel>
@@ -204,6 +219,21 @@
 
                                                                                     <td>
                                                                                         <LogTextBox [ObjectFieldName]="'StartNumber'" [Text]="item.StartNumber" [ObjectTableName]="ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- Suffix -->
+                                                                                <tr>
+                                                                                    <td style="width: 100px;">
+                                                                                        <LogLabel [ObjectFieldName]="'Suffix'" [ObjectTableName]="ObjectTableName" [DataContext]="item.DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td style="width: 150px;">
+                                                                                        <LogTextBox [ObjectFieldName]="'Suffix'" [Text]="item.Suffix" [ObjectTableName]="ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
                                                                                     </td>
 
                                                                                     <td>

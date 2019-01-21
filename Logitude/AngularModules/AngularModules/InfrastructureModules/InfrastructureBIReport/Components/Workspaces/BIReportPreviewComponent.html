@@ -51,6 +51,7 @@
                                 <div></div>
                             </td>
 
+
                             <td style="width: 120px;">
                                 <button style="width:120px;float:left;" class="Button" (click)="CountClicked()">Grid Total Rows</button>
                             </td>
@@ -59,9 +60,17 @@
                                 <div></div>
                             </td>
 
-                            <td style="float:right;width:200px; ">
+                            <td style="float:right;width:230px; ">
                                 <table>
                                     <tr>
+                                        <td style="width: 15px;vertical-align:middle;">
+                                            <img src="./Images/Columns.png" (click)="onBIReportColumnsClick()" title="Show/Hide/Reorder Column(s)" style="cursor: pointer; height:18px;" [className]="LeftCenter"/>
+                                        </td>
+
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+
                                         <td style="width: 57px;">
                                             <button [disabled]="IsNewEntity" class="Button" (click)="EditBIReportClicked()">Edit Report</button>
                                         </td>

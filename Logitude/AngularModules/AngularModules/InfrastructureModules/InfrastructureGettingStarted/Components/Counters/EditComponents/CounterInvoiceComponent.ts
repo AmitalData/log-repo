@@ -79,6 +79,7 @@ export class CounterInvoiceComponent extends BaseComponent {
     }
     SetUIProperties() {
         this.UIProperties.SetEnabled("Prefix", this.ObjectTableName, !this.IsCounterUsed);
+        this.UIProperties.SetEnabled("Suffix", this.ObjectTableName, !this.IsCounterUsed);
         this.UIProperties.SetEnabled("StartNumber", this.ObjectTableName, !this.IsCounterUsed);
         this.UIProperties.SetEnabled("CounterSize", this.ObjectTableName, !this.IsCounterUsed);
     }
@@ -199,6 +200,17 @@ export class CounterInvoiceComponent extends BaseComponent {
 
             this.ItemsSource.forEach(item => {
                 item.Prefix = value;
+            });
+        }
+    }
+
+    public get Suffix() { return this.EntityPM.Suffix; }
+    public set Suffix(value: string) {
+        if (this.EntityPM.Suffix != value) {
+            this.EntityPM.Suffix = value;
+
+            this.ItemsSource.forEach(item => {
+                item.Suffix = value;
             });
         }
     }
@@ -338,6 +350,7 @@ export class CounterInvoiceDefinitionItem extends BaseComponent {
         }
 
         this.UIProperties.SetEnabled("Prefix", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Suffix", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("StartNumber", this.ObjectTableName, isEnabled_StartNumber);
     }
 
@@ -353,6 +366,13 @@ export class CounterInvoiceDefinitionItem extends BaseComponent {
     public set Prefix(value: string) {
         if (this.EntityPM.Prefix != value) {
             this.EntityPM.Prefix = value;
+        }
+    }
+
+    public get Suffix() { return this.EntityPM.Suffix; }
+    public set Suffix(value: string) {
+        if (this.EntityPM.Suffix != value) {
+            this.EntityPM.Suffix = value;
         }
     }
 

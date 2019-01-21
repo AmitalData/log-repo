@@ -71,7 +71,7 @@ namespace Logitude.Accounting.BL.DataContract
         public decimal? OpeningBalanceInForegnCurrency { get; set; }
         public decimal? TotalDebitInForeignCurrency { get; set; }
         public decimal? TotalCreditInForeignCurrency { get; set; }
-
+        public string CustomerGLAccountId { get; set; }
 
 
     }
