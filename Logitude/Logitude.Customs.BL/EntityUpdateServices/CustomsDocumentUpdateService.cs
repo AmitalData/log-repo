@@ -34,6 +34,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Server.Tools.Utils;
+using Logitude.Customs.BL.TraceEvents;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -120,7 +121,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         var documentsFilingQuery = new DocumentsFilingQuery(entityPM.Tenant);
                         var pm = documentsFilingQuery.GetSinglePM(documentsFilingId, entityPM.Tenant);
-
+                        if (pm.ExternalEntityName == "CFIFILEM" && !string.IsNullOrWhiteSpace(pm.ExternalEntityReference))
+                        {
+                            var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
+                            unifreightFUStatusTaskService.DeleteINAFUStatus(entityPM.Tenant, pm.ExternalEntityReference);
+                        }
                         AddHybridTaskDocumentFilingChange(pm); //Bug 36694: Disconnecting document from the ticket  does not create trigger to UNF
                     }
 
@@ -392,6 +397,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
+            if (!string.IsNullOrWhiteSpace(entityPM.CollateralId) && !string.IsNullOrWhiteSpace(entityPM.CustomsDocId)) // Send automatically if from Collateral screen
+            {
+                send = true;
+            }
+
             if (send || forceDueLoadTest)
             {
                 if (SendMessageToQueue(entityPM, forceDueLoadTest))
@@ -416,6 +426,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public bool SendMessageToQueue(CustomsDocumentPM entityPM, bool forceDueLoadTest = false)
         {
             bool send = false;
+            bool sendWithCustomsDocId = false;
             try
             {
 
@@ -424,7 +435,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     return send;
                 }
-                if (!String.IsNullOrWhiteSpace(entityPM.CustomsDocId))
+                if (!string.IsNullOrWhiteSpace(entityPM.CollateralId))
+                {
+                    sendWithCustomsDocId = true;
+                }
+                if (!String.IsNullOrWhiteSpace(entityPM.CustomsDocId) && !sendWithCustomsDocId)
                 {
                     //ALREADY SEND TO MEHES AND RECIVE REF :entityPM.CustomsDocId
                     LogMessagingUtil.Instance.AppendLine("Customs Document already sent to Customs");
@@ -446,7 +461,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var concurCheck = customsDocumentQueryService.GetSingle(entityPM.DocumentsFilingId, false, false);
                 if (concurCheck != null && !forceDueLoadTest)
                 {
-                    if (!String.IsNullOrWhiteSpace(concurCheck.CustomsDocId))
+                    if (!String.IsNullOrWhiteSpace(concurCheck.CustomsDocId) && !sendWithCustomsDocId)
                     {
                         LogMessagingUtil.Instance.AppendLine("Customs Document already sent to Customs");
                         return send;

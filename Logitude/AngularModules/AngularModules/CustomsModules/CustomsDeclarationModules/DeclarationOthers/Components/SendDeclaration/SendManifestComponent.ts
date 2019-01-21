@@ -321,9 +321,10 @@ export class SendManifestService {
                     }
                     var myDeclarationEditComponentController = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
                     myDeclarationEditComponentController.CustomsAnswersShowManifest = true;
-
                     SessionLocator.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCA";
                     SessionLocator.CurrentSession.CurrentEditComponent.SetSelectedTab();
+                    var myDeclarationEditComponentController = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
+                    myDeclarationEditComponentController.CustomsAnswersShowManifest = true;
                     SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 }
             }

@@ -169,6 +169,7 @@
     <Content Include="2018.R4\10 - 2018\Day 02 [Islam] delete old queries for sat.sql" />
     <Content Include="2018.R4\10 - 2018\Day 11 [Rabaia] DeleteOldAuthenticationTokensStoredProc - Copy.sql" />
     <Content Include="2018.R4\10 - 2018\Day 11 [Rabaia] RemoveForwardingPartnerIdFKConstraint.sql" />
+    <Content Include="2018.R5\1 - 2019\Day 16  [Khalid] deleteOldTextCode and Feature DownloadDocuments.sql" />
     <Content Include="2018.R5\10 - 2018\Day 15 [Ayman] RemoveAutoCriditAndCreditedReceivableId.sql" />
     <Content Include="2018.R5\11 - 2018\Day 25 [Samar] set shared logistics setting defaults.sql" />
     <Content Include="2018.R5\11 - 2018\Day 28 [Samar] Add new help resources.sql" />
@@ -1815,6 +1816,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Jenkins\ConnectionStrings\563\JustAmitalCustomsWindowsServiceappSettings.config" />
+    <None Include="Jenkins\ConnectionStrings\563\JustAmitalCustomsWindowsServiceConnectionStrings.config" />
+    <None Include="Jenkins\ConnectionStrings\563\JustConfig\Customs.appSettings.config" />
+    <None Include="Jenkins\ConnectionStrings\563\JustConfig\Customs.ConnectionStrings.config" />
+    <None Include="Jenkins\ConnectionStrings\573\JustAmitalCustomsWindowsServiceappSettings.config" />
+    <None Include="Jenkins\ConnectionStrings\573\JustAmitalCustomsWindowsServiceConnectionStrings.config" />
+    <None Include="Jenkins\ConnectionStrings\573\JustConfig\Customs.appSettings.config" />
+    <None Include="Jenkins\ConnectionStrings\573\JustConfig\Customs.ConnectionStrings.config" />
+    <None Include="Jenkins\ConnectionStrings\581\JustAmitalCustomsWindowsServiceappSettings.config" />
+    <None Include="Jenkins\ConnectionStrings\581\JustAmitalCustomsWindowsServiceConnectionStrings.config" />
+    <None Include="Jenkins\ConnectionStrings\581\JustConfig\Customs.appSettings.config" />
+    <None Include="Jenkins\ConnectionStrings\581\JustConfig\Customs.ConnectionStrings.config" />
+    <None Include="Jenkins\ConnectionStrings\584\JustAmitalCustomsWindowsServiceappSettings.config" />
+    <None Include="Jenkins\ConnectionStrings\584\JustAmitalCustomsWindowsServiceConnectionStrings.config" />
+    <None Include="Jenkins\ConnectionStrings\584\JustConfig\Customs.appSettings.config" />
+    <None Include="Jenkins\ConnectionStrings\584\JustConfig\Customs.ConnectionStrings.config" />
+    <None Include="Jenkins\Customs56.bat" />
     <None Include="OracleScripts\1701\package features_05-11-2017.csv" />
     <None Include="OracleScripts\1701\Role features_05-11-2017.csv" />
     <None Include="OracleScripts\1701\Snap\1701_global.onp" />

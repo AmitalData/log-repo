@@ -56,6 +56,21 @@ namespace Logitude.Customs.Data.Repsitories
             return null;
         }
 
+
+        public string GetDeclarationIdBythirdCargoID(string thirdCargoID, int tenant, List<string> idList = null)
+        {
+            var q = GetAll(tenant)
+                .Where(r => r.ThirdCargoID == thirdCargoID);
+
+            if (idList != null && idList.Count > 0)
+            {
+                q = q.Where(r => idList.Contains(r.DeclarationId));
+            }
+
+            return q.Select(r => r.DeclarationId).FirstOrDefault();
+        }
+
+
         public void FastDeleteMulti(DeclarationKeys entityKeyFields)
         {
             //throw new Exception("preventing Clear Consignments - Validation (CALL#291407)");

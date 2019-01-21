@@ -33,7 +33,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                                               select a;
             return queries;
         }
-
       
         public QueryColumn GetSingleQueryColumn(string id,int tenant)
         {
@@ -48,7 +47,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     where a.ObjectFieldId == FieldId && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
-
      
         public IQueryable<QueryColumn> GetQueryColumnsByQueryTenantOnly(int tenant, string queryId)
         {
@@ -91,7 +89,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
            context.SaveChanges();
         }
 
-
         public List<QueryColumn> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
@@ -100,6 +97,24 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public QueryColumn GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
+        }
+
+        public List<QueryColumn> GetQueryColumnsByQueryIdAndUser(int tenant, string userId, string queryId)
+        {
+            IQueryable<QueryColumn> columns = from a in webFreightContext.QueryColumns
+                                              where a.Tenant == tenant && a.UserId == userId && a.QueryId == queryId && a.ObjectField.DisplayInList == true
+                                              select a;            
+
+            List<QueryColumn> Cols = new List<QueryColumn>();
+            foreach (var item in columns)
+            {
+                if (!Cols.Contains(item))
+                {
+                    Cols.Add(item);
+                }
+            }
+
+            return Cols;
         }
     }
 }

@@ -37,7 +37,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return advancedFilters;
 
         }
-
       
         public IQueryable<AdvancedQueryFilter> GetAdvancedQueryFiltersByTenantAndQuery(int tenant,string queryId)
         {
@@ -102,7 +101,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             context.SaveChanges();
         }
 
-
         public List<AdvancedQueryFilter> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
@@ -111,6 +109,15 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public AdvancedQueryFilter GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
+        }
+
+        public List<AdvancedQueryFilter> GetAdvancedQueryFiltersByTenantAndUserAndQuery(int tenant, string userId, string queryId)
+        {
+            List<AdvancedQueryFilter> advancedFilters = (from a in context.AdvancedQueryFilters
+                                                        where (a.Tenant == tenant && a.UserId == userId && a.QueryId == queryId) || a.Tenant == 0
+                                                        select a).ToList();                                  
+            
+            return advancedFilters;
         }
     }
 }

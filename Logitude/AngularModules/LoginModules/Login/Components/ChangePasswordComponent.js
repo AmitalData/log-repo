@@ -303,8 +303,8 @@ var ChangePasswordComponent = (function () {
             moduleId: './Login/Components/',
             templateUrl: 'ChangePasswordComponent.html',
             styleUrls: ['ChangePasswordComponent.css']
-        }), 
-        __metadata('design:paramtypes', [PasswordChangeService_1.PasswordChangeService, LoginService_1.LoginService])
+        }),
+        __metadata("design:paramtypes", [PasswordChangeService_1.PasswordChangeService, LoginService_1.LoginService])
     ], ChangePasswordComponent);
     return ChangePasswordComponent;
 }());

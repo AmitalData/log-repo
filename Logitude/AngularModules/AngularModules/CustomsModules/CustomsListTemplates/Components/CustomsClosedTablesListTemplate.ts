@@ -103,7 +103,8 @@ export class CustomsClosedTablesListTemplate {
         logitudeWindow.IsShowCloseButton = true;
         logitudeWindow.Title = this._CustomsClosedTable.CustomsLocalName;
         logitudeWindow.WindowArgs = this._CustomsClosedTable;
-        logitudeWindow.Show('./Customs/Components/Maintenance/ClosedTableNotExistedComponent');
+        //logitudeWindow.Show('./Customs/Components/Maintenance/ClosedTableNotExistedComponent');
+        logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/ClosedTableNotExistedComponent');
         return;
 
 

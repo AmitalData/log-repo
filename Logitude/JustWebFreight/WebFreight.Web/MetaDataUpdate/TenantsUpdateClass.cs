@@ -199,9 +199,9 @@ namespace WebFreight.Web.MetaDataUpdate
                             updateClass.LoadHelpResources();
                             updateClass.CreateMasterCounter(0);
                             updateClass.LoadEmailAlertSettings();
-                            if (LogitudeSettings.WorkEnvironment == "logbox")
+                            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
                             {
-                                updateClass.UpdateLogboxAuomationObjectFields(context);
+                                updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
                             }
                          
 
@@ -315,12 +315,12 @@ namespace WebFreight.Web.MetaDataUpdate
                             updateClass.FillManifestCargoStatusTable();
                             updateClass.FillAcceptanceStatus();
                             updateClass.FillMamanStatus();
-
+                            updateClass.FillPendingErrorPlaceTable();
                             //updateClass.FillCourierDeclarationStatus();
                             //updateClass.FillCourierManifestStatus();
                             //updateClass.FillCourierPaymentStatus();
-
-
+                            updateClass.FillMamanSpecialActionTable();
+                            updateClass.FillMamanSpecialActionStatusTable();
 
 
 

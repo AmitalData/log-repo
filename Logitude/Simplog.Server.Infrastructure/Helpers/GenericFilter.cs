@@ -237,7 +237,26 @@ namespace Simplog.Server.Infrastructure.Helpers
 
                                         MemberExpression field = Expression.PropertyOrField(pe, item.FieldName);
 
-                                        MethodCallExpression startsWith = Expression.Call(field, mi, Expression.Constant(item.FieldValue));
+                                        MethodCallExpression startsWith = null;
+                                        if (LogitudeSettings.WorkEnvironment == "customs")
+                                        {
+                                            if (item.FieldName == "SearchFields")
+                                            {
+                                                Expression ex = Expression.Call(field, typeof(string).GetMethod("ToLower", System.Type.EmptyTypes));
+                                                startsWith = Expression.Call(ex, mi, Expression.Constant(item.FieldValue));
+                                            }
+                                            else
+                                            {
+                                                startsWith = Expression.Call(field, mi, Expression.Constant(item.FieldValue));
+
+                                            }
+                                        }
+                                        else
+                                        {
+
+                                            startsWith = Expression.Call(field, mi, Expression.Constant(item.FieldValue));
+                                        }
+
 
 
                                         if (grandExpression == null)

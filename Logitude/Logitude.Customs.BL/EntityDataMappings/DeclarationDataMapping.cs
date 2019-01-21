@@ -92,6 +92,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.CourierSuspentionReasonName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AcceptanceStatusName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.MamanStatusName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.CourierSuspentionName);
+
             //CardRepository rep = new CardRepository(entityPM.Tenant);
             Card customerCard = CardRepository.GetSingleCard(entityPOCO.CustomerId, entityPOCO.Tenant, true);
             if (customerCard != null)
@@ -215,11 +217,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
             }
 
-            if (entityPOCO.DeclarationStatusTypeCode != null)
+            if (entityPOCO.DeclarationStatusTypeCode != null || entityPOCO.CourierSuspentionCode != null)
             {
                 DeclarationStatusTypeQueryService declarationStatusTypeQueryService = new DeclarationStatusTypeQueryService(entityPOCO.Tenant);
-                DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(entityPOCO.DeclarationStatusTypeCode, false, true);
-                entityPM.DeclarationStatusTypeName = declarationStatusType.LocalName;
+                if (entityPOCO.DeclarationStatusTypeCode != null)
+                {
+                    DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(entityPOCO.DeclarationStatusTypeCode, false, true);
+                    entityPM.DeclarationStatusTypeName = declarationStatusType.LocalName;
+                }
+
+                if (entityPOCO.CourierSuspentionCode != null)
+                {
+                    DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(entityPOCO.CourierSuspentionCode, false, true);
+                    entityPM.CourierSuspentionName = declarationStatusType.LocalName;
+                }
+
             }
 
             if (entityPOCO.StorageStatusCode != null)
@@ -364,6 +376,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     entityPM.MamanStatusName = mamanStatus.LocalName;
                 }
             }
+
 
         }
 

@@ -2212,16 +2212,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (shipment.IsDangerous && iDangerousShipmentPackages) shipmentPM.ShipmentContanisDangerousGoods = true;
 
-            if (LogitudeSettings.WorkEnvironment == "logbox")
-            {
-                ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipmentPM.Tenant);
-                ShipmentComputedFields shipmentComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipmentPM.Id, shipmentPM.Tenant);
-                if (shipmentComputedFields != null)
-                {
-                    shipmentPM.IsRequestedDocuments = shipmentComputedFields.IsRequestedDocuments;
-                    shipmentPM.IsDigitalSignRequired = shipmentComputedFields.IsDigitalSignRequired;
-                }
-            }
+            //  if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+            //{
+            //    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipmentPM.Tenant);
+            //    ShipmentComputedFields shipmentComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipmentPM.Id, shipmentPM.Tenant);
+            //    if (shipmentComputedFields != null)
+            //    {
+            //        shipmentPM.IsRequestedDocuments = shipmentComputedFields.IsRequestedDocuments;
+            //        shipmentPM.IsDigitalSignRequired = shipmentComputedFields.IsDigitalSignRequired;
+            //    }
+            //}
 
 
 

@@ -16,6 +16,7 @@ export class CustomsAirlineList {
 	InActive: boolean;
 	SearchFields: string;
 	AirlinePrefix: string;
+	ICAO: string;
 	
 }
  

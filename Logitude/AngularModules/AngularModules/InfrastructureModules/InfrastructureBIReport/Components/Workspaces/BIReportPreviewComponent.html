@@ -16,8 +16,8 @@
                                 <BackButton [Text]="'BI Reports'" (click)="BackButtonClicked()"></BackButton>
                             </td>
                             <td style="width:10px"></td>
-                            <td>
-                                <div class="TabTitleRow">
+                            <td style="vertical-align:middle;">
+                                <div style="vertical-align:middle;" class="TabTitleRow">
                                     {{BIReportName}}
                                 </div>
                             </td>
@@ -43,30 +43,53 @@
                             </td>
 
                             <td style="width: 120px;">
-                                <button style="width:120px;float:left;" class="Button" (click)="ExportToExcelClicked()">Export To Excel</button>
+                                <button [disabled]="IsNewEntity" style="width:120px;float:left;" class="Button" (click)="ExportToExcelClicked()">Export To Excel</button>
                             </td>
 
-                            <td style="width: 10px;">
+
+                            <td style="width: 5px;">
                                 <div></div>
                             </td>
 
-                            <td style="width: 150px;">
-                                <button style="width:150px;float:left;" class="Button" (click)="ExportToExcelAGGridClicked()">Export To Excel (AGGrid)</button>
+                            <td style="width: 120px;">
+                                <button style="width:120px;float:left;" class="Button" (click)="CountClicked()">Grid Total Rows</button>
                             </td>
 
                             <td>
                                 <div></div>
                             </td>
 
-                            <td style="width: 65px;float:right">
-                                <button *ngIf="!HasChanged" class="Button" style="height:25px;" (click)="SaveBIReport()">
-                                    <img [ngStyle]="{'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="LeftCenter" />
-                                    <span style="line-height: 19px;" [ngStyle]="{'margin-left': '3px'}">Save</span>
-                                </button>
-                                <button *ngIf="HasChanged" class="EntityChangesButton" (click)="SaveBIReport()" style="height:25px;">
-                                    <img src="./Images/Buttons/Save.Red.png" [className]="LeftCenter" [ngStyle]="{'margin-left': '2px'}" />
-                                    <span style="line-height: 19px;" [ngStyle]="{'margin-left': '3px'}">Save</span>
-                                </button>
+                            <td style="float:right;width:200px; ">
+                                <table>
+                                    <tr>
+                                        <td style="width: 57px;">
+                                            <button [disabled]="IsNewEntity" class="Button" (click)="EditBIReportClicked()">Edit Report</button>
+                                        </td>
+
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 57px;">
+                                            <button [disabled]="IsNewEntity" class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
+                                        </td>
+
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 50px;">
+                                            <button *ngIf="!HasChanges" class="Button" (click)="SaveBIReport()">
+                                                <img [ngStyle]="{'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="LeftCenter" />
+                                                <span style="line-height: 19px;vertical-align:middle;" [ngStyle]="{'margin-left': '3px'}">Save</span>
+                                            </button>
+                                            <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveBIReport()">
+                                                <img src="./Images/Buttons/Save.Red.png" [className]="LeftCenter" [ngStyle]="{'margin-left': '2px'}" />
+                                                <span style="line-height: 19px;vertical-align:middle;" [ngStyle]="{'margin-left': '3px'}">Save</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                     </table>
@@ -83,7 +106,7 @@
                 <td>
                     <!--   [suppressCsvExport]="true" [animateRows]="true"  [showToolPanel]="true"    [rowModelType]="'virtual'"   [floatingFilter]="true" -->
                     <div class="MediaFill">
-                        <ag-grid-angular style="width:100%; height:100%;"
+                        <ag-grid-angular style="width:100%; height:100%;" 
                                          #agGrid
                                          id="myGrid"
                                          class="ag-theme-balham"
@@ -93,7 +116,6 @@
                                          [columnDefs]="columnDefs"
                                          [rowSelection]="'multiple'"
                                          [multiSortKey]="'ctrl'"
-                                         [excelStyles]="excelStyles"
                                          (gridReady)="onGridReady($event)"
                                          (sortChanged)="onSortChanged($event)"
                                          (columnResized)="onColumnResized($event)"

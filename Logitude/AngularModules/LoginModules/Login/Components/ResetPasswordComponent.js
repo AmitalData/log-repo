@@ -8,10 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var LoginService_1 = require('../LoginService');
-var SessionInfo_1 = require('../SessionInfo');
-var ResetPasswordComponent = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var LoginService_1 = require("../LoginService");
+var SessionInfo_1 = require("../SessionInfo");
+var ResetPasswordComponent = /** @class */ (function () {
     function ResetPasswordComponent(_LoginService) {
         this._LoginService = _LoginService;
         this.HasErrors = false;
@@ -119,8 +120,8 @@ var ResetPasswordComponent = (function () {
             moduleId: './Login/Components/',
             templateUrl: 'ResetPasswordComponent.html',
             styleUrls: ['ChangePasswordComponent.css']
-        }), 
-        __metadata('design:paramtypes', [LoginService_1.LoginService])
+        }),
+        __metadata("design:paramtypes", [LoginService_1.LoginService])
     ], ResetPasswordComponent);
     return ResetPasswordComponent;
 }());

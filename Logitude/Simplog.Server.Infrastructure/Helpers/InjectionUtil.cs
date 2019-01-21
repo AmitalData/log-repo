@@ -15,6 +15,7 @@ namespace Simplog.Server.Infrastructure.Helpers
         readonly Func<int> _GetTenantFromToken;
         private Action<string, string, int, string> _checkContactFeature;
         private Func<IByteCompressorUtil> _ByteCompressorUtilProvider;
+        private I_IISManager _IISManager;
 
         private InjectionUtil(
             Func<IAmitalRestrictOwnerService> CreateAmitalRestrictOwnerModelService,
@@ -26,7 +27,7 @@ namespace Simplog.Server.Infrastructure.Helpers
             _GetTenantFromToken = getTenantFromToken;
             _checkContactFeature = checkContactFeature;
         }
-        public void CheckContactFeature(string objectTableName, string featureCode, int tenant,string overrideEmail)
+        public void CheckContactFeature(string objectTableName, string featureCode, int tenant, string overrideEmail)
         {
             this._checkContactFeature(objectTableName, featureCode, tenant, overrideEmail);
         }
@@ -64,11 +65,15 @@ namespace Simplog.Server.Infrastructure.Helpers
             }
 
         }
+
+        public I_IISManager IISManager { get => _IISManager; private set => _IISManager = value; }
+
         public static void Init(
             Func<IAmitalRestrictOwnerService> CreateAmitalRestrictOwnerModelService,
             Func<int> getTenantFromToken,
             Action<string, string, int, string> checkContactFeature,
-            Func<IByteCompressorUtil> iByteCompressorUtilProvider
+            Func<IByteCompressorUtil> iByteCompressorUtilProvider,
+            I_IISManager myIISManager
             )
         {
             if (_Instance != null)
@@ -77,9 +82,10 @@ namespace Simplog.Server.Infrastructure.Helpers
                 throw new Exception(@"already created 
                     InjectionUtil Instance not Init (Please create it @ Global.asax Or ThreadInit )");
             }
-            
+
             _Instance = new InjectionUtil(CreateAmitalRestrictOwnerModelService, getTenantFromToken, checkContactFeature);
             _Instance._ByteCompressorUtilProvider = iByteCompressorUtilProvider;
+            _Instance._IISManager = myIISManager;
 
         }
 
@@ -102,6 +108,10 @@ namespace Simplog.Server.Infrastructure.Helpers
         string CompressText(string text);
         byte[] Decompress(byte[] gzBuffer);
         string DeCompressText(string compressedText);
+    }
+    public interface I_IISManager
+    {
+        void RecycleMe();
     }
 }
 

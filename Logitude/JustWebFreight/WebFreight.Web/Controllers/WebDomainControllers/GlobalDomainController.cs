@@ -518,6 +518,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         PackagesCodes_PK = entityPM.PackagesCodes_PK,
                         TrailDaysLeft = entityPM.TrailDaysLeft,
                          TenantManagementLicenses = entityPM.TenantManagementLicenses,
+                         CountryName=entityPM.CountryName,
                     };
                 }
 
@@ -581,6 +582,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public bool IsINTTRAOnlyDemo { get; set; }
         public string PackageName { get; set; }
         public string TemporalPackageCode { get; set; }
+        public string CountryName { get; set; }
 
         private List<string> packagesCodes_PK;
         public List<string> PackagesCodes_PK

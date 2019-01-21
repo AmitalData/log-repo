@@ -37,9 +37,18 @@ namespace Logitude.Customs.Data.Repsitories
 
         public CourierMaster GetCourierMaster(string airlineId, string HAWB, string MAWB, int tenant)
         {
-            return (from a in context.CourierMasters
-                    where a.AirlineId == airlineId && a.HAWB == HAWB && a.MAWB == MAWB && a.Tenant == tenant
-                    select a).FirstOrDefault();
+            if (String.IsNullOrWhiteSpace(HAWB))
+            {
+                return (from a in context.CourierMasters
+                        where a.AirlineId == airlineId && a.MAWB == MAWB && a.Tenant == tenant
+                        select a).FirstOrDefault();
+            }
+            else
+            {
+                return (from a in context.CourierMasters
+                        where a.AirlineId == airlineId && a.HAWB == HAWB && a.MAWB == MAWB && a.Tenant == tenant
+                        select a).FirstOrDefault();
+            }
         }
 
     }

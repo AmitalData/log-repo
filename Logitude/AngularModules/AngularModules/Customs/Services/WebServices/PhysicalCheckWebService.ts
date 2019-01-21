@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -29,6 +29,26 @@ export class PhysicalCheckWebService {
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
             return this._http.get(this._apiUrl + "/GetPhysicalCheckByDeclarationIdLists/?declarationId=" + declarationId + "&tenant=" + tenant, {
+                headers: authHeader
+            }).map(response => {
+
+                var res = response.json();
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+        );
+    }
+
+    PostClosePhysicalCheck(physicalCheckId: string, tenant: number) {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            return this._http.post(this._apiUrl + "/PostClosePhysicalCheck/?physicalCheckId=" + physicalCheckId + "&tenant=" + tenant, {
                 headers: authHeader
             }).map(response => {
 

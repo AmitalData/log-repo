@@ -70,6 +70,8 @@ using System.Xml.Serialization;
 using WebFreight.Web.DataContracts;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data.Repsitories;
+using System.IO;
+using WebFreight.Web.App_Code.AngularJS_App_Code.Global;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -1631,7 +1633,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetByBIReportId(string Id)
+        public HttpResponseMessage GetByBIReportId(string Id, string dWQueryId)
         {
             try
             {
@@ -1643,13 +1645,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 BIReportPM entityPM = query.GetSingle(Id, false, false);
                 BIReportXMLData QueryData = new BIReportXMLData();
 
+                DWSubQueryQuery dWSubQueryQuery = new DWSubQueryQuery(authToken.Tenant);
+                DWSubQueryPM dWSubQueryPM = dWSubQueryQuery.GetSinglePMByQueryid(dWQueryId, authToken.Tenant);
+                DWQueryData DWQueryData = new DWQueryData();
+                if (dWSubQueryPM != null)
+                {
+                    var Columns = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(dWSubQueryPM.ColumnsXML);
+                    var Filters = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(dWSubQueryPM.FiltersXML);
+                    DWQueryData.SubQueryData = dWSubQueryPM;
+                    DWQueryData.Columns = Columns;
+                    DWQueryData.Filters = Filters;
+                }
+                QueryData.DWQueryData = DWQueryData;
+
                 if (entityPM != null)
                 {
                     QueryData.BIReportPM = entityPM;
                     if (!string.IsNullOrEmpty(entityPM.AGGridOptionsXML))
                     {
-                        var Columns = LogitudeXmlSerializer.DeserializeObject<List<BIReportColumnData>>(entityPM.AGGridOptionsXML);
-                        QueryData.Columns = Columns;
+                        var bITabularViewSettings = LogitudeXmlSerializer.DeserializeObject<BITabularViewSettings>(entityPM.AGGridOptionsXML);
+                        QueryData.BITabularViewSettings = new BITabularViewSettings();
+                        QueryData.BITabularViewSettings = bITabularViewSettings;
                     }
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, QueryData);
@@ -1667,22 +1683,26 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                var ColumnsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Columns);
+                var ColumnsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.BITabularViewSettings);
+
+                //StringWriter ColumnsXML = new StringWriter();
+                //XmlSerializer s = new XmlSerializer(QueryData.BITabularViewSettings.GetType());
+                //XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+                //ns.Add("", "");
+                //s.Serialize(ColumnsXML, QueryData.BITabularViewSettings, ns);
+
                 IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
                 BIReportRepository repository = new BIReportRepository(objectContext);
 
                 var entityPM = QueryData.BIReportPM;
-
                 var entityPOCO = repository.GetSingle(entityPM.Id, entityPM.Tenant);
                 if (entityPM != null)
                 {
                     entityPM.AGGridOptionsXML = ColumnsXML;
                     entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-
-                    entityPOCO.AGGridOptionsXML = ColumnsXML;
+                    entityPOCO.AGGridOptionsXML = entityPM.AGGridOptionsXML;
                     BIReportUpdateService service = new BIReportUpdateService(objectContext);
                    // service.Update(entityPM, true);
-
                     repository.Update(entityPOCO);
                     repository.SubmitChanges();
                 }

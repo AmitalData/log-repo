@@ -68,19 +68,28 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     if (entityPM.VehicleChassisNumber != entityPOCO.VehicleChassisNumber || entityPM.RichbitFileNumber != entityPOCO.RichbitFileNumber) // only if the vehicle chassie number or richbitfilenumber is changed.
                     {
+                        VehiclePM oldVehiclePM = vehicleQueryService.GetVehicleByVehicleChassisNumberOrRichbitFileNumber(entityPOCO.VehicleChassisNumber, entityPOCO.RichbitFileNumber, entityPOCO.Tenant);
                         if (vehiclePM != null)
                         {
-                            VehiclePM oldVehiclePM = vehicleQueryService.GetVehicleByVehicleChassisNumberOrRichbitFileNumber(entityPOCO.VehicleChassisNumber, entityPOCO.RichbitFileNumber, entityPOCO.Tenant);
-                            if (oldVehiclePM != null)
+                            if (oldVehiclePM != null && oldVehiclePM.Id != vehiclePM.Id)
                             {
                                 oldVehiclePM.DeclarationId = null;//the vehicle disconnected from declaration since the entitypm differs from the poco.
                                 oldVehiclePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                                 vehicleUpdateService.Update(oldVehiclePM, false);
                             }
 
-                            vehiclePM.DeclarationId = entityPM.DeclarationId;
-                            vehiclePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                            vehicleUpdateService.Update(vehiclePM, false);
+                            if (oldVehiclePM == null || (oldVehiclePM != null && oldVehiclePM.Id != vehiclePM.Id))
+                            {
+                                vehiclePM.DeclarationId = entityPM.DeclarationId;
+                                vehiclePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                                vehicleUpdateService.Update(vehiclePM, false);
+                            }
+                        }
+                        else if(oldVehiclePM != null)
+                        {
+                            oldVehiclePM.DeclarationId = null;//the vehicle disconnected from declaration since the entitypm differs from the poco.
+                            oldVehiclePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                            vehicleUpdateService.Update(oldVehiclePM, false);
                         }
                     }
                 }

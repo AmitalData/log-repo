@@ -39,6 +39,8 @@ export class CourierMasterList {
 	DepartureDate: Date;
 	EstimatedArrivalDateOnly: Date;
 	EstimatedArrivalTimeOnly: Date;
+	WeightValueCode: string;
+	WeightValueName: string;
 	
 }
  

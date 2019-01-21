@@ -76,7 +76,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         this.MyResponseData.HasException = true;
                         this.MyResponseData.UserMessage = "קיימת כבר בקשה לדרישה למסמך מספר " + customsDocumentItem.documentID.ToString() + " ולדרישה זו כבר קושר מסמך " + "\n" + "לא בוצע ניתוח למסר זה";
                         LogMessagingUtil.Instance.AppendLine("קיימת כבר בקשה לדרישה למסמך מספר " + customsDocumentItem.documentID.ToString() + " ולדרישה זו כבר קושר מסמך ");
-                        return;
+                        continue;
                     }
                 }
 

@@ -7,4 +7,5 @@ public partial class CargoQueryContext
     public bool RequestAutoSend { get; set; }
     public CFIPACKS ResponseCFIPACKS { get; set; }
     public DateTime? StatusDate { get; set; }
+    public FileAdditionalData FileAdditionalData { get; set; }
 }
