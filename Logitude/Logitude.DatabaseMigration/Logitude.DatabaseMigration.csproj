@@ -538,6 +538,10 @@
     <Compile Include="Migrations\201901170542318_counterdefinition_countersize.Designer.cs">
       <DependentUpon>201901170542318_counterdefinition_countersize.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901170921329_AddShipmentContainerStatusChanges.cs" />
+    <Compile Include="Migrations\201901170921329_AddShipmentContainerStatusChanges.Designer.cs">
+      <DependentUpon>201901170921329_AddShipmentContainerStatusChanges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -879,6 +883,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901170542318_counterdefinition_countersize.resx">
       <DependentUpon>201901170542318_counterdefinition_countersize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901170921329_AddShipmentContainerStatusChanges.resx">
+      <DependentUpon>201901170921329_AddShipmentContainerStatusChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
