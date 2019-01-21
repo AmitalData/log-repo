@@ -550,6 +550,10 @@
     <Compile Include="Migrations\201901200830579_missingcustomsmigratinos_MM_20012019.Designer.cs">
       <DependentUpon>201901200830579_missingcustomsmigratinos_MM_20012019.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901170921329_AddShipmentContainerStatusChanges.cs" />
+    <Compile Include="Migrations\201901170921329_AddShipmentContainerStatusChanges.Designer.cs">
+      <DependentUpon>201901170921329_AddShipmentContainerStatusChanges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201901210635206_counterdefinition_suffix.cs" />
     <Compile Include="Migrations\201901210635206_counterdefinition_suffix.Designer.cs">
       <DependentUpon>201901210635206_counterdefinition_suffix.cs</DependentUpon>
@@ -910,6 +914,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901200830579_missingcustomsmigratinos_MM_20012019.resx">
       <DependentUpon>201901200830579_missingcustomsmigratinos_MM_20012019.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901170921329_AddShipmentContainerStatusChanges.resx">
+      <DependentUpon>201901170921329_AddShipmentContainerStatusChanges.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901210635206_counterdefinition_suffix.resx">
       <DependentUpon>201901210635206_counterdefinition_suffix.cs</DependentUpon>

@@ -2194,6 +2194,7 @@
     <Compile Include="Helpers\DataProviderHelpers\ShipmentInventoryDataProviderHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsStocksDataProviderHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\UsersByTenantDataProviderHelper.cs" />
+    <Compile Include="Helpers\DataWarehouseHelper.cs" />
     <Compile Include="Helpers\DocumentHelper.cs" />
     <Compile Include="Helpers\EntityChangeAutomationHelper.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\ApiExceptionHandler.cs" />
