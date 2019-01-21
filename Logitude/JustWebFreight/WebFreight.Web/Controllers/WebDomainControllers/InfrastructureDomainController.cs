@@ -1648,9 +1648,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 DWSubQueryQuery dWSubQueryQuery = new DWSubQueryQuery(authToken.Tenant);
                 DWSubQueryPM dWSubQueryPM = dWSubQueryQuery.GetSinglePMByQueryid(dWQueryId, authToken.Tenant);
                 DWQueryData DWQueryData = new DWQueryData();
+                bool isUpdated = false; 
+     
+                List<DWObjectFieldsDetails> Columns = null;
                 if (dWSubQueryPM != null)
                 {
-                    var Columns = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(dWSubQueryPM.ColumnsXML);
+                    Columns = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(dWSubQueryPM.ColumnsXML);
                     var Filters = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(dWSubQueryPM.FiltersXML);
                     DWQueryData.SubQueryData = dWSubQueryPM;
                     DWQueryData.Columns = Columns;
@@ -1664,8 +1667,36 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (!string.IsNullOrEmpty(entityPM.AGGridOptionsXML))
                     {
                         var bITabularViewSettings = LogitudeXmlSerializer.DeserializeObject<BITabularViewSettings>(entityPM.AGGridOptionsXML);
+                        if(bITabularViewSettings!= null && Columns != null)
+                        {
+                            foreach(var item in bITabularViewSettings.Columns.ToList())
+                            {
+                                var queryColumn = Columns.Where(a => a.Name == item.Code).FirstOrDefault();
+                                if (queryColumn == null)
+                                {
+                                    isUpdated = true;
+                                    bITabularViewSettings.Columns.RemoveAll(a => a.Code == item.Code);
+                                }
+                            }
+                        }
                         QueryData.BITabularViewSettings = new BITabularViewSettings();
                         QueryData.BITabularViewSettings = bITabularViewSettings;
+
+                        if (isUpdated)
+                        {
+                            var ColumnsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.BITabularViewSettings);
+                            IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
+                            BIReportRepository repository = new BIReportRepository(objectContext);
+                            var entityPOCO = repository.GetSingle(entityPM.Id, entityPM.Tenant);
+                            if (entityPM != null)
+                            {
+                                entityPOCO.AGGridOptionsXML = ColumnsXML;
+                                repository.Update(entityPOCO);
+                                repository.SubmitChanges();
+                            }
+
+                            isUpdated = false;
+                        }
                     }
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, QueryData);
@@ -1701,7 +1732,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     entityPM.AGGridOptionsXML = ColumnsXML;
                     entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                     entityPOCO.AGGridOptionsXML = entityPM.AGGridOptionsXML;
-                    BIReportUpdateService service = new BIReportUpdateService(objectContext);
+                    //BIReportUpdateService service = new BIReportUpdateService(objectContext);
                    // service.Update(entityPM, true);
                     repository.Update(entityPOCO);
                     repository.SubmitChanges();
