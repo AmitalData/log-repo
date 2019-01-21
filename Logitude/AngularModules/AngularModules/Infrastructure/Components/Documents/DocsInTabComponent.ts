@@ -256,6 +256,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
 
             this.IsLoadDocumentTypeListsComplete = true;
             this.LoadComplete();
+            this.CheckHasDocuments();
         });
 
 
@@ -345,7 +346,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                 }
 
             });
-
+            this.CheckHasDocuments();
 
         }
 
@@ -576,7 +577,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         this.HasDocuments = false;
 
         this.DocumentsList.forEach((item) => {
-            if (item.DataContext.DocumentId) {
+            if (item.DataContext.DocumentHasFile) {
                 this.HasDocuments = true;
             }
             itemsCollection.push(item);
@@ -647,7 +648,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                                 this.DeleteAttachmentButtonEnable = false;
                                 this.UndoReceivedButtonEnable = true;
                                 this.IsDeleteAttachment = false;
-
+                                this.CheckHasDocuments();
                                 SessionLocator.CurrentSession.StopBusyIndicator();
 
                             });
@@ -663,6 +664,19 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             });
         }
     }
+
+    CheckHasDocuments() {
+        this.HasDocuments = false;
+        if (this.DocumentsList) {
+            this.DocumentsList.forEach(item => {
+                if (item.DataContext.DocumentHasFile) {
+                    this.HasDocuments = true;
+                }
+            });
+        }
+    }
+
+
 
     UndoReceivedButtonClicked() {
         if (this.SelectedExternalViewModel != null) {

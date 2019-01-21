@@ -153,7 +153,7 @@ namespace WebFreight.Web.WebPages
 
                     else if (partnerType == "CS")
                     {
-                        documents = documents.Where(d => d.IsCustomerView).ToList();
+                        documents = documents.Where(d => d.IsCustomerView==true).ToList();
                     }
 
                     Dictionary<string, byte[]> CompressedArray = new Dictionary<string, byte[]>();
@@ -167,8 +167,14 @@ namespace WebFreight.Web.WebPages
                             continue;
                         }
 
+                        if (!string.IsNullOrEmpty(token))
+                        {
+                            if (document.DirectionCode == "O")
+                                continue;
+                        }
 
-                        else if (!string.IsNullOrEmpty(document.FileExtension))
+
+                         if (!string.IsNullOrEmpty(document.FileExtension))
                         {
                             DocumentsExistance = true;
                             string fileName = !string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
