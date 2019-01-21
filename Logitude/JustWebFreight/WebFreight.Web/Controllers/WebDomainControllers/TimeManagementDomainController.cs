@@ -410,7 +410,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 DateTime? entry = item.EntryTime != null ? item.EntryTime : item.RecordedEntryTime;
                 DateTime? exit = item.ExitTime != null ? item.ExitTime : item.RecordedExitTime;
-                if (OneDay && officeDays.Count==1 && entry!=null && exit!=null)
+                if (OneDay && officeDays.Count==1 && entry!=null && exit==null)
                 {
                     exit = TenantServerConfigration.GetCurrentDateTime(item.Tenant);
                     total += Math.Round((exit.Value - entry.Value).TotalHours, 2);
