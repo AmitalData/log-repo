@@ -1,0 +1,105 @@
+
+<table>
+    <tr style="height:10px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+    <tr style="vertical-align:top;">
+        <td>
+            <ScrollViewer>
+                <div class="MediaFill" >
+                    <table>
+                        <tr>
+                            <td> 
+                                <table>
+                                    <tr *ngFor="let item of ItemsSource; let i = index" style="height:25px;margin-left:25px">
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="float:left;">
+                                                        <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'IsChecked'" [Checked]="item.IsChecked" [Text]="item.Code" [DataContext]="DataContext"></LogCheckBox>
+                                                    </td>
+                                                </tr>
+                                                <tr style="height:3px">
+                                                    <td colspan="2">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width:20px">
+                                <div></div>
+                            </td>
+                            <td style="width:50px">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:20px;">
+                                        <td>
+                                            <button (click)="btnUp_Click()" class="Button" style="width:26px;float:right;">
+                                                <img src="./Images/Icons/ArrowUp.png" style="height:16px;vertical-align:middle;"/>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:20px">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:20px;">
+                                        <td>
+                                            <button (click)="btnDown_Click()" class="Button" style="width:26px;float:right;">
+                                                <img src="./Images/Icons/ArrowDown.png" style="height:16px;vertical-align:middle;"/>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </ScrollViewer>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

@@ -1679,9 +1679,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 }
                             }
                         }
-                        QueryData.BITabularViewSettings = new BITabularViewSettings();
                         QueryData.BITabularViewSettings = bITabularViewSettings;
-
                         if (isUpdated)
                         {
                             var ColumnsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.BITabularViewSettings);
@@ -1698,6 +1696,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             isUpdated = false;
                         }
                     }
+                }
+                else
+                {
+                    var bITabularViewSettings = new BITabularViewSettings();
+                    bITabularViewSettings.Columns = new List<Column>();
+                    foreach (var item in Columns)
+                    {
+                        bITabularViewSettings.Columns.Add(new Column
+                        {
+                            Code = item.Name,
+                            IsChecked = true,
+                            Width = 150,
+                            DataTypeCode = item.DataTypeCode,
+                        });
+                    }
+                    QueryData.BITabularViewSettings = bITabularViewSettings;
+
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, QueryData);
             }
