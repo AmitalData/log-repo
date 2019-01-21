@@ -18,7 +18,8 @@ export class GatepassRequestComponent extends BaseComponent {
     //public EntityPM: GatepassRequestPM;
     CourierMasterPM: CourierMasterPM = new CourierMasterPM();
     ValidationErrorsList: any[] = [];
-
+    OriginPortCode: string;
+    OkButtonEnabled: boolean;
     //_DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
     UpdateCodeList = [ { 'EnumId': 0, 'New': 'חדש' }, { 'EnumId': 1, 'Cancel': 'ביטול' } ];
 
