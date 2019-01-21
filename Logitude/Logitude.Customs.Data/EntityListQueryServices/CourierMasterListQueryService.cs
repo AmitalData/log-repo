@@ -21,12 +21,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CourierMasterList> GetIqueryableList(IQueryable<CourierMaster> iQueryable)
         {
-            IQueryable<CourierMasterList> query = (from a in iQueryable.Include("Airline").Include("MAWBType")
+            IQueryable<CourierMasterList> query = (from a in iQueryable.Include("CustomsAirline").Include("MAWBType").Include("OriginPort").Include("GatewayPort")
                                                    select new CourierMasterList()
                                                    {
                                                        // comments made because of cannot convert nclob to char exception ---mohammad
                                                        SearchFields = a.SearchFields,
-                                                       AirlinePrefix = a.Airline == null ? null : a.Airline.Prefix,
+                                                       AirlinePrefix = a.CustomsAirline == null ? null : a.CustomsAirline.AirlinePrefix,
                                                        Id = a.Id,
                                                        Tenant = a.Tenant,
                                                        MAWB = a.MAWB,
@@ -43,7 +43,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        CreateDateTime = a.CreateDateTime,
                                                        CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.LocalName : null,
                                                        AirlineId = a.AirlineId,
-                                                       AirlineName = a.Airline != null ? a.Airline.Card.LocalName : null,
+                                                       AirlineName = a.CustomsAirline != null ? a.CustomsAirline.LocalName : null,
                                                        UpdateDateTime = a.UpdateDateTime,
                                                        UpdatedByUserName = a.User != null ? a.User.Contact.LocalName : null,
                                                        ManifestNumber = a.ManifestNumber,
@@ -54,7 +54,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        PackageQuantity = a.PackageQuantity,
                                                        ShortHAWB = a.ShortHAWB,
                                                        UpdatedByUserId = a.UpdatedByUserId,
-        });
+                                                       WeightValueCode = a.WeightValueCode,
+                                                       WeightValueName = a.FreightPaymentMethod != null ? a.FreightPaymentMethod.LocalName : null,
+                                                    });
             return query;
 		}
 
@@ -63,7 +65,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return iQueryable;
 
         }
-			}
+	}
 
 
 }

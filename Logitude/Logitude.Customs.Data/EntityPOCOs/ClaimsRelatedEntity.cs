@@ -87,6 +87,19 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CustomsBranchCode { get; set; }
 	      
         public virtual CustomsHouseType CustomsBranch { get; set; }
+        [ForeignKey("DecisionType")]
+        [Column("DecisionCode")]
+	    public string DecisionCode { get; set; }
+	      
+        public virtual DecisionType DecisionType { get; set; }
+        [Column("DecisionNote")]
+	    public string DecisionNote { get; set; }
+        [Column("EilatVatRefoundDecision")]
+	    public string EilatVatRefoundDecision { get; set; }
+        [Column("DepositingAmount")]
+	    public decimal? DepositingAmount { get; set; }
+        [Column("RefundAmount")]
+	    public decimal? RefundAmount { get; set; }
     }
 }
 	 

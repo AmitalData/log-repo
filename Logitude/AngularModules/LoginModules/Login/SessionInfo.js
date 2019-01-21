@@ -1,5 +1,6 @@
 "use strict";
-var SessionInfo = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var SessionInfo = /** @class */ (function () {
     function SessionInfo() {
     }
     Object.defineProperty(SessionInfo, "PlShortName", {

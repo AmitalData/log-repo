@@ -48,26 +48,23 @@
     <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Devart.Data, Version=5.0.895.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.dll</HintPath>
+    <Reference Include="Devart.Data, Version=5.0.2045.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Linq, Version=4.4.441.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Linq.dll</HintPath>
+    <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle.Entity.Spatials, Version=8.2.103.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Entity.Spatials.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle.Linq, Version=4.4.441.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Oracle.Web, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -90,6 +87,119 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LogitudeModel\LogitudeMigrationContext.cs" />
+    <Compile Include="Migrations\201810161033120_AddDeclarationFields.cs" />
+    <Compile Include="Migrations\201810311122380_AddVehiclePassportName.cs" />
+    <Compile Include="Migrations\201810311122380_AddVehiclePassportName.Designer.cs">
+      <DependentUpon>201810311122380_AddVehiclePassportName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811050626572_CustomsPartnerFtpAndMore.cs" />
+    <Compile Include="Migrations\201811050626572_CustomsPartnerFtpAndMore.Designer.cs">
+      <DependentUpon>201811050626572_CustomsPartnerFtpAndMore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811050632236_CustomsPartnerFtpTk2.cs" />
+    <Compile Include="Migrations\201811050632236_CustomsPartnerFtpTk2.Designer.cs">
+      <DependentUpon>201811050632236_CustomsPartnerFtpTk2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811050638372_CustomsPartnerFtpTk3.cs" />
+    <Compile Include="Migrations\201811050638372_CustomsPartnerFtpTk3.Designer.cs">
+      <DependentUpon>201811050638372_CustomsPartnerFtpTk3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811060542460_AddMigrationPendingErrorPlace.cs" />
+    <Compile Include="Migrations\201811060542460_AddMigrationPendingErrorPlace.Designer.cs">
+      <DependentUpon>201811060542460_AddMigrationPendingErrorPlace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811151237538_VendorVATNumberChange.cs" />
+    <Compile Include="Migrations\201811151237538_VendorVATNumberChange.Designer.cs">
+      <DependentUpon>201811151237538_VendorVATNumberChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811201042007_AddMogrationDecisionType.cs" />
+    <Compile Include="Migrations\201811201042007_AddMogrationDecisionType.Designer.cs">
+      <DependentUpon>201811201042007_AddMogrationDecisionType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811220919515_AddMigrationClaimRelatedEntityDecision.cs" />
+    <Compile Include="Migrations\201811220919515_AddMigrationClaimRelatedEntityDecision.Designer.cs">
+      <DependentUpon>201811220919515_AddMigrationClaimRelatedEntityDecision.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811221127221_AddMigrationSeizureMethodType.cs" />
+    <Compile Include="Migrations\201811221127221_AddMigrationSeizureMethodType.Designer.cs">
+      <DependentUpon>201811221127221_AddMigrationSeizureMethodType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811221311394_AddClaimsRelatedEntitiesSeizure.cs" />
+    <Compile Include="Migrations\201811221311394_AddClaimsRelatedEntitiesSeizure.Designer.cs">
+      <DependentUpon>201811221311394_AddClaimsRelatedEntitiesSeizure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811250603192_AddClaimsRelatedEntitiesRefund.cs" />
+    <Compile Include="Migrations\201811250603192_AddClaimsRelatedEntitiesRefund.Designer.cs">
+      <DependentUpon>201811250603192_AddClaimsRelatedEntitiesRefund.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811251240447_AddICAOFieldToCustomsAirLines.cs" />
+    <Compile Include="Migrations\201811251240447_AddICAOFieldToCustomsAirLines.Designer.cs">
+      <DependentUpon>201811251240447_AddICAOFieldToCustomsAirLines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811290906148_CustomsPartnerCommDet.cs" />
+    <Compile Include="Migrations\201811290906148_CustomsPartnerCommDet.Designer.cs">
+      <DependentUpon>201811290906148_CustomsPartnerCommDet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812020755198_CustomsPartnerFtpNullable.cs" />
+    <Compile Include="Migrations\201812020755198_CustomsPartnerFtpNullable.Designer.cs">
+      <DependentUpon>201812020755198_CustomsPartnerFtpNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812110709089_AddMigrationSeizureFactorType.cs" />
+    <Compile Include="Migrations\201812110709089_AddMigrationSeizureFactorType.Designer.cs">
+      <DependentUpon>201812110709089_AddMigrationSeizureFactorType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812120858343_AddMigrationWeightValueCode.cs" />
+    <Compile Include="Migrations\201812120858343_AddMigrationWeightValueCode.Designer.cs">
+      <DependentUpon>201812120858343_AddMigrationWeightValueCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812121305212_AddMigrationMamanSpecialAction.cs" />
+    <Compile Include="Migrations\201812121305212_AddMigrationMamanSpecialAction.Designer.cs">
+      <DependentUpon>201812121305212_AddMigrationMamanSpecialAction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812122107253_AddMigrationMamanSpecialActionStatus.cs" />
+    <Compile Include="Migrations\201812122107253_AddMigrationMamanSpecialActionStatus.Designer.cs">
+      <DependentUpon>201812122107253_AddMigrationMamanSpecialActionStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812160741349_AddMigrationDeclarationMamanSpecialAction.cs" />
+    <Compile Include="Migrations\201812160741349_AddMigrationDeclarationMamanSpecialAction.Designer.cs">
+      <DependentUpon>201812160741349_AddMigrationDeclarationMamanSpecialAction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812161346315_AddMigrationClaimSeizureUpdateKey.cs" />
+    <Compile Include="Migrations\201812161346315_AddMigrationClaimSeizureUpdateKey.Designer.cs">
+      <DependentUpon>201812161346315_AddMigrationClaimSeizureUpdateKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812310731564_AddMigrationDecCourierSuspention.cs" />
+    <Compile Include="Migrations\201812310731564_AddMigrationDecCourierSuspention.Designer.cs">
+      <DependentUpon>201812310731564_AddMigrationDecCourierSuspention.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901091013411_AddMigrationRefundCustomerActivityType.cs" />
+    <Compile Include="Migrations\201901091013411_AddMigrationRefundCustomerActivityType.Designer.cs">
+      <DependentUpon>201901091013411_AddMigrationRefundCustomerActivityType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901100730447_AddMigrationFixProblems.cs" />
+    <Compile Include="Migrations\201901100730447_AddMigrationFixProblems.Designer.cs">
+      <DependentUpon>201901100730447_AddMigrationFixProblems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901131101558_AddMigrationChangeResponseStatus.cs" />
+    <Compile Include="Migrations\201901131101558_AddMigrationChangeResponseStatus.Designer.cs">
+      <DependentUpon>201901131101558_AddMigrationChangeResponseStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901131529526_AddMigrationCourierSpecialActionStatus.cs" />
+    <Compile Include="Migrations\201901131529526_AddMigrationCourierSpecialActionStatus.Designer.cs">
+      <DependentUpon>201901131529526_AddMigrationCourierSpecialActionStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901171655152_AddDepositionStatusCodeFieldToDeclaration.cs" />
+    <Compile Include="Migrations\201901171655152_AddDepositionStatusCodeFieldToDeclaration.Designer.cs">
+      <DependentUpon>201901171655152_AddDepositionStatusCodeFieldToDeclaration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901200958097_missingmaindbmigrations.cs" />
+    <Compile Include="Migrations\201901200958097_missingmaindbmigrations.Designer.cs">
+      <DependentUpon>201901200958097_missingmaindbmigrations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901201024109_shareduserqueriesoracle.cs" />
+    <Compile Include="Migrations\201901201024109_shareduserqueriesoracle.Designer.cs">
+      <DependentUpon>201901201024109_shareduserqueriesoracle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -139,6 +249,90 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201810311122380_AddVehiclePassportName.resx">
+      <DependentUpon>201810311122380_AddVehiclePassportName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811050626572_CustomsPartnerFtpAndMore.resx">
+      <DependentUpon>201811050626572_CustomsPartnerFtpAndMore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811050632236_CustomsPartnerFtpTk2.resx">
+      <DependentUpon>201811050632236_CustomsPartnerFtpTk2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811050638372_CustomsPartnerFtpTk3.resx">
+      <DependentUpon>201811050638372_CustomsPartnerFtpTk3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811060542460_AddMigrationPendingErrorPlace.resx">
+      <DependentUpon>201811060542460_AddMigrationPendingErrorPlace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811151237538_VendorVATNumberChange.resx">
+      <DependentUpon>201811151237538_VendorVATNumberChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811201042007_AddMogrationDecisionType.resx">
+      <DependentUpon>201811201042007_AddMogrationDecisionType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811220919515_AddMigrationClaimRelatedEntityDecision.resx">
+      <DependentUpon>201811220919515_AddMigrationClaimRelatedEntityDecision.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811221127221_AddMigrationSeizureMethodType.resx">
+      <DependentUpon>201811221127221_AddMigrationSeizureMethodType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811221311394_AddClaimsRelatedEntitiesSeizure.resx">
+      <DependentUpon>201811221311394_AddClaimsRelatedEntitiesSeizure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811250603192_AddClaimsRelatedEntitiesRefund.resx">
+      <DependentUpon>201811250603192_AddClaimsRelatedEntitiesRefund.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811251240447_AddICAOFieldToCustomsAirLines.resx">
+      <DependentUpon>201811251240447_AddICAOFieldToCustomsAirLines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811290906148_CustomsPartnerCommDet.resx">
+      <DependentUpon>201811290906148_CustomsPartnerCommDet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812020755198_CustomsPartnerFtpNullable.resx">
+      <DependentUpon>201812020755198_CustomsPartnerFtpNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812110709089_AddMigrationSeizureFactorType.resx">
+      <DependentUpon>201812110709089_AddMigrationSeizureFactorType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812120858343_AddMigrationWeightValueCode.resx">
+      <DependentUpon>201812120858343_AddMigrationWeightValueCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812121305212_AddMigrationMamanSpecialAction.resx">
+      <DependentUpon>201812121305212_AddMigrationMamanSpecialAction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812122107253_AddMigrationMamanSpecialActionStatus.resx">
+      <DependentUpon>201812122107253_AddMigrationMamanSpecialActionStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812160741349_AddMigrationDeclarationMamanSpecialAction.resx">
+      <DependentUpon>201812160741349_AddMigrationDeclarationMamanSpecialAction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812161346315_AddMigrationClaimSeizureUpdateKey.resx">
+      <DependentUpon>201812161346315_AddMigrationClaimSeizureUpdateKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812310731564_AddMigrationDecCourierSuspention.resx">
+      <DependentUpon>201812310731564_AddMigrationDecCourierSuspention.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901091013411_AddMigrationRefundCustomerActivityType.resx">
+      <DependentUpon>201901091013411_AddMigrationRefundCustomerActivityType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901100730447_AddMigrationFixProblems.resx">
+      <DependentUpon>201901100730447_AddMigrationFixProblems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901131101558_AddMigrationChangeResponseStatus.resx">
+      <DependentUpon>201901131101558_AddMigrationChangeResponseStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901131529526_AddMigrationCourierSpecialActionStatus.resx">
+      <DependentUpon>201901131529526_AddMigrationCourierSpecialActionStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901171655152_AddDepositionStatusCodeFieldToDeclaration.resx">
+      <DependentUpon>201901171655152_AddDepositionStatusCodeFieldToDeclaration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901200958097_missingmaindbmigrations.resx">
+      <DependentUpon>201901200958097_missingmaindbmigrations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901201024109_shareduserqueriesoracle.resx">
+      <DependentUpon>201901201024109_shareduserqueriesoracle.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

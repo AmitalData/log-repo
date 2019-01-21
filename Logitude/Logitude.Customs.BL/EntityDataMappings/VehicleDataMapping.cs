@@ -46,7 +46,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             string result = "";
 
             result = entityPM.ImporterName + "," + entityPM.MedalNumber + "," + entityPM.ModelCode + "," + entityPM.ModelDescription + "," + entityPM.RichbitFileNumber + "," + entityPM.StatusName + "," + entityPM.VehicleChassisNumber + "," + entityPM.VehicleManufacturerName + "," + entityPM.VehiclePoolTypeName + "," + entityPM.VehiclePriceListTypeName + "," + entityPM.VehicleTecnologyTypeName + "," + entityPM.VehicleTypeName
-                 + "," + entityPM.TaxiMedalOwner + "," + entityPM.ImporterPassportNumber + "," + entityPM.ImporterPassCountryCode + "," + entityPM.ImporterPassCountryName + "," + entityPM.ImporterPassportTypeCode + "," + entityPM.ImporterPassportTypeName + "," + entityPM.VehicleCategory;
+                 + "," + entityPM.TaxiMedalOwner + "," + entityPM.ImporterPassportNumber + "," + entityPM.ImporterPassCountryCode + "," + entityPM.ImporterPassCountryName + "," + entityPM.ImporterPassportTypeCode + "," + entityPM.ImporterPassportTypeName + "," + entityPM.PassportName + "," + entityPM.VehicleCategory;
 
             DeclarationQueryService declarationQuery = new DeclarationQueryService(poco.Tenant);
             string customFileNo = declarationQuery.GetCustomFileNoByDeclarationId(entityPM.DeclarationId, entityPM.Tenant);

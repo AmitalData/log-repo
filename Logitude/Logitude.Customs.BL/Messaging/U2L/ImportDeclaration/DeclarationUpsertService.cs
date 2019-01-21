@@ -212,7 +212,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     //Yuval Chalup 04.03.2015 TASK-11617 --->
 
                     //Dont allow to cancel if there is a connected vehicle (SupplierInvoiceItemVehicle)
-                    if (_AmitalCustomsFile.Mode == "CANCEL")
+                    if (_AmitalCustomsFile.Mode == "CANCEL" || _AmitalCustomsFile.Mode == "DELETE")
                     {
                         var supplierInvoiceItemVehicleQueryService = new SupplierInvoiceItemVehicleQueryService(_context);
                         List<SupplierInvoiceItemVehiclePM> supplierInvoiceItemVehicles = supplierInvoiceItemVehicleQueryService.GetAllSupplierInvoiceItemVehiclesForDeclaration(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
@@ -338,6 +338,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 if (_AmitalCustomsFile.Mode == "CANCEL") // moran 25.12.13 - task 2431
                 {
                     this._MyDeclarationPM.IsCancelled = true;
+                }
+                else if (_AmitalCustomsFile.Mode == "DELETE")
+                {
+                    this._MyDeclarationPM.IsCancelled = true;
+                    this._MyDeclarationPM.CustomFileNo = null;
                 }
                 else if (_AmitalCustomsFile.Mode == "UNCANCEL")
                 {
@@ -506,6 +511,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             unloadportId = TranslateUnloadPort(_AmitalCustomsFile.UnloadportId);
                         }
                         this._MyDeclarationPM.Consignments[0].UnloadPortCode = unloadportId;
+                        if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWBDATE))
+                        {
+                            this._MyDeclarationPM.Consignments[0].ManifestDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.HAWBDATE, "AmitalCustomsFile.HAWBDATE");
+                        }
+                        else if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ManifestDate))
+                        {
+                            this._MyDeclarationPM.Consignments[0].ManifestDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.ManifestDate, "AmitalCustomsFile.ManifestDate");
+                        }
                     }
 
                     // moran 1.2.17 - AMI-59543 <--
@@ -607,6 +620,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     _MyDeclarationPM.CasualSupplierName = _AmitalCustomsFile.CasualSupplierName;
                     _MyDeclarationPM.CasualSupplierAddress = _AmitalCustomsFile.CasualSupplierAddress;
                     _MyDeclarationPM.CourierHAWB = _AmitalCustomsFile.CourierHawb;
+                    _MyDeclarationPM.CasualImporterAddress1 = _AmitalCustomsFile.CasualImporterAddress1;
+                    _MyDeclarationPM.CasualImporterAddress2 = _AmitalCustomsFile.CasualImporterAddress2;
+                    _MyDeclarationPM.CasualImporterCity = _AmitalCustomsFile.CasualImporterCity;
+                    _MyDeclarationPM.CasualImporterZipCode = _AmitalCustomsFile.CasualImporterZipCode;
+                    _MyDeclarationPM.CasualImporterFax = _AmitalCustomsFile.CasualImporterFax;
+                    _MyDeclarationPM.CasualImporterEmail = _AmitalCustomsFile.CasualImporterEmail;
+                    _MyDeclarationPM.CasualImporterTel = _AmitalCustomsFile.CasualImportelTel;
+                    _MyDeclarationPM.CasualImporterContact = _AmitalCustomsFile.CasualImporterContact;
                     if (_MyDeclarationPM.Consignments.Count == 1)
                     {
                         _MyDeclarationPM.Consignments[0].CargoTypeCode = _AmitalCustomsFile.CargoTypeCode;

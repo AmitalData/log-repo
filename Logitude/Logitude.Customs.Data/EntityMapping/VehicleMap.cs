@@ -126,6 +126,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.VehicleCategory).HasColumnName("VehicleCategory").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.VehicleMaxPowerKW).HasColumnName("VehicleMaxPowerKW").HasPrecision(7, 2);
+
+            this.Property(t => t.PassportName).HasColumnName("PassportName").HasMaxLength(55).IsUnicode(true);
         }
     }
 }

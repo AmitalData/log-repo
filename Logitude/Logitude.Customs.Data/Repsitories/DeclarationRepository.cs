@@ -216,6 +216,16 @@ namespace Logitude.Customs.Data.Repsitories
                   )
                   .FirstOrDefault();
         }
+        public List<string> GetListByCourierHAWB(string CourierHAWB, int tenant)
+        {
+            
+            return
+                  (
+                  from rec in context.Declarations
+                  where rec.CourierHAWB == CourierHAWB && rec.Tenant == tenant
+                  select rec.Id
+                  ).ToList();
+        }
         public string GetConcurrencyGUIDByCustomFileNo(string customFileNo, int tenant)
         {
             if (String.IsNullOrWhiteSpace(customFileNo)) return "";
@@ -371,9 +381,9 @@ namespace Logitude.Customs.Data.Repsitories
 
         public IQueryable<Declaration> GetCourierConnectedDeclaratins(string CourierMasterId, int tenant)
         {
-            List<string> courierDeclarations = (from a in context.CourierDeclarations
+            var /*List<string>*/ courierDeclarations = (from a in context.CourierDeclarations
                                                 where a.CourierMasterId == CourierMasterId && a.Tenant == tenant
-                                                select a.DeclarationId).ToList();
+                                                select a.DeclarationId)/*.ToList()*/;
 
             IQueryable<Declaration> declarations = (from a in context.Declarations
                                                     where courierDeclarations.Contains(a.Id)
@@ -384,14 +394,46 @@ namespace Logitude.Customs.Data.Repsitories
 
         public IQueryable<Declaration> GetNotConnectedDeclaratins(int tenant)
         {
-            List<string> courierDeclarations = (from a in context.CourierDeclarations
-                                                where a.CourierMasterId != null && a.Tenant == tenant
-                                                select a.DeclarationId).ToList();
+            bool joinIt = false;
 
-            IQueryable<Declaration> declarations = (from a in context.Declarations
-                                                    where !courierDeclarations.Contains(a.Id) && a.IsCourierDeclaration == true
-                                                    select a);
+#if (false)
+            {
+                List<string> courierDeclarations = (from a in context.CourierDeclarations
+                                                    where a.CourierMasterId != null && a.Tenant == tenant
+                                                    select a.DeclarationId).ToList();
 
+                IQueryable<Declaration> declarations = (from a in context.Declarations
+                                                        where !courierDeclarations.Contains(a.Id) && a.IsCourierDeclaration == true
+                                                        select a);
+            }
+#endif
+            IQueryable<Declaration> declarations = null;
+            if (!joinIt)
+            {
+                var courierDeclarations = (from a in context.CourierDeclarations
+                                           where a.CourierMasterId != null && a.Tenant == tenant
+                                           select a.DeclarationId);
+
+                declarations = (from a in context.Declarations
+                                                        where !courierDeclarations.Contains(a.Id) && a.IsCourierDeclaration == true
+                                                        select a);
+            }
+            else
+            {
+                declarations = (from a in context.Declarations
+
+                                where /*!courierDeclarations.Contains(a.Id) */
+                                !context.CourierDeclarations.Any(cd => cd.DeclarationId == a.Id)
+                                && a.IsCourierDeclaration == true
+                                select a
+                 );
+
+            }
+            bool testIt = false;
+            if (testIt)
+            {
+                var res = declarations.ToList();
+            }
             return declarations;
         }
 

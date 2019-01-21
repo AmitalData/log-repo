@@ -138,16 +138,16 @@ if ( MyContext == null)
             {  
                 entityPM.ClaimsRelatedEntitys.Where(d => d.ClaimId == ClaimImporterDeclarsPage3.ClaimId && d.EntityCounterKey == ClaimImporterDeclarsPage3.EntityCounterKey).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert; 
             List<ClaimsRelatedEntitiesAmountPM> ClaimsRelatedEntitiesAmountsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntitiesAmounts).Cast<ClaimsRelatedEntitiesAmountPM>().ToList();
-            foreach (ClaimsRelatedEntitiesAmountPM ClaimsRelatedEntsExpDeclar in ClaimsRelatedEntitiesAmountsChangeSet)
+            foreach (ClaimsRelatedEntitiesAmountPM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntitiesAmountsChangeSet)
             {  
-                ClaimsRelatedEntity.ClaimsRelatedEntitiesAmounts.Where(d => d.ClaimId == ClaimsRelatedEntsExpDeclar.ClaimId && d.CounterKey == ClaimsRelatedEntsExpDeclar.CounterKey && d.LineNo == ClaimsRelatedEntsExpDeclar.LineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+                ClaimsRelatedEntity.ClaimsRelatedEntitiesAmounts.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.LineNo == ClaimsRelatedEntitiesRefund.LineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
             }
         
 		
             List<ClaimsRelatedEntitiesReasonPM> ClaimsRelatedEntitiesReasonsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntitiesReasons).Cast<ClaimsRelatedEntitiesReasonPM>().ToList();
-            foreach (ClaimsRelatedEntitiesReasonPM ClaimsRelatedEntsExpDeclar in ClaimsRelatedEntitiesReasonsChangeSet)
+            foreach (ClaimsRelatedEntitiesReasonPM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntitiesReasonsChangeSet)
             {  
-                ClaimsRelatedEntity.ClaimsRelatedEntitiesReasons.Where(d => d.ClaimId == ClaimsRelatedEntsExpDeclar.ClaimId && d.CounterKey == ClaimsRelatedEntsExpDeclar.CounterKey && d.LineNo == ClaimsRelatedEntsExpDeclar.LineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert; 
+                ClaimsRelatedEntity.ClaimsRelatedEntitiesReasons.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.LineNo == ClaimsRelatedEntitiesRefund.LineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert; 
             List<ClaimsRelatedEntsReasonsExpPM> ClaimsRelatedEntsReasonsExpsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntitiesReason, d => d.ClaimsRelatedEntsReasonsExps).Cast<ClaimsRelatedEntsReasonsExpPM>().ToList();
             foreach (ClaimsRelatedEntsReasonsExpPM ClaimsRelatedEntsReasonsExp in ClaimsRelatedEntsReasonsExpsChangeSet)
             {  
@@ -159,9 +159,23 @@ if ( MyContext == null)
         
 		
             List<ClaimsRelatedEntsExpDeclarPM> ClaimsRelatedEntsExpDeclarsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntsExpDeclars).Cast<ClaimsRelatedEntsExpDeclarPM>().ToList();
-            foreach (ClaimsRelatedEntsExpDeclarPM ClaimsRelatedEntsExpDeclar in ClaimsRelatedEntsExpDeclarsChangeSet)
+            foreach (ClaimsRelatedEntsExpDeclarPM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntsExpDeclarsChangeSet)
             {  
-                ClaimsRelatedEntity.ClaimsRelatedEntsExpDeclars.Where(d => d.ClaimId == ClaimsRelatedEntsExpDeclar.ClaimId && d.CounterKey == ClaimsRelatedEntsExpDeclar.CounterKey && d.ExportDeclarationNumber == ClaimsRelatedEntsExpDeclar.ExportDeclarationNumber).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+                ClaimsRelatedEntity.ClaimsRelatedEntsExpDeclars.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.ExportDeclarationNumber == ClaimsRelatedEntitiesRefund.ExportDeclarationNumber).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+            }
+        
+		
+            List<ClaimsRelatedEntitiesSeizurePM> ClaimsRelatedEntitiesSeizuresChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntitiesSeizures).Cast<ClaimsRelatedEntitiesSeizurePM>().ToList();
+            foreach (ClaimsRelatedEntitiesSeizurePM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntitiesSeizuresChangeSet)
+            {  
+                ClaimsRelatedEntity.ClaimsRelatedEntitiesSeizures.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.SeizureLinoNo == ClaimsRelatedEntitiesRefund.SeizureLinoNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+            }
+        
+		
+            List<ClaimsRelatedEntitiesRefundPM> ClaimsRelatedEntitiesRefundsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntitiesRefunds).Cast<ClaimsRelatedEntitiesRefundPM>().ToList();
+            foreach (ClaimsRelatedEntitiesRefundPM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntitiesRefundsChangeSet)
+            {  
+                ClaimsRelatedEntity.ClaimsRelatedEntitiesRefunds.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.RefundQuntityLineNo == ClaimsRelatedEntitiesRefund.RefundQuntityLineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
             }
         
 		 
@@ -201,16 +215,16 @@ if ( MyContext == null)
             {  
                 entityPM.ClaimsRelatedEntitys.Where(d => d.ClaimId == ClaimsRelatedEntity.ClaimId && d.EntityCounterKey == ClaimsRelatedEntity.EntityCounterKey).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert; 
             List<ClaimsRelatedEntitiesAmountPM> ClaimsRelatedEntitiesAmountsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntitiesAmounts).Cast<ClaimsRelatedEntitiesAmountPM>().ToList();
-            foreach (ClaimsRelatedEntitiesAmountPM ClaimsRelatedEntsExpDeclar in ClaimsRelatedEntitiesAmountsChangeSet)
+            foreach (ClaimsRelatedEntitiesAmountPM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntitiesAmountsChangeSet)
             {  
-                ClaimsRelatedEntity.ClaimsRelatedEntitiesAmounts.Where(d => d.ClaimId == ClaimsRelatedEntsExpDeclar.ClaimId && d.CounterKey == ClaimsRelatedEntsExpDeclar.CounterKey && d.LineNo == ClaimsRelatedEntsExpDeclar.LineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+                ClaimsRelatedEntity.ClaimsRelatedEntitiesAmounts.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.LineNo == ClaimsRelatedEntitiesRefund.LineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
             }
         
 		
             List<ClaimsRelatedEntitiesReasonPM> ClaimsRelatedEntitiesReasonsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntitiesReasons).Cast<ClaimsRelatedEntitiesReasonPM>().ToList();
-            foreach (ClaimsRelatedEntitiesReasonPM ClaimsRelatedEntsExpDeclar in ClaimsRelatedEntitiesReasonsChangeSet)
+            foreach (ClaimsRelatedEntitiesReasonPM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntitiesReasonsChangeSet)
             {  
-                ClaimsRelatedEntity.ClaimsRelatedEntitiesReasons.Where(d => d.ClaimId == ClaimsRelatedEntsExpDeclar.ClaimId && d.CounterKey == ClaimsRelatedEntsExpDeclar.CounterKey && d.LineNo == ClaimsRelatedEntsExpDeclar.LineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert; 
+                ClaimsRelatedEntity.ClaimsRelatedEntitiesReasons.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.LineNo == ClaimsRelatedEntitiesRefund.LineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert; 
             List<ClaimsRelatedEntsReasonsExpPM> ClaimsRelatedEntsReasonsExpsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntitiesReason, d => d.ClaimsRelatedEntsReasonsExps).Cast<ClaimsRelatedEntsReasonsExpPM>().ToList();
             foreach (ClaimsRelatedEntsReasonsExpPM ClaimsRelatedEntsReasonsExp in ClaimsRelatedEntsReasonsExpsChangeSet)
             {  
@@ -222,9 +236,23 @@ if ( MyContext == null)
         
 		
             List<ClaimsRelatedEntsExpDeclarPM> ClaimsRelatedEntsExpDeclarsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntsExpDeclars).Cast<ClaimsRelatedEntsExpDeclarPM>().ToList();
-            foreach (ClaimsRelatedEntsExpDeclarPM ClaimsRelatedEntsExpDeclar in ClaimsRelatedEntsExpDeclarsChangeSet)
+            foreach (ClaimsRelatedEntsExpDeclarPM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntsExpDeclarsChangeSet)
             {  
-                ClaimsRelatedEntity.ClaimsRelatedEntsExpDeclars.Where(d => d.ClaimId == ClaimsRelatedEntsExpDeclar.ClaimId && d.CounterKey == ClaimsRelatedEntsExpDeclar.CounterKey && d.ExportDeclarationNumber == ClaimsRelatedEntsExpDeclar.ExportDeclarationNumber).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+                ClaimsRelatedEntity.ClaimsRelatedEntsExpDeclars.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.ExportDeclarationNumber == ClaimsRelatedEntitiesRefund.ExportDeclarationNumber).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+            }
+        
+		
+            List<ClaimsRelatedEntitiesSeizurePM> ClaimsRelatedEntitiesSeizuresChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntitiesSeizures).Cast<ClaimsRelatedEntitiesSeizurePM>().ToList();
+            foreach (ClaimsRelatedEntitiesSeizurePM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntitiesSeizuresChangeSet)
+            {  
+                ClaimsRelatedEntity.ClaimsRelatedEntitiesSeizures.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.SeizureLinoNo == ClaimsRelatedEntitiesRefund.SeizureLinoNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+            }
+        
+		
+            List<ClaimsRelatedEntitiesRefundPM> ClaimsRelatedEntitiesRefundsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntitiesRefunds).Cast<ClaimsRelatedEntitiesRefundPM>().ToList();
+            foreach (ClaimsRelatedEntitiesRefundPM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntitiesRefundsChangeSet)
+            {  
+                ClaimsRelatedEntity.ClaimsRelatedEntitiesRefunds.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.RefundQuntityLineNo == ClaimsRelatedEntitiesRefund.RefundQuntityLineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
             }
         
 		 
@@ -264,16 +292,16 @@ if ( MyContext == null)
             {  
                 entityPM.ClaimsRelatedEntitys.Where(d => d.ClaimId == ClaimImporterDeclarsPage3A.ClaimId && d.EntityCounterKey == ClaimImporterDeclarsPage3A.EntityCounterKey).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert; 
             List<ClaimsRelatedEntitiesAmountPM> ClaimsRelatedEntitiesAmountsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntitiesAmounts).Cast<ClaimsRelatedEntitiesAmountPM>().ToList();
-            foreach (ClaimsRelatedEntitiesAmountPM ClaimsRelatedEntsExpDeclar in ClaimsRelatedEntitiesAmountsChangeSet)
+            foreach (ClaimsRelatedEntitiesAmountPM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntitiesAmountsChangeSet)
             {  
-                ClaimsRelatedEntity.ClaimsRelatedEntitiesAmounts.Where(d => d.ClaimId == ClaimsRelatedEntsExpDeclar.ClaimId && d.CounterKey == ClaimsRelatedEntsExpDeclar.CounterKey && d.LineNo == ClaimsRelatedEntsExpDeclar.LineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+                ClaimsRelatedEntity.ClaimsRelatedEntitiesAmounts.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.LineNo == ClaimsRelatedEntitiesRefund.LineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
             }
         
 		
             List<ClaimsRelatedEntitiesReasonPM> ClaimsRelatedEntitiesReasonsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntitiesReasons).Cast<ClaimsRelatedEntitiesReasonPM>().ToList();
-            foreach (ClaimsRelatedEntitiesReasonPM ClaimsRelatedEntsExpDeclar in ClaimsRelatedEntitiesReasonsChangeSet)
+            foreach (ClaimsRelatedEntitiesReasonPM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntitiesReasonsChangeSet)
             {  
-                ClaimsRelatedEntity.ClaimsRelatedEntitiesReasons.Where(d => d.ClaimId == ClaimsRelatedEntsExpDeclar.ClaimId && d.CounterKey == ClaimsRelatedEntsExpDeclar.CounterKey && d.LineNo == ClaimsRelatedEntsExpDeclar.LineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert; 
+                ClaimsRelatedEntity.ClaimsRelatedEntitiesReasons.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.LineNo == ClaimsRelatedEntitiesRefund.LineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert; 
             List<ClaimsRelatedEntsReasonsExpPM> ClaimsRelatedEntsReasonsExpsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntitiesReason, d => d.ClaimsRelatedEntsReasonsExps).Cast<ClaimsRelatedEntsReasonsExpPM>().ToList();
             foreach (ClaimsRelatedEntsReasonsExpPM ClaimsRelatedEntsReasonsExp in ClaimsRelatedEntsReasonsExpsChangeSet)
             {  
@@ -285,9 +313,23 @@ if ( MyContext == null)
         
 		
             List<ClaimsRelatedEntsExpDeclarPM> ClaimsRelatedEntsExpDeclarsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntsExpDeclars).Cast<ClaimsRelatedEntsExpDeclarPM>().ToList();
-            foreach (ClaimsRelatedEntsExpDeclarPM ClaimsRelatedEntsExpDeclar in ClaimsRelatedEntsExpDeclarsChangeSet)
+            foreach (ClaimsRelatedEntsExpDeclarPM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntsExpDeclarsChangeSet)
             {  
-                ClaimsRelatedEntity.ClaimsRelatedEntsExpDeclars.Where(d => d.ClaimId == ClaimsRelatedEntsExpDeclar.ClaimId && d.CounterKey == ClaimsRelatedEntsExpDeclar.CounterKey && d.ExportDeclarationNumber == ClaimsRelatedEntsExpDeclar.ExportDeclarationNumber).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+                ClaimsRelatedEntity.ClaimsRelatedEntsExpDeclars.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.ExportDeclarationNumber == ClaimsRelatedEntitiesRefund.ExportDeclarationNumber).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+            }
+        
+		
+            List<ClaimsRelatedEntitiesSeizurePM> ClaimsRelatedEntitiesSeizuresChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntitiesSeizures).Cast<ClaimsRelatedEntitiesSeizurePM>().ToList();
+            foreach (ClaimsRelatedEntitiesSeizurePM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntitiesSeizuresChangeSet)
+            {  
+                ClaimsRelatedEntity.ClaimsRelatedEntitiesSeizures.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.SeizureLinoNo == ClaimsRelatedEntitiesRefund.SeizureLinoNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+            }
+        
+		
+            List<ClaimsRelatedEntitiesRefundPM> ClaimsRelatedEntitiesRefundsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntitiesRefunds).Cast<ClaimsRelatedEntitiesRefundPM>().ToList();
+            foreach (ClaimsRelatedEntitiesRefundPM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntitiesRefundsChangeSet)
+            {  
+                ClaimsRelatedEntity.ClaimsRelatedEntitiesRefunds.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.RefundQuntityLineNo == ClaimsRelatedEntitiesRefund.RefundQuntityLineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
             }
         
 		 
@@ -327,16 +369,16 @@ if ( MyContext == null)
             {  
                 entityPM.ClaimsRelatedEntitys.Where(d => d.ClaimId == ClaimImporterDeclarsPage3B.ClaimId && d.EntityCounterKey == ClaimImporterDeclarsPage3B.EntityCounterKey).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert; 
             List<ClaimsRelatedEntitiesAmountPM> ClaimsRelatedEntitiesAmountsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntitiesAmounts).Cast<ClaimsRelatedEntitiesAmountPM>().ToList();
-            foreach (ClaimsRelatedEntitiesAmountPM ClaimsRelatedEntsExpDeclar in ClaimsRelatedEntitiesAmountsChangeSet)
+            foreach (ClaimsRelatedEntitiesAmountPM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntitiesAmountsChangeSet)
             {  
-                ClaimsRelatedEntity.ClaimsRelatedEntitiesAmounts.Where(d => d.ClaimId == ClaimsRelatedEntsExpDeclar.ClaimId && d.CounterKey == ClaimsRelatedEntsExpDeclar.CounterKey && d.LineNo == ClaimsRelatedEntsExpDeclar.LineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+                ClaimsRelatedEntity.ClaimsRelatedEntitiesAmounts.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.LineNo == ClaimsRelatedEntitiesRefund.LineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
             }
         
 		
             List<ClaimsRelatedEntitiesReasonPM> ClaimsRelatedEntitiesReasonsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntitiesReasons).Cast<ClaimsRelatedEntitiesReasonPM>().ToList();
-            foreach (ClaimsRelatedEntitiesReasonPM ClaimsRelatedEntsExpDeclar in ClaimsRelatedEntitiesReasonsChangeSet)
+            foreach (ClaimsRelatedEntitiesReasonPM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntitiesReasonsChangeSet)
             {  
-                ClaimsRelatedEntity.ClaimsRelatedEntitiesReasons.Where(d => d.ClaimId == ClaimsRelatedEntsExpDeclar.ClaimId && d.CounterKey == ClaimsRelatedEntsExpDeclar.CounterKey && d.LineNo == ClaimsRelatedEntsExpDeclar.LineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert; 
+                ClaimsRelatedEntity.ClaimsRelatedEntitiesReasons.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.LineNo == ClaimsRelatedEntitiesRefund.LineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert; 
             List<ClaimsRelatedEntsReasonsExpPM> ClaimsRelatedEntsReasonsExpsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntitiesReason, d => d.ClaimsRelatedEntsReasonsExps).Cast<ClaimsRelatedEntsReasonsExpPM>().ToList();
             foreach (ClaimsRelatedEntsReasonsExpPM ClaimsRelatedEntsReasonsExp in ClaimsRelatedEntsReasonsExpsChangeSet)
             {  
@@ -348,9 +390,23 @@ if ( MyContext == null)
         
 		
             List<ClaimsRelatedEntsExpDeclarPM> ClaimsRelatedEntsExpDeclarsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntsExpDeclars).Cast<ClaimsRelatedEntsExpDeclarPM>().ToList();
-            foreach (ClaimsRelatedEntsExpDeclarPM ClaimsRelatedEntsExpDeclar in ClaimsRelatedEntsExpDeclarsChangeSet)
+            foreach (ClaimsRelatedEntsExpDeclarPM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntsExpDeclarsChangeSet)
             {  
-                ClaimsRelatedEntity.ClaimsRelatedEntsExpDeclars.Where(d => d.ClaimId == ClaimsRelatedEntsExpDeclar.ClaimId && d.CounterKey == ClaimsRelatedEntsExpDeclar.CounterKey && d.ExportDeclarationNumber == ClaimsRelatedEntsExpDeclar.ExportDeclarationNumber).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+                ClaimsRelatedEntity.ClaimsRelatedEntsExpDeclars.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.ExportDeclarationNumber == ClaimsRelatedEntitiesRefund.ExportDeclarationNumber).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+            }
+        
+		
+            List<ClaimsRelatedEntitiesSeizurePM> ClaimsRelatedEntitiesSeizuresChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntitiesSeizures).Cast<ClaimsRelatedEntitiesSeizurePM>().ToList();
+            foreach (ClaimsRelatedEntitiesSeizurePM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntitiesSeizuresChangeSet)
+            {  
+                ClaimsRelatedEntity.ClaimsRelatedEntitiesSeizures.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.SeizureLinoNo == ClaimsRelatedEntitiesRefund.SeizureLinoNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+            }
+        
+		
+            List<ClaimsRelatedEntitiesRefundPM> ClaimsRelatedEntitiesRefundsChangeSet = ChangeSet.GetAssociatedChanges(ClaimsRelatedEntity, d => d.ClaimsRelatedEntitiesRefunds).Cast<ClaimsRelatedEntitiesRefundPM>().ToList();
+            foreach (ClaimsRelatedEntitiesRefundPM ClaimsRelatedEntitiesRefund in ClaimsRelatedEntitiesRefundsChangeSet)
+            {  
+                ClaimsRelatedEntity.ClaimsRelatedEntitiesRefunds.Where(d => d.ClaimId == ClaimsRelatedEntitiesRefund.ClaimId && d.CounterKey == ClaimsRelatedEntitiesRefund.CounterKey && d.RefundQuntityLineNo == ClaimsRelatedEntitiesRefund.RefundQuntityLineNo).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
             }
         
 		 
@@ -480,6 +536,10 @@ if ( MyContext == null)
 		                	SetClaimsRelatedEntitiesReasonChangeSet(currentItemPM);
 			                
 		                	SetClaimsRelatedEntsExpDeclarChangeSet(currentItemPM);
+			                
+		                	SetClaimsRelatedEntitiesSeizureChangeSet(currentItemPM);
+			                
+		                	SetClaimsRelatedEntitiesRefundChangeSet(currentItemPM);
 			                                           
                             break;
                         }
@@ -493,6 +553,10 @@ if ( MyContext == null)
 		                	SetClaimsRelatedEntitiesReasonChangeSet(currentItemPM);
 			                
 		                	SetClaimsRelatedEntsExpDeclarChangeSet(currentItemPM);
+			                
+		                	SetClaimsRelatedEntitiesSeizureChangeSet(currentItemPM);
+			                
+		                	SetClaimsRelatedEntitiesRefundChangeSet(currentItemPM);
 			                
                             break;
                         }

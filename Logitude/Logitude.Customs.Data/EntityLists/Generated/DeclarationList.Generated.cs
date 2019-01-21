@@ -266,6 +266,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string MamanStatusName  { get; set; }
        [DataMember]
        public string AcceptanceStatusName  { get; set; }
+       [DataMember]
+       public string CourierSuspentionCode  { get; set; }
+       [DataMember]
+       public string CourierSuspentionName  { get; set; }
+       [DataMember]
+       public string DepositionStatusCode  { get; set; }
    }
 
 }

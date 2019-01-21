@@ -1322,7 +1322,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddCustomsInterfaces(new CustomsInterfaceDetails() { Code = "CBP", Name = "CBP direct", InterfaceType = "EX" }, customsInterfaceRepository);
             //cache on client USE : "Update Customs With Out Tenant 0"
             //INSERT INTO "CUSTOMSINTERFACES" (CODE, NAME, SEARCHFIELDS, INACTIVE, INTERFACETYPE) VALUES ('CMN', 'Maman Courier', 'CMN,Maman Courier', '0', 'IM');
-            AddClosedTables.AddCustomsInterfaces(new CustomsInterfaceDetails() { Code = "CMN", Name = "Maman Courier", InterfaceType = "IM" }, customsInterfaceRepository);
+            ///AddClosedTables.AddCustomsInterfaces(new CustomsInterfaceDetails() { Code = "CMN", Name = "Maman Courier", InterfaceType = "IM" }, customsInterfaceRepository);
 
             customsInterfaceRepository.SubmitChanges();
         }

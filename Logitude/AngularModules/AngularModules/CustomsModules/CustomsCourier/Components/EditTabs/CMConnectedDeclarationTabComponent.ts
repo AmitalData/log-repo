@@ -66,6 +66,14 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
         }
     }
 
+    private _TotalConnected: number = 0;
+    get TotalConnected() { return this.DataSource != null ? this.DataSource.rowCount : 0; }
+    set TotalConnected(value: number) {
+        if (this._TotalConnected != value) {
+            this._TotalConnected = value;
+        }
+    }
+
     private Listen() {
         if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
 

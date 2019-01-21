@@ -114,7 +114,7 @@ export class CustomsRequestMenuService {
 
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("קליטת זמינויות", "StorageEntranceComponent", './CustomsModules/CustomsRequests/Components/Courier/StorageEntranceComponent', 800, 500, ""));
 
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem("מסר התרה לתיק", "ReleaseGoods",'./CustomsModules/CustomsRequests/Components/DeclarationRequests/ReleaseGoodsComponent',1010, 680, "2470"));
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem("מסר התרה לתיק", "ReleaseGoods", './CustomsModules/CustomsRequests/Components/DeclarationRequests/ReleaseGoodsComponent', 1010, 610, "2470", null, null, null, true));
     }
     public ShowModalByIdAndIntreface(id: string, InterfaceTypeCode: string, RequestDescription: string) {
         if (AppTool.IsNullOrEmpty(id)) {

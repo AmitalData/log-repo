@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class ClaimsRelatedEntitiesSeizureList
+   {
+   
+       [Key]
+       [DataMember]
+       public string ClaimId  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int CounterKey  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int SeizureLinoNo  { get; set; }
+       [DataMember]
+       public string SeizureFactorCode  { get; set; }
+       [DataMember]
+       public string SeizureMethodCode  { get; set; }
+       [DataMember]
+       public string SeizureMethodName  { get; set; }
+       [DataMember]
+       public decimal? SeizureAmount  { get; set; }
+       [DataMember]
+       public string SeizureFactorName  { get; set; }
+   }
+
+}
+	 

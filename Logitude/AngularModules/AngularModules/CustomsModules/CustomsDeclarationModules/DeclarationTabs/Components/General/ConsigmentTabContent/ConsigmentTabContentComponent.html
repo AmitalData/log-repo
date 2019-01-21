@@ -1,4 +1,4 @@
-﻿<style>
+<style>
 
     .disabled{
         pointer-events: none;
@@ -81,9 +81,9 @@
                                                           [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td style="width: 130px; ">
-                                                <LogTextBox *ngIf="CargoTypeCode != 17" [ObjectFieldName]="'SecondCargoID'" [Placeholder]="SecondCargoIDPlaceholder" [ObjectTableName]="'Customs.Consignment'"
+                                                <LogTextBoxV2 *ngIf="CargoTypeCode != 17" [ObjectFieldName]="'SecondCargoID'" [Placeholder]="SecondCargoIDPlaceholder" [ObjectTableName]="'Customs.Consignment'"
                                                             [HideColumns]="true"
-                                                            [DataContext]="DataContext" [Text]="SecondCargoID" (LostFocus)="OnSecondCargoLostFocus()"></LogTextBox>
+                                                            [DataContext]="DataContext" [Text]="SecondCargoID" (LostFocus)="OnSecondCargoLostFocus()"></LogTextBoxV2>
 
                                                 <SearchBox *ngIf="CargoTypeCode == 17"
                                                            [ObjectTableName]="'Customs.CouriersVat'"
@@ -183,7 +183,7 @@
                                             <td>
                                                 <!--Customs.Consignment-->
                                                 <LogLov [ObjectFieldName]="'LoadingPortCode'"
-                                                        [ObjectTableName]="'ObjectTableName'"
+                                                        [ObjectTableName]="'Customs.Consignment'"
                                                         [DataContext]="DataContext"
                                                         [HideColumns]="true"
                                                         [QueryFilterItems]="LoadingPortFilterItems"
@@ -353,7 +353,8 @@
                                                 <HelpIcon style="float: right; padding-right: 10px;" [HideHeader]="true" [Text]="'Customs.Declaration.O.consignmentShoudlnotSent' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
                                             </td>
                                             <td></td>
-                                            <td>
+                                            <!--removed due task 45549-->
+                                            <!--<td>
                                                 <div *ngIf="(ShowExcludeConsignmentBoolean && IsCourierDeclaration)">
                                                     <LogLabel [ObjectFieldName]="'DeliveryPlaceName'" [ObjectTableName]="'Customs.Consignment'"
                                                               [DataContext]="DataContext"></LogLabel>
@@ -365,14 +366,15 @@
                                                                 [HideColumns]="true"
                                                                 [DataContext]="DataContext"></LogTextBox>
                                                 </div>
-                                            </td>
+                                            </td>-->
                                             <td><div></div></td>
 
                                         </tr>
 
                                         <tr *ngIf="(ShowExcludeConsignmentBoolean && IsCourierDeclaration)" style="height: 28px;">
+                                            <!--removed due task 45549-->
                                             <!-- WeightValue -->
-                                            <td>
+                                            <!--<td>
                                                 <LogLabel [ObjectFieldName]="'WeightValue'"
                                                           [DataContext]="DataContext"
                                                           [TextCode]="'Customs.General.O.WeightValue'">
@@ -387,7 +389,7 @@
                                                         [SelectedValue]="WeightValue"
                                                         [QueryFilterItems]="WeightValueFilterItems">
                                                 </LogLov>
-                                            </td>
+                                            </td>-->
                                             <td><div></div></td>
                                         </tr>
 

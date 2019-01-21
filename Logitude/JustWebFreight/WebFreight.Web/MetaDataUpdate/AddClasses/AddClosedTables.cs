@@ -3154,5 +3154,79 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 mamanStatusRepository.Add(newMamanStatus);
             }
         }
+
+        public static void AddPendingErrorPlace(PendingErrorPlace pendingErrorPlaceDetails, PendingErrorPlaceRepository pendingErrorPlaceRepository)
+        {
+            Dictionary<string, PendingErrorPlace> tenantPendingErrorPlace = pendingErrorPlaceRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenantPendingErrorPlace.Keys.Contains(pendingErrorPlaceDetails.Code))
+            {
+                PendingErrorPlace pendingErrorPlace = pendingErrorPlaceRepository.GetSingle(pendingErrorPlaceDetails.Code);
+                pendingErrorPlace.LocalName = pendingErrorPlaceDetails.LocalName;
+                pendingErrorPlace.EnglishName = pendingErrorPlaceDetails.EnglishName;
+                pendingErrorPlace.SearchFields = (pendingErrorPlaceDetails.Code + "," + pendingErrorPlaceDetails.LocalName).ToLower();
+                pendingErrorPlaceRepository.Update(pendingErrorPlace);
+            }
+            else
+            {
+                PendingErrorPlace newPendingErrorPlace = new PendingErrorPlace() {
+                    Code = pendingErrorPlaceDetails.Code,
+                    LocalName = pendingErrorPlaceDetails.LocalName,
+                    EnglishName = pendingErrorPlaceDetails.EnglishName,
+                    SearchFields = (pendingErrorPlaceDetails.Code + "," + pendingErrorPlaceDetails.LocalName).ToLower()
+                };
+                pendingErrorPlaceRepository.Add(newPendingErrorPlace);
+            }
+        }
+
+        public static void AddMamanSpecialAction(MamanSpecialAction mamanSpecialActionDetails, MamanSpecialActionRepository mamanSpecialActionRepository)
+        {
+            Dictionary<string, MamanSpecialAction> tenant = mamanSpecialActionRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenant.Keys.Contains(mamanSpecialActionDetails.Code))
+            {
+                MamanSpecialAction mamanSpecialAction = mamanSpecialActionRepository.GetSingle(mamanSpecialActionDetails.Code);
+                mamanSpecialAction.LocalName = mamanSpecialActionDetails.LocalName;
+                mamanSpecialAction.EnglishName = mamanSpecialActionDetails.EnglishName;
+                mamanSpecialAction.SearchFields = (mamanSpecialActionDetails.Code + "," + mamanSpecialActionDetails.LocalName).ToLower();
+                mamanSpecialActionRepository.Update(mamanSpecialAction);
+            }
+            else
+            {
+                MamanSpecialAction newMamanSpecialAction = new MamanSpecialAction()
+                {
+                    Code = mamanSpecialActionDetails.Code,
+                    LocalName = mamanSpecialActionDetails.LocalName,
+                    EnglishName = mamanSpecialActionDetails.EnglishName,
+                    SearchFields = (mamanSpecialActionDetails.Code + "," + mamanSpecialActionDetails.LocalName).ToLower()
+                };
+                mamanSpecialActionRepository.Add(newMamanSpecialAction);
+            }
+        }
+
+        public static void AddMamanSpecialActionStatus(MamanSpecialActionStatus mamanSpecialActionStatusDetails, MamanSpecialActionStatusRepository mamanSpecialActionStatusRepository)
+        {
+            Dictionary<string, MamanSpecialActionStatus> tenant = mamanSpecialActionStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenant.Keys.Contains(mamanSpecialActionStatusDetails.Code))
+            {
+                MamanSpecialActionStatus mamanSpecialActionStatus = mamanSpecialActionStatusRepository.GetSingle(mamanSpecialActionStatusDetails.Code);
+                mamanSpecialActionStatus.LocalName = mamanSpecialActionStatusDetails.LocalName;
+                mamanSpecialActionStatus.EnglishName = mamanSpecialActionStatusDetails.EnglishName;
+                mamanSpecialActionStatus.SearchFields = (mamanSpecialActionStatusDetails.Code + "," + mamanSpecialActionStatusDetails.LocalName).ToLower();
+                mamanSpecialActionStatusRepository.Update(mamanSpecialActionStatus);
+            }
+            else
+            {
+                MamanSpecialActionStatus newMamanSpecialActionStatus = new MamanSpecialActionStatus()
+                {
+                    Code = mamanSpecialActionStatusDetails.Code,
+                    LocalName = mamanSpecialActionStatusDetails.LocalName,
+                    EnglishName = mamanSpecialActionStatusDetails.EnglishName,
+                    SearchFields = (mamanSpecialActionStatusDetails.Code + "," + mamanSpecialActionStatusDetails.LocalName).ToLower()
+                };
+                mamanSpecialActionStatusRepository.Add(newMamanSpecialActionStatus);
+            }
+        }
     }
 }

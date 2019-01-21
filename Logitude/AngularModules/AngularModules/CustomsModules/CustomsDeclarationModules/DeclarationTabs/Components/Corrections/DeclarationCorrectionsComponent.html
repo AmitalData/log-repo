@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .subTitle {
         color: #4b90cb;
@@ -196,6 +196,19 @@
 
                     <tr style="height: 10px;">
                         <td></td>
+                    </tr>
+
+
+                    <!-- System Messages -->
+                    <tr *ngIf="IsDescriptionVisible" style="height: 28px;">
+                        <td colspan="3" class="subTitle">{{'Customs.Declaration.O.SystemMessages' | TextCodeTranslationPipe}}</td>
+                    </tr>
+                    <tr *ngIf="IsDescriptionVisible" style="height: 30px;">
+                        <td colspan="3">
+                            <div class="DisbleBox" style="max-width: 860px;word-wrap: break-word;word-break: break-word;white-space: initial;">
+                                {{Description}}
+                            </div>
+                        </td>
                     </tr>
 
                     <!-- Correction Statement | AdditionalInformationlist -->

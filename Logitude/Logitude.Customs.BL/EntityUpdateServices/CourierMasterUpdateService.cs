@@ -86,8 +86,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            if (entityPM.HAWB != entityPOCO.HAWB || entityPM.MAWB != entityPOCO.MAWB || entityPM.AirlineId != entityPOCO.AirlineId)
-            {
+//Task 44476 remove if in order to always create task - in case another field was changed but cfi don't has updated value
+//            if (entityPM.HAWB != entityPOCO.HAWB || entityPM.MAWB != entityPOCO.MAWB || entityPM.AirlineId != entityPOCO.AirlineId)
+//            {
                 if (entityPM.ConnectedDeclarations != null && entityPM.ConnectedDeclarations.Length > 0)
                 {
                     this.toSendTask = true;
@@ -102,7 +103,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         this.toSendTask = true;
                     }
                 }
-            }
+//            }
 
             entityPM.ConnectedDeclarations = null;
             entityPM.NotConnectedDeclarations = null;
@@ -138,7 +139,44 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.ShortHAWB = entityPM.ShortHAWB.Substring(start);
                 }
             }
+
+            if(entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                CourierMasterPM dbOccCourierMasterPM = GetDBEntity(entityPM.Id, entityPM.Tenant);
+
+                if(entityPM.OriginPortCode != dbOccCourierMasterPM.OriginPortCode ||
+                    entityPM.MAWB != dbOccCourierMasterPM.MAWB ||
+                    entityPM.MAWBTypeCode != dbOccCourierMasterPM.MAWBTypeCode ||
+                    entityPM.AirlineId != dbOccCourierMasterPM.AirlineId ||
+                    entityPM.WeightValueCode != dbOccCourierMasterPM.WeightValueCode)
+                {
+                    CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(entityPM.Tenant);
+                    List <string> declarations = courierDeclarationRepository.GetCourierConnectedDeclaratinsList(entityPM.Id, entityPM.Tenant);
+                    if (declarations != null)
+                    {
+                        DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        foreach (var declarationId in declarations)
+                        {
+                            declarationQueryService.LoadSupplierInvoicesWithItems = false;
+                            var myDBEntity = declarationQueryService.GetSingle(declarationId, false, false);
+                            DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(myDBEntity);
+                            declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
+                        }
+                    }
+                }
+            }
+
             base.OnUpdating(entityPM, entityPOCO);
+        }
+
+        private CourierMasterPM GetDBEntity(string dirtyCourierMasterId, int tenant)
+        {
+
+            var courierMasterQueryService = new CourierMasterQueryService(tenant);
+            var myDBEntity = courierMasterQueryService.GetSingle(dirtyCourierMasterId, false, false);
+            return myDBEntity ?? new CourierMasterPM();
+
         }
 
         protected override void Trace(CourierMasterPM entityPM, CourierMaster entityPOCO, string changesXml)
@@ -209,6 +247,27 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (this.toSendTask == true)
             {
                 OpenUnifreighTask(entityPM, "LMC2U", "RSH", true, "");
+            }
+
+            if (entityPM.AirlineId != null)
+            {
+                CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(entityPM.Tenant);
+                CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(entityPM.AirlineId, false, true);
+                    if (customsAirline != null)
+                {
+                    entityPM.AirlinePrefix = customsAirline.AirlinePrefix;
+                    entityPM.AirlineName = customsAirline.LocalName;
+                }
+            }
+
+            if (entityPM.GatewayPortCode != null)
+            {
+                InternationalSiteQueryService internationalSiteQueryService = new InternationalSiteQueryService(entityPM.Tenant);
+                InternationalSitePM internationalSitePM = internationalSiteQueryService.GetSingle(entityPM.GatewayPortCode, false, true);
+                if (internationalSitePM != null)
+                {
+                    entityPM.GatewayPortName = internationalSitePM.LocalName;
+                }
             }
         }
 

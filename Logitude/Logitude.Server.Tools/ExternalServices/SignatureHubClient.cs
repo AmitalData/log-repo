@@ -3,6 +3,7 @@ using Microsoft.AspNet.SignalR.Client;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
@@ -55,6 +56,8 @@ namespace Logitude.Server.Tools.ExternalServices
         private IHubProxy HubProxy { get; set; }
         string _ServerURI;
         Action<string, string> _Message4U;
+        private DateTime? _LastCrashAt;
+
         private HubConnection MyConnection { get; set; }
 
         SignatureHubClient(string serverURI, Action<string, string> message4U)
@@ -129,7 +132,18 @@ namespace Logitude.Server.Tools.ExternalServices
 
         public void WakeUp(bool forceReconnect = false)
         {
-
+            bool RestartSignlarWhenCrash = ConfigurationManager.AppSettings["20181212.RestartSignlarWhenCrash"] == "1";//TFCSendSignCrushButSuccesssInBackground
+            if (RestartSignlarWhenCrash)
+            {
+                if (_LastCrashAt.HasValue)
+                {
+                    if (DateTime.Now.Subtract(_LastCrashAt.GetValueOrDefault()) > TimeSpan.FromMinutes(15))
+                    {
+                        forceReconnect = true;
+                        _LastCrashAt = null;
+                    }
+                }
+            }
             if (!IsActive || forceReconnect)
             {
 
@@ -160,12 +174,17 @@ namespace Logitude.Server.Tools.ExternalServices
                 }
                 if (HubProxy != null && MyConnection != null && MyConnection.State == ConnectionState.Connected)
                 {
+                    
                     HubProxy.Invoke("Send", requestMessageType.ToString(), requestMessageData);
                 }
+                _LastCrashAt = null;
             }
             catch (Exception)
             {
-
+                if (!_LastCrashAt.HasValue)
+                {
+                    _LastCrashAt = DateTime.Now;
+                }
                 throw;
             }
         }

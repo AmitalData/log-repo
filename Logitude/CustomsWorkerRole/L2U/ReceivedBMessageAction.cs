@@ -94,6 +94,7 @@ namespace CustomsWorkerRole.L2U
                         //cl.Logs  
                         //cl.CorrelationID  
                         _WaitingCommLog.CommunicationStatusTypeCode = "D";
+                        //LogDoneItemInMemory();
                     }
                     else
                     {
