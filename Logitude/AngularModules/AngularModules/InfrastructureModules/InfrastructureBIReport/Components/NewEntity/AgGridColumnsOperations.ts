@@ -18,12 +18,6 @@ export class AgGridColumnsOperations extends BaseComponent {
         super();
     }
     BuildList() {
-        this.father.BIReportXMLData.BITabularViewSettings.Columns.sort((a, b) => { return (a.Index === b.Index) ? 0 : (a.Index < b.Index) ? -1 : 1 }).forEach(item => {
-            this.ItemsSource.push(item);
-        });
-    }
-    SetWindowArgs(args: any) {
-        this.father = args.father;
         this.ItemsSource = [];
         var allItem = new Column();
         allItem.Code = "All";
@@ -32,6 +26,13 @@ export class AgGridColumnsOperations extends BaseComponent {
             allItem.IsChecked = false;
         }
         this.ItemsSource.push(allItem);
+        this.father.BIReportXMLData.BITabularViewSettings.Columns.sort((a, b) => { return (a.Index === b.Index) ? 0 : (a.Index < b.Index) ? -1 : 1 }).forEach(item => {
+            this.ItemsSource.push(item);
+        });
+    }
+    SetWindowArgs(args: any) {
+        this.father = args.father;
+        
         this.BuildList();
     }
 
@@ -71,7 +72,7 @@ export class AgGridColumnsOperations extends BaseComponent {
             if (nextItem) {
                 currItem.Index = nextIndex;
                 nextItem.Index = currIndex;
-                //this.BuildList();
+                this.BuildList();
             }
         }
     }
@@ -88,7 +89,7 @@ export class AgGridColumnsOperations extends BaseComponent {
             if (nextItem) {
                 currItem.Index = nextIndex;
                 nextItem.Index = currIndex;
-               // this.BuildList();
+                this.BuildList();
             }
         }
     }
