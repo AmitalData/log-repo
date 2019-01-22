@@ -989,6 +989,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\ComputingPartnerViewsExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\AgentSharedDocumentExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CustomerDepositionExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\DepositionRequestController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\DocumentFilingBackupBatchExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\HybridTenantStateExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ImporterDepositionController.cs" />
@@ -2196,6 +2197,7 @@
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsStocksDataProviderHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\UsersByTenantDataProviderHelper.cs" />
     <Compile Include="Helpers\DataWarehouseHelper.cs" />
+    <Compile Include="Helpers\DepositionRequestHelper.cs" />
     <Compile Include="Helpers\DocumentHelper.cs" />
     <Compile Include="Helpers\EntityChangeAutomationHelper.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\ApiExceptionHandler.cs" />
@@ -4131,6 +4133,7 @@
     <Content Include="WcfApi\CustomerAdditionalServiceDWWcfService.svc" />
     <Content Include="WcfApi\CustomerCompetitorDWWcfService.svc" />
     <Content Include="WcfApi\CustomerDWWcfService.svc" />
+    <Content Include="WcfApi\DepositionRequestWcfService.svc" />
     <Content Include="WcfApi\DocumentInWcfService.svc" />
     <Content Include="WcfApi\DocumentsMetaDataTypeWcfService.svc" />
     <Content Include="WcfApi\DocumentTypeWcfService.svc" />
@@ -5573,6 +5576,9 @@
     <Compile Include="WcfApi\CustomerDWWcfService.svc.cs">
       <DependentUpon>CustomerDWWcfService.svc</DependentUpon>
     </Compile>
+    <Compile Include="WcfApi\DepositionRequestWcfService.svc.cs">
+      <DependentUpon>DepositionRequestWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\DocumentInWcfService.svc.cs">
       <DependentUpon>DocumentInWcfService.svc</DependentUpon>
     </Compile>
@@ -5619,6 +5625,7 @@
     <Compile Include="WcfApi\ICustomerAdditionalServiceDWWcfService.cs" />
     <Compile Include="WcfApi\ICustomerCompetitorDWWcfService.cs" />
     <Compile Include="WcfApi\ICustomerDWWcfService.cs" />
+    <Compile Include="WcfApi\IDepositionRequestWcfService.cs" />
     <Compile Include="WcfApi\IDocumentInWcfService.cs" />
     <Compile Include="WcfApi\IDocumentsMetaDataTypeWcfService.cs" />
     <Compile Include="WcfApi\IDocumentTypeWcfService.cs" />

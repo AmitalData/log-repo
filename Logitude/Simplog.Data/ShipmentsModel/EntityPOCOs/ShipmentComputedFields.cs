@@ -22,5 +22,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public int NumberOfHouses { get; set; }
         public Shipment Shipment { get; set; }
         public bool IsDigitalSignRequired { get; set; }
+
+        public bool IsDepositionRequired { get; set; }
+        public string ImporterDepositionRequestDetails { get; set; }
     }
 }
