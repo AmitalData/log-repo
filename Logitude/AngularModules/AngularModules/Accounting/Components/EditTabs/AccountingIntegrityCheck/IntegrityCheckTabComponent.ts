@@ -55,13 +55,15 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
 
     decodeParameters(){
         var xmlString = this.entityPM.ParametersXML;
-        var tenant = xmlString.substring(xmlString.indexOf('<Tenant>')+8,xmlString.indexOf('</Tenant>'));
-        var __FromMonthInclusive = xmlString.substring(xmlString.indexOf('<FromMonthInclusive>')+20,xmlString.indexOf('</FromMonthInclusive>'));
-        var __ToMonthInclusive = xmlString.substring(xmlString.indexOf('<ToMonthInclusive>')+18,xmlString.indexOf('</ToMonthInclusive>'));
+        if(xmlString)
+        {
+            var tenant = xmlString.substring(xmlString.indexOf('<Tenant>')+8,xmlString.indexOf('</Tenant>'));
+            var __FromMonthInclusive = xmlString.substring(xmlString.indexOf('<FromMonthInclusive>')+20,xmlString.indexOf('</FromMonthInclusive>'));
+            var __ToMonthInclusive = xmlString.substring(xmlString.indexOf('<ToMonthInclusive>')+18,xmlString.indexOf('</ToMonthInclusive>'));
 
-        if(__FromMonthInclusive) this.FromMonthInclusive = new Date(__FromMonthInclusive);
-        if(__ToMonthInclusive) this.ToMonthInclusive = new Date(__ToMonthInclusive);
-
+            if(__FromMonthInclusive) this.FromMonthInclusive = new Date(__FromMonthInclusive);
+            if(__ToMonthInclusive) this.ToMonthInclusive = new Date(__ToMonthInclusive);
+        }
         console.log(tenant,__FromMonthInclusive,__ToMonthInclusive)
 
     }
