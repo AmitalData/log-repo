@@ -10,6 +10,7 @@ namespace WebFreight.Web.DataContracts
     public class BIReportXMLData
     {
         public string BIReportId { get; set; }
+        public DWQueryData DWQueryData { get; set; }
         public BIReportPM BIReportPM { get; set; }
         public BITabularViewSettings BITabularViewSettings { get; set; }
     }
@@ -34,5 +35,10 @@ namespace WebFreight.Web.DataContracts
         public int Width { get; set; }
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public int Index { get; set; }
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public bool IsChecked { get; set; }
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string DataTypeCode { get; set; }
+        
     }
 }

@@ -34,6 +34,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             DecCargoSplitConUpdateService decCargoSplitConUpdateServiceUpdateService = new DecCargoSplitConUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
             decCargoSplitConUpdateServiceUpdateService.UpdateMulti(entityPM.DecCargoSplitCons, entityPM.DeletedDecCargoSplitCons, entityPM, false);
+
+            DecCargoSplitCargoIdentifierUpdateService decCargoSplitCargoIdentifierUpdateServiceUpdateService = new DecCargoSplitCargoIdentifierUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            decCargoSplitCargoIdentifierUpdateServiceUpdateService.UpdateMulti(entityPM.DecCargoSplitCargoIdentifiers, entityPM.DeletedDecCargoSplitCargoIdentifiers, entityPM, false);
         }
 
         protected override void OnUpdating(DeclarationCargoSplitPM entityPM)

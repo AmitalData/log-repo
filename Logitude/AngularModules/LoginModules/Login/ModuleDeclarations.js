@@ -1,12 +1,13 @@
 "use strict";
-var LoginComponent_1 = require('./Components/LoginComponent');
-var DSVLoginComponent_1 = require('./Components/DSVLoginComponent');
-var DSVMobileLoginComponent_1 = require('./Components/DSVMobileLoginComponent');
-var ChangePasswordComponent_1 = require('./Components/ChangePasswordComponent');
-var DSVChangePasswordComponent_1 = require('./Components/DSVChangePasswordComponent');
-var ResetPasswordComponent_1 = require('./Components/ResetPasswordComponent');
-var RootComponent_1 = require('./RootComponent');
-var DSVResetPasswordComponent_1 = require('./Components/DSVResetPasswordComponent');
+Object.defineProperty(exports, "__esModule", { value: true });
+var LoginComponent_1 = require("./Components/LoginComponent");
+var DSVLoginComponent_1 = require("./Components/DSVLoginComponent");
+var DSVMobileLoginComponent_1 = require("./Components/DSVMobileLoginComponent");
+var ChangePasswordComponent_1 = require("./Components/ChangePasswordComponent");
+var DSVChangePasswordComponent_1 = require("./Components/DSVChangePasswordComponent");
+var ResetPasswordComponent_1 = require("./Components/ResetPasswordComponent");
+var RootComponent_1 = require("./RootComponent");
+var DSVResetPasswordComponent_1 = require("./Components/DSVResetPasswordComponent");
 exports.LoginComponents = [
     LoginComponent_1.LoginComponent,
     DSVLoginComponent_1.DSVLoginComponent,
@@ -17,7 +18,7 @@ exports.LoginComponents = [
     DSVResetPasswordComponent_1.DSVResetPasswordComponent,
     DSVMobileLoginComponent_1.DSVMobileLoginComponent
 ];
-var LoginModuleDeclarations = (function () {
+var LoginModuleDeclarations = /** @class */ (function () {
     function LoginModuleDeclarations() {
     }
     LoginModuleDeclarations.Get = function (name) {

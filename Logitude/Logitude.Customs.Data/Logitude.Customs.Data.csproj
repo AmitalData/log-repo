@@ -48,26 +48,23 @@
     <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Devart.Data, Version=5.0.895.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.dll</HintPath>
+    <Reference Include="Devart.Data, Version=5.0.2045.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Linq, Version=4.4.441.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Linq.dll</HintPath>
+    <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle.Entity.Spatials, Version=8.2.103.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Entity.Spatials.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle.Linq, Version=4.4.441.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Oracle.Web, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -102,6 +99,8 @@
     <Compile Include="EntityKeys\AgentTalkBackTypeKeys.cs" />
     <Compile Include="EntityKeys\CargoSplitRequestStatusKeys.cs" />
     <Compile Include="EntityKeys\CargoStatusKeys.cs" />
+    <Compile Include="EntityKeys\ClaimsRelatedEntitiesRefundKeys.cs" />
+    <Compile Include="EntityKeys\ClaimsRelatedEntitiesSeizureKeys.cs" />
     <Compile Include="EntityKeys\ClientDrivingLicenseKeys.cs" />
     <Compile Include="EntityKeys\ClientDrivingLicenseTypeKeys.cs" />
     <Compile Include="EntityKeys\CourierCustomStatusKeys.cs" />
@@ -114,19 +113,28 @@
     <Compile Include="EntityKeys\CourierStatusKeys.cs" />
     <Compile Include="EntityKeys\CustomsAirlineKeys.cs" />
     <Compile Include="EntityKeys\CustomsDocumentsDefinitionKeys.cs" />
+    <Compile Include="EntityKeys\CustomsPartnerFtpKeys.cs" />
     <Compile Include="EntityKeys\DecCargoSplitCargoIdentifierKeys.cs" />
     <Compile Include="EntityKeys\DecCargoSplitConsItemKeys.cs" />
     <Compile Include="EntityKeys\DecCargoSplitConKeys.cs" />
     <Compile Include="EntityKeys\DecCargoSplitConsPackDetKeys.cs" />
+    <Compile Include="EntityKeys\DecisionTypeKeys.cs" />
     <Compile Include="EntityKeys\DeclarationCargoSplitKeys.cs" />
     <Compile Include="EntityKeys\DeclarationConsAcceptanceKeys.cs" />
     <Compile Include="EntityKeys\DeclarationCourierStatusKeys.cs" />
+    <Compile Include="EntityKeys\DeclarationMamanSpecialActionKeys.cs" />
     <Compile Include="EntityKeys\DocumentTypeCustomsDataKeys.cs" />
     <Compile Include="EntityKeys\FreightPaymentMethodKeys.cs" />
+    <Compile Include="EntityKeys\MamanSpecialActionKeys.cs" />
+    <Compile Include="EntityKeys\MamanSpecialActionStatusKeys.cs" />
     <Compile Include="EntityKeys\MamanStatusKeys.cs" />
     <Compile Include="EntityKeys\ManifestCargoStatusKeys.cs" />
     <Compile Include="EntityKeys\MAWBTypeKeys.cs" />
+    <Compile Include="EntityKeys\PendingErrorPlaceKeys.cs" />
     <Compile Include="EntityKeys\PointerLevelKeys.cs" />
+    <Compile Include="EntityKeys\RefundCustomerActivityTypeKeys.cs" />
+    <Compile Include="EntityKeys\SeizureFactorTypeKeys.cs" />
+    <Compile Include="EntityKeys\SeizureMethodTypeKeys.cs" />
     <Compile Include="EntityKeys\SplitOrMergeReasonKeys.cs" />
     <Compile Include="EntityKeys\TPGFileTypeKeys.cs" />
     <Compile Include="EntityKeys\TreatmentWayKeys.cs" />
@@ -137,6 +145,8 @@
     <Compile Include="EntityListQueryServices\AgentTalkBackTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoSplitRequestStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ClaimsRelatedEntitiesRefundListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ClaimsRelatedEntitiesSeizureListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientDrivingLicenseListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientDrivingLicenseTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierCustomStatusListQueryService.cs" />
@@ -149,13 +159,16 @@
     <Compile Include="EntityListQueryServices\CourierStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsAirlineListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsDocumentsDefinitionListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CustomsPartnerFtpListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecCargoSplitCargoIdentifierListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecCargoSplitConListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecCargoSplitConsItemListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecCargoSplitConsPackDetListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DecisionTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationCargoSplitListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationConsAcceptanceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationCourierStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DeclarationMamanSpecialActionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DocumentTypeCustomsDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\FreightPaymentMethodListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\AcceptanceStatusListQueryService.Generated.cs" />
@@ -163,6 +176,8 @@
     <Compile Include="EntityListQueryServices\Generated\AgentTalkBackTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoSplitRequestStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ClaimsRelatedEntitiesRefundListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ClaimsRelatedEntitiesSeizureListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientDrivingLicenseListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientDrivingLicenseTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierCustomStatusListQueryService.Generated.cs" />
@@ -175,28 +190,43 @@
     <Compile Include="EntityListQueryServices\Generated\CourierStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsAirlineListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsDocumentsDefinitionListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CustomsPartnerFtpListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitCargoIdentifierListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitConListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitConsItemListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitConsPackDetListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DecisionTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationCargoSplitListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationConsAcceptanceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationCourierStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DeclarationMamanSpecialActionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DocumentTypeCustomsDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FreightPaymentMethodListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\MamanSpecialActionListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\MamanSpecialActionStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MamanStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ManifestCargoStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MAWBTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\PendingErrorPlaceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PointerLevelListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\RefundCustomerActivityTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SeizureFactorTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SeizureMethodTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SplitOrMergeReasonListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TPGFileTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TreatmentWayListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UIMessageAdditionalListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UIMessageListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\MamanSpecialActionListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\MamanSpecialActionStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MamanStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ManifestCargoStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MAWBTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\PendingErrorPlaceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PointerLevelListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\RefundCustomerActivityTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SeizureFactorTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SeizureMethodTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SplitOrMergeReasonListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TPGFileTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TreatmentWayListQueryService.cs" />
@@ -207,6 +237,8 @@
     <Compile Include="EntityLists\Generated\AgentTalkBackTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoSplitRequestStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ClaimsRelatedEntitiesRefundList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ClaimsRelatedEntitiesSeizureList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientDrivingLicenseList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientDrivingLicenseTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CourierCustomStatusList.Generated.cs" />
@@ -219,19 +251,28 @@
     <Compile Include="EntityLists\Generated\CourierStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsAirlineList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsDocumentsDefinitionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomsPartnerFtpList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecCargoSplitCargoIdentifierList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecCargoSplitConList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecCargoSplitConsItemList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecCargoSplitConsPackDetList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DecisionTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationCargoSplitList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationConsAcceptanceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationCourierStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DeclarationMamanSpecialActionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DocumentTypeCustomsDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FreightPaymentMethodList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\MamanSpecialActionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\MamanSpecialActionStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MamanStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ManifestCargoStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MAWBTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\PendingErrorPlaceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PointerLevelList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\RefundCustomerActivityTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SeizureFactorTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SeizureMethodTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SplitOrMergeReasonList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TPGFileTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TreatmentWayList.Generated.cs" />
@@ -242,6 +283,8 @@
     <Compile Include="EntityMapping\AgentTalkBackTypeMap.cs" />
     <Compile Include="EntityMapping\CargoSplitRequestStatusMap.cs" />
     <Compile Include="EntityMapping\CargoStatusMap.cs" />
+    <Compile Include="EntityMapping\ClaimsRelatedEntitiesRefundMap.cs" />
+    <Compile Include="EntityMapping\ClaimsRelatedEntitiesSeizureMap.cs" />
     <Compile Include="EntityMapping\ClientDrivingLicenseMap.cs" />
     <Compile Include="EntityMapping\ClientDrivingLicenseTypeMap.cs" />
     <Compile Include="EntityMapping\CourierCustomStatusMap.cs" />
@@ -254,19 +297,28 @@
     <Compile Include="EntityMapping\CourierStatusMap.cs" />
     <Compile Include="EntityMapping\CustomsAirlineMap.cs" />
     <Compile Include="EntityMapping\CustomsDocumentsDefinitionMap.cs" />
+    <Compile Include="EntityMapping\CustomsPartnerFtpMap.cs" />
     <Compile Include="EntityMapping\DecCargoSplitCargoIdentifierMap.cs" />
     <Compile Include="EntityMapping\DecCargoSplitConMap.cs" />
     <Compile Include="EntityMapping\DecCargoSplitConsItemMap.cs" />
     <Compile Include="EntityMapping\DecCargoSplitConsPackDetMap.cs" />
+    <Compile Include="EntityMapping\DecisionTypeMap.cs" />
     <Compile Include="EntityMapping\DeclarationCargoSplitMap.cs" />
     <Compile Include="EntityMapping\DeclarationConsAcceptanceMap.cs" />
     <Compile Include="EntityMapping\DeclarationCourierStatusMap.cs" />
+    <Compile Include="EntityMapping\DeclarationMamanSpecialActionMap.cs" />
     <Compile Include="EntityMapping\DocumentTypeCustomsDataMap.cs" />
     <Compile Include="EntityMapping\FreightPaymentMethodMap.cs" />
+    <Compile Include="EntityMapping\MamanSpecialActionMap.cs" />
+    <Compile Include="EntityMapping\MamanSpecialActionStatusMap.cs" />
     <Compile Include="EntityMapping\MamanStatusMap.cs" />
     <Compile Include="EntityMapping\ManifestCargoStatusMap.cs" />
     <Compile Include="EntityMapping\MAWBTypeMap.cs" />
+    <Compile Include="EntityMapping\PendingErrorPlaceMap.cs" />
     <Compile Include="EntityMapping\PointerLevelMap.cs" />
+    <Compile Include="EntityMapping\RefundCustomerActivityTypeMap.cs" />
+    <Compile Include="EntityMapping\SeizureFactorTypeMap.cs" />
+    <Compile Include="EntityMapping\SeizureMethodTypeMap.cs" />
     <Compile Include="EntityMapping\SplitOrMergeReasonMap.cs" />
     <Compile Include="EntityMapping\TPGFileTypeMap.cs" />
     <Compile Include="EntityMapping\TreatmentWayMap.cs" />
@@ -277,6 +329,8 @@
     <Compile Include="EntityPOCOs\AgentTalkBackType.cs" />
     <Compile Include="EntityPOCOs\CargoSplitRequestStatus.cs" />
     <Compile Include="EntityPOCOs\CargoStatus.cs" />
+    <Compile Include="EntityPOCOs\ClaimsRelatedEntitiesRefund.cs" />
+    <Compile Include="EntityPOCOs\ClaimsRelatedEntitiesSeizure.cs" />
     <Compile Include="EntityPOCOs\ClientDrivingLicense.cs" />
     <Compile Include="EntityPOCOs\ClientDrivingLicenseType.cs" />
     <Compile Include="EntityPOCOs\CourierCustomStatus.cs" />
@@ -289,19 +343,28 @@
     <Compile Include="EntityPOCOs\CourierStatus.cs" />
     <Compile Include="EntityPOCOs\CustomsAirline.cs" />
     <Compile Include="EntityPOCOs\CustomsDocumentsDefinition.cs" />
+    <Compile Include="EntityPOCOs\CustomsPartnerFtp.cs" />
     <Compile Include="EntityPOCOs\DecCargoSplitCargoIdentifier.cs" />
     <Compile Include="EntityPOCOs\DecCargoSplitCon.cs" />
     <Compile Include="EntityPOCOs\DecCargoSplitConsItem.cs" />
     <Compile Include="EntityPOCOs\DecCargoSplitConsPackDet.cs" />
+    <Compile Include="EntityPOCOs\DecisionType.cs" />
     <Compile Include="EntityPOCOs\DeclarationCargoSplit.cs" />
     <Compile Include="EntityPOCOs\DeclarationConsAcceptance.cs" />
     <Compile Include="EntityPOCOs\DeclarationCourierStatus.cs" />
+    <Compile Include="EntityPOCOs\DeclarationMamanSpecialAction.cs" />
     <Compile Include="EntityPOCOs\DocumentTypeCustomsData.cs" />
     <Compile Include="EntityPOCOs\FreightPaymentMethod.cs" />
+    <Compile Include="EntityPOCOs\MamanSpecialAction.cs" />
+    <Compile Include="EntityPOCOs\MamanSpecialActionStatus.cs" />
     <Compile Include="EntityPOCOs\MamanStatus.cs" />
     <Compile Include="EntityPOCOs\ManifestCargoStatus.cs" />
     <Compile Include="EntityPOCOs\MAWBType.cs" />
+    <Compile Include="EntityPOCOs\PendingErrorPlace.cs" />
     <Compile Include="EntityPOCOs\PointerLevel.cs" />
+    <Compile Include="EntityPOCOs\RefundCustomerActivityType.cs" />
+    <Compile Include="EntityPOCOs\SeizureFactorType.cs" />
+    <Compile Include="EntityPOCOs\SeizureMethodType.cs" />
     <Compile Include="EntityPOCOs\SplitOrMergeReason.cs" />
     <Compile Include="EntityPOCOs\TPGFileType.cs" />
     <Compile Include="EntityPOCOs\TreatmentWay.cs" />
@@ -312,6 +375,8 @@
     <Compile Include="Repsitories\AgentTalkBackTypeRepository.cs" />
     <Compile Include="Repsitories\CargoSplitRequestStatusRepository.cs" />
     <Compile Include="Repsitories\CargoStatusRepository.cs" />
+    <Compile Include="Repsitories\ClaimsRelatedEntitiesRefundRepository.cs" />
+    <Compile Include="Repsitories\ClaimsRelatedEntitiesSeizureRepository.cs" />
     <Compile Include="Repsitories\ClientDrivingLicenseRepository.cs" />
     <Compile Include="Repsitories\ClientDrivingLicenseTypeRepository.cs" />
     <Compile Include="Repsitories\CourierCustomStatusRepository.cs" />
@@ -324,13 +389,16 @@
     <Compile Include="Repsitories\CourierStatusRepository.cs" />
     <Compile Include="Repsitories\CustomsAirlineRepository.cs" />
     <Compile Include="Repsitories\CustomsDocumentsDefinitionRepository.cs" />
+    <Compile Include="Repsitories\CustomsPartnerFtpRepository.cs" />
     <Compile Include="Repsitories\DecCargoSplitCargoIdentifierRepository.cs" />
     <Compile Include="Repsitories\DecCargoSplitConRepository.cs" />
     <Compile Include="Repsitories\DecCargoSplitConsItemRepository.cs" />
     <Compile Include="Repsitories\DecCargoSplitConsPackDetRepository.cs" />
+    <Compile Include="Repsitories\DecisionTypeRepository.cs" />
     <Compile Include="Repsitories\DeclarationCargoSplitRepository.cs" />
     <Compile Include="Repsitories\DeclarationConsAcceptanceRepository.cs" />
     <Compile Include="Repsitories\DeclarationCourierStatusRepository.cs" />
+    <Compile Include="Repsitories\DeclarationMamanSpecialActionRepository.cs" />
     <Compile Include="Repsitories\DocumentTypeCustomsDataRepository.cs" />
     <Compile Include="Repsitories\FreightPaymentMethodRepository.cs" />
     <Compile Include="Repsitories\Generated\AcceptanceStatusRepository.Generated.cs" />
@@ -338,6 +406,8 @@
     <Compile Include="Repsitories\Generated\AgentTalkBackTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoSplitRequestStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoStatusRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ClaimsRelatedEntitiesRefundRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ClaimsRelatedEntitiesSeizureRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientDrivingLicenseRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientDrivingLicenseTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierCustomStatusRepository.Generated.cs" />
@@ -350,28 +420,43 @@
     <Compile Include="Repsitories\Generated\CourierStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsAirlineRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsDocumentsDefinitionRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CustomsPartnerFtpRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecCargoSplitCargoIdentifierRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecCargoSplitConRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecCargoSplitConsItemRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecCargoSplitConsPackDetRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DecisionTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationCargoSplitRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationConsAcceptanceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationCourierStatusRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DeclarationMamanSpecialActionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DocumentTypeCustomsDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FreightPaymentMethodRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\MamanSpecialActionRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\MamanSpecialActionStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MamanStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ManifestCargoStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MAWBTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\PendingErrorPlaceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PointerLevelRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\RefundCustomerActivityTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SeizureFactorTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SeizureMethodTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SplitOrMergeReasonRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TPGFileTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TreatmentWayRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UIMessageAdditionalRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UIMessageRepository.Generated.cs" />
+    <Compile Include="Repsitories\MamanSpecialActionRepository.cs" />
+    <Compile Include="Repsitories\MamanSpecialActionStatusRepository.cs" />
     <Compile Include="Repsitories\MamanStatusRepository.cs" />
     <Compile Include="Repsitories\ManifestCargoStatusRepository.cs" />
     <Compile Include="Repsitories\MAWBTypeRepository.cs" />
+    <Compile Include="Repsitories\PendingErrorPlaceRepository.cs" />
     <Compile Include="Repsitories\PointerLevelRepository.cs" />
+    <Compile Include="Repsitories\RefundCustomerActivityTypeRepository.cs" />
+    <Compile Include="Repsitories\SeizureFactorTypeRepository.cs" />
+    <Compile Include="Repsitories\SeizureMethodTypeRepository.cs" />
     <Compile Include="Repsitories\SplitOrMergeReasonRepository.cs" />
     <Compile Include="Repsitories\TPGFileTypeRepository.cs" />
     <Compile Include="Repsitories\TreatmentWayRepository.cs" />
@@ -2367,6 +2452,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CloseTables\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

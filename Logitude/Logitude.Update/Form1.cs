@@ -110,7 +110,7 @@ namespace Logitude.Update
                 string storageServiceMode = "fs";
                 string queueServiceMode = "azure";
                 Logitude.Server.Tools.ContainerAccessor.InitContainer();
-                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil);
+                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil,null);
 
                 CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
             }
@@ -838,7 +838,8 @@ User/Pass",
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (Environment.MachineName == "ABDULLAH-PC") btnUpdateAccounting_Click(null, null);
+            //if (Environment.MachineName == "ABDULLAH-PC") btnUpdateAccounting_Click(null, null);
+            this.Text += " Environment=" + LogitudeSettings.LogitudeURL;// 4 customs env its must to know which company u updating 
 
             //string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             //LogitudeSettings.DatabaseManagementSystem = dbms;

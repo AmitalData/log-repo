@@ -220,6 +220,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                             #region ShippingLine
                             string iVoyageNumber = null;
+                            string iVesselName = null;
                             string ShippingLineName = shipmentPM.MainCarriageCarrierName;
 
                             if (iMessageProperties.TransportationDetails != null)
@@ -227,8 +228,9 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                 if (iMessageProperties.TransportationDetails.ConveyanceInformation != null)
                                 {
                                     iVoyageNumber = iMessageProperties.TransportationDetails.ConveyanceInformation.VoyageTripNumber;
+                                    iVesselName = iMessageProperties.TransportationDetails.ConveyanceInformation.ConveyanceName;
+
                                     string d = iMessageProperties.TransportationDetails.ConveyanceInformation.CarrierSCAC;
-                                    string b = iMessageProperties.TransportationDetails.ConveyanceInformation.ConveyanceName;
                                     string f = iMessageProperties.TransportationDetails.ConveyanceInformation.TransportIdentification.Value;
                                 }
                             }
@@ -266,6 +268,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     Details = iDetails,
                                     ReceivingDate = iLogDate,
                                     VoyageNumber = iVoyageNumber,
+                                    VesselName = iVesselName,
                                     ShippingLineName = ShippingLineName,
                                     ContainerNumber = ContainerNumber,
                                     Location = EventLocationPortId,
@@ -322,6 +325,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                                         Details = iDetails,
                                                         ReceivingDate = iLogDate,
                                                         VoyageNumber = iVoyageNumber,
+                                                        VesselName = iVesselName,
                                                         ShippingLineName = ShippingLineName,
                                                         ContainerNumber = ContainerNumber,
                                                         Location = EventLocationPortId,

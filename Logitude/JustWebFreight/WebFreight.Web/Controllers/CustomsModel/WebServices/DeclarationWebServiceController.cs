@@ -33,6 +33,10 @@ using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Unifreight.Data.AmitalModel.Repsitories;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure;
+using Logitude.Customs.BL.Models;
+using Logitude.Customs.BL.Messaging.Maman;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -662,7 +666,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         VendorId = rec.SAPAKID,
                         SearchFields = rec.SEARCHENG,
                         OriginCountryCode = rec.ORIGINCOUNTRY,
-                        //InvoiceQuantityType = rec.UNITID,
+                        InvoiceQuantityType = rec.UNITID,
                     })
                 select new { itm };
                 if (!string.IsNullOrWhiteSpace(customerCode))
@@ -757,7 +761,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         VendorId = rec.SAPAKID,
                         SearchFields = rec.SEARCHENG,
                         OriginCountryCode = rec.ORIGINCOUNTRY,
-                        //InvoiceQuantityType = rec.UNITID,
+                        InvoiceQuantityType = rec.UNITID,
                     })
                 select new { itm };
                 if (!string.IsNullOrWhiteSpace(customerCode))
@@ -846,7 +850,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         VendorId = rec.SAPAKID,
                         SearchFields = rec.SEARCHENG,
                         OriginCountryCode = rec.ORIGINCOUNTRY,
-                        //InvoiceQuantityType = rec.UNITID,
+                        InvoiceQuantityType = rec.UNITID,
                     })
                 select new { itm };
                 if (!string.IsNullOrWhiteSpace(customerCode))
@@ -1160,6 +1164,32 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 DeclarationQueryService queryService = new DeclarationQueryService(myContext);
                 var result = queryService.CheckFreightAmountsByIncoterm(declarationId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetDeclarationClosureMethod(string declarationId, int tenant)
+        {
+            try
+            {
+                var mess = DeclarationUpdateService.DeclarationClosure(declarationId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, mess);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetCancelDeclarationClosureMethod(string declarationId, int tenant)
+        {
+            try
+            {
+                var mess = DeclarationUpdateService.CancelDeclarationClosure(declarationId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, mess);
             }
             catch (Exception ex)
             {
@@ -1610,6 +1640,41 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         }
 
+        //DeclarationMamanSpecialAction
+        public HttpResponseMessage GetDeclarationMamanSpecialAction(string declarationId, int tenant, string actionCode, string mamanSpecialActionCode)
+        {
+            try
+            {
+                ICustomContext myContext = CustomContext.GetContext(tenant);
+                CourierGWMessageECSpclMamanRequestService courierGWMessageECSpclMamanRequestService = new CourierGWMessageECSpclMamanRequestService();
+                MamanActionCodeUpdateOrCancel mamanActionCode = MamanActionCodeUpdateOrCancel.Upsert;
+                MamanSpecialCode mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
+                if (actionCode == "C")
+                {
+                    mamanActionCode = MamanActionCodeUpdateOrCancel.Cancel;
+                }
+                switch(mamanSpecialActionCode)
+                {
+                    case "2":
+                        mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
+                        break;
+                    case "4":
+                        mamanSpecialCode = MamanSpecialCode.StickerPrinting;
+                        break;
+                    case "5":
+                        mamanSpecialCode = MamanSpecialCode.PrintDocuments;
+                        break;
+                }
+
+                string actionResultString = courierGWMessageECSpclMamanRequestService.BuildQueueSendWebAPI(declarationId, tenant, mamanActionCode, mamanSpecialCode);
+                return Request.CreateResponse(HttpStatusCode.OK, actionResultString);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
     
 }

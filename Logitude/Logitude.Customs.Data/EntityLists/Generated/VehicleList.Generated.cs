@@ -144,6 +144,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string VehicleCategory  { get; set; }
        [DataMember]
        public decimal? VehicleMaxPowerKW  { get; set; }
+       [DataMember]
+       public string PassportName  { get; set; }
    }
 
 }

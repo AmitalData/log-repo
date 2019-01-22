@@ -8,13 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var http_1 = require('@angular/http');
-var DynamicLoaderAOT_1 = require('./Utilities/DynamicLoaderAOT');
-var Tools_1 = require('./Utilities/Tools');
-var ExternalParams_1 = require('./Utilities/ExternalParams');
-var SessionInfo_1 = require('./SessionInfo');
-var RootComponentAOT = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var http_1 = require("@angular/http");
+var DynamicLoaderAOT_1 = require("./Utilities/DynamicLoaderAOT");
+var Tools_1 = require("./Utilities/Tools");
+var ExternalParams_1 = require("./Utilities/ExternalParams");
+var SessionInfo_1 = require("./SessionInfo");
+var RootComponentAOT = /** @class */ (function () {
     function RootComponentAOT(compiler, resolver, http) {
         this.resolver = resolver;
         this.http = http;
@@ -135,15 +136,15 @@ var RootComponentAOT = (function () {
             .then(function (cmpRef) { });
     };
     __decorate([
-        core_1.ViewChild("Child", { read: core_1.ViewContainerRef }), 
-        __metadata('design:type', core_1.ViewContainerRef)
+        core_1.ViewChild("Child", { read: core_1.ViewContainerRef }),
+        __metadata("design:type", core_1.ViewContainerRef)
     ], RootComponentAOT.prototype, "location", void 0);
     RootComponentAOT = __decorate([
         core_1.Component({
             selector: 'RootComponentAOT',
             template: "\n        <div class=\"MediaFillRelative\">\n            <div #Child></div>\n        </div>\n    ",
-        }), 
-        __metadata('design:paramtypes', [core_1.Compiler, core_1.ComponentFactoryResolver, http_1.Http])
+        }),
+        __metadata("design:paramtypes", [core_1.Compiler, core_1.ComponentFactoryResolver, http_1.Http])
     ], RootComponentAOT);
     return RootComponentAOT;
 }());

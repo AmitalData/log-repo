@@ -21,6 +21,7 @@ using WebFreight.Web.DataContracts;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.Security
 {
@@ -220,40 +221,51 @@ namespace WebFreight.Web.Security
             {
 
             }
+            //if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+            //{
 
-            if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+            //}
+
+            string email = null;
+            if (HttpContext.Current!=null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
             {
-                string email = HttpContext.Current.User.Identity.Name;
-                ContactInfo contactinfo = GetContactInfo(email, tenant);
+                /*string */
+                email = HttpContext.Current.User.Identity.Name;
+            }
+            else
+            {
+                email = AuthenticationUtil.ResolveLoggingUserId(tenant);
+            }
+            ContactInfo contactinfo = GetContactInfo(email, tenant);
 
-                if (contactinfo != null)
+            if (contactinfo != null)
+            {
+                if (contactinfo.IsLogitudeAdmin)
                 {
-                    if (contactinfo.IsLogitudeAdmin)
-                    {
-                        exists = true;
-                    }
+                    exists = true;
+                }
 
-                    else
+                else
+                {
+                    ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
+                    if (objectTable != null)
                     {
-                        ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
-                        if (objectTable != null)
+                        foreach (string myRoleId in contactinfo.RolesIds)
                         {
-                            foreach (string myRoleId in contactinfo.RolesIds)
+                            Dictionary<string, FeaturePM> features = GetFeaturesForRole(myRoleId, contactinfo.PackagesCodes, tenant);
+                            if (features.Keys.Contains(featureCode + objectTable.Id))
                             {
-                                Dictionary<string, FeaturePM> features = GetFeaturesForRole(myRoleId, contactinfo.PackagesCodes, tenant);
-                                if (features.Keys.Contains(featureCode + objectTable.Id))
+                                FeaturePM feature = features[featureCode + objectTable.Id];
+                                if (feature != null)
                                 {
-                                    FeaturePM feature = features[featureCode + objectTable.Id];
-                                    if (feature != null)
-                                    {
-                                        exists = true;
-                                    }
+                                    exists = true;
                                 }
                             }
                         }
                     }
                 }
             }
+            //}
 
             if (!exists)
             {

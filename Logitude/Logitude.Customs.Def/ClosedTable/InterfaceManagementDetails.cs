@@ -1231,10 +1231,42 @@ namespace Logitude.Customs.Def.ClosedTable
                 //NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
                 Active = true,
                 SendAsDual = false,
+                ResponseInterfaceCode = "8374",
+                //      NeedSignature = false,
+            });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "8374",
+                InOut = InOutEnum.I.ToString(),
+                Description = "משוב לפיצול מטען",
+                DcaPrefixName = "SendMN_MSG8374_CargoSplitRequestFeedBack_Message_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                //NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
                 ResponseInterfaceCode = "",
                 //      NeedSignature = false,
             });
 
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2753",
+                InOut = InOutEnum.I.ToString(),
+                Description = "השלמת פרטי החזר פקדון",
+                DcaPrefixName = "SendDEPO_MSG2753_DepositBankAccountToRefundUpdateRequest_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                //NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //      NeedSignature = false,
+            });
+            
             //all.Add(new InterfaceManagementDetails()
             //{
             //    Code = "9000",
@@ -2345,7 +2377,23 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = "",
             });
 
-
+            //DCAInCLAIM_5114_AcceptanceOrRejectionClaimMessageMessagingServices
+            all.Add(
+            new InterfaceManagementDetails()
+            {
+                Code = "5114",
+                InOut = InOutEnum.I.ToString(),
+                Description = "אישור/דחיה תביעה",
+                DcaPrefixName = "SendCLAIM_MSG5114_AcceptanceOrRejectionClaimMessage_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                //   NotificationId = "",
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+                // NeedSignature = false
+            });
 
             all.Add(new InterfaceManagementDetails()
             {
@@ -2416,6 +2464,10 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = "",
                 //  NeedSignature = false
             });
+
+
+
+
             //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
             var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();
             var myRequestCode = pm.ResponseInterfaceCode;

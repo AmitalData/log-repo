@@ -147,6 +147,19 @@ namespace AmitalCustomsWindowsService
                 }
 
                 AddWorkerFromAppSetting<CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService>();
+                AddWorkerFromAppSetting<SendWEBAPIMessage2MamanWR>();
+                AddWorkerFromAppSetting<FTPToAnalyzeQueueWR>();
+                
+                bool courierFeaturePackageExist = true;
+                if (courierFeaturePackageExist)
+                {
+                    AddWorkerFromAppSetting<SendWEBAPIMessage2MamanWR>();
+                    AddWorkerFromAppSetting<FTPToAnalyzeQueueWR>();
+                    AddWorkerFromAppSetting<CustomsAnalyzeQueueWR>();
+                    
+
+
+                }
                 if (!AmitalProxy.Have_UnfConnectionString())
                 {
                     /// itzik+ihab  - AddWorkerFromAppSetting<CommunicationWorkerRole.CommunicationLogWorkerRoleWinService>();// Email change Pass ?!?!?    
@@ -225,6 +238,10 @@ namespace AmitalCustomsWindowsService
             var listOfWorkerEntryPoint = CustomsWorkerRole.ThreadedRoleEntryPoint.GetAllWorkerEntryPointType();
             ///itzik +  ihab  listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
+            listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
+            listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
+            listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
+            
 
             BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
             BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);

@@ -15,6 +15,7 @@ import {CustomFieldClass} from '../DataContracts/CustomFieldClass';
 import {TasksSchedulerPM} from '../EntityPMs/TasksSchedulerPM';
 import { BIReportPM } from '../EntityPMs/BIReportPM';
 import { ClassLevelValidator } from '../Validators/ClassLevelValidator';
+import { DWQueryData } from '../../Common/DataContracts/DWQueryData';
 
 
 @Injectable()
@@ -699,13 +700,13 @@ export class InfrastructureDomainService {
         });
     }
 
-    GetByBIReportId(Queryid: string) {
+    GetByBIReportId(Queryid: string, DWQueryId : string ) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetByBIReportId?' + 'Id=' + Queryid, {
+            return this._http.get(this._apiUrl + '/GetByBIReportId?' + 'Id=' + Queryid + '&dWQueryId=' + DWQueryId, {
                 headers: authHeader
             }).map(response => {
                 var pm = response.json();
@@ -713,6 +714,7 @@ export class InfrastructureDomainService {
                 if (pm) {
                     entity.BIReportId = pm.BIReportId;
                     entity.BIReportPM = pm.BIReportPM;
+                    entity.DWQueryData = pm.DWQueryData;
                     entity.BITabularViewSettings = pm.BITabularViewSettings;
                 }
                 var serviceResponse: ServiceResponse;
@@ -846,6 +848,7 @@ export class BusinessRecordsSummary {
 
 export class BIReportXMLData {
     public BIReportId: string;
+    public DWQueryData: DWQueryData; 
     public BIReportPM: BIReportPM;
     public BITabularViewSettings: BITabularViewSettings;
 }
@@ -860,4 +863,6 @@ export class Column {
     public SortOrder: number;
     public Width: number;
     public Index: number;
+    public IsChecked: boolean;
+    public DataTypeCode: string; 
 }

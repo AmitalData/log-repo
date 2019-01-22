@@ -32,6 +32,8 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';    
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
+import { CardPMService } from '"../../../Common/Services/StandardPMs/CardPMService';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
 
 @Component({
     moduleId: module.id,
@@ -54,6 +56,9 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
     public ChildEntityId: string = "";
     public EntityReference: string = "";
     public ObjectTableName: string = "";
+    public DownloadAllVisibile: boolean = false;
+    public HasDocuments: boolean = false;
+
     //test
     EntityPM: any;
     public CustomFilterOperation: string = "";
@@ -107,7 +112,32 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
         this.Listen();
     }
 
+    DownloadAllClick() {
 
+        var service: CardPMService = new CardPMService();
+        service.get(SessionLocator.LoggedUserPM.Id).subscribe(res => {
+            if (!res.HasError) {
+
+                var link = ServiceHelper.GetLogitudeURL() + "/WebPages/SharedDownloadPage.aspx?id=" + SessionLocator.Tenant + ":" + null + ":ship:" + this.EntityId + ":O:" + ServiceHelper.GetLDocumentDownloadToken();
+                var win = window.open(link, '_blank');
+                win.focus();
+            }
+        });
+
+
+    }
+
+
+    CheckHasDocuments() {
+        this.HasDocuments = false;
+        if (this.StaticDocumentsList) {
+            this.StaticDocumentsList.forEach(item => {
+                if (item.HasFile) {
+                    this.HasDocuments = true;
+                }
+            });
+        }
+    }
     
 
     ngOnInit() {
@@ -119,6 +149,14 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
         }
 
         else this.ObjectTableName = "Shipment";
+
+
+        if (FeatureLocator.HasFeaturePermession("Shipment", "DOCSOUTDOWNLOADDOCUMENTS") && this.ObjectTableName == "Shipment") {
+            this.DownloadAllVisibile = true;
+        }
+
+
+
 
         // Ayman:
         // we need this for Translation
@@ -399,6 +437,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
                 if (!isLoadOnlay) {
                     this.LoadFirstObjectCompleted.emit("Ready");
                 }
+                this.CheckHasDocuments();
             }
         });
     }
@@ -481,7 +520,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
                         break;
                     }
             }
-
+            this.CheckHasDocuments();
         }
         this.IsLoadDocumenTypeLists = true;
          this.LoadComplete();
@@ -634,6 +673,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
                 }
 
             })
+            this.CheckHasDocuments();
         }
 
 
@@ -1095,7 +1135,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
         logWindow.Title = "Print " + this.SelectedInternalDocument.DocumentTypeList.Name;
         logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/PrintDocumentComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
-
+            this.CheckHasDocuments();
             //  this.InitializeDocsOutControl();
         });
 

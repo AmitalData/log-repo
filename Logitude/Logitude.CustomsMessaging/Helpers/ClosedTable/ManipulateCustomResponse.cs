@@ -34,7 +34,12 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                 };
                 newResponseTableData.state = int.Parse(dr["State"].ToString());
                 newResponseTableData.malamID = int.Parse(dr["MalamID"].ToString());
-                newResponseTableData.extraNumericData = int.Parse(dr["ExtraNumericData"].ToString());
+                string sExtraNumericData = dr["ExtraNumericData"].ToString();
+                if (!string.IsNullOrWhiteSpace(sExtraNumericData))
+                {
+                    newResponseTableData.extraNumericData = int.Parse(sExtraNumericData);
+                }
+                
                 
                 OverrideDefault
                 (newResponseTableData, dr);

@@ -10,7 +10,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -158,6 +158,7 @@
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclBCTabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\Refund\ClaimRefundDetailsTabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityAdditionalDataTabComponent.html" />
+    <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityClaimDecisionTabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityCustomAnswerTabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityGeneralTabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityReasonsTabComponent.html" />
@@ -165,6 +166,8 @@
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntReasonExpComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\NewEntity\NewClaimComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\SendClaim\SendClaimComponent.html" />
+    <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddCourierPendingToUnifreightStatusComponent.html" />
+    <Content Include="CustomsModules\CustomsCourier\Components\MamanSpecialAction\AddEditMamanStickerComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationCargoSplit\Components\EditTabs\DecCargoSplitConsPackDetComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\VendorExtendedSearchComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\AddEditCustomsAirlineComponent.html" />
@@ -172,8 +175,10 @@
     <Content Include="CustomsModules\CustomsMaintenance\Components\ClosedTableNotExistedComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\CustomsClosedTablesComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\CustomsDocumentsDefinitionComponent.html" />
+    <Content Include="CustomsModules\CustomsMaintenance\Components\CustomsPartnerFtpListComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\CustomsSettingsComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\DocumentTypeCustomsDataComponent.html" />
+    <Content Include="CustomsModules\CustomsMaintenance\Components\GeneralLOVComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\InterfaceManagementComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\LoadTestComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\RequiredFields\AddEditRequiredFieldsComponent.html" />
@@ -232,6 +237,10 @@
     <Content Include="Images\ArrowLeft.png" />
     <Content Include="Images\ArrowRight.png" />
     <Content Include="Images\arrow_right_w.png" />
+    <Content Include="Images\Icons\BlueChecked.png" />
+    <Content Include="Images\Icons\GreenV.png" />
+    <Content Include="Images\Icons\OrangeV.png" />
+    <Content Include="Images\Icons\RedX.png" />
     <Content Include="Images\Flags\--.png" />
     <Content Include="Images\Flags\XK.png" />
     <Content Include="Images\Icons\collapse.png" />
@@ -247,6 +256,7 @@
     <Content Include="Images\train.png" />
     <Content Include="Images\truck.png" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIReportPreviewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessProcessQueue\QueueNewComponent.html" />
@@ -405,6 +415,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclBCTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\Refund\ClaimRefundDetailsTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityAdditionalDataTabComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityClaimDecisionTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityCustomAnswerTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityReasonsTabComponent.ts" />
@@ -420,8 +431,10 @@
     <TypeScriptCompile Include="CustomsModules\CustomsCollateral\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsControls\ModuleCustomsControls.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsControls\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddCourierPendingToUnifreightStatusComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddEditCourierPendingReasonComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\CourierWorksheetComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\MamanSpecialAction\AddEditMamanStickerComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\ModuleCustomsCourier.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\Components\EditTabs\DecCargoSplitConComponent.ts" />
@@ -456,8 +469,10 @@
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\ClosedTableNotExistedComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\CustomsClosedTablesComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\CustomsDocumentsDefinitionComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\CustomsPartnerFtpListComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\CustomsSettingsComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\DocumentTypeCustomsDataComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\GeneralLOVComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\InterfaceManagementComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\LoadTestComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\RequiredFields\AddEditRequiredFieldsComponent.ts" />
@@ -501,17 +516,51 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\ModuleDeclarationTabs.ts" />
     <TypeScriptCompile Include="Customs\Components\ListTemplates\EndDateComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.ts" />
+    <TypeScriptCompile Include="Customs\Components\MenuButtons\PhysicalCheckMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\BankAccountToRefundRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSplitRequestParams.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\CourierPendingReasonList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsAirlineList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\CustomsPartnerFtpList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\DecisionTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\DeclarationMamanSpecialActionList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\PendingErrorPlaceList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\RefundCustomerActivityTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\SeizureFactorTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\SeizureMethodTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ClaimsRelatedEntitiesRefundPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ClaimsRelatedEntitiesSeizurePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\CourierPendingReasonPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsAirlinePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\CustomsPartnerFtpPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConsItemPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConsPackDetPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\DecisionTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\DeclarationMamanSpecialActionPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\PendingErrorPlacePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\RefundCustomerActivityTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\SeizureFactorTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\SeizureMethodTypePM.ts" />
+    <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAirlineExtendedPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsPartnerFtpExtendedPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\AgentTalkBackTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\CourierPaymentStatusListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\CourierPendingReasonListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsAirlineListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsPartnerFtpListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\DecisionTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationMamanSpecialActionListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\PendingErrorPlaceListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\RefundCustomerActivityTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\SeizureFactorTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\SeizureMethodTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierPendingReasonPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsAirlinePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\Others\GITITEMCacheService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsPartnerFtpPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationMamanSpecialActionPMService.ts" />
     <TypeScriptCompile Include="Customs\Validators\VehicleValidator.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationClassificationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\SInvoiceClassificationTabComponent.ts" />
@@ -593,6 +642,7 @@
     <TypeScriptCompile Include="e2e\CRM\CRMModule.ts" />
     <TypeScriptCompile Include="e2e\CRM\Opportunities\NewOpportunity.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIReportPreviewComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\ModuleDeclarations.ts" />
@@ -3295,7 +3345,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\Components\EditTabs\DeclarationCargoSplitEditComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\Components\NewEntity\NewDeclarationCargoSplitComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\DropdownMenuFilterComponent.ts" />
-    <TypeScriptCompile Include="Customs\Components\Declaration\DeclarationPayment\DeclarationPaymentComponent.ts" />
+    <!-- <TypeScriptCompile Include="Customs\Components\Declaration\DeclarationPayment\DeclarationPaymentComponent.ts" /> -->
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetInternalBankComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsRequests\Components\DeclarationRequests\ReleaseGoodsComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\Declaration\DocumentsPanel\DocumentsPanelComponent.ts" />

@@ -1816,6 +1816,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Jenkins\ConnectionStrings\563\JustAmitalCustomsWindowsServiceappSettings.config" />
+    <None Include="Jenkins\ConnectionStrings\563\JustAmitalCustomsWindowsServiceConnectionStrings.config" />
+    <None Include="Jenkins\ConnectionStrings\563\JustConfig\Customs.appSettings.config" />
+    <None Include="Jenkins\ConnectionStrings\563\JustConfig\Customs.ConnectionStrings.config" />
+    <None Include="Jenkins\ConnectionStrings\573\JustAmitalCustomsWindowsServiceappSettings.config" />
+    <None Include="Jenkins\ConnectionStrings\573\JustAmitalCustomsWindowsServiceConnectionStrings.config" />
+    <None Include="Jenkins\ConnectionStrings\573\JustConfig\Customs.appSettings.config" />
+    <None Include="Jenkins\ConnectionStrings\573\JustConfig\Customs.ConnectionStrings.config" />
+    <None Include="Jenkins\ConnectionStrings\581\JustAmitalCustomsWindowsServiceappSettings.config" />
+    <None Include="Jenkins\ConnectionStrings\581\JustAmitalCustomsWindowsServiceConnectionStrings.config" />
+    <None Include="Jenkins\ConnectionStrings\581\JustConfig\Customs.appSettings.config" />
+    <None Include="Jenkins\ConnectionStrings\581\JustConfig\Customs.ConnectionStrings.config" />
+    <None Include="Jenkins\ConnectionStrings\584\JustAmitalCustomsWindowsServiceappSettings.config" />
+    <None Include="Jenkins\ConnectionStrings\584\JustAmitalCustomsWindowsServiceConnectionStrings.config" />
+    <None Include="Jenkins\ConnectionStrings\584\JustConfig\Customs.appSettings.config" />
+    <None Include="Jenkins\ConnectionStrings\584\JustConfig\Customs.ConnectionStrings.config" />
+    <None Include="Jenkins\Customs56.bat" />
     <None Include="OracleScripts\1701\package features_05-11-2017.csv" />
     <None Include="OracleScripts\1701\Role features_05-11-2017.csv" />
     <None Include="OracleScripts\1701\Snap\1701_global.onp" />

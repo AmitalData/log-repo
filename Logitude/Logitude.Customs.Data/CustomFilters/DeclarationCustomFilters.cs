@@ -26,9 +26,10 @@ namespace Logitude.Customs.Data.CustomFilters
            {
                if (item.FieldName == "DeclarationWithoutRelease")
                {
-                   queryableData = queryableData.Where(d => (d.HatraDate == null));
+                    //queryableData = queryableData.Where(d => (d.HatraDate == null));
+                    queryableData = queryableData.Where(d => (d.IsClose == false));
 
-               }
+                }
 
                if (item.FieldName == "PaidDeclarationWithoutRelease")
                {

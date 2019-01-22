@@ -18,9 +18,9 @@ import {DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult} from '../../../../
 import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
 import {ConsignmentPM} from '../../../../../Customs/EntityPMs/ConsignmentPM';
 import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
-import {DeclarationErrorView} from '../../../../../Customs/EntityPMs/Extended/DeclarationErrorView';
 import {AmendmentView} from '../../../../../Customs/EntityPMs/Extended/AmendmentView';
-import {GeneralDataView} from '../../../../../Customs/EntityPMs/Extended/GeneralDataView';
+import { GeneralDataView } from '../../../../../Customs/EntityPMs/Extended/GeneralDataView';
+import { error } from '../../../../../Customs/EntityPMs/Extended/AmendmentView';
 import {DeclarationCorrectionView} from '../../../../../Customs/EntityPMs/Extended/DeclarationCorrectionView';
 import {DeclarationConstraintPM} from '../../../../../Customs/EntityPMs/DeclarationConstraintPM';
 import {DeclarationEventManager} from '../../../../../Customs/Utilities/DeclarationEventManager';
@@ -127,6 +127,13 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
         SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
+    public IsDescriptionVisible: boolean = false;
+    private description: string;
+    public get Description() { return this.description }
+    public set Description(newValue: string) {
+        this.description = newValue;
+    }
+
     //#region Get screen DATA
     SelectedGeneralIndex: number;
     GeneralData: GeneralDataView[] = [];
@@ -160,6 +167,8 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                     this.AmendmentViewsList.InsertCollection(amendmentViewsList);
 
                     this.GetResources(this.AmendmentViewsList.Collection);
+
+                    this.BuildSystemMessage(general.SystemMessageViews);
 
                 } else {
                     this.IsNoAmendmentsMsgVisible = true;
@@ -203,6 +212,23 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
         });
 
         this.GetResources(this.AmendmentViewsList.Collection);
+    }
+
+    BuildSystemMessage(data: error[]) {
+
+        this.Description = null;
+        for (var error of data) {
+
+            if (error.ListVersionID == "A") {
+                if (!this.Description) this.Description = "";
+                this.Description += error.MessageError + ", ";
+            }
+        }
+
+        if (this.Description) {
+            this.IsDescriptionVisible = true;
+            this.Description = this.Description.replace(/,\s*$/, ""); //remove last comma
+        }
     }
     //#endregion
 

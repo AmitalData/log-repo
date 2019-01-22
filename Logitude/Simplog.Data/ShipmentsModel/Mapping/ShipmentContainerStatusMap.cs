@@ -19,7 +19,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Details).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.FromPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ToPortId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.VoyageNumber).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.VoyageNumber).HasMaxLength(35).IsUnicode(false);
+            this.Property(t => t.VesselName).HasMaxLength(35).IsUnicode(false);
             this.Property(t => t.RecordHash).IsRequired().HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.Location).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.TimeOfDepartureInfo).HasMaxLength(1).IsUnicode(false);
@@ -51,6 +52,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ArrivalDate).HasColumnName("ArrivalDate");
             this.Property(t => t.ContainerId).HasColumnName("ContainerId");
             this.Property(t => t.ContainerNumber).HasColumnName("ContainerNumber");
+            this.Property(t => t.VesselName).HasColumnName("VesselName");
 
             this.HasRequired(t => t.INTTRAStatus).WithMany().HasForeignKey(d => d.StatusCode);
             this.HasOptional(t => t.FromPort).WithMany().HasForeignKey(d => d.FromPortId);

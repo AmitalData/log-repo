@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnInit, ViewChild, ViewContainerRef, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {AppTool} from '../../Tools';
@@ -114,7 +114,11 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
                                 var ObjectTable = window.ObjectTables.filter(x => x.Id === this.ObjectField.LookUpTableId)[0];
                                 if (ObjectTable) {
                                     var moduleName = ObjectTable.ClientModuleName;
-                                    var servicename = ObjectTable.Name + "ListService";
+                                    var objectTableName = ObjectTable.Name;
+                                    if (objectTableName.indexOf('Customs.') > -1) {
+                                        objectTableName = objectTableName.split('.')[1];
+                                    }
+                                    var servicename = objectTableName + "ListService"; 
                                     var servicelink = './' + moduleName + '/Services/StandardLists/' + servicename;
 
                                     return new Promise((resolve, reject) => {

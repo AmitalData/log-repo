@@ -143,7 +143,7 @@ export class CustomsDocumentTicketViewModel {
 
                 var ary = this.customsDocumentsTicketPM.ConnectedInvoicesSequences.split(",");
                 var firstSeq = ary[0];
-                var sp = dec.SupplierInvoices.filter(r => r.SequenceNumeric.toString() == firstSeq)[0];
+                var sp = dec.SupplierInvoices.filter(r => !AppTool.IsNullOrEmpty(r.SequenceNumeric) && r.SequenceNumeric.toString() == firstSeq)[0];
                 if (sp) {
                     this._SInvoiceNumber = sp.InvoiceNumber;
                     if (ary.length > 1) {

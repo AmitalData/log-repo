@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .FormFieldRow {
         height: 32px;
     }
@@ -212,7 +212,7 @@
 
                                     </log-column>
 
-                                    <log-column [header]="'Customs.VehicleOwner.F.PassportNumber' | TextCodeTranslationPipe" [binding]="'PassportNumber'" [width]="'200'" [Editable]="true" [Alignment]="'right'">
+                                    <log-column [header]="'Customs.VehicleOwner.F.PassportNumber' | TextCodeTranslationPipe" [binding]="'PassportNumber'" [width]="'100'" [Editable]="true" [Alignment]="'right'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.PassportNumber}}</span>
@@ -225,7 +225,7 @@
                                         </log-cell-template>
                                     </log-column>
 
-                                    <log-column [header]="'Customs.VehicleOwner.F.PassCountryCode' | TextCodeTranslationPipe" [binding]="'PassCountryCode'" [width]="'200'" [Alignment]="'right'">
+                                    <log-column [header]="'Customs.VehicleOwner.F.PassCountryCode' | TextCodeTranslationPipe" [binding]="'PassCountryCode'" [width]="'100'" [Alignment]="'right'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="text-align:right" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.PassCountryName}}</span>
@@ -266,13 +266,13 @@
                                     </log-column>
 
                                     <log-column [header]="'Customs.VehicleOwner.F.FirstName' | TextCodeTranslationPipe"
-                                                [binding]="'Amount'"
+                                                [binding]="'FirstName'"
                                                 [width]="'200'"
                                                 [Editable]="true"
                                                 [Alignment]="'right'">
 
                                         <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right">
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.FirstName}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
@@ -286,13 +286,13 @@
                                     </log-column>
 
                                     <log-column [header]="'Customs.VehicleOwner.F.LastNameOrCorporationName' | TextCodeTranslationPipe"
-                                                [binding]="'Amount'"
+                                                [binding]="'LastNameOrCorporationName'"
                                                 [width]="'200'"
                                                 [Editable]="true"
                                                 [Alignment]="'right'">
 
                                         <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right">
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.LastNameOrCorporationName}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">

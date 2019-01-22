@@ -19,6 +19,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
+        public List<GLAccountCurrencyPM> GetTenantCurrenciesAccount(int tenant )
+        {
+            var pocos = this.repository.GetCurrenciesAccounts(tenant).ToList();
+            return pocos.Select(r => this.GetEntityPM(r)).ToList();
+
+        }
+
         public GLAccountCurrencyPM GetEntityByCurrencyAndGLAccountId(string accountId, string currencyId, int tenant)
         {
 

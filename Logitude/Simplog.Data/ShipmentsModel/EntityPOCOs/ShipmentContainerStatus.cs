@@ -26,6 +26,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? EventDate { get; set; }
         public bool Partial { get; set; }
         public string VoyageNumber { get; set; }
+        public string VesselName { get; set; }
         public string Location { get; set; }
         public string ShippingLineName { get; set; }
         public DateTime? DepartureDate { get; set; }

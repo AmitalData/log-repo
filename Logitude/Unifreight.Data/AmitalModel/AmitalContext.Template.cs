@@ -5110,9 +5110,14 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"ORIGIN_COUNTRY")
                     .HasMaxLength(4)
                     .HasColumnType("varchar2");
-#endregion
+            modelBuilder.Entity<GITITEM>()
+               .Property(p => p.UNITID)
+                   .HasColumnName(@"UNIT_ID")
+                   .HasMaxLength(3)
+                   .HasColumnType("varchar2");
+            #endregion
 
-#region CFICONN
+            #region CFICONN
 
             modelBuilder.Entity<CFICONN>()
                 .HasKey(p => new { p.CUSTOMFILE, p.FILENO })

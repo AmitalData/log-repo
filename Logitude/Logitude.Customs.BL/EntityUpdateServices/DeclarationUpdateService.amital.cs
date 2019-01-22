@@ -589,7 +589,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(dirtyDeclarationPM.Tenant);
                         DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(dirtyDeclarationPM.Id, false, false);
-                        if (currentDeclarationCourierStatusPM != null)
+                        if (currentDeclarationCourierStatusPM != null && taskType == "LP2U" && string.IsNullOrWhiteSpace(dirtyDeclarationPM.PaymentOrderNumber) && dirtyDeclarationPM.TotalTax > 5)
                         {
                             if (raiseStatus == true)
                             {
@@ -607,6 +607,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             {
                                 requestData = string.Concat("<CourierHighLow>", currentDeclarationCourierStatusPM.HighLowValue, "</CourierHighLow>");
                             }
+
                         }
                     }
                     

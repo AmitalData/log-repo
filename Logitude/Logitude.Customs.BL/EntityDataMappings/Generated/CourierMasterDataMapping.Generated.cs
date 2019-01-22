@@ -43,7 +43,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         GrossMassMeasure, 
 	         ShortHAWB, 
 	         FlightNumber, 
-	         DepartureDate,
+	         DepartureDate, 
+	         WeightValueCode,
 	      }
 
 
@@ -83,7 +84,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FlightNumber, 
 	         DepartureDate, 
 	         EstimatedArrivalDateOnly, 
-	         EstimatedArrivalTimeOnly,
+	         EstimatedArrivalTimeOnly, 
+	         WeightValueCode, 
+	         WeightValueName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -195,6 +198,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepartureDate))
             {
 				entityPOCO.DepartureDate = entityPM.DepartureDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WeightValueCode))
+            {
+				entityPOCO.WeightValueCode = entityPM.WeightValueCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -313,6 +321,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.DepartureDate = entityPOCO.DepartureDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WeightValueCode))
+            {
+					entityPM.WeightValueCode = entityPOCO.WeightValueCode;
+            }
+
 		}
 
 		public void PMToOldPM(CourierMasterPM entityPM, CourierMasterPM oldEntityPM)
@@ -422,6 +435,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepartureDate))
             {
                 oldEntityPM.DepartureDate = entityPM.DepartureDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WeightValueCode))
+            {
+                oldEntityPM.WeightValueCode = entityPM.WeightValueCode;
             }
 			
 		}

@@ -1,4 +1,4 @@
-﻿import {Component, AfterViewInit, ViewContainerRef, ViewChildren, QueryList, Output, EventEmitter, HostListener} from '@angular/core';
+import {Component, AfterViewInit, ViewContainerRef, ViewChildren, QueryList, Output, EventEmitter, HostListener} from '@angular/core';
 import {Settings} from '../../Infrastructure/Settings';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
@@ -56,6 +56,15 @@ export class ConfirmWindow {
                 this.InstanceComponent.InjectWindowComponent(this);
             });
     }
+    public  WindowClosedPromise() {
+        return new Promise(resolve =>
+        {
+            this.WindowClosed.subscribe((event: any) => {
+                resolve(this);
+            });
+        });
+    }
+
 
     public Close() {
 

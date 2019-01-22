@@ -21,6 +21,8 @@ using System.Threading.Tasks;
 using UnifreightIIG.Common.ImportDeclarationServiceReference;
 using UnifreightIIG.Common.MessageLib.Fault;
 using UnifreightIIG.Common.MessageLib.ID;
+using UnifreightIIG.Common.MessageLib.Collateral;
+using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -101,7 +103,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var importDeclarationServiceReferenceResponse = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.Response>
                         .DeSerializeObject(customResponseResponseXml);
                     ////5117 5117 5117 5117 5117
-                    this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointer(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, requestParams.Tenant);
+                    List<error> systemMessagesList = new List<error>();
+                    if (customResponse.CollateralRequests != null && customResponse.CollateralRequests.Count() > 0) // Update Declaration Correction Pointer
+                    {
+                        foreach (var collateralRequestItem in customResponse.CollateralRequests)
+                        {
+                            var myError = new error();
+                            myError.ListVersionID = "A";
+                            myError.MessageError = "המשוב להצהרה כולל דרישה לבטוחה " + " - מספר בטוחה " + collateralRequestItem.collateralRequestNumber;
+                            systemMessagesList.Add(myError);
+                        }
+                    }
+                    this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointer(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant);
                 }
                 if (_MyDeclarationPM.UserNotes == "LoadTestOnProgress")
                 {
@@ -148,7 +161,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     SendDeclarationPrint(requestParams);
                 }
 
-                
+                if (customResponse.CollateralRequests != null) // Create Collateral
+                {
+                    LogMessagingUtil.Instance.AppendLine("ImportDeclarationAmendmentReplyMsg: Create Collateral");
+                    var requestXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.CollateralRequestDetails[]>.SerializeObject(customResponse.CollateralRequests);
+                    var collateralArry = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.CollateralRequestDetails[]>.DeSerializeObject(requestXml);
+
+                    COLT_NG_8211_MSG10040_CollateralRequestMsg myCOLT_NG_8211_MSG10040_CollateralRequestMsg = new COLT_NG_8211_MSG10040_CollateralRequestMsg();
+                    var responseContentHeader = customResponse.GetResponseContentHeader();
+                    myCOLT_NG_8211_MSG10040_CollateralRequestMsg.ResponseContentHeader = new UnifreightIIG.Common.MessageLib.Collateral.ResponseContentHeader();
+                    if (responseContentHeader != null)
+                    {
+                        myCOLT_NG_8211_MSG10040_CollateralRequestMsg.ResponseContentHeader.ApplicationID = responseContentHeader.ApplicationID;
+                        myCOLT_NG_8211_MSG10040_CollateralRequestMsg.ResponseContentHeader.Remark = responseContentHeader.Remark;
+                        myCOLT_NG_8211_MSG10040_CollateralRequestMsg.ResponseContentHeader.TransmitionDateTime = responseContentHeader.TransmitionDateTime;
+                    }
+                    myCOLT_NG_8211_MSG10040_CollateralRequestMsg.CollateralRequestDetails = collateralArry;
+                    var xml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.COLT_NG_8211_MSG10040_CollateralRequestMsg>
+                        .SerializeObject(myCOLT_NG_8211_MSG10040_CollateralRequestMsg);
+
+                    var ser = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.COLT_NG_8211_MSG10040_CollateralRequestMsg>.DeSerializeObject(xml);
+                    var DF_MSG10040_CollateralRequestMsgResponseService = new DF_8211_CollateralRequestMsgResponseService();
+                    DF_MSG10040_CollateralRequestMsgResponseService.Update(ser, requestParams);
+                }
+
             }
         }
         bool SendDeclarationPrintSync(GenericRequestParams requestParams)
