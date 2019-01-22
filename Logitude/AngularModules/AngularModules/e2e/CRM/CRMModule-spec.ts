@@ -14,9 +14,9 @@ describe('CRM Module', () => {
   it('Operations Success', function () {
     browser.ignoreSynchronization = true;
     // CRMPage.DoCRM('Overview');
-    // CRMPage.DoCRM('Customers');
+    CRMPage.DoCRM('Customers');
     // CRMPage.DoCRM('Quotes');
-    CRMPage.DoCRM('Activities');
+    // CRMPage.DoCRM('Activities');
     // CRMPage.DoCRM('Opportunities');
    
   });

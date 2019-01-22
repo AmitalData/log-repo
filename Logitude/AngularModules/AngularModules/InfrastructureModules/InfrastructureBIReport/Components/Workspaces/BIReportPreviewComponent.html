@@ -33,6 +33,31 @@
                 <td></td>
             </tr>
 
+            <tr *ngIf="SelectedFiltersDataSource" style="height: 1px;">
+                <td>
+                    <table class="BodyBackground">
+                        <tr>
+                            <td>
+                                <div class="EmailBoxMultiLinesText" style="white-space: normal;">
+                                    <div style="margin:5px;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="EmailBoxMultiLinesText" style="white-space: normal;">
+                                                        <DWAskUserFiltersComponent [SelectedFiltersDataSource]="SelectedFiltersDataSource" [RunReportCommand]="RunReportCommand" (RunReportComplete)="OnRunReportComplete($event)"></DWAskUserFiltersComponent>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <!--<tr><td style="height:100%;"></td></tr>-->
+                    </table>
+                </td>
+            </tr>
+
             <!-- Filters -->
             <tr style="height: 1px;">
                 <td>
@@ -46,6 +71,14 @@
                                 <button [disabled]="IsNewEntity" style="width:120px;float:left;" class="Button" (click)="ExportToExcelClicked()">Export To Excel</button>
                             </td>
 
+
+                            <td style="width: 5px;">
+                                <div></div>
+                            </td>
+
+                            <td style="width: 57px;">
+                                <button class="GreenButton" (click)="RunReportButtonClicked()">Run Report</button>
+                            </td>
 
                             <td style="width: 5px;">
                                 <div></div>
@@ -113,11 +146,12 @@
 
             <tr>
                 <td>
-                    <!--   [suppressCsvExport]="true" [animateRows]="true"  [showToolPanel]="true"    [rowModelType]="'virtual'"   [floatingFilter]="true" -->
+                    <!--   [suppressCsvExport]="true" [animateRows]="true"  [showToolPanel]="true"    [rowModelType]="'virtual'"   [floatingFilter]="true" [enableCellChangeFlash]="true" -->
                     <div class="MediaFill">
-                        <ag-grid-angular style="width:100%; height:100%;" 
+                        <ag-grid-angular style="width:100%; height:100%;"
                                          #agGrid
                                          id="myGrid"
+                                         [enableCellChangeFlash]="true"
                                          class="ag-theme-balham"
                                          [enableSorting]="true"
                                          [enableFilter]="true"

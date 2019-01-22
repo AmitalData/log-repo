@@ -1,4 +1,22 @@
 
+<style>
+    .ItemBox {
+        height: 25px;
+        margin-bottom: 3px;
+        padding: 2px;
+    }
+
+        .ItemBox:hover {
+            cursor: pointer;
+            background: #DEEBEF;
+            transition: 0.3s;
+        }
+
+    .SelectedItem {
+        background: #DEEBEF;
+    }
+</style>
+
 <table>
     <tr style="height:10px;">
         <td>
@@ -7,18 +25,22 @@
     </tr>
     <tr style="vertical-align:top;">
         <td>
-            <ScrollViewer>
-                <div class="MediaFill" >
-                    <table>
-                        <tr>
-                            <td> 
-                                <table>
-                                    <tr *ngFor="let item of ItemsSource; let i = index" style="height:25px;margin-left:25px">
-                                        <td>
+
+            <div class="MediaFill">
+                <table>
+                    <tr>
+                        <td>
+                            <ScrollViewer>
+                                <div class="MediaFill">
+                                    <div class="ItemBox" *ngFor="let item of ItemsSource; let i = index" [class.SelectedItem]="item == FieldSelectedItem" (mousedown)="FieldSelectedItem = item">
+                                        <div>
                                             <table>
                                                 <tr>
                                                     <td style="float:left;">
-                                                        <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'IsChecked'" [Checked]="item.IsChecked" [Text]="item.Code" [DataContext]="DataContext"></LogCheckBox>
+                                                        <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="item.IsChecked" [Checked]="item.IsChecked" [DataContext]="DataContext" (ValueChanged)="onValueChanged(item, $event)"></LogCheckBox>
+                                                    </td>
+                                                    <td style="float:left;">
+                                                        <label style="float:left;" [attr.for]="item.Code">{{item.Code}}</label>
                                                     </td>
                                                 </tr>
                                                 <tr style="height:3px">
@@ -27,55 +49,52 @@
                                                     </td>
                                                 </tr>
                                             </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td style="width:20px">
-                                <div></div>
-                            </td>
-                            <td style="width:50px">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-                                    <tr style="height:20px;">
-                                        <td>
-                                            <button (click)="btnUp_Click()" class="Button" style="width:26px;float:right;">
-                                                <img src="./Images/Icons/ArrowUp.png" style="height:16px;vertical-align:middle;"/>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr style="height:20px">
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-                                    <tr style="height:20px;">
-                                        <td>
-                                            <button (click)="btnDown_Click()" class="Button" style="width:26px;float:right;">
-                                                <img src="./Images/Icons/ArrowDown.png" style="height:16px;vertical-align:middle;"/>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </ScrollViewer>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </ScrollViewer>
+                        </td>
+                        <td style="width:10px">
+                            <div></div>
+                        </td>
+                        <td style="width:25px">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr style="height:20px;">
+                                    <td>
+                                        <button (click)="btnUp_Click()" class="Button" style="width:26px;float:right;">
+                                            <img src="./Images/Icons/ArrowUp.png" style="height:16px;vertical-align:middle;" />
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr style="height:20px;">
+                                    <td>
+                                        <button (click)="btnDown_Click()" class="Button" style="width:26px;float:right;">
+                                            <img src="./Images/Icons/ArrowDown.png" style="height:16px;vertical-align:middle;" />
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
         </td>
     </tr>
 

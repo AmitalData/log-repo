@@ -2,6 +2,7 @@ import { NewBIReport } from './Components/NewEntity/NewBIReport';
 import { BIReportGeneralTabComponent } from './Components/EditTabs/BIReportGeneralTabComponent';
 import { BIReportPreviewComponent } from './Components/Workspaces/BIReportPreviewComponent';
 import { AgGridColumnsOperations } from './Components/NewEntity/AgGridColumnsOperations';
+import { DWAskUserFiltersComponent } from './Components/Workspaces/DWAskUserFiltersComponent'; 
 
 export const Components =
     [
@@ -9,6 +10,8 @@ export const Components =
         BIReportGeneralTabComponent,
         BIReportPreviewComponent,
         AgGridColumnsOperations,
+        DWAskUserFiltersComponent,
+
     ];
 
 export class ModuleDeclarations {
@@ -19,6 +22,8 @@ export class ModuleDeclarations {
             case "BIReportGeneralTabComponent": { myResult = BIReportGeneralTabComponent; break; }
             case "BIReportPreviewComponent": { myResult = BIReportPreviewComponent; break; }
             case "AgGridColumnsOperations": { myResult = AgGridColumnsOperations; break; }
+            case "DWAskUserFiltersComponent": { myResult = DWAskUserFiltersComponent; break; }
+
         }
         return myResult;
     }
