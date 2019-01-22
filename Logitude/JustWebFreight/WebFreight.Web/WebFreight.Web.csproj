@@ -2169,6 +2169,7 @@
     <Compile Include="ExternalAPIs\V1\HouseController.cs" />
     <Compile Include="ExternalAPIs\V1\VendorPartnerController.cs" />
     <Compile Include="GlobalModel\GlobalDomainService.TenantManagmentPrivateLablesPM.cs" />
+    <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
     <Compile Include="Helpers\APICredentialsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ComputeHelper.cs" />
@@ -2194,6 +2195,7 @@
     <Compile Include="Helpers\DataProviderHelpers\ShipmentInventoryDataProviderHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsStocksDataProviderHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\UsersByTenantDataProviderHelper.cs" />
+    <Compile Include="Helpers\DataWarehouseHelper.cs" />
     <Compile Include="Helpers\DocumentHelper.cs" />
     <Compile Include="Helpers\EntityChangeAutomationHelper.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\ApiExceptionHandler.cs" />
@@ -2713,7 +2715,6 @@
     <Content Include="Monitoring\QuickbooksOnlineQueue.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnline.aspx" />
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\webfreight.web.dll.licenses" />
     <Content Include="ReportsWebServices\APInvoiceWebService.asmx" />
     <None Include="Properties\PublishProfiles\sendgrid.pubxml" />

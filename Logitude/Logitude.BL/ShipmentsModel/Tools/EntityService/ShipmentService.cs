@@ -2348,8 +2348,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.IsRemovingStackEvents = false;
             entityPM.CalculateStatus = false;
 
-            this.ComputeShipmentStatus();            
-            this.UpdateCustomerWorkingDates();            
+            this.ComputeShipmentStatus();
+            if (!entityPM.IsHybrid)
+            {
+                this.UpdateCustomerWorkingDates();
+            }
+                    
             
 
             if (isNewEntity)

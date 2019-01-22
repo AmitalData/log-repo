@@ -84,7 +84,11 @@ namespace WebFreight.Web.DataContracts
 
     public class ObjectFieldOperator
     {
-
+        //public ObjectFieldOperator(string code,string name)
+        //{
+        //    Code = code;
+        //    Name = name;
+        //}
         public string Code { get; set; }
 
         public string Name { get; set; }

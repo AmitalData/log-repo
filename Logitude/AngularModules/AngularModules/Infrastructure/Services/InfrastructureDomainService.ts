@@ -863,4 +863,6 @@ export class Column {
     public SortOrder: number;
     public Width: number;
     public Index: number;
+    public IsChecked: boolean;
+    public DataTypeCode: string; 
 }

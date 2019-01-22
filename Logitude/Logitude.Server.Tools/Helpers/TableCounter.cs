@@ -194,37 +194,81 @@ namespace Logitude.Server.Tools.Helpers
 
 		private static string ResolveCounterPrefixVariables(Counter counter, CounterDefinition counterDef, int tenant, string counterLastNumberValue, Dictionary<string, string> additionalParameters)
 		{
-			string counterPrefix = counterDef.Prefix;
-			if (!string.IsNullOrEmpty(counterPrefix))
+			string counterPrefix = !string.IsNullOrEmpty(counterDef.Prefix) ? counterDef.Prefix : "";
+			string counterSuffix = !string.IsNullOrEmpty(counterDef.Suffix) ? counterDef.Suffix : "";
+
+
+			//if (!string.IsNullOrEmpty(counterPrefix))
+			//{
+			//number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value : counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value);
+
+			//[MM],[YY] or [YYYY],[B]
+
+			DateTime date = TenantServerConfigration.GetCurrentDateTime(tenant);
+			string MM = date.ToString("MM");
+			string YY = date.ToString("yy");
+			string YYYY = date.ToString("yyyy");
+
+			counterPrefix = counterPrefix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
+			if (additionalParameters != null)
 			{
-				//number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value : counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value);
-
-				//[MM],[YY] or [YYYY],[B]
-
-				DateTime date = TenantServerConfigration.GetCurrentDateTime(tenant);
-				string MM = date.ToString("MM");
-				string YY = date.ToString("yy");
-				string YYYY = date.ToString("yyyy");
-
-				counterPrefix = counterPrefix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
-				if (additionalParameters != null)
-				{
-					foreach (var k in additionalParameters.Keys)
-						counterPrefix = counterPrefix.Replace(k, additionalParameters[k]);
-				}
-
-				if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0 && (counterPrefix + counterLastNumberValue).Length < counterDef.CounterSize.Value)
-				{
-					int sizeOfPrefix = (counterDef.CounterSize.Value - (counterPrefix + counterLastNumberValue).Length + counterPrefix.Length);
-					counterPrefix = counterPrefix.ToString().PadRight(sizeOfPrefix, '0');
-				}
-
-				counterLastNumberValue = counterPrefix + counterLastNumberValue;//(counterDef.Prefix != null ? counterDef.Prefix + counterLastNumberValue : counterDef.Prefix + counterLastNumberValue);
+				foreach (var k in additionalParameters.Keys)
+					counterPrefix = counterPrefix.Replace(k, additionalParameters[k]);
 			}
-			else if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0)
+
+			counterSuffix = counterSuffix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
+			if (additionalParameters != null)
 			{
-				counterLastNumberValue = counterLastNumberValue.ToString().PadLeft(counterDef.CounterSize.Value, '0');
+				foreach (var k in additionalParameters.Keys)
+					counterSuffix = counterSuffix.Replace(k, additionalParameters[k]);
 			}
+			//YYYShipEEE (15 - 9) + 3 
+			if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0 && (counterPrefix + counterLastNumberValue + counterSuffix).Length < counterDef.CounterSize.Value)
+			{
+				int sizeOfStartNumber = (counterDef.CounterSize.Value - (counterPrefix + counterSuffix).Length);
+				counterLastNumberValue = counterLastNumberValue.ToString().PadLeft(sizeOfStartNumber, '0');
+			}
+
+			counterLastNumberValue = counterPrefix + counterLastNumberValue + counterSuffix;
+			//(counterDef.Prefix != null ? counterDef.Prefix + counterLastNumberValue : counterDef.Prefix + counterLastNumberValue);
+																							//}
+																							//else if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0)
+																							//{
+																							//	counterLastNumberValue = counterLastNumberValue.ToString().PadLeft(counterDef.CounterSize.Value, '0');
+																							//}
+
+
+
+			//if (!string.IsNullOrEmpty(counterPrefix))
+			//{
+			//	//number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value : counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value);
+
+			//	//[MM],[YY] or [YYYY],[B]
+
+			//	DateTime date = TenantServerConfigration.GetCurrentDateTime(tenant);
+			//	string MM = date.ToString("MM");
+			//	string YY = date.ToString("yy");
+			//	string YYYY = date.ToString("yyyy");
+
+			//	counterPrefix = counterPrefix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
+			//	if (additionalParameters != null)
+			//	{
+			//		foreach (var k in additionalParameters.Keys)
+			//			counterPrefix = counterPrefix.Replace(k, additionalParameters[k]);
+			//	}
+
+			//	if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0 && (counterPrefix + counterLastNumberValue).Length < counterDef.CounterSize.Value)
+			//	{
+			//		int sizeOfPrefix = (counterDef.CounterSize.Value - (counterPrefix + counterLastNumberValue).Length + counterPrefix.Length);
+			//		counterPrefix = counterPrefix.ToString().PadRight(sizeOfPrefix, '0');
+			//	}
+
+			//	counterLastNumberValue = counterPrefix + counterLastNumberValue;//(counterDef.Prefix != null ? counterDef.Prefix + counterLastNumberValue : counterDef.Prefix + counterLastNumberValue);
+			//}
+			//else if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0)
+			//{
+			//	counterLastNumberValue = counterLastNumberValue.ToString().PadLeft(counterDef.CounterSize.Value, '0');
+			//}
 
 			return counterLastNumberValue;
 		}

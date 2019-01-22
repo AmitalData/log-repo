@@ -25,6 +25,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
 		public int? CounterSize { get; set; }
 
+		public string Suffix { get; set; }
 
 		//[Include]
 		//[Association("CounterCounterDefinition", "CounterId", "Id", IsForeignKey = true)]
