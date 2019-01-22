@@ -35,6 +35,9 @@ export class DailyTimeSheetComponent extends BaseComponent {
         super();
     }
 
+   
+
+
     private isLoaderReady: boolean = false;
     RunComponent() {
         if (this.AllLocations) {

@@ -18,10 +18,10 @@ export class CustomerModule {
     }
 
     public CreateCustomer() {
-        var activityNo = this.Generator.RandomNum();
+        var customerNo = this.Generator.RandomNum();
 
-        this.addPotCustomer.CreateNewPotentialCustomer('Customer # ' + activityNo);
-        this.QuickSearchBox('Opportunity_Search', 'Customer # ' + activityNo);
+        this.addPotCustomer.CreateNewPotentialCustomer('Customer # ' + customerNo);
+        this.QuickSearchBox('Opportunity_Search', 'Customer # ' + customerNo);
      
         // browser.driver.sleep(6000);
 

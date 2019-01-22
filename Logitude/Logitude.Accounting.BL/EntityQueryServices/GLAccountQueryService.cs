@@ -922,6 +922,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                         IsMultiCurrency = a.IsMultiCurrency,
                                         CurrecnyId = a.CurrencyId,
                                         CustomerGLAccountId= a.CustomerGLAccountId,
+                                        CurrencyCode = a.Currency !=null? a.Currency.Code:null, 
                      }).ToList();
 
 
