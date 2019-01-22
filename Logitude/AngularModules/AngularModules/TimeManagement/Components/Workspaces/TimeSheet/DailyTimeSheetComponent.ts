@@ -35,9 +35,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         super();
     }
 
-    RefreshButtonClicked() {
-        this.RefreshTab();
-    }
+   
 
 
     private isLoaderReady: boolean = false;
