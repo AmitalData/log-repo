@@ -427,10 +427,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 if ((item.AccountTypeCode == "2" || item.AccountTypeCode == "3"))
                 {
-                    if(item.GLAccountId == "1-267526")
-                    {
-
-                    }
+                    
                     var accountCurrency = gLAccountCurrencies.Where(d => d.GLAccountId == item.GLAccountId).FirstOrDefault();
                     if(accountCurrency != null)
                     {
@@ -653,6 +650,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (item.IsMultiCurrency == false && item.CurrecnyId != tenantPM.CurrencyId)
                 {
+                   
                     item.OpeningBalanceInForegnCurrency = trailReportM != null ? trailReportM.Select(d => d.ForeignOpenBalance).Sum() : null;
                     if (item.OpeningBalanceInForegnCurrency != null)
                     {
@@ -697,7 +695,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-                    myStringBuilder.Append(' ', 48);
+                    myStringBuilder.Append('0', 45);
+                    myStringBuilder.Append(' ', 3);
                 }
 
                 myStringBuilder.Append(' ', 16);
