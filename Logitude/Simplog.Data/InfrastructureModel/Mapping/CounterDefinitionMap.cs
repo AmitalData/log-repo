@@ -29,7 +29,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(10)
                 .IsUnicode(false);
 
-            this.Property(t => t.CounterId)
+			this.Property(t => t.Suffix)
+			   .HasMaxLength(10)
+			   .IsUnicode(false);
+
+			this.Property(t => t.CounterId)
                 .IsRequired()
                 .HasMaxLength(15)
                 .IsUnicode(false);
@@ -45,6 +49,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.StartNumber).HasColumnName("StartNumber");
             this.Property(t => t.CounterId).HasColumnName("CounterId");
 			this.Property(t => t.CounterSize).HasColumnName("CounterSize");
+			this.Property(t => t.Suffix).HasColumnName("Suffix");
 
 			// Relationships
 			//this.HasRequired(t => t.Counter)

@@ -181,17 +181,16 @@ export class DWQueryBuilderService {
 
                 /////////////////////////////////////////////////////
                 return this._http.post(this._apiUrl + '/PostGetDWQueryData', JSON.stringify(temp),
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
-                        if (pm) {
-                            //var mappedResult: QueryColumnPM;
-                            //mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                            //response.Result = mappedResult;
-                        }
+                    { headers: authHeader }).map((response) => {
+
+                        var result = response.json();
+                         
 
 
-
-                        return null;//response;
+                        var pmresponse: ServiceResponse;
+                        pmresponse = new ServiceResponse();
+                        pmresponse.Result = result;
+                        return pmresponse;
 
                     });
             }

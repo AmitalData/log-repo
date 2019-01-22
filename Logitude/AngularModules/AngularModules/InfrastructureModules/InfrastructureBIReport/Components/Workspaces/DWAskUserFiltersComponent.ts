@@ -51,36 +51,32 @@ export class DWAskUserFiltersComponent implements OnInit{
         }
     }
 
-    RunReport(DWQueryId) {
-        this._DWSubQueryPMService.getByQueryId(DWQueryId).subscribe(myResult => {
-            if (!myResult.HasError) {
-                this.DWQueryData = myResult.Result;
+    RunReport(MyDWQueryData) {
+        this.DWQueryData = MyDWQueryData;
+        //this.DWQueryData.Filters = this.SelectedFiltersDataSource;
+        if (this.DWQueryData.Filters) {
+            //var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
+            //var temp = [];
+            //temp.push(MyFilter);
+            //this.SelectedFiltersDataSource = temp;
+            var QueryData = new DWQueryData();
+            QueryData.Columns = this.DWQueryData.Columns;
+            QueryData.Filters = this.SelectedFiltersDataSource[0];
+            QueryData.PageIndex = 0;
+            QueryData.PageSize = 100;
+            this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
+                if (!myResult.HasError) {
+                    //this.rowData = myResult.Result;
+                    this.RunReportComplete.emit(myResult.Result);
+                }
+                else {
+                    //this.StopBusyIndicator();
+                }
 
-                if (this.DWQueryData.Filters) {
-                    var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
-                    var temp = [];
-                    temp.push(MyFilter);
-                    this.SelectedFiltersDataSource = temp;
-                    var QueryData = new DWQueryData();
-                    QueryData.Columns = this.DWQueryData.Columns;
-                    QueryData.Filters = this.DWQueryData.Filters;
-                    QueryData.PageIndex = 0;
-                    QueryData.PageSize = 100;
-                    this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
-                        if (!myResult.HasError) {
-                            //this.rowData = myResult.Result;
-                            this.RunReportComplete.emit(myResult.Result);
-                        }
-                        else {
-                            //this.StopBusyIndicator();
-                        }
-
-                        //this.LoadBIReportData();
-                    });
-                } 
-            }
-        });
-       
+                //this.LoadBIReportData();
+            });
+        } 
+        
     }
 
     AddFilterToGroup(item) {

@@ -29,7 +29,7 @@ namespace WebFreight.Web.Helpers
 
         public DWQueryBuilderHelper(int tenant)
         {
-            WhereStmt = string.Empty;
+            WhereStmt = " where ";
             this.Tenant = tenant;
         }
 
