@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { BIReportPreviewComponent } from  '../Workspaces/BIReportPreviewComponent'
+import { InfrastructureDomainService, Column, BITabularViewSettings, BIReportXMLData} from '../../../../Infrastructure/Services/InfrastructureDomainService';
 
 @Component({
     moduleId: module.id,
@@ -15,12 +16,28 @@ export class AgGridColumnsOperations extends BaseComponent {
 
     constructor() {
         super();
-        this.ItemsSource = [];
     }
-
+    BuildList() {
+        this.father.BIReportXMLData.BITabularViewSettings.Columns.sort((a, b) => { return (a.Index === b.Index) ? 0 : (a.Index < b.Index) ? -1 : 1 }).forEach(item => {
+            this.ItemsSource.push(item);
+        });
+    }
     SetWindowArgs(args: any) {
         this.father = args.father;
-        this.ItemsSource = this.father.BIReportXMLData.BITabularViewSettings.Columns;
+        this.ItemsSource = [];
+        var allItem = new Column();
+        allItem.Code = "All";
+        allItem.IsChecked = true;
+        if (this.father.BIReportXMLData.BITabularViewSettings.Columns.filter(a => !a.IsChecked)[0]) {
+            allItem.IsChecked = false;
+        }
+        this.ItemsSource.push(allItem);
+        this.BuildList();
+    }
+
+    public FieldSelectedItem = null; 
+    SetFieldSelectedItem(item) {
+        this.FieldSelectedItem = item;
     }
 
     CancelButtonClicked() {
@@ -28,16 +45,62 @@ export class AgGridColumnsOperations extends BaseComponent {
     }
 
     OkButtonClicked() {
-        this.father.BuildColumns(this.father.BIReportXMLData);
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit('ok');
+        var _InfrastructureDomainService = new InfrastructureDomainService();
+        var result = new BIReportXMLData();
+        result.BITabularViewSettings = this.father.BIReportXMLData.BITabularViewSettings;
+        result.BIReportId = this.father.EntityId;
+        result.BIReportPM = this.father.EntityPM;
+
+        _InfrastructureDomainService.UpdateBIReportXMLData(result ).subscribe(myResult => {
+            if (!myResult.HasError) {
+                this.father.BIReportXMLData = myResult.Result;
+                SessionLocator.CurrentSession.CloseCurrentWindowEmit('ok');
+            }
+        });
     }
 
     btnUp_Click() {
+        var item = this.FieldSelectedItem;
+        if (item != null && item.Code  != "All") {
+            var currIndex = this.father.BIReportXMLData.BITabularViewSettings.Columns.indexOf(item);
+            var nextIndex = currIndex - 1;
 
+            var currItem = this.father.BIReportXMLData.BITabularViewSettings.Columns[currIndex];
+            var nextItem = this.father.BIReportXMLData.BITabularViewSettings.Columns[nextIndex];
+           
+            if (nextItem) {
+                currItem.Index = nextIndex;
+                nextItem.Index = currIndex;
+                //this.BuildList();
+            }
+        }
     }
 
     btnDown_Click() {
-        
+        var item = this.FieldSelectedItem;
+        if (item != null && item.Code != "All") {
+            var currIndex = this.father.BIReportXMLData.BITabularViewSettings.Columns.indexOf(item);
+            var nextIndex = currIndex + 1;
 
+            var currItem = this.father.BIReportXMLData.BITabularViewSettings.Columns[currIndex];
+            var nextItem = this.father.BIReportXMLData.BITabularViewSettings.Columns[nextIndex];
+
+            if (nextItem) {
+                currItem.Index = nextIndex;
+                nextItem.Index = currIndex;
+               // this.BuildList();
+            }
+        }
+    }
+
+    onValueChanged(item, event) {
+        if (item.Code == "All") {
+            this.father.BIReportXMLData.BITabularViewSettings.Columns.sort((a, b) => { return (a.Index === b.Index) ? 0 : (a.Index < b.Index) ? -1 : 1 }).forEach(item => {
+                item.IsChecked = event;
+            });
+        }
+        else {
+            item.IsChecked = event; 
+        }
     }
 }
