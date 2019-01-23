@@ -76,18 +76,18 @@
                                 <div></div>
                             </td>
 
-                            <td style="width: 57px;">
-                                <button class="GreenButton" (click)="RunReportButtonClicked()">Run Report</button>
+                            <td style="width: 120px;">
+                                <button style="width:120px;float:left;" class="Button" (click)="CountClicked()">Grid Total Rows</button>
                             </td>
 
                             <td style="width: 5px;">
                                 <div></div>
                             </td>
 
-
-                            <td style="width: 120px;">
-                                <button style="width:120px;float:left;" class="Button" (click)="CountClicked()">Grid Total Rows</button>
+                            <td *ngIf="SelectedFiltersDataSource" style="width: 57px;">
+                                <button class="GreenButton" (click)="RunReportButtonClicked()">Run Report</button>
                             </td>
+
 
                             <td>
                                 <div></div>
@@ -97,7 +97,7 @@
                                 <table>
                                     <tr>
                                         <td style="width: 15px;vertical-align:middle;">
-                                            <img src="./Images/Columns.png" (click)="onBIReportColumnsClick()" title="Show/Hide/Reorder Column(s)" style="cursor: pointer; height:18px;" [className]="LeftCenter"/>
+                                            <img src="./Images/Columns.png" (click)="onBIReportColumnsClick()" title="Show/Hide/Reorder Column(s)" style="cursor: pointer; height:18px;" [className]="LeftCenter" />
                                         </td>
 
                                         <td style="width: 5px;">
