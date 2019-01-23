@@ -80,13 +80,11 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LocalDescription { get; set; }
-
-
-
-
+        
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ChargeTypeGLAccountId { get; set; }
         public bool AuthorizedSignatory { get; set; }
 
+        public string PrepaidCollectId { get; set; }
     }
 }

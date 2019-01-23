@@ -39,6 +39,8 @@ namespace WebFreight.Web.DataContracts
         public bool IsChecked { get; set; }
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string DataTypeCode { get; set; }
-        
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Name { get; set; }
+
     }
 }

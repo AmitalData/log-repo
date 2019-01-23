@@ -724,6 +724,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
                 invoiceLine.ForiegnCurrencyId = payable.CurrencyId;
                 invoiceLine.ForiegnCurrencyCode = payable.CurrencyCode;
                 invoiceLine.Notes = payable.Notes;
+                invoiceLine.PrepaidCollectId = payable.PrepaidCollectId;
 
                 if (invoiceLine.ForiegnCurrencyId == this.EntityPM.InvoiceCurrencyId) {
                     invoiceLine.ForiegnExchangeRate = this.EntityPM.InvoiceCurrencyExchangeRate;

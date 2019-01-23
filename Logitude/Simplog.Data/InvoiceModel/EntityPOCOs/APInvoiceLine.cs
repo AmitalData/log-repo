@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Simplog.Data.InvoiceModel.EntityPOCOs
@@ -33,6 +34,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string LocalDescription { get; set; }
         public string ChargeTypeGLAccountId { get; set; }
         public bool AuthorizedSignatory { get; set; }
+        public string PrepaidCollectId { get; set; }
 
         [ForeignKey("ForiegnCurrencyId")]
         public virtual Currency Currency { get; set; }
@@ -45,5 +47,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
 
         [ForeignKey("APInvoiceId")]
         public virtual APInvoice APInvoice { get; set; }
+
+        [ForeignKey("PrepaidCollectId")]
+        public virtual PrepaidCollect PrepaidCollect { get; set; }
     }
 }

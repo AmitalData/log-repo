@@ -22,6 +22,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.LocalDescription).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.ChargeTypeGLAccountId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.VatPercentage).IsOptional();
+            this.Property(t => t.PrepaidCollectId).HasMaxLength(1).IsUnicode(false);
 
             this.ToTable("APInvoiceLines");
             this.Property(t => t.APInvoiceId).HasColumnName("APInvoiceId");
@@ -46,11 +47,13 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.VatAmount).HasColumnName("VatAmount");
             this.Property(t => t.ChargeTypeGLAccountId).HasColumnName("ChargeTypeGLAccountId");
             this.Property(t => t.AuthorizedSignatory).HasColumnName("AuthorizedSignatory");
+            this.Property(t => t.PrepaidCollectId).HasColumnName("PrepaidCollectId");
 
             this.HasRequired(t => t.APInvoice).WithMany().HasForeignKey(d => d.APInvoiceId);
             this.HasRequired(t => t.ChargesType).WithMany().HasForeignKey(d => d.ChargesTypeId);
             this.HasRequired(t => t.VatType).WithMany().HasForeignKey(d => d.VatTypeId);
             this.HasRequired(t => t.Currency).WithMany().HasForeignKey(d => d.ForiegnCurrencyId);
+            this.HasOptional(t => t.PrepaidCollect).WithMany().HasForeignKey(d => d.PrepaidCollectId);
         }
     }
 }
