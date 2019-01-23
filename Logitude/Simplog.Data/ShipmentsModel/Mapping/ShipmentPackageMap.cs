@@ -34,10 +34,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.EmptyContainerReturnId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.EmptyContainerReturnTo).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.EmptyContainerReturnFrom).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.Reference1).HasMaxLength(250).IsUnicode(false);
-            this.Property(t => t.Reference2).HasMaxLength(250).IsUnicode(false);
-            this.Property(t => t.Reference3).HasMaxLength(250).IsUnicode(false);
-            this.Property(t => t.Reference4).HasMaxLength(250).IsUnicode(false);
+            this.Property(t => t.Reference1).HasMaxLength(2000).IsUnicode(false);
+            this.Property(t => t.Reference2).HasMaxLength(2000).IsUnicode(false);
+            this.Property(t => t.Reference3).HasMaxLength(2000).IsUnicode(false);
+            this.Property(t => t.Reference4).HasMaxLength(2000).IsUnicode(false);
             this.Property(t => t.CommodityNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.CommodityName).HasMaxLength(250).IsUnicode(false);
             this.Property(t => t.CeficClass).HasMaxLength(25).IsUnicode(false);
