@@ -9377,14 +9377,25 @@ namespace WebFreight.Web.ReportsWebServices
             if (time != 0)
             {
                 var ts = TimeSpan.FromHours(time);
+                var h = 0.0;
                 if(ts.TotalHours < 0)
                 {
                     isMinus = true;
+                    var h_Abs = Math.Abs(ts.TotalHours);
+                     h = System.Math.Floor(h_Abs);
                 }
-                var h = System.Math.Floor(ts.TotalHours);
+                else
+                {
+                     h = System.Math.Floor(ts.TotalHours);
+                }
+               
                 if (Math.Abs(ts.TotalHours) < 1)
                 {
                     h = 0;
+                }
+                if(isMinus)
+                {
+                    h = h * -1;
                 }
                 var m = (ts.TotalHours - h) * 60;
                 if (isMinus)
