@@ -134,6 +134,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.MasterInternalNumber = shipment.MasterShipmentNumber;
                 myDataProvider.CompleteShipmentType = shipment.TransportModeName + " " + shipment.DirectionName;
                 myDataProvider.ChargeableWeight = shipment.ChargeableWeight;
+                myDataProvider.ProjectNumber = shipment.ProjectNumber;
 
                 if (shipment.DocumentsClosingDate != null)
                 {
