@@ -576,8 +576,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         var subscription = this.pubSubAdvanceQueryFiltersService.Stream.subscribe(customer => this.processAdvanceQueryFilters(customer));
       //SessionLocator.CurrentSession.pubSubAdvanceQueryFiltersService.emit(this.pubSubAdvanceQueryFiltersService)
       //this.ObjectTableName == "Customs.Declaration" || this.ObjectTableName == "Customs.PhysicalCheck" ||
-      if (this.ObjectTableName.startsWith("Customs.")) {
-        this.IsNavigateButtonVisible = true;
+        if (this.ObjectTableName.startsWith("Customs.")) {
+            this.IsNavigateButtonVisible = false;
       }
         this.Listen();
     }
