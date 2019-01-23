@@ -9346,7 +9346,7 @@ namespace WebFreight.Web.ReportsWebServices
                 differenceTime_Total += differenceTime;
                 timSheetItem.DifferenceTime = DateFormat(differenceTime);
 
-                var totalWorkHrs = Math.Round((timeFromOffice + timeFromClient + timeFromHome), 2);
+                var totalWorkHrs = Math.Round((timeFromClock + timeFromClient + timeFromHome), 2);
                 totalWorkHrs_Total += totalWorkHrs;
                 timSheetItem.TotalWorkHrs = DateFormat(totalWorkHrs);
 
