@@ -2164,6 +2164,17 @@ export class ShipmentPayableItem extends BaseComponent {
                     if (list) {
                         this.CreatedByUserName = list.EnglishName;
                     }
+
+                    else {
+                        this.fatherComponent.myUserListService.getSingle(this.EntityPM.CreatedByUserId).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                var list: UserList = myResponse.Result;
+                                if (list) {
+                                    this.CreatedByUserName = list.EnglishName;
+                                }
+                            }
+                        });
+                    }
                 }
             });
 
@@ -2177,6 +2188,17 @@ export class ShipmentPayableItem extends BaseComponent {
                         var list: UserList = myResponse.Result;
                         if (list) {
                             this.UpdatedByUserName = list.EnglishName;
+                        }
+
+                        else {
+                            this.fatherComponent.myUserListService.getSingle(this.EntityPM.UpdateByUserId).subscribe((myResponse: ServiceResponse) => {
+                                if (!myResponse.HasError) {
+                                    var list: UserList = myResponse.Result;
+                                    if (list) {
+                                        this.UpdatedByUserName = list.EnglishName;
+                                    }
+                                }
+                            });
                         }
                     }
                 });

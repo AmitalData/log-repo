@@ -285,10 +285,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     select a.DWObjectTableCode).FirstOrDefault();
         }
 
-        public DWObjectFieldPM GetFactKeyFieldForDWDimTable(string DWDimTableCode)
+        public DWObjectFieldPM GetFactKeyFieldForDWDimTable(string DWFactTableCode,string DWDimTableCode)
         {
             return (from a in repository.webFreightContext.DWObjectFields
-                    where a.DimensionTableCode == DWDimTableCode && a.IsPrimaryKey == true
+                    where a.DimensionTableCode == DWDimTableCode && a.DWObjectTableCode == DWFactTableCode && (a.DataTypeCode.ToLower() == "dimension" || a.DataTypeCode.ToLower() == "lookup")
                     select new DWObjectFieldPM()
                     {
                         Id = a.Id,

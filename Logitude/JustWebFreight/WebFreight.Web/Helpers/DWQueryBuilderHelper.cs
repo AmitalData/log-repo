@@ -293,9 +293,10 @@ namespace WebFreight.Web.Helpers
                 //var Key = this.AllFieldsObsList.filter(a => a.DWObjectTableCode == mytbl.ParentDimTabelName && a.IsPrimaryKey == true)[0];
                 var Key = OFieldQuery.GetPrimaryKeyFieldForDWObjectTable(mytbl.ParentDimTabelName);
                 //MeFactName = OFieldQuery.GetFactTableCode(mytbl.ParentDimTabelName);
-                var FactKey = OFieldQuery.GetFactKeyFieldForDWDimTable(Fact);
+                var FactKey = OFieldQuery.GetFactKeyFieldForDWDimTable(Fact, mytbl.ParentDimTabelName);
                 //this.AllFieldsDataSource.filter(a => a.DimensionTableCode == mytbl.ParentDimTabelName)[0];
-                FinalSelectStmt += " inner join " + mytbl.ParentDimTabelName + " on " + Fact + "." + ((FactKey.DataTypeCode.ToLower() == "lookup" || FactKey.DataTypeCode.ToLower() == "dimension") ? FactKey.DisplayName : FactKey.Code) + " = " + mytbl.ParentDimTabelName + "." + Key.Code;
+                //(FactKey.DataTypeCode.ToLower() == "lookup" || FactKey.DataTypeCode.ToLower() == "dimension") ? FactKey.DisplayName : 
+                FinalSelectStmt += " inner join " + mytbl.ParentDimTabelName + " on " + Fact + "." + (FactKey.Code) + " = " + mytbl.ParentDimTabelName + "." + Key.Code;
 
 
             }
@@ -322,7 +323,7 @@ namespace WebFreight.Web.Helpers
             {
                 FinalQuery = FinalQuery + " where " + Fact + ".[Parent Tenant] = " + Tenant;
             }
-            if (DWQueryParam.PageIndex == 0 && DWQueryParam.PageSize == 0)
+            if (DWQueryParam.PageSize != 0)
             {
                 FinalQuery = FinalQuery + PagingString;
             }
