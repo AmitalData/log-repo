@@ -59,5 +59,12 @@ namespace WebFreight.Web.DataProviders
         public int? PackagesCount { get; set; }
         public int? InsidePackagesCount { get; set; }
         public string FullStatus { get; set; }
+
+        public DateTime? Transshipment1ETA { get; set; }
+        public DateTime? Transshipment2ETA { get; set; }
+        public DateTime? Transshipment3ETA { get; set; }
+        public DateTime? Transshipment1ETD { get; set; }
+        public DateTime? Transshipment2ETD { get; set; }
+        public DateTime? Transshipment3ETD { get; set; }
     }
 }
