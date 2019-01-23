@@ -441,26 +441,25 @@
                                             <tr>
                                                 <td style="height:25px;width:100%;">
                                                     <div class="TitleBackGround" style="width:100%;height:100%;border-radius:5px 5px 0px 0px;">
-
-                                                        <table>
-                                                            <tr>
-                                                                <td style="width:1px;">
-                                                                    <div style="float:left;">
+                                                        <div style="float:left;">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:1px;">
                                                                         <label style="margin:5px;vertical-align: middle;">Selected Query Columns</label><!--{{'General.O.SelectedColumns' | TextCodeTranslationPipe}}-->
                                                                         <!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}-->
-                                                                    </div>
-                                                                </td>
-                                                                <td width="3px;">
-                                                                    <div></div>
-                                                                </td>
-                                                                <td style="width: 49px;">
-                                                                    <HelpIcon *ngIf="IsBIReportEditScreen" style="width: 18px;height:18px;" [Header]="'Help'" [Text]="'Added Columns will be added to the end of the report columns. Removed columns will be removed from the report automatically.'"></HelpIcon>
-                                                                </td>
-                                                                <td>
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
+                                                                    </td>
+                                                                    <td width="3px;">
+                                                                        <div></div>
+                                                                    </td>
+                                                                    <td style="width: 49px;">
+                                                                        <HelpIcon *ngIf="IsBIReportEditScreen" style="width: 18px;height:18px;" [Header]="'Help'" [Text]="'Added Columns will be added to the end of the report columns. Removed columns will be removed from the report automatically.'"></HelpIcon>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
                                                         <!--<div style="float:right;">
                                                             <button (click)="btnUp_Click()" class="Button" [disabled]="IsbtnDownEnabled" style="width:26px;margin-right: 2px;margin-top:3px;float:right;">
                                                                 <img src="./Images/Icons/ArrowUp.png" style="height:16px;vertical-align:middle;" />
@@ -510,9 +509,7 @@
 
                                                 </td>
                                             </tr>
-
                                         </table>
-
                                     </div>
                                 </td>
                             </tr>
@@ -569,7 +566,6 @@
                                                 </td>
                                             </tr>
                                         </table>
-
                                     </div>
                                 </td>
                             </tr>

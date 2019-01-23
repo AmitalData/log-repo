@@ -1671,7 +1671,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             foreach(var item in bITabularViewSettings.Columns.ToList())
                             {
-                                var queryColumn = Columns.Where(a => a.Name == item.Code).FirstOrDefault();
+                                var queryColumn = Columns.Where(a => a.DisplayName.Replace("[", "").Replace("]", "") == item.Code).FirstOrDefault();
                                 if (queryColumn == null)
                                 {
                                     isUpdated = true;
@@ -1682,13 +1682,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         foreach(var item in Columns)
                         {
-                            var queryColumn = bITabularViewSettings.Columns.Where(a => a.Code == item.Name).FirstOrDefault();
+                            var queryColumn = bITabularViewSettings.Columns.Where(a => a.Code == item.DisplayName.Replace("[", "").Replace("]", "")).FirstOrDefault();
                             if (queryColumn == null)
                             {
                                 isUpdated = true;
                                 bITabularViewSettings.Columns.Add(new Column
                                 {
-                                    Code = item.DisplayName,
+                                    Code = item.DisplayName.Replace("[","").Replace("]",""),
                                     Name = item.Name,
                                     IsChecked = true,
                                     Width = 150,
@@ -1723,7 +1723,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         bITabularViewSettings.Columns.Add(new Column
                         {
-                            Code = item.DisplayName,
+                            Code = item.DisplayName.Replace("[", "").Replace("]", ""),
                             Name = item.Name,
                             IsChecked = true,
                             Width = 150,

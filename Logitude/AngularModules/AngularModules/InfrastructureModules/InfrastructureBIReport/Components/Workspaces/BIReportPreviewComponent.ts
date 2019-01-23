@@ -343,7 +343,7 @@ export class BIReportPreviewComponent implements OnInit {
 
         this.BIReportXMLData.DWQueryData.Columns.forEach(item => {
             newColumn = new Column();
-            var agCol = coulmns!= null ? coulmns.filter(x => x.colId === item.Name)[0] : null;
+            var agCol = coulmns != null ? coulmns.filter(x => x.colId === item.DisplayName.replace('[', '').replace(']', ''))[0] : null;
             newColumn.Index = this.BIReportXMLData.DWQueryData.Columns.indexOf(item);
             newColumn.DataTypeCode = item.DataTypeCode;
             newColumn.IsChecked = false;
@@ -355,7 +355,7 @@ export class BIReportPreviewComponent implements OnInit {
                 newColumn.Code = agCol["colId"];
             }
             if (sorting != null) {
-                var sortItem = sorting.filter(x => x.colId === item.Name)[0];
+                var sortItem = sorting.filter(x => x.colId === item.DisplayName.replace('[', '').replace(']', ''))[0];
                 if (sortItem != null) {
                     newColumn.SortDirction = sortItem["sort"];
                     newColumn.SortOrder = sorting.indexOf(sortItem);
@@ -397,7 +397,7 @@ export class BIReportPreviewComponent implements OnInit {
         logWindow.Show('./CommonModules/CommonOthers/Components/LoadSampleData/DWQueryBuilderComponent');
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
-                if (s != null && d != "cancel") {
+                if (s != null && d != null && d != "cancel") {
                     this.DWQueryId = s.ID;
                     this.LoadBIReportData();
                 }
