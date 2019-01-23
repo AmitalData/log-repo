@@ -27,23 +27,23 @@
 
                                     <td style="width: 60px;padding: 0 10px; color:rgb(110, 113, 114)" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.Datefrom'  | TextCodeTranslationPipe}}</td>
 
-                                    <td style="width: 130px;">
+                                    <td style="width: 130px; ">
                                         <LogDatePicker [ObjectFieldName]="'FromMonthInclusive'" [ObjectTableName]="ObjectTableName"
                                             [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"
-                                            [SelectedDateValue]="FromMonthInclusive"></LogDatePicker>
+                                            ></LogDatePicker>
                                     </td>
 
                                     <td style="width:15px;">
                                         <div></div>
                                     </td>
 
-                                    <td style="width: 30px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.To'
+                                    <td style="width: 30px; color:rgb(110, 113, 114)" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.To'
                                         | TextCodeTranslationPipe}}</td>
 
                                     <td style="width: 130px;">
                                         <LogDatePicker [ObjectFieldName]="'ToMonthInclusive'" [ObjectTableName]="ObjectTableName"
                                             [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"
-                                            [SelectedDateValue]="ToMonthInclusive"></LogDatePicker>
+                                            ></LogDatePicker>
                                     </td>
 
                                     <td>
