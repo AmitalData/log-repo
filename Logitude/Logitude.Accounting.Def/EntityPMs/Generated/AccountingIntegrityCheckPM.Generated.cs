@@ -227,6 +227,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime fromMonthInclusive ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime FromMonthInclusive  
+	   {
+	    
+	     get
+		{
+		   return fromMonthInclusive;
+		 }
+		 set
+		 {
+		   if(fromMonthInclusive != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromMonthInclusive",OldValue=fromMonthInclusive,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   fromMonthInclusive=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime toMonthInclusive ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime ToMonthInclusive  
+	   {
+	    
+	     get
+		{
+		   return toMonthInclusive;
+		 }
+		 set
+		 {
+		   if(toMonthInclusive != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToMonthInclusive",OldValue=toMonthInclusive,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   toMonthInclusive=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
