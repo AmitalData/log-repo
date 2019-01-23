@@ -172,6 +172,9 @@ export class BIReportPreviewComponent implements OnInit {
                 }
             });
         }
+        else {
+            this.StopBusyIndicator();
+        }
     }
     private DateCellRenderer(params: any) {
         var DatePipe = new DateTimePipe();
