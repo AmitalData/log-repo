@@ -1,4 +1,4 @@
-﻿<div>
+﻿<div *ngIf="IsLoad">
     <table>
         <tr>
           
@@ -18,7 +18,10 @@
                 </div>
             </td>
             <td style="width:100%" *ngIf="ShowLogDatePicker">
-                <LogDatePicker [InputType]="'date'" [HideColumns]="true" [IsFreeValue]="true" [NoObjectField]="true" [NoValidation]="true" [SelectedDateValue]="DateValue" (ValueChanged)="DatePickerValueChange($event)"  [DataContext]="DataContext"></LogDatePicker>
+                
+                <LogDatePicker  [HideColumns]="true"  [IsFreeValue]="true"  [SelectedDateValue]="DateValue" [ObjectFieldName]="'DateValue'"  (ValueChanged)="DatePickerValueChange($event)" [DataContext]="DataContext"></LogDatePicker>
+
+
             </td>
         </tr>
     </table>

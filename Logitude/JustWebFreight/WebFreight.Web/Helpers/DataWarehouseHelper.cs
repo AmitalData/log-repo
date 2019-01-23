@@ -8,14 +8,14 @@ namespace WebFreight.Web.Helpers
 {
     public class DataWarehouseHelper
     {
-        public string ResolveWarehoueDateField(string fieldName,string operationCode, string fieldValue, int tenant)
+        public string ResolveWarehoueDateField(string fieldName, string operationCode, string fieldValue, int tenant)
         {
             string result = string.Empty;
             if (!string.IsNullOrEmpty(fieldValue))
             {
                 var valuesArray = fieldValue.Split('^');
 
-                if ((operationCode == "Before" || operationCode == "After")) result = ResolveBeforeAfterDateValue(fieldName, operationCode, fieldValue, tenant);
+                if ((operationCode == "Before" || operationCode == "After")) result = ResolveBeforeAfterDateValue(fieldName ,operationCode, fieldValue, tenant);
                 if (operationCode == "Previous" && valuesArray.Length == 3) result = ResolvePreviousDateValue(fieldName, valuesArray[1], valuesArray[2], tenant);
                 else if (operationCode == "Next" && valuesArray.Length == 3) result = ResolveNextDateValue(fieldName, valuesArray[1], valuesArray[2], tenant);
                 else if (operationCode == "Current" && valuesArray.Length == 2) result = ResolveCurrentDateValue(fieldName, valuesArray[1], tenant);
@@ -26,9 +26,10 @@ namespace WebFreight.Web.Helpers
 
         }
 
-        private string ResolveBeforeAfterDateValue(string fieldName, string operationCode, string fieldvalue, int tenant)
+        private string ResolveBeforeAfterDateValue(string fieldName , string operationCode, string fieldvalue, int tenant)
         {
-            string result = fieldName + operationCode == "After" ?  " >'" :"<'" + fieldvalue + "'";
+            string operationSimpol = operationCode == "After" ? " >'" : "<'";
+            string result = fieldName + operationSimpol + fieldvalue + "'";
 
             return result;
         }

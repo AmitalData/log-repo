@@ -35,15 +35,15 @@ export class DWDateComponent extends BaseComponent {
     DataContext: any;
     ObjectFieldName: string;
     Item: any;
-
+    IsFirstTime: boolean = true;
+    IsLoad: boolean = false;
     constructor() {
         super();
-       
+  
     }
 
 
     SelectedRange: string;
-    DateValue: Date;
 
     ShowRange: boolean = false;
     ShowInterval: boolean = false;
@@ -51,10 +51,11 @@ export class DWDateComponent extends BaseComponent {
 
     ngOnInit() { 
 
-
+   
         this.FillListRange();
         this.ShowControl();
         this.GetValue();
+
     }
 
     private operation: string;
@@ -64,11 +65,18 @@ export class DWDateComponent extends BaseComponent {
     public set Operation(newValue: string) {
         if (this.operation != newValue) {
             this.operation = newValue;
-            this.ShowControl();
-            this.SetValue();
+            if (!this.IsFirstTime) {
+                this.ShowControl();
+                this.SetValue();
+            }
+            this.IsFirstTime = false;
 
         }
     }
+
+
+
+    DateValue: Date;
     IntervalValue: number;
     ShowControl() {
 
@@ -107,8 +115,10 @@ export class DWDateComponent extends BaseComponent {
         this.SetValue();
     }
 
-    DatePickerValueChange(value) {
-        if (value != this.DateValue) {
+    DatePickerValueChange(value: Date) {
+        var value1:string = value != null ? value.toString():"";
+        var value2:string = this.DateValue != null ? this.DateValue.toString():"";
+        if (value1 != value2) {
             this.DateValue = value;
             this.SetValue();
         }
@@ -127,8 +137,8 @@ export class DWDateComponent extends BaseComponent {
     SetValue() {
 
         if (this.Operation == "Before" || this.Operation == "After") {
-            this.SelectedValue = this.DateValue;
-
+            this.SelectedValue = this.DateValue ? this.DateValue.toString():"";
+           
 
         } else if (this.Operation == "Previous" || this.Operation == "Next" ) {
             this.SelectedValue = this.Operation;
@@ -153,8 +163,11 @@ export class DWDateComponent extends BaseComponent {
     GetValue() {
 
         if (this.Operation == "Before" || this.Operation == "After") {
-            this.DateValue = this.SelectedValue;
-
+            if (this.SelectedValue) {
+               
+                this.DateValue = new Date(this.SelectedValue);  
+            }
+ 
         } else if (this.Operation == "Previous" || this.Operation == "Next") {
 
             var values: string[] = this.SelectedValue.toString().split('^');
@@ -168,7 +181,17 @@ export class DWDateComponent extends BaseComponent {
         
         }
 
+        this.IsLoad = true;
     }
-
+    SetDate(year: number, month: number, day: number) {
+        var date = new Date();
+        date.setUTCFullYear(year);
+        date.setUTCMonth(month);
+        date.setUTCDate(day);
+        date.setUTCHours(0);
+        date.setUTCMinutes(0);
+        date.setUTCSeconds(0);
+        return date;
+    }
 }
 
