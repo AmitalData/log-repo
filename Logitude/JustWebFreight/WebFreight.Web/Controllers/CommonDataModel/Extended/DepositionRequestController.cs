@@ -26,13 +26,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 DepositionRequestHelper depositionRequestHelper = new DepositionRequestHelper();
-                string ShipmentId =  depositionRequestHelper.StartDepositionRequestTask(depositionRequestAM);
-
                 string logId = depositionRequestHelper.AddAPILogs(depositionRequestAM);
+
+                string ShipmentId =  depositionRequestHelper.StartDepositionRequestTask(depositionRequestAM);
                 var msg = "Importer Deposition Send to cloud Successfully";
-                APILogsUtility.UpdateAPILogStatus(logId, depositionRequestAM.CustomerTenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(depositionRequestAM), null, null, "");
                 if (string.IsNullOrEmpty(ShipmentId)) msg = "Shipment not found in logbox";
-            
+                APILogsUtility.UpdateAPILogStatus(logId, depositionRequestAM.CustomerTenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(depositionRequestAM), null, null, "");
                 return Request.CreateResponse(HttpStatusCode.OK, msg);
             }
 
