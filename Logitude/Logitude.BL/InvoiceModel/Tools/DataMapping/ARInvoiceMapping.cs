@@ -97,8 +97,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.IsGeneralInvoice = entityPM.IsGeneralInvoice;
             entity.SalesmanUserId = entityPM.SalesmanUserId;
             entity.IsCustomsChargesOnly = entityPM.IsCustomsChargesOnly;
-
             entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
+
             if (entityPM.HouseNumber != null)
             {
                 entityPM.HouseNumber = entityPM.HouseNumber.Trim();
@@ -231,6 +231,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.LineActionCode = entityPM.LineActionCode;
             entity.IsBackToBack = entityPM.IsBackToBack;
             entity.IsExpense = entityPM.IsExpense;
+            entity.PrepaidCollectId = entityPM.PrepaidCollectId;
 
             Tenant myTenant = TenantRepository.GetSingleTenant(entityPM.Tenant, true);
 
@@ -239,7 +240,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.ForiegnExchangeRate = 1;
                 entity.LocalCurrencyAmount = entity.ForiegnCurrencyAmount;
             }
-
         }
 
         public static void MapInvoicePayment(ARInvoicePaymentPM entityPM, ARInvoicePayment entity, bool isNewState)

@@ -748,10 +748,15 @@ export class InfrastructureDomainService {
                 return this._http.put(this._apiUrl + "/PutBIReport", JSON.stringify(temp),
                     { headers: authHeader }).map((res) => {
                         var pm = res.json();
+                        var entity: BIReportXMLData = new BIReportXMLData();
                         if (pm) {
-                            response.Result = pm;
+                            entity = pm;
                         }
-                        return response;
+                        var serviceResponse: ServiceResponse;
+                        serviceResponse = new ServiceResponse();
+                        serviceResponse.Result = entity;
+                        var servertime = res.headers.get('ServerExecutionTime');
+                        return serviceResponse;
                     });
             }
             else {
@@ -852,13 +857,12 @@ export class BIReportXMLData {
     public BIReportPM: BIReportPM;
     public BITabularViewSettings: BITabularViewSettings;
 }
-
 export class BITabularViewSettings {
     public Columns: Column[];  
 }
-
 export class Column {
     public Code: string;
+    public Name: string;
     public SortDirction: string;
     public SortOrder: number;
     public Width: number;

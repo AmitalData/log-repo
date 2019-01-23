@@ -194,6 +194,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? CutoffDate { get; set; }
 
         public string MainCarriageFromPortId { get; set; }
+        public string MainCarriageToPortId { get; set; }
         public string MainCarriageFromPortName { get; set; } // origin
         public DateTime? MainCarriageATA { get; set; }
         public DateTime? MainCarriageETD { get; set; }
@@ -497,6 +498,10 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string AdditionalChargesId { get; set; }
         public string FreightPayerId { get; set; }
         public string FreightPayerAddressId { get; set; }
-
+        public string PreCarriageFromPortId { get; set; }
+        public string OnCarriageToPortId { get; set; }
+        public string Transshipment1ToPortId { get; set; }
+        public string Transshipment2ToPortId { get; set; }
+        public string Transshipment3ToPortId { get; set; }
     }
 }

@@ -558,6 +558,18 @@
     <Compile Include="Migrations\201901210635206_counterdefinition_suffix.Designer.cs">
       <DependentUpon>201901210635206_counterdefinition_suffix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.cs" />
+    <Compile Include="Migrations\201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.Designer.cs">
+      <DependentUpon>201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901230833116_IncreasePackagesReferencesLength_Samar.cs" />
+    <Compile Include="Migrations\201901230833116_IncreasePackagesReferencesLength_Samar.Designer.cs">
+      <DependentUpon>201901230833116_IncreasePackagesReferencesLength_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.cs" />
+    <Compile Include="Migrations\201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.Designer.cs">
+      <DependentUpon>201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -920,6 +932,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901210635206_counterdefinition_suffix.resx">
       <DependentUpon>201901210635206_counterdefinition_suffix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.resx">
+      <DependentUpon>201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901230833116_IncreasePackagesReferencesLength_Samar.resx">
+      <DependentUpon>201901230833116_IncreasePackagesReferencesLength_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.resx">
+      <DependentUpon>201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
