@@ -246,13 +246,409 @@ namespace WebFreight.Web.WebServices
             totalData.DirectionTransportModeList = new List<DirectionTransportModeDataClass>();
             totalData.ShipmentQuantityList = new List<ShipmentQuantityDataClass>();
 
-            totalData.CustomersList = this.GetCustomersData(tenant, LastMonths, LastDays, ShowIndex, DirectionId, TransportModeId);
-            totalData.CountriesList = this.GetCountriesData(tenant, LastMonths, LastDays, ShowIndex, DirectionId, TransportModeId);
-            totalData.DirectionTransportModeList = this.GetDirectionTransportModeData(tenant, LastMonths, LastDays, ShowIndex);
-            totalData.ShipmentQuantityList = this.GetShipmentsData(tenant, LastMonths, LastDays, ShowIndex, DirectionId, TransportModeId);
 
+            DateTime? fromDate = null;
+            DateTime? toDate = null;
+
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            if (filterItem_FromDate != null && filterItem_FromDate.FieldValue != null) fromDate = DateTime.Parse(filterItem_FromDate.FieldValue.ToString());
+
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            if (filterItem_ToDate != null && filterItem_ToDate.FieldValue != null) toDate = DateTime.Parse(filterItem_ToDate.FieldValue.ToString());
+
+
+            if (fromDate != null && toDate != null)
+            {
+                totalData.CustomersList = this.GetCustomersDataCustom(tenant, LastMonths, LastDays, ShowIndex, DirectionId, TransportModeId,fromDate,toDate);
+                totalData.CountriesList = this.GetCountriesDataCustom(tenant, LastMonths, LastDays, ShowIndex, DirectionId, TransportModeId,fromDate,toDate);
+                totalData.DirectionTransportModeList = this.GetDirectionTransportModeDataCustom(tenant, LastMonths, LastDays, ShowIndex,fromDate,toDate);
+                totalData.ShipmentQuantityList = this.GetShipmentsDataCustom(tenant, LastMonths, LastDays, ShowIndex, DirectionId, TransportModeId,fromDate,toDate);
+
+            }
+            else
+            {
+                totalData.CustomersList = this.GetCustomersData(tenant, LastMonths, LastDays, ShowIndex, DirectionId, TransportModeId);
+                totalData.CountriesList = this.GetCountriesData(tenant, LastMonths, LastDays, ShowIndex, DirectionId, TransportModeId);
+                totalData.DirectionTransportModeList = this.GetDirectionTransportModeData(tenant, LastMonths, LastDays, ShowIndex);
+                totalData.ShipmentQuantityList = this.GetShipmentsData(tenant, LastMonths, LastDays, ShowIndex, DirectionId, TransportModeId);
+
+            }
             return totalData;
         }
+
+
+        private List<CustomersDataClass> GetCustomersDataCustom(int tenant, int lastMonths, int lastDays, int measurment, string directionId, string transmodeId,DateTime?fromDate,DateTime?toDate)
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            List<DashBoardClass> list = shipmentQuery.GetTop10DashBoardCustom(null, fromDate, toDate, measurment, tenant, 10, false, directionId, transmodeId).ToList();
+
+            List<DashBoardClass> list1 = (from l in list
+                                          group l by new
+                                          {
+                                              l.CustomerName,
+                                              l.CustomerID,
+                                          }
+                          into m
+                                          orderby m.Key.CustomerName
+                                          select new DashBoardClass()
+                                          {
+                                              CustomerID = m.Key.CustomerID,
+                                              CustomerName = m.Key.CustomerName,
+                                              total = m.Sum(d => d.total),
+                                              sumGrossWeight = m.Sum(d => d.sumGrossWeight),
+                                              sumChargeableWeight = m.Sum(d => d.sumChargeableWeight),
+                                              totalProfitInLocalCurrency = m.Sum(d => d.totalProfitInLocalCurrency),
+                                              totalProfitInProfitCurrency = m.Sum(d => d.totalProfitInProfitCurrency),
+                                              ReceivablesInLocalCurrency = m.Sum(d => d.ReceivablesInLocalCurrency),
+                                              ReceivablesInProfitCurrency = m.Sum(d => d.ReceivablesInProfitCurrency),
+                                          }).ToList<DashBoardClass>();
+
+
+
+            List<CustomersDataClass> result = new List<CustomersDataClass>();
+
+            if (list1 != null)
+            {
+                int i = 0;
+                foreach (DashBoardClass item in list1)
+                {
+                    CustomersDataClass newItem = new CustomersDataClass()
+                    {
+                        Id = i++,
+                        CustomerId = item.CustomerID,
+                        CustomerName = item.CustomerName,
+                        DirectionId = item.directionID,
+                        TransportModeId = item.transportModeID,
+                        Total = item.total,
+                        SumGrossWeight = item.sumGrossWeight,
+                        SumChargeableWeight = item.sumChargeableWeight,
+                        ProfitInLocalCurrency = item.totalProfitInLocalCurrency,
+                        ProfitInProfitCurrency = item.totalProfitInProfitCurrency,
+                        ReceivablesInLocalCurrency = item.ReceivablesInLocalCurrency,
+                        ReceivablesInProfitCurrency = item.ReceivablesInProfitCurrency,
+                    };
+
+                    result.Add(newItem);
+                }
+            }
+
+            foreach (CustomersDataClass item in result)
+            {
+                switch (measurment)
+                {
+                    case 0:
+                        {
+                            item.GeneralTotal = item.Total;
+                            break;
+                        }
+
+                    case 1:
+                        {
+                            item.GeneralTotal = item.SumChargeableWeight;
+                            break;
+                        }
+
+                    case 2:
+                        {
+                            item.GeneralTotal = item.SumGrossWeight;
+                            break;
+                        }
+
+                    case 3:
+                        {
+                            item.GeneralTotal = item.ProfitInLocalCurrency;
+                            break;
+                        }
+
+                    case 4:
+                        {
+                            item.GeneralTotal = item.ProfitInProfitCurrency;
+                            break;
+                        }
+
+                    case 5:
+                        {
+                            item.GeneralTotal = item.ReceivablesInLocalCurrency;
+                            break;
+                        }
+
+                    case 6:
+                        {
+                            item.GeneralTotal = item.ReceivablesInProfitCurrency;
+                            break;
+                        }
+                }
+
+                item.GeneralTotal = Math.Round(item.GeneralTotal.Value, 2);
+            }
+
+            return result;
+        }
+
+        private List<CountriesDataClass> GetCountriesDataCustom(int tenant, int lastMonths, int lastDays, int measurment, string directionId, string transmodeId,DateTime?fromDate, DateTime? toDate)
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            List<DashBoardClass> list = shipmentQuery.GetShipmentsByTop10CountriesDashBoardCustom2(null, fromDate, toDate, measurment, tenant, 10, false, null, directionId, transmodeId).ToList();
+
+            List<DashBoardClass> list1 = (from l in list
+                                          where l.countryName != "Others"
+                                          group l by new
+                                          {
+                                              l.countryName,
+                                              l.countryCode
+                                          }
+                      into m
+                                          orderby m.Key.countryName
+                                          select new DashBoardClass()
+                                          {
+                                              countryCode = m.Key.countryCode,
+                                              countryName = m.Key.countryName,
+                                              total = m.Sum(d => d.total),
+                                              sumGrossWeight = m.Sum(d => d.sumGrossWeight),
+                                              sumChargeableWeight = m.Sum(d => d.sumChargeableWeight),
+                                              totalLastMonth = m.Sum(d => d.totalLastMonth),
+                                              sumChargeableWeightLastMonth = m.Sum(d => d.sumChargeableWeightLastMonth),
+                                              sumGrossWeightLastMonth = m.Sum(d => d.sumGrossWeightLastMonth),
+                                              totalProfitInLocalCurrency = m.Sum(d => d.totalProfitInLocalCurrency),
+                                              totalProfitInProfitCurrency = m.Sum(d => d.totalProfitInProfitCurrency),
+                                              ReceivablesInLocalCurrency = m.Sum(d => d.ReceivablesInLocalCurrency),
+                                              ReceivablesInProfitCurrency = m.Sum(d => d.ReceivablesInProfitCurrency),
+                                          }).ToList<DashBoardClass>();
+
+            //OrderByDescending(d => d.YField).Take(Convert.ToInt32(10))
+
+            List<CountriesDataClass> result = new List<CountriesDataClass>();
+
+            if (list1 != null)
+            {
+                int i = 0;
+                foreach (DashBoardClass item in list1)
+                {
+                    CountriesDataClass newItem = new CountriesDataClass()
+                    {
+                        Id = i++,
+                        CountryCode = item.countryCode,
+                        CountryName = item.countryName,
+                        Total = item.total,
+                        SumGrossWeight = item.sumGrossWeight,
+                        SumChargeableWeight = item.sumChargeableWeight,
+                        TotalLastMonth = item.totalLastMonth,
+                        SumChargeableWeightLastMonth = item.sumChargeableWeightLastMonth,
+                        SumGrossWeightLastMonth = item.sumGrossWeightLastMonth,
+                        ProfitInLocalCurrency = item.totalProfitInLocalCurrency,
+                        ProfitInProfitCurrency = item.totalProfitInProfitCurrency,
+                        ReceivablesInLocalCurrency = item.ReceivablesInLocalCurrency,
+                        ReceivablesInProfitCurrency = item.ReceivablesInProfitCurrency,
+                    };
+
+                    result.Add(newItem);
+                }
+            }
+
+            foreach (CountriesDataClass item in result)
+            {
+                switch (measurment)
+                {
+                    case 0:
+                        {
+                            item.GeneralTotal = item.Total;
+                            break;
+                        }
+
+                    case 1:
+                        {
+                            item.GeneralTotal = item.SumChargeableWeight;
+                            break;
+                        }
+
+                    case 2:
+                        {
+                            item.GeneralTotal = item.SumGrossWeight;
+                            break;
+                        }
+
+                    case 3:
+                        {
+                            item.GeneralTotal = item.ProfitInLocalCurrency;
+                            break;
+                        }
+
+                    case 4:
+                        {
+                            item.GeneralTotal = item.ProfitInProfitCurrency;
+                            break;
+                        }
+
+                    case 5:
+                        {
+                            item.GeneralTotal = item.ReceivablesInLocalCurrency;
+                            break;
+                        }
+
+                    case 6:
+                        {
+                            item.GeneralTotal = item.ReceivablesInProfitCurrency;
+                            break;
+                        }
+                }
+
+                item.GeneralTotal = Math.Round(item.GeneralTotal.Value, 2);
+            }
+
+            return result;
+        }
+
+        private List<DirectionTransportModeDataClass> GetDirectionTransportModeDataCustom(int tenant, int lastMonths, int lastDays, int measurment, DateTime? fromDate, DateTime? toDate)
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            List<DashBoardClass> list = shipmentQuery.GetShipmentsByDirectionAndTransModeCustom(null, fromDate, toDate, tenant, null).ToList();
+
+            List<DashBoardClass> list1 = (from l in list
+                                          group l by new
+                                          {
+                                              l.transportModeID,
+                                              l.directionID,
+                                              l.DirectionName,
+                                              l.TransportModeName,
+                                          }
+                                          into m
+                                          orderby m.Key.directionID
+                                          select new DashBoardClass()
+                                          {
+                                              directionID = m.Key.directionID,
+                                              transportModeID = m.Key.transportModeID,
+                                              TransportModeName = m.Key.TransportModeName,
+                                              DirectionName = m.Key.DirectionName,
+                                              total = m.Sum(d => d.total),
+                                              sumChargeableWeight = m.Sum(d => d.sumChargeableWeight),
+                                              sumGrossWeight = m.Sum(d => d.sumGrossWeight),
+                                              totalProfitInLocalCurrency = m.Sum(d => d.totalProfitInLocalCurrency),
+                                              totalProfitInProfitCurrency = m.Sum(d => d.totalProfitInProfitCurrency),
+                                              ReceivablesInLocalCurrency = m.Sum(d => d.ReceivablesInLocalCurrency),
+                                              ReceivablesInProfitCurrency = m.Sum(d => d.ReceivablesInProfitCurrency),
+                                          }).ToList<DashBoardClass>();
+
+            List<DirectionTransportModeDataClass> dataList = new List<DirectionTransportModeDataClass>();
+
+            if (list1 != null)
+            {
+                int i = 0;
+                foreach (DashBoardClass item in list1)
+                {
+                    DirectionTransportModeDataClass newItem = new DirectionTransportModeDataClass()
+                    {
+                        Id = i++,
+                        Day = item.day,
+                        Year = item.year,
+                        Month = item.month,
+                        DirectionId = item.directionID,
+                        TransportModeId = item.transportModeID,
+                        TransportModeName = item.TransportModeName,
+                        DirectionName = item.DirectionName,
+                        Total = item.total,
+                        SumGrossWeight = item.sumGrossWeight,
+                        SumChargeableWeight = item.sumChargeableWeight,
+                        TotalProfitInLocalCurrency = item.totalProfitInLocalCurrency,
+                        TotalProfitInProfitCurrency = item.totalProfitInProfitCurrency,
+                        ReceivablesInLocalCurrency = item.ReceivablesInLocalCurrency,
+                        ReceivablesInProfitCurrency = item.ReceivablesInProfitCurrency,
+                        DirectionTransportModeNames = item.DirectionName + "/" + item.TransportModeName,
+                    };
+
+                    dataList.Add(newItem);
+                }
+            }
+
+            foreach (DirectionTransportModeDataClass item in dataList)
+            {
+                switch (measurment)
+                {
+                    case 0:
+                        {
+                            item.GeneralTotal = item.Total;
+                            break;
+                        }
+                    case 1:
+                        {
+                            item.GeneralTotal = item.SumChargeableWeight;
+                            break;
+                        }
+                    case 2:
+                        {
+                            item.GeneralTotal = item.SumGrossWeight;
+                            break;
+                        }
+                    case 3:
+                        {
+                            item.GeneralTotal = item.TotalProfitInLocalCurrency;
+                            break;
+                        }
+                    case 4:
+                        {
+                            item.GeneralTotal = item.TotalProfitInProfitCurrency;
+                            break;
+                        }
+                    case 5:
+                        {
+                            item.GeneralTotal = item.ReceivablesInLocalCurrency;
+                            break;
+                        }
+                    case 6:
+                        {
+                            item.GeneralTotal = item.ReceivablesInProfitCurrency;
+                            break;
+                        }
+                }
+
+                item.GeneralTotal = Math.Round(item.GeneralTotal.Value, 2);
+            }
+
+            return dataList;
+        }
+
+        private List<ShipmentQuantityDataClass> GetShipmentsDataCustom(int tenant, int lastMonths, int lastDays, int measurment, string directionId, string transmodeId, DateTime? fromDate, DateTime? toDate)
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            List<DashBoardClass> list = shipmentQuery.GetShipmentsByCreateOperationalDate(null, fromDate, toDate, tenant, null, directionId, transmodeId);
+            List<DashBoardClass> list1 = new List<DashBoardClass>();
+           
+            
+
+            List<ShipmentQuantityDataClass> result = new List<ShipmentQuantityDataClass>();
+
+            if (list != null)
+            {
+                int i = 0;
+                foreach (DashBoardClass item in list)
+                {
+                    ShipmentQuantityDataClass newItem = new ShipmentQuantityDataClass()
+                    {
+                        Id = i++,
+                        Day = item.day,
+                        Month = item.month,
+                        Year = item.year,
+                        DirectionId = item.directionID,
+                        DirectionName = item.DirectionName,
+                        TransportModeId = item.transportModeID,
+                        TransportModeName = item.TransportModeName,
+                        Total = item.total,
+                        SumGrossWeight = item.sumGrossWeight,
+                        SumChargeableWeight = item.sumChargeableWeight,
+                        TotalProfitInLocalCurrency = item.totalProfitInLocalCurrency,
+                        TotalProfitInProfitCurrency = item.totalProfitInProfitCurrency,
+                        ReceivablesInLocalCurrency = item.ReceivablesInLocalCurrency,
+                        ReceivablesInProfitCurrency = item.ReceivablesInProfitCurrency,
+                        XField = item.XField,
+                        GeneralTotal = item.GeneralTotal,
+                    };
+
+                    result.Add(newItem);
+                }
+            }
+
+            return result;
+        }
+
 
         private List<CustomersDataClass> GetCustomersData(int tenant, int lastMonths, int lastDays, int measurment, string directionId, string transmodeId)
         {

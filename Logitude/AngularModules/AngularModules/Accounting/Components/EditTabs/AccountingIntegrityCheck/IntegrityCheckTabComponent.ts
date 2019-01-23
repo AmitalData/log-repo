@@ -37,8 +37,8 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
         this.showLocals = !SessionLocator.LoggedUserPM.DontShowLocal;
         this.entityPM = entityArgs.EntityPM;
 
-        this.encodeParameters();
-        this.decodeParameters();
+        // this.encodeParameters();
+        // this.decodeParameters();
         this.SetUIProperty();
 
     }
@@ -53,63 +53,71 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
         this.UIProperties.SetEnabled("ResultXML", this.ObjectTableName, false);
     }
 
-    decodeParameters(){
-        var xmlString = this.entityPM.ParametersXML;
-        if(xmlString)
-        {
-            var tenant = xmlString.substring(xmlString.indexOf('<Tenant>')+8,xmlString.indexOf('</Tenant>'));
-            var __FromMonthInclusive = xmlString.substring(xmlString.indexOf('<FromMonthInclusive>')+20,xmlString.indexOf('</FromMonthInclusive>'));
-            var __ToMonthInclusive = xmlString.substring(xmlString.indexOf('<ToMonthInclusive>')+18,xmlString.indexOf('</ToMonthInclusive>'));
+    // decodeParameters(){
+    //     var xmlString = this.entityPM.ParametersXML;
+    //     if(xmlString)
+    //     {
+    //         var tenant = xmlString.substring(xmlString.indexOf('<Tenant>')+8,xmlString.indexOf('</Tenant>'));
+    //         var __FromMonthInclusive = xmlString.substring(xmlString.indexOf('<FromMonthInclusive>')+20,xmlString.indexOf('</FromMonthInclusive>'));
+    //         var __ToMonthInclusive = xmlString.substring(xmlString.indexOf('<ToMonthInclusive>')+18,xmlString.indexOf('</ToMonthInclusive>'));
 
-            if(__FromMonthInclusive) this.FromMonthInclusive = new Date(__FromMonthInclusive);
-            if(__ToMonthInclusive) this.ToMonthInclusive = new Date(__ToMonthInclusive);
-        }
-        console.log(tenant,__FromMonthInclusive,__ToMonthInclusive)
+    //         if(__FromMonthInclusive) this.FromMonthInclusive = new Date(__FromMonthInclusive);
+    //         if(__ToMonthInclusive) this.ToMonthInclusive = new Date(__ToMonthInclusive);
+    //     }
+    //     console.log(tenant,__FromMonthInclusive,__ToMonthInclusive)
 
-    }
-    encodeParameters(){
+    // }
+    // encodeParameters(){
+    //     // -_-
+    //     if (this.entityPM) {
+    //         var xmlString =
+    //             `<AccountingIntegrityInParam xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+    //                 <Tenant>#Tenant</Tenant>
+    //                 <FromMonthInclusive>#FromMonthInclusive</FromMonthInclusive>
+    //                 <ToMonthInclusive>#ToMonthInclusive</ToMonthInclusive>
+    //             </AccountingIntegrityInParam>`
 
-        if (this.entityPM && this.FromMonthInclusive && this.ToMonthInclusive) {
-            var xmlString =
-                `<?xml version="1.0" encoding="UTF-8"?>
-                <AccountingIntegrityInParam>
-                <Tenant>#Tenant</Tenant>
-                <FromMonthInclusive>#FromMonthInclusive</FromMonthInclusive>
-                <ToMonthInclusive>#ToMonthInclusive</ToMonthInclusive>
-                </AccountingIntegrityInParam>`;
 
-            xmlString = xmlString.replace('#Tenant', this.entityPM.Tenant.toString());
-            xmlString = xmlString.replace('#FromMonthInclusive', this.FromMonthInclusive.toString());
-            xmlString = xmlString.replace('#ToMonthInclusive', this.ToMonthInclusive.toString());
+    //         xmlString = xmlString.replace('#Tenant', this.entityPM.Tenant.toString());
+    //         xmlString = xmlString.replace('#FromMonthInclusive', this.FromMonthInclusive ? this.FromMonthInclusive.toISOString() : "" );
+    //         xmlString = xmlString.replace('#ToMonthInclusive', this.ToMonthInclusive ? this.ToMonthInclusive.toISOString() : "");
 
-            this.entityPM.ParametersXML = xmlString;
-            console.log(xmlString);
-        }
-    }
+    //         this.entityPM.ParametersXML = xmlString;
+    //         console.log(xmlString);
+    //     }
+    // }
 
 
     //#region Properties
 
     get Tenant() { return this._parameters.Tenant; }
     set Tenant(value: number) {
-        if (this._parameters.Tenant != value) {
-            this._parameters.Tenant = value;
+        if (this.entityPM.Tenant != value) {
+            this.entityPM.Tenant = value;
         }
     }
 
-    get FromMonthInclusive () { return this._parameters.FromMonthInclusive ; }
+    get FromMonthInclusive () { return this.entityPM.FromMonthInclusive ; }
     set FromMonthInclusive (value: Date) {
-        if (this._parameters.FromMonthInclusive  != value) {
-            this._parameters.FromMonthInclusive  = value;
-            this.encodeParameters();
+        if (this.entityPM.FromMonthInclusive  != value) {
+            this.entityPM.FromMonthInclusive  = value;
+            // this.encodeParameters();
         }
     }
 
-    get ToMonthInclusive () { return this._parameters.ToMonthInclusive ; }
+    get ToMonthInclusive () { return this.entityPM.ToMonthInclusive ; }
     set ToMonthInclusive (value: Date) {
-        if (this._parameters.ToMonthInclusive  != value) {
-            this._parameters.ToMonthInclusive  = value;
-            this.encodeParameters();
+        if (this.entityPM.ToMonthInclusive  != value) {
+            this.entityPM.ToMonthInclusive  = value;
+            // this.encodeParameters();
+        }
+    }
+
+
+    get ResultXML () { return this.entityPM.ResultXML ; }
+    set ResultXML (value: string) {
+        if (this.entityPM.ResultXML  != value) {
+            this.entityPM.ResultXML  = value;
         }
     }
 

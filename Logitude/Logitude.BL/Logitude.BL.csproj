@@ -331,6 +331,7 @@
     <Compile Include="CommonDataModel\CustomFilters\WarehouseCustomFilter.cs" />
     <Compile Include="CommonDataModel\DataContracts\ShipmentPickUpDeliverySL.cs" />
     <Compile Include="CommonDataModel\DataContracts\UsersByTenantData.cs" />
+    <Compile Include="CommonDataModel\EntityAMs\DepositionRequestAM.cs" />
     <Compile Include="CommonDataModel\EntityAMs\ImporterDepositionAM.cs" />
     <Compile Include="CommonDataModel\EntityLists\CustomerDepositionList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CustomsShipperList.cs" />
@@ -342,6 +343,7 @@
     <Compile Include="CommonDataModel\EntityLists\HybridPartnersPermissionList.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CustomerDepositionPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CustomsShipperPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\DepositionRequestPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\DocumentFilingBackupBatchPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\DocumentFilingBackupSettingPM.cs" />
     <Compile Include="CommonDataModel\EntityLists\TemperatureUnitList.cs" />

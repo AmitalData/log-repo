@@ -32,6 +32,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public DateTime? DoneDateTimeUTC  { get; set; }
        [DataMember]
        public string StatusName  { get; set; }
+       [DataMember]
+       public DateTime FromMonthInclusive  { get; set; }
+       [DataMember]
+       public DateTime ToMonthInclusive  { get; set; }
    }
 
 }
