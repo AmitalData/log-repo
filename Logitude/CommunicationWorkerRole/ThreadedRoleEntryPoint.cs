@@ -160,8 +160,9 @@ namespace CommunicationWorkerRole
                 he.DateTimeFormat.ShortDatePattern = "dd-MM-yy";// ' "yyyy/MM/dd" '  ' "DD/MM/YYYY"
                 System.Threading.Thread.CurrentThread.CurrentCulture = he;
             }
+            //TestBatch();
             UpdateRunningWR();
-            TestBatch();
+            
             aTimer.Elapsed += new ElapsedEventHandler(OnSettingsCheckTimedEvent);
             aTimer.Interval = 30000;
             aTimer.Enabled = true;
