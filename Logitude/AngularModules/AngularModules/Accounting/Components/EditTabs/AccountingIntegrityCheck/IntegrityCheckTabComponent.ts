@@ -51,42 +51,11 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
 
     SetUIProperty() {
         this.UIProperties.SetEnabled("ResultXML", this.ObjectTableName, false);
+        if(this.entityPM.Id && this.entityPM.Id != "new"){
+            this.UIProperties.SetEnabled("FromMonthInclusive", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ToMonthInclusive", this.ObjectTableName, false);
+        }
     }
-
-    // decodeParameters(){
-    //     var xmlString = this.entityPM.ParametersXML;
-    //     if(xmlString)
-    //     {
-    //         var tenant = xmlString.substring(xmlString.indexOf('<Tenant>')+8,xmlString.indexOf('</Tenant>'));
-    //         var __FromMonthInclusive = xmlString.substring(xmlString.indexOf('<FromMonthInclusive>')+20,xmlString.indexOf('</FromMonthInclusive>'));
-    //         var __ToMonthInclusive = xmlString.substring(xmlString.indexOf('<ToMonthInclusive>')+18,xmlString.indexOf('</ToMonthInclusive>'));
-
-    //         if(__FromMonthInclusive) this.FromMonthInclusive = new Date(__FromMonthInclusive);
-    //         if(__ToMonthInclusive) this.ToMonthInclusive = new Date(__ToMonthInclusive);
-    //     }
-    //     console.log(tenant,__FromMonthInclusive,__ToMonthInclusive)
-
-    // }
-    // encodeParameters(){
-    //     // -_-
-    //     if (this.entityPM) {
-    //         var xmlString =
-    //             `<AccountingIntegrityInParam xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
-    //                 <Tenant>#Tenant</Tenant>
-    //                 <FromMonthInclusive>#FromMonthInclusive</FromMonthInclusive>
-    //                 <ToMonthInclusive>#ToMonthInclusive</ToMonthInclusive>
-    //             </AccountingIntegrityInParam>`
-
-
-    //         xmlString = xmlString.replace('#Tenant', this.entityPM.Tenant.toString());
-    //         xmlString = xmlString.replace('#FromMonthInclusive', this.FromMonthInclusive ? this.FromMonthInclusive.toISOString() : "" );
-    //         xmlString = xmlString.replace('#ToMonthInclusive', this.ToMonthInclusive ? this.ToMonthInclusive.toISOString() : "");
-
-    //         this.entityPM.ParametersXML = xmlString;
-    //         console.log(xmlString);
-    //     }
-    // }
-
 
     //#region Properties
 
@@ -122,7 +91,6 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
     }
 
     //#endregion
-
 
     ReloadData() {
     }

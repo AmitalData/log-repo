@@ -6,6 +6,7 @@ import { DWQueryBuilderService } from '../../../../Infrastructure/Services/Exten
 import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
 import { DWQueryData } from '../../../../Common/DataContracts/DWQueryData';
 import { DWSubQueryPMService } from '../../../../Infrastructure/Services/StandardPMs/DWSubQueryPMService';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     selector: 'DWAskUserFiltersComponent',
@@ -29,7 +30,7 @@ export class DWAskUserFiltersComponent implements OnInit{
     public _DWQueryBuilderService: DWQueryBuilderService;
     public _DWQueryBuilderHelper: DWQueryBuilderHelper;
     public _DWSubQueryPMService: DWSubQueryPMService;
-     
+    ValidationErrorsList: any[];
     public DWQueryData: DWQueryData;
 
     constructor() {
@@ -52,29 +53,30 @@ export class DWAskUserFiltersComponent implements OnInit{
     }
 
     RunReport(MyDWQueryData) {
+        this.ValidationErrorsList = [];
+        
         this.DWQueryData = MyDWQueryData;
         //this.DWQueryData.Filters = this.SelectedFiltersDataSource;
         if (this.DWQueryData.Filters) {
-            //var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
-            //var temp = [];
-            //temp.push(MyFilter);
-            //this.SelectedFiltersDataSource = temp;
-            var QueryData = new DWQueryData();
-            QueryData.Columns = this.DWQueryData.Columns;
-            QueryData.Filters = this.SelectedFiltersDataSource[0];
-            QueryData.PageIndex = 0;
-            QueryData.PageSize = 100;
-            this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
-                if (!myResult.HasError) {
-                    //this.rowData = myResult.Result;
-                    this.RunReportComplete.emit(myResult.Result);
-                }
-                else {
-                    //this.StopBusyIndicator();
-                }
+            this.CheckFiltersValidationsFilters(this.SelectedFiltersDataSource[0]);
+            if (this.ValidationErrorsList.length == 0) {
+                var QueryData = new DWQueryData();
+                QueryData.Columns = this.DWQueryData.Columns;
+                QueryData.Filters = this.SelectedFiltersDataSource[0];
+                QueryData.PageIndex = 0;
+                QueryData.PageSize = 100;
+                this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
+                    if (!myResult.HasError) {
+                        //this.rowData = myResult.Result;
+                        this.RunReportComplete.emit(myResult.Result.SQLDataResult);
+                    }
+                    else {
+                        //this.StopBusyIndicator();
+                    }
 
-                //this.LoadBIReportData();
-            });
+                    //this.LoadBIReportData();
+                });
+            }
         } 
         
     }
@@ -129,24 +131,29 @@ export class DWAskUserFiltersComponent implements OnInit{
     }
 
     FieldValueChanged(DWObjectField: DWObjectFieldsDetails) {
-        ////this.MyParentClass = ParentClass;
-        //this.Name = DWObjectField.Name;
-        //this.Code = DWObjectField.Code;
-        //this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
-        //this.DataTypeCode = DWObjectField.DataTypeCode;
-        //this.DimensionTableCode = DWObjectField.DimensionTableCode;
-        //this.DisplayName = DWObjectField.Code;
-        //this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
-        //this.IsMeasurement = DWObjectField.IsMeasurement;
-        //this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
-        //this.ParentDataTypeCode = DWObjectField.DataTypeCode;
-        //this.ParentDimTabelName = DWObjectField.ParentDimTabelName;
-        ////this.IndexOrder = ParentClass.SelectedFieldsDataSource.length;
-        ////var Filters = DWObjectField.MyParentClass.SelectedFiltersDataSource;
-        ////DWObjectField.MyParentClass.SelectedFiltersDataSource = [];
-        ////DWObjectField.MyParentClass.SelectedFiltersDataSource = Filters;
+        
+    }
+
+    Msg : string = "";
+    CheckFiltersValidationsFilters(MyFilter: DWObjectFieldsDetails) {
+
+        MyFilter.FilterItems.forEach((field) => {
+          
+            if (field.FilterItems.length == 0) {
+                if (field.IsMandatoryFilter == true && AppTool.IsNullOrEmpty(field.TextValue)) {
+                    this.ValidationErrorsList.push(field.Name + " filter is required");
+                } 
+            } 
+            else { 
+                this.CheckFiltersValidationsFilters(field);
+               
+            }
 
 
-        ////this.MyParentClass.SelectedFiltersDataSource.where
+        });
+
+        return MyFilter;
+
+
     }
 }
