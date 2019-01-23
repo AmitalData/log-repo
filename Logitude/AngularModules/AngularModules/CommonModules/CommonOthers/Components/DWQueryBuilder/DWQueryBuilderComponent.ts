@@ -1358,6 +1358,12 @@ export class DWObjectFieldsDetails extends BaseComponent {
                 this.OperationName = "Starts With";
                 return this.operation;
             }
+            else if ((this.ParentDataTypeCode == "Date" || this.ParentDataTypeCode == "DateTime") && AppTool.IsNullOrEmpty(this.operation)) {
+                this.operation = new ObjectFieldOperator("Before", "Before");
+                this.OperationCode = "Before";
+                this.OperationName = "Before";
+                return this.operation;
+            }
             else {
                 if (AppTool.IsNullOrEmpty(this.operation)) {
                     this.operation = new ObjectFieldOperator("Equals", "Equals to");
@@ -1634,7 +1640,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         if (field.ParentDataTypeCode == "Integer" || field.ParentDataTypeCode == "UnsInteger"
             || field.ParentDataTypeCode == "Double" || field.ParentDataTypeCode == "SigDouble"
             || field.ParentDataTypeCode == "Decimal" || field.ParentDataTypeCode == "UnsDecimal"
-            || field.ParentDataTypeCode == "DateTime" || field.ParentDataTypeCode == "Date") {
+             ) {
             this.list.push(this.largerThanOp);
             this.list.push(this.lessThanOp);
             this.list.push(this.equalsOp);
@@ -1656,6 +1662,20 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.list.push(this.equalsOp);
             this.list.push(this.notEqualsOp);
         }
+
+        if (field.ParentDataTypeCode == "DateTime" || field.ParentDataTypeCode == "Date"){
+            this.list.push(this.beforeOp);
+            this.list.push(this.afterOp);
+            this.list.push(this.previousOp);
+            this.list.push(this.currentOp);
+            this.list.push(this.nextOp);
+
+        }
+
+
+
+
+
         return this.list;
     }
 
@@ -1673,6 +1693,12 @@ export class DWObjectFieldsDetails extends BaseComponent {
     IsNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNull", "Is Empty");
     IsNotNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNotNull", "Has Value");
 
+
+    beforeOp: ObjectFieldOperator = new ObjectFieldOperator("Before", "Before");
+    afterOp: ObjectFieldOperator = new ObjectFieldOperator("After", "After");
+    previousOp: ObjectFieldOperator = new ObjectFieldOperator("Previous", "Previous");
+    currentOp: ObjectFieldOperator = new ObjectFieldOperator("Current", "Current");
+    nextOp: ObjectFieldOperator = new ObjectFieldOperator("Next", "Next");
 }
 
 export class ObjectFieldOperator {

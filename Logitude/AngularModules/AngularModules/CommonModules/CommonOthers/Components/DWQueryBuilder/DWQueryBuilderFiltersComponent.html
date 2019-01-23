@@ -120,6 +120,8 @@
                     <td style="width:7px;">
                         <div style="width:7px;"></div>
                     </td>
+
+                 
                     <td *ngIf="item.FilterType == 'Fixed Filter' || (item.FilterType == 'Ask User' && item.IsSetDefaults == true)" style="width:150px;" [ngSwitch]="item.ParentDataTypeCode">
 
                         <!-- Text -->
@@ -187,6 +189,22 @@
                                 </DWLov>
                             </div>
                         </div>
+
+                        <!--Date-->
+                        <div *ngSwitchCase="'DateTime'">
+
+                            <div style="width:180px;">
+
+                                <DWDate [ObjectFieldName]="item.Code"
+                                        [DataContext]="item"
+                                        [Operation]="item.Operation.Code"
+                                        [SelectedValue]="item.TextValue"
+                                        >
+                                </DWDate>
+
+                            </div>
+                        </div>
+
 
                         <div *ngSwitchCase="'Dimension'">
                             <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>-->
@@ -328,6 +346,11 @@
                                         </DWLov>
                                     </div>
                                 </div>
+
+                         
+                                <!--abed-->
+
+
 
                                 <div *ngSwitchCase="'Dimension'">
                                     <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>-->
