@@ -184,6 +184,10 @@ export class AddEditOceanPackageComponent {
                         DeliveryPackagePM.Length = this.EntityPM.Length;
                     }
 
+                    if (DeliveryPackagePM.Harmonize != this.EntityPM.Harmonize) {
+                        DeliveryPackagePM.Harmonize = this.EntityPM.Harmonize;
+                    }
+
                     if (DeliveryPackagePM.IsMultiHarmonize != this.EntityPM.IsMultiHarmonize) {
                         DeliveryPackagePM.IsMultiHarmonize = this.EntityPM.IsMultiHarmonize;
                     }
