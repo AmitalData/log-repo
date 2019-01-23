@@ -2166,7 +2166,7 @@ export class ShipmentPayableItem extends BaseComponent {
                     }
 
                     else {
-                        this.myUserListService.getSingle(this.EntityPM.CreatedByUserId).subscribe((myResponse: ServiceResponse) => {
+                        this.fatherComponent.myUserListService.getSingle(this.EntityPM.CreatedByUserId).subscribe((myResponse: ServiceResponse) => {
                             if (!myResponse.HasError) {
                                 var list: UserList = myResponse.Result;
                                 if (list) {
@@ -2191,7 +2191,7 @@ export class ShipmentPayableItem extends BaseComponent {
                         }
 
                         else {
-                            this.myUserListService.getSingle(this.EntityPM.UpdateByUserId).subscribe((myResponse: ServiceResponse) => {
+                            this.fatherComponent.myUserListService.getSingle(this.EntityPM.UpdateByUserId).subscribe((myResponse: ServiceResponse) => {
                                 if (!myResponse.HasError) {
                                     var list: UserList = myResponse.Result;
                                     if (list) {
