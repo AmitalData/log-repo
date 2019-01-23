@@ -109,8 +109,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature revenueEexpenseReportFeature = tenantFeatures.Where(d => d.Code == "REVEXP" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature trailBalanceReportFeature = tenantFeatures.Where(d => d.Code == "TRAIL" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature shipmentsStocksReportFeature = tenantFeatures.Where(d => d.Code == "SHIPMENTSSTOCKS" && d.FeatureTypeCode == "AREA").FirstOrDefault();
-            Feature feature_DetailedShipmentCharges = tenantFeatures.Where(d => d.Code == "Report.Features.DetailedShipmentCharges" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature vendorChargesReportFeature = tenantFeatures.Where(d => d.Code == "Report.Features.VendorCharges" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature feature_DetailedShipmentCharges = tenantFeatures.Where(d => d.Code == "Report.Features.DetailedShipmentCharges" && d.FeatureTypeCode == "AREA").FirstOrDefault();
 
             AddReports.AddReport(new ReportDetails() { Code = "RACL", Description = "Accounting Ledger", Name = "Accounting Ledger", FilterControlName = "AccountingLedgerFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = accountingLedgerFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/AccountingLedgerFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "RAAR", Description = "AgedAccountsReceivable", Name = "Aging report - Statement summarized", FilterControlName = "AgedAccountsReceivableFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = agedAccountsReceivableFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/AgedAccountsReceivableFilterComponent" }, reportRepository, tenantReports);

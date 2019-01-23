@@ -8,19 +8,17 @@ namespace WebFreight.Web.Helpers
 {
     public class DataWarehouseHelper
     {
-        public string ResolveWarehoueDateField(string fieldName, string fieldValue, int tenant)
+        public string ResolveWarehoueDateField(string fieldName,string operationCode, string fieldValue, int tenant)
         {
             string result = string.Empty;
             if (!string.IsNullOrEmpty(fieldValue))
             {
                 var valuesArray = fieldValue.Split('^');
 
-                if (valuesArray.Length > 0)
-                {
-                    if (valuesArray[0] == "Prev" && valuesArray.Length == 3) result = ResovePreviousDateValue(fieldName, valuesArray[1], valuesArray[2], tenant);
-                    else if (valuesArray[0] == "Next" && valuesArray.Length == 3) result = ResoveNextDateValue(fieldName, valuesArray[1], valuesArray[2], tenant);
-                    else if (valuesArray[0] == "Current" && valuesArray.Length == 2) result = ResoveCurrentDateValue(fieldName, valuesArray[1], tenant);
-                }
+                if ((operationCode == "Before" || operationCode == "After")) result = ResolveBeforeAfterDateValue(fieldName, operationCode, fieldValue, tenant);
+                if (operationCode == "Previous" && valuesArray.Length == 3) result = ResolvePreviousDateValue(fieldName, valuesArray[1], valuesArray[2], tenant);
+                else if (operationCode == "Next" && valuesArray.Length == 3) result = ResolveNextDateValue(fieldName, valuesArray[1], valuesArray[2], tenant);
+                else if (operationCode == "Current" && valuesArray.Length == 2) result = ResolveCurrentDateValue(fieldName, valuesArray[1], tenant);
 
             }
 
@@ -28,7 +26,14 @@ namespace WebFreight.Web.Helpers
 
         }
 
-        private string ResoveCurrentDateValue(string fieldName, string range, int tenant)
+        private string ResolveBeforeAfterDateValue(string fieldName, string operationCode, string fieldvalue, int tenant)
+        {
+            string result = fieldName + operationCode == "After" ?  " >'" :"<'" + fieldvalue + "'";
+
+            return result;
+        }
+
+        private string ResolveCurrentDateValue(string fieldName, string range, int tenant)
         {
             string result = string.Empty;
             DateTime currentDate = TenantServerConfigration.GetCurrentDateTime(tenant);
@@ -78,7 +83,7 @@ namespace WebFreight.Web.Helpers
             return result;
         }
 
-        private string ResoveNextDateValue(string fieldName, string interval, string range, int tenant)
+        private string ResolveNextDateValue(string fieldName, string interval, string range, int tenant)
         {
             string result = string.Empty;
             DateTime currentDate = TenantServerConfigration.GetCurrentDateTime(tenant);
@@ -135,7 +140,7 @@ namespace WebFreight.Web.Helpers
             return result != null ? result.ToString() : "";
         }
 
-        private string ResovePreviousDateValue(string fieldName, string interval, string range, int tenant)
+        private string ResolvePreviousDateValue(string fieldName, string interval, string range, int tenant)
         {
             string result = string.Empty;
             DateTime currentDate = TenantServerConfigration.GetCurrentDateTime(tenant);

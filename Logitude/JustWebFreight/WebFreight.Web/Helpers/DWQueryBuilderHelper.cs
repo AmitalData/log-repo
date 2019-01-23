@@ -86,70 +86,75 @@ namespace WebFreight.Web.Helpers
                     {
                         var filter = Myfilter;
                         var OperationSimpol = "";
-                        if (filter.Operation.Code == "Equals")
-                        {
-                            if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
+                        if(filter.DataTypeCode!="Date" && filter.DataTypeCode != "DateTime"){
+                            if (filter.Operation.Code == "Equals")
                             {
-                                OperationSimpol = " = @@ ";
+                                if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
+                                {
+                                    OperationSimpol = " = @@ ";
+                                }
+                                else
+                                {
+
+                                    OperationSimpol = " IN ( '";
+                                    OperationSimpol = this.BuildMultiValueSql(filter.TextValue.ToString(), OperationSimpol);
+                                    isHaveMultiSelect = true;
+
+
+                                }
                             }
-                            else
+                            else if (filter.Operation.Code == "NotEqual")
                             {
+                                if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
+                                {
+                                    OperationSimpol = " <> @@ ";
+                                }
+                                else
+                                {
 
-                                OperationSimpol = " IN ( '";
-                                OperationSimpol = this.BuildMultiValueSql(filter.TextValue.ToString(), OperationSimpol);
-                                isHaveMultiSelect = true;
+                                    OperationSimpol = " not IN ( '";
+                                    OperationSimpol = BuildMultiValueSql(filter.TextValue.ToString(), OperationSimpol);
+                                    isHaveMultiSelect = true;
 
-
+                                    //abed
+                                }
                             }
-                        }
-                        else if (filter.Operation.Code == "NotEqual")
-                        {
-                            if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
+                            else if (filter.Operation.Code == "StartsWith")
                             {
-                                OperationSimpol = " <> @@ ";
+                                OperationSimpol = " like '@@%' ";
                             }
-                            else
+                            else if (filter.Operation.Code == "IsNull")
                             {
-
-                                OperationSimpol = " not IN ( '";
-                                OperationSimpol = BuildMultiValueSql(filter.TextValue.ToString(), OperationSimpol);
-                                isHaveMultiSelect = true;
-
-                                //abed
+                                OperationSimpol = " is null ";
+                            }
+                            else if (filter.Operation.Code == "IsNotNull")
+                            {
+                                OperationSimpol = " is not null ";
+                            }
+                            else if (filter.Operation.Code == "GreaterThanOrEqual")
+                            {
+                                OperationSimpol = " >= @@ ";
+                            }
+                            else if (filter.Operation.Code == "LargerThan")
+                            {
+                                OperationSimpol = " > @@ ";
+                            }
+                            else if (filter.Operation.Code == "LessThan")
+                            {
+                                OperationSimpol = " < @@ ";
+                            }
+                            else if (filter.Operation.Code == "LessThanOrEqual")
+                            {
+                                OperationSimpol = " <= @@ ";
                             }
                         }
-                        else if (filter.Operation.Code == "StartsWith")
+                        else
                         {
-                            OperationSimpol = " like '@@%' ";
-                        }
-                        //else if (filter.Operation.Code == filter.IsNullOp.Code) {
-                        //    OperationSimpol = " like '%@@' ";
-                        //}
-                        else if (filter.Operation.Code == "IsNull")
-                        {
-                            OperationSimpol = " is null ";
-                        }
-                        else if (filter.Operation.Code == "IsNotNull")
-                        {
-                            OperationSimpol = " is not null ";
-                        }
-                        else if (filter.Operation.Code == "GreaterThanOrEqual")
-                        {
-                            OperationSimpol = " >= @@ ";
-                        }
-                        else if (filter.Operation.Code == "LargerThan")
-                        {
-                            OperationSimpol = " > @@ ";
-                        }
-                        else if (filter.Operation.Code == "LessThan")
-                        {
-                            OperationSimpol = " < @@ ";
-                        }
-                        else if (filter.Operation.Code == "LessThanOrEqual")
-                        {
-                            OperationSimpol = " <= @@ ";
-                        }
+                            DataWarehouseHelper dataWarehouseHelper = new DataWarehouseHelper();
 
+                            WhereStmt += dataWarehouseHelper.ResolveWarehoueDateField(filter.Name, filter.OperationCode, filter.TextValue.ToString(), Tenant);
+
+                        }
 
 
                         if (filter.Operation.Code == "IsNull")
