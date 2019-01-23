@@ -233,6 +233,11 @@ export class APInvoiceLinePM {
     public set AuthorizedSignatory(newValue: boolean) { if (this.authorizedSignatory != newValue) { this.authorizedSignatory = newValue; this.MarkAsDirty("AuthorizedSignatory"); } }
        
 	 
+    private prepaidCollectId: string;
+    public get PrepaidCollectId() { return this.prepaidCollectId; }
+    public set PrepaidCollectId(newValue: string) { if (this.prepaidCollectId != newValue) { this.prepaidCollectId = newValue; this.MarkAsDirty("PrepaidCollectId"); } }
+       
+	 
 
     public OldEntityPM: APInvoiceLinePM;
 	    
