@@ -174,6 +174,7 @@ export class ShipmentList {
 		SearchFieldsText: string;
 		CutoffDate: Date;
 		MainCarriageFromPortId: string;
+		MainCarriageToPortId: string;
 		MainCarriageFromPortName: string;
 		MainCarriageATA: Date;
 		MainCarriageETD: Date;
@@ -414,5 +415,10 @@ export class ShipmentList {
 		AdditionalChargesId: string;
 		FreightPayerId: string;
 		FreightPayerAddressId: string;
+		PreCarriageFromPortId: string;
+		OnCarriageToPortId: string;
+		Transshipment1ToPortId: string;
+		Transshipment2ToPortId: string;
+		Transshipment3ToPortId: string;
 	
 }

@@ -2140,6 +2140,7 @@
     <Compile Include="DataProviders\ShipmentsStocksDataProvider.cs" />
     <Compile Include="DataProviders\TasksWithoutProjectsDataProvider.cs" />
     <Compile Include="DataProviders\UsersByTenantDataProvider.cs" />
+    <Compile Include="DataProviders\VendorChargesAnalysisDataProvider.cs" />
     <Compile Include="DataProviders\WorkHoursPerProjectDataProvider.cs" />
     <Compile Include="DropBoxAuth.aspx.cs">
       <DependentUpon>DropBoxAuth.aspx</DependentUpon>
@@ -4906,6 +4907,7 @@
     <Compile Include="ReportsWebServices\LogitudeReports\DetailedShipmentChargesManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\ShipmentProfitVSQuoteEstimateManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\StatisticsByCustomerManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\VendorChargesAnalysisManager.cs" />
     <Compile Include="ReportsWebServices\OpportunitySummaryWebService.asmx.cs">
       <DependentUpon>OpportunitySummaryWebService.asmx</DependentUpon>
       <SubType>Component</SubType>

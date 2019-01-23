@@ -43,6 +43,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                                   StatusName = a.IntegrityCheckStatus.Name,
 
+                                                                  //FromMonthInclusive = a.from
+
                                                               });
             return query;
 		}
