@@ -161,6 +161,7 @@ namespace CommunicationWorkerRole
                 System.Threading.Thread.CurrentThread.CurrentCulture = he;
             }
             UpdateRunningWR();
+            TestBatch();
             aTimer.Elapsed += new ElapsedEventHandler(OnSettingsCheckTimedEvent);
             aTimer.Interval = 30000;
             aTimer.Enabled = true;
@@ -170,6 +171,24 @@ namespace CommunicationWorkerRole
             return base.OnStart();
 
             //throw (new InvalidOperationException());
+        }
+
+        private void TestBatch()
+        {
+            string s =
+                @"<?xml version=""1.0"" encoding=""utf-16""?>
+<BatchAccountingLoadArg xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
+  <Tenant>1051</Tenant>
+  <ActionType>CreateCustomers</ActionType>
+  <Amount>10</Amount>
+  <SleepEveryMinute>0</SleepEveryMinute>
+  <JournalYYYY>2018</JournalYYYY>
+</BatchAccountingLoadArg>";
+            var myBatchAccountingLoadTestTask = new Logitude.Accounting.BL.CoreBL.Batch.BatchAccountingLoadTestTask( new Logitude.Infrastructure.BL.EntityPMs.BatchTaskExecutionPM() {
+                 PrametersXml= s,
+                  Tenant= 0,
+            });
+            myBatchAccountingLoadTestTask.Execute();
         }
 
         private void OnSettingsCheckTimedEvent(object source, ElapsedEventArgs e)
