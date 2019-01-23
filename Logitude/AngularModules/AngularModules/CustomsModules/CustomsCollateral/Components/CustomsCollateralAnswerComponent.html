@@ -1,4 +1,4 @@
-﻿<style>
+<style>
 
     .noBorder {
            border:none !important;
@@ -102,7 +102,8 @@
                                      <tr>
 
                                          <td style="width:25px">
-                                             <RadioButton [Name]="'RequestNewFile'" [IsEnabled]="!IsClosed" [IsChecked]="IsTapag" (Checked)="UseExistingTapagFile('')"></RadioButton>
+                                             <!--<RadioButton [Name]="'RequestNewFile'" [IsEnabled]="!IsClosed" [IsChecked]="IsTapag" (Checked)="UseExistingTapagFile('')"></RadioButton>-->
+                                             <RadioButton [Name]="'ExistingTapagFile'" [IsEnabled]="!IsClosed" [IsChecked]="IsTapag" (Checked)="UseExistingTapagFile('')"></RadioButton>
                                          </td>
                                          <td>
 
