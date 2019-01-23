@@ -112,7 +112,7 @@ export class BIReportPreviewComponent implements OnInit {
             //var params = {
             //    force: true,
             //};
-           
+            this.agGrid.api.refreshCells();
         }
     }
     public BuildColumns(arg: BIReportXMLData) {
@@ -164,7 +164,6 @@ export class BIReportPreviewComponent implements OnInit {
                 if (!myResult.HasError) {
                     this.rowData = myResult.Result;
                     this.timerToken = setTimeout(() => this.UpdateAGGrid(arg), 500);
-
                     this.StopBusyIndicator();
                 }
                 else {
