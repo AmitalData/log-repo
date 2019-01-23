@@ -1688,7 +1688,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 isUpdated = true;
                                 bITabularViewSettings.Columns.Add(new Column
                                 {
-                                    Code = item.Name,
+                                    Code = item.DisplayName,
+                                    Name = item.Name,
                                     IsChecked = true,
                                     Width = 150,
                                     DataTypeCode = item.DataTypeCode,
@@ -1722,7 +1723,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         bITabularViewSettings.Columns.Add(new Column
                         {
-                            Code = item.Name,
+                            Code = item.DisplayName,
+                            Name = item.Name,
                             IsChecked = true,
                             Width = 150,
                             DataTypeCode = item.DataTypeCode,
@@ -1759,8 +1761,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     entityPM.AGGridOptionsXML = ColumnsXML;
                     entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                     entityPOCO.AGGridOptionsXML = entityPM.AGGridOptionsXML;
-                    //BIReportUpdateService service = new BIReportUpdateService(objectContext);
-                   // service.Update(entityPM, true);
                     repository.Update(entityPOCO);
                     repository.SubmitChanges();
 

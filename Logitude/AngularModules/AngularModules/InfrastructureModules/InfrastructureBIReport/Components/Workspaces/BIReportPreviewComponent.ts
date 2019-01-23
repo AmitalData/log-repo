@@ -17,8 +17,6 @@ import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMSer
 import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
 import { DWObjectFieldsDetails } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
 
-
-
 @Component({
     moduleId: module.id,
     templateUrl: 'BIReportPreviewComponent.html',
@@ -126,7 +124,7 @@ export class BIReportPreviewComponent implements OnInit {
                     if (columns[i].DataTypeCode == "DateTime") {
                         this.columnDefs.push({
                             colId: columns[i].Code,
-                            headerName: columns[i].Code,
+                            headerName: columns[i].Name,
                             field: columns[i].Code,
                             sortable: true,
                             width: columns[i].Width,
@@ -135,13 +133,13 @@ export class BIReportPreviewComponent implements OnInit {
                             cellClass: columns[i].DataTypeCode,
                             //filter: 'agTextColumnFilter',
                             pivotIndex: columns[i].Index,
-                            //sort: sortingDirction,
-                        });
+
+                        });                            //sort: sortingDirction,
                     }
                     else {
                         this.columnDefs.push({
                             colId: columns[i].Code,
-                            headerName: columns[i].Code,
+                            headerName: columns[i].Name,
                             field: columns[i].Code,
                             sortable: true,
                             filter: true,
@@ -214,8 +212,7 @@ export class BIReportPreviewComponent implements OnInit {
         this.gridApi = params.api;
         this.gridApi.hideOverlay()
         this.gridColumnApi = params.columnApi;
-        this.agGrid.api.redrawRows();
-        this.agGrid.api.refreshHeader();
+
     }
     onSortChanged(params) {
         if (!this.IsSorting)
@@ -350,6 +347,7 @@ export class BIReportPreviewComponent implements OnInit {
             newColumn.Index = this.BIReportXMLData.DWQueryData.Columns.indexOf(item);
             newColumn.DataTypeCode = item.DataTypeCode;
             newColumn.IsChecked = false;
+            newColumn.Name = item.Name;
             if (agCol != null) {
                 newColumn.IsChecked = true;
                 newColumn.Index = coulmns.indexOf(agCol);
@@ -422,11 +420,9 @@ export class BIReportPreviewComponent implements OnInit {
                 });
         }
     }
-
     RunReportButtonClicked() {
         this.RunReportCommand.emit(this.DWQueryData);
     }
-
     OnRunReportComplete(MyData) {
         this.rowData = MyData;
         this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML), 500);
@@ -451,7 +447,6 @@ export class BIReportPreviewComponent implements OnInit {
                 logWindow.WindowClosed.subscribe(d => {
                     if (s != null && d != "cancel") {
                         this.BuildColumns(this.BIReportXMLData);
-                       
                     }
                 });
             });

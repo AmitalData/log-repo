@@ -46,7 +46,6 @@ export class AgGridColumnsOperations extends BaseComponent {
         result.BITabularViewSettings = this.father.BIReportXMLData.BITabularViewSettings;
         result.BIReportId = this.father.EntityId;
         result.BIReportPM = this.father.EntityPM;
-
         _InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe(myResult => {
             if (!myResult.HasError) {
                 this.father.BIReportXMLData = myResult.Result;
