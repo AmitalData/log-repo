@@ -40,6 +40,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
     public class ShipmentQuery
     {
+        
         ShipmentRepository repository;
 
         public ShipmentQuery(int tenant)
