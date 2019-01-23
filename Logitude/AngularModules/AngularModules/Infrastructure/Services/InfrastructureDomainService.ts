@@ -857,13 +857,12 @@ export class BIReportXMLData {
     public BIReportPM: BIReportPM;
     public BITabularViewSettings: BITabularViewSettings;
 }
-
 export class BITabularViewSettings {
     public Columns: Column[];  
 }
-
 export class Column {
     public Code: string;
+    public Name: string;
     public SortDirction: string;
     public SortOrder: number;
     public Width: number;

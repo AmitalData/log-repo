@@ -46,7 +46,6 @@ export class AgGridColumnsOperations extends BaseComponent {
         result.BITabularViewSettings = this.father.BIReportXMLData.BITabularViewSettings;
         result.BIReportId = this.father.EntityId;
         result.BIReportPM = this.father.EntityPM;
-
         _InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe(myResult => {
             if (!myResult.HasError) {
                 this.father.BIReportXMLData = myResult.Result;
@@ -91,6 +90,7 @@ export class AgGridColumnsOperations extends BaseComponent {
 
     onValueChanged(item, event) {
         item.IsChecked = event;
+        this.IsAll = this.father.BIReportXMLData.BITabularViewSettings.Columns.filter(a => !a.IsChecked)[0] != null ? false : true;
     }
     IsAllClicked(event) {
         this.father.BIReportXMLData.BITabularViewSettings.Columns.sort((a, b) => { return (a.Index === b.Index) ? 0 : (a.Index < b.Index) ? -1 : 1 }).forEach(item => {
