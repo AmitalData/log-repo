@@ -157,5 +157,6 @@ namespace WebFreight.Web.DataProviders
 
         public string OnCarriageCarrier { get; set; }
         public string FreightLocation { get; set; }
+        public DateTime? LastFreeDate { get; set; }
     }
 }

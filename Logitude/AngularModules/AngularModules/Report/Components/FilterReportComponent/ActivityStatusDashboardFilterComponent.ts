@@ -71,13 +71,56 @@ export class ActivityStatusDashboardFilterComponent extends BaseComponent implem
         this.ReportsPreview = myReportsPreview;
 
         this.timeRangeComboList = LastFilter.myList();
+        var lastFilter: LastFilter = new LastFilter();
+        lastFilter.lastTitle = "Custom";
+        lastFilter.LastDays = 0;
+        lastFilter.Lastmonths = 0;
+
+        this.timeRangeComboList.push(lastFilter);
         this.SelectedItem = this.timeRangeComboList[0];
+        this.ComputeDays();
+
+
         this.BuildShowTypesFilters();
     }
 
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, aDate.getDate() + 1)).getDate();
     }
+
+
+    ComputeDays() {
+        var days;
+        var Todate: Date = DateTool.GetDateParts(DateTool.GetCurrentDateAsUtc()).DateObject;
+        this.activityFromDate = DateTool.GetDateParts(DateTool.GetCurrentDateAsUtc()).DateObject;
+        if (this.SelectedItem.LastDays == -7) {
+            days = -7;
+            Todate.setDate(Todate.getDate() - 6);
+            this.activityToDate = Todate;
+        }
+
+        else if (this.SelectedItem.LastDays == -30) {
+            days = -30;
+            Todate.setMonth(Todate.getMonth() - 1);
+            this.activityToDate = Todate;
+        }
+
+        else if (this.SelectedItem.LastDays == -90) {
+            days = -90;
+            Todate.setMonth(Todate.getMonth() - 3);
+            this.activityToDate = Todate;
+        }
+
+        else if (this.SelectedItem.LastDays == -365) {
+            days = -365;
+            Todate.setMonth(Todate.getMonth() - 12);
+            this.activityToDate = Todate;
+        }
+
+        return days;
+
+    }
+
 
     ngOnInit() {
 
@@ -91,8 +134,30 @@ export class ActivityStatusDashboardFilterComponent extends BaseComponent implem
     }
 
 
+    private activityToDate: Date;
+    public get ActivityToDate() { return this.activityToDate; }
+    public set ActivityToDate(value: Date) {
+        if (value != this.activityToDate) {
+            this.activityToDate = value;
+            this.SelectedItem = this.TimeRangeComboList[4];
+
+        }
+    }
+
+    private activityFromDate: Date;
+    public get ActivityFromDate() { return this.activityFromDate; }
+    public set ActivityFromDate(value: Date) {
+        if (value != this.activityFromDate) {
+            this.activityFromDate = value;
+            this.SelectedItem = this.TimeRangeComboList[4];
+        }
+    }
+
+
+
     onSelectedItemChanged(item) {
         this.SelectedItem = item;
+        this.ComputeDays();
     }
 
 
@@ -156,6 +221,14 @@ export class ActivityStatusDashboardFilterComponent extends BaseComponent implem
 
         if (!this.SelectedItemShow) {
             this.ValidationErrorsList.push("Show field is required");
+        }
+
+        if (this.SelectedItem.lastTitle == "Custom") {
+            if (this.ActivityFromDate == null)
+                this.ValidationErrorsList.push("From Date field is required");
+            if (this.ActivityToDate == null)
+                this.ValidationErrorsList.push("To Date field is required");
+
         }
 
 
@@ -255,8 +328,21 @@ export class ActivityStatusDashboardFilterComponent extends BaseComponent implem
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 
+            if (this.SelectedItem.lastTitle == "Custom") {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "FromDate";
+                this.queryFilterItem.FieldValue = this.ActivityToDate;
+                this.queryFilterItem.FieldDataType = "Date";
+                this.queryFilterItems.push(this.queryFilterItem);
 
-
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "ToDate";
+                this.queryFilterItem.FieldValue = this.ActivityFromDate;
+                this.queryFilterItem.FieldDataType = "Date";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
 
 
             this.reportFliter = new ReportFliter();

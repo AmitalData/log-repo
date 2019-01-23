@@ -304,18 +304,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.CustomerTenantNumber = entityPM.CustomerTenantNumber;
             }
 
-            if (entityPM.IsAccountingClosed)
-            {
-                if (entityPM.AccountingCloseDate == null)
-                {
-                    entityPM.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-                }
-            }
 
-            else
-            {
-                entityPM.AccountingCloseDate = null;
-            }
 
             entityPoco.CASSCode = entityPM.CASSCode;
             entityPoco.OrderGrossWeight = entityPM.OrderGrossWeight;

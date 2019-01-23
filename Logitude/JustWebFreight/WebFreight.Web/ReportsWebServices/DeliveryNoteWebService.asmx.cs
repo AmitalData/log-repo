@@ -135,7 +135,8 @@ namespace WebFreight.Web.ReportsWebServices
                 deliveryNotedataprovider.ShipperReference2 = shipment.ShipperReference2;
                 deliveryNotedataprovider.ConsigneeReference2 = shipment.ConsigneeReference2;
                 deliveryNotedataprovider.ShipmentSalesman = shipment.SalesmanUserName;
-              
+                deliveryNotedataprovider.LastFreeDate = shipment.WarehouseLegLastFreeDate;
+
                 if (!string.IsNullOrEmpty(shipment.FreightLocationId))
                 {
                     CardPM cardPM = cardQuery.GetSinglePM(shipment.FreightLocationId, tenant);
@@ -885,6 +886,8 @@ namespace WebFreight.Web.ReportsWebServices
                 deliveryNotedataprovider.ShipperReference2 = shipment.ShipperReference2;
                 deliveryNotedataprovider.ConsigneeReference2 = shipment.ConsigneeReference2;
                 deliveryNotedataprovider.ShipmentSalesman = shipment.SalesmanUserName;
+                deliveryNotedataprovider.LastFreeDate = shipment.WarehouseLegLastFreeDate;
+
                 if (!string.IsNullOrEmpty(shipment.FreightLocationId))
                 {
                     Card card = cardRepository.GetSingleCard(shipment.FreightLocationId, tenant);
