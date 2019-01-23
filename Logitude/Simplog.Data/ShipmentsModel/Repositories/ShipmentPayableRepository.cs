@@ -81,6 +81,20 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return myResult;
         }
 
+        public IQueryable<ShipmentPayable> GetShipmentPayablesByShipmentIds(List<string> ids, int tenant)
+        {
+            IQueryable<ShipmentPayable> myResult = null;
+
+            if (ids.Count > 0)
+            {
+                myResult = from a in context.ShipmentPayables.Include("ChargesType").Include("VendorCard")
+                           where a.Tenant == tenant && ids.Contains(a.ShipmentId)
+                           select a;
+            }
+
+            return myResult;
+        }
+
         public void Add(ShipmentPayable entity)
         {
             context.ShipmentPayables.Add(entity);
