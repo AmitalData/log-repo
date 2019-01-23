@@ -1,0 +1,182 @@
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height:22px">
+                    <td style="color:#1B90CB;font-size:14px;">Filter By:</td>
+                </tr>
+
+                <tr style="height:28px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:90px;" class="Label">Vendor:</td>
+                                <td style="width:200px;">
+                                    <LogLov [ObjectFieldName]="'VendorId'"
+                                            [ObjectTableName]="'Card'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Card'"
+                                            [HideMaintenanceIcon]="true"
+                                            [DependencyFilter1Value]="'AG,AL,CG,SG,SL,TR,VD,WH'"
+                                            [DependencyFilter1IsList]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:40px;" class="Label">Date:</td>
+                                <td style="width:150px;">
+                                    <ComboBox [ItemsSource]="DateFilterList" [Binding]="'Name'" [SelectedItem]="SelectedDateFilter" (SelectedItemChanged)="SelectedDateFilter = $event"></ComboBox>
+                                </td>
+
+                                <td style="width:20px;"><div></div></td>
+                                <td style="width:40px;" class="Label">From: </td>
+                                <td style="width:150px;">
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td style="width:10px;"><div></div></td>
+                                <td style="width:30px;" class="Label">To: </td>
+                                <td style="width:150px;">
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td style="width:15px"></td>
+                                <td style="width:90px;">
+                                    <button (click)="RunButtonClicked()" class="GreenButton" style="width:90px;height:22px;">Run Report</button>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:28px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:90px;" class="Label">Charges Type:</td>
+                                <td style="width:200px;">
+                                    <LogLov [ObjectFieldName]="'ChargesTypeId'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'ChargesType'"
+                                            [ShowInActive]="true"
+                                            [HideMaintenanceIcon]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width: 1px;">
+                                    <CheckBox [IsChecked]="IncludeAccountedOnly" (Checked)="IncludeAccountedOnly = $event" [Text]="'Include Accounted Only'"></CheckBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:28px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <!--Currency-->
+                                <td style="width:70px;" class="Label">Currency: </td>
+                                <td style="width: 66px;">
+                                    <div style="width: 66px; position: absolute; top:5px; right:0;">
+                                        <ul class="FiltersMenu">
+                                            <li style="width:33px;" (click)="OnSelectCurrency(LocalCurrencyCode)" [class.SelectedFilter]="SelectedCurrencyCode === LocalCurrencyCode" title="Local Currency">
+                                                {{LocalCurrencyCode}}
+                                            </li>
+                                            <li style="width:33px;" (click)="OnSelectCurrency(ProfitCurrencyCode)" [class.SelectedFilter]="SelectedCurrencyCode === ProfitCurrencyCode" title="Profit Currency">
+                                                {{ProfitCurrencyCode}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+
+                                <!--operational filter-->
+                                <td style="width:20px;"><div></div></td>
+                                <td style="width:80px;" class="Label">Operational: </td>
+                                <td style="width: 99px;">
+                                    <div style="width: 99px; position: absolute; top:5px; right:0;">
+                                        <ul class="FiltersMenuImage">
+                                            <li style="width:33px;" (mouseover)="OperationalMouseOver('All')" (mouseleave)="OperationalMouseLeave('A')" (click)="OnOperationalClicked('All')" [class.SelectedFilter]="SelectedOperationalCode === 'All'">
+                                                All
+                                            </li>
+                                            <li (click)="OnOperationalClicked('Open')" (mouseover)="OperationalMouseOver('Open')" (mouseleave)="OperationalMouseLeave('Open')" [class.SelectedFilter]="SelectedOperationalCode === 'Open'" title="Open">
+                                                <img [attr.id]="FilterId_OO" class="CenterCenter" src="./Images/Icons/opened_n.png" style="top: 1px;height:15px" />
+                                            </li>
+                                            <li (click)="OnOperationalClicked('Close')" (mouseover)="OperationalMouseOver('Close')" (mouseleave)="OperationalMouseLeave('Close')" [class.SelectedFilter]="SelectedOperationalCode === 'Close'" title="Close">
+                                                <img [attr.id]="FilterId_OC" class="CenterCenter" src="./Images/Icons/closed_n.png" style="top: 1px;height:15px" />
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </td>
+
+                                <!--accounting filter-->
+                                <td style="width:20px;"><div></div></td>
+                                <td style="width:80px;" class="Label">Accounting: </td>
+                                <td style="width: 99px;">
+                                    <div style="width: 99px; position: absolute; top:5px; right:0;">
+                                        <ul class="FiltersMenuImage">
+                                            <li style="width:33px;" (mouseover)="AccountingMouseOver('All')" (mouseleave)="AccountingMouseLeave('All')" (click)="OnAccountingClicked('All')" [class.SelectedFilter]="SelectedAccountingCode === 'All'">
+                                                All
+                                            </li>
+                                            <li (click)="OnAccountingClicked('Open')" (mouseover)="AccountingMouseOver('Open')" (mouseleave)="AccountingMouseLeave('Open')" [class.SelectedFilter]="SelectedAccountingCode === 'Open'" title="Open">
+                                                <img [attr.id]="FilterId_AO" class="CenterCenter" src="./Images/Icons/opened_n.png" style="top: 1px;height:17px" />
+                                            </li>
+                                            <li (click)="OnAccountingClicked('Close')" (mouseover)="AccountingMouseOver('Close')" (mouseleave)="AccountingMouseLeave('Close')" [class.SelectedFilter]="SelectedAccountingCode === 'Close'" title="Close">
+                                                <img [attr.id]="FilterId_AC" class="CenterCenter" src="./Images/Icons/closed_n.png" style="top: 1px;height:17px" />
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </td>
+
+                                <td style="width:20px;"><div></div></td>
+                                <td style="width:100px;" class="Label">Transport Mode</td>
+                                <td style="width:117px;">
+                                    <TransportsFilter [SelectedValue]="SelectedTransportFilter" (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
+                                </td>
+
+                                <td style="width:20px;"><div style="width:15px;"></div></td>
+                                <td style="width:60px;" class="Label">Direction:</td>
+                                <td style="width:1px;">
+                                    <div>
+                                        <DirectionsFilter [SelectedValue]="SelectedDirectionFilter" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
