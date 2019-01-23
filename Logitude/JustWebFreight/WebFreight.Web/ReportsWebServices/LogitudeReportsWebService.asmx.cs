@@ -10311,6 +10311,12 @@ namespace WebFreight.Web.ReportsWebServices
                     myRecord.PortOfDischargeName = a.MainCarriageFinalDestinationPortName;
                     myRecord.Consignee = a.ConsigneeName;
                     myRecord.BookingNumber = a.BookingConfirmationNumber;
+                    myRecord.Transshipment1ETA = a.Transshipment1ETA;
+                    myRecord.Transshipment2ETA = a.Transshipment2ETA;
+                    myRecord.Transshipment3ETA = a.Transshipment3ETA;
+                    myRecord.Transshipment1ETD = a.Transshipment1ETD;
+                    myRecord.Transshipment2ETD = a.Transshipment2ETD;
+                    myRecord.Transshipment3ETD = a.Transshipment3ETD;
 
                     myRecord.FullStatus = a.StatusName;
                     if(!string.IsNullOrEmpty(a.StatusLocation))

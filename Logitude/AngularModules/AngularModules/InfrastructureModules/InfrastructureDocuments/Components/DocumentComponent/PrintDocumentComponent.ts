@@ -300,6 +300,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 case "OMBC":
                 case "WHL":
                 case "DESCH":
+                case "WESL":
                     return true;
 
                 default:
