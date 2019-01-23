@@ -35,5 +35,10 @@ namespace WebFreight.Web.DataContracts
         public int Width { get; set; }
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public int Index { get; set; }
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public bool IsChecked { get; set; }
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string DataTypeCode { get; set; }
+        
     }
 }

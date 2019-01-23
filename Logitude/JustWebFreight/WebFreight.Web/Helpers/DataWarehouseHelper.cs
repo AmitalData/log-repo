@@ -14,13 +14,16 @@ namespace WebFreight.Web.Helpers
             if (!string.IsNullOrEmpty(fieldValue))
             {
                 var valuesArray = fieldValue.Split('^');
+
                 if (valuesArray.Length > 0)
                 {
                     if (valuesArray[0] == "Prev" && valuesArray.Length == 3) result = ResovePreviousDateValue(fieldName, valuesArray[1], valuesArray[2], tenant);
                     else if (valuesArray[0] == "Next" && valuesArray.Length == 3) result = ResoveNextDateValue(fieldName, valuesArray[1], valuesArray[2], tenant);
                     else if (valuesArray[0] == "Current" && valuesArray.Length == 2) result = ResoveCurrentDateValue(fieldName, valuesArray[1], tenant);
                 }
+
             }
+
             return result;
 
         }
@@ -35,30 +38,30 @@ namespace WebFreight.Web.Helpers
             {
                 case "Day":
                     fromDate = currentDate;
-                    toDate = currentDate.AddDays(1);
 
                     break;
 
                 case "Week":
-                    fromDate = currentDate.AddDays(7);
-                    toDate = fromDate.Value.AddDays(-1);
+
+                    fromDate = StartOfWeek(currentDate, DayOfWeek.Monday);
+                    toDate = fromDate.Value.AddDays(7);
                     break;
 
                 case "Month":
 
                     fromDate = new DateTime(currentDate.Year, currentDate.Month, 1);
-                    toDate = fromDate.Value.AddMonths(1).AddDays(-1);
+                    toDate = fromDate.Value.AddMonths(1);
                     break;
 
                 case "Quarter":
                     fromDate = new DateTime(currentDate.Year, currentDate.Month, 1);
-                    toDate = fromDate.Value.AddMonths(3).AddDays(-1);
+                    toDate = fromDate.Value.AddMonths(3);
                     break;
 
                 case "Year":
 
                     fromDate = new DateTime(currentDate.Year, 1, 1);
-                    toDate = fromDate.Value.AddYears(1).AddDays(-1);
+                    toDate = fromDate.Value.AddYears(1);
                     break;
 
 
@@ -69,8 +72,9 @@ namespace WebFreight.Web.Helpers
                     break;
             }
 
+            if (range == "Day") result = fieldName + "= '" + fromDate;
+            else result = fieldName + " >= '" + fromDate + "' and " + fieldName + " < '" + toDate + "'";
 
-            result = fieldName + " >= '" + fromDate + "' and " + fieldName + " < '" + toDate + "'";
             return result;
         }
 
@@ -86,15 +90,15 @@ namespace WebFreight.Web.Helpers
             switch (range)
             {
                 case "Day":
-                    fromDate = currentDate.AddDays(-1);
-                    toDate = currentDate.AddDays(intervalNumber);
+                    fromDate = currentDate.AddDays(1);
+                    toDate = currentDate.AddDays((intervalNumber + 1));
                     break;
 
                 case "Week":
 
                     toDate = currentDate.AddDays(7 * (intervalNumber + 1));
                     fromDate = DateTime.Parse(toDate.ToString()).AddDays(7 * (intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber)));
-                    toDate = toDate.Value.AddDays(-1);
+
                     break;
 
                 case "Month":
@@ -102,7 +106,7 @@ namespace WebFreight.Web.Helpers
                     toDate = currentDate.AddMonths((intervalNumber + 1));
                     toDate = new DateTime(toDate.Value.Year, toDate.Value.Month, 1);
                     fromDate = DateTime.Parse(toDate.ToString()).AddMonths(intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber));
-                    toDate = toDate.Value.AddDays(-1);
+
 
                     break;
 
@@ -111,16 +115,13 @@ namespace WebFreight.Web.Helpers
                     toDate = AddQuarters(currentDate, (intervalNumber + 1));
                     toDate = new DateTime(toDate.Value.Year, toDate.Value.Month, 1);
                     fromDate = AddQuarters((DateTime)toDate, intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber));
-                    toDate = toDate.Value.AddDays(-1);
 
                     break;
-
 
                 case "Year":
 
                     toDate = new DateTime(currentDate.AddYears(intervalNumber + 1).Year, 1, 1);
                     fromDate = DateTime.Parse(toDate.ToString()).AddYears(intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber));
-                    toDate = toDate.Value.AddDays(-1);
 
                     break;
                 default:
@@ -129,7 +130,7 @@ namespace WebFreight.Web.Helpers
                     break;
             }
 
-            result = fieldName + " > '" + fromDate + "' and " + fieldName + " <= '" + toDate + "'";
+            result = fieldName + " >= '" + fromDate + "' and " + fieldName + " < '" + toDate + "'";
 
             return result != null ? result.ToString() : "";
         }
@@ -148,13 +149,13 @@ namespace WebFreight.Web.Helpers
             {
                 case "Day":
                     fromDate = currentDate.AddDays(intervalNumber);
-                    toDate = currentDate.AddDays(-1);
+                    toDate = currentDate;
 
                     break;
 
                 case "Week":
                     fromDate = currentDate.AddDays(7 * intervalNumber);
-                    toDate = currentDate.AddDays(-1);
+                    toDate = currentDate;
                     fromDate = fromDate.Value.AddDays(-1);
                     break;
 
@@ -162,7 +163,6 @@ namespace WebFreight.Web.Helpers
                     fromDate = currentDate.AddMonths(intervalNumber);
                     fromDate = new DateTime(fromDate.Value.Year, fromDate.Value.Month, 1);
                     toDate = DateTime.Parse(fromDate.ToString()).AddMonths(intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber));
-                    toDate = toDate.Value.AddDays(-1);
 
                     break;
 
@@ -170,14 +170,13 @@ namespace WebFreight.Web.Helpers
 
                     fromDate = AddQuarters(currentDate, intervalNumber);
                     fromDate = new DateTime(fromDate.Value.Year, fromDate.Value.Month, 1);
-                    toDate = AddQuarters((DateTime)fromDate, intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber)).AddDays(-1);
 
                     break;
 
                 case "Year":
 
                     fromDate = new DateTime(currentDate.AddYears(intervalNumber).Year, 1, 1);
-                    toDate = DateTime.Parse(fromDate.ToString()).AddYears(intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber)).AddDays(-1);
+                    toDate = DateTime.Parse(fromDate.ToString()).AddYears(intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber));
 
                     break;
                 default:
@@ -186,14 +185,21 @@ namespace WebFreight.Web.Helpers
                     break;
             }
 
-            result = fieldName + " > '" + fromDate + "' and " + fieldName + " <= '" + toDate + "'";
+            result = fieldName + " >= '" + fromDate + "' and " + fieldName + " < '" + toDate + "'";
 
             return result != null ? result.ToString() : "";
         }
 
+
         private DateTime AddQuarters(DateTime originalDate, int quarters)
         {
             return originalDate.AddMonths(quarters * 3);
+        }
+
+        public DateTime StartOfWeek(DateTime dt, DayOfWeek startOfWeek)
+        {
+            int diff = (7 + (dt.DayOfWeek - startOfWeek)) % 7;
+            return dt.AddDays(-1 * diff).Date;
         }
     }
 }

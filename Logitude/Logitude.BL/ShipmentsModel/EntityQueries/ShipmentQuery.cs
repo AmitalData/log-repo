@@ -11700,12 +11700,25 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
 
             string shipmentId = (from a in repository.context.Shipments
-                                 where a.Tenant == tenant && a.ShipmentNumber == agentRef
+                                 where a.Tenant == tenant && a.ShipmentNumber == agentRef && !a.IsCancelled
                                  select a.Id).FirstOrDefault();
 
             return shipmentId;
 
         }
+
+
+        public string GetShipmentIdByForwarderShipmentNumber(string agentRef, int tenant)
+        {
+            string shipmentId = (from a in repository.context.Shipments
+                                 where a.Tenant == tenant && a.ForwarderShipmentNumber == agentRef && !a.IsCancelled
+                                 select a.Id).FirstOrDefault();
+
+            return shipmentId;
+
+        }
+
+
         public string GetShipmentByAgentSharedManifestRef(string agentSharedManifestRef, int tenant)
         {
 
@@ -11876,8 +11889,20 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
 
 
+        public int? GetCustomerTenantByShipmentNumber(string shipmentNumber,  int tenant)
+        {
+         
+            int? result = (from a in repository.context.Shipments
+                                 where a.Tenant == tenant && a.ShipmentNumber == shipmentNumber 
+                                 select a.CustomerTenantNumber).FirstOrDefault();
 
 
+            return result;
+
+        }
+
+
+ 
     }
 
     public class DeparturesArrivalsDataItem

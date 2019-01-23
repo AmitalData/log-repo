@@ -80,6 +80,11 @@ export class CounterDefinitionPM {
     public set CounterSize(newValue: number) { if (this.counterSize != newValue) { this.counterSize = newValue; this.MarkAsDirty("CounterSize"); } }
        
 	 
+    private suffix: string;
+    public get Suffix() { return this.suffix; }
+    public set Suffix(newValue: string) { if (this.suffix != newValue) { this.suffix = newValue; this.MarkAsDirty("Suffix"); } }
+       
+	 
 
     public OldEntityPM: CounterDefinitionPM;
 		

@@ -920,9 +920,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                         AccountTypeCode = a.AccountTypeCode,
                                         GLAccountId = a.Id,
                                         IsMultiCurrency = a.IsMultiCurrency,
-                                        CurrecnyId = a.CurrencyId
-
-                                    }).ToList();
+                                        CurrecnyId = a.CurrencyId,
+                                        CustomerGLAccountId= a.CustomerGLAccountId,
+                                        CurrencyCode = a.Currency !=null? a.Currency.Code:null, 
+                     }).ToList();
 
 
             return b110s;

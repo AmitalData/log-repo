@@ -45,7 +45,7 @@ namespace Logitude.DatabaseMigration.Migrations
             //AddColumn("Customs.ClaimsRelatedEntities", "RefundAmount", c => c.Decimal(precision: 16, scale: 2));
             //AddColumn("Customs.Declarations", "CourierSuspentionCode", c => c.String(maxLength: 2, unicode: false));
             //AddColumn("Customs.CourierMasters", "WeightValueCode", c => c.String(maxLength: 3, unicode: false));
-            AddColumn("dbo.ShipmentPackages", "HasContainerException", c => c.Boolean(nullable: false));
+           // AddColumn("dbo.ShipmentPackages", "HasContainerException", c => c.Boolean(nullable: false));
             //AddColumn("Customs.Vehicles", "PassportName", c => c.String(maxLength: 55));
             //AddColumn("Customs.CustomsAirlines", "ICAO", c => c.String(maxLength: 3, unicode: false));
             //AlterColumn("Customs.CargoSplitRequestStatuses", "Code", c => c.String(nullable: false, maxLength: 2, unicode: false));
@@ -82,7 +82,7 @@ namespace Logitude.DatabaseMigration.Migrations
             //AlterColumn("Customs.CargoSplitRequestStatuses", "Code", c => c.String(nullable: false, maxLength: 1, unicode: false));
             //DropColumn("Customs.CustomsAirlines", "ICAO");
             //DropColumn("Customs.Vehicles", "PassportName");
-            DropColumn("dbo.ShipmentPackages", "HasContainerException");
+            //DropColumn("dbo.ShipmentPackages", "HasContainerException");
             //DropColumn("Customs.CourierMasters", "WeightValueCode");
             //DropColumn("Customs.Declarations", "CourierSuspentionCode");
             //DropColumn("Customs.ClaimsRelatedEntities", "RefundAmount");

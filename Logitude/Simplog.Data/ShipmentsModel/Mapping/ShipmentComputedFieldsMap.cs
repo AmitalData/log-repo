@@ -16,7 +16,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.MissingDocumentsCount);
             this.Property(t => t.MissingDocumentsNames).IsMaxLength();
             this.Property(t => t.IsDigitalSignRequired).IsRequired();
-
+            this.Property(t => t.ImporterDepositionRequestDetails).HasMaxLength(100).IsUnicode(false);
+    
             // Table & Column Mappings
             this.ToTable("ShipmentComputedFields");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -30,6 +31,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.RequestedDocumentsCount).HasColumnName("RequestedDocumentsCount");
             this.Property(t => t.NumberOfHouses).HasColumnName("NumberOfHouses");
             this.Property(t => t.IsDigitalSignRequired).HasColumnName("IsDigitalSignRequired");
+            this.Property(t => t.IsDepositionRequired).HasColumnName("IsDepositionRequired");
+            this.Property(t => t.ImporterDepositionRequestDetails).HasColumnName("ImporterDepositionRequestDetails");
 
             this.HasRequired(t => t.Shipment);
         }
