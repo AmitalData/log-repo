@@ -458,10 +458,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             DateTime date;
             if (string.IsNullOrWhiteSpace(txt)) return null;
 
-            if (!string.IsNullOrWhiteSpace(time))
-            {
-                txt = string.Concat(txt, time);
-            }
+            //if (!string.IsNullOrWhiteSpace(time))
+            //{
+            //    txt = string.Concat(txt, time);
+            //}
             if (DateTime.TryParseExact(txt, "yyyyMMddHHmm", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
             {
                 return date;

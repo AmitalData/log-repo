@@ -209,17 +209,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     switch (_DeclarationCargoSplitPM.ResponseStatusCode)
                     {
                         case "1":
-                            notificationDescription = "בקשת פיצול מטען אושרה " + customsFileNo;
+                            notificationDescription = "בקשת פיצול מטען מס' " + _DeclarationCargoSplitPM.RequestNumber + " אושרה " + customsFileNo;
                             break;
                         case "2":
-                            notificationDescription = "בקשת פיצול מטען נדחתה " + customsFileNo;
+                            notificationDescription = "בקשת פיצול מטען מס' " + _DeclarationCargoSplitPM.RequestNumber + " נדחתה " + customsFileNo;
                             break;
                         case "4":
                         case "7":
-                            notificationDescription = "בקשת פיצול מטען בוטלה " + customsFileNo;
+                            notificationDescription = "בקשת פיצול מטען מס' " + _DeclarationCargoSplitPM.RequestNumber + " בוטלה " + customsFileNo;
                             break;
                         case "6":
-                            notificationDescription = "בוצע פיצול מטען " + customsFileNo;
+                            notificationDescription = "בוצע פיצול מטען  " + customsFileNo;
                             break;
                         default:
                             notificationDescription = "התקבל משוב לפיצול מטען " + customsFileNo;
@@ -288,26 +288,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 case "1":
                     status = "CSA";
                     notificationDefinitionCode = "8374A";
-                    notificationDescription = "בקשת פיצול מטען אושרה " + customsFileNo;
+                    notificationDescription = "בקשת פיצול מטען מס' " + _DeclarationCargoSplitPM.RequestNumber + " אושרה " + customsFileNo;
                     userMessage = "בקשת פיצול מטען " + _DeclarationCargoSplitPM.RequestNumber + " אושרה";
                     break;
                 case "2":
                     status = "CSJ";
                     notificationDefinitionCode = "8374J";
-                    notificationDescription = "בקשת פיצול מטען נדחתה " + customsFileNo;
+                    notificationDescription = "בקשת פיצול מטען מס' " + _DeclarationCargoSplitPM.RequestNumber + " נדחתה " + customsFileNo;
                     userMessage = "בקשת פיצול מטען " + _DeclarationCargoSplitPM.RequestNumber + " נדחתה";
                     break;
                 case "4":
                 case "7":
                     status = "CSC";
                     notificationDefinitionCode = "8374C";
-                    notificationDescription = "בקשת פיצול מטען בוטלה " + customsFileNo;
+                    notificationDescription = "בקשת פיצול מטען מס' " + _DeclarationCargoSplitPM.RequestNumber + " בוטלה " + customsFileNo;
                     userMessage = "בקשת פיצול מטען " + _DeclarationCargoSplitPM.RequestNumber + " בוטלה";
                     break;
                 case "6":
                     status = "CSD";
                     notificationDefinitionCode = "8374D";
-                    notificationDescription = "בוצע פיצול מטען " + customsFileNo;
+                    notificationDescription = "בוצע פיצול מטען  " + customsFileNo;
                     userMessage = "בוצע פיצול מטען לבקשה " + _DeclarationCargoSplitPM.RequestNumber;
                     break;
             }

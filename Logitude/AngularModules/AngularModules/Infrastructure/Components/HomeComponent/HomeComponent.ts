@@ -102,7 +102,7 @@ export class HomeComponent implements OnDestroy{
 
         if (ObjectsLocator.GlobalSetting) {
           // if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
-          if (!ObjectsLocator.LoggedUserPM.DontShowLocal) {
+            if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs" || !ObjectsLocator.LoggedUserPM.DontShowLocal) {
                 this.SystemFontFamily = 'Arial'; //'OpenSans-Regular';
                 isNewSignupTenant = false;
             }

@@ -33,6 +33,8 @@ import {DeclarationMessagesService} from '../../../../../Customs/Services/WebSer
 import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
+import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+
 @Component({
     moduleId: module.id,
     templateUrl: './CustomsAnswersComponent.html',
@@ -59,6 +61,12 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     AllCount: string = "";
     SystemMessageDescribtion: string;
     IsCourierDeclaration: boolean = false;
+    DepositionStatusCode: string = "";
+    DepositionStatusCodeIcon: string = "";
+    IsDepositionStatusCodeButton: boolean = false;
+    IsDepositionStatusCodeSendDigital: boolean = false;
+    DepositionStatusCodeText: string = "";
+
     //Services
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
     private declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService;
@@ -86,6 +94,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                         this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
                             this.EntityPM = this.entityArgs.EntityPM;
                             this.IsCourierDeclaration = this.EntityPM.IsCourierDeclaration;
+                            this.DepositionStatusCode = this.EntityPM.DepositionStatusCode;
                             this.ObjectTableName = this.entityArgs.ObjectTableName;
                             this.Listen();
                             this.ReloadDeclarationErrors();
@@ -105,6 +114,8 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                             this.textcode_DenialReason = TextCodeTranslator.Translate("Customs.CustomsCollateral.O.DenialReason");
                             this.textcode_ApprovalReason = TextCodeTranslator.Translate("Customs.CustomsCollateral.O.ApprovalReason");
 
+                            this.GetDepositionDefaults(this.EntityPM.CustomerCode);
+                            this.DepositionStatusCodeIcon = "./Images/Buttons/EditWithGreenTick.png";
                             //#enderegion
                         });
                     });
@@ -116,8 +127,6 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         if (this.IsDisplayOnly) {
             this.SetScreenFieldsEditability();
         }
-
-        
 
     }
 
@@ -1016,6 +1025,51 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         return title;
     }
 
+    DepositionStatusbuttonclicked(event) {
+
+        //if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && this.EntityPM.DepositionStatusCode != "L") {
+            this.EntityPM.DepositionStatusCode = "L";
+            this.SaveEntityChanges(null);
+            event.stopPropagation();
+            return;
+        //}
+    }
+    SaveEntityChanges(args: any): any {
+        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+            this.declarationPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+
+                if (myResponse.HasError) {
+                    //this.ValidationErrorsList = myResponse.ErrorsArray;
+                }
+
+                else {
+                    this.EntityPM = myResponse.Result;
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+
+                        var myErrors: string[] = [];
+                        myErrors.push("this.EntityPM.Id is null");
+                        //this.ValidationErrorsList = myErrors;
+                    }
+                    else {
+                        if (args == null) {
+                            //this.CancelButtonClicked();
+                        } else {
+                            
+                            //this.SendButtonClicked();
+                        }
+
+                    }
+                }
+
+            
+            });
+
+        }
+    }
+
+
     //#endregion
 
     //#region constraint paging - client
@@ -1049,6 +1103,38 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             this.LoadConstriantsList(this.errorsForDeclaration);
         }
 
+    }
+
+    private GetDepositionDefaults(CustomerCode: string) {
+        var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+        myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_BOX_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
+            .subscribe(response => {
+                this.IsDepositionStatusCodeButton = false;
+                this.IsDepositionStatusCodeSendDigital = false;
+                this.DepositionStatusCodeIcon = "./Images/Buttons/U_LOGBOX.png";
+                if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
+                    this.IsDepositionStatusCodeButton = true;
+                }
+                myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_LBL_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
+                    .subscribe(res => {
+                        if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
+                            this.IsDepositionStatusCodeButton = true;
+                            this.IsDepositionStatusCodeSendDigital = true;
+                        }
+                        if (this.IsDepositionStatusCodeSendDigital) {
+                            this.DepositionStatusCodeText = "נשלחה משימה ליבואן בדיגיטל";
+                        }
+                        else {
+                            this.DepositionStatusCodeText = "נשלחה משימה ליבואן בלוגבוקס";
+                        }
+                        myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_PRV_LBL_LOG", "NON", "NON", SessionLocator.Tenant)
+                            .subscribe(res => {
+                                if (!res.HasError && res.Result != null) {
+                                    this.DepositionStatusCodeIcon = res.Result.DefaultValue;
+                                }
+                            });
+                    });
+            });
     }
     //#endregion
 }
@@ -1516,6 +1602,7 @@ export class ConstraintLineModel extends BaseComponent {
         }
 
     }
+
 }
 
 
