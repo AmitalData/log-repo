@@ -60,8 +60,11 @@ export class ActivitiesModule {
         this.Helper.WaitByCssAndClick_FromTagInsideList('.LogitudeQuickSearchItem', 0);
     }
 
-
+ 
 }
 
+this.addPhoneCall.CreateNewTask('task#'+activityNo);
+this.QuickSearchBox('activity','task#'+activityNo);
+this.editPhoneCall.EditPhoneCall("")
 
 
