@@ -21,7 +21,6 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DeclarationEditComponentController } from '../../../../Customs/Controller/DeclarationEditComponentController';
 import { DropdownMenuFilterComponent }  from './DropdownMenuFilterComponent'
-import { CustomBankListService } from '../../../../Customs/Services/StandardLists/CustomBankListService';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { SendPayReadyLowRequestParams } from '../../../../Customs/DataContract/RequestParams/SendPayReadyLowRequestParams';
 import { SendALLCorrectRequestParams } from '../../../../Customs/DataContract/RequestParams/SendALLCorrectRequestParams';
@@ -1455,6 +1454,36 @@ implements OnDestroy
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
             });
+    }
+
+    GatepassRequestMethod() {
+
+        if (AppTool.IsNullOrEmpty(this.entityPM.MAWB)) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show("לא ניתן לבצע גייטפס העברות ללא מזהה מטען"); //TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            return;
+        }
+
+        //this._DeclarationCourierStatusPMService.get(declarationId).subscribe((response: ServiceResponse) => {
+            //if (!response.HasError) {
+                var logitudeWindow = new LogitudeWindow();
+                var windowArgs: any = {};
+                windowArgs.CourierMasterPM = this.entityPM;
+                //windowArgs.Mode = mode;
+
+                logitudeWindow.Width = 750;
+                logitudeWindow.Height = 400;
+                logitudeWindow.IsShowCloseButton = false;
+                logitudeWindow.Title = "גייטפס העברות";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+                logitudeWindow.WindowArgs = windowArgs;
+                logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/GatepassRequest/GatepassRequestComponent');
+                logitudeWindow.WindowClosed.subscribe(($event: any) => {
+                    //this.RefreshData();
+                });
+            //}
+        //});
     }
 
     private GetMamanPUR() {
