@@ -1435,12 +1435,21 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                     if((this.TextValue + "").indexOf(',') == -1) {
                       val = Number(this.TextValue);
                     }
+
                     if (this.AddCommasToNumbers) {
                         if ((this.TextValue + "").indexOf(',') > -1) {
                             var txtval = this.TextValue.replace(/,/g, "");
                             val = Number(txtval);
                         }
                      }
+
+
+                    if(this.AllowPercentage && this.TextValue.indexOf('%')>-1)
+                    {
+                       var txtval2=this.TextValue.replace('%', '');
+                       val= Number(txtval2);
+                    }
+
 
                     if (isNaN(Number(val))) {
                         this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
