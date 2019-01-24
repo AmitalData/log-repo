@@ -1333,6 +1333,14 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     OperationValueChanged(operation) {
 
+        if ((this.Operation.Code == this.beforeOp.Code && operation != this.afterOp.Code) || (this.Operation.Code == this.afterOp.Code && operation != this.beforeOp.Code) ) {
+            this.TextValue = "";
+        }
+        if ((this.Operation.Code == this.nextOp.Code && operation != this.previousOp.Code) || (this.Operation.Code == this.previousOp.Code && operation != this.nextOp.Code)) {
+            this.TextValue = "";
+        }
+
+
         if (this.Operation.Code == this.IsNullOp.Code || this.Operation.Code == this.IsNotNullOp.Code) {
             this.TextValue = "";
             this.MultiSelectedValueLists = [];
