@@ -86,6 +86,12 @@ namespace WebFreight.Web.Helpers
                     {
                         var filter = Myfilter;
                         var OperationSimpol = "";
+                        if (filter.Operation == null)
+                        {
+                            filter.Operation = new ObjectFieldOperator();
+                            filter.Operation.Code = filter.OperationCode;
+                            filter.Operation.Name = filter.OperationName;
+                        }
                         if(filter.DataTypeCode!="Date" && filter.DataTypeCode != "DateTime"){
                             if (filter.Operation.Code == "Equals")
                             {
@@ -233,7 +239,7 @@ namespace WebFreight.Web.Helpers
             var FilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(DWQueryParam.Filters);
             var Columns = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(ColumnsXML);
             var Filters = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(FilterXML);
-            string PagingString = " ORDER BY " + "Id_Number OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY";
+            
             bool HasMeasurement = Columns.Where(a => a.IsMeasurement == true).Count() > 0;
             var InnerTables = new List<DWObjectFieldsDetails>();
             //this.SampleData = [];
@@ -302,6 +308,7 @@ namespace WebFreight.Web.Helpers
 
 
             }
+            string PagingString = " ORDER BY " + Fact + ".Id_Number OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY";
             string FinalQuery = "";
             if (Filters != null)
             {

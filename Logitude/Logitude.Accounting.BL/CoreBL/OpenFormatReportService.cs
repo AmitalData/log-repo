@@ -780,7 +780,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 var CreateDate = String.Format("{0:yyyyMMdd}", item.DocumentCreateDate);
-                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HH:mm");
+                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HHmm");
 
                 if (CreateDate.Length > 8) { CreateDate.Substring(0, 8); }
                 myStringBuilder.Append("a" + CreateDate.PadLeft(8, '0'));
@@ -1231,7 +1231,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 var CreateDate = String.Format("{0:yyyyMMdd}", item.DocumentCreateDate);
-                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HH:mm");
+                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HHmm");
 
                 if (CreateDate.Length > 8) { CreateDate.Substring(0, 8); }
                 myStringBuilder.Append("a" + CreateDate.PadLeft(8, '0'));
@@ -1785,7 +1785,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 var CreateDate = String.Format("{0:yyyyMMdd}", item.DocumentCreateDate);
-                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HH:mm");
+                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HHmm");
 
                 if (CreateDate.Length > 8) { CreateDate.Substring(0, 8); }
                 myStringBuilder.Append("a" + CreateDate.PadLeft(8, '0'));
@@ -2353,7 +2353,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 var CreateDate = String.Format("{0:yyyyMMdd}", item.DocumentCreateDate);
-                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HH:mm");
+                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HHmm");
 
                 if (CreateDate.Length > 8) { CreateDate.Substring(0, 8); }
                 myStringBuilder.Append("a" + CreateDate.PadLeft(8, '0'));
@@ -2854,7 +2854,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         AddressStreet = a.BillToAddress != null? a.BillToAddress.Address1:null,
                                         AddressCity = a.BillToAddress != null ? a.BillToAddress.City : null,
                                         AddressZIPCode = a.BillToAddress != null? a.BillToAddress.ZipCode: null,
-                                        AddressCountry = a.BillToAddress != null ? a.BillToAddress.Country.EnglishName : null,
+                                        AddressCountry = a.BillToAddress.Country.LocalName != null ? a.BillToAddress.Country.LocalName : a.BillToAddress.Country.EnglishName,
                                         AddressCountryCode = a.BillToAddress != null ? a.BillToAddress.Country.Code : null,
                                         CustomeVendorTelephone = a.BillToAddress != null ? a.BillToAddress.PhoneNumber : null,
                                         CustomerVendorVatNumber = a.BillTo != null ? a.BillTo.VatNumber : null,
