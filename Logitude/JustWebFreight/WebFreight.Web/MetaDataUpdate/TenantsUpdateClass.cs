@@ -157,49 +157,84 @@ namespace WebFreight.Web.MetaDataUpdate
                       
                       case "updatetenantzeronew":
                         {
-                            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
-                            updateClass.UpgradeClosedTablesForTenantZero();
 
-                            ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
-                            shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+                            if (LogitudeSettings.WorkEnvironment == "customs")
+                            {
+                                MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+                                updateClass.UpgradeClosedTablesForTenantZero();
 
-                            QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
-                            quotemodelUpdateClass.LoadObjectsTenantZero(context);
+                                CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
+                                commonmodelUpdateClass.LoadObjectsTenantZero(context);
 
-                            InvoiceModelUpdateClass invoicemodelUpdateClass = new InvoiceModelUpdateClass();
-                            invoicemodelUpdateClass.LoadObjectsTenantZero(context);
+                                InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
+                                inframodelUpdateClass.LoadObjectsTenantZero(context);
 
-                            CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
-                            commonmodelUpdateClass.LoadObjectsTenantZero(context);
+                                GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
+                                globalmodelUpdateClass.LoadObjectsTenantZero(context);
 
-                            InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
-                            inframodelUpdateClass.LoadObjectsTenantZero(context);
+                                updateClass.LoadUpdateTenantZero(context, false);
+                                updateClass.LoadOtherFields(context);
 
-                            GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
-                            globalmodelUpdateClass.LoadObjectsTenantZero(context);
+                                updateClass.LoadTranslationHeaders();
+                                updateClass.LoadMeasurements();
+                                updateClass.LoadCreditCardTypes();
+                                updateClass.LoadMoveTypes();
+                                updateClass.LoadRolesAndFeatures(0);
+                                updateClass.LoadObjectTableHelperControls();
+                                updateClass.LoadEntityStatus();
+                                updateClass.LoadEventTypes();
+                                updateClass.LoadRanks();
+                                updateClass.LoadMenustables();
+                                updateClass.LoadDefaultReports();
+                                updateClass.LoadHelpResources();
+                                updateClass.LoadEmailAlertSettings();
+                            }
+                            else
+                            {
+
+                                MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+                                updateClass.UpgradeClosedTablesForTenantZero();
+
+                                ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
+                                shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+
+                                QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
+                                quotemodelUpdateClass.LoadObjectsTenantZero(context);
+
+                                InvoiceModelUpdateClass invoicemodelUpdateClass = new InvoiceModelUpdateClass();
+                                invoicemodelUpdateClass.LoadObjectsTenantZero(context);
+
+                                CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
+                                commonmodelUpdateClass.LoadObjectsTenantZero(context);
+
+                                InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
+                                inframodelUpdateClass.LoadObjectsTenantZero(context);
+
+                                GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
+                                globalmodelUpdateClass.LoadObjectsTenantZero(context);
 
 
-                            updateClass.LoadUpdateTenantZero(context, false);
+                                updateClass.LoadUpdateTenantZero(context, false);
 
-                            updateClass.LoadOtherFields(context);
-                            updateClass.LoadTranslationHeaders();
-                            updateClass.LoadMeasurements();
-                            updateClass.LoadCreditCardTypes();
-                            updateClass.LoadMoveTypes();
-                            //updateClass.loadQueries();
-                            //updateClass.loadScreens();
-                            //updateClass.LoadObjectTableTabs();
-                            updateClass.LoadRolesAndFeatures(0);
-                            updateClass.LoadObjectTableHelperControls();
-                            updateClass.LoadEntityStatus();
-                            updateClass.LoadEventTypes();
-                            updateClass.LoadRanks();
-                            updateClass.LoadMenustables();
-                            updateClass.LoadDefaultReports();
-                            updateClass.LoadHelpResources();
-                            updateClass.CreateMasterCounter(0);
-                            updateClass.LoadEmailAlertSettings();
-
+                                updateClass.LoadOtherFields(context);
+                                updateClass.LoadTranslationHeaders();
+                                updateClass.LoadMeasurements();
+                                updateClass.LoadCreditCardTypes();
+                                updateClass.LoadMoveTypes();
+                                //updateClass.loadQueries();
+                                //updateClass.loadScreens();
+                                //updateClass.LoadObjectTableTabs();
+                                updateClass.LoadRolesAndFeatures(0);
+                                updateClass.LoadObjectTableHelperControls();
+                                updateClass.LoadEntityStatus();
+                                updateClass.LoadEventTypes();
+                                updateClass.LoadRanks();
+                                updateClass.LoadMenustables();
+                                updateClass.LoadDefaultReports();
+                                updateClass.LoadHelpResources();
+                                updateClass.CreateMasterCounter(0);
+                                updateClass.LoadEmailAlertSettings();
+                            }
                             break;
                         }
                     case "updatetenantzero":
