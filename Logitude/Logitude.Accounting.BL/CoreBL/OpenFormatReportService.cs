@@ -780,7 +780,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 var CreateDate = String.Format("{0:yyyyMMdd}", item.DocumentCreateDate);
-                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HH:mm");
+                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HHmm");
 
                 if (CreateDate.Length > 8) { CreateDate.Substring(0, 8); }
                 myStringBuilder.Append("a" + CreateDate.PadLeft(8, '0'));
@@ -1231,7 +1231,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 var CreateDate = String.Format("{0:yyyyMMdd}", item.DocumentCreateDate);
-                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HH:mm");
+                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HHmm");
 
                 if (CreateDate.Length > 8) { CreateDate.Substring(0, 8); }
                 myStringBuilder.Append("a" + CreateDate.PadLeft(8, '0'));
@@ -1785,7 +1785,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 var CreateDate = String.Format("{0:yyyyMMdd}", item.DocumentCreateDate);
-                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HH:mm");
+                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HHmm");
 
                 if (CreateDate.Length > 8) { CreateDate.Substring(0, 8); }
                 myStringBuilder.Append("a" + CreateDate.PadLeft(8, '0'));
@@ -2353,7 +2353,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 var CreateDate = String.Format("{0:yyyyMMdd}", item.DocumentCreateDate);
-                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HH:mm");
+                var CreateDateTime = item.DocumentCreateDate.Value.ToString("HHmm");
 
                 if (CreateDate.Length > 8) { CreateDate.Substring(0, 8); }
                 myStringBuilder.Append("a" + CreateDate.PadLeft(8, '0'));
