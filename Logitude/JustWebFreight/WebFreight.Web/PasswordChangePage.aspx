@@ -446,7 +446,7 @@
            
          } else document.getElementById("BackToLogin").style.display = "none";
            var url = window.location.href;
-           var isDSV = url.toLowerCase().indexOf("dsv") > -1 ? true : false;
+           var isDSV = url.toLowerCase().indexOf("system.dsv.co.il") > -1 ? true : false;
            var myDomain = url.split('/')[2];
            if (isDSV == true) {
                window.sessionStorage.setItem("ResetPWD", "true");

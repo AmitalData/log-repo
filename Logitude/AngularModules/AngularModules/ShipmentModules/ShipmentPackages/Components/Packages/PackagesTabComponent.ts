@@ -1460,6 +1460,13 @@ export class ShipmentPackageItem extends BaseComponent {
             this.UIProperties.SetEnabled("Length", this.ObjectTableName, isDimensionEnabled);
             this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isVolumeEnabled);
             this.UIProperties.SetEnabled("Weight", this.ObjectTableName, isGrossWeightEnabled);
+
+            this.UIProperties.SetEnabled("CommodityNumber", this.ObjectTableName, this.IsEditingFieldsEnabled);
+            this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingFieldsEnabled);
+            this.UIProperties.SetEnabled("Reference1", this.ObjectTableName, this.IsEditingFieldsEnabled);
+            this.UIProperties.SetEnabled("Reference2", this.ObjectTableName, this.IsEditingFieldsEnabled);
+            this.UIProperties.SetEnabled("Reference3", this.ObjectTableName, this.IsEditingFieldsEnabled);
+            this.UIProperties.SetEnabled("Reference4", this.ObjectTableName, this.IsEditingFieldsEnabled);
         }
     }
     SetUIProperties_Container() {
