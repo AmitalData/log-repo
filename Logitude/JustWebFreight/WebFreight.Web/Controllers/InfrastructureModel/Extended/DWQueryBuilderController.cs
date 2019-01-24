@@ -407,8 +407,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(authToken.Tenant);
                 string MySqlString = QBHelper.GetQuerySQL(DWQueryParam);
                 DataTable MyData = QBHelper.GetDWQueryData(MySqlString);
-
-                return Request.CreateResponse(HttpStatusCode.OK, MyData);
+                DWQueryDataResult myResult = new DWQueryDataResult();
+                myResult.SQLDataResult = MyData;
+                myResult.SQLString = MySqlString;
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
             }
 

@@ -51,6 +51,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ECRTransportModeCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.FlashPointTemperatureUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.Routing).HasMaxLength(20).IsUnicode(false);
+            this.Property(t => t.RoutingIds).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.VoyageTripNumber).HasMaxLength(10).IsUnicode(false);
 
             // Table & Column Mappings
@@ -130,6 +131,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ETD).HasColumnName("ETD");
             this.Property(t => t.ETA).HasColumnName("ETA");
             this.Property(t => t.Routing).HasColumnName("Routing");
+            this.Property(t => t.RoutingIds).HasColumnName("RoutingIds");
             this.Property(t => t.VoyageTripNumber).HasColumnName("VoyageTripNumber");
             this.Property(t => t.HasContainerException).HasColumnName("HasContainerException");
 

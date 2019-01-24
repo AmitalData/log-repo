@@ -149,12 +149,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     else if(transactionPM.SourceTypeCode == "6") // 6- Cheque Deposit
                     {
                         BankDepositPM depositPM = depositQuery.GetSingle(transactionPM.SourceId, true, false);
+
                         foreach (BankDepositLinePM depLine in depositPM.BankDepositLines)
                         {
-                            ARPaymentChequePM chequePM = arpChequeQuery.GetSingle(depLine.ARPaymentChequeId, false, false);
-                            chequePM.ChangeSetOp = ChangeSetOperation.Update;
-                            chequePM.StatusCode = "4"; // 4- In cashbook
-                            arpChequeUpdateService.Update(chequePM, true);
+
+                            if (transactionPM.Reference1 == depLine.ChequeNumber)
+                            {
+                                ARPaymentChequePM chequePM = arpChequeQuery.GetSingle(depLine.ARPaymentChequeId, false, false);
+                                chequePM.ChangeSetOp = ChangeSetOperation.Update;
+                                chequePM.StatusCode = "4"; // 4- In cashbook
+                                arpChequeUpdateService.Update(chequePM, true);
+                            }
 
                         }
                     }

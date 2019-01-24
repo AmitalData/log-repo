@@ -86,85 +86,92 @@ namespace WebFreight.Web.Helpers
                     {
                         var filter = Myfilter;
                         var OperationSimpol = "";
-                        if ( filter!= null && filter.Operation != null && filter.Operation.Code == "Equals")
-                        {
-                            if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
+                        if(filter.DataTypeCode!="Date" && filter.DataTypeCode != "DateTime"){
+                            if (filter.Operation.Code == "Equals")
                             {
-                                OperationSimpol = " = @@ ";
+                                if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
+                                {
+                                    OperationSimpol = " = @@ ";
+                                }
+                                else
+                                {
+
+                                    OperationSimpol = " IN ( '";
+                                    OperationSimpol = this.BuildMultiValueSql(filter.TextValue.ToString(), OperationSimpol);
+                                    isHaveMultiSelect = true;
+
+
+                                }
+                            }
+                            else if (filter.Operation.Code == "NotEqual")
+                            {
+                                if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
+                                {
+                                    OperationSimpol = " <> @@ ";
+                                }
+                                else
+                                {
+
+                                    OperationSimpol = " not IN ( '";
+                                    OperationSimpol = BuildMultiValueSql(filter.TextValue.ToString(), OperationSimpol);
+                                    isHaveMultiSelect = true;
+
+                                    //abed
+                                }
+                            }
+                            else if (filter.Operation.Code == "StartsWith")
+                            {
+                                OperationSimpol = " like '@@%' ";
+                            }
+                            else if (filter.Operation.Code == "IsNull")
+                            {
+                                OperationSimpol = " is null ";
+                            }
+                            else if (filter.Operation.Code == "IsNotNull")
+                            {
+                                OperationSimpol = " is not null ";
+                            }
+                            else if (filter.Operation.Code == "GreaterThanOrEqual")
+                            {
+                                OperationSimpol = " >= @@ ";
+                            }
+                            else if (filter.Operation.Code == "LargerThan")
+                            {
+                                OperationSimpol = " > @@ ";
+                            }
+                            else if (filter.Operation.Code == "LessThan")
+                            {
+                                OperationSimpol = " < @@ ";
+                            }
+                            else if (filter.Operation.Code == "LessThanOrEqual")
+                            {
+                                OperationSimpol = " <= @@ ";
+                            }
+
+                            if (filter.Operation.Code == "IsNull")
+                            {
+                                WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is null or " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " = '' " + " " + AndOr + " ";
+                            }
+                            else if (filter.Operation.Code == "IsNotNull")
+                            {
+                                WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is not null and " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " <> '' " + " " + AndOr + " ";
                             }
                             else
                             {
-
-                                OperationSimpol = " IN ( '";
-                                OperationSimpol = this.BuildMultiValueSql(filter.TextValue.ToString(), OperationSimpol);
-                                isHaveMultiSelect = true;
-
-
+                                var operation = !isHaveMultiSelect ? OperationSimpol.Replace("@@", filter.TextValue.ToString()) : OperationSimpol;
+                                WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + operation + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
                             }
-                        }
-                        else if (filter != null && filter.Operation != null && filter.Operation.Code == "NotEqual")
-                        {
-                            if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
-                            {
-                                OperationSimpol = " <> @@ ";
-                            }
-                            else
-                            {
-
-                                OperationSimpol = " not IN ( '";
-                                OperationSimpol = BuildMultiValueSql(filter.TextValue.ToString(), OperationSimpol);
-                                isHaveMultiSelect = true;
-
-                                //abed
-                            }
-                        }
-                        else if (filter != null && filter.Operation != null &&  filter.Operation.Code == "StartsWith")
-                        {
-                            OperationSimpol = " like '@@%' ";
-                        }
-                        //else if (filter.Operation.Code == filter.IsNullOp.Code) {
-                        //    OperationSimpol = " like '%@@' ";
-                        //}
-                        else if (filter != null && filter.Operation != null &&  filter.Operation.Code == "IsNull")
-                        {
-                            OperationSimpol = " is null ";
-                        }
-                        else if (filter != null && filter.Operation != null &&  filter.Operation.Code == "IsNotNull")
-                        {
-                            OperationSimpol = " is not null ";
-                        }
-                        else if (filter != null && filter.Operation != null &&  filter.Operation.Code == "GreaterThanOrEqual")
-                        {
-                            OperationSimpol = " >= @@ ";
-                        }
-                        else if (filter != null && filter.Operation != null &&  filter.Operation.Code == "LargerThan")
-                        {
-                            OperationSimpol = " > @@ ";
-                        }
-                        else if (filter != null && filter.Operation != null &&  filter.Operation.Code == "LessThan")
-                        {
-                            OperationSimpol = " < @@ ";
-                        }
-                        else if (filter != null && filter.Operation != null &&  filter.Operation.Code == "LessThanOrEqual")
-                        {
-                            OperationSimpol = " <= @@ ";
-                        }
-
-
-
-                        if (filter != null && filter.Operation != null &&  filter.Operation.Code == "IsNull")
-                        {
-                            WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is null or " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " = '' " + " " + AndOr + " ";
-                        }
-                        else if (filter != null && filter.Operation != null &&  filter.Operation.Code == "IsNotNull")
-                        {
-                            WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is not null and " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " <> '' " + " " + AndOr + " ";
                         }
                         else
                         {
-                            var operation = !isHaveMultiSelect ? OperationSimpol.Replace("@@", filter.TextValue.ToString()) : OperationSimpol;
-                            WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + operation + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
+                            DataWarehouseHelper dataWarehouseHelper = new DataWarehouseHelper();
+                            var fieldName =   (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) +"." + filter.Code;
+                            WhereStmt += dataWarehouseHelper.ResolveWarehoueDateField(fieldName , filter.OperationCode, filter.TextValue.ToString(), Tenant);
+     
                         }
+
+
+                       
                     }
                     else
                     {
@@ -226,7 +233,7 @@ namespace WebFreight.Web.Helpers
             var FilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(DWQueryParam.Filters);
             var Columns = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(ColumnsXML);
             var Filters = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(FilterXML);
-            string PagingString = " ORDER BY " + "Id_Number OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY";
+            
             bool HasMeasurement = Columns.Where(a => a.IsMeasurement == true).Count() > 0;
             var InnerTables = new List<DWObjectFieldsDetails>();
             //this.SampleData = [];
@@ -288,12 +295,14 @@ namespace WebFreight.Web.Helpers
                 //var Key = this.AllFieldsObsList.filter(a => a.DWObjectTableCode == mytbl.ParentDimTabelName && a.IsPrimaryKey == true)[0];
                 var Key = OFieldQuery.GetPrimaryKeyFieldForDWObjectTable(mytbl.ParentDimTabelName);
                 //MeFactName = OFieldQuery.GetFactTableCode(mytbl.ParentDimTabelName);
-                var FactKey = OFieldQuery.GetFactKeyFieldForDWDimTable(Fact);
+                var FactKey = OFieldQuery.GetFactKeyFieldForDWDimTable(Fact, mytbl.ParentDimTabelName);
                 //this.AllFieldsDataSource.filter(a => a.DimensionTableCode == mytbl.ParentDimTabelName)[0];
-                FinalSelectStmt += " inner join " + mytbl.ParentDimTabelName + " on " + Fact + "." + ((FactKey.DataTypeCode.ToLower() == "lookup" || FactKey.DataTypeCode.ToLower() == "dimension") ? FactKey.DisplayName : FactKey.Code) + " = " + mytbl.ParentDimTabelName + "." + Key.Code;
+                //(FactKey.DataTypeCode.ToLower() == "lookup" || FactKey.DataTypeCode.ToLower() == "dimension") ? FactKey.DisplayName : 
+                FinalSelectStmt += " inner join " + mytbl.ParentDimTabelName + " on " + Fact + "." + (FactKey.Code) + " = " + mytbl.ParentDimTabelName + "." + Key.Code;
 
 
             }
+            string PagingString = " ORDER BY " + Fact + ".Id_Number OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY";
             string FinalQuery = "";
             if (Filters != null)
             {
@@ -317,7 +326,7 @@ namespace WebFreight.Web.Helpers
             {
                 FinalQuery = FinalQuery + " where " + Fact + ".[Parent Tenant] = " + Tenant;
             }
-            if (DWQueryParam.PageIndex == 0 && DWQueryParam.PageSize == 0)
+            if (DWQueryParam.PageSize != 0)
             {
                 FinalQuery = FinalQuery + PagingString;
             }

@@ -158,8 +158,9 @@ export class BIReportPreviewComponent implements OnInit {
     }
     public BuildRows(arg: BIReportXMLData) {
         this.rowData = [];
-        this.StartBusyIndicator("Loading ..");
+       
         if (arg.DWQueryData != null && arg.DWQueryData.SubQueryData != null && arg.DWQueryData.SubQueryData.SQLString != null) {
+            this.StartBusyIndicator("Loading ..");
             this._DWQueryBuilderService.GetDWQueryData(arg.DWQueryData.SubQueryData.SQLString, "Fact_Shipments").subscribe(myResult => {
                 if (!myResult.HasError) {
                     this.rowData = myResult.Result;

@@ -38,6 +38,8 @@ import {LogLovComponent} from './Components/LogitudeComponents/LogLovComponent';
 import {LogLovV2Component} from './Components/LogitudeComponents/LogLovV2Component';
 
 import {DWLovComponent} from './Components/LogitudeComponents/DWLovComponent';
+import {DWDateComponent} from './Components/LogitudeComponents/DWDateComponent'
+
 import {LogDatePickerComponent} from './Components/LogitudeComponents/LogDatePickerComponent';
 import {LogCalendarComponent} from './Components/LogitudeComponents/LogCalendarComponent';
 import {TimeSelectComponent} from './Components/LogitudeComponents/TimeSelectComponent';
@@ -198,7 +200,7 @@ export const ControlsComponents =
         LogLovComponent,
         LogLovV2Component,
         DWLovComponent,
-
+        DWDateComponent,
         LogDatePickerComponent,
         LogCalendarComponent,
         TimeSelectComponent,

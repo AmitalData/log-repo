@@ -2103,8 +2103,19 @@ export class ShipmentReceivableItem extends BaseComponent {
                     if (list) {
                         this.CreatedByUserName = list.EnglishName;
                     }
+
+                    else {
+                        this.myUserListService.getSingle(this.EntityPM.CreatedByUserId).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                var list: UserList = myResponse.Result;
+                                if (list) {
+                                    this.CreatedByUserName = list.EnglishName;
+                                }
+                            }
+                        });
+                    }
                 }
-            });
+            });            
 
             if (this.EntityPM.UpdateByUserId == this.EntityPM.CreatedByUserId) {
                 this.UpdatedByUserName = this.CreatedByUserName;
@@ -2117,8 +2128,19 @@ export class ShipmentReceivableItem extends BaseComponent {
                         if (list) {
                             this.UpdatedByUserName = list.EnglishName;
                         }
+
+                        else {
+                            this.myUserListService.getSingle(this.EntityPM.UpdateByUserId).subscribe((myResponse: ServiceResponse) => {
+                                if (!myResponse.HasError) {
+                                    var list: UserList = myResponse.Result;
+                                    if (list) {
+                                        this.UpdatedByUserName = list.EnglishName;
+                                    }
+                                }
+                            });
+                        }
                     }
-                });
+                });                
             }
         }
 

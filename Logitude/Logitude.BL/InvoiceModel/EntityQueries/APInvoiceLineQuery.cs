@@ -146,8 +146,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                 AuthorizedSignatory = a.AuthorizedSignatory,
                                 VatTypeId = a.VatTypeId,
                                 VatPercentage = a.VatPercentage,
+                                PrepaidCollectId = a.PrepaidCollectId,
                             }).ToList();
-
 
                 ShipmentPayableRepository payableRepository = new ShipmentPayableRepository(tenant);
                 APInvoiceTotalVATRepository invoiceTotalVatRepository = new APInvoiceTotalVATRepository(tenant);

@@ -926,6 +926,7 @@
     <Compile Include="Controllers\AccountingModel\BankDepositController.cs" />
     <Compile Include="Controllers\AccountingModel\CashBookViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AccountingIntegrityCheckViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AccountingNoteViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ARPaymentChequeViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AutomaticExternalReconcileMethodViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\BankPageEntryTypeViewsController.Generated.cs" />
@@ -957,6 +958,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\WithholdingTaxDeductionTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\AccountingCompanyTypeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\AccountingIntegrityCheckController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\AccountingNoteController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\ExternalReconciliationController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountMoreDataController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountWithholdingTaxController.Generated.cs" />
@@ -1845,6 +1847,7 @@
     <Compile Include="CustomWebServices\BL\XLSExport\XLSExportBase.cs" />
     <Compile Include="CustomWebServices\Testers\Tester.cs" />
     <Compile Include="DataContracts\BIReportXMLData.cs" />
+    <Compile Include="DataContracts\DWQueryDataResult.cs" />
     <Compile Include="DataContracts\WebHookTesterData.cs" />
     <Compile Include="DataContracts\CommunicationLogSettings.cs" />
     <Compile Include="DataContracts\AgentSharedManifestsSummaryClass.cs" />
@@ -2419,6 +2422,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AcceptanceStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AccountingCompanyTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AccountingIntegrityCheckUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AccountingNoteUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AccumalationStateUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ActionCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AgentTalkBackTypeUpdateClass.cs" />

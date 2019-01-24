@@ -89,6 +89,11 @@
 </style>
 
 <table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
     <tr>
         <td>
             <div *ngFor="let item of SelectedFiltersDataSource; let i=index;">
@@ -187,8 +192,8 @@
                                     </div>
                                 </td>
                                 <!--<td *ngIf="item.FilterType == 'Ask User'" [style.width.px]="item.FilterType == 'Ask User' && item.IsSetDefaults == true ? 50: 310">
-                            <span class="LinkBtn" (click)="item.OpenFilterSettings()">Settings</span>
-                        </td>-->
+                                    <span class="LinkBtn" (click)="item.OpenFilterSettings()">Settings</span>
+                                </td>-->
                             </tr>
                         </table>
                         <!-------------------------->
