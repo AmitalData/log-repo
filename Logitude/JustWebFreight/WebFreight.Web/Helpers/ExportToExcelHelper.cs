@@ -568,7 +568,7 @@ namespace WebFreight.Web.Helpers
             DWSubQueryPM dWSubQueryPM = dWSubQueryQuery.GetSinglePMByQueryid(queryId, tenant);
             DWQueryData DWQueryData = new DWQueryData();
             DWQueryData.PageIndex = 0;
-            DWQueryData.PageSize = 1000;
+            DWQueryData.PageSize = 0;
 
             List<DWObjectFieldsDetails> Columns = null;
             if (dWSubQueryPM != null)
@@ -592,6 +592,7 @@ namespace WebFreight.Web.Helpers
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet = workbook.Worksheets[0];
 
+            // Data Table Format - Index  
             for (var i = 0; i < dataTable.Columns.Count; i++)
             {
                 var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[i].ColumnName).FirstOrDefault();
@@ -601,11 +602,9 @@ namespace WebFreight.Web.Helpers
 
                 }
             }
-
             sheet.ImportDataTable(dataTable, true, 1, 1);
 
-            // Data Table Format 
-
+            // sheet Format - Width 
             for (var i = 0; i < dataTable.Columns.Count; i++)
             {
                 var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[i].ColumnName).FirstOrDefault();
@@ -615,6 +614,7 @@ namespace WebFreight.Web.Helpers
                 }
             }
 
+            // sheet Format - Data Type 
             int cellRow = 2;
             TenantRepository tenantRepoitory = new TenantRepository(tenant);
             var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
@@ -684,7 +684,6 @@ namespace WebFreight.Web.Helpers
                 }
                 cellRow++;
             }
-
 
             workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
             return memory.ToArray();
