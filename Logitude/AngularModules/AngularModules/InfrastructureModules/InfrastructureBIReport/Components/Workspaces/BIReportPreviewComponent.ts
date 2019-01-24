@@ -158,23 +158,37 @@ export class BIReportPreviewComponent implements OnInit {
     }
     public BuildRows(arg: BIReportXMLData) {
         this.rowData = [];
-       
-        if (arg.DWQueryData != null && arg.DWQueryData.SubQueryData != null && arg.DWQueryData.SubQueryData.SQLString != null) {
-            this.StartBusyIndicator("Loading ..");
-            this._DWQueryBuilderService.GetDWQueryData(arg.DWQueryData.SubQueryData.SQLString, "Fact_Shipments").subscribe(myResult => {
-                if (!myResult.HasError) {
-                    this.rowData = myResult.Result;
-                    this.timerToken = setTimeout(() => this.UpdateAGGrid(arg), 500);
-                    this.StopBusyIndicator();
-                }
-                else {
-                    this.StopBusyIndicator();
-                }
-            });
-        }
-        else {
-            this.StopBusyIndicator();
-        }
+        this.StopBusyIndicator();
+        this._DWQueryBuilderService.GetNewDWQueryData(arg.DWQueryData).subscribe(myResult => {
+            if (!myResult.HasError) {
+                this.rowData = myResult.Result.SQLDataResult;
+                this.timerToken = setTimeout(() => this.UpdateAGGrid(arg), 500);
+                this.StopBusyIndicator();
+            }
+            else {
+                this.StopBusyIndicator();
+            }
+
+            //this.LoadBIReportData();
+        });
+        //this.RunReportCommand.emit(arg.DWQueryData);
+
+        //if (arg.DWQueryData != null && arg.DWQueryData.SubQueryData != null && arg.DWQueryData.SubQueryData.SQLString != null) {
+        //    this.StartBusyIndicator("Loading ..");
+        //    this._DWQueryBuilderService.GetDWQueryData(arg.DWQueryData.SubQueryData.SQLString, "Fact_Shipments").subscribe(myResult => {
+        //        if (!myResult.HasError) {
+        //            this.rowData = myResult.Result;
+        //            this.timerToken = setTimeout(() => this.UpdateAGGrid(arg), 500);
+        //            this.StopBusyIndicator();
+        //        }
+        //        else {
+        //            this.StopBusyIndicator();
+        //        }
+        //    });
+        //}
+        //else {
+        //    this.StopBusyIndicator();
+        //}
     }
     private DateCellRenderer(params: any) {
         var DatePipe = new DateTimePipe();
@@ -431,6 +445,7 @@ export class BIReportPreviewComponent implements OnInit {
     OnRunReportComplete(MyData) {
         this.rowData = MyData;
         this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML), 500);
+        this.StopBusyIndicator();
     }
     CountClicked() {
         alert("Count : " + this.agGrid.api.getDisplayedRowCount());
