@@ -33,7 +33,7 @@ namespace WebFreight.Web.DataProviders
         /// <summary>
         /// Place of Receipt
         /// </summary>
-
+        public string ProjectNumber { get; set; }
         public string MasterNumber { get; set; }
         public string PreCarriageCarrierName { get; set; }
         public string ForeignPortOfUnloading { get; set; }

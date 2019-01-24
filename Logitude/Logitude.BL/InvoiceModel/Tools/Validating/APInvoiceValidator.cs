@@ -173,6 +173,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 ValidateMultiVatPercentages(entityPM, myAccountingSetting, allVats);
             }
 
+            ValidateOnVoid(entityPM);
             ValidateAirlineRestriction(entityPM.VendorId, entityPM.Tenant);
             ValidateFullAccounting(entityPM.Tenant, entityPM.VendorId, entityPM.InvoiceCurrencyId, entityPM.AccountingDate);
         }
@@ -301,7 +302,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             return glaAccount;
         }
-
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         private static ContactPM GetLoggedContact(int tenant)
         {
@@ -319,5 +319,17 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
             return loggedContact;
         }
+        private static void ValidateOnVoid(APInvoicePM entityPM)
+        {
+            if (entityPM.SetVoided)
+            {               
+                if (entityPM.InvoicePayments.Count > 0)
+                {
+                    string msg = TranslateTextsClass.Translate("APInvoice.M.DisconnectPayments", entityPM.Tenant);
+                    throw new ApplicationException(msg);
+                }
+            }
+        }
+
     }
 }

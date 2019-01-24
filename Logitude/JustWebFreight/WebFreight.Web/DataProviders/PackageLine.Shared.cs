@@ -130,7 +130,7 @@ namespace WebFreight.Web.DataProviders
         public string Description { get; set; }
         public string InsidePackagesDetails { get; set; }
         public string Notes { get; set; }
-
+        public string MarksAndNumbersOnly { get; set; }
     }
 
     public class InsidePackageLine

@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -111,7 +111,7 @@
                                                                     <LogTextBox [HideColumns]="true" [ObjectFieldName]="'CommodityNumber'" [Text]="DataContext.CommodityNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                                 </td>
                                                                 <td style="width: 20px; padding-left: 4px;">
-                                                                    <span class="hyperlink" (click)="DataContext.ChooseCommodityClicked()">
+                                                                    <span class="hyperlink" [class.HyperlinkDisabled]="!DataContext.IsEditingFieldsEnabled" (click)="DataContext.ChooseCommodityClicked()">
                                                                         <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
                                                                     </span>
                                                                 </td>

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ShipmentPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPackagePM';
@@ -109,6 +109,13 @@ export class AddEditAirPackageComponent {
         this.myCloner.AddField('Volume');
         this.myCloner.AddField('VolumetricWeight');
         this.myCloner.AddField('Weight');
+        this.myCloner.AddField('CommodityNumber');
+        this.myCloner.AddField('Notes');
+        this.myCloner.AddField('Reference1');
+        this.myCloner.AddField('Reference2');
+        this.myCloner.AddField('Reference3');
+        this.myCloner.AddField('Reference4');        
+        
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.ShipmentPM);
     }

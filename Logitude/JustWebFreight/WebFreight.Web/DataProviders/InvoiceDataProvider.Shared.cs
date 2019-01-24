@@ -7,6 +7,7 @@ namespace WebFreight.Web.DataProviders
 {
     public class InvoiceDataProvider : BaseDataProvider
     {
+        public string TenantStateCode { get; set; }
         public string BranchSignature { get; set; }
         public string PackageDetails { get; set; }
         public string Type { get; set; }
@@ -31,6 +32,7 @@ namespace WebFreight.Web.DataProviders
         public string BillToVatNumber { get; set; }
         public string BillToCustomerCode { get; set; }
         public string BillToTelephone { get; set; }
+        public string BillToStateCode { get; set; }
         public string DebitAccount { get; set; }
         public string AccountingNumber { get; set; }
         public string InvoiceDate { get; set; }

@@ -9346,7 +9346,7 @@ namespace WebFreight.Web.ReportsWebServices
                 differenceTime_Total += differenceTime;
                 timSheetItem.DifferenceTime = DateFormat(differenceTime);
 
-                var totalWorkHrs = Math.Round((timeFromOffice + timeFromClient + timeFromHome), 2);
+                var totalWorkHrs = Math.Round((timeFromClock + timeFromClient + timeFromHome), 2);
                 totalWorkHrs_Total += totalWorkHrs;
                 timSheetItem.TotalWorkHrs = DateFormat(totalWorkHrs);
 
@@ -9377,14 +9377,25 @@ namespace WebFreight.Web.ReportsWebServices
             if (time != 0)
             {
                 var ts = TimeSpan.FromHours(time);
+                var h = 0.0;
                 if(ts.TotalHours < 0)
                 {
                     isMinus = true;
+                    var h_Abs = Math.Abs(ts.TotalHours);
+                     h = System.Math.Floor(h_Abs);
                 }
-                var h = System.Math.Floor(ts.TotalHours);
+                else
+                {
+                     h = System.Math.Floor(ts.TotalHours);
+                }
+               
                 if (Math.Abs(ts.TotalHours) < 1)
                 {
                     h = 0;
+                }
+                if(isMinus)
+                {
+                    h = h * -1;
                 }
                 var m = (ts.TotalHours - h) * 60;
                 if (isMinus)
@@ -10311,6 +10322,12 @@ namespace WebFreight.Web.ReportsWebServices
                     myRecord.PortOfDischargeName = a.MainCarriageFinalDestinationPortName;
                     myRecord.Consignee = a.ConsigneeName;
                     myRecord.BookingNumber = a.BookingConfirmationNumber;
+                    myRecord.Transshipment1ETA = a.Transshipment1ETA;
+                    myRecord.Transshipment2ETA = a.Transshipment2ETA;
+                    myRecord.Transshipment3ETA = a.Transshipment3ETA;
+                    myRecord.Transshipment1ETD = a.Transshipment1ETD;
+                    myRecord.Transshipment2ETD = a.Transshipment2ETD;
+                    myRecord.Transshipment3ETD = a.Transshipment3ETD;
 
                     myRecord.FullStatus = a.StatusName;
                     if(!string.IsNullOrEmpty(a.StatusLocation))
