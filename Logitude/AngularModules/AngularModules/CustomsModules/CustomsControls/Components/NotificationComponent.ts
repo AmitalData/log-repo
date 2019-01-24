@@ -1033,6 +1033,8 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "1812U":
                                 case "2020N":
                                 case "2000N":
+                                case "2753A":
+                                case "5110N":
                                     {
                                         currentScreenCode = "DCTP";
                                         break;
