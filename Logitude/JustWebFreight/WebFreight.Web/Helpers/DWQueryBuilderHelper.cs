@@ -86,7 +86,7 @@ namespace WebFreight.Web.Helpers
                     {
                         var filter = Myfilter;
                         var OperationSimpol = "";
-                        if (filter.Operation.Code == "Equals")
+                        if ( filter!= null && filter.Operation != null && filter.Operation.Code == "Equals")
                         {
                             if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
                             {
@@ -102,7 +102,7 @@ namespace WebFreight.Web.Helpers
 
                             }
                         }
-                        else if (filter.Operation.Code == "NotEqual")
+                        else if (filter != null && filter.Operation != null && filter.Operation.Code == "NotEqual")
                         {
                             if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
                             {
@@ -118,45 +118,45 @@ namespace WebFreight.Web.Helpers
                                 //abed
                             }
                         }
-                        else if (filter.Operation.Code == "StartsWith")
+                        else if (filter != null && filter.Operation != null &&  filter.Operation.Code == "StartsWith")
                         {
                             OperationSimpol = " like '@@%' ";
                         }
                         //else if (filter.Operation.Code == filter.IsNullOp.Code) {
                         //    OperationSimpol = " like '%@@' ";
                         //}
-                        else if (filter.Operation.Code == "IsNull")
+                        else if (filter != null && filter.Operation != null &&  filter.Operation.Code == "IsNull")
                         {
                             OperationSimpol = " is null ";
                         }
-                        else if (filter.Operation.Code == "IsNotNull")
+                        else if (filter != null && filter.Operation != null &&  filter.Operation.Code == "IsNotNull")
                         {
                             OperationSimpol = " is not null ";
                         }
-                        else if (filter.Operation.Code == "GreaterThanOrEqual")
+                        else if (filter != null && filter.Operation != null &&  filter.Operation.Code == "GreaterThanOrEqual")
                         {
                             OperationSimpol = " >= @@ ";
                         }
-                        else if (filter.Operation.Code == "LargerThan")
+                        else if (filter != null && filter.Operation != null &&  filter.Operation.Code == "LargerThan")
                         {
                             OperationSimpol = " > @@ ";
                         }
-                        else if (filter.Operation.Code == "LessThan")
+                        else if (filter != null && filter.Operation != null &&  filter.Operation.Code == "LessThan")
                         {
                             OperationSimpol = " < @@ ";
                         }
-                        else if (filter.Operation.Code == "LessThanOrEqual")
+                        else if (filter != null && filter.Operation != null &&  filter.Operation.Code == "LessThanOrEqual")
                         {
                             OperationSimpol = " <= @@ ";
                         }
 
 
 
-                        if (filter.Operation.Code == "IsNull")
+                        if (filter != null && filter.Operation != null &&  filter.Operation.Code == "IsNull")
                         {
                             WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is null or " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " = '' " + " " + AndOr + " ";
                         }
-                        else if (filter.Operation.Code == "IsNotNull")
+                        else if (filter != null && filter.Operation != null &&  filter.Operation.Code == "IsNotNull")
                         {
                             WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is not null and " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " <> '' " + " " + AndOr + " ";
                         }

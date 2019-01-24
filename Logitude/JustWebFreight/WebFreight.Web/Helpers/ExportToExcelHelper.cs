@@ -27,6 +27,10 @@ using System.Web.Services;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Diagnostics;
+using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.Infrastructure.BL.EntityPMs;
+using WebFreight.Web.DataContracts;
+using Logitude.Server.Tools;
 
 namespace WebFreight.Web.Helpers
 {
@@ -488,8 +492,6 @@ namespace WebFreight.Web.Helpers
                                     {
                                         sheet.Range[cellRow, cellCol].Text = "";
                                     }
-
-
                                     break;
                                 case "Decimal":
                                     double dex = 0;
@@ -554,46 +556,137 @@ namespace WebFreight.Web.Helpers
             return memory.ToArray();
         }
 
-        public byte[] ExportBIQueryToExcel(string queryId, int tenant)
+        public byte[] ExportBIQueryToExcel(string queryId, string reportId, int tenant)
         {
             DWSubQueryRepository subQueryRep = new DWSubQueryRepository(tenant);
             DWSubQuery dWSubQuery = subQueryRep.GetSingleDWSubQueryByDWQueryId(queryId, tenant);
-            string SQL = dWSubQuery.SQLString;
-            string objectTable = "Shipment";
-            var currentDb = GlobalDbHelper.GetGlobalDBWithNoCache(0);
-            string dbConnectionInfo = currentDb.SharedDWConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
-            DataTable dataTable = new DataTable();
 
-            using (var scope = TransactionFactory.GetNewTransaction())
+            BIReportQueryService query = new BIReportQueryService(tenant);
+            BIReportPM biReportEntityPM = query.GetSingle(reportId, false, false);
+
+            DWSubQueryQuery dWSubQueryQuery = new DWSubQueryQuery(tenant);
+            DWSubQueryPM dWSubQueryPM = dWSubQueryQuery.GetSinglePMByQueryid(queryId, tenant);
+            DWQueryData DWQueryData = new DWQueryData();
+            DWQueryData.PageIndex = 0;
+            DWQueryData.PageSize = 1000;
+
+            List<DWObjectFieldsDetails> Columns = null;
+            if (dWSubQueryPM != null)
             {
-                using (SqlConnection sourceConnection = new SqlConnection(connection.ConnectionString))
-                {
-                    sourceConnection.Open();
-                    SqlCommand commandSourceData = new SqlCommand(SQL, sourceConnection);
-                    SqlDataReader reader = commandSourceData.ExecuteReader();
-                    dataTable.Load(reader);
-                    reader.Close();
-                }
-                scope.Complete();
+                Columns = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(dWSubQueryPM.ColumnsXML);
+                var Filters = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(dWSubQueryPM.FiltersXML);
+                DWQueryData.SubQueryData = dWSubQueryPM;
+                DWQueryData.Columns = Columns;
+                DWQueryData.Filters = Filters;
             }
-            //byte[] binaryDataResult = null;
-            //using (MemoryStream memStream = new MemoryStream())
-            //{
-            //    BinaryFormatter brFormatter = new BinaryFormatter();
-            //    dataTable.RemotingFormat = SerializationFormat.Binary;
-            //    brFormatter.Serialize(memStream, dataTable);
-            //    binaryDataResult = memStream.ToArray();
-            //}
+
+            DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(tenant);
+            string MySqlString = QBHelper.GetQuerySQL(DWQueryData);
+            DataTable dataTable = QBHelper.GetDWQueryData(MySqlString);
+
+            var bITabularViewSettings = LogitudeXmlSerializer.DeserializeObject<BITabularViewSettings>(biReportEntityPM.AGGridOptionsXML);
 
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
             ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet = workbook.Worksheets[0];
-            sheet.ImportDataTable(dataTable,true, 1, 1);
-            workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
 
+            for (var i = 0; i < dataTable.Columns.Count; i++)
+            {
+                var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[i].ColumnName).FirstOrDefault();
+                if (agColumn != null)
+                {
+                    dataTable.Columns[i].SetOrdinal(agColumn.Index);
+
+                }
+            }
+
+            sheet.ImportDataTable(dataTable, true, 1, 1);
+
+            // Data Table Format 
+
+            for (var i = 0; i < dataTable.Columns.Count; i++)
+            {
+                var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[i].ColumnName).FirstOrDefault();
+                if (agColumn != null)
+                {
+                    sheet.Columns[i].ColumnWidth = agColumn.Width / 7.5;
+                }
+            }
+
+            int cellRow = 2;
+            TenantRepository tenantRepoitory = new TenantRepository(tenant);
+            var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
+            for (var i = 1; i < dataTable.Rows.Count; i++)
+            {
+                int cellCol = 1;
+                for (var j = 0; j < dataTable.Columns.Count; j++)
+                {
+                    var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[j].ColumnName).FirstOrDefault();
+                    if (agColumn != null)
+                    {
+                        switch (agColumn.DataTypeCode)
+                        {
+                            case "Text":
+                                sheet.Range[cellRow, cellCol].Text = sheet.Columns[j].Rows[i].Value.Trim();
+                                break;
+
+                            case "Boolean":
+                                Boolean b = false;
+                                Boolean.TryParse(sheet.Columns[j].Cells[i].Rows[i].Value.Trim(), out b);
+                                sheet.Range[cellRow, cellCol].Boolean = b;
+                                break;
+
+                            case "Constant":
+                                sheet.Range[cellRow, cellCol].Text = sheet.Columns[j].Cells[i].Rows[i].Value.Trim();
+                                break;
+
+                            case "DateTime":
+                                DateTime date;
+                                if (DateTime.TryParse(sheet.Columns[j].Rows[i].Value.Trim(), out date))
+                                {
+                                    sheet.Range[cellRow, cellCol].DateTime = date.Date;
+                                    string datetimeformat = @"dd\/MM\/yyyy";
+                                    if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
+                                    {
+                                        datetimeformat = CurTenant.DateTimeFormat;
+                                    }
+                                    sheet.Range[cellRow, cellCol].NumberFormat = datetimeformat;
+                                }
+                                else
+                                {
+                                    sheet.Range[cellRow, cellCol].Text = "";
+                                }
+                                break;
+                            case "Decimal":
+                                double dex = 0;
+                                double.TryParse(sheet.Columns[j].Rows[i].Value.Trim(), out dex);
+                                sheet.Range[cellRow, cellCol].Number = dex;
+                                break;
+                            case "Double":
+                                double d = 0;
+                                double.TryParse(sheet.Columns[j].Rows[i].Value.Trim(), out d);
+                                sheet.Range[cellRow, cellCol].Number = d;
+                                break;
+                            case "Integer":
+                                int x = 0;
+                                int.TryParse(sheet.Columns[j].Rows[i].Value.Trim(), out x);
+                                sheet.Range[cellRow, cellCol].Number = x;
+                                break;
+
+                            default:
+                                sheet.Range[cellRow, cellCol].Text = sheet.Columns[j].Rows[i].Value.Trim();
+                                break;
+                        }
+                    }
+                    cellCol++;
+                }
+                cellRow++;
+            }
+
+
+            workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
             return memory.ToArray();
         }
 

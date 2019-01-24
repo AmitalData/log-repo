@@ -260,6 +260,8 @@ export class BIReportPreviewComponent implements OnInit {
     ExportToExcelClicked() {
         var windowArgs: any = {};
         windowArgs.queryId = this.DWQueryId;
+        windowArgs.reportId = this.EntityPM.Id;
+        windowArgs.reportName = this.EntityPM.Name;
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 500;
         logitudeWindow.Height = 200;
