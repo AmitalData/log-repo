@@ -212,6 +212,7 @@ export class NotificationBellComponent {
                                 case "1812U":
                                 case "2020N":
                                 case "2000N":
+                                case "2753A":
                                     {
                                         currentScreenCode = "DCTP";
                                         break;
