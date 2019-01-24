@@ -265,6 +265,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         }
                 }
 
+                iQueryable_shipments = iQueryable_shipments.Where(d => (d.AccountedPayablesInLocalCurrency != null && d.AccountedPayablesInLocalCurrency != 0) || (d.OpenPayablesInLocalCurrency != null && d.OpenPayablesInLocalCurrency != 0));
+                
                 List<string> shipmentIds = iQueryable_shipments.Select(s => s.Id).ToList();
                 IQueryable<ShipmentPayable> iQueryable_payables = shipmentPayableRepository.GetShipmentPayablesByShipmentIds(shipmentIds, tenant);
 
@@ -331,7 +333,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.Carrier = item.VendorName;
                             myRecord.ChargesTypeId = item.ChargeTypeId;
                             myRecord.ChargesType = item.ChargeTypeName;
-                            myRecord.OpenAmount = item.Payables_OPEN;
+
+                            if (IncludeAccountedOnly)
+                            {
+                                myRecord.OpenAmount = null;
+                            }
+                            else
+                            {
+                                myRecord.OpenAmount = item.Payables_OPEN;
+                            }
+
                             myRecord.AccountedAmount = item.Payables_ACCT;
                             myRecord.Notes = item.Notes;
 
