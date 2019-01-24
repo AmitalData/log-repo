@@ -445,7 +445,6 @@ export class BIReportPreviewComponent implements OnInit {
             var windowArgs: any = {};
             windowArgs.father = this;
             logWindow.WindowArgs = windowArgs;
-            logWindow.IsShowCloseButton = true;
             logWindow.WindowClosed.subscribe(($event: any) => this.OnNewBIReportWindowClosed($event));
             logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/AgGridColumnsOperations');
             logWindow.ComponentLoaded.subscribe(s => {
