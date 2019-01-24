@@ -2854,7 +2854,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         AddressStreet = a.BillToAddress != null? a.BillToAddress.Address1:null,
                                         AddressCity = a.BillToAddress != null ? a.BillToAddress.City : null,
                                         AddressZIPCode = a.BillToAddress != null? a.BillToAddress.ZipCode: null,
-                                        AddressCountry = a.BillToAddress != null ? a.BillToAddress.Country.EnglishName : null,
+                                        AddressCountry = a.BillToAddress.Country.LocalName != null ? a.BillToAddress.Country.LocalName : a.BillToAddress.Country.EnglishName,
                                         AddressCountryCode = a.BillToAddress != null ? a.BillToAddress.Country.Code : null,
                                         CustomeVendorTelephone = a.BillToAddress != null ? a.BillToAddress.PhoneNumber : null,
                                         CustomerVendorVatNumber = a.BillTo != null ? a.BillTo.VatNumber : null,
