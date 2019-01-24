@@ -86,6 +86,12 @@ namespace WebFreight.Web.Helpers
                     {
                         var filter = Myfilter;
                         var OperationSimpol = "";
+                        if (filter.Operation == null)
+                        {
+                            filter.Operation = new ObjectFieldOperator();
+                            filter.Operation.Code = filter.OperationCode;
+                            filter.Operation.Name = filter.OperationName;
+                        }
                         if(filter.DataTypeCode!="Date" && filter.DataTypeCode != "DateTime"){
                             if (filter.Operation.Code == "Equals")
                             {
