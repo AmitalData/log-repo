@@ -248,7 +248,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     DateTime paymentDateTime = dirtyDeclarationPM.PaymentDate.Value;
                     if (statusDateTimeLP2U.Subtract(paymentDateTime).TotalMinutes > 30 || (paymentDateTime.Hour == 13 && paymentDateTime.Minute >= 45) || (paymentDateTime.Hour == 14 && paymentDateTime.Minute <= 15))
                     {
-                        SendDelayedDeclarationStatusRequest(dirtyDeclarationPM);
+                        using (var trans = TransactionFactory.GetNewTransaction())
+                        {
+                            SendDelayedDeclarationStatusRequest(dirtyDeclarationPM);
+                            trans.Complete();
+                        }
                     }
                     statusDateTimeLP2U = dirtyDeclarationPM.PaymentDate.Value; // Task 36100
                 }
@@ -333,9 +337,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public void SendDelayedDeclarationStatusRequest(DeclarationPM dirtyDeclarationPM)
         {
-            if(this.IsDelayedDeclarationStatusRequestSent == true)return;
+            //bool DoNotsendDelayedDeclarationStatusRequest = String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20181024.SendDelayedDeclarationStatusRequest"]);
+            //if (DoNotsendDelayedDeclarationStatusRequest)
+            //{
+            //    LogMessagingUtil.Instance.AppendLine("DoNotsendDelayedDeclarationStatusRequest ==String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings[20181024.SendDelayedDeclarationStatusRequest]) 14:45 til 15:15");
+            //    return;
+            //}
+            if (this.IsDelayedDeclarationStatusRequestSent == true) return;
+            LogMessagingUtil.Instance.AppendLine("SendDelayedDeclarationStatusRequest 13:45 til 14:15");
             string user = null;
-            if(RequestSheetContext.Current != null) user = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+            if (RequestSheetContext.Current != null) user = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+            if (RequestSheetContext.Current != null) user = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
             if (string.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
             DateTime? execTime = DateTime.Now;
             execTime = execTime.Value.AddMinutes(10);

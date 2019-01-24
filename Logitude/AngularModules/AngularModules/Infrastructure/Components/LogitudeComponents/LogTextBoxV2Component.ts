@@ -455,6 +455,10 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     onBlur() {
+        this.Detach = true;
+        this.show = false;
+        this.keydown = false;
+
         this.timerToken = setTimeout(() => {
             this.ShowErrorPopup = false;
             if (this.uiProperty.ValidValue) {
@@ -463,16 +467,10 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.TextValueChanges(this.TextValue);
         }, 300);
         this.timerToken = setTimeout(() => {
-           this.TextValueChanges(this.TextValue);
+           // this.TextValueChanges(this.TextValue);
         }, 30);
-        this.Detach = true;
-        //this.DetectChanges();
-        this.show = false;
-        //if(!this.FocusOnMe){
-            
-        //}
-        // this.TextValue = this.DataContext[this.ObjectFieldName];
-        this.keydown = false;
+
+        this.TextValueChanges(this.TextValue);
         this.GetValueFormatted(this.TextValue);
         this.LostFocus.emit(this.TextValue);
     }
@@ -582,7 +580,7 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
         if (key == SHIFT) {
             this.keydown = false;
-            this.isShiftKeyDown = true;// this is used to check some keys 
+            this.isShiftKeyDown = true;// this is used to check some keys
         }
         if (key == CTRL) {
             this.isCtrlKeyDown = true;
