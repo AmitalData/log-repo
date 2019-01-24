@@ -3332,6 +3332,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<OpenFormatReportStatus> OpenFormatReportStatuses { get; set; }
         public IDbSet<AccountingIntegrityCheck> AccountingIntegrityChecks { get; set; }
         public IDbSet<IntegrityCheckStatus> IntegrityCheckStatuses { get; set; }
+        public IDbSet<AccountingNote> AccountingNotes { get; set; }
    
 
         #endregion
@@ -4746,6 +4747,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new CustomerDepositionMap());
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new AccountingIntegrityCheckMap());
+            modelBuilder.Configurations.Add(new AccountingNoteMap());
             modelBuilder.Configurations.Add(new IntegrityCheckStatusMap());
             modelBuilder.Configurations.Add(new HarmonizeCodeMap());
 
