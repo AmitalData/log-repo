@@ -35,6 +35,7 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.Def.Messaging.Customs;
+using System.Xml.Linq;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -131,6 +132,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (dirtyDeclarationPM.CurrentContextTag.ToString().Contains("Upsert"))  // moran 28.7.16 - Task 22249
             {
                 doTask = false;
+            }
+            if(dirtyDeclarationPM.DepositionStatusCode == "L" && dbOccDeclarationPM.DepositionStatusCode != "L")
+            {
+                OpenLogBoxUnifreighTask(dirtyDeclarationPM, "LD2C", "", false, "");
+                return;
             }
             bool deleteStatus = false;
             try
@@ -330,6 +336,112 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 ///         CalcReleaseGoodEvent(dirtyDeclarationPM, loggingUserId, dbOccDeclarationPM);
 
         }
+
+
+        private void OpenLogBoxUnifreighTask(DeclarationPM dirtyDeclarationPM, string taskType, string status, bool raiseStatus, string xmlStatus)
+        {
+            var sw = Stopwatch.StartNew();
+            TransactionScope scope = null;
+            var statusDateTime = DateTime.Now;
+
+            if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
+            {
+                scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
+            }
+            try
+            {
+                using (_AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant))
+                {
+                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                    myGGGQUpdateService.DontAddTransaction = true;
+                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+                    myYCULTASKUpdateService.DontAddTransaction = true;
+                    var requestData = "";
+                    string vendorCode = null;
+                    string vendorName = null;
+                    if (dirtyDeclarationPM.SupplierInvoices != null && dirtyDeclarationPM.SupplierInvoices.Count() > 0)
+                    {
+                        if (!string.IsNullOrWhiteSpace(dirtyDeclarationPM.SupplierInvoices[0].VendorId))
+                        {
+                            var myQueryService = new CustomsVendorQueryService(this.currentContext);
+                            var custVendor = myQueryService.GetSingle(dirtyDeclarationPM.SupplierInvoices[0].VendorId, false, true);
+                            if (custVendor != null)
+                            {
+                                vendorCode = custVendor.VendorNumber;
+                                vendorName = custVendor.VendorName;
+                            }
+                        }
+                    }
+                    if (vendorCode == null ) return;
+                    
+                    var XMLData = new XDocument(
+                        new XElement("ImporterDepositionPM",
+                            new XElement("RequestDateTime", DateTime.Now.ToString("o")),
+                            new XElement("ForwarderShipmentNumber", dirtyDeclarationPM.CustomFileNo),
+                            new XElement("VendorCode", vendorCode),
+                            new XElement("VendorName", vendorName)
+                            )
+                            );
+
+
+                    requestData = XMLData.ToString(SaveOptions.None);
+                    string unifreightUser = null;
+
+                    if (String.IsNullOrWhiteSpace(unifreightUser))
+                    {
+                        unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
+                    }
+
+                    var myYCULTASKPM = new YCULTASKPM()
+                    {
+                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                        STATUS = "W",
+                        REQUESTDATA = requestData,
+                        ENTNAME = "DEPOSITION",
+                        PRIMARYNUM = dirtyDeclarationPM.Id,
+                        PRIORITY = YCULTASKPM.calcPriority(taskType),
+                        TYPE = taskType,
+                        USRCODE = unifreightUser,
+                        ARCHIVE = "F",
+                    };
+
+                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+
+                    var myGGGQPM = new GGGQPM()
+                    {
+                        ChangeSetOp = ChangeSetOperation.Insert,
+                        ORIGINQUE = "LGT",
+                        STATUS = "1",
+                        EXPTASKTIME = 5,
+                        EXECDATE = (new DualQueryService(_AmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20),
+                        TRY = 9,
+                        PRIORITY = 8,
+                        ENTNAME = "DEPOSITION",
+                        PRIMARYNUM = "0",
+                        FORMID = "LGT_UPDATE_FCI",
+                        DEBUG = "F",
+                        DONEOPERATION = "A",
+                        //GSTRING1 = myYCULTASKPM.TASKID,
+                    };
+                    myGGGQUpdateService.Update(myGGGQPM, true);
+
+                    if (scope != null)
+                    {
+                        scope.Complete();
+                    }
+                }
+            }
+            finally
+            {
+                if (scope != null)
+                {
+                    scope.Dispose();
+                }
+            }
+
+            LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask:Took:" + sw.ElapsedMilliseconds);
+        }
+
 
         public void SendDelayedDeclarationStatusRequest(DeclarationPM dirtyDeclarationPM)
         {
