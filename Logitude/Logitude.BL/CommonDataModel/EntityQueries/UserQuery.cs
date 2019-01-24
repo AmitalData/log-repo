@@ -1399,7 +1399,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       InActive = a.Contact.InActive,
                                       LocalName = a.Contact.LocalName,
                                       SearchFields = a.SearchFields,
-
+                                      Code= a.Code,
                                       IsBranchRestricted = a.IsBranchRestricted,
                                       IsSalesman = a.IsSalesman,
                                       IsFreelancer = a.IsFreelancer,
