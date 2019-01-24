@@ -5,6 +5,59 @@
     .green{
         color: #00a24d !important;
     }
+
+
+     /* css X icon */
+     .aboodX{
+        margin: 0 auto;
+        position: absolute;
+        left: 15px;
+        top: 5px;
+        right: 15px;
+    }
+        .aboodX:before, .aboodX:after {
+            position: absolute;
+            left: 15px;
+            content: ' ';
+            height: 12px;
+            width: 3px;
+            background-color: black;
+        }
+        .red.aboodX:before,.red.aboodX:after{
+            background: #f32626 !important;
+        }
+        .orange.aboodX:before,.orange.aboodX:after{
+            background: #ff8100 !important;
+        }
+        .aboodX:hover{
+            opacity: 0.9;
+        }
+        .aboodX:before {
+            transform: rotate(45deg);
+        }
+        .aboodX:after {
+            transform: rotate(-45deg);
+        }
+
+
+        .aboodV {
+            margin: 0 auto;
+            position: absolute;
+            left: 15px;
+            top: 4px;
+            right: 15px;
+            width: 15px;
+        }
+        .aboodV:after {
+            content: "";
+            display: block;
+            width: 4px;
+            height: 10px;
+            border: solid #090;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+
 </style>
 <div>
     <!-- ReferenceDate -->
@@ -15,8 +68,10 @@
 
     <!-- TransmitStatusCode -->
     <div class="TextTrimming" style="text-align: center;" *ngIf="fieldName == 'TransmitStatusCode'">
-        <div class="TextTrimming" style="text-align: center;">
-            <img *ngIf="rowData.TransmitStatusCode == '1'" src="./Images/CheckBoxIcon.png" />
+        <div [ngSwitch]="rowData.TransmitStatusCode" class="TextTrimming" style="text-align: center;">
+            <div *ngSwitchCase="'1'" class="aboodV" [style.right.px]="isRTL ? '30' : '15'" ></div>
+            <div *ngSwitchCase="'2'" class="aboodX red" ></div>
+            <div *ngSwitchCase="'3'" class="aboodX orange" ></div>
         </div>
     </div>
 
