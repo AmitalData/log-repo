@@ -45,6 +45,20 @@
         color: #545454;
         border-radius: 5px;
     }
+    .DisbleBox{
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+     }
+     .disabled{
+         pointer-events: none;
+         opacity: 0.7;
+     }
 </style>
 
     <table>
@@ -55,10 +69,21 @@
             </td>
         </tr>
 
-        <tr>
+        <!--Disble Alert-->
+        <tr style="height: 20px;">
+            <td >
+                <div *ngIf="!hasReadPermision" style="width: 100%;text-align:center">
+                    <div class="DisbleBox">
+                        {{"You don't have the permission to see the data"}}
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <tr [class.disabled]="!hasReadPermision">
             <td>
                 <div class="ScrollViewer">
-                    <div class="ScrollContent"> 
+                    <div class="ScrollContent">
                         <div class="TableHolder" style="padding-top: 5px;">
                             <table>
 
@@ -71,27 +96,27 @@
                                     </td>
 
                                     <td style="width: 100px;">
-                                        <LogTextBox [ObjectFieldName]="'Year'" [ObjectTableName]="ObjectTableName" [IsNewEntityCall]="true" 
+                                        <LogTextBox [ObjectFieldName]="'Year'" [ObjectTableName]="ObjectTableName" [IsNewEntityCall]="true"
                                                     [InputType]="'integer'" [DataContext]="DataContext"  [Text]="Year"
-                                                    [NoObjectField]="true" (KeyUp)="OnKeyUp($event)"></LogTextBox>  <!--[FocusOnMe]="true"--> 
+                                                    [NoObjectField]="true" (KeyUp)="OnKeyUp($event)"></LogTextBox>  <!--[FocusOnMe]="true"-->
 
                                     </td>
                                     <td style="width: 30px;">
-                                        <div></div>                                    
+                                        <div></div>
                                     </td>
                                     <td style="width: 80px;">
-                                        <button class="Button" (click)="BrowseButtonClicked()">{{'Accounting.General.B.Browse' | TextCodeTranslationPipe}}</button>
+                                        <button class="Button" (click)="BrowseButtonClicked()" [disabled]="!hasReadPermision">{{'Accounting.General.B.Browse' | TextCodeTranslationPipe}}</button>
                                     </td>
                                     <td><div></div></td>
                                 </tr>
 
                                 <tr style="height: 30px;"><td><div></div></td></tr>
 
-                               
+
 
                                 <!-- table -->
                                 <tr>
-                                    <td [class.CellStretch]="!ShowPrompt" colspan="5">
+                                    <td [class.CellStretch]="!ShowPrompt" colspan="5" >
                                         <div class="SimpleGridView">
                                             <div class="SimpleGridViewHeader">
                                                 <table>
@@ -107,7 +132,7 @@
                                                 </table>
                                             </div>
 
-                                            <div class="SimpleGridViewBody">
+                                            <div class="SimpleGridViewBody" >
                                                 <table>
                                                     <tr class="SimpleGridViewRow" *ngFor="let period of PeriodsList; let i=index;">
                                                         <td class="GridViewCell" style="width: 75px;">
@@ -122,7 +147,7 @@
                                                         <td class="GridViewCell" style="width: 100px;">
                                                             {{period.OpenMonth}}
                                                         </td>
-                                                        <td class="GridViewCell" style="width: 50px;"  
+                                                        <td class="GridViewCell" style="width: 50px;"
                                                             [style.text-align]="isRTL ? 'right' : 'left'"
                                                              [style.padding-left]="isRTL ? '25px' : 'initial'"
                                                             [style.padding-right]="isRTL ? 'initial' : '25px'">
@@ -151,10 +176,11 @@
                                             <button class="Button CenterCenter" style="width: 100px;margin-top: 20px;" (click)="CreateRecord()">{{'Accounting.O.Create' | TextCodeTranslationPipe}}</button>
                                         </div>
                                     </td>
+
                                 </tr>
-                                
+
                                 <tr><td><div></div></td></tr>
-  
+
 
                             </table>
                         </div>

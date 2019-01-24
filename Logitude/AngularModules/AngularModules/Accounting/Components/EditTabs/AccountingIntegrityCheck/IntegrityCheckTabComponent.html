@@ -1,0 +1,84 @@
+<style>
+</style>
+<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+
+                    <!-- Header -->
+                    <tr class="TabTitleRow">
+                        <td>
+                            {{'General.O.General' | TextCodeTranslationPipe}}
+                        </td>
+                        <!-- <div *ngIf="ShowErrorMsg" style="position: absolute;width: 100%;text-align: center;left: 0;right: 0;">
+                            <div class="DisbleBox" style="margin: 0 auto;">
+                                {{GetErrorMsg()}}
+                            </div>
+                        </div> -->
+
+                    </tr>
+
+                    <!-- Fields -->
+                    <tr>
+                        <td >
+                            <table>
+                                <tr style="height: 50px;">
+
+                                    <td style="width: 60px;padding: 0 10px; color:rgb(110, 113, 114)" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.Datefrom'  | TextCodeTranslationPipe}}</td>
+
+                                    <td style="width: 130px; ">
+                                        <LogDatePicker [ObjectFieldName]="'FromMonthInclusive'" [ObjectTableName]="ObjectTableName"
+                                            [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"
+                                            ></LogDatePicker>
+                                    </td>
+
+                                    <td style="width:15px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 30px; color:rgb(110, 113, 114)" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.To'
+                                        | TextCodeTranslationPipe}}</td>
+
+                                    <td style="width: 130px;">
+                                        <LogDatePicker [ObjectFieldName]="'ToMonthInclusive'" [ObjectTableName]="ObjectTableName"
+                                            [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"
+                                            ></LogDatePicker>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <!-- ResultXML -->
+                                    <td style="vertical-align:top;width: 130px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                        <LogLabel [ObjectFieldName]="'ResultXML'" [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td colspan="5" style="vertical-align: top" [style.text-align]="isRTL ? 'right' : 'left'">
+                                        <div style="width: 650px;">
+                                            <LogTextBox [ObjectFieldName]="'ResultXML'" [InputType]="'nText'" [DataContext]="DataContext"
+                                            [RowsCount]="30" [ObjectTableName]="ObjectTableName" [IsMultiline]="true"
+                                            [HideColumns]="true"></LogTextBox>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+</table>

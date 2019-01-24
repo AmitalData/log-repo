@@ -73,6 +73,7 @@ export class VehicleList {
 	IsTPS: boolean;
 	VehicleCategory: string;
 	VehicleMaxPowerKW: number;
+	PassportName: string;
 	
 }
  

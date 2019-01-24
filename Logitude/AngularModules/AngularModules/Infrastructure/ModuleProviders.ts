@@ -19,7 +19,9 @@ import {VolumeUnitListService} from './Services/StandardLists/VolumeUnitListServ
 import {AdvancedQueryFiltersPMService} from './Services/StandardPMs/AdvancedQueryFiltersPMService';
 import {BusinessHoursHolidayPMService} from './Services/StandardPMs/BusinessHoursHolidayPMService';
 import {ChargesGroupPMService} from './Services/StandardPMs/ChargesGroupPMService';
-import {CustomPickListPMService} from './Services/StandardPMs/CustomPickListPMService';
+import { CustomPickListPMService } from './Services/StandardPMs/CustomPickListPMService';
+import { BluesnapContractPMService } from './Services/StandardPMs/BluesnapContractPMService';
+
 //import {EntityStatusPMService} from './Services/StandardPMs/EntityStatusPMService';
 //import {EventTypeCategoryPMService} from './Services/StandardPMs/EventTypeCategoryPMService';
 import {EventTypePMService} from './Services/StandardPMs/EventTypePMService';
@@ -133,6 +135,7 @@ export class ModuleProviders {
             case "APILogsPMService": { myResult = new APILogsPMService(); break; }
             case "EmailAlertSettingPMService": { myResult = new EmailAlertSettingPMService(); break; }
             case "BluesnapContractListService": { myResult = new BluesnapContractListService(); break; }
+            case "BluesnapContractPMService": { myResult = new BluesnapContractPMService(); break; }                
             case "TenantTypeListService": { myResult = new TenantTypeListService(); break; }   
             case "BusinessHourListService": { myResult = new BusinessHourListService(); break; }
             case "PaymentChannelListService": { myResult = new PaymentChannelListService(); break; }

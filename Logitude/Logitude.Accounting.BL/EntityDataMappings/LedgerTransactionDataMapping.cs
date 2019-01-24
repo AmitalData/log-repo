@@ -71,6 +71,18 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPM.OpenAmountCurrencySign = "";
             }
 
+            CustomMappedPMProperties.Add(PMPropertyNames.OppositeAccountEnglishName);
+            CustomMappedPMProperties.Add(PMPropertyNames.OppositeAccountLocalName);
+            CustomMappedPMProperties.Add(PMPropertyNames.OppositeAccountDisplayNumber);
+            if (entityPOCO.OppositeAccountId != null)
+            {
+                GLAccountQueryService glaQuery = new GLAccountQueryService(entityPOCO.Tenant);
+                GLAccountPM gla = glaQuery.GetSinglePM(entityPOCO.OppositeAccountId, entityPOCO.Tenant);
+                entityPM.OppositeAccountEnglishName = gla.EnglishName;
+                entityPM.OppositeAccountLocalName = gla.LocalName;
+                entityPM.OppositeAccountDisplayNumber = gla.DisplayNumber;
+            }
+
 
         }
 

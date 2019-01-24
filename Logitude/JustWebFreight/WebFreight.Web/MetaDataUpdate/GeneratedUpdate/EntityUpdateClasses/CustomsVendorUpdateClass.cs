@@ -69,16 +69,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
 			
 	             				    ObjectTableName =  "Customs.CustomsVendor",
-			      				    IsNew =  false,
 			      				    DBTableName =  "Customs.CustomsVendors",
-			      				    OldDBTableName =  "Customs.CustomsVendors",
 			      				    ObjectTableSingular =  "Customs Vendor",
 			      				    ObjectTablePlural =  "Customs Vendors",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
-			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  true,
 			      				    LookUp1 =  "VendorNumber",
@@ -107,21 +104,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "Logitude.Customs.Views.NewVendorControlCommand",
 			      				    LocalDefaultText =  "מוכר",
 			      				    DefaultText =  "Vendor",
-			      				    Code =  "8fe7",
+			      				    Code =  "2a67",
 			      				    Name =  "Customs.CustomsVendor Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
 			      				    NewWizardComponentPath =  "./CustomsModules/CustomsVendor/Components/NewEntity/NewVendorComponent",
-			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  false,
-			      				    Code1 =  "20dc",
-			      				    Name1 =  " Query Group",
-			      				    CustomFieldsCount =  0,
-			      				    DisableSearchBox =  false,
-			      				    HasDocuments =  false,
-			      				    IsLookUp =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -133,10 +122,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -161,14 +146,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.CustomsVendor",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -187,10 +166,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -199,10 +174,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VendorNumber",
-					  						OldFieldName =  "VendorNumber",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -228,15 +199,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -255,10 +220,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -267,10 +228,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VendorTypeCode",
-					  						OldFieldName =  "VendorTypeCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.VendorType",
@@ -297,15 +254,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -324,10 +275,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -336,10 +283,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VendorName",
-					  						OldFieldName =  "VendorName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -365,15 +308,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -392,10 +329,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -404,10 +337,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CountryCode",
-					  						OldFieldName =  "CountryCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsCountry",
@@ -434,15 +363,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -461,10 +384,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -473,10 +392,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SubCountryCode",
-					  						OldFieldName =  "SubCountryCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.SubCountry",
@@ -503,16 +418,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						ControlField1 =  "CountryCode",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -531,10 +440,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -543,10 +448,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SubCountryName",
-					  						OldFieldName =  "SubCountryName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -572,15 +473,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -599,10 +494,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -611,10 +502,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CityName",
-					  						OldFieldName =  "CityName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -640,15 +527,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -667,10 +548,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -679,10 +556,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MainAddressLine",
-					  						OldFieldName =  "MainAddressLine",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -708,15 +581,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -735,10 +602,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -747,10 +610,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PostalCode",
-					  						OldFieldName =  "PostalCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -776,15 +635,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -803,10 +656,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -815,10 +664,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DunsNumber",
-					  						OldFieldName =  "DunsNumber",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -844,15 +689,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -869,10 +708,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -881,20 +716,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VATNumber",
-					  						OldFieldName =  "VATNumber",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  25,
 					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
+					  						SystemMaxLength =  25,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
@@ -910,15 +741,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -937,10 +762,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -949,10 +770,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StatusCode",
-					  						OldFieldName =  "StatusCode",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.VendorStatus",
@@ -979,15 +796,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -1006,10 +817,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1018,10 +825,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransactionTypeID",
-					  						OldFieldName =  "TransactionTypeID",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.VendorTransactionType",
@@ -1048,15 +851,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -1075,10 +872,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1087,10 +880,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsPalestinian",
-					  						OldFieldName =  "IsPalestinian",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1116,13 +905,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -1138,10 +921,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1150,10 +929,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VendorTypeName",
-					  						OldFieldName =  "VendorTypeName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1179,15 +954,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -1206,10 +975,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1218,10 +983,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CountryName",
-					  						OldFieldName =  "CountryName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1247,15 +1008,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -1274,10 +1029,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1286,10 +1037,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VendorCommunications",
-					  						OldFieldName =  "VendorCommunications",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1315,14 +1062,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiTableName =  "Customs.VendorCommunication",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -1341,10 +1082,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1353,10 +1090,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1382,15 +1115,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InActive",
@@ -1408,10 +1135,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1420,10 +1143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ExternalId",
-					  						OldFieldName =  "ExternalId",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1449,15 +1168,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExternalId",
@@ -1475,10 +1188,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1487,10 +1196,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StatusName",
-					  						OldFieldName =  "StatusName",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1515,15 +1220,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CustomsVendors",
 					  						ValidForQuerySection2 =  "ActiveCustomsVendors",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusName",
@@ -1541,10 +1240,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1553,10 +1248,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConcurrencyGUID",
-					  						OldFieldName =  "ConcurrencyGUID",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1581,13 +1272,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ConcurrencyGUID",
@@ -1601,10 +1286,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1613,10 +1294,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NewConcurrencyGUID",
-					  						OldFieldName =  "NewConcurrencyGUID",
-					  						IsNew =  false,
-					  						IsChecked =  false,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CustomsVendor",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1641,13 +1318,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NewConcurrencyGUID",
@@ -1661,10 +1332,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  

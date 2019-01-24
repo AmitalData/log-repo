@@ -254,5 +254,60 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
+        public DWObjectFieldPM GetPrimaryKeyFieldForDWObjectTable(string DWObjectTableCode)
+        {
+            return (from a in repository.webFreightContext.DWObjectFields
+                    where a.DWObjectTableCode == DWObjectTableCode && a.IsPrimaryKey == true
+                    select new DWObjectFieldPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        Name = a.Name,
+                        Code = a.Code,
+                        DimensionTableCode = a.DimensionTableCode,
+                        DataTypeCode = a.DataTypeCode,
+                        DWObjectTableCode = a.DWObjectTableCode,
+                        IsRequiered = a.IsRequired,
+                        MaxLength = a.MaxLength,
+                        MinLength = a.MinLength,
+                        IsPrimaryKey = a.IsPrimaryKey,
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                        Category1 = a.Category1,
+                        Category2 = a.Category2,
+                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                    }).FirstOrDefault();
+        }
+
+        public string GetFactTableCode(string DWDimTableCode)
+        {
+            return (from a in repository.webFreightContext.DWObjectFields
+                    where a.DimensionTableCode == DWDimTableCode && a.IsPrimaryKey == true
+                    select a.DWObjectTableCode).FirstOrDefault();
+        }
+
+        public DWObjectFieldPM GetFactKeyFieldForDWDimTable(string DWFactTableCode,string DWDimTableCode)
+        {
+            return (from a in repository.webFreightContext.DWObjectFields
+                    where a.DimensionTableCode == DWDimTableCode && a.DWObjectTableCode == DWFactTableCode && (a.DataTypeCode.ToLower() == "dimension" || a.DataTypeCode.ToLower() == "lookup")
+                    select new DWObjectFieldPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        Name = a.Name,
+                        Code = a.Code,
+                        DimensionTableCode = a.DimensionTableCode,
+                        DataTypeCode = a.DataTypeCode,
+                        DWObjectTableCode = a.DWObjectTableCode,
+                        IsRequiered = a.IsRequired,
+                        MaxLength = a.MaxLength,
+                        MinLength = a.MinLength,
+                        IsPrimaryKey = a.IsPrimaryKey,
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                        Category1 = a.Category1,
+                        Category2 = a.Category2,
+                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                    }).FirstOrDefault();
+        }
+
     }
 }

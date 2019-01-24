@@ -20,6 +20,7 @@ import { ApiQueryFilters } from '../../DataContracts/ApiQueryFilters';
 import { DWObjectFieldPM } from '../../EntityPMs/DWObjectFieldPM';
 import { DWObjectFieldsDetails } from '../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent';
 import { DWQueryData } from '../../../Common/DataContracts/DWQueryData';
+//import { DWObjectFieldsDetails } from '../../../Infrastructure/Helpers/DWQueryBuilderHelper';
 
 
 @Injectable()
@@ -154,6 +155,58 @@ export class DWQueryBuilderService {
         });
     }
 
+    GetNewDWQueryData(entityPM: DWQueryData) {
+
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+
+            var validator: ClassLevelValidator;
+
+            validator = new ClassLevelValidator();
+
+            var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
+
+
+            //var response: EntityPMServiceResponse;
+            //response = new EntityPMServiceResponse();
+            if (errorsArray.length == 0) {
+                //var mappedEntity: QueryColumnPM;
+                //mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+                //////////////////////////////////////////////////////
+
+                var temp = this.deepClone(entityPM);
+
+                /////////////////////////////////////////////////////
+                return this._http.post(this._apiUrl + '/PostGetDWQueryData', JSON.stringify(temp),
+                    { headers: authHeader }).map((response) => {
+
+                        var result = response.json();
+                         
+
+
+                        var pmresponse: ServiceResponse;
+                        pmresponse = new ServiceResponse();
+                        pmresponse.Result = result;
+                        return pmresponse;
+
+                    });
+            }
+            else {
+
+                //response.HasError = true;
+                //response.ErrorsArray = errorsArray;
+
+                return null;//Observable.of(response);
+
+            }
+        }
+
+        );
+    }
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: DWObjectFieldPM = null) {
 
 
@@ -227,7 +280,7 @@ export class DWQueryBuilderService {
                 var temp = this.deepClone(entityPM);
 
                 /////////////////////////////////////////////////////
-                return this._http.post(this._apiUrl, JSON.stringify(temp),
+                return this._http.post(this._apiUrl + '/PostQueryData', JSON.stringify(temp),
                     { headers: authHeader }).map((res) => {
                         var pm = res.json();
                         if (pm) {
@@ -254,6 +307,7 @@ export class DWQueryBuilderService {
 
         );
     }
+
     public deepClone(obj, hash = new WeakMap()) {
         // Do not try to clone primitives or functions
         if (Object(obj) !== obj || obj instanceof Function) {
@@ -289,10 +343,11 @@ export class DWQueryBuilderService {
             key => ({
                 [key]:
 
-                    key != "UIProperties" && key != "MyParentClass" ? this.deepClone(obj[key], hash) : true
+                    key != "UIProperties" && key != "MyParentClass" && key != "Items" ? this.deepClone(obj[key], hash) : true
                     
             })));
     }
+
     CustomMapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entities: DWQueryData = null) {
 
 

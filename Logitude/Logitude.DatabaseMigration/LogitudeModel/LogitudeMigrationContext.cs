@@ -1618,6 +1618,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<PickUpDeliveryTransportMode> PickUpDeliveryTransportModes { get; }
         public IDbSet<INTTRADocumentType> INTTRADocumentTypes { get; }
         public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; }
+        public IDbSet<HarmonizeCode> HarmonizeCodes { get; }
 
         #endregion
 
@@ -2913,6 +2914,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<TreatmentWay> TreatmentWays { get; set; }
         public IDbSet<DecCargoSplitConsItem> DecCargoSplitConsItems { get; set; }
         public IDbSet<DecCargoSplitConsPackDet> DecCargoSplitConsPackDets { get; set; }
+        public IDbSet<DecCargoSplitCargoIdentifier> DecCargoSplitCargoIdentifiers { get; set; }
 
         #endregion
 
@@ -4085,7 +4087,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TreatmentWayMap());
             modelBuilder.Configurations.Add(new DecCargoSplitConsItemMap());
             modelBuilder.Configurations.Add(new DecCargoSplitConsPackDetMap());
-
+            modelBuilder.Configurations.Add(new DecCargoSplitCargoIdentifierMap());
+            
             #endregion
 
             #region Accounting
@@ -4744,7 +4747,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new AccountingIntegrityCheckMap());
             modelBuilder.Configurations.Add(new IntegrityCheckStatusMap());
+            modelBuilder.Configurations.Add(new HarmonizeCodeMap());
 
+            
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -1,0 +1,45 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class CustomsPartnerFtp
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("TypeCode")]
+	    public string TypeCode { get; set; }
+        [Column("PartnerCode")]
+	    public string PartnerCode { get; set; }
+        [Column("InterfaceName")]
+	    public string InterfaceName { get; set; }
+        [ForeignKey("MyFTPDetail")]
+        [Column("FtpDetailsId")]
+	    public string FtpDetailsId { get; set; }
+	      
+        public virtual FTPDetail MyFTPDetail { get; set; }
+        [Column("FileName")]
+	    public string FileName { get; set; }
+        [Column("FileExt")]
+	    public string FileExt { get; set; }
+        [Column("CommunicationDetails")]
+	    public string CommunicationDetails { get; set; }
+    }
+}
+	 

@@ -1,3 +1,4 @@
+import { IntegrityCheckTabComponent } from './Components/EditTabs/AccountingIntegrityCheck/IntegrityCheckTabComponent';
 import {AccountingWorkspaceComponent} from './Components/Workspaces/AccountingWorkspaceComponent';
 import {GLAccountPageComponent} from './Components/Workspaces/Main/GLAccountPageComponent';
 import {JournalPageComponent} from './Components/Workspaces/Journal/JournalPageComponent';
@@ -31,6 +32,7 @@ import {AccountingPeriodEventComponent} from './Components/Maintenance/Accountin
 import {YearTransferComponent} from './Components/Maintenance/YearTransferComponent';
 import { NewTaxReportComponent } from './Components/NewEntity/NewTaxReportComponent';
 import { NewOpenFormatReportComponent } from './Components/NewEntity/NewOpenFormatReportComponent';
+import { AccountingLoadTestComponent } from './Components/Maintenance/AccountingLoadTestComponent';
 
 import {GLAccountGeneralTabComponent} from './Components/EditTabs/GLAccount/GLAccountGeneralTabComponent';
 import {GLAccountTransactionsTabComponent} from './Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent';
@@ -122,6 +124,7 @@ export const Components =
         AccountingPeriodEventComponent,
         NewTaxWithholdingAssessingOfficeComponent,
         YearTransferComponent,
+        AccountingLoadTestComponent,
 
         //Edit Tabs
         GLAccountGeneralTabComponent,
@@ -175,6 +178,7 @@ export const Components =
         NewTaxReportComponent,
         AccountingFlatFileDownloadComponent,
         NewTaxDeductionReportComponent,
+        IntegrityCheckTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -220,6 +224,7 @@ export class ModuleDeclarations {
             case "EditAccountingPeriodComponent": { myResult = EditAccountingPeriodComponent; break; }
             case "AccountingPeriodEventComponent": { myResult = AccountingPeriodEventComponent; break; }
             case "NewTaxWithholdingAssessingOfficeComponent": { myResult = NewTaxWithholdingAssessingOfficeComponent; break; }
+            case "AccountingLoadTestComponent": { myResult = AccountingLoadTestComponent; break; }
             //Edit Tabs
             case "GLAccountGeneralTabComponent": { myResult = GLAccountGeneralTabComponent; break; }
             case "GLAccountOverviewComponent": { myResult = GLAccountOverviewComponent; break; }
@@ -272,6 +277,7 @@ export class ModuleDeclarations {
             case "ExternalReconcileComponent": { myResult = ExternalReconcileComponent; break; }
             case "AddEditTaxWithholdingLineComponent": { myResult = AddEditTaxWithholdingLineComponent; break; }
             case "AccountingFlatFileDownloadComponent": { myResult = AccountingFlatFileDownloadComponent; break; }
+            case "IntegrityCheckTabComponent": { myResult = IntegrityCheckTabComponent; break; }
         }
 
         return myResult;

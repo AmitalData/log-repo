@@ -47,7 +47,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
     {
 
 
-        public HttpResponseMessage GetDWQueryData(string SQL,string Table)
+        public HttpResponseMessage GetDWQueryData(string SQL, string Table)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 {
                     SQL = SQL + " where " + Table + ".[Parent Tenant] = " + authToken.Tenant;
                 }
-                
+
                 using (var scope = TransactionFactory.GetNewTransaction())
                 {
                     var currentDb = GlobalDbHelper.GetGlobalDBWithNoCache(0);
@@ -108,7 +108,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
         }
 
-        public HttpResponseMessage GetDWDataForDimTabel(string Tabel, string Field,string SearchData)
+        public HttpResponseMessage GetDWDataForDimTabel(string Tabel, string Field, string SearchData)
         {
             try
             {
@@ -183,9 +183,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 var Field8 = "";
                 var Field9 = "";
                 var Field10 = "";
-                var LovAdditionalFields = !string.IsNullOrEmpty(temp) ? temp.Split(','):null;
-               
-                var SearchData = filters.Filter2Value; 
+                var LovAdditionalFields = !string.IsNullOrEmpty(temp) ? temp.Split(',') : null;
+
+                var SearchData = filters.Filter2Value;
                 DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(authToken.Tenant);
                 DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(Tabel, authToken.Tenant);
                 bool IsClosed = dWObjectTablePM.IsClosed;
@@ -201,14 +201,14 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     if (Tabel != "DIM_Tenants")
                     {
                         WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + ".[Parent Tenant] = " + authToken.Tenant); //authToken.Tenant
-                    } 
-                   
+                    }
+
                     //if (!string.IsNullOrEmpty(SearchData))
                     //{
                     //    WhereStmt = WhereStmt + (" and " + Field + " like '%" + SearchData + "'");
                     //}
                 }
-               
+
                 using (var scope = TransactionFactory.GetNewTransaction())
                 {
                     var currentDb = GlobalDbHelper.GetGlobalDBWithNoCache(0);
@@ -279,19 +279,19 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     object Count = 0;
                     using (SqlConnection sourceConnection = new SqlConnection(connection.ConnectionString))
                     {
-                         
+
                         var CountSQL = "select Count(DISTINCT " + Field + ") from " + Tabel + WhereStmt;
                         sourceConnection.Open();
                         SqlCommand commandSourceData = new SqlCommand(CountSQL, sourceConnection);
-                        Count = commandSourceData.ExecuteScalar(); 
+                        Count = commandSourceData.ExecuteScalar();
                     }
 
                     scope.Complete();
-                    
+
                     ServiceResponse response = new ServiceResponse();
                     List<FactDataTable> FactDataList = new List<FactDataTable>();
                     var TempFactDataList = (from DataRow dr in dataTable.Rows
-                                    select dr);
+                                            select dr);
                     //new FactDataTable()
                     //{ 
                     //    Name = dr[Field.Replace("[","").Replace("]","")].ToString(), 
@@ -340,7 +340,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         {
                             temprec.Field10 = dr[Field10.Replace("[", "").Replace("]", "")].ToString();
                         }
-                         
+
                         FactDataList.Add(temprec);
                     }
                     if (filters.GetCount)
@@ -366,6 +366,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
         }
 
+        [ActionName("PostQueryData")]
         public HttpResponseMessage Post(DWQueryData QueryData)
         {
             try
@@ -373,7 +374,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-               
+
                 var XML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Columns);
                 var FilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Filters);
                 var temp = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(XML);
@@ -391,6 +392,37 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             }
         }
 
+         
+        [ActionName("PostGetDWQueryData")]
+        public HttpResponseMessage PostGetDWQueryData(DWQueryData DWQueryParam)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Shipment", "READ", authToken.Tenant);
+                
+
+                DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(authToken.Tenant);
+                string MySqlString = QBHelper.GetQuerySQL(DWQueryParam);
+                DataTable MyData = QBHelper.GetDWQueryData(MySqlString);
+                DWQueryDataResult myResult = new DWQueryDataResult();
+                myResult.SQLDataResult = MyData;
+                myResult.SQLString = MySqlString;
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        
+
     }
 
     class FactDataTable
@@ -405,6 +437,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
         public string Field7 { get; set; }
         public string Field8 { get; set; }
         public string Field9 { get; set; }
-        public string Field10 { get; set; } 
+        public string Field10 { get; set; }
     }
 }

@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns="http://tempuri.org/LOGIBONDREL" elementFormDefault="qualified" targetNamespace="http://tempuri.org/LOGIBONDREL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="LOGIBONDREL">
+<xs:schema xmlns="http://tempuri.org/LOGICOMMDEC" elementFormDefault="qualified" targetNamespace="http://tempuri.org/LOGICOMMDEC" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="LOGICOMMDEC">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="LogitudeReleaseFile" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="LogitudeCommDecFile" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="LogitudeReleaseFile">
+  <xs:element name="LogitudeCommDecFile">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" maxOccurs="1" ref="CustomFileNo" />
@@ -52,6 +52,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="agent_fee_currency" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="CustomsDocuments" />
         <xs:element minOccurs="0" maxOccurs="1" ref="TaxationDateTime" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CarrierPrefix" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -289,4 +290,5 @@
   <xs:element name="COM_ID" type="xs:string" />
   <xs:element name="SerialNum" type="xs:string" />
   <xs:element name="TaxationDateTime" type="xs:string" />
+  <xs:element name="CarrierPrefix" type="xs:string" />
 </xs:schema>

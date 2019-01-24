@@ -471,8 +471,9 @@ namespace Logitude.CustomsMessaging.RequestServices
         {
             var claimAttachmentList = new List<Attachment>();
             var customsDocumentQueryService = new CustomsDocumentQueryService(_DbContext);
-            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = this._ClaimPM.Id, ParentEntityCode = "Claim" }, this._ClaimPM.Tenant);
 
+            //Get Claims Attachments
+            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = this._ClaimPM.Id, ParentEntityCode = "Claim" }, this._ClaimPM.Tenant);
             foreach (CustomsDocumentPM customsDocumentPM in customsDocumentPMList)
             {
                 if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
@@ -488,6 +489,25 @@ namespace Logitude.CustomsMessaging.RequestServices
                     claimAttachmentList.Add(claimAttachment);
                 }
             }
+
+            //Get ClaimsRelatedEntity Attachments
+            foreach (ClaimsRelatedEntityPM claimsRelatedEntityPM in _ClaimPM.ClaimsRelatedEntities)
+            {
+                var relatedEntityCustomsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = claimsRelatedEntityPM.ClaimId, ParentEntityCode = "Claim", Child1EntityCode = "ClaimsRelatedEntity", Child1EntityId = claimsRelatedEntityPM.EntityCounterKey.ToString() }, this._ClaimPM.Tenant);
+                foreach (CustomsDocumentPM customsDocumentPM in relatedEntityCustomsDocumentPMList)
+                {
+                    if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
+                    {
+                        var claimAttachment = new Attachment();
+                        claimAttachment.documentType = customsDocumentPM.DocumentTypeCode;
+                        claimAttachment.fileName = customsDocumentPM.Name;
+                        claimAttachment.externalAttachmentID = customsDocumentPM.ExternalAttachmentId;
+                        claimAttachment.IsAttachment = false.ToString();
+                        claimAttachmentList.Add(claimAttachment);
+                    }
+                }
+            }
+
             return claimAttachmentList.ToArray();
         }
 

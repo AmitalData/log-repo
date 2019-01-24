@@ -992,5 +992,16 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
             return loggedContact;
         }
+        private static void ValidateOnVoid(ARInvoicePM entityPM)
+        {
+            if (entityPM.SetVoided)
+            {
+                if (entityPM.InvoicePayments.Count > 0)
+                {
+                    string msg = TranslateTextsClass.Translate("ARInvoice.M.DisconnectPayments", entityPM.Tenant);
+                    throw new ApplicationException(msg);
+                }
+            }
+        }
     }
 }

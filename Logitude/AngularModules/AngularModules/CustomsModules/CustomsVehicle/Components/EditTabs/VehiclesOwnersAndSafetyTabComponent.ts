@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import { Component, AfterViewInit, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { LogTab } from '../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';

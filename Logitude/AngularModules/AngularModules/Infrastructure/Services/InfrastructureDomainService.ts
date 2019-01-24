@@ -15,6 +15,7 @@ import {CustomFieldClass} from '../DataContracts/CustomFieldClass';
 import {TasksSchedulerPM} from '../EntityPMs/TasksSchedulerPM';
 import { BIReportPM } from '../EntityPMs/BIReportPM';
 import { ClassLevelValidator } from '../Validators/ClassLevelValidator';
+import { DWQueryData } from '../../Common/DataContracts/DWQueryData';
 
 
 @Injectable()
@@ -699,20 +700,22 @@ export class InfrastructureDomainService {
         });
     }
 
-    GetByBIReportId(Queryid: string) {
+    GetByBIReportId(Queryid: string, DWQueryId : string ) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetByBIReportId?' + 'Id=' + Queryid, {
+            return this._http.get(this._apiUrl + '/GetByBIReportId?' + 'Id=' + Queryid + '&dWQueryId=' + DWQueryId, {
                 headers: authHeader
             }).map(response => {
                 var pm = response.json();
                 var entity: BIReportXMLData = new BIReportXMLData();
                 if (pm) {
+                    entity.BIReportId = pm.BIReportId;
                     entity.BIReportPM = pm.BIReportPM;
-                    entity.Columns = pm.Columns;
+                    entity.DWQueryData = pm.DWQueryData;
+                    entity.BITabularViewSettings = pm.BITabularViewSettings;
                 }
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -745,10 +748,15 @@ export class InfrastructureDomainService {
                 return this._http.put(this._apiUrl + "/PutBIReport", JSON.stringify(temp),
                     { headers: authHeader }).map((res) => {
                         var pm = res.json();
+                        var entity: BIReportXMLData = new BIReportXMLData();
                         if (pm) {
-                            response.Result = pm;
+                            entity = pm;
                         }
-                        return response;
+                        var serviceResponse: ServiceResponse;
+                        serviceResponse = new ServiceResponse();
+                        serviceResponse.Result = entity;
+                        var servertime = res.headers.get('ServerExecutionTime');
+                        return serviceResponse;
                     });
             }
             else {
@@ -841,15 +849,24 @@ export class BusinessRecordsSummary {
     public OpportunitiesCount: number;
 }
 
+
+
 export class BIReportXMLData {
     public BIReportId: string;
+    public DWQueryData: DWQueryData; 
     public BIReportPM: BIReportPM;
-    public Columns: BIReportColumnData[];  
+    public BITabularViewSettings: BITabularViewSettings;
 }
-
-export class BIReportColumnData {
-    public SortColId: string;
+export class BITabularViewSettings {
+    public Columns: Column[];  
+}
+export class Column {
+    public Code: string;
+    public Name: string;
     public SortDirction: string;
+    public SortOrder: number;
     public Width: number;
     public Index: number;
+    public IsChecked: boolean;
+    public DataTypeCode: string; 
 }

@@ -1237,6 +1237,16 @@ namespace WebFreight.Web.Helpers
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
+
+                case "VDCA":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(VendorChargesAnalysisDataProvider));
+                        VendorChargesAnalysisDataProvider reportDataProvider = (VendorChargesAnalysisDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "VendorChargesAnalysis", Name = "VendorChargesAnalysisDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
             }
             return urlImage;
         }
@@ -1580,11 +1590,17 @@ namespace WebFreight.Web.Helpers
                         dataProvider = myDataManager.GetData();
                         break;
                     }
-
-                case "DSCA":
+                    
                 case "AREX":
                     {
                         ArchivoExportadoManager myDataManager = new ArchivoExportadoManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
+
+                case "DSCA":
+                    {
+                        DetailedShipmentChargesManager myDataManager = new DetailedShipmentChargesManager(filters, reportFliter.tenant);
                         dataProvider = myDataManager.GetData();
                         break;
                     }
@@ -1652,6 +1668,13 @@ namespace WebFreight.Web.Helpers
                 case "SHID":
                     {
                         dataProvider = logitudeReportsWebService.LoadShipmentDetailsDataProvider(filters, reportFliter.tenant);
+                        break;
+                    }
+
+                case "VDCA":
+                    {
+                        VendorChargesAnalysisManager myDataManager = new VendorChargesAnalysisManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
                         break;
                     }
 

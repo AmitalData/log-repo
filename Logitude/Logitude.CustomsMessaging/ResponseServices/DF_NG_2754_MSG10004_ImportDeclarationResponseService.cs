@@ -24,6 +24,8 @@ using System.Linq;
 using UnifreightIIG.Common.ImportDeclarationServiceReference;
 using UnifreightIIG.Common.MessageLib.Collateral;
 using Logitude.Customs.BL.TraceEvents;
+using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -44,7 +46,34 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         DeclarationError _MyDeclarationError;
         decimal? _TotalBtlCoverageNISSum = 0;
-        
+
+        public override void OnRequestFail(DF_NG_2754_MSG10004_ImportDeclarationResponse customResponse, GenericRequestParams requestParams)
+        {
+            if (!String.IsNullOrWhiteSpace(requestParams.AppicationId))
+            {
+                var customContext = CustomContext.GetContext(requestParams.Tenant);
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.AppicationId, false, false);
+                if (currentDeclarationCourierStatusPM != null)
+                {
+                    string prevVal = null;
+                    string currvVal = null;
+                    CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(null, requestParams.AppicationId, requestParams.Tenant);
+                    prevVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+                    calculateDeclarationCourierStatus.CalcCourierDeclarationStatusCode(currentDeclarationCourierStatusPM);
+                    currvVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+
+                    if (prevVal != currvVal)
+                    {
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                    }
+                }
+            }
+            base.OnRequestFail(customResponse, requestParams);
+        }
+
         public override INF_MSG_GenericResponseData GetResponse(
             DF_NG_2754_MSG10004_ImportDeclarationResponse customResponse, GenericRequestParams requestParams)
         {
@@ -153,7 +182,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //}
                 if (this._MyDeclarationPM.PaymentDate.HasValue) //If declaration was already paid 
                 {
-                    if (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value) //Compare Declaration Version
+                    //Task 44715 allow update of 1.0 if current <1.0 and it's a restore response
+                    if (!(requestParams.GetType() == typeof(DeclarationRestoreRequestParams) && System.Convert.ToDouble(_MyDeclarationPM.VersionId) < 1.0 && System.Convert.ToDouble(customResponse.Response.Declaration.DMExtensions.VersionID.Value) == 1.0) //restored version 1.0 and current 0.x
+                        && (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value)) //Compare Declaration Version
+                        
+                    //if (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value) //Compare Declaration Version
                     {
                         string mess = "נתוני ההצהרה לא עודכנו " + " (" + _MyDeclarationPM.DeclarationNumber + ")" + " הצהרה כבר שולמה ויש שוני בין הגרסאות";
                         LogMessagingUtil.Instance.AppendLine(mess);
@@ -415,10 +448,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             _MyDeclarationPM.TotalTax = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TaxAssessedAmount.Value, 2);
             _MyDeclarationPM.DealValueWithFactor = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalMADDealValueAmountNIS.Value, 2);
             _MyDeclarationPM.TaxationDateTime = Convert.ToDateTime(customResponse.Response.Declaration.DMExtensions.TaxationDateTime);
-            if (_IsSubmitDeclarationResponse != true) _MyDeclarationPM.IsChanged = false;
-            //_MyDeclarationPM.DealValueWithoutFactor = customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalMADDealValueAmountNIS.Value;
-            //_MyDeclarationPM.DealValueWithoutFactor = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalMADDealValueAmountNIS.Value, 2);
-            decimal DealValueWithoutFactor = 0;
+            //if (_IsSubmitDeclarationResponse != true) _MyDeclarationPM.IsChanged = false;
+            if (requestParams.GetType() != typeof(DeclarationRestoreRequestParams))//Task 44715
+            {
+                if (_IsSubmitDeclarationResponse != true) _MyDeclarationPM.IsChanged = false;
+            }
+
+                //_MyDeclarationPM.DealValueWithoutFactor = customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalMADDealValueAmountNIS.Value;
+                //_MyDeclarationPM.DealValueWithoutFactor = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalMADDealValueAmountNIS.Value, 2);
+                decimal DealValueWithoutFactor = 0;
             if (customResponse.Response.Declaration.GoodsShipment != null)
             {
                 foreach (var goodsShipment in customResponse.Response.Declaration.GoodsShipment)
@@ -465,7 +503,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             //Analyze the Errors section in the response XML 
             var swErrosXml1 = Stopwatch.StartNew();
-            this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AnalyzeErrorPionter(customResponse.Response.Error, _MyDeclarationPM);
+            this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AnalyzeErrorPionter(customResponse.Response.Error, _MyDeclarationPM, WCOTypeEnum.WCO, !_IsSubmitDeclarationResponse);
             this._MyDeclarationError = mydDclarationErrorPointerService._declarationErrorPointer;
             LogMessagingUtil.Instance.AppendLine("ErrosXml:Took:" + swErrosXml1.ElapsedMilliseconds);
 
@@ -645,10 +683,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
+            UpdateDepositionStatusCode();
+
             if (!String.IsNullOrWhiteSpace("itzik and yaron move to herer from DeclarationWebService.asmx"))
             {
-                _MyDeclarationPM.MarkAsChanged = false;
-                _MyDeclarationPM.IsChanged = false;
+                if (requestParams.GetType() != typeof(DeclarationRestoreRequestParams))//Task 44715 (add condition to itzik and yaron...
+                {
+                    _MyDeclarationPM.MarkAsChanged = false;
+                    _MyDeclarationPM.IsChanged = false;
+                }
             }
             _MyDeclarationPM.CustomsRequestsSheetId = requestParams.CustomsRequestsSheetId;
             _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -715,6 +758,34 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 myDeclarationUpdateService.SendDelayedDeclarationStatusRequest(_MyDeclarationPM);
             }
+        }
+
+        private void UpdateDepositionStatusCode()
+        {
+            if (_MyDeclarationError != null && _MyDeclarationError.Entitites != null && _MyDeclarationError.Entitites.Count > 0)
+            {
+                //Go over all the 'Entity'
+                foreach (var entity in _MyDeclarationError.Entitites)
+                {
+                    if (entity.FieldErrors != null)
+                    {
+                        //Go over all the 'FieldErrors'
+                        foreach (var fieldErrors in entity.FieldErrors)
+                        {
+                            //Get all 'FieldErrors' for the 'FieldError'
+                            List<field> fieldList = (from a in entity.FieldErrors
+                                                     where (a.Code == "4589")
+                                                     select a).ToList();
+                            if (fieldList.Count > 0)
+                            {
+                                if (string.IsNullOrWhiteSpace(_MyDeclarationPM.DepositionStatusCode)) _MyDeclarationPM.DepositionStatusCode = "R";
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+            if (_MyDeclarationPM.DepositionStatusCode == "R") _MyDeclarationPM.DepositionStatusCode = null;
         }
 
         public void SendDeclarationPrint(DeclarationPM declarationPM, SendRequestVIA RequestVIA, GenericRequestParams requestParams) // moran 28.1.15 - Task 10005

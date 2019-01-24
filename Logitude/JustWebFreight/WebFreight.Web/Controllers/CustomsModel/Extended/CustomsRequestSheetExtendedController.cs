@@ -206,18 +206,20 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                                 CustomsRequestsSheetPM currententityPm = customsRequestsSheetQuery.GetSingle(dummyPM.Id, false, false);
 
-                                bool tryConcurrentKiller = ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
+                                bool tryConcurrentKiller = true;// ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                                 if (tryConcurrentKiller)
                                 {
                                     if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(currententityPm.InterfaceTypeCode))
                                     {
-                                        
-                                        string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSKey(currententityPm.Id);
-                                        using (var scope1 = TransactionFactory.GetNewTransaction())
+                                        if (DateTime.Now.Subtract(currententityPm.RequestCreateDate.GetValueOrDefault()) < TimeSpan.FromMinutes(10)) //CALL#321639         
                                         {
-                                            var concurrentKiller = new ConcurrentKiller();
-                                            concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, currententityPm.Tenant);
-                                            scope1.Complete();
+                                            string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSKey(currententityPm.Id);
+                                            using (var scope1 = TransactionFactory.GetNewTransaction())
+                                            {
+                                                var concurrentKiller = new ConcurrentKiller();
+                                                concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, currententityPm.Tenant);
+                                                scope1.Complete();
+                                            }
                                         }
                                     }
                                 }

@@ -270,20 +270,14 @@ export class PaymentOrderDepositDataComponent extends BaseComponent {
     }
 
     BankAccountToRefundButtonClicked() {
-
-        //var logitudeWindow = new LogitudeWindow();
-        //var windowArgs: any = {};
-        //logitudeWindow.Width = 600;
-        //logitudeWindow.Height = 480;
-        //logitudeWindow.IsShowCloseButton = false;
-        //logitudeWindow.Title = TextCodeTranslator.Translate("Customs.General.O.BankAccountToRefundMessage");;
-        //logitudeWindow.WindowArgs = windowArgs;
-        //logitudeWindow.Show('./CustomsModules/CustomsPaymentOrder/Components/EditTabs/Tapag/Deposit/BankAccountToRefundComponent');
-
+        var declarationId: string;
+        if (this.ConnectedEntitiesList != null && this.ConnectedEntitiesList.Length > 0) {
+            declarationId = this.ConnectedEntitiesList.Collection[0].Id;
+        }
 
         let customsRequestMenuService = new CustomsRequestMenuService();
         let my = {
-            "DeclarationId": this.EntityPM.Id,
+            "DeclarationId": declarationId,
         };
         customsRequestMenuService.WindowClosed.subscribe((myarg) => { });
         customsRequestMenuService.ShowModalAsEditMenuAction("2018", my);

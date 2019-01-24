@@ -35,6 +35,7 @@ using UnifreightIIG.Common.CommonIIGInterface;
 using UnifreightIIG.Common.FaultProceduralDetailsServiceReference;
 using Logitude.Customs.BL.Models;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -49,6 +50,35 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private GTRTRANQueryService _GTRTRANQueryService;
         private Dictionary<string, IList> _MyLocalCache = new Dictionary<string, IList>();
         private AmitalContext _AmitalContext;
+
+
+        public override void OnRequestFail(MN_MSG4_SendManifestFeedBack_Message customResponse, MANIFESTRequestRequestParams requestParams)
+        {
+            if (!String.IsNullOrWhiteSpace(requestParams.DeclarationId))
+            {
+                var customContext = CustomContext.GetContext(requestParams.Tenant);
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.DeclarationId, false, false);
+                if (currentDeclarationCourierStatusPM != null)
+                {
+                    string prevVal = null;
+                    string currvVal = null;
+                    CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(null, requestParams.DeclarationId, requestParams.Tenant);
+                    prevVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
+                    calculateDeclarationCourierStatus.CalcCourierManifestStatusCode(currentDeclarationCourierStatusPM);
+                    currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
+
+                    if (prevVal != currvVal)
+                    {
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                    }
+                }
+            }
+            base.OnRequestFail(customResponse, requestParams);
+        }
+
 
         public override void Update(MN_MSG4_SendManifestFeedBack_Message customResponse, MANIFESTRequestRequestParams requestParams)
         {
@@ -223,7 +253,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration>.DeSerializeObject(declarationXml);
                     UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration = new UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration();
 
-                    _MyDeclarationPM.ManifestErrorXml = mydDclarationErrorPointerService.AnalyzeErrorPionter(responseError, _MyDeclarationPM, WCOTypeEnum.Manifest);
+                    _MyDeclarationPM.ManifestErrorXml = mydDclarationErrorPointerService.AnalyzeErrorPionter(responseError, _MyDeclarationPM, WCOTypeEnum.Manifest, false);
 
 
 

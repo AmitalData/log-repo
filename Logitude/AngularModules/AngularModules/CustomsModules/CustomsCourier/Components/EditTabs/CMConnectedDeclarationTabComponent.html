@@ -1,14 +1,17 @@
-﻿<table>
+<table>
     <tr>
         <td>
             <div class="TableHolder">
                 <table >
                     <tr style="height:25px">
-                        <td class="TabTitleRow" style="width:250px"> {{'General.O.ConnectedDeclarations' | TextCodeTranslationPipe}}  </td>
+                        <td class="TabTitleRow" style="width:250px">
+                            {{'General.O.ConnectedDeclarations' | TextCodeTranslationPipe}}
+                            <span *ngIf="TotalConnected != null"> {{' (' + TotalConnected + ')' }} </span>
+                        </td>
                         <td><div></div></td>
                         <td style="width:250px">
-                            <SearchBox [SearchText]="ConnectedSearch" (TextChanged)="ConnectedSearchCompleted($event)"
-                                       [Watermark]="'תיק/הצהרה/שטר מטען בלדר/לקוח'"></SearchBox>
+                            <SearchTextBox [PlaceHolder]="'תיק/הצהרה/שטר מטען בלדר/לקוח'"
+                                           [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="ConnectedSearchCompleted($event)"></SearchTextBox>
                         </td>
                     </tr>
                     <tr>
@@ -37,8 +40,8 @@
                         <td class="TabTitleRow" style="width:250px">{{'General.O.NotConnectedDeclarations' | TextCodeTranslationPipe}} </td>
                         <td><div></div></td>
                         <td style="width:250px">
-                            <SearchBox [SearchText]="NotConnectedSearch" (TextChanged)="NotConnectedSearchCompleted($event)"
-                                       [Watermark]="'תיק/הצהרה/שטר מטען בלדר/לקוח'"></SearchBox>
+                            <SearchTextBox [PlaceHolder]="'תיק/הצהרה/שטר מטען בלדר/לקוח'"
+                                           [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="NotConnectedSearchCompleted($event)"></SearchTextBox>
                         </td>
                     </tr>
                     <tr>

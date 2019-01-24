@@ -82,7 +82,9 @@ using Logitude.Accounting.Data;
         {
 		    try
             {
-				   					var temp = new Category5PM();								  
+				   
+					var temp = new Category5PM();
+												  
 					if (!string.IsNullOrEmpty(MyEntity.Id))
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
@@ -91,6 +93,7 @@ using Logitude.Accounting.Data;
 					if(temp == null)
 					{
 					    throw new ApplicationException("Category5 with Id " + MyEntity.Id + " doesn't exist");
+						
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{

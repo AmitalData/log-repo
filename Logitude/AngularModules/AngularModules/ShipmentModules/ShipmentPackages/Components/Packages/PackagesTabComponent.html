@@ -534,24 +534,8 @@
                                     <!-- Last Status -->
                                     <log-column [width]="'150'" [header]="'ShipmentPackage.F.LastStatusCode' | TextCodeTranslationPipe" *ngIf="IsShippingInstructionsVisible">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <div style="height: 100%; width: 100%; position: relative;">
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="MediaFill TextTrimming">
-                                                                {{item.LastStatusName}}
-                                                            </div>
-                                                        </td>
-
-                                                        <td style="width: 5px;">
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="width: 25px;">
-                                                            <Hyperlink *ngIf="item.LastStatusName" (click)="ViewStatusesClicked(item)">View</Hyperlink>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                            <div style="height: 100%; width: 100%;">
+                                                <Hyperlink *ngIf="item.LastStatusName" (click)="ViewStatusesClicked(item)">{{item.LastStatusName}}</Hyperlink>
                                             </div>
                                         </log-cell-template>
                                     </log-column>

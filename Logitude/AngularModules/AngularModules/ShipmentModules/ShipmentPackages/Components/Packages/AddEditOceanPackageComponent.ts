@@ -50,18 +50,6 @@ export class AddEditOceanPackageComponent {
         this.VolumetricWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.VolumetricWeight').replace('%WeightCode', this.DataContext.ShipmentPM.ChargeableWeightUnitCode);
     }
 
-    MultiHarmonizeClicked() {
-        var logWindow = new LogitudeWindow();
-        logWindow.WindowArgs = { PackagePM: this.EntityPM, ShipmentPM: this.DataContext.ShipmentPM ,IsEditingEnabled: this.DataContext.IsEditingEnabled };
-        logWindow.Title = "Container Multi-Harmonize";
-        logWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/AddEditPackageHarmonizeComponent");
-        logWindow.WindowClosed.subscribe(s => {
-            if (s) {
-                this.DataContext.SetUIProperties_Harmonize();                
-            }
-        });
-    }
-
     CancelButtonClicked() {
         this.RejectChanges();
         SessionLocator.CurrentSession.CloseCurrentWindow();
@@ -184,6 +172,10 @@ export class AddEditOceanPackageComponent {
                         DeliveryPackagePM.Length = this.EntityPM.Length;
                     }
 
+                    if (DeliveryPackagePM.Harmonize != this.EntityPM.Harmonize) {
+                        DeliveryPackagePM.Harmonize = this.EntityPM.Harmonize;
+                    }
+
                     if (DeliveryPackagePM.IsMultiHarmonize != this.EntityPM.IsMultiHarmonize) {
                         DeliveryPackagePM.IsMultiHarmonize = this.EntityPM.IsMultiHarmonize;
                     }
@@ -207,6 +199,29 @@ export class AddEditOceanPackageComponent {
                     }
                 }
             }
+        }
+    }
+
+    MultiHarmonizeClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = { PackagePM: this.EntityPM, ShipmentPM: this.DataContext.ShipmentPM, IsEditingEnabled: this.DataContext.IsEditingEnabled };
+        logWindow.Title = "Container Multi-Harmonize";
+        logWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/AddEditPackageHarmonizeComponent");
+        logWindow.WindowClosed.subscribe(s => {
+            if (s) {
+                this.DataContext.SetUIProperties_Harmonize();
+            }
+        });
+    }
+    ChooseHarmonizeClicked() {
+        if (this.DataContext) {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = TextCodeTranslator.TranslateTablePlural("HarmonizeCode") + " Search";
+            logitudeWindow.WindowArgs = { Entity: this.DataContext, FieldName: 'Harmonize' };
+            logitudeWindow.Show("./ShipmentModules/ShipmentTabs/Components/Windows/Harmonizes/HarmonizesComponent");
+            logitudeWindow.WindowClosed.subscribe(s => {
+
+            });
         }
     }
 

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {CounterPM} from '../../../../../Common/EntityPMs/CounterPM';
 import {CounterDefinitionPM} from '../../../../../Common/EntityPMs/CounterDefinitionPM';
@@ -215,6 +215,18 @@ export class CounterAdvancedComponent extends BaseComponent {
         }
     }
 
+    public get CounterSize() { return this.EntityPM.CounterSize; }
+    public set CounterSize(value: number) {
+        if (this.EntityPM.CounterSize != value) {
+            this.EntityPM.CounterSize = value;
+
+            this.APIHelper.CounterDefinitions.forEach(item => {
+                item.CounterSize = value;
+            });
+        }
+    }
+
+
     public get StartNumber() { return this.EntityPM.StartNumber; }
     public set StartNumber(value: number) {
         if (this.EntityPM.StartNumber != value) {
@@ -280,6 +292,8 @@ export class CounterAdvancedComponent extends BaseComponent {
                     }
                 }
             }
+            else {
+            }
 
             if (!isValidUniquePrefix) {
                 var messageWindow = new MessageWindow();
@@ -288,16 +302,32 @@ export class CounterAdvancedComponent extends BaseComponent {
 
             else {
                 var errors: string[] = [];
+                if (this.CounterSize > 15) {
+                    errors.push("Maximum size allowed for counter is 15");
+                }
+                if (this.UniquePerPrefix == true) {
+                    this.APIHelper.CounterDefinitions.forEach(item => {
+                        Validator.TryValidateObject(item, this.ObjectTableName, errors);
 
-                this.APIHelper.CounterDefinitions.forEach(item => {
-                    Validator.TryValidateObject(item, this.ObjectTableName, errors);
-
-                    if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
-                        if ((item.StartNumber + item.Prefix).length > 15) {
-                            errors.push("Maximum length allowed for [Startnumber + Prefix] is 15");
+                        if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
+                            if ((item.StartNumber).toString().length + AppTool.GetCounterPrefixLength(item.Prefix)> 15) {
+                                errors.push("Maximum length allowed for [Prefix + StartNumber] is 15");
+                            }
                         }
+                    });
+                }
+                else {
+
+                    //var m = AppTool.GetCounterPrefixLength(this.Prefix);
+                    if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) > 15) {
+                        errors.push("Maximum length allowed for [Prefix + StartNumber] is 15");
                     }
-                });
+
+                    this.APIHelper.CounterDefinitions.forEach(item => {
+                        Validator.TryValidateObject(item, this.ObjectTableName, errors);
+                    });
+                }
+            
 
                 this.ValidationErrorsList = errors;
 
@@ -427,6 +457,7 @@ export class CounterAdvancedDefinitionItem extends BaseComponent {
 
         this.UIProperties.SetEnabled("Prefix", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("StartNumber", this.ObjectTableName, isEnabled_StartNumber);
+        this.UIProperties.SetEnabled("CounterSize", this.ObjectTableName, isEnabled);
     }
 
     public get Prefix() { return this.EntityPM.Prefix; }
@@ -450,6 +481,33 @@ export class CounterAdvancedDefinitionItem extends BaseComponent {
                     // Get All Definitions with same Parameter2: A (Airline)
                     this.father.father.APIHelper.CounterDefinitions.filter(f => f.Parameter2 == this.EntityPM.Parameter2).forEach(item => {
                         item.Prefix = value;
+                    });
+                }
+            }
+        }
+    }
+
+    public get CounterSize() { return this.EntityPM.CounterSize; }
+    public set CounterSize(value: number) {
+        if (this.EntityPM.CounterSize != value) {
+            this.EntityPM.CounterSize = value;
+
+            if (this.father.father.SameForAllDirectios == false && this.father.father.SameForAllTransports == false) {
+                // No need to apply for others
+            }
+
+            else {
+                if (this.father.father.SameForAllTransports) {
+                    // Get All Definitions with same Parameter1: E (Export)
+                    this.father.father.APIHelper.CounterDefinitions.filter(f => f.Parameter1 == this.EntityPM.Parameter1).forEach(item => {
+                        item.CounterSize = value;
+                    });
+                }
+
+                if (this.father.father.SameForAllDirectios) {
+                    // Get All Definitions with same Parameter2: A (Airline)
+                    this.father.father.APIHelper.CounterDefinitions.filter(f => f.Parameter2 == this.EntityPM.Parameter2).forEach(item => {
+                        item.CounterSize = value;
                     });
                 }
             }

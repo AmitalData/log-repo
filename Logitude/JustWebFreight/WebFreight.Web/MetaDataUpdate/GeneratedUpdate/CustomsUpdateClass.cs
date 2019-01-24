@@ -105,6 +105,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		ClaimImporterDeclarsPage3BUpdateClass  ClaimImporterDeclarsPage3BUpdateClass = new ClaimImporterDeclarsPage3BUpdateClass();
 		ClaimsRelatedEntitiesAmountUpdateClass  ClaimsRelatedEntitiesAmountUpdateClass = new ClaimsRelatedEntitiesAmountUpdateClass();
 		ClaimsRelatedEntitiesReasonUpdateClass  ClaimsRelatedEntitiesReasonUpdateClass = new ClaimsRelatedEntitiesReasonUpdateClass();
+		ClaimsRelatedEntitiesRefundUpdateClass  ClaimsRelatedEntitiesRefundUpdateClass = new ClaimsRelatedEntitiesRefundUpdateClass();
+		ClaimsRelatedEntitiesSeizureUpdateClass  ClaimsRelatedEntitiesSeizureUpdateClass = new ClaimsRelatedEntitiesSeizureUpdateClass();
 		ClaimsRelatedEntityUpdateClass  ClaimsRelatedEntityUpdateClass = new ClaimsRelatedEntityUpdateClass();
 		ClaimsRelatedEntsExpDeclarUpdateClass  ClaimsRelatedEntsExpDeclarUpdateClass = new ClaimsRelatedEntsExpDeclarUpdateClass();
 		ClaimsRelatedEntsReasonsExpUpdateClass  ClaimsRelatedEntsReasonsExpUpdateClass = new ClaimsRelatedEntsReasonsExpUpdateClass();
@@ -176,6 +178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		CustomsInsuranceCompanyUpdateClass  CustomsInsuranceCompanyUpdateClass = new CustomsInsuranceCompanyUpdateClass();
 		CustomsItemUpdateClass  CustomsItemUpdateClass = new CustomsItemUpdateClass();
 		CustomsItemDetailsHistoryUpdateClass  CustomsItemDetailsHistoryUpdateClass = new CustomsItemDetailsHistoryUpdateClass();
+		CustomsPartnerFtpUpdateClass  CustomsPartnerFtpUpdateClass = new CustomsPartnerFtpUpdateClass();
 		CustomsPartnersItemUpdateClass  CustomsPartnersItemUpdateClass = new CustomsPartnersItemUpdateClass();
 		CustomsPaymentTermUpdateClass  CustomsPaymentTermUpdateClass = new CustomsPaymentTermUpdateClass();
 		CustomsRequestsSheetUpdateClass  CustomsRequestsSheetUpdateClass = new CustomsRequestsSheetUpdateClass();
@@ -191,12 +194,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		DecCargoSplitConUpdateClass  DecCargoSplitConUpdateClass = new DecCargoSplitConUpdateClass();
 		DecCargoSplitConsItemUpdateClass  DecCargoSplitConsItemUpdateClass = new DecCargoSplitConsItemUpdateClass();
 		DecCargoSplitConsPackDetUpdateClass  DecCargoSplitConsPackDetUpdateClass = new DecCargoSplitConsPackDetUpdateClass();
+		DecisionTypeUpdateClass  DecisionTypeUpdateClass = new DecisionTypeUpdateClass();
 		DeclarationUpdateClass  DeclarationUpdateClass = new DeclarationUpdateClass();
 		DeclarationCargoSplitUpdateClass  DeclarationCargoSplitUpdateClass = new DeclarationCargoSplitUpdateClass();
 		DeclarationConsAcceptanceUpdateClass  DeclarationConsAcceptanceUpdateClass = new DeclarationConsAcceptanceUpdateClass();
 		DeclarationConstraintUpdateClass  DeclarationConstraintUpdateClass = new DeclarationConstraintUpdateClass();
 		DeclarationCourierStatusUpdateClass  DeclarationCourierStatusUpdateClass = new DeclarationCourierStatusUpdateClass();
 		DeclarationErrorMappingUpdateClass  DeclarationErrorMappingUpdateClass = new DeclarationErrorMappingUpdateClass();
+		DeclarationMamanSpecialActionUpdateClass  DeclarationMamanSpecialActionUpdateClass = new DeclarationMamanSpecialActionUpdateClass();
 		DeclarationPaymentUpdateClass  DeclarationPaymentUpdateClass = new DeclarationPaymentUpdateClass();
 		DeclarationPaymentMethodUpdateClass  DeclarationPaymentMethodUpdateClass = new DeclarationPaymentMethodUpdateClass();
 		DeclarationPaymentProtestUpdateClass  DeclarationPaymentProtestUpdateClass = new DeclarationPaymentProtestUpdateClass();
@@ -239,6 +244,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		LastReleaseFromWarehouseUpdateClass  LastReleaseFromWarehouseUpdateClass = new LastReleaseFromWarehouseUpdateClass();
 		LeadDocumentExceptionTypeUpdateClass  LeadDocumentExceptionTypeUpdateClass = new LeadDocumentExceptionTypeUpdateClass();
 		LeadDocumentTypeUpdateClass  LeadDocumentTypeUpdateClass = new LeadDocumentTypeUpdateClass();
+		MamanSpecialActionUpdateClass  MamanSpecialActionUpdateClass = new MamanSpecialActionUpdateClass();
+		MamanSpecialActionStatusUpdateClass  MamanSpecialActionStatusUpdateClass = new MamanSpecialActionStatusUpdateClass();
 		MamanStatusUpdateClass  MamanStatusUpdateClass = new MamanStatusUpdateClass();
 		ManifestCargoStatusUpdateClass  ManifestCargoStatusUpdateClass = new ManifestCargoStatusUpdateClass();
 		MAWBTypeUpdateClass  MAWBTypeUpdateClass = new MAWBTypeUpdateClass();
@@ -270,6 +277,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		PaymentProcessUpdateClass  PaymentProcessUpdateClass = new PaymentProcessUpdateClass();
 		PaymentProtestTypeUpdateClass  PaymentProtestTypeUpdateClass = new PaymentProtestTypeUpdateClass();
 		PaymentTypeUpdateClass  PaymentTypeUpdateClass = new PaymentTypeUpdateClass();
+		PendingErrorPlaceUpdateClass  PendingErrorPlaceUpdateClass = new PendingErrorPlaceUpdateClass();
 		PhysicalCheckUpdateClass  PhysicalCheckUpdateClass = new PhysicalCheckUpdateClass();
 		PhysicalCheckOperationUpdateClass  PhysicalCheckOperationUpdateClass = new PhysicalCheckOperationUpdateClass();
 		PhysicalCheckStatusMessageUpdateClass  PhysicalCheckStatusMessageUpdateClass = new PhysicalCheckStatusMessageUpdateClass();
@@ -285,11 +293,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		ProductNameTypeUpdateClass  ProductNameTypeUpdateClass = new ProductNameTypeUpdateClass();
 		PropertiesDetailsHistoryUpdateClass  PropertiesDetailsHistoryUpdateClass = new PropertiesDetailsHistoryUpdateClass();
 		RansomViolationTypeUpdateClass  RansomViolationTypeUpdateClass = new RansomViolationTypeUpdateClass();
+		RefundCustomerActivityTypeUpdateClass  RefundCustomerActivityTypeUpdateClass = new RefundCustomerActivityTypeUpdateClass();
 		RegisteredWarehouseSiteTypeUpdateClass  RegisteredWarehouseSiteTypeUpdateClass = new RegisteredWarehouseSiteTypeUpdateClass();
 		RequestStatusUpdateClass  RequestStatusUpdateClass = new RequestStatusUpdateClass();
 		RequiredGuaranteeTypeUpdateClass  RequiredGuaranteeTypeUpdateClass = new RequiredGuaranteeTypeUpdateClass();
 		ReturnConditionUpdateClass  ReturnConditionUpdateClass = new ReturnConditionUpdateClass();
 		SalesTaxExemptionTypeUpdateClass  SalesTaxExemptionTypeUpdateClass = new SalesTaxExemptionTypeUpdateClass();
+		SeizureFactorTypeUpdateClass  SeizureFactorTypeUpdateClass = new SeizureFactorTypeUpdateClass();
+		SeizureMethodTypeUpdateClass  SeizureMethodTypeUpdateClass = new SeizureMethodTypeUpdateClass();
 		SignatureTypeUpdateClass  SignatureTypeUpdateClass = new SignatureTypeUpdateClass();
 		SiteLookupUpdateClass  SiteLookupUpdateClass = new SiteLookupUpdateClass();
 		SiteTypeUpdateClass  SiteTypeUpdateClass = new SiteTypeUpdateClass();
@@ -484,6 +495,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ClaimsRelatedEntitiesReasonUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
+	   	   ClaimsRelatedEntitiesRefundUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
+	   	   ClaimsRelatedEntitiesSeizureUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
 	   	   ClaimsRelatedEntityUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   ClaimsRelatedEntsExpDeclarUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
@@ -626,6 +641,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   CustomsItemDetailsHistoryUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
+	   	   CustomsPartnerFtpUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
 	   	   CustomsPartnersItemUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   CustomsPaymentTermUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
@@ -656,6 +673,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   DecCargoSplitConsPackDetUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
+	   	   DecisionTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
 	   	   DeclarationUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   DeclarationCargoSplitUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
@@ -667,6 +686,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   DeclarationCourierStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   DeclarationErrorMappingUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
+	   	   DeclarationMamanSpecialActionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   DeclarationPaymentUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
@@ -752,6 +773,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   LeadDocumentTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
+	   	   MamanSpecialActionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
+	   	   MamanSpecialActionStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
 	   	   MamanStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   ManifestCargoStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
@@ -814,6 +839,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   PaymentTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
+	   	   PendingErrorPlaceUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
 	   	   PhysicalCheckUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   PhysicalCheckOperationUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
@@ -844,6 +871,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   RansomViolationTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
+	   	   RefundCustomerActivityTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
 	   	   RegisteredWarehouseSiteTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   RequestStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
@@ -853,6 +882,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   ReturnConditionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   SalesTaxExemptionTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
+	   	   SeizureFactorTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
+	   	   SeizureMethodTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   SignatureTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
@@ -1040,6 +1073,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ClaimsRelatedEntitiesReasonUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
+	   	   ClaimsRelatedEntitiesRefundUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
+	   	   ClaimsRelatedEntitiesSeizureUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
 	   	   ClaimsRelatedEntityUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   ClaimsRelatedEntsExpDeclarUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
@@ -1182,6 +1219,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   CustomsItemDetailsHistoryUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
+	   	   CustomsPartnerFtpUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
 	   	   CustomsPartnersItemUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   CustomsPaymentTermUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
@@ -1212,6 +1251,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   DecCargoSplitConsPackDetUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
+	   	   DecisionTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
 	   	   DeclarationUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   DeclarationCargoSplitUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
@@ -1223,6 +1264,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   DeclarationCourierStatusUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   DeclarationErrorMappingUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
+	   	   DeclarationMamanSpecialActionUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   DeclarationPaymentUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
@@ -1308,6 +1351,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   LeadDocumentTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
+	   	   MamanSpecialActionUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
+	   	   MamanSpecialActionStatusUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
 	   	   MamanStatusUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   ManifestCargoStatusUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
@@ -1370,6 +1417,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   PaymentTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
+	   	   PendingErrorPlaceUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
 	   	   PhysicalCheckUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   PhysicalCheckOperationUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
@@ -1400,6 +1449,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   RansomViolationTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
+	   	   RefundCustomerActivityTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
 	   	   RegisteredWarehouseSiteTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   RequestStatusUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
@@ -1409,6 +1460,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   ReturnConditionUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   SalesTaxExemptionTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
+	   	   SeizureFactorTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
+	   	   SeizureMethodTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   SignatureTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
@@ -1595,6 +1650,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ClaimsRelatedEntitiesReasonUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
+	   	   ClaimsRelatedEntitiesRefundUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
+	   	   ClaimsRelatedEntitiesSeizureUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
 	   	   ClaimsRelatedEntityUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   ClaimsRelatedEntsExpDeclarUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
@@ -1737,6 +1796,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   CustomsItemDetailsHistoryUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
+	   	   CustomsPartnerFtpUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
 	   	   CustomsPartnersItemUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   CustomsPaymentTermUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
@@ -1767,6 +1828,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   DecCargoSplitConsPackDetUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
+	   	   DecisionTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
 	   	   DeclarationUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   DeclarationCargoSplitUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
@@ -1778,6 +1841,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   DeclarationCourierStatusUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   DeclarationErrorMappingUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
+	   	   DeclarationMamanSpecialActionUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   DeclarationPaymentUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
@@ -1863,6 +1928,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   LeadDocumentTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
+	   	   MamanSpecialActionUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
+	   	   MamanSpecialActionStatusUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
 	   	   MamanStatusUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   ManifestCargoStatusUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
@@ -1925,6 +1994,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   PaymentTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
+	   	   PendingErrorPlaceUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
 	   	   PhysicalCheckUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   PhysicalCheckOperationUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
@@ -1955,6 +2026,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   RansomViolationTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
+	   	   RefundCustomerActivityTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
 	   	   RegisteredWarehouseSiteTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   RequestStatusUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
@@ -1964,6 +2037,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   ReturnConditionUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   SalesTaxExemptionTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
+	   	   SeizureFactorTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
+	   	   SeizureMethodTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   SignatureTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
@@ -2150,6 +2227,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ClaimsRelatedEntitiesReasonUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
+	   	   ClaimsRelatedEntitiesRefundUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
+	   	   ClaimsRelatedEntitiesSeizureUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
 	   	   ClaimsRelatedEntityUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   ClaimsRelatedEntsExpDeclarUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
@@ -2292,6 +2373,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   CustomsItemDetailsHistoryUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
+	   	   CustomsPartnerFtpUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
 	   	   CustomsPartnersItemUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   CustomsPaymentTermUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
@@ -2322,6 +2405,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   DecCargoSplitConsPackDetUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
+	   	   DecisionTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
 	   	   DeclarationUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   DeclarationCargoSplitUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
@@ -2333,6 +2418,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   DeclarationCourierStatusUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   DeclarationErrorMappingUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
+	   	   DeclarationMamanSpecialActionUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   DeclarationPaymentUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
@@ -2418,6 +2505,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   LeadDocumentTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
+	   	   MamanSpecialActionUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
+	   	   MamanSpecialActionStatusUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
 	   	   MamanStatusUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   ManifestCargoStatusUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
@@ -2480,6 +2571,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   PaymentTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
+	   	   PendingErrorPlaceUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
 	   	   PhysicalCheckUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   PhysicalCheckOperationUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
@@ -2510,6 +2603,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   RansomViolationTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
+	   	   RefundCustomerActivityTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
 	   	   RegisteredWarehouseSiteTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   RequestStatusUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
@@ -2519,6 +2614,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   ReturnConditionUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   SalesTaxExemptionTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
+	   	   SeizureFactorTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
+	   	   SeizureMethodTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   SignatureTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
@@ -2705,6 +2804,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ClaimsRelatedEntitiesReasonUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
+	   	   ClaimsRelatedEntitiesRefundUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
+	   	   ClaimsRelatedEntitiesSeizureUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
 	   	   ClaimsRelatedEntityUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   ClaimsRelatedEntsExpDeclarUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
@@ -2847,6 +2950,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   CustomsItemDetailsHistoryUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
+	   	   CustomsPartnerFtpUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
 	   	   CustomsPartnersItemUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   CustomsPaymentTermUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
@@ -2877,6 +2982,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   DecCargoSplitConsPackDetUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
+	   	   DecisionTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
 	   	   DeclarationUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   DeclarationCargoSplitUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
@@ -2888,6 +2995,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   DeclarationCourierStatusUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   DeclarationErrorMappingUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
+	   	   DeclarationMamanSpecialActionUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   DeclarationPaymentUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
@@ -2973,6 +3082,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   LeadDocumentTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
+	   	   MamanSpecialActionUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
+	   	   MamanSpecialActionStatusUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
 	   	   MamanStatusUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   ManifestCargoStatusUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
@@ -3035,6 +3148,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   PaymentTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
+	   	   PendingErrorPlaceUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
 	   	   PhysicalCheckUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   PhysicalCheckOperationUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
@@ -3065,6 +3180,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   RansomViolationTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
+	   	   RefundCustomerActivityTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
 	   	   RegisteredWarehouseSiteTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   RequestStatusUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
@@ -3074,6 +3191,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   ReturnConditionUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   SalesTaxExemptionTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
+	   	   SeizureFactorTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
+	   	   SeizureMethodTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   SignatureTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
@@ -3260,6 +3381,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ClaimsRelatedEntitiesReasonUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
+	   	   ClaimsRelatedEntitiesRefundUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
+	
+	   	   ClaimsRelatedEntitiesSeizureUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
+	
 	   	   ClaimsRelatedEntityUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
 	   	   ClaimsRelatedEntsExpDeclarUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
@@ -3402,6 +3527,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   CustomsItemDetailsHistoryUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
+	   	   CustomsPartnerFtpUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
+	
 	   	   CustomsPartnersItemUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
 	   	   CustomsPaymentTermUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
@@ -3432,6 +3559,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   DecCargoSplitConsPackDetUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
+	   	   DecisionTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
+	
 	   	   DeclarationUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
 	   	   DeclarationCargoSplitUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
@@ -3443,6 +3572,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   DeclarationCourierStatusUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
 	   	   DeclarationErrorMappingUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
+	
+	   	   DeclarationMamanSpecialActionUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
 	   	   DeclarationPaymentUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
@@ -3528,6 +3659,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   LeadDocumentTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
+	   	   MamanSpecialActionUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
+	
+	   	   MamanSpecialActionStatusUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
+	
 	   	   MamanStatusUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
 	   	   ManifestCargoStatusUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
@@ -3590,6 +3725,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   PaymentTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
+	   	   PendingErrorPlaceUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
+	
 	   	   PhysicalCheckUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
 	   	   PhysicalCheckOperationUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
@@ -3620,6 +3757,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   RansomViolationTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
+	   	   RefundCustomerActivityTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
+	
 	   	   RegisteredWarehouseSiteTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
 	   	   RequestStatusUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
@@ -3629,6 +3768,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   ReturnConditionUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
 	   	   SalesTaxExemptionTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
+	
+	   	   SeizureFactorTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
+	
+	   	   SeizureMethodTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
 	   	   SignatureTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
@@ -3815,6 +3958,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ClaimsRelatedEntitiesReasonUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   ClaimsRelatedEntitiesRefundUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   ClaimsRelatedEntitiesSeizureUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   ClaimsRelatedEntityUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   ClaimsRelatedEntsExpDeclarUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -3957,6 +4104,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   CustomsItemDetailsHistoryUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   CustomsPartnerFtpUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   CustomsPartnersItemUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   CustomsPaymentTermUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -3987,6 +4136,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   DecCargoSplitConsPackDetUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   DecisionTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   DeclarationUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   DeclarationCargoSplitUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -3998,6 +4149,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   DeclarationCourierStatusUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   DeclarationErrorMappingUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   DeclarationMamanSpecialActionUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   DeclarationPaymentUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
@@ -4083,6 +4236,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   LeadDocumentTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   MamanSpecialActionUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   MamanSpecialActionStatusUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   MamanStatusUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   ManifestCargoStatusUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -4145,6 +4302,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   PaymentTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   PendingErrorPlaceUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   PhysicalCheckUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   PhysicalCheckOperationUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -4175,6 +4334,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   RansomViolationTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   RefundCustomerActivityTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   RegisteredWarehouseSiteTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   RequestStatusUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -4184,6 +4345,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   ReturnConditionUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   SalesTaxExemptionTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   SeizureFactorTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   SeizureMethodTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   SignatureTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
@@ -4370,6 +4535,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ClaimsRelatedEntitiesReasonUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
+	   	   ClaimsRelatedEntitiesRefundUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
+	   	   ClaimsRelatedEntitiesSeizureUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
 	   	   ClaimsRelatedEntityUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   ClaimsRelatedEntsExpDeclarUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
@@ -4512,6 +4681,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   CustomsItemDetailsHistoryUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
+	   	   CustomsPartnerFtpUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
 	   	   CustomsPartnersItemUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   CustomsPaymentTermUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
@@ -4542,6 +4713,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   DecCargoSplitConsPackDetUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
+	   	   DecisionTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
 	   	   DeclarationUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   DeclarationCargoSplitUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
@@ -4553,6 +4726,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   DeclarationCourierStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   DeclarationErrorMappingUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
+	   	   DeclarationMamanSpecialActionUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   DeclarationPaymentUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
@@ -4638,6 +4813,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   LeadDocumentTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
+	   	   MamanSpecialActionUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
+	   	   MamanSpecialActionStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
 	   	   MamanStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   ManifestCargoStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
@@ -4700,6 +4879,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   PaymentTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
+	   	   PendingErrorPlaceUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
 	   	   PhysicalCheckUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   PhysicalCheckOperationUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
@@ -4730,6 +4911,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   RansomViolationTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
+	   	   RefundCustomerActivityTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
 	   	   RegisteredWarehouseSiteTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   RequestStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
@@ -4739,6 +4922,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   ReturnConditionUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   SalesTaxExemptionTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
+	   	   SeizureFactorTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
+	   	   SeizureMethodTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   SignatureTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
@@ -4855,6 +5042,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllClosedTables()
         {
    
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
 	   
 	   
 	   

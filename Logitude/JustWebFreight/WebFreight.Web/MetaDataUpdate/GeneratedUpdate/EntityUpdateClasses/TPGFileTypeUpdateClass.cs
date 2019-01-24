@@ -83,7 +83,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  true,
-			      				    CacheOnClient =  true,
+			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
@@ -109,7 +109,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
-			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);

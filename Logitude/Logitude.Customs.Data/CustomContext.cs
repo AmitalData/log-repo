@@ -134,6 +134,10 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesReasonMap());
 	
+            modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesRefundMap());
+	
+            modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesSeizureMap());
+	
             modelBuilder.Configurations.Add(new ClaimsRelatedEntityMap());
 	
             modelBuilder.Configurations.Add(new ClaimsRelatedEntsExpDeclarMap());
@@ -276,6 +280,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsItemDetailsHistoryMap());
 	
+            modelBuilder.Configurations.Add(new CustomsPartnerFtpMap());
+	
             modelBuilder.Configurations.Add(new CustomsPartnersItemMap());
 	
             modelBuilder.Configurations.Add(new CustomsPaymentTermMap());
@@ -306,6 +312,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DecCargoSplitConsPackDetMap());
 	
+            modelBuilder.Configurations.Add(new DecisionTypeMap());
+	
             modelBuilder.Configurations.Add(new DeclarationMap());
 	
             modelBuilder.Configurations.Add(new DeclarationCargoSplitMap());
@@ -317,6 +325,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new DeclarationCourierStatusMap());
 	
             modelBuilder.Configurations.Add(new DeclarationErrorMappingMap());
+	
+            modelBuilder.Configurations.Add(new DeclarationMamanSpecialActionMap());
 	
             modelBuilder.Configurations.Add(new DeclarationPaymentMap());
 	
@@ -402,6 +412,10 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new LeadDocumentTypeMap());
 	
+            modelBuilder.Configurations.Add(new MamanSpecialActionMap());
+	
+            modelBuilder.Configurations.Add(new MamanSpecialActionStatusMap());
+	
             modelBuilder.Configurations.Add(new MamanStatusMap());
 	
             modelBuilder.Configurations.Add(new ManifestCargoStatusMap());
@@ -464,6 +478,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new PaymentTypeMap());
 	
+            modelBuilder.Configurations.Add(new PendingErrorPlaceMap());
+	
             modelBuilder.Configurations.Add(new PhysicalCheckMap());
 	
             modelBuilder.Configurations.Add(new PhysicalCheckOperationMap());
@@ -494,6 +510,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new RansomViolationTypeMap());
 	
+            modelBuilder.Configurations.Add(new RefundCustomerActivityTypeMap());
+	
             modelBuilder.Configurations.Add(new RegisteredWarehouseSiteTypeMap());
 	
             modelBuilder.Configurations.Add(new RequestStatusMap());
@@ -503,6 +521,10 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new ReturnConditionMap());
 	
             modelBuilder.Configurations.Add(new SalesTaxExemptionTypeMap());
+	
+            modelBuilder.Configurations.Add(new SeizureFactorTypeMap());
+	
+            modelBuilder.Configurations.Add(new SeizureMethodTypeMap());
 	
             modelBuilder.Configurations.Add(new SignatureTypeMap());
 	
@@ -627,9 +649,17 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<ClaimsRelatedEntitiesAmount>().Property(x => x.Amount).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<ClaimsRelatedEntitiesRefund>().Property(x => x.RefundQuntity).HasPrecision(16, 6);
+				
+			modelBuilder.Entity<ClaimsRelatedEntitiesSeizure>().Property(x => x.SeizureAmount).HasPrecision(16, 2);
+				
 			modelBuilder.Entity<ClaimsRelatedEntity>().Property(x => x.ClaimAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<ClaimsRelatedEntity>().Property(x => x.DeclarationVersion).HasPrecision(5, 3);
+				
+			modelBuilder.Entity<ClaimsRelatedEntity>().Property(x => x.DepositingAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<ClaimsRelatedEntity>().Property(x => x.RefundAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<ClientAddress>().Property(x => x.LocalApartment).HasPrecision(4, 0);
 				
@@ -1240,6 +1270,18 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<ClaimsRelatedEntitiesRefund> ClaimsRelatedEntitiesRefunds 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ClaimsRelatedEntitiesSeizure> ClaimsRelatedEntitiesSeizures 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ClaimsRelatedEntity> ClaimsRelatedEntities 
 	 {
 	      get; set;
@@ -1666,6 +1708,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CustomsPartnerFtp> CustomsPartnerFtps 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CustomsPartnersItem> CustomsPartnersItems 
 	 {
 	      get; set;
@@ -1756,6 +1804,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<DecisionType> DecisionTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<Declaration> Declarations 
 	 {
 	      get; set;
@@ -1787,6 +1841,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DeclarationErrorMapping> DeclarationErrorMappings 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DeclarationMamanSpecialAction> DeclarationMamanSpecialActions 
 	 {
 	      get; set;
 	 
@@ -2044,6 +2104,18 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<MamanSpecialAction> MamanSpecialActions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<MamanStatus> MamanStatuses 
 	 {
 	      get; set;
@@ -2230,6 +2302,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<PendingErrorPlace> PendingErrorPlaces 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<PhysicalCheck> PhysicalChecks 
 	 {
 	      get; set;
@@ -2320,6 +2398,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes 
 	 {
 	      get; set;
@@ -2345,6 +2429,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SalesTaxExemptionType> SalesTaxExemptionTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SeizureFactorType> SeizureFactorTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SeizureMethodType> SeizureMethodTypes 
 	 {
 	      get; set;
 	 

@@ -26,7 +26,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using UnifreightIIG.Common.MessageLib.Docs;
 using Logitude.Server.Tools.Models;
 using Logitude.Customs.BL.Models;
-
+using Logitude.Customs.BL.Messaging.Customs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {  // moran 6.10.14 - Task 8066 -->
@@ -77,6 +77,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                         notificationDescription = notificationDescription + " בגין הצהרה מספר " + notificationDeclaration; //eitan h 4/3/15 task 11572
+                    }
+                    if (customResponse.MessageToAgent.RelatedEntity.entityType == 12234)
+                    {
+                        notificationDescription = notificationDescription + " בגין בטוחה מספר " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1; 
                     }
                     notificationStatusCode = "VAN";
                     break;
@@ -203,6 +207,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             this._MyDeclarationPM.CourierCustomStatusCode = "2";
                             this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
                             declarationUpdateService.Update(this._MyDeclarationPM, true);
+                            SendDeclarationStatusRequest(this._MyDeclarationPM);
                             break;
                         case 17:
                             notificationDefinitionCode = "5101M";
@@ -218,6 +223,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 //this.MyRequestSheetParam.EntityId1 = requestParams.AppicationId;
                 //this.MyRequestSheetParam.ObjectTableId1 = ObjectTabelRepository.GetObjectTableByName("Customs.Declaration");
+            }
+            else if (customResponse.MessageToAgent.RelatedEntity.entityType == 12234)  // Collateral
+            {
+                LogMessagingUtil.Instance.AppendLine("Notification Collateral= " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1);
+                var customsCollateralQueryService = new CustomsCollateralQueryService(context);
+                requestParams.AppicationId = customsCollateralQueryService.GetIdByCollateralRequestNumber(customResponse.MessageToAgent.RelatedEntity.entityIdKey1, requestParams.Tenant);
+                if (String.IsNullOrWhiteSpace(requestParams.AppicationId))
+                {
+                    LogMessagingUtil.Instance.AppendLine("Can not found Collateral" + requestParams.AppicationId);
+                    MyResponseData = new INF_MSG_GenericResponseData() { Succeeded = false, HasException = false, UserMessage = "Can not found Collateral" + requestParams.AppicationId };
+                    return;
+                }
+                this.MyRequestSheetParam.EntityId1 = requestParams.AppicationId;
+                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.CustomsCollateral");
             }
 
             this.MyResponseData = new INF_MSG_GenericResponseData();
@@ -268,11 +287,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 customerId = this._MyDeclarationPM.CustomerId;
                 referentUserId = this._MyDeclarationPM.ReferentUserId;
             }
+            if(MyRequestSheetParam.ObjectTableId1 == ObjectTableRepository.GetObjectTableByName("Customs.CustomsCollateral"))
+            {
+                newNotificationPM.EntityId = MyRequestSheetParam.EntityId1;
+                newNotificationPM.ObjectTableId = MyRequestSheetParam.ObjectTableId1;
+            }
             if (this._MyDeclarationPM != null && !string.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId)) newNotificationPM.CustomerId = this._MyDeclarationPM.CustomerId; // moran 20.6.16 - Task 20789
 
             newNotificationPM.AssigneToId =
-               NotificationBase.
-               CalcAssigneToId(newNotificationPM.Tenant, customerId, referentUserId, notificationDefinitionCode, "");
+               NotificationBase.CalcAssigneToId(newNotificationPM.Tenant, customerId, referentUserId, notificationDefinitionCode, "");
 
             if (this._MyDeclarationPM != null && !string.IsNullOrWhiteSpace(newNotificationPM.DeclarationOfficeCode))
             {
@@ -327,6 +350,40 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
+        }
+
+        void SendDeclarationStatusRequest(DeclarationPM myDeclarationPM)
+        {
+            var mySBQMessage = new SBQMessageService();
+            var newSearchDeclarationStatusRequestParams = new DeclarationStatusRequestParams()
+            {
+                LoggingEnabled = true,
+                CustomFileNo = myDeclarationPM.CustomFileNo,
+                DeclarationNumber = myDeclarationPM.DeclarationNumber,
+                Tenant = myDeclarationPM.Tenant,
+                RequestName = "Declaration Status (from Message To Agent Response) " + myDeclarationPM.DeclarationNumber,
+                ResponseName = "Declaration Status (from Message To Agent Response) " + myDeclarationPM.DeclarationNumber,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                InterfaceTypeCode = "8250",
+                LoggingEntityId = myDeclarationPM.Id,
+                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                LoggingUserId = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant),
+            };
+
+            try
+            {
+                SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.DeclarationStatusRequestParams>(newSearchDeclarationStatusRequestParams
+                    , false
+                    );
+            }
+            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+            {
+                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8250 RequestInProgress stop create a new one !! ");
+                }
+                throw;
+            }
         }
     }
 }

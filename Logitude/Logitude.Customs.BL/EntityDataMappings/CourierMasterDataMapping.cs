@@ -13,6 +13,8 @@ using Logitude.Customs.Data;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -33,16 +35,20 @@ namespace Logitude.Customs.BL.EntityDataMappings
         {
             this.CustomMappedPMProperties.Add(PMPropertyNames.CreatedByUserName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AirlinePrefix);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.AirlineName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.EstimatedArrivalDateOnly);
             this.CustomMappedPMProperties.Add(PMPropertyNames.EstimatedArrivalTimeOnly);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.OriginPortName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.GatewayPortName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.WeightValueName);
 
-            AirlineRepository rep = new AirlineRepository(entityPM.Tenant);
+            CustomsAirlineRepository rep = new CustomsAirlineRepository(entityPM.Tenant);
             UserRepository userRep = new UserRepository(entityPM.Tenant);
-            Airline airline = rep.GetSingleAirline(entityPOCO.AirlineId, entityPOCO.Tenant);
-            if (airline != null)
+            CustomsAirline customsAirline = rep.GetSingle(entityPOCO.AirlineId, entityPOCO.Tenant);
+            if (customsAirline != null)
             {
-                entityPM.AirlinePrefix = airline.Prefix;
-          
+                entityPM.AirlinePrefix = customsAirline.AirlinePrefix;
+                entityPM.AirlineName = customsAirline.LocalName;
             }
 
             User user = userRep.GetSingleUser(entityPM.CreatedByUserId, entityPM.Tenant);
@@ -63,6 +69,36 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.EstimatedArrivalTimeOnly = (DateTime)entityPOCO.EstimatedArrivalDate;
             }
 
+            if (entityPOCO.OriginPortCode != null)
+            {
+                InternationalSiteQueryService internationalSiteQueryService = new InternationalSiteQueryService(entityPOCO.Tenant);
+                InternationalSitePM internationalSitePM = internationalSiteQueryService.GetSingle(entityPOCO.OriginPortCode, false, true);
+                if(internationalSitePM != null)
+                {
+                    entityPM.OriginPortName = internationalSitePM.LocalName;
+                }
+            }
+
+            if (entityPOCO.GatewayPortCode != null)
+            {
+                InternationalSiteQueryService internationalSiteQueryService = new InternationalSiteQueryService(entityPOCO.Tenant);
+                InternationalSitePM internationalSitePM = internationalSiteQueryService.GetSingle(entityPOCO.GatewayPortCode, false, true);
+                if (internationalSitePM != null)
+                {
+                    entityPM.GatewayPortName = internationalSitePM.LocalName;
+                }
+            }
+
+            if (entityPOCO.WeightValueCode != null)
+            {
+                FreightPaymentMethodQueryService freightPaymentMethodQueryService = new FreightPaymentMethodQueryService(entityPOCO.Tenant);
+                FreightPaymentMethodPM freightPaymentMethodPM = freightPaymentMethodQueryService.GetSingle(entityPOCO.WeightValueCode, false, true);
+                if (freightPaymentMethodPM != null)
+                {
+                    entityPM.WeightValueName = freightPaymentMethodPM.LocalName;
+                }
+            }
+
         }
 
         private static void BuildSearchFields(CourierMasterPM entityPM, CourierMaster poco, bool isNewEntity)
@@ -79,12 +115,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 result = string.IsNullOrEmpty(result) ? entityPM.HAWB : result + "," + entityPM.HAWB;
             }
 
-            AirlineRepository rep = new AirlineRepository(entityPM.Tenant);
+            CustomsAirlineRepository rep = new CustomsAirlineRepository(entityPM.Tenant);
 
-            Airline airline = rep.GetSingleAirline(poco.AirlineId, poco.Tenant);
-            if (airline != null)
+            CustomsAirline customsAirline = rep.GetSingle(poco.AirlineId, poco.Tenant);
+            if (customsAirline != null)
             {
-                result = string.IsNullOrEmpty(result) ? airline.Prefix : result + "," + airline.Prefix;
+                result = string.IsNullOrEmpty(result) ? customsAirline.AirlinePrefix : result + "," + customsAirline.AirlinePrefix;
             }
 
            

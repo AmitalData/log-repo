@@ -23,15 +23,19 @@ exports.config = {
   },
   onPrepare() {
     require('ts-node').register({
-      project: 'aut/config.json'
+      project: 'e2e/tsconfig.e2e.json'
     });
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
   },
-//this is to order the login steps
+
   suites: {
     // ********************* Login **********************************
-     login: 'aut/login-spec.ts',
-     //NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
+     login: 'e2e/Login/**/Login.e2e-spec.ts',
+     CRM: 'e2e/CRM/**/CRMModule-spec.ts',
+
+    //  NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
+    //  Contact: 'e2e/Contacts/**/Contacts-spec.ts',
+
      //EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
     //  ShipmentSearch: 'e2e/Operations/**/ShipmentSearch.e2e-spec.ts',
 

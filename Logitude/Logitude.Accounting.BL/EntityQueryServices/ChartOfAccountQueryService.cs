@@ -418,6 +418,35 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return entityPM;
         }
+
+        public ChartOfAccountPM GetSinglePMByCode(string code, int tenant)
+        {
+            ChartOfAccountPM entityPM = null;
+            entityPM =
+                (from a in repository.All()
+                 where a.Code == code && a.Tenant == tenant
+                 select new ChartOfAccountPM()
+                 {
+                     Id = a.Id,
+                     LocalName = a.LocalName,
+                     EnglishName = a.EnglishName,
+                     Inactive = a.Inactive,
+                     Tenant = a.Tenant,
+                     Code = a.Code,
+                     ParentId = a.ParentId,
+                     TypeCode = a.TypeCode,
+
+
+
+
+
+
+
+                     SearchFields = a.SearchFields,
+                 }).FirstOrDefault();
+
+            return entityPM;
+        }
     }
     public class ChartOfAccount5LevelM
     {

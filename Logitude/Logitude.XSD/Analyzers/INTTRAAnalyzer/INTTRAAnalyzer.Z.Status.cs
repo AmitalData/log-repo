@@ -220,6 +220,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                             #region ShippingLine
                             string iVoyageNumber = null;
+                            string iVesselName = null;
                             string ShippingLineName = shipmentPM.MainCarriageCarrierName;
 
                             if (iMessageProperties.TransportationDetails != null)
@@ -227,8 +228,9 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                 if (iMessageProperties.TransportationDetails.ConveyanceInformation != null)
                                 {
                                     iVoyageNumber = iMessageProperties.TransportationDetails.ConveyanceInformation.VoyageTripNumber;
+                                    iVesselName = iMessageProperties.TransportationDetails.ConveyanceInformation.ConveyanceName;
+
                                     string d = iMessageProperties.TransportationDetails.ConveyanceInformation.CarrierSCAC;
-                                    string b = iMessageProperties.TransportationDetails.ConveyanceInformation.ConveyanceName;
                                     string f = iMessageProperties.TransportationDetails.ConveyanceInformation.TransportIdentification.Value;
                                 }
                             }
@@ -266,6 +268,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     Details = iDetails,
                                     ReceivingDate = iLogDate,
                                     VoyageNumber = iVoyageNumber,
+                                    VesselName = iVesselName,
                                     ShippingLineName = ShippingLineName,
                                     ContainerNumber = ContainerNumber,
                                     Location = EventLocationPortId,
@@ -322,6 +325,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                                         Details = iDetails,
                                                         ReceivingDate = iLogDate,
                                                         VoyageNumber = iVoyageNumber,
+                                                        VesselName = iVesselName,
                                                         ShippingLineName = ShippingLineName,
                                                         ContainerNumber = ContainerNumber,
                                                         Location = EventLocationPortId,
@@ -674,19 +678,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
         }
         private void UpdateContainerFields(ShipmentPackagePM iContainer, string iVoyageNumber, string departurePortId, string departurePortCode, DateTime? departureDate, string departureDateIndicator, string arrivalPortId, string arrivalPortCode, DateTime? arrivalDate, string arrivalDateIndicator)
         {
-            iContainer.VoyageTripNumber = iVoyageNumber;
-
-            if (departurePortCode == null)
-            {
-                departurePortCode = "";
-            }
-            if (arrivalPortCode == null)
-            {
-                arrivalPortCode = "";
-            }
-
-            iContainer.Routing = departurePortCode + " > " + arrivalPortCode;
-
             if (departureDateIndicator == "E")
             {
                 iContainer.ETD = departureDate;
@@ -697,56 +688,71 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 iContainer.ETA = arrivalDate;
             }
 
-            bool iHasContainerException = false;
+            iContainer.VoyageTripNumber = iVoyageNumber;
+
+            if (departurePortId == null)
+            {
+                departurePortId = "";
+            }
+            if (departurePortCode == null)
+            {
+                departurePortCode = "";
+            }
+            if (arrivalPortId == null)
+            {
+                arrivalPortId = "";
+            }
+            if (arrivalPortCode == null)
+            {
+                arrivalPortCode = "";
+            }
+
+            iContainer.Routing = departurePortCode + " > " + arrivalPortCode;
+            iContainer.RoutingIds = departurePortId + "," + arrivalPortId;
+
+
             List<ShipmentPackagePM> AllContainers = this.shipmentPM.ShipmentPackages.ToList();
             if (AllContainers.Count > 1)
             {
-                List<string> AllVoyageNumber = (from a in AllContainers
-                                                where a.VoyageTripNumber != null
-                                                group a by iVoyageNumber into g
-                                                select g.Key).ToList();
+                var AllVoyageNumber = (from a in AllContainers
+                                       where a.VoyageTripNumber != null && a.Routing != null
+                                       group a by new { a.VoyageTripNumber, a.Routing } into g
+                                       select g.Key).ToList();
 
-                if (AllVoyageNumber.Count >1)
+                if (AllVoyageNumber.Count > 1)
                 {
-                    iHasContainerException = true;
-                }
-            }
+                    string iRouting_Main = this.shipmentPM.MainCarriageFromPortId + "," + this.shipmentPM.MainCarriageToPortId;
+                    string iRouting_Trs1 = this.shipmentPM.Transshipment1FromPortId + "," + this.shipmentPM.Transshipment1ToPortId;
+                    string iRouting_Trs2 = this.shipmentPM.Transshipment2FromPortId + "," + this.shipmentPM.Transshipment2ToPortId;
+                    string iRouting_Trs3 = this.shipmentPM.Transshipment3FromPortId + "," + this.shipmentPM.Transshipment3ToPortId;
 
-            if (iHasContainerException)
-            {
-                iContainer.HasContainerException = true;
-                shipmentPM.HasContainerException = true;
-            }
-
-            else
-            {
-                iContainer.HasContainerException = false;
-                shipmentPM.HasContainerException = false;
-
-                if (departureDateIndicator == "E")
-                {
-                    if (departurePortId == this.shipmentPM.MainCarriageFromPortId)
+                    foreach (ShipmentPackagePM item in AllContainers.Where(d => d.VoyageTripNumber != null && d.Routing != null))
                     {
-                        if (this.shipmentPM.MainCarriageATD == null)
+                        bool iHasContainerException = false;
+
+                        if (item.RoutingIds == iRouting_Main)
                         {
-                            this.shipmentPM.MainCarriageETD = departureDate;
+                            if (item.ETD != shipmentPM.MainCarriageETD)
+                            {
+                                iHasContainerException = true;
+                            }
+
+                            else if (item.ETA != shipmentPM.MainCarriageETA)
+                            {
+                                iHasContainerException = true;
+                            }
                         }
-                    }
-                }
 
-                if (arrivalDateIndicator == "E")
-                {
-                    if (arrivalPortId == this.shipmentPM.MainCarriageFinalDestinationPortId)
-                    {
-                        if (this.shipmentPM.MainCarriageATA == null)
+                        if (item.HasContainerException != iHasContainerException)
                         {
-                            this.shipmentPM.MainCarriageETA = arrivalDate;
+                            item.HasContainerException = iHasContainerException;
+                            item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         }
                     }
                 }
             }
 
-            iContainer.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            //shipmentPM.HasContainerException = iHasContainerException;            
         }
         private DateTime? GetDateFromString(INTTRA_Status.LocationType iLocation)
         {

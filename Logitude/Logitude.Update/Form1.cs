@@ -62,6 +62,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.Utils;
 using System.Data.Common;
+using Simplog.Data.ShipmentsModel.Repositories;
 
 namespace Logitude.Update
 {
@@ -109,7 +110,7 @@ namespace Logitude.Update
                 string storageServiceMode = "fs";
                 string queueServiceMode = "azure";
                 Logitude.Server.Tools.ContainerAccessor.InitContainer();
-                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil);
+                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil,null);
 
                 CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
             }
@@ -837,7 +838,8 @@ User/Pass",
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (Environment.MachineName == "ABDULLAH-PC") btnUpdateAccounting_Click(null, null);
+            //if (Environment.MachineName == "ABDULLAH-PC") btnUpdateAccounting_Click(null, null);
+            this.Text += " Environment=" + LogitudeSettings.LogitudeURL;// 4 customs env its must to know which company u updating 
 
             //string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             //LogitudeSettings.DatabaseManagementSystem = dbms;
@@ -3277,10 +3279,10 @@ User/Pass",
                 DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
                 string solutionDirectory = solutionDir.FullName;
                 string mainDirPath = solutionDirectory + @"\General\Main Branch\2018";
-                dialog.RootFolder = Environment.SpecialFolder.MyComputer; 
+                dialog.RootFolder = Environment.SpecialFolder.MyComputer;
                 dialog.SelectedPath = mainDirPath;
                 dialog.ShowNewFolderButton = false;
-                
+
                 System.Windows.Forms.DialogResult result = dialog.ShowDialog();
 
                 if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
@@ -3296,7 +3298,7 @@ User/Pass",
         {
             RecalculateCashbookLbl.Text = "Working...";
 
-            Thread thread = new Thread(() => 
+            Thread thread = new Thread(() =>
             {
                 if (string.IsNullOrWhiteSpace(textBox1.Text))
                 {
@@ -3337,12 +3339,12 @@ User/Pass",
             IAccountingContext accountingContext = AccountingContext.GetContext(0);
             JournalQueryService journalQuery = new JournalQueryService(1);
             List<Journal> journals = accountingContext.Journals.ToList();
-            foreach(Journal line in journals)
+            foreach (Journal line in journals)
             {
                 JournalMoreDataPM moreDataPM = new JournalMoreDataPM()
                 {
                     JournalId = line.Id,
-                    Line= 1,
+                    Line = 1,
                     TaxReportId = null,
                     Tenant = 1,
                     ChangeSetOp = ChangeSetOperation.Insert,
@@ -3386,9 +3388,117 @@ User/Pass",
 
         }
 
+        private void HarmonizeCodesButton_Click(object sender, EventArgs e)
+        {
+            HarmonizeCodesLabel.Text = null;
+
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            //openFileDialog1.Filter = "csv Files (.csv)|*.csv|All Files (*.*)|*.*";
+            openFileDialog1.Filter = "txt|*.txt";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.Multiselect = false;
+
+            DialogResult res = openFileDialog1.ShowDialog();
+
+            if (res == System.Windows.Forms.DialogResult.OK)
+            {
+                List<string> lines = new List<String>(File.ReadAllLines(openFileDialog1.FileName));
+
+                if (lines.Count == 0)
+                {
+                    MessageBox.Show("No Lines in this file");
+                }
+
+                else
+                {
+                    Thread thread = new Thread(() => UpdateHarmonizeCodes(lines, HarmonizeCodesLabel));
+                    thread.IsBackground = true;
+                    thread.Start();
+                }
+            }
+        }
+
+        private void UpdateHarmonizeCodes(List<string> lines, Label lable)
+        {
+            SetControlPropertyValue(lable, "Text", "Updating...");
+            SetControlPropertyValue(lable, "ForeColor", Color.Black);
+
+            HarmonizeCodeRepository iRepository = new HarmonizeCodeRepository(0);
+            List<HarmonizeCode> db_Items = iRepository.GetAll().ToList();
+
+            int index = 0;
+            int errorLinesCount = 0;
+            foreach (string item in lines)
+            {
+                if (!string.IsNullOrEmpty(item))
+                {
+                    string line = item.Replace("\"", "");
+
+                    string[] lineArray = line.Split('\t');
+
+                    if (lineArray.Count() == 6)
+                    {
+                        HarmonizeCode iEntity = db_Items.Where(d => d.Code == lineArray[0]).FirstOrDefault();
+                        if (iEntity == null)
+                        {
+                            iEntity = new HarmonizeCode()
+                            {
+                                Code = lineArray[0],
+                                Description = lineArray[1],
+                                ChapterCode = lineArray[2],
+                                ChapterDescription = lineArray[3],
+                                SubChapterCode = lineArray[4],
+                                SubChapterDescription = lineArray[5],
+                            };
+
+                            iEntity.SearchFields = iEntity.Code + "," + iEntity.ChapterCode + "," + iEntity.SubChapterCode;
+                            iRepository.Add(iEntity);
+                        }
+
+                        else
+                        {
+                            iEntity.Description = lineArray[1];
+                            iEntity.ChapterCode = lineArray[2];
+                            iEntity.ChapterDescription = lineArray[3];
+                            iEntity.SubChapterCode = lineArray[4];
+                            iEntity.SubChapterDescription = lineArray[5];
+                            iEntity.SearchFields = iEntity.Code + "," + iEntity.ChapterCode + "," + iEntity.SubChapterCode;
+                            iRepository.Update(iEntity);
+                        }
+
+                        index++;
+
+                        if (index >= 500)
+                        {
+                            index = 0;
+                            iRepository.SubmitChanges();
+                        }
+                    }
+
+                    else
+                    {
+                        errorLinesCount++;
+                    }
+                }
+            }
+
+            iRepository.SubmitChanges();
+
+            SetControlPropertyValue(lable, "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
+            SetControlPropertyValue(lable, "ForeColor", Color.Green);
+
+            if (errorLinesCount == 0)
+            {
+                SetControlPropertyValue(lable, "Text", "Done");
+            }
+
+            else
+            {
+                SetControlPropertyValue(lable, "Text", "Done with " + errorLinesCount + " lines error");
+            }
+        }
+
     }
-
-
 
 
     public class HtmlStringParsingParams

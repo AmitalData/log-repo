@@ -506,13 +506,73 @@
     <Compile Include="Migrations\201901130934417_NewField_SoftwareVersion_FullAccountingSettings.Designer.cs">
       <DependentUpon>201901130934417_NewField_SoftwareVersion_FullAccountingSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.cs" />
-    <Compile Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.Designer.cs">
-      <DependentUpon>201901131517146_AddPackageHasContainerExc.Field.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201901131510531_NewTables_AccountingIntegrityCheck.cs" />
     <Compile Include="Migrations\201901131510531_NewTables_AccountingIntegrityCheck.Designer.cs">
       <DependentUpon>201901131510531_NewTables_AccountingIntegrityCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901160901352_AddHarmonizeCodesTable.cs" />
+    <Compile Include="Migrations\201901160901352_AddHarmonizeCodesTable.Designer.cs">
+      <DependentUpon>201901160901352_AddHarmonizeCodesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901161513218_AddHarmonizeCodesTableModifications.cs" />
+    <Compile Include="Migrations\201901161513218_AddHarmonizeCodesTableModifications.Designer.cs">
+      <DependentUpon>201901161513218_AddHarmonizeCodesTableModifications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901161520085_AddHarmonizeCodesTableModifications2.cs" />
+    <Compile Include="Migrations\201901161520085_AddHarmonizeCodesTableModifications2.Designer.cs">
+      <DependentUpon>201901161520085_AddHarmonizeCodesTableModifications2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901161524277_AddHarmonizeCodesTableModifications3.cs" />
+    <Compile Include="Migrations\201901161524277_AddHarmonizeCodesTableModifications3.Designer.cs">
+      <DependentUpon>201901161524277_AddHarmonizeCodesTableModifications3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901160605329_branch_countercode_field.cs" />
+    <Compile Include="Migrations\201901160605329_branch_countercode_field.Designer.cs">
+      <DependentUpon>201901160605329_branch_countercode_field.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901170542318_counterdefinition_countersize.cs" />
+    <Compile Include="Migrations\201901170542318_counterdefinition_countersize.Designer.cs">
+      <DependentUpon>201901170542318_counterdefinition_countersize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811060825038_missingCustoms-MM.cs" />
+    <Compile Include="Migrations\201811060825038_missingCustoms-MM.Designer.cs">
+      <DependentUpon>201811060825038_missingCustoms-MM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901071344200_newcusotmsmigrations.cs" />
+    <Compile Include="Migrations\201901071344200_newcusotmsmigrations.Designer.cs">
+      <DependentUpon>201901071344200_newcusotmsmigrations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901161128192_AddPackageHasContainerExcField_MM_Fix.cs" />
+    <Compile Include="Migrations\201901161128192_AddPackageHasContainerExcField_MM_Fix.Designer.cs">
+      <DependentUpon>201901161128192_AddPackageHasContainerExcField_MM_Fix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901200830579_missingcustomsmigratinos_MM_20012019.cs" />
+    <Compile Include="Migrations\201901200830579_missingcustomsmigratinos_MM_20012019.Designer.cs">
+      <DependentUpon>201901200830579_missingcustomsmigratinos_MM_20012019.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901170921329_AddShipmentContainerStatusChanges.cs" />
+    <Compile Include="Migrations\201901170921329_AddShipmentContainerStatusChanges.Designer.cs">
+      <DependentUpon>201901170921329_AddShipmentContainerStatusChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901210635206_counterdefinition_suffix.cs" />
+    <Compile Include="Migrations\201901210635206_counterdefinition_suffix.Designer.cs">
+      <DependentUpon>201901210635206_counterdefinition_suffix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.cs" />
+    <Compile Include="Migrations\201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.Designer.cs">
+      <DependentUpon>201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901230833116_IncreasePackagesReferencesLength_Samar.cs" />
+    <Compile Include="Migrations\201901230833116_IncreasePackagesReferencesLength_Samar.Designer.cs">
+      <DependentUpon>201901230833116_IncreasePackagesReferencesLength_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.cs" />
+    <Compile Include="Migrations\201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.Designer.cs">
+      <DependentUpon>201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901231239517_AddShipmentPackageRoutingIds.cs" />
+    <Compile Include="Migrations\201901231239517_AddShipmentPackageRoutingIds.Designer.cs">
+      <DependentUpon>201901231239517_AddShipmentPackageRoutingIds.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -597,6 +657,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810220655058_ChangeFieldsType_Refs.resx">
       <DependentUpon>201810220655058_ChangeFieldsType_Refs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811060825038_missingCustoms-MM.resx">
+      <DependentUpon>201811060825038_missingCustoms-MM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811071326248_AddShipmentPackageHarmonize.resx">
+      <DependentUpon>201811071326248_AddShipmentPackageHarmonize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811071639283_AddShipmentPackageHarmonizeModification.resx">
+      <DependentUpon>201811071639283_AddShipmentPackageHarmonizeModification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901071344200_newcusotmsmigrations.resx">
+      <DependentUpon>201901071344200_newcusotmsmigrations.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810230534351_UpdateFieldLength_ExternalReconciliation.resx">
       <DependentUpon>201810230534351_UpdateFieldLength_ExternalReconciliation.cs</DependentUpon>
@@ -835,11 +907,47 @@
     <EmbeddedResource Include="Migrations\201901131510531_NewTables_AccountingIntegrityCheck.resx">
       <DependentUpon>201901131510531_NewTables_AccountingIntegrityCheck.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.resx">
-      <DependentUpon>201901131517146_AddPackageHasContainerExc.Field.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901161128192_AddPackageHasContainerExcField_MM_Fix.resx">
+      <DependentUpon>201901161128192_AddPackageHasContainerExcField_MM_Fix.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901131517146_AddPackageHasContainerExc.Field.resx">
-      <DependentUpon>201901131517146_AddPackageHasContainerExc.Field.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901160901352_AddHarmonizeCodesTable.resx">
+      <DependentUpon>201901160901352_AddHarmonizeCodesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901161513218_AddHarmonizeCodesTableModifications.resx">
+      <DependentUpon>201901161513218_AddHarmonizeCodesTableModifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901161520085_AddHarmonizeCodesTableModifications2.resx">
+      <DependentUpon>201901161520085_AddHarmonizeCodesTableModifications2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901161524277_AddHarmonizeCodesTableModifications3.resx">
+      <DependentUpon>201901161524277_AddHarmonizeCodesTableModifications3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901160605329_branch_countercode_field.resx">
+      <DependentUpon>201901160605329_branch_countercode_field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901170542318_counterdefinition_countersize.resx">
+      <DependentUpon>201901170542318_counterdefinition_countersize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901200830579_missingcustomsmigratinos_MM_20012019.resx">
+      <DependentUpon>201901200830579_missingcustomsmigratinos_MM_20012019.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901170921329_AddShipmentContainerStatusChanges.resx">
+      <DependentUpon>201901170921329_AddShipmentContainerStatusChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901210635206_counterdefinition_suffix.resx">
+      <DependentUpon>201901210635206_counterdefinition_suffix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.resx">
+      <DependentUpon>201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901230833116_IncreasePackagesReferencesLength_Samar.resx">
+      <DependentUpon>201901230833116_IncreasePackagesReferencesLength_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.resx">
+      <DependentUpon>201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901231239517_AddShipmentPackageRoutingIds.resx">
+      <DependentUpon>201901231239517_AddShipmentPackageRoutingIds.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

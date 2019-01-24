@@ -324,6 +324,8 @@ export class DocsInDataViewModel extends BaseComponent{
                 });
             }
          
+            this.DocsInComponent.CheckHasDocuments();
+
 
         }
 

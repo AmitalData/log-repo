@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .MyField1 {
         width: 150px;
         padding-right: 6px;
@@ -31,516 +31,513 @@
     }
     
 </style>
-<div>
+<div style="vertical-align: top">
 
     <!-- ReleaseGoodsComponent  view-->
     <!--[IsShowCustomResponseContent]="false"-->
     <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
                             [IsShowCustomResponseContent]="false"
                             [IsShowCustomToolBar]="false">
+        
+                    <div class="class-request-content" style="vertical-align: top">
+                        <div style="width: 950px; height:500px; vertical-align: top;">
+                            <table style="vertical-align: top">
+                                <tr>
+                                    <td style="vertical-align: top">
 
-        <div class="class-request-content">
-            <div style="width: 950px; height:500px; ">
-                <table>
-                    <tr>
-                        <td>
+                                        <table>
 
-                            <table>
+                                            <tr class="FormFieldRow">
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'DeclarationNumber'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.BlockListInWarehouse.O.DeclarationNumber'">
 
-                                <tr class="FormFieldRow">
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'DeclarationNumber'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.BlockListInWarehouse.O.DeclarationNumber'">
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
 
-                                        </LogLabel>
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'DeclarationNumber'"
+                                                                [Text]="DeclarationNumber"></LogTextBox>
+                                                </td>
+
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'FileNumber'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.DeficitFileFilterQuery.F.DisplayFileNumber'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'FileNumber'"
+                                                                [Text]="FileNumber"></LogTextBox>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+
+
+
+                                            <tr style="width: 100%;height:25px;">
+                                                <td colspan="4" style="width: 300px; font-size: 18px; color: #1B90CB;">
+                                                    {{'Customs.ReleaseGoods.O.GeneralData'| TextCodeTranslationPipe}}
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'governmentProcedureType'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.ReleaseGoods.O.ProcessType'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'governmentProcedureType'"
+                                                                [Text]="governmentProcedureType"></LogTextBox>
+                                                </td>
+
+
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'releaseDate'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.DeclarationStatusQuery.O.ReleaseDateTime'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'releaseDate'"
+                                                                [Text]="releaseDate"></LogTextBox>
+                                                </td>
+
+
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'dealValueNIS'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.ReleaseGoods.O.TotalDealValue'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'dealValueNIS'"
+                                                                [Text]="dealValueNIS"></LogTextBox>
+                                                </td>
+
+
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'CifValueNis'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.ReleaseGoods.O.TotalCIFValue'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'CifValueNis'"
+                                                                [Text]="CifValueNis"></LogTextBox>
+                                                </td>
+
+
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'CurrencyTypeCode'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.ReleaseGoods.O.CurrencyTypeCode'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'CurrencyTypeCode'"
+                                                                [Text]="CurrencyTypeCode"></LogTextBox>
+                                                </td>
+
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'ExchangeRate'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.ReleaseGoods.O.ExchangeRate'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'ExchangeRate'"
+                                                                [Text]="ExchangeRate"></LogTextBox>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'TaxationDate'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.DeclarationStatusQuery.O.TaxationDateTime'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'TaxationDate'"
+                                                                [Text]="TaxationDate"></LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td></td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'importerExpoterExternalID'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.ReleaseGoods.O.Client'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'importerExpoterExternalID'"
+                                                                [Text]="importerExpoterExternalID"></LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'cargoIdentifierType'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierType'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'cargoIdentifierType'"
+                                                                [Text]="cargoIdentifierType"></LogTextBox>
+                                                </td>
+
+
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'cargoIdentifierKey1'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey1'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'cargoIdentifierKey1'"
+                                                                [Text]="cargoIdentifierKey1"></LogTextBox>
+                                                </td>
+
+
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'cargoIdentifierKey2'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey2'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'cargoIdentifierKey2'"
+                                                                [Text]="cargoIdentifierKey2"></LogTextBox>
+                                                </td>
+
+                                            </tr>
+
+
+                                            <tr class="FormFieldRow">
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'loadingPort'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.ReleaseGoods.O.LoadingPort'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'loadingPort'"
+                                                                [Text]="loadingPort"></LogTextBox>
+                                                </td>
+
+
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'unloadingSiteNumber'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.ReleaseGoods.O.UnloadingPort'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'unloadingSiteNumber'"
+                                                                [Text]="unloadingSiteNumber"></LogTextBox>
+                                                </td>
+
+
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'storageSiteNumber'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.ReleaseGoods.O.StorageSite'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'storageSiteNumber'"
+                                                                [Text]="storageSiteNumber"></LogTextBox>
+                                                </td>
+
+                                            </tr>
+
+
+                                            <tr class="FormFieldRow">
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'cargoDescription'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.ReleaseGoods.O.GoodsDescription'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="ellipsis2">
+                                                    <LogTextBox data-toggle="tooltip" data-placement="bottom" title="{{cargoDescription}}"
+                                                                [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'cargoDescription'"
+                                                                [Text]="cargoDescription"></LogTextBox>
+                                                </td>
+
+
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'packageType'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.WarehouseBlockBalance.O.PackingType'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'packageType'"
+                                                                [Text]="packageType"></LogTextBox>
+                                                </td>
+
+
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'packageQuantity'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.SpecialActivityRequest.F.Quantity'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'packageQuantity'"
+                                                                [Text]="packageQuantity"></LogTextBox>
+                                                </td>
+
+                                                <td class="MyLabel1">
+                                                    <LogLabel [NoObjectField]="true"
+                                                              [ObjectFieldName]="'packagesWeight'"
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"
+                                                              [TextCode]="'Customs.SpecialActivityRequest.F.Weight'">
+
+                                                    </LogLabel>
+                                                </td>
+                                                <td class="MyFieldsMargin1"></td>
+
+                                                <td class="MyField1">
+                                                    <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"
+                                                                [ObjectFieldName]="'packagesWeight'"
+                                                                [Text]="packagesWeight"></LogTextBox>
+                                                </td>
+
+                                            </tr>
+
+                                        </table>
+
                                     </td>
-                                    <td class="MyFieldsMargin1"></td>
+                                </tr>
 
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'DeclarationNumber'"
-                                                    [Text]="DeclarationNumber"></LogTextBox>
-                                    </td>
-
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'FileNumber'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.DeficitFileFilterQuery.F.DisplayFileNumber'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'FileNumber'"
-                                                    [Text]="FileNumber"></LogTextBox>
-                                    </td>
-
+                                <tr>
                                     <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
+                                        <table>
+
+                                            <tr style="width:100%; height:25px;">
+                                                <td style="width: 200px; font-size: 18px; color: #1B90CB;">
+                                                    {{'Customs.ReleaseGoods.O.GoodsItems'| TextCodeTranslationPipe}}
+                                                </td>
+                                            </tr>
+                                            <!--*ngIf="DoNotShow"-->
+                                            <tr style="width:350px; height:85px;">
+                                                <td style="width: 350px; height: 85px;">
+                                                    <div style="width: 350px; height: 85px;">
+                                                        <div class="GeneratedGridContainer" style="height : 85px;">
+                                                            <logitude-edit-grid GridWidth="100%"
+                                                                                GridHeight="100%"
+                                                                                [ItemSource]="GoodsItemsList">
 
 
 
+                                                                <log-column [header]="'Customs.CustomsDocument.SupplierInvoice' | TextCodeTranslationPipe"
+                                                                            [binding]="'SupplierInvoice'"
+                                                                            [width]="'100'" [Alignment]="'right'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div class="RightCenter">
+                                                                            <span>{{item.SupplierInvoice}}</span>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
 
-                                <tr style="width: 100%;height:25px;">
-                                    <td colspan="4" style="width: 300px; font-size: 18px; color: #1B90CB;">
-                                        {{'Customs.ReleaseGoods.O.GeneralData'| TextCodeTranslationPipe}}
-                                    </td>
-                                </tr>
+                                                                <log-column [header]="'Customs.ReleaseGoods.O.GoodsItemPath' | TextCodeTranslationPipe"
+                                                                            [binding]="'GoodsItemPath'"
+                                                                            [width]="'100'" [Alignment]="'right'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div class="RightCenter">
+                                                                            <span>{{item.GoodsItemPath}}</span>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
 
-                                <tr class="FormFieldRow">
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'governmentProcedureType'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.ReleaseGoods.O.ProcessType'">
+                                                                <log-column [header]="'Customs.ReleaseGoods.O.GoodsItem' | TextCodeTranslationPipe"
+                                                                            [binding]="'CustomItemID'"
+                                                                            [width]="'100'" [Alignment]="'right'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div class="RightCenter">
+                                                                            <span>{{item.CustomItemID}}</span>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
 
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'governmentProcedureType'"
-                                                    [Text]="governmentProcedureType"></LogTextBox>
-                                    </td>
-
-
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'releaseDate'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.DeclarationStatusQuery.O.ReleaseDateTime'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'releaseDate'"
-                                                    [Text]="releaseDate"></LogTextBox>
-                                    </td>
+                                                            </logitude-edit-grid>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
 
 
-                                </tr>
+                                        </table>
 
-                                <tr class="FormFieldRow">
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'dealValueNIS'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.ReleaseGoods.O.TotalDealValue'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'dealValueNIS'"
-                                                    [Text]="dealValueNIS"></LogTextBox>
-                                    </td>
-
-
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'CifValueNis'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.ReleaseGoods.O.TotalCIFValue'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'CifValueNis'"
-                                                    [Text]="CifValueNis"></LogTextBox>
-                                    </td>
-
-
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'CurrencyTypeCode'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.ReleaseGoods.O.CurrencyTypeCode'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'CurrencyTypeCode'"
-                                                    [Text]="CurrencyTypeCode"></LogTextBox>
-                                    </td>
-
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'ExchangeRate'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.ReleaseGoods.O.ExchangeRate'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'ExchangeRate'"
-                                                    [Text]="ExchangeRate"></LogTextBox>
-                                    </td>
-
-                                </tr>
-
-                                <tr class="FormFieldRow">
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'TaxationDate'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.DeclarationStatusQuery.O.TaxationDateTime'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'TaxationDate'"
-                                                    [Text]="TaxationDate"></LogTextBox>
-                                    </td>
-                                </tr>
-
-                                <tr class="FormFieldRow">
-                                    <td>
 
                                     </td>
-                                </tr>
-
-                                <tr class="FormFieldRow">
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'importerExpoterExternalID'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.ReleaseGoods.O.Client'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'importerExpoterExternalID'"
-                                                    [Text]="importerExpoterExternalID"></LogTextBox>
-                                    </td>
-                                </tr>
-
-                                <tr class="FormFieldRow">
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'cargoIdentifierType'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierType'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'cargoIdentifierType'"
-                                                    [Text]="cargoIdentifierType"></LogTextBox>
-                                    </td>
-
-
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'cargoIdentifierKey1'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey1'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'cargoIdentifierKey1'"
-                                                    [Text]="cargoIdentifierKey1"></LogTextBox>
-                                    </td>
-
-
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'cargoIdentifierKey2'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey2'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'cargoIdentifierKey2'"
-                                                    [Text]="cargoIdentifierKey2"></LogTextBox>
-                                    </td>
-
-                                </tr>
-
-
-                                <tr class="FormFieldRow">
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'loadingPort'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.ReleaseGoods.O.LoadingPort'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'loadingPort'"
-                                                    [Text]="loadingPort"></LogTextBox>
-                                    </td>
-
-
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'unloadingSiteNumber'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.ReleaseGoods.O.UnloadingPort'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'unloadingSiteNumber'"
-                                                    [Text]="unloadingSiteNumber"></LogTextBox>
-                                    </td>
-
-
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'storageSiteNumber'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.ReleaseGoods.O.StorageSite'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'storageSiteNumber'"
-                                                    [Text]="storageSiteNumber"></LogTextBox>
-                                    </td>
-
-                                </tr>
-
-
-                                <tr class="FormFieldRow">
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'cargoDescription'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.ReleaseGoods.O.GoodsDescription'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="ellipsis2">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'cargoDescription'"
-                                                    [Text]="cargoDescription"></LogTextBox>
-                                    </td>
-
-
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'packageType'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.WarehouseBlockBalance.O.PackingType'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'packageType'"
-                                                    [Text]="packageType"></LogTextBox>
-                                    </td>
-
-
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'packageQuantity'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.SpecialActivityRequest.F.Quantity'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'packageQuantity'"
-                                                    [Text]="packageQuantity"></LogTextBox>
-                                    </td>
-
-                                    <td class="MyLabel1">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'packagesWeight'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.SpecialActivityRequest.F.Weight'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="MyFieldsMargin1"></td>
-
-                                    <td class="MyField1">
-                                        <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [ObjectFieldName]="'packagesWeight'"
-                                                    [Text]="packagesWeight"></LogTextBox>
-                                    </td>
-
                                 </tr>
 
                             </table>
 
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <table>
-
-                                <tr style="width:100%; height:25px;">
-                                    <td style="width: 200px; font-size: 18px; color: #1B90CB;">
-                                        {{'Customs.ReleaseGoods.O.GoodsItems'| TextCodeTranslationPipe}}
-                                    </td>
-                                </tr>
-                                    <!--*ngIf="DoNotShow"-->
-                                <tr 
-                                    
-                                    style="width:350px; height:85px;"  >
-                                    <td style="width: 350px; height: 85px;">
-                                        <div style="width: 350px; height: 85px;">
-                                            <div class="GeneratedGridContainer" style="height : 85px;">
-                                                <logitude-edit-grid GridWidth="100%"
-                                                                    GridHeight="100%"
-                                                                    [ItemSource]="GoodsItemsList">
-
-
-
-                                                    <log-column [header]="'Customs.CustomsDocument.SupplierInvoice' | TextCodeTranslationPipe"
-                                                                [binding]="'SupplierInvoice'"
-                                                                [width]="'100'" [Alignment]="'right'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
-                                                            <div class="RightCenter">
-                                                                <span>{{item.SupplierInvoice}}</span>
-                                                            </div>
-                                                        </log-cell-template>
-                                                    </log-column>
-
-                                                    <log-column [header]="'Customs.ReleaseGoods.O.GoodsItemPath' | TextCodeTranslationPipe"
-                                                                [binding]="'GoodsItemPath'"
-                                                                [width]="'100'" [Alignment]="'right'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
-                                                            <div class="RightCenter">
-                                                                <span>{{item.GoodsItemPath}}</span>
-                                                            </div>
-                                                        </log-cell-template>
-                                                    </log-column>
-
-                                                    <log-column [header]="'Customs.ReleaseGoods.O.GoodsItem' | TextCodeTranslationPipe"
-                                                                [binding]="'CustomItemID'"
-                                                                [width]="'100'" [Alignment]="'right'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
-                                                            <div class="RightCenter">
-                                                                <span>{{item.CustomItemID}}</span>
-                                                            </div>
-                                                        </log-cell-template>
-                                                    </log-column>
-
-                                                </logitude-edit-grid>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-
-
-                            </table>
-
-
-                        </td>
-                    </tr>
-
-                </table>
-
-            </div>
+                        </div>
+                    </div>
+                
+    <div class="class-response-ToolBar" style="height:22px;">
+        <div style="width: 57px;margin-left:10px;float: left;">
+            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
         </div>
+    </div>
 
-        <div class="class-response-ToolBar" style="height:22px;">
-            <div style="width: 57px;margin-left:10px;float: left;">
-                <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
-            </div>
-        </div>
-
-    </custom-message-wrapper>
+</custom-message-wrapper>
 
 
 </div>

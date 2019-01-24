@@ -74,6 +74,18 @@ namespace Logitude.Customs.Data.EntityLists
        public string CustomsBranchCode  { get; set; }
        [DataMember]
        public bool IsSendClaimsRelatedEntity  { get; set; }
+       [DataMember]
+       public string DecisionCode  { get; set; }
+       [DataMember]
+       public string DecisionName  { get; set; }
+       [DataMember]
+       public string DecisionNote  { get; set; }
+       [DataMember]
+       public string EilatVatRefoundDecision  { get; set; }
+       [DataMember]
+       public decimal? DepositingAmount  { get; set; }
+       [DataMember]
+       public decimal? RefundAmount  { get; set; }
    }
 
 }

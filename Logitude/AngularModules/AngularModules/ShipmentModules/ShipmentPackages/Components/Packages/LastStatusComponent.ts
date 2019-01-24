@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {INTRAWebService} from '../../../../Shipment/Services/INTRAWebService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -37,7 +37,7 @@ export class LastStatusComponent {
                 var items: any[] = myResponse.Result;
 
                 items.forEach(item => {
-                    itemsSource.push(item);
+                    itemsSource.push(new LastStatusItem(item));
                 });
 
                 itemsSource.sort((a, b) => { return (a.SortingValue === b.SortingValue) ? 0 : (a.SortingValue < b.SortingValue) ? -1 : 1 }).forEach(item => {
@@ -60,6 +60,10 @@ class LastStatusItem {
     public DepartureDate: Date;
     public ArrivalDate: Date;
     public SortingValue: number = 0;
+    public VesselName: string;
+    public VoyageNumber: string;
+    public DepartureDateInfo: string;
+    public ArrivalDateInfo: string;
     constructor(item:any) {
         if (item) {
 
@@ -69,6 +73,16 @@ class LastStatusItem {
             this.LocationCode = item.LocationCode;
             this.DepartureDate = item.DepartureDate;
             this.ArrivalDate = item.ArrivalDate;
+            this.VesselName = item.VesselName;
+            this.VoyageNumber = item.VoyageNumber;
+
+            if (this.DepartureDate && item.TimeOfDepartureInfo) {
+                this.DepartureDateInfo = item.TimeOfDepartureInfo == "E" ? "(expected)" : "(actual)";
+            }
+
+            if (this.ArrivalDate && item.TimeOfArrivalInfo) {
+                this.ArrivalDateInfo = item.TimeOfArrivalInfo == "E" ? "(expected)" : "(actual)";
+            }
 
             if (this.EventDate) {
                 this.SortingValue = DateTool.GetDateParts(this.EventDate).DateTicks;

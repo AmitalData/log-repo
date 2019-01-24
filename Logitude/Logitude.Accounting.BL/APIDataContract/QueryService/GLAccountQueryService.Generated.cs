@@ -57,47 +57,8 @@ using Logitude.Accounting.Data;
                 throw ex;
             }
         }
-
-        public GLAccount GetGLAccountByDisplayNumber(string displayNo, int Tenant)
-        {
-            try
-            {
-
-
-                var temp = query.GetSinglePMByDisplayNumber(displayNo, Tenant);
-                if (temp == null)
-                    throw new ApplicationException("GLAccount with Display number " + displayNo + " doesn't exist");
-
-                return GLAccountDataMapping(temp, Tenant);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        public GLAccount GetGLAccountByInternalNumber(string internalNo, int Tenant)
-        {
-            try
-            {
-
-
-                var temp = query.GetSinglePMByInternalNumber(internalNo , Tenant);
-                if (temp == null)
-                    throw new ApplicationException("GLAccount with Internal number " + internalNo + " doesn't exist");
-                  
-
-                return GLAccountDataMapping(temp, Tenant);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        public GLAccount GLAccountDataMapping(GLAccountPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
+		
+		public GLAccount GLAccountDataMapping(GLAccountPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -268,15 +229,15 @@ using Logitude.Accounting.Data;
 				   temp.AssessingOfficeCode = MyEntityPM.AssessingOfficeCode;
 				   temp.Occupation = MyEntityPM.Occupation;
 				   temp.DeductionTypeId = MyEntityPM.DeductionTypeId;
-				   temp.ConsolidationVat = MyEntityPM.ConsolidationVat;
-                   temp.Parent = MyEntityPM.Parent;
+				   temp.ConsolidationVat = MyEntityPM.ConsolidationVat;			  
 				   if(MyEntityPM.RevenueExpenseType != null)
 				   {
 					   RevenueExpenseTypeQueryService RevenueExpenseTypeService16 = new RevenueExpenseTypeQueryService(Tenant);
 					   					   temp.RevenueExpenseType = RevenueExpenseTypeService16.GetRevenueExpenseTypeByCode(MyEntityPM.RevenueExpenseType,Tenant); 
 			       
 					   				   }
-				   					
+				   
+				   temp.Parent = MyEntityPM.Parent;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -290,7 +251,9 @@ using Logitude.Accounting.Data;
         {
 		    try
             {
-				   					var temp = new GLAccountPM();								  
+				   
+					var temp = new GLAccountPM();
+												  
 					if (!string.IsNullOrEmpty(MyEntity.Id))
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
@@ -299,6 +262,7 @@ using Logitude.Accounting.Data;
 					if(temp == null)
 					{
 					    throw new ApplicationException("GLAccount with Id " + MyEntity.Id + " doesn't exist");
+						
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -549,7 +513,6 @@ using Logitude.Accounting.Data;
 					temp.Occupation = MyEntity.Occupation;
 					temp.DeductionTypeId = MyEntity.DeductionTypeId;
 					temp.ConsolidationVat = MyEntity.ConsolidationVat;
-                    temp.Parent = MyEntity.Parent;
 					RevenueExpenseTypeQueryService RevenueExpenseTypeRevenueExpenseTypeService = new RevenueExpenseTypeQueryService(Tenant);
 					if(MyEntity.RevenueExpenseType != null)
 					{
@@ -561,7 +524,8 @@ using Logitude.Accounting.Data;
 						 
 					}
 			
-										   
+					
+					temp.Parent = MyEntity.Parent;					   
 					   return temp;
 		    }
             catch (Exception ex)

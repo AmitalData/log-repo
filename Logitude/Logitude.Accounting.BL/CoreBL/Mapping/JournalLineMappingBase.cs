@@ -266,12 +266,10 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                 }
 
             }
+            MyLedgerTransaction.IsExternalReconcile = _JournalLine.IsExternalReconcile;
         }
 
-        protected void MapIsExternalReconcile()
-        {
-
-        }
+        
     }
 
 }

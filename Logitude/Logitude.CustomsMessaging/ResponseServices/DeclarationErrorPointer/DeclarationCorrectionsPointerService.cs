@@ -19,7 +19,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
     {
         General _DeclarationCorrection = null;
 
-        public string AnalyzeCorrectionsPointer(string currentCorrectionXml, Response response, int tenant)
+        public string AnalyzeCorrectionsPointer(string currentCorrectionXml, Response response, List<error> systemMessagesList, int tenant)
         {
             DeclarationCorrection declarationCorrectionXml = new DeclarationCorrection();
             if (response == null)
@@ -66,6 +66,11 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                     //Analyze Amendment pointers
                     GetCorrectionAmendment(amendmentItem);
                 }
+            }
+
+            if (systemMessagesList != null && systemMessagesList.Count > 0)
+            {
+                _DeclarationCorrection.SystemMessages = systemMessagesList;
             }
 
             declarationCorrectionXml.GeneralData.Add(_DeclarationCorrection);

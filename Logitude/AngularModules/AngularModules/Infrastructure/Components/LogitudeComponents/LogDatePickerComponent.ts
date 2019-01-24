@@ -1110,8 +1110,11 @@ export class LogDatePickerComponent
                 );
                 timeUiProp.UIPropertyChanged.emit("datevaluechanges");
                 dateUiProp.UIPropertyChanged.emit("datevaluechanges");
-                this.SetValidity(true, null);
-                this.ValidateField();
+        
+                if (!this.IsFreeValue) {
+                    this.SetValidity(true, null);
+                    this.ValidateField();
+                }
             } else {
                 this.SelectedDate = null;
                 this.InputValue = null;

@@ -50,6 +50,8 @@ namespace Logitude.Customs.Data
 		 IDbSet<ClaimImporterDeclarsPage3B> ClaimImporterDeclarsPage3Bs { get; }
 		 IDbSet<ClaimsRelatedEntitiesAmount> ClaimsRelatedEntitiesAmounts { get; }
 		 IDbSet<ClaimsRelatedEntitiesReason> ClaimsRelatedEntitiesReasons { get; }
+		 IDbSet<ClaimsRelatedEntitiesRefund> ClaimsRelatedEntitiesRefunds { get; }
+		 IDbSet<ClaimsRelatedEntitiesSeizure> ClaimsRelatedEntitiesSeizures { get; }
 		 IDbSet<ClaimsRelatedEntity> ClaimsRelatedEntities { get; }
 		 IDbSet<ClaimsRelatedEntsExpDeclar> ClaimsRelatedEntsExpDeclars { get; }
 		 IDbSet<ClaimsRelatedEntsReasonsExp> ClaimsRelatedEntsReasonsExps { get; }
@@ -121,6 +123,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomsInsuranceCompany> CustomsInsuranceCompanies { get; }
 		 IDbSet<CustomsItem> CustomsItems { get; }
 		 IDbSet<CustomsItemDetailsHistory> CustomsItemDetailsHistorys { get; }
+		 IDbSet<CustomsPartnerFtp> CustomsPartnerFtps { get; }
 		 IDbSet<CustomsPartnersItem> CustomsPartnersItems { get; }
 		 IDbSet<CustomsPaymentTerm> CustomsPaymentTerms { get; }
 		 IDbSet<CustomsRequestsSheet> CustomsRequestsSheets { get; }
@@ -136,12 +139,14 @@ namespace Logitude.Customs.Data
 		 IDbSet<DecCargoSplitCon> DecCargoSplitCons { get; }
 		 IDbSet<DecCargoSplitConsItem> DecCargoSplitConsItems { get; }
 		 IDbSet<DecCargoSplitConsPackDet> DecCargoSplitConsPackDets { get; }
+		 IDbSet<DecisionType> DecisionTypes { get; }
 		 IDbSet<Declaration> Declarations { get; }
 		 IDbSet<DeclarationCargoSplit> DeclarationCargoSplits { get; }
 		 IDbSet<DeclarationConsAcceptance> DeclarationConsAcceptances { get; }
 		 IDbSet<DeclarationConstraint> DeclarationConstraints { get; }
 		 IDbSet<DeclarationCourierStatus> DeclarationCourierStatuses { get; }
 		 IDbSet<DeclarationErrorMapping> DeclarationErrorMappings { get; }
+		 IDbSet<DeclarationMamanSpecialAction> DeclarationMamanSpecialActions { get; }
 		 IDbSet<DeclarationPayment> DeclarationPayments { get; }
 		 IDbSet<DeclarationPaymentMethod> DeclarationPaymentMethods { get; }
 		 IDbSet<DeclarationPaymentProtest> DeclarationPaymentProtests { get; }
@@ -184,6 +189,8 @@ namespace Logitude.Customs.Data
 		 IDbSet<LastReleaseFromWarehouse> LastReleaseFromWarehouses { get; }
 		 IDbSet<LeadDocumentExceptionType> LeadDocumentExceptionTypes { get; }
 		 IDbSet<LeadDocumentType> LeadDocumentTypes { get; }
+		 IDbSet<MamanSpecialAction> MamanSpecialActions { get; }
+		 IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatuses { get; }
 		 IDbSet<MamanStatus> MamanStatuses { get; }
 		 IDbSet<ManifestCargoStatus> ManifestCargoStatuses { get; }
 		 IDbSet<MAWBType> MAWBTypes { get; }
@@ -215,6 +222,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<PaymentProcess> PaymentProcesses { get; }
 		 IDbSet<PaymentProtestType> PaymentProtestTypes { get; }
 		 IDbSet<PaymentType> PaymentTypes { get; }
+		 IDbSet<PendingErrorPlace> PendingErrorPlaces { get; }
 		 IDbSet<PhysicalCheck> PhysicalChecks { get; }
 		 IDbSet<PhysicalCheckOperation> PhysicalCheckOperations { get; }
 		 IDbSet<PhysicalCheckStatusMessage> PhysicalCheckStatusMessages { get; }
@@ -230,11 +238,14 @@ namespace Logitude.Customs.Data
 		 IDbSet<ProductNameType> ProductNameTypes { get; }
 		 IDbSet<PropertiesDetailsHistory> PropertiesDetailsHistorys { get; }
 		 IDbSet<RansomViolationType> RansomViolationTypes { get; }
+		 IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes { get; }
 		 IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes { get; }
 		 IDbSet<RequestStatus> RequestStatuses { get; }
 		 IDbSet<RequiredGuaranteeType> RequiredGuaranteeTypes { get; }
 		 IDbSet<ReturnCondition> ReturnConditions { get; }
 		 IDbSet<SalesTaxExemptionType> SalesTaxExemptionTypes { get; }
+		 IDbSet<SeizureFactorType> SeizureFactorTypes { get; }
+		 IDbSet<SeizureMethodType> SeizureMethodTypes { get; }
 		 IDbSet<SignatureType> SignatureTypes { get; }
 		 IDbSet<SiteLookup> SiteLookups { get; }
 		 IDbSet<SiteType> SiteTypes { get; }

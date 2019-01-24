@@ -194,6 +194,16 @@ export class CourierMasterPM {
     public set EstimatedArrivalTimeOnly(newValue: Date) { if (this.estimatedArrivalTimeOnly != newValue) { this.estimatedArrivalTimeOnly = newValue; this.MarkAsDirty("EstimatedArrivalTimeOnly"); } }
        
 	 
+    private weightValueCode: string;
+    public get WeightValueCode() { return this.weightValueCode; }
+    public set WeightValueCode(newValue: string) { if (this.weightValueCode != newValue) { this.weightValueCode = newValue; this.MarkAsDirty("WeightValueCode"); } }
+       
+	 
+    private weightValueName: string;
+    public get WeightValueName() { return this.weightValueName; }
+    public set WeightValueName(newValue: string) { if (this.weightValueName != newValue) { this.weightValueName = newValue; this.MarkAsDirty("WeightValueName"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		

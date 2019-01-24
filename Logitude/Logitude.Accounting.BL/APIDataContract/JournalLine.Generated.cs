@@ -6,14 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
-using Logitude.BL.QuoteModel.APIDataContract.ApiV1; 
+using Logitude.BL.CommonDataModel.APIDataContract.;
+using Logitude.BL.QuoteModel.APIDataContract.; 
 using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
-using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+using Logitude.BL.InfrastructureModel.APIDataContract.;
+using Logitude.BL.ShipmentsModel.APIDataContract.;
 using System.Xml.Serialization;
 
-namespace Logitude.Accounting.BL.APIDataContract.ApiV1
+namespace Logitude.Accounting.BL.APIDataContract.
 {
    
     public class JournalLine

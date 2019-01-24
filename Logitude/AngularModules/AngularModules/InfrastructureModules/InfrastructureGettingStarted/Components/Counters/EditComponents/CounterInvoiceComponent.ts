@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {CounterPM} from '../../../../../Common/EntityPMs/CounterPM';
 import {CounterDefinitionPM} from '../../../../../Common/EntityPMs/CounterDefinitionPM';
@@ -79,7 +79,9 @@ export class CounterInvoiceComponent extends BaseComponent {
     }
     SetUIProperties() {
         this.UIProperties.SetEnabled("Prefix", this.ObjectTableName, !this.IsCounterUsed);
+        this.UIProperties.SetEnabled("Suffix", this.ObjectTableName, !this.IsCounterUsed);
         this.UIProperties.SetEnabled("StartNumber", this.ObjectTableName, !this.IsCounterUsed);
+        this.UIProperties.SetEnabled("CounterSize", this.ObjectTableName, !this.IsCounterUsed);
     }
     InitializeDefinitions() {
 
@@ -202,6 +204,28 @@ export class CounterInvoiceComponent extends BaseComponent {
         }
     }
 
+    public get Suffix() { return this.EntityPM.Suffix; }
+    public set Suffix(value: string) {
+        if (this.EntityPM.Suffix != value) {
+            this.EntityPM.Suffix = value;
+
+            this.ItemsSource.forEach(item => {
+                item.Suffix = value;
+            });
+        }
+    }
+
+    public get CounterSize() { return this.EntityPM.CounterSize; }
+    public set CounterSize(value: number) {
+        if (this.EntityPM.CounterSize != value) {
+            this.EntityPM.CounterSize = value;
+
+            this.ItemsSource.forEach(item => {
+                item.CounterSize = value;
+            });
+        }
+    }
+
     public get StartNumber() { return this.EntityPM.StartNumber; }
     public set StartNumber(value: number) {
         if (this.EntityPM.StartNumber != value) {
@@ -251,16 +275,30 @@ export class CounterInvoiceComponent extends BaseComponent {
 
             else {
                 var errors: string[] = [];
+                if (this.CounterSize > 20) {
+                    errors.push("Maximum size allowed for counter is 20");
+                }
+                if (this.UniquePerPrefix == true) {
+                    this.APIHelper.CounterDefinitions.forEach(item => {
+                        Validator.TryValidateObject(item, this.ObjectTableName, errors);
 
-                this.APIHelper.CounterDefinitions.forEach(item => {
-                    Validator.TryValidateObject(item, this.ObjectTableName, errors);
-
-                    if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
-                        if ((item.StartNumber + item.Prefix).length > 20) {
-                            errors.push("Maximum length allowed for [Startnumber + Prefix] is 20");
+                        if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
+                            if ((item.StartNumber).toString().length + AppTool.GetCounterPrefixLength(item.Prefix) > 20) {
+                                errors.push("Maximum length allowed for [Prefix + StartNumber] is 20");
+                            }
                         }
+                    });
+                }
+                else {
+
+                    if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) > 20) {
+                        errors.push("Maximum length allowed for [Prefix + StartNumber] is 20");
                     }
-                });
+
+                    this.APIHelper.CounterDefinitions.forEach(item => {
+                        Validator.TryValidateObject(item, this.ObjectTableName, errors);
+                    });
+                }
 
                 this.ValidationErrorsList = errors;
 
@@ -312,6 +350,7 @@ export class CounterInvoiceDefinitionItem extends BaseComponent {
         }
 
         this.UIProperties.SetEnabled("Prefix", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Suffix", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("StartNumber", this.ObjectTableName, isEnabled_StartNumber);
     }
 
@@ -327,6 +366,20 @@ export class CounterInvoiceDefinitionItem extends BaseComponent {
     public set Prefix(value: string) {
         if (this.EntityPM.Prefix != value) {
             this.EntityPM.Prefix = value;
+        }
+    }
+
+    public get Suffix() { return this.EntityPM.Suffix; }
+    public set Suffix(value: string) {
+        if (this.EntityPM.Suffix != value) {
+            this.EntityPM.Suffix = value;
+        }
+    }
+
+    public get CounterSize() { return this.EntityPM.CounterSize; }
+    public set CounterSize(value: number) {
+        if (this.EntityPM.CounterSize != value) {
+            this.EntityPM.CounterSize = value;
         }
     }
 

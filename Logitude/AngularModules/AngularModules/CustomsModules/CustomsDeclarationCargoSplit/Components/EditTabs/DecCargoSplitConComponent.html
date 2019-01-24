@@ -1,4 +1,4 @@
-﻿<style>
+<style>
 
     .noBorder {
            border:none !important;
@@ -16,7 +16,7 @@
         <!-->td style="width:10px"></td>
         <td-->
         <td colspan="4">
-            <div class="TableHolder" *ngIf="EntityPM">
+            <div class="TableHolder" style="width: 680px;" *ngIf="EntityPM">
                 <table>
                     <tr>
                         <td colspan="2">
@@ -98,7 +98,7 @@
                     <tr style="height: 15px;"><td><div></div> </td></tr>
 
                     <tr>
-                        <td class="subTitle">{{'Customs.Declaration.O.ConsignmentPackages' | TextCodeTranslationPipe}}</td>
+                        <td class="TabTitleRow">{{'Customs.Declaration.O.ConsignmentPackages' | TextCodeTranslationPipe}}</td>
                         <td style="width: 25px;height: 20px;">
                             <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="AddItem()" style="float:left;"></IconButton></div>
                         </td>
@@ -160,7 +160,7 @@
 
                                     <log-column [header]="'Customs.DecCargoSplitConsItem.F.CargoDescription' | TextCodeTranslationPipe"
                                                 [binding]="'CargoDescription'"
-                                                [width]="'150'" [Alignment]="'right'">
+                                                [width]="'142'" [Alignment]="'right'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width:100%;height:100%;text-align: right;">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
@@ -176,7 +176,7 @@
 
                                     <log-column [header]="'Customs.DecCargoSplitConsItem.F.RequestReasonCode' | TextCodeTranslationPipe"
                                                 [binding]="'RequestReasonCode'"
-                                                [width]="'230'" [Alignment]="'right'">
+                                                [width]="'222'" [Alignment]="'right'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.RequestReasonName}}</span>
@@ -195,7 +195,7 @@
                                         </log-cell-template>
                                     </log-column>
 
-                                    <log-column [width]="'55'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
+                                    <log-column [width]="'54'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
                                         <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
 
                                             <span class="CellSeparator" style="float: right;"></span>

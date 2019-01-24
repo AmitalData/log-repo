@@ -32,8 +32,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.INTTRAId = entityPM.INTTRAId;
             poco.INTTRAAlias = entityPM.INTTRAAlias;
             poco.INTTRAContactId = entityPM.INTTRAContactId;
+			poco.CounterCode = entityPM.CounterCode;
 
-            BuildSearchField(entityPM, poco);
+			BuildSearchField(entityPM, poco);
         }
 
         private static void BuildSearchField(BranchPM entityPM, Branch entityPoco)

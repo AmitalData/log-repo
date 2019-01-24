@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {CounterPM} from '../../../../../Common/EntityPMs/CounterPM';
 import {CounterDefinitionPM} from '../../../../../Common/EntityPMs/CounterDefinitionPM';
@@ -61,6 +61,8 @@ export class CounterTableComponent extends BaseComponent {
     SetUIProperties() {
         this.UIProperties.SetEnabled("Prefix", this.ObjectTableName, !this.IsCounterUsed);
         this.UIProperties.SetEnabled("StartNumber", this.ObjectTableName, !this.IsCounterUsed);
+        this.UIProperties.SetEnabled("CounterSize", this.ObjectTableName, !this.IsCounterUsed);
+
     }
     InitializeDefinitions() {
 
@@ -85,6 +87,13 @@ export class CounterTableComponent extends BaseComponent {
     public set Prefix(value: string) {
         if (this.EntityPM.Prefix != value) {
             this.EntityPM.Prefix = value;
+        }
+    }
+
+    public get CounterSize() { return this.EntityPM.CounterSize; }
+    public set CounterSize(value: number) {
+        if (this.EntityPM.CounterSize != value) {
+            this.EntityPM.CounterSize = value;
         }
     }
 
@@ -122,13 +131,22 @@ export class CounterTableComponent extends BaseComponent {
 
         else {
             var errors: string[] = [];
-            Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+             if (this.CounterSize > 15) {
+                    errors.push("Maximum size allowed for counter is 15");
+                }
+            if (this.UniquePerPrefix == true) {
+                Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
-            if (this.UniquePerPrefix && !AppTool.IsNullOrEmpty(this.Prefix) && !AppTool.IsNullOrEmpty(this.StartNumber)) {
-                if ((this.StartNumber + this.Prefix).length > 15) {
-                    errors.push("Maximum length allowed for [Startnumber + Prefix] is 15");
+                if (this.UniquePerPrefix && !AppTool.IsNullOrEmpty(this.Prefix) && !AppTool.IsNullOrEmpty(this.StartNumber)) {
+                    if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) > 15) {
+                        errors.push("Maximum length allowed for [Startnumber + Prefix] is 15");
+                    }
                 }
             }
+            else if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) > 15) {
+                errors.push("Maximum length allowed for [Prefix + StartNumber] is 15");
+            }
+        
 
             this.ValidationErrorsList = errors;
 

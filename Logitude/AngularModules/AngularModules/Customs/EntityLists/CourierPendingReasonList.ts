@@ -16,6 +16,7 @@ export class CourierPendingReasonList {
 	ErrorPlace: string;
 	Tenant: number;
 	UnifreightStatusCode: string;
+	ErrorPlaceName: string;
 	
 }
  

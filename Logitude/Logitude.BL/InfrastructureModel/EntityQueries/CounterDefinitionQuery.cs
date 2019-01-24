@@ -34,17 +34,19 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             IQueryable<CounterDefinitionPM> result = (from a in repository.context.CounterDefinitions
                                                       where a.Tenant == tenant
                                                       select new CounterDefinitionPM()
-                                                      {
-                                                          Id = a.Id,
-                                                          CounterId = a.CounterId,
-                                                          Parameter1 = a.Parameter1,
-                                                          Parameter2 = a.Parameter2,
-                                                          Prefix = a.Prefix,
-                                                          Tenant = a.Tenant,
-                                                          UniquePerPrefix = a.UniquePerPrefix,
-                                                          StartNumber = a.StartNumber,
-                                                          StartNumber_Old = a.StartNumber,
-                                                      }
+													  {
+														  Id = a.Id,
+														  CounterId = a.CounterId,
+														  Parameter1 = a.Parameter1,
+														  Parameter2 = a.Parameter2,
+														  Prefix = a.Prefix,
+														  Tenant = a.Tenant,
+														  UniquePerPrefix = a.UniquePerPrefix,
+														  StartNumber = a.StartNumber,
+														  StartNumber_Old = a.StartNumber,
+														  CounterSize = a.CounterSize,
+														  Suffix = a.Suffix,
+													  }
        );
             //List<CounterDefinitionPM> defList = result.Where(
             //    c => c.Tenant == tenant &&
@@ -76,7 +78,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        UniquePerPrefix = a.UniquePerPrefix,
                        StartNumber = a.StartNumber,
                        StartNumber_Old = a.StartNumber,
-                   });
+					   CounterSize = a.CounterSize,
+					   Suffix = a.Suffix,
+				   });
 
             return result;
         }
