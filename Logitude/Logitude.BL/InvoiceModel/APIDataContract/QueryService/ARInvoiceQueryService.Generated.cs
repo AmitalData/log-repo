@@ -102,7 +102,7 @@ using Simplog.Data.InvoiceModel;
 			       
 					   				   }
 				   
-				   temp.VatNumber = MyEntityPM.VatNumber;			  
+				   temp.VATNumber = MyEntityPM.VatNumber;			  
 				   if(MyEntityPM.BillToAddressId != null)
 				   {
 					   AddressQueryService AddressService4 = new AddressQueryService(Tenant);
@@ -236,7 +236,7 @@ using Simplog.Data.InvoiceModel;
 					}
 			
 					
-					temp.VatNumber = MyEntity.VatNumber;					AddressQueryService BillToAddressAddressService = new AddressQueryService(Tenant);
+					temp.VatNumber = MyEntity.VATNumber;					AddressQueryService BillToAddressAddressService = new AddressQueryService(Tenant);
 					if(MyEntity.BillToAddress != null)
 					{
 						var myBillToAddressPM = BillToAddressAddressService.AddressCustomDataMappingAndValidatin(MyEntity.BillToAddress,Tenant);
