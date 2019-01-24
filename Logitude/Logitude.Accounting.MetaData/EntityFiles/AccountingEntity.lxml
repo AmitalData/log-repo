@@ -8,16 +8,16 @@
     <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;AccountingEntity&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <Records>
-    <Record Code="&quot;4&quot;" LocalName="&quot;חשבונית ספק&quot;" EnglishName="&quot;APInvoice&quot;" />
-    <Record Code="&quot;5&quot;" LocalName="&quot;תשלום לספק&quot;" EnglishName="&quot;APPayment&quot;" />
+    <Record Code="&quot;1&quot;" LocalName="&quot;פקודת יומן&quot;" EnglishName="&quot;Journal&quot;" />
     <Record Code="&quot;2&quot;" LocalName="&quot;חשבונית לקוח&quot;" EnglishName="&quot;ARInvoice&quot;" />
     <Record Code="&quot;3&quot;" LocalName="&quot;קבלה לקוח&quot;" EnglishName="&quot;ARPayment&quot;" />
-    <Record Code="&quot;7&quot;" LocalName="&quot;הפקדת מזומן&quot;" EnglishName="&quot;Cash Deposit&quot;" />
+    <Record Code="&quot;4&quot;" LocalName="&quot;חשבונית ספק&quot;" EnglishName="&quot;APInvoice&quot;" />
+    <Record Code="&quot;5&quot;" LocalName="&quot;תשלום לספק&quot;" EnglishName="&quot;APPayment&quot;" />
     <Record Code="&quot;6&quot;" LocalName="&quot;הפקדת המחאות&quot;" EnglishName="&quot;Cheque Deposit&quot;" />
-    <Record Code="&quot;1&quot;" LocalName="&quot;פקודת יומן&quot;" EnglishName="&quot;Journal&quot;" />
-    <Record Code="&quot;9&quot;" LocalName="&quot;מערכת המחאות&quot;" EnglishName="&quot;Payment Cheque&quot;" />
-    <Record Code="&quot;10&quot;" LocalName="&quot;התאמה&quot;" EnglishName="&quot;Reconciliation&quot;" />
+    <Record Code="&quot;7&quot;" LocalName="&quot;הפקדת מזומן&quot;" EnglishName="&quot;Cash Deposit&quot;" />
     <Record Code="&quot;8&quot;" LocalName="&quot;שערוך&quot;" EnglishName="&quot;Revaluation&quot;" />
+    <Record Code="&quot;9&quot;" LocalName="&quot;מערכת המחאות&quot;" EnglishName="&quot;Payment Cheque&quot;" />
+    <Record Code="&quot;10&quot;" LocalName="&quot;התאמה&quot;" EnglishName="&quot;Adjustment&quot;" />
   </Records>
   <DataContracts>
     <DataContract Name="&quot;AccountingEntity&quot;" Version="&quot;ApiV1&quot;">
