@@ -407,5 +407,90 @@ new XElement("FileStreamError",
 
 
         }
+
+
+
+
+
+        public HttpResponseMessage GetLast2755ResponseDataAsFileStream(string customFileNo, int tenant)//AMI-66312 - שליחת מסר תשובה של מסר הגשה במקום של טיוטה אחרונה
+        {
+            //http://192.116.221.103:572/NextProd572/api/Declarartion/GetLast2755ResponseDataAsFileStream?customFileNo=51340159&tenant=1
+            string responseDataDocumentId = "NaN";
+            string declarationVersionId = "NaN";
+            string Status = "Error";
+            HttpResponseMessage httpResponse = null;
+            try
+            {
+
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+
+                DeclarationRepository declarationRep = new DeclarationRepository(customContext);
+                var decPoco = declarationRep.GetByCustomFileNo(customFileNo, tenant);
+
+                // first check if Declaration exist 
+                if (decPoco == null)
+                {
+                    throw new Exception("Declaration !exist ");
+                }
+
+                declarationVersionId = decPoco.VersionId;
+                if (String.IsNullOrWhiteSpace(declarationVersionId))
+                {
+                    throw new Exception("declarationVersionId !exist ");
+                }
+                var crsAnalyzeStatus = "30";
+                string interfaceTypeCode = "2755";
+                var crsRepo = new CustomsRequestsSheetRepository(customContext);
+                var crsPoco = crsRepo.GetLastCRSByCustomfileStatusInterface(decPoco.CustomFileNo, crsAnalyzeStatus, interfaceTypeCode, tenant);
+                if (crsPoco == null)
+                {
+                    throw new Exception("CustomsRequestsSheet !exist ");
+                }
+                var stepRepo = new CommunicationLogStepRepository(tenant);
+                int stepReceivedCustomResponseCorrelation = 20;
+                var stepPoco = stepRepo.CommunicationLogStep(crsPoco.RequestComminicationId, stepReceivedCustomResponseCorrelation, tenant);
+                responseDataDocumentId = stepPoco.DocumentId;
+                if (String.IsNullOrWhiteSpace(responseDataDocumentId))
+                {
+                    throw new Exception("ResponseDataDocumentId !exist ");
+                }
+
+
+                string blobId = tenant + "_" + responseDataDocumentId;
+                httpResponse = Uploader.GetFileStream(blobId);
+                Status = "OK";
+            }
+            catch (Exception ee)
+            {
+
+                XElement myXml =
+new XElement("FileStreamError",
+    new XElement("Error", ee.ToString()
+
+        )
+    );
+
+                var data = System.Text.UTF8Encoding.UTF8.GetBytes(myXml.ToString());
+
+                httpResponse = new HttpResponseMessage(HttpStatusCode.OK);
+
+                httpResponse.Content = new StreamContent(new MemoryStream(data));
+                httpResponse.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                httpResponse.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                httpResponse.Content.Headers.ContentDisposition.FileName = responseDataDocumentId + ".xml";
+            }
+            finally
+            {
+                var fileName = httpResponse.Content.Headers.ContentDisposition.FileName;
+                var FileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+                var Extension = Path.GetExtension(fileName);
+                var newFileName = $"DocumentId={responseDataDocumentId};DeclarationVersionId={declarationVersionId};Status={Status}" + Extension;
+                httpResponse.Content.Headers.ContentDisposition.FileName = newFileName;
+
+            }
+            return httpResponse;
+
+
+        }
     }
 }
