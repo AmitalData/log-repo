@@ -191,7 +191,7 @@
                         </div>
 
                         <!--Date-->
-                        <div *ngSwitchCase="'DateTime'">
+                        <div *ngSwitchCase="'DateTime' || 'Date'" >
 
                             <div style="width:180px;">
 
@@ -348,7 +348,19 @@
                                 </div>
 
                          
-                                <!--abed-->
+                                <!--Date-->
+                                <div *ngSwitchCase="'DateTime' || 'Date'">
+
+                                    <div style="width:180px;">
+
+                                        <DWDate [ObjectFieldName]="item.Code"
+                                                [DataContext]="item"
+                                                [Operation]="item.Operation.Code"
+                                                [SelectedValue]="item.TextValue">
+                                        </DWDate>
+
+                                    </div>
+                                </div>
 
 
 
