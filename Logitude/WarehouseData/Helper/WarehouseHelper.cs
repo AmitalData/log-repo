@@ -377,14 +377,23 @@ namespace WarehouseData.Helper
                 var field = table.DWObjectFieldDBLists.Where(d => d.IsPrimaryKey).FirstOrDefault();
                 if (field != null)
                 {
-                    string fieldName = field.FieldName.Replace("[", "").Replace("]", "");
+                    string keyName = field.FieldName.Replace("[", "").Replace("]", "");
+                    sql += (" ALTER TABLE New" + table.DWObjectTableCode + " ADD CONSTRAINT PK_New" + table.DWObjectTableCode + "_" + keyName.Replace(" ", "") + " PRIMARY KEY CLUSTERED([" + keyName + "]) \r\n");
 
-                    sql += (" ALTER TABLE New" + table.DWObjectTableCode + " ADD CONSTRAINT PK_New" + table.DWObjectTableCode + "_" + fieldName.Replace(" ", "") + " PRIMARY KEY CLUSTERED([" + fieldName + "]) \r\n");
-                    sql += (" CREATE NONCLUSTERED INDEX [IX_" + table.DWObjectTableCode + "_" + fieldName.Replace(" ", "") + "] ON [dbo].[New" + table.DWObjectTableCode + "]([" + fieldName + "]) \r\n");
                 }
+
+                var secondField = table.DWObjectFieldDBLists.Where(d => d.FieldName == "[Id]").FirstOrDefault();
+                 if (secondField == null) secondField = table.DWObjectFieldDBLists.Where(d => d.FieldName == "[Code]").FirstOrDefault();
+                if (secondField != null)
+                {
+                    string secondKeyName = secondField.FieldName.Replace("[", "").Replace("]", "");
+                    sql += (" CREATE NONCLUSTERED INDEX [IX_" + table.DWObjectTableCode + "_" + secondKeyName.Replace(" ", "") + "] ON [dbo].[New" + table.DWObjectTableCode + "]([" + secondKeyName + "]) \r\n");
+                }
+
+                    
+                
             }
-
-
+           
 
             return sql;
 

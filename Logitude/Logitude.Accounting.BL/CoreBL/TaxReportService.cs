@@ -183,7 +183,11 @@ namespace Logitude.Accounting.BL.CoreBL
             List<string> JournalIds = ledgerTransactons.Where(d => d.JournalId != null).Select(d => d.JournalId).ToList();
             List<JournalPM> journalPMs = journalQueryService.GetJournalsByIds(JournalIds, tenant);
 
-      
+            List<string> ids = new List<string>();
+            ids = aPInvoices.Select(d => d.Id).ToList();
+            APInvoiceTotalVATQuery myTotalVATQuery = new APInvoiceTotalVATQuery(tenant);
+            List<APInvoiceTotalVATPM> totalvats = new List<APInvoiceTotalVATPM>();
+            totalvats  = myTotalVATQuery.GetTotalVATs(ids, tenant);
 
             foreach (TaxReportData a in ledgerTransactons)
 			{
@@ -191,9 +195,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 
 				if (a.AccountingEntity == "4")
 				{
-				
+
                     aPInvoice = aPInvoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
-					if (aPInvoice != null)
+                    aPInvoice.TotalVATs = totalvats.Where(d => d.APInvoiceId == aPInvoice.Id).ToList();
+
+                    if (aPInvoice != null)
 					{
 						VatNumber = aPInvoice.VATNumber;
 						   VatAmount = (decimal?)aPInvoice.TotalVATs.Sum(d=> d.LocalVATAmount);
