@@ -140,7 +140,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipperCountry { get; set; }
         public string ShipperTel { get; set; }
         public string ShipperFax { get; set; }
-        public string ShipperZipCode { get; set; }
+        public string ShipperZipCode { get; set; }       
         public string ConsigneeName { get; set; }
         public string ConsigneeAddress1 { get; set; }
         public string ConsigneeAddress2 { get; set; }
@@ -148,7 +148,7 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeCountry { get; set; }
         public string ConsigneeTel { get; set; }
         public string ConsigneeFax { get; set; }
-        public string ConsigneeZipCode { get; set; }
+        public string ConsigneeZipCode { get; set; }        
 
         public List<CommodityLine> CommoditiesLinesList { get; set; }
 
@@ -199,12 +199,20 @@ namespace WebFreight.Web.DataProviders
         public string Branch { get; set; }
 
         public string ShipperAddress_WithName { get; set; }
-        public string ShipperNotExporterAddress_WithName { get; set; }
+        public string ShipperNotExporterAddress_WithName { get; set; }        
         public string ConsigneeAddress_WithName { get; set; }
         public string NotifyAddress_WithName { get; set; }
         public string NotifyAddress2_WithName { get; set; }
-
         public string HandlingInformationOnly { get; set; }
+
+        public string ShipperATTN { get; set; }
+        public string ConsigneeATTN { get; set; }
+        public string ShipperNotExporterATTN { get; set; }
+        public string ConsigneeNotImporterATTN { get; set; }
+        public string Notify1ATTN { get; set; }
+        public string Notify2ATTN { get; set; }
+        public string AgentATTN { get; set; }
+
     }
 
     public class CommodityLine
