@@ -379,7 +379,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     if (vendorCode == null ) return;
                     
                     var XMLData = new XDocument(
-                        new XElement("DepositionRequestPM",
+                        new XElement("depositionRequestPM",
                             new XElement("RequestDateTime", DateTime.Now.ToString("o")),
                             new XElement("ForwarderShipmentNumber", dirtyDeclarationPM.CustomFileNo),
                             new XElement("VendorCode", vendorCode),
