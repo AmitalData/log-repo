@@ -1208,14 +1208,23 @@ export class DWObjectFieldsDetails extends BaseComponent {
         if (this.textValue != newValue) {
             if ((newValue == true || newValue == false) && this.textValue) {
                 this.textValue = newValue;
-                this.MyParentClass.SaveChanges();
+
+                if (!this.DontSaveChanges) this.MyParentClass.SaveChanges();
+             
+              
             }
             else if (newValue != true || newValue != false) {
                 this.textValue = newValue;
-                this.MyParentClass.SaveChanges();
+                if (!this.DontSaveChanges) this.MyParentClass.SaveChanges();
             }
+
+            this.DontSaveChanges = false;
         }
     }
+
+
+
+
 
     private multiSelectedValueLists: MultiSelectedValue[];
     public get MultiSelectedValueLists() {
