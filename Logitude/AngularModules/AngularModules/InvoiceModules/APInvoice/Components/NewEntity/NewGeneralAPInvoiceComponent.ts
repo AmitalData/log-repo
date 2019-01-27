@@ -313,7 +313,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
                     var isDuplicated: boolean = myResponse.Result;
 
                     if (isDuplicated) {
-                        warnings.push("Please Note that there is already another invoice with the same number by the same vendor");
+                        warnings.push(TextCodeTranslator.Translate("APInvoice.M.SameInvoiceNumber"));
                         this.FillWarnings(warnings);
                     }
                 }

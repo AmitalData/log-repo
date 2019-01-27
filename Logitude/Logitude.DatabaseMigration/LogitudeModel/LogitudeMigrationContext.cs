@@ -3452,6 +3452,20 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         #endregion
 
         #region Infrastructure Generated
+        public IDbSet<Toggle> Toggles
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<FeatureToggle> FeatureToggle
+        {
+            get;
+            set;
+
+        }
+
         public IDbSet<BIReport> BIReports
         {
             get;
@@ -4209,6 +4223,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             #endregion
 
             #region Infrastructure Generated
+            modelBuilder.Configurations.Add(new ToggleMap());
+            modelBuilder.Configurations.Add(new FeatureToggleMap());
             modelBuilder.Configurations.Add(new BIReportMap());
             modelBuilder.Configurations.Add(new BIReportsTypeMap());
             modelBuilder.Configurations.Add(new BusinessRoleMap());

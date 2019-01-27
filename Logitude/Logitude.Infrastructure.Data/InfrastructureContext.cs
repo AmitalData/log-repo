@@ -78,6 +78,8 @@ namespace Logitude.Infrastructure.Data
 	
             modelBuilder.Configurations.Add(new BusinessRoleMap());
 	
+            modelBuilder.Configurations.Add(new FeatureToggleMap());
+	
             modelBuilder.Configurations.Add(new LBPTeamMemberMap());
 	
             modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
@@ -85,6 +87,8 @@ namespace Logitude.Infrastructure.Data
             modelBuilder.Configurations.Add(new TeamMap());
 	
             modelBuilder.Configurations.Add(new TeamMemberBusinessRoleMap());
+	
+            modelBuilder.Configurations.Add(new ToggleMap());
 				
 						 
             #region
@@ -401,6 +405,12 @@ namespace Logitude.Infrastructure.Data
 	 
 	 }
 	
+	 public IDbSet<FeatureToggle> FeatureToggles 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<LBPTeamMember> LBPTeamMembers 
 	 {
 	      get; set;
@@ -420,6 +430,12 @@ namespace Logitude.Infrastructure.Data
 	 }
 	
 	 public IDbSet<TeamMemberBusinessRole> TeamMemberBusinessRoles 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<Toggle> Toggles 
 	 {
 	      get; set;
 	 
