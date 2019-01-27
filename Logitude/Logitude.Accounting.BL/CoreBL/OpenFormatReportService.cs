@@ -263,18 +263,48 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     myStringBuilder.Append(' ', 3);
                 }
+
+
                 if ( item.LocalAmountDebit != 0)
                 {
-                    var LocalAmountDebit = "+" + item.LocalAmountDebit;
+                    if(item.LocalAmountDebit > 0)
+                    {
+                        string LocalAmountDebit =item.LocalAmountDebit.ToString();
+                        myStringBuilder.Append("+");
+                        if (LocalAmountDebit.Length > 15) { LocalAmountDebit = LocalAmountDebit.Substring(0, 15); }
+                        myStringBuilder.Append(LocalAmountDebit.PadLeft(15, '0'));
+                    }
+                    else if(item.LocalAmountDebit <0)
+                    {
+                        var LocalAmountDebit = item.LocalAmountDebit.ToString();
+                        myStringBuilder.Append("-");
+                        if (LocalAmountDebit.Length > 15) { LocalAmountDebit= LocalAmountDebit.Substring(0, 15); }
+                        myStringBuilder.Append(LocalAmountDebit.PadLeft(15, '0'));
+                    }
 
-                    if (LocalAmountDebit.Length > 15) { LocalAmountDebit.Substring(0, 15); }
-                    myStringBuilder.Append( LocalAmountDebit.PadLeft(15, '0'));
+                  
                 }
                 else
                 {
-                    var LocalAmountCredit = "-" + item.LocalAmountCredit;
-                    if (LocalAmountCredit.Length > 15) { LocalAmountCredit.Substring(0, 15); }
-                    myStringBuilder.Append( LocalAmountCredit.PadLeft(15, '0'));
+
+                    if(item.LocalAmountCredit > 0)
+                    {
+                        var LocalAmountCredit = item.LocalAmountCredit.ToString();
+
+                        myStringBuilder.Append("+");
+                        if (LocalAmountCredit.Length > 15) { LocalAmountCredit.Substring(0, 15); }
+                        myStringBuilder.Append(LocalAmountCredit.PadLeft(15, '0'));
+                    }
+
+                    else if (item.LocalAmountCredit < 0)
+                    {
+                        var LocalAmountCredit =  item.LocalAmountCredit.ToString();
+
+                        myStringBuilder.Append("-");
+                        if (LocalAmountCredit.Length > 15) { LocalAmountCredit.Substring(0, 15); }
+                        myStringBuilder.Append(LocalAmountCredit.PadLeft(15, '0'));
+                    }
+                 
                 }
 
 
