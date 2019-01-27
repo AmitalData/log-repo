@@ -308,18 +308,47 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
 
-                if (item.ForeignAmountDebit != 0)
+                if (item.LocalAmountDebit != 0)
                 {
-                    var ForeignAmountDebit = "+" + item.ForeignAmountDebit;
+                    if (item.ForeignAmountDebit > 0)
+                    {
+                        string ForeignAmountDebit = item.ForeignAmountDebit.ToString();
+                        myStringBuilder.Append("+");
+                        if (ForeignAmountDebit.Length > 15) { ForeignAmountDebit = ForeignAmountDebit.Substring(0, 15); }
+                        myStringBuilder.Append(ForeignAmountDebit.PadLeft(15, '0'));
 
-                    if (ForeignAmountDebit.Length > 15) { ForeignAmountDebit.Substring(0, 15); }
-                    myStringBuilder.Append( ForeignAmountDebit.PadLeft(15, '0'));
+
+                    }
+                    else if(item.ForeignAmountDebit< 0)
+                    {
+
+                        string ForeignAmountDebit = item.ForeignAmountDebit.ToString();
+                        myStringBuilder.Append("-");
+                        if (ForeignAmountDebit.Length > 15) { ForeignAmountDebit = ForeignAmountDebit.Substring(0, 15); }
+                        myStringBuilder.Append(ForeignAmountDebit.PadLeft(15, '0'));
+
+                    }
                 }
                 else
                 {
-                    var ForignAmountCredit = "-" + item.ForeignAmountCredit;
-                    if (ForignAmountCredit.Length > 15) { ForignAmountCredit.Substring(0, 15); }
-                    myStringBuilder.Append( ForignAmountCredit.PadLeft(15, '0'));
+                    if (item.ForeignAmountCredit > 0)
+                    {
+                        string ForeignAmountCredit = item.ForeignAmountCredit.ToString();
+                        myStringBuilder.Append("+");
+                        if (ForeignAmountCredit.Length > 15) { ForeignAmountCredit = ForeignAmountCredit.Substring(0, 15); }
+                        myStringBuilder.Append(ForeignAmountCredit.PadLeft(15, '0'));
+
+
+                    }
+                    else if (item.ForeignAmountCredit < 0)
+                    {
+
+                        string ForeignAmountCredit = item.ForeignAmountCredit.ToString();
+                        myStringBuilder.Append("-");
+                        if (ForeignAmountCredit.Length > 15) { ForeignAmountCredit = ForeignAmountCredit.Substring(0, 15); }
+                        myStringBuilder.Append(ForeignAmountCredit.PadLeft(15, '0'));
+
+                    }
                 }
 
 
