@@ -1,4 +1,4 @@
-import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool, DateTool, FormatTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -37,7 +37,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
     templateUrl: './NewMasterComponent.html',
 })
 
-export class NewMasterComponent extends BaseComponent {
+export class NewMasterComponent extends BaseComponent implements OnInit {
     public TenantPM: TenantPM;
     public EntityPM: ShipmentPM;
     public DataContext = this;
@@ -47,6 +47,7 @@ export class NewMasterComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public SessionIndex: number;
     public IsResourcesReady: boolean = false;
+    public OkButtonLabel: string;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     constructor(private entityResourceService: EntityResourceService) {
         super();
@@ -55,14 +56,42 @@ export class NewMasterComponent extends BaseComponent {
         this.TenantPM = SessionLocator.TenantPM;
         this.EntityPM = this.myShipmentPMService.GetNewEntityPM();
         this.EntityPM.ShipmentLevelCode = "C";
-        this.BuildFiltersLists();
-        this.OnFiltersChanged();
-        this.LoadAllowedAirline();
+        this.OkButtonLabel = TextCodeTranslator.Translate("Shipment.B.Create");
+
+        //this.BuildFiltersLists();
+        //this.OnFiltersChanged();
+        //this.LoadAllowedAirline();
 
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.IsResourcesReady = true;
             this.BuildAdditionalFields();
         });
+    }
+
+    ngOnInit() {
+        this.BuildFiltersLists();
+
+        if (this.IsCopyFromShipment == false && this.IsBuildFromQuote == false) {
+            this.OnFiltersChanged();
+        }
+
+        this.LoadAllowedAirline();
+        //this.ScreenIsReady = true;
+    }
+
+    private SourceEntityPM: ShipmentPM;
+    public IsBuildFromQuote: boolean = false;
+    public IsCopyFromShipment: boolean = false;
+    SetWindowArgs(args: any) {
+        if (args.IsNew == null) {
+            this.SourceEntityPM = args.Shipment;
+            this.IsCopyFromShipment = args.IsCopyFromShipment;
+            this.IsBuildFromQuote = args.IsBuildFromQuote;
+
+            this.BuildFiltersLists();
+            this.SetUIProperties();
+            this.CopyEntityData();
+        }
     }
 
     private myPortListService: PortListService;
@@ -81,7 +110,6 @@ export class NewMasterComponent extends BaseComponent {
         this.myPartnersDomainService = new PartnersDomainService();
         this.myShipmentPMService = new ShipmentPMService();
     }
-
     LoadAllowedAirline() {
         if (SessionLocator.TenantManagementJS.IsRestrictedByAirline) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
@@ -110,16 +138,6 @@ export class NewMasterComponent extends BaseComponent {
         }
     }
 
-    private sourceEntityPM: ShipmentPM;
-    public IsCopyFromShipment: boolean = false;
-    public IsBuildFromQuote: boolean = false;
-    SetWindowArgs(args: NewShipmentComponentArgs) {
-        this.sourceEntityPM = args.Shipment;
-        this.IsCopyFromShipment = args.IsCopyFromShipment;
-        this.IsBuildFromQuote = args.IsBuildFromQuote;
-        this.BuildFiltersLists();
-        this.SetUIProperties();
-    }
 
     public DirectionsList: FilterClass[] = [];
     public TransportModesList: FilterClass[] = [];
@@ -1089,6 +1107,383 @@ export class NewMasterComponent extends BaseComponent {
         }
     }
 
+    // Copy
+    public CopyCheckBoxTop: number = 5;
+    public IsCopyOtherPartnersVisible: boolean = false;
+    CopyEntityData() {
+        if (this.IsBuildFromQuote || this.IsCopyFromShipment) {
+            this.EntityPM.IsBuildFromQuote = this.IsBuildFromQuote;
+            this.EntityPM.IsCopyFromShipment = this.IsCopyFromShipment;
+
+            this.DirectionId = this.SourceEntityPM.DirectionId;
+            this.TransportModeId = this.SourceEntityPM.TransportModeId;
+            this.ShipmentTypeId = this.SourceEntityPM.ShipmentTypeId;
+
+            ShipmentTool.CopyShipment(this.EntityPM, this.SourceEntityPM);
+
+            this.OnFiltersChanged();
+
+            this.CopyRoutings();
+            this.CopyPartners();
+
+            if (this.IsCopyFromShipment) {
+                this.OkButtonLabel = TextCodeTranslator.Translate("Shipment.B.Copy");
+
+                this.EntityPM.OriginShipmentId = this.SourceEntityPM.Id;
+                this.EntityPM.IncotermId = this.SourceEntityPM.IncotermId;
+                this.EntityPM.FreightPrepaidCollectId = this.SourceEntityPM.FreightPrepaidCollectId;
+                this.EntityPM.OtherPrepaidCollectId = this.SourceEntityPM.OtherPrepaidCollectId;
+                this.EntityPM.BaseShipmentNumber = this.SourceEntityPM.ShipmentNumber;
+                this.IsCopyDescription = AppTool.IsNullOrEmpty(this.SourceEntityPM.DescriptionOfGoods) ? false : true;
+                this.IsCopyDescriptionEnabled = AppTool.IsNullOrEmpty(this.SourceEntityPM.DescriptionOfGoods) ? false : true;
+                this.IsCopyPackagesEnabled = this.SourceEntityPM.ShipmentPackages.length > 0 ? true : false;
+
+                if (!AppTool.IsNullOrEmpty(this.SourceEntityPM.ShipperId)) {
+                    this.IsCopyOtherPartnersVisible = true;
+                }
+
+                else if (!AppTool.IsNullOrEmpty(this.SourceEntityPM.ConsigneeId)) {
+                    this.IsCopyOtherPartnersVisible = true;
+                }
+
+                else if (!AppTool.IsNullOrEmpty(this.SourceEntityPM.CustomAgentImportId)) {
+                    this.IsCopyOtherPartnersVisible = true;
+                }
+
+                else if (!AppTool.IsNullOrEmpty(this.SourceEntityPM.CustomAgentExportId)) {
+                    this.IsCopyOtherPartnersVisible = true;
+                }
+
+                else if (!AppTool.IsNullOrEmpty(this.SourceEntityPM.Notify1Id)) {
+                    this.IsCopyOtherPartnersVisible = true;
+                }
+
+                else if (!AppTool.IsNullOrEmpty(this.SourceEntityPM.Notify2Id)) {
+                    this.IsCopyOtherPartnersVisible = true;
+                }
+
+                else if (!AppTool.IsNullOrEmpty(this.SourceEntityPM.ShipperNotExporterId)) {
+                    this.IsCopyOtherPartnersVisible = true;
+                }
+
+                else if (!AppTool.IsNullOrEmpty(this.SourceEntityPM.ConsigneeNotImporterId)) {
+                    this.IsCopyOtherPartnersVisible = true;
+                }
+
+                else if (!AppTool.IsNullOrEmpty(this.SourceEntityPM.FreightForwarderId)) {
+                    this.IsCopyOtherPartnersVisible = true;
+                }
+            }
+
+            else if (this.IsBuildFromQuote) {
+                this.EntityPM.QuoteId = this.SourceEntityPM.QuoteId;
+                this.EntityPM.QuoteNumber = this.SourceEntityPM.QuoteNumber;
+            }
+        }
+    }
+    CopyRoutings() {
+        if (this.IsCopyFromShipment) {
+            this.EntityPM.AirlinePrefix = this.SourceEntityPM.AirlinePrefix;
+            this.EntityPM.MainCarriageCarrierId = this.SourceEntityPM.MainCarriageCarrierId;
+            this.EntityPM.MainCarriageCarrierNumber = this.SourceEntityPM.MainCarriageCarrierNumber;
+            this.EntityPM.MainCarriageCarrierCode = this.SourceEntityPM.MainCarriageCarrierCode;
+            this.EntityPM.MainCarriageCarrierPrefix = this.SourceEntityPM.MainCarriageCarrierPrefix;
+            this.EntityPM.FromPortId = this.SourceEntityPM.MainCarriageFromPortId;
+            this.EntityPM.MainCarriageFromPortId = this.SourceEntityPM.MainCarriageFromPortId;
+            this.EntityPM.MainCarriageFromPortCode = this.SourceEntityPM.MainCarriageFromPortCode;
+            this.EntityPM.MainCarriageFromPortName = this.SourceEntityPM.MainCarriageFromPortName;
+            this.EntityPM.MainCarriageFromPortCountryCode = this.SourceEntityPM.MainCarriageFromPortCountryCode;
+            this.EntityPM.MainCarriageFromPortCountryName = this.SourceEntityPM.MainCarriageFromPortCountryName;
+            this.EntityPM.ToPortId = this.SourceEntityPM.MainCarriageToPortId;
+            this.EntityPM.MainCarriageToPortId = this.SourceEntityPM.MainCarriageToPortId;
+            this.EntityPM.MainCarriageToPortCode = this.SourceEntityPM.MainCarriageToPortCode;
+            this.EntityPM.MainCarriageToPortName = this.SourceEntityPM.MainCarriageToPortName;
+            this.EntityPM.MainCarriageToPortCountryCode = this.SourceEntityPM.MainCarriageToPortCountryCode;
+            this.EntityPM.MainCarriageToPortCountryName = this.SourceEntityPM.MainCarriageToPortCountryName;
+            this.EntityPM.FinalDistenationPortId = this.SourceEntityPM.FinalDistenationPortId;
+            this.EntityPM.MainCarriageFinalDestinationPortId = this.SourceEntityPM.MainCarriageFinalDestinationPortId;
+        }
+
+        if (this.IsBuildFromQuote) {
+            this.EntityPM.MainCarriageFromPartnerId = this.SourceEntityPM.MainCarriageFromPartnerId;
+            this.EntityPM.MainCarriageFromAddressId = this.SourceEntityPM.MainCarriageFromAddressId;
+            this.EntityPM.MainCarriageToPartnerId = this.SourceEntityPM.MainCarriageToPartnerId;
+            this.EntityPM.MainCarriageToAddressId = this.SourceEntityPM.MainCarriageToAddressId;
+            this.EntityPM.MainCarriageFromPortId = this.SourceEntityPM.MainCarriageFromPortId;
+            this.EntityPM.MainCarriageToPortId = this.SourceEntityPM.MainCarriageToPortId;
+            this.EntityPM.FromPortId = this.SourceEntityPM.FromPortId;
+            this.EntityPM.ToPortId = this.SourceEntityPM.ToPortId;
+            this.EntityPM.MainCarriageCarrierId = this.SourceEntityPM.MainCarriageCarrierId;
+            this.EntityPM.MainCarriageFinalDestinationPortId = this.SourceEntityPM.MainCarriageFinalDestinationPortId;
+        }
+    }
+    CopyPartners() {
+        if (this.IsCopyFromShipment) {
+            if (!AppTool.IsNullOrEmpty(this.SourceEntityPM.AgentId)) {
+                this.IsCopyAgent = true;
+                this.IsCopyAgentEnabled = true;
+            }
+        }
+
+        else if (this.IsBuildFromQuote) {
+            //this.IsCopyShipper = true;
+            //this.IsCopyConsignee = true;
+            //this.IsCopyAgent = true;
+            //this.IsCopyCustomAgentExport = true;
+            //this.IsCopyCustomAgentImport = true;
+            //this.IsCopyNotify1 = true;
+            //this.IsCopyNotify2 = true;
+            //this.IsCopyShipperNotExporter = true;
+            //this.IsCopyConsigneeNotImporter = true;
+            //this.IsCopyFreightForwarder = true;
+            //this.IsCopyConsolidator = true;
+        }
+    }
+
+    public IsCopyAgentEnabled: boolean = false;
+
+    private isCopyAgent: boolean = false;
+    get IsCopyAgent() { return this.isCopyAgent; }
+    set IsCopyAgent(value: boolean) {
+        if (this.isCopyAgent != value) {
+            this.isCopyAgent = value;
+
+            this.EntityPM.AgentId = !value ? null : this.SourceEntityPM.AgentId;
+            this.EntityPM.AgentName = !value ? null : this.SourceEntityPM.AgentName;
+            this.EntityPM.AgentNote = !value ? null : this.SourceEntityPM.AgentNote;
+            this.EntityPM.AgentAddressId = !value ? null : this.SourceEntityPM.AgentAddressId;
+            this.EntityPM.AgentContactId = !value ? null : this.SourceEntityPM.AgentContactId;
+            //this.EntityPM.AgentReference1 = !value ? null : this.SourceEntityPM.AgentReference1;
+            //this.EntityPM.AgentReference2 = !value ? null : this.SourceEntityPM.AgentReference2;
+            this.SetUIProperties_Agent();
+        }
+    }
+
+    private isCopyShipper: boolean = false;
+    get IsCopyShipper() { return this.isCopyShipper; }
+    set IsCopyShipper(value) {
+        if (this.isCopyShipper != value) {
+            this.isCopyShipper = value;
+
+            this.EntityPM.ShipperId = !value ? null : this.SourceEntityPM.ShipperId;
+            this.EntityPM.ShipperName = this.SourceEntityPM.ShipperName;
+            this.EntityPM.ShipperNote = this.SourceEntityPM.ShipperNote;
+            this.EntityPM.ShipperAddressId = !value ? null : this.SourceEntityPM.ShipperAddressId;
+            this.EntityPM.ShipperContactId = !value ? null : this.SourceEntityPM.ShipperContactId;
+            //this.EntityPM.ShipperReference1 = !value ? null : this.SourceEntityPM.ShipperReference1;
+            //this.EntityPM.ShipperReference2 = !value ? null : this.SourceEntityPM.ShipperReference2;
+        }
+    }
+
+    private isCopyConsignee: boolean = false;
+    get IsCopyConsignee() { return this.isCopyConsignee; }
+    set IsCopyConsignee(value) {
+        if (this.isCopyConsignee != value) {
+            this.isCopyConsignee = value;
+
+            this.EntityPM.ConsigneeId = !value ? null : this.SourceEntityPM.ConsigneeId;
+            this.EntityPM.ShipperName = !value ? null : this.SourceEntityPM.ShipperName;
+            this.EntityPM.ShipperNote = !value ? null : this.SourceEntityPM.ShipperNote;
+            this.EntityPM.ConsigneeAddressId = !value ? null : this.SourceEntityPM.ConsigneeAddressId;
+            this.EntityPM.ConsigneeContactId = !value ? null : this.SourceEntityPM.ConsigneeContactId;
+            //this.EntityPM.ConsigneeReference1 = !value ? null : this.SourceEntityPM.ConsigneeReference1;
+            //this.EntityPM.ConsigneeReference2 = !value ? null : this.SourceEntityPM.ConsigneeReference2;            
+        }
+    }
+
+    private isCopyCustomAgentImport: boolean = false;
+    get IsCopyCustomAgentImport() { return this.isCopyCustomAgentImport; }
+    set IsCopyCustomAgentImport(value) {
+        if (this.isCopyCustomAgentImport != value) {
+            this.isCopyCustomAgentImport = value;
+
+            this.EntityPM.CustomAgentImportId = !value ? null : this.SourceEntityPM.CustomAgentImportId;
+            this.EntityPM.CustomAgentImportName = !value ? null : this.SourceEntityPM.CustomAgentImportName;
+            this.EntityPM.CustomAgentImportNote = !value ? null : this.SourceEntityPM.CustomAgentImportNote;
+            this.EntityPM.CustomAgentImportAddressId = !value ? null : this.SourceEntityPM.CustomAgentImportAddressId;
+            this.EntityPM.CustomAgentImportContactId = !value ? null : this.SourceEntityPM.CustomAgentImportContactId;
+            //this.EntityPM.CustomAgentImportReference = !value ? null : this.SourceEntityPM.CustomAgentImportReference;
+        }
+    }
+
+    private isCopyCustomAgentExport: boolean = false;
+    get IsCopyCustomAgentExport() { return this.isCopyCustomAgentExport; }
+    set IsCopyCustomAgentExport(value) {
+        if (this.isCopyCustomAgentExport != value) {
+            this.isCopyCustomAgentExport = value;
+
+            this.EntityPM.CustomAgentExportId = !value ? null : this.SourceEntityPM.CustomAgentExportId;
+            this.EntityPM.CustomAgentExportName = !value ? null : this.SourceEntityPM.CustomAgentExportName;
+            this.EntityPM.CustomAgentExportNote = !value ? null : this.SourceEntityPM.CustomAgentExportNote;
+            this.EntityPM.CustomAgentExportAddressId = !value ? null : this.SourceEntityPM.CustomAgentExportAddressId;
+            this.EntityPM.CustomAgentExportContactId = !value ? null : this.SourceEntityPM.CustomAgentExportContactId;
+            //this.EntityPM.CustomAgentExportReference = !value ? null : this.SourceEntityPM.CustomAgentExportReference;
+        }
+    }
+
+    private isCopyNotify1: boolean = false;
+    get IsCopyNotify1() { return this.isCopyNotify1; }
+    set IsCopyNotify1(value) {
+        if (this.isCopyNotify1 != value) {
+            this.isCopyNotify1 = value;
+
+            this.EntityPM.Notify1Id = !value ? null : this.SourceEntityPM.Notify1Id;
+            this.EntityPM.Notify1Name = !value ? null : this.SourceEntityPM.Notify1Name;
+            this.EntityPM.Notify1Note = !value ? null : this.SourceEntityPM.Notify1Note;
+            this.EntityPM.Notify1AddressId = !value ? null : this.SourceEntityPM.Notify1AddressId;
+            this.EntityPM.Notify1ContactId = !value ? null : this.SourceEntityPM.Notify1ContactId;
+        }
+    }
+
+    private isCopyNotify2: boolean = false;
+    get IsCopyNotify2() { return this.isCopyNotify2; }
+    set IsCopyNotify2(value) {
+        if (this.isCopyNotify2 != value) {
+            this.isCopyNotify2 = value;
+
+            this.EntityPM.Notify2Id = !value ? null : this.SourceEntityPM.Notify2Id;
+            this.EntityPM.Notify2Name = !value ? null : this.SourceEntityPM.Notify2Name;
+            this.EntityPM.Notify2Note = !value ? null : this.SourceEntityPM.Notify2Note;
+            this.EntityPM.Notify2AddressId = !value ? null : this.SourceEntityPM.Notify2AddressId;
+            this.EntityPM.Notify2ContactId = !value ? null : this.SourceEntityPM.Notify2ContactId;
+        }
+    }
+
+    private isCopyShipperNotExporter: boolean = false;
+    get IsCopyShipperNotExporter() { return this.isCopyShipperNotExporter; }
+    set IsCopyShipperNotExporter(value) {
+        if (this.isCopyShipperNotExporter != value) {
+            this.isCopyShipperNotExporter = value;
+
+            this.EntityPM.ShipperNotExporterId = !value ? null : this.SourceEntityPM.ShipperNotExporterId;
+            this.EntityPM.ShipperNotExporterName = !value ? null : this.SourceEntityPM.ShipperNotExporterName;
+            this.EntityPM.ShipperNotExporterNote = !value ? null : this.SourceEntityPM.ShipperNotExporterNote;
+            this.EntityPM.ShipperNotExporterAddressId = !value ? null : this.SourceEntityPM.ShipperNotExporterAddressId;
+            this.EntityPM.ShipperNotExporterContactId = !value ? null : this.SourceEntityPM.ShipperNotExporterContactId;
+        }
+    }
+
+    private isCopyConsigneeNotImporter: boolean = false;
+    get IsCopyConsigneeNotImporter() { return this.isCopyConsigneeNotImporter; }
+    set IsCopyConsigneeNotImporter(value) {
+        if (this.isCopyConsigneeNotImporter != value) {
+            this.isCopyConsigneeNotImporter = value;
+
+            this.EntityPM.ConsigneeNotImporterId = !value ? null : this.SourceEntityPM.ConsigneeNotImporterId;
+            this.EntityPM.ConsigneeNotImporterName = !value ? null : this.SourceEntityPM.ConsigneeNotImporterName;
+            this.EntityPM.ConsigneeNotImporterNote = !value ? null : this.SourceEntityPM.ConsigneeNotImporterNote;
+            this.EntityPM.ConsigneeNotImporterAddressId = !value ? null : this.SourceEntityPM.ConsigneeNotImporterAddressId;
+            this.EntityPM.ConsigneeNotImporterContactId = !value ? null : this.SourceEntityPM.ConsigneeNotImporterContactId;
+        }
+    }
+
+    private isCopyFreightForwarder: boolean = false;
+    get IsCopyFreightForwarder() { return this.isCopyFreightForwarder; }
+    set IsCopyFreightForwarder(value) {
+        if (this.isCopyFreightForwarder != value) {
+            this.isCopyFreightForwarder = value;
+
+            this.EntityPM.FreightForwarderId = !value ? null : this.SourceEntityPM.FreightForwarderId;
+            this.EntityPM.FreightForwarderName = !value ? null : this.SourceEntityPM.FreightForwarderName;
+            this.EntityPM.FreightForwarderNote = !value ? null : this.SourceEntityPM.FreightForwarderNote;
+            this.EntityPM.FreightForwarderAddressId = !value ? null : this.SourceEntityPM.FreightForwarderAddressId;
+            this.EntityPM.FreightForwarderContactId = !value ? null : this.SourceEntityPM.FreightForwarderContactId;
+            //this.EntityPM.FreightForwarderReference = !value ? null : this.SourceEntityPM.FreightForwarderReference;
+        }
+    }
+
+    private isCopyConsolidator: boolean = false;
+    get IsCopyConsolidator() { return this.isCopyConsolidator; }
+    set IsCopyConsolidator(value) {
+        if (this.isCopyConsolidator != value) {
+            this.isCopyConsolidator = value;
+
+            this.EntityPM.ConsolidatorId = !value ? null : this.SourceEntityPM.ConsolidatorId;
+            this.EntityPM.ConsolidatorName = !value ? null : this.SourceEntityPM.ConsolidatorName;
+            this.EntityPM.ConsolidatorNote = !value ? null : this.SourceEntityPM.ConsolidatorNote;
+            this.EntityPM.ConsolidatorAddressId = !value ? null : this.SourceEntityPM.ConsolidatorAddressId;
+            this.EntityPM.ConsolidatorContactId = !value ? null : this.SourceEntityPM.ConsolidatorContactId;
+            //this.EntityPM.ConsolidatorReference = !value ? null : this.SourceEntityPM.ConsolidatorReference;
+        }
+    }
+
+
+
+
+    private isCopyFlights: boolean = false;
+    get IsCopyFlights() { return this.isCopyFlights; }
+    set IsCopyFlights(value) {
+        if (this.isCopyFlights != value) {
+            this.isCopyFlights = value;
+        }
+    }
+
+    public IsCopyDescriptionEnabled: boolean = false;
+    private isCopyDescription: boolean = false;
+    get IsCopyDescription() { return this.isCopyDescription; }
+    set IsCopyDescription(value) {
+        if (this.isCopyDescription != value) {
+            this.isCopyDescription = value;
+            this.DescriptionOfGoods = !value ? null : this.SourceEntityPM.DescriptionOfGoods;
+        }
+    }
+
+    public IsCopyPackagesEnabled: boolean = false;
+    private isCopyPackages: boolean = false;
+    get IsCopyPackages() { return this.isCopyPackages; }
+    set IsCopyPackages(value) {
+        if (this.isCopyPackages != value) {
+            this.isCopyPackages = value;
+
+            if (value) {
+                ShipmentTool.CopyShipmentPackages(this.EntityPM, this.SourceEntityPM, false);
+
+                this.EntityPM.BookingVolume = this.SourceEntityPM.BookingVolume;
+                this.EntityPM.OrderVolumetricWeight = this.SourceEntityPM.OrderVolumetricWeight;
+                this.EntityPM.OrderGrossWeight = this.SourceEntityPM.OrderGrossWeight;
+                this.EntityPM.OrderChargeableWeight = this.SourceEntityPM.OrderChargeableWeight;
+                this.EntityPM.BookingNumberOfPackages = this.SourceEntityPM.BookingNumberOfPackages;
+
+                this.EntityPM.GrossWeight = this.SourceEntityPM.GrossWeight;
+                this.EntityPM.GrossWeightInKG = this.SourceEntityPM.GrossWeightInKG;
+                this.EntityPM.Volume = this.SourceEntityPM.Volume;
+                this.EntityPM.VolumeInCBM = this.SourceEntityPM.VolumeInCBM;
+                this.EntityPM.ChargeableWeight = this.SourceEntityPM.ChargeableWeight;
+                this.EntityPM.ChargeableWeightInKG = this.SourceEntityPM.ChargeableWeightInKG;
+                this.EntityPM.VolumetricWeight = this.SourceEntityPM.VolumetricWeight;
+                this.EntityPM.NumberOfContainers = this.SourceEntityPM.NumberOfContainers;
+                this.EntityPM.NumberOfPackages = this.SourceEntityPM.NumberOfPackages;
+                this.EntityPM.TEU = this.SourceEntityPM.TEU;
+                this.EntityPM.GrossWeightPerTon = this.SourceEntityPM.GrossWeightPerTon;
+            }
+
+            else {
+                this.EntityPM.ShipmentPackages = [];
+                this.EntityPM.ShipmentOrderPackages = [];
+
+                this.EntityPM.BookingVolume = null;
+                this.EntityPM.OrderVolumetricWeight = null;
+                this.EntityPM.OrderGrossWeight = null;
+                this.EntityPM.OrderChargeableWeight = null;
+                this.EntityPM.BookingNumberOfPackages = null;
+
+                this.EntityPM.GrossWeight = null;
+                this.EntityPM.GrossWeightInKG = null;
+                this.EntityPM.Volume = null;
+                this.EntityPM.VolumeInCBM = null;
+                this.EntityPM.ChargeableWeight = null;
+                this.EntityPM.ChargeableWeightInKG = null;
+                this.EntityPM.VolumetricWeight = null;
+                this.EntityPM.NumberOfContainers = null;
+                this.EntityPM.NumberOfPackages = null;
+                this.EntityPM.TEU = null;
+                this.EntityPM.GrossWeightPerTon = null;
+            }
+
+            this.SetUIProperties_OrderDetails();
+        }
+    }
+
     // Commands
     CancelButtonClicked() {
         SessionLocator.CurrentSession.CloseCurrentWindow();
@@ -1132,33 +1527,40 @@ export class NewMasterComponent extends BaseComponent {
 
     SetDataOnFinish() {
         this.EntityPM.MainCarriageFinalDestinationPortId = this.EntityPM.MainCarriageToPortId;
+
+        if (this.IsCopyFlights) {
+            ShipmentTool.CopyFlights(this.EntityPM, this.SourceEntityPM);
+        }
+
         this.SetPartnersOnFinish();
         this.SetCountryECOnFinish();
         this.SetOrderPackagesOnFinish();
         this.SetInlandDomesticOnFinish();
     }
     SetPartnersOnFinish() {
-        if (!AppTool.IsNullOrEmpty(this.AgentId)) {
-            if (this.DirectionId == "E") {
-                this.EntityPM.ConsigneeId = this.AgentId;
-                this.EntityPM.ConsigneeName = this.AgentName;
-                this.EntityPM.ConsigneeAddressId = this.AgentAddressId;
-                this.EntityPM.ConsigneeContactId = this.AgentContactId;
-                this.EntityPM.ConsigneeReference1 = this.AgentReference1;
-                this.EntityPM.ConsigneeReference2 = this.AgentReference2;
-                this.EntityPM.ShipperId = SessionLocator.TenantPM.AgentId;
-                this.EntityPM.ShipperAddressId = SessionLocator.TenantPM.AddressId;
-            }
+        if (this.IsCopyFromShipment) {
+            if (!AppTool.IsNullOrEmpty(this.AgentId)) {
+                if (this.DirectionId == "E") {
+                    this.EntityPM.ConsigneeId = this.AgentId;
+                    this.EntityPM.ConsigneeName = this.AgentName;
+                    this.EntityPM.ConsigneeAddressId = this.AgentAddressId;
+                    this.EntityPM.ConsigneeContactId = this.AgentContactId;
+                    this.EntityPM.ConsigneeReference1 = this.AgentReference1;
+                    this.EntityPM.ConsigneeReference2 = this.AgentReference2;
+                    this.EntityPM.ShipperId = SessionLocator.TenantPM.AgentId;
+                    this.EntityPM.ShipperAddressId = SessionLocator.TenantPM.AddressId;
+                }
 
-            else {
-                this.EntityPM.ShipperId = this.AgentId;
-                this.EntityPM.ShipperName = this.AgentName;
-                this.EntityPM.ShipperAddressId = this.AgentAddressId;
-                this.EntityPM.ShipperContactId = this.AgentContactId;
-                this.EntityPM.ShipperReference1 = this.AgentReference1;
-                this.EntityPM.ShipperReference2 = this.AgentReference2;
-                this.EntityPM.ConsigneeId = SessionLocator.TenantPM.AgentId;
-                this.EntityPM.ConsigneeAddressId = SessionLocator.TenantPM.AddressId;
+                else {
+                    this.EntityPM.ShipperId = this.AgentId;
+                    this.EntityPM.ShipperName = this.AgentName;
+                    this.EntityPM.ShipperAddressId = this.AgentAddressId;
+                    this.EntityPM.ShipperContactId = this.AgentContactId;
+                    this.EntityPM.ShipperReference1 = this.AgentReference1;
+                    this.EntityPM.ShipperReference2 = this.AgentReference2;
+                    this.EntityPM.ConsigneeId = SessionLocator.TenantPM.AgentId;
+                    this.EntityPM.ConsigneeAddressId = SessionLocator.TenantPM.AddressId;
+                }
             }
         }
     }
@@ -1370,6 +1772,38 @@ export class NewMasterComponent extends BaseComponent {
                 }
 
                 SessionLocator.CurrentSession.CloseCurrentWindowEmit('OK');
+
+                if (this.IsBuildFromQuote || this.IsCopyFromShipment) {
+
+                    var myBackButtonLabel: string = null;
+                    var myBackSessionTextCode: string = null;
+
+                    if (this.IsBuildFromQuote) {
+                        myBackButtonLabel = "Quote: " + this.SourceEntityPM.QuoteNumber;
+                        myBackSessionTextCode = "General.MH.Quotes";
+                    }
+
+                    else {
+                        myBackButtonLabel = "Shipment: " + this.SourceEntityPM.ShipmentNumber;
+                        myBackSessionTextCode = "General.MH.Operations";
+                    }
+
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: 'Shipment', BackButtonLabel: myBackButtonLabel });
+
+                            SessionLocator.CurrentSession.ChangeSessionHeader({ MenuTextCode: "General.MH.Operations" });
+
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                                SessionLocator.CurrentSession.ChangeSessionHeader({ MenuTextCode: myBackSessionTextCode });
+
+                                if (this.IsBuildFromQuote) {
+                                    SessionLocator.CurrentSession.FireEvent("LoadConnectedShipments");
+                                }
+                            });
+                        });
+                }
             }
         });
     }
