@@ -368,7 +368,7 @@ export class APInvoiceMenuButtonsHandler {
                         confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
                         confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
                         confirmWindow.ShowCancelButton = false;
-                        confirmWindow.Show("Please Note that there is already another invoice with the same number by the same vendor");
+                        confirmWindow.Show(TextCodeTranslator.Translate("APInvoice.M.SameInvoiceNumber"));
 
                         confirmWindow.WindowClosed.subscribe(c => {
                             if (confirmWindow.Yes) {

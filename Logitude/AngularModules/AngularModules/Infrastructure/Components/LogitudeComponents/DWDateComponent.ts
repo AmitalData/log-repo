@@ -1,14 +1,18 @@
-﻿declare var window: any;
+﻿
+
+declare var window: any;
 declare var System: any;
 import {Directive, ElementRef, Input, Output, Component, OnInit, EventEmitter} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
 import {ServiceArgs} from '../../DataContracts/ServiceArgs';
 
 import {SessionLocator} from '../../Utilities/SessionLocator';
-import {AppTool} from '../../Tools';
+import {AppTool, DateTool} from '../../Tools';
 
 
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
+
+import {DateAgeHelper} from '../../../Infrastructure/Utilities/DateAgeHelper';
 
 
 import {CustomEntityArgs} from './DWLogSearchWindowComponent';
@@ -29,21 +33,23 @@ import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
 
 
 export class DWDateComponent extends BaseComponent {
-
+    DateAgeHelper: DateAgeHelper = new DateAgeHelper(null);
     RangeLists: string[];
     SelectedValue: any;
     DataContext: any;
     ObjectFieldName: string;
     Item: any;
-
+    IsFirstTime: boolean = true;
+    IsLoad: boolean = false;
     constructor() {
         super();
-       
+  
     }
 
-
-    SelectedRange: string;
     DateValue: Date;
+    SelectedRange: string = "Day";
+    IntervalValue: number = 1;
+
 
     ShowRange: boolean = false;
     ShowInterval: boolean = false;
@@ -55,6 +61,7 @@ export class DWDateComponent extends BaseComponent {
         this.FillListRange();
         this.ShowControl();
         this.GetValue();
+
     }
 
     private operation: string;
@@ -64,12 +71,17 @@ export class DWDateComponent extends BaseComponent {
     public set Operation(newValue: string) {
         if (this.operation != newValue) {
             this.operation = newValue;
-            this.ShowControl();
-            this.SetValue();
+            if (!this.IsFirstTime) {
+                this.ShowControl();
+                this.SetValue();
+            }
+            this.IsFirstTime = false;
 
         }
     }
-    IntervalValue: number;
+
+
+
     ShowControl() {
 
         this.ShowLogDatePicker = false;
@@ -107,8 +119,10 @@ export class DWDateComponent extends BaseComponent {
         this.SetValue();
     }
 
-    DatePickerValueChange(value) {
-        if (value != this.DateValue) {
+    DatePickerValueChange(value: Date) {
+        var value1:string = value != null ? value.toString():"";
+        var value2:string = this.DateValue != null ? this.DateValue.toString():"";
+        if (value1 != value2) {
             this.DateValue = value;
             this.SetValue();
         }
@@ -122,14 +136,17 @@ export class DWDateComponent extends BaseComponent {
         }
     }
 
-
-
     SetValue() {
 
+        this.SelectedValue = "";
         if (this.Operation == "Before" || this.Operation == "After") {
-            this.SelectedValue = this.DateValue;
-
-
+            if (this.DateValue) {
+                var myFormats = DateTool.GetDateFormats(this.DateValue);
+                if (myFormats) {
+                    this.SelectedValue = myFormats.ShortDateString;
+                }
+            } 
+            
         } else if (this.Operation == "Previous" || this.Operation == "Next" ) {
             this.SelectedValue = this.Operation;
             this.SelectedValue += "^";
@@ -153,22 +170,39 @@ export class DWDateComponent extends BaseComponent {
     GetValue() {
 
         if (this.Operation == "Before" || this.Operation == "After") {
-            this.DateValue = this.SelectedValue;
+            if (this.SelectedValue) {
+                var date = new Date(this.SelectedValue);
+                var year = date.getUTCFullYear();
+                var month = date.getUTCMonth() + 1;
+                var day = date.getUTCDate() +2;
+                var value = month + "/" + day + "/" + year;
+                this.DateValue = new Date(value);
+            }
+ 
+        }
 
-        } else if (this.Operation == "Previous" || this.Operation == "Next") {
-
+        else if (this.Operation == "Previous" || this.Operation == "Next") {
             var values: string[] = this.SelectedValue.toString().split('^');
             if (values.length > 1) this.IntervalValue = Number(values[1]);
             if (values.length > 2) this.SelectedRange = values[2];
             
         }
+
         else if (this.Operation == "Current") {
             var values: string[] = this.SelectedValue.toString().split('^');
             if (values.length > 1) this.SelectedRange = values[1];
         
         }
 
+        this.IsLoad = true;
     }
+
+
+
+
+
+
+
 
 }
 

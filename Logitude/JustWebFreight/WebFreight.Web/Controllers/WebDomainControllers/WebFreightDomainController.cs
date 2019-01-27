@@ -295,7 +295,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
 
 
-        public HttpResponseMessage GetExportBIReportToExcel(string queryId)
+        public HttpResponseMessage GetExportBIReportToExcel(string queryId, string reportId)
         {
             try
             {
@@ -304,7 +304,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 string ObjectTableName = "Shipment";
-                var data = new ExportToExcelHelper().ExportBIQueryToExcel(queryId, tenant);
+                var data = new ExportToExcelHelper().ExportBIQueryToExcel(queryId, reportId, tenant);
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
                     FileName = ObjectTableName + DateTime.Now.ToShortDateString(),

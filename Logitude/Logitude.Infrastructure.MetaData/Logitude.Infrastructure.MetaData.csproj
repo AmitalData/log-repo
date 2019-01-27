@@ -91,12 +91,14 @@
     <None Include="EntityFiles\BIReportsType.lxml" />
     <None Include="EntityFiles\BusinessProcessQueue.lxml" />
     <None Include="EntityFiles\BusinessRole.lxml" />
+    <None Include="EntityFiles\FeatureToggle.lxml" />
     <None Include="EntityFiles\LBPTeamMember.lxml" />
     <None Include="EntityFiles\SharedLogisticsSetting.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\Team.lxml" />
     <None Include="EntityFiles\TeamMemberBusinessRole.lxml" />
+    <None Include="EntityFiles\Toggle.lxml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

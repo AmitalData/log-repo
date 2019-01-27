@@ -1648,6 +1648,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 DWSubQueryQuery dWSubQueryQuery = new DWSubQueryQuery(authToken.Tenant);
                 DWSubQueryPM dWSubQueryPM = dWSubQueryQuery.GetSinglePMByQueryid(dWQueryId, authToken.Tenant);
                 DWQueryData DWQueryData = new DWQueryData();
+                DWQueryData.PageIndex = 0;
+                DWQueryData.PageSize = 0;
                 bool isUpdated = false; 
      
                 List<DWObjectFieldsDetails> Columns = null;
@@ -1660,6 +1662,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     DWQueryData.Filters = Filters;
                 }
                 QueryData.DWQueryData = DWQueryData;
+
 
                 if (entityPM != null)
                 {

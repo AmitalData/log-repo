@@ -64,7 +64,7 @@ namespace WebFreight.Web.Helpers
                     {
                         WhereStmt = WhereStmt + " ( ";
                     }
-                    GetWhereStmtForFiltersList(Myfilter.FilterItems, Myfilter.AndOr);
+                    GetWhereStmtForFiltersList(Myfilter.FilterItems, !string.IsNullOrEmpty(Myfilter.AndOr) ? Myfilter.AndOr : "And");
                     if (WhereStmt == " where ")
                     {
                         WhereStmt = "";
@@ -76,16 +76,24 @@ namespace WebFreight.Web.Helpers
                     if (WhereStmt != "" && GetIfFiltersHaveValues(Myfilter.FilterItems) == true)
                     {
                         WhereStmt = WhereStmt + " ) ";
+                        WhereStmt = WhereStmt.Replace("And  (  )", "");
+                        WhereStmt = WhereStmt.Replace("Or  (  )", "");
                     }
 
                 }
                 else
                 {
                     //Myfilter.FilterItems.filter(a => a.TextValue != null).forEach((filter) => {
-                    if (Myfilter.TextValue != null)
+                    if (Myfilter.TextValue != null && !string.IsNullOrEmpty(Myfilter.TextValue.ToString()))
                     {
                         var filter = Myfilter;
                         var OperationSimpol = "";
+                        if (filter.Operation == null)
+                        {
+                            filter.Operation = new ObjectFieldOperator();
+                            filter.Operation.Code = filter.OperationCode;
+                            filter.Operation.Name = filter.OperationName;
+                        }
                         if(filter.DataTypeCode!="Date" && filter.DataTypeCode != "DateTime"){
                             if (filter.Operation.Code == "Equals")
                             {
@@ -147,29 +155,31 @@ namespace WebFreight.Web.Helpers
                             {
                                 OperationSimpol = " <= @@ ";
                             }
+
+                            if (filter.Operation.Code == "IsNull")
+                            {
+                                WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is null or " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " = '' " + " " + AndOr + " ";
+                            }
+                            else if (filter.Operation.Code == "IsNotNull")
+                            {
+                                WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is not null and " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " <> '' " + " " + AndOr + " ";
+                            }
+                            else
+                            {
+                                var operation = !isHaveMultiSelect ? OperationSimpol.Replace("@@", filter.TextValue.ToString()) : OperationSimpol;
+                                WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + operation + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
+                            }
                         }
                         else
                         {
                             DataWarehouseHelper dataWarehouseHelper = new DataWarehouseHelper();
-
-                            WhereStmt += dataWarehouseHelper.ResolveWarehoueDateField(filter.Name, filter.OperationCode, filter.TextValue.ToString(), Tenant);
-
+                            var fieldName =   (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) +"." + filter.Code;
+                            WhereStmt += dataWarehouseHelper.ResolveWarehoueDateField(fieldName , filter.OperationCode, filter.TextValue.ToString(), Tenant);
+     
                         }
 
 
-                        if (filter.Operation.Code == "IsNull")
-                        {
-                            WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is null or " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " = '' " + " " + AndOr + " ";
-                        }
-                        else if (filter.Operation.Code == "IsNotNull")
-                        {
-                            WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is not null and " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " <> '' " + " " + AndOr + " ";
-                        }
-                        else
-                        {
-                            var operation = !isHaveMultiSelect ? OperationSimpol.Replace("@@", filter.TextValue.ToString()) : OperationSimpol;
-                            WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + operation + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
-                        }
+                       
                     }
                     else
                     {
@@ -231,7 +241,7 @@ namespace WebFreight.Web.Helpers
             var FilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(DWQueryParam.Filters);
             var Columns = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(ColumnsXML);
             var Filters = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(FilterXML);
-            string PagingString = " ORDER BY " + "Id_Number OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY";
+            
             bool HasMeasurement = Columns.Where(a => a.IsMeasurement == true).Count() > 0;
             var InnerTables = new List<DWObjectFieldsDetails>();
             //this.SampleData = [];
@@ -282,7 +292,7 @@ namespace WebFreight.Web.Helpers
                 var MyFilterList = new List<DWObjectFieldsDetails>();
                 MyFilterList.Add(Filters);
                 GetWhereJoined(MyFilterList, InnerTables);
-                GetWhereStmtForFiltersList(MyFilterList, Filters.AndOr);
+                GetWhereStmtForFiltersList(MyFilterList, !string.IsNullOrEmpty(Filters.AndOr) ? Filters.AndOr : "And");
             }
 
             //this.Notes = SelectStmt;
@@ -300,6 +310,13 @@ namespace WebFreight.Web.Helpers
 
 
             }
+            var OrderByString = "" + Fact + ".Id_Number";
+            //var HasAggregate = false;
+            if (DWQueryParam.Columns.Where(a => a.IsMeasurement).Count() > 0)
+            {
+                OrderByString = "max(" + Fact + ".Id_Number)";
+            }
+            string PagingString = " ORDER BY " + OrderByString + " OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY";
             string FinalQuery = "";
             if (Filters != null)
             {

@@ -49,7 +49,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     
     public User CreatedByUser { get; set; }
     
-    public string VatNumber { get; set; }
+    public string VATNumber { get; set; }
     
     public Address BillToAddress { get; set; }
     
