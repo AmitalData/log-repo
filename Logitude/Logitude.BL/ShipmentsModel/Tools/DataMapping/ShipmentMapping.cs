@@ -200,8 +200,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             else
             {
-                entityPoco.FromPortId = entityMasterData.MainCarriageFromPortId;
-                entityPoco.ToPortId = entityMasterData.MainCarriageFinalDestinationPortId;
+                entityPM.FromPortId = entityMasterData.MainCarriageFromPortId;
+                entityPM.ToPortId = entityMasterData.MainCarriageFinalDestinationPortId;
+
+                entityPoco.FromPortId = entityPM.FromPortId;
+                entityPoco.ToPortId = entityPM.ToPortId;
 
                 if (entityPM.DirectionId == "I")
                 {
