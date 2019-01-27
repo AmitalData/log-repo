@@ -982,6 +982,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
                         FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
                         journalLine.CreditAccountId = accountingSettings != null ? accountingSettings.TaxWithholdingGLAccountId : null;
+                        journalLine.DebitAccountId = glAccount != null ? glAccount.Id : null;
                         journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                         journal.JournalLines.Add(journalLine);
                     }
