@@ -270,7 +270,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 List<string> shipmentIds = iQueryable_shipments.Select(s => s.Id).ToList();
                 IQueryable<ShipmentPayable> iQueryable_payables = shipmentPayableRepository.GetShipmentPayablesByShipmentIds(shipmentIds, tenant);
 
-                if (iQueryable_payables.Count() > 0)
+                if (iQueryable_payables != null && iQueryable_payables.Count() > 0)
                 {
                     if (!string.IsNullOrEmpty(VendorId))
                     {
