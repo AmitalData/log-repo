@@ -456,10 +456,21 @@ namespace Logitude.Accounting.BL.CoreBL
                             {
                                 if (item.Address1.Length > 50) { item.Address1.Substring(0, 50); }
                                 myStringBuilder.Append(item.Address1.PadLeft(50, ' '));
-                                if (address != null && address.Length > 51)
+                                if (address.Length > 60)
                                 {
                                     item.Address2 = address.Substring(51, 60);
-                                    myStringBuilder.Append("a" + item.Address1.PadLeft(10, ' '));
+                                    myStringBuilder.Append("a" + item.Address2.PadLeft(10, ' '));
+                                }
+                                else if (address.Length > 51)
+                                {
+                                    int s = address.Length - 50;
+                                    item.Address2 = address.Substring(50, s);
+                                    myStringBuilder.Append("a" + item.Address2.PadLeft(10, ' '));
+                                }
+                                else
+                                {
+                                    myStringBuilder.Append("a");
+                                    myStringBuilder.Append(' ', 10);
                                 }
                             }
                             else
@@ -529,18 +540,37 @@ namespace Logitude.Accounting.BL.CoreBL
                                 item.Address1 = address;
                                 if (item.Address1 != null)
                                 {
-                                    if (item.Address1.Length > 50) { item.Address1.Substring(0, 50); }
+                                    
+
+                                    if (item.Address1.Length > 50)
+                                    { item.Address1.Substring(0, 50); }
                                     myStringBuilder.Append(item.Address1.PadLeft(50, ' '));
-                                    if (address != null && address.Length > 51)
+
+                                    if (address.Length > 60)
                                     {
                                         item.Address2 = address.Substring(51, 60);
-                                        myStringBuilder.Append("a" + item.Address1.PadLeft(10, ' '));
+                                        myStringBuilder.Append("a" + item.Address2.PadLeft(10, ' '));
                                     }
+                                    else if (address.Length > 51)
+                                    {
+                                        int s = address.Length - 50;
+                                        item.Address2 = address.Substring(50, s);
+                                        myStringBuilder.Append("a" + item.Address2.PadLeft(10, ' '));
+                                    }
+                                    else
+                                    {
+                                        myStringBuilder.Append("a");
+                                        myStringBuilder.Append(' ', 10);
+                                    }
+
+                                  
                                 }
                                 else
                                 {
                                     myStringBuilder.Append("a");
-                                    myStringBuilder.Append(' ', 60);
+                                    myStringBuilder.Append(' ', 50);
+                                    myStringBuilder.Append("a");
+                                    myStringBuilder.Append(' ', 10);
                                 }
                                 if (mainaddress.City != null)
                                 {
@@ -1316,9 +1346,15 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         if (item.AddressStreet.Length > 50) { item.AddressStreet.Substring(0, 50); }
                         myStringBuilder.Append(item.AddressStreet.PadLeft(50, ' '));
-                        if (address != null && address.Length > 51)
+                        if (address.Length > 60)
                         {
                             item.AddressHomeNO = address.Substring(51, 60);
+                            myStringBuilder.Append("a" + item.AddressHomeNO.PadLeft(10, ' '));
+                        }
+                        else if (address.Length > 51)
+                        {
+                            int s = address.Length - 50;
+                            item.AddressHomeNO = address.Substring(50, s);
                             myStringBuilder.Append("a" + item.AddressHomeNO.PadLeft(10, ' '));
                         }
                         else
@@ -1326,6 +1362,8 @@ namespace Logitude.Accounting.BL.CoreBL
                             myStringBuilder.Append("a");
                             myStringBuilder.Append(' ', 10);
                         }
+
+                       
                     }
                     else
                     {
@@ -1401,9 +1439,15 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         if (item.AddressStreet.Length > 50) { item.AddressStreet = item.AddressStreet.Substring(0, 50); }
                         myStringBuilder.Append("a" + item.AddressStreet.PadLeft(50, ' '));
-                        if (address != null && address.Length > 51)
+                        if (address.Length > 60)
                         {
                             item.AddressHomeNO = address.Substring(51, 60);
+                            myStringBuilder.Append("a" + item.AddressHomeNO.PadLeft(10, ' '));
+                        }
+                        else if (address.Length > 51)
+                        {
+                            int s = address.Length - 50;
+                            item.AddressHomeNO = address.Substring(50, s);
                             myStringBuilder.Append("a" + item.AddressHomeNO.PadLeft(10, ' '));
                         }
                         else
@@ -1411,6 +1455,9 @@ namespace Logitude.Accounting.BL.CoreBL
                             myStringBuilder.Append("a");
                             myStringBuilder.Append(' ', 10);
                         }
+
+
+                   
                     }
                     else
                     {
@@ -1869,9 +1916,15 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         if (item.AddressStreet.Length > 50) { item.AddressStreet.Substring(0, 50); }
                         myStringBuilder.Append(item.AddressStreet.PadLeft(50, ' '));
-                        if (address != null && address.Length > 51)
+                        if (address.Length > 60)
                         {
                             item.AddressHomeNO = address.Substring(51, 60);
+                            myStringBuilder.Append("a" + item.AddressHomeNO.PadLeft(10, ' '));
+                        }
+                        else if (address.Length > 51)
+                        {
+                            int s = address.Length - 50;
+                            item.AddressHomeNO = address.Substring(50, s);
                             myStringBuilder.Append("a" + item.AddressHomeNO.PadLeft(10, ' '));
                         }
                         else
@@ -1879,6 +1932,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             myStringBuilder.Append("a");
                             myStringBuilder.Append(' ', 10);
                         }
+
                     }
                     else
                     {
@@ -1953,9 +2007,15 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         if (item.AddressStreet.Length > 50) { item.AddressStreet = item.AddressStreet.Substring(0, 50); }
                         myStringBuilder.Append("a" + item.AddressStreet.PadLeft(50, ' '));
-                        if (address != null && address.Length > 51)
+                        if (address.Length > 60)
                         {
                             item.AddressHomeNO = address.Substring(51, 60);
+                            myStringBuilder.Append("a" + item.AddressHomeNO.PadLeft(10, ' '));
+                        }
+                        else if (address.Length > 51)
+                        {
+                            int s = address.Length - 50;
+                            item.AddressHomeNO = address.Substring(50, s);
                             myStringBuilder.Append("a" + item.AddressHomeNO.PadLeft(10, ' '));
                         }
                         else
@@ -1963,6 +2023,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             myStringBuilder.Append("a");
                             myStringBuilder.Append(' ', 10);
                         }
+
                     }
                     else
                     {
