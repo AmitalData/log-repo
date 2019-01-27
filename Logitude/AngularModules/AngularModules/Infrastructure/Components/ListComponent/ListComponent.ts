@@ -2863,6 +2863,7 @@ export class ListComponent implements OnInit, AfterViewInit {
               ObjectTableName: this.ObjectTableName,
               BackButtonLabel: label,
               NavigationIds: ids,
+              
             });
             cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
               this.isEditControlOpened = false;

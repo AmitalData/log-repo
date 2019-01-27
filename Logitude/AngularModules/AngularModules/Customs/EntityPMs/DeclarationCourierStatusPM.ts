@@ -249,6 +249,11 @@ export class DeclarationCourierStatusPM {
     public set SpecialActionsErrorXml(newValue: string) { if (this.specialActionsErrorXml != newValue) { this.specialActionsErrorXml = newValue; this.MarkAsDirty("SpecialActionsErrorXml"); } }
        
 	 
+    private courierPendingReasonErrorPlace: string;
+    public get CourierPendingReasonErrorPlace() { return this.courierPendingReasonErrorPlace; }
+    public set CourierPendingReasonErrorPlace(newValue: string) { if (this.courierPendingReasonErrorPlace != newValue) { this.courierPendingReasonErrorPlace = newValue; this.MarkAsDirty("CourierPendingReasonErrorPlace"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

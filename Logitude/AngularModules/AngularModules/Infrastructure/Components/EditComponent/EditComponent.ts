@@ -1386,7 +1386,7 @@ export class EditComponent implements OnDestroy {
    nextPreviousTimerToken: any;
    LoadNextPreviousEntity() {
 
-
+     var selectedTab=this.PreSelectedTabCode;
      this.NextButtonDisabled = true;
      this.PreviousButtonDisabled = true;
      this.cd.detectChanges();
@@ -1418,6 +1418,7 @@ export class EditComponent implements OnDestroy {
      args.ObjectTableName = this.ObjectTableName;
      args.BackButtonLabel = this.BackButtonLabel;
      args.NavigationIds = this.NavigationIds;
+     args.SelectedTabCode=selectedTab;
      this.Run(args);
 
    }
