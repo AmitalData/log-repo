@@ -414,7 +414,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
     btnAdd_Click(item) {
 
         this.SelectedItem = item;
-        if (this.SelectedItem && this.SelectedFieldsDataSource.indexOf(this.SelectedItem) == -1) {
+        var myCurrentItem = this.SelectedFieldsDataSource.filter(a => a.DisplayName == this.SelectedItem.DisplayName);
+        if (this.SelectedItem && myCurrentItem && myCurrentItem.length == 0) {
 
             var tempData = this.SelectedFieldsDataSource;
             tempData.push(this.SelectedItem);
@@ -1204,8 +1205,14 @@ export class DWObjectFieldsDetails extends BaseComponent {
     }
     public set TextValue(newValue: any) {
         if (this.textValue != newValue) {
-            this.textValue = newValue;
-            this.MyParentClass.SaveChanges();
+            if ((newValue == true || newValue == false) && this.textValue) {
+                this.textValue = newValue;
+                this.MyParentClass.SaveChanges();
+            }
+            else if (newValue != true || newValue != false) {
+                this.textValue = newValue;
+                this.MyParentClass.SaveChanges();
+            }
         }
     }
 
