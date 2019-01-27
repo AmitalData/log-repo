@@ -115,7 +115,7 @@
 	dw_Shipments.AgentReference1, dw_Shipments.AgentReference2,dw_Shipments.CustomerReference1,dw_Shipments.CustomerReference2,dw_Shipments.ShipperReference1,dw_Shipments.ShipperReference2,dw_Shipments.ConsigneeReference1,dw_Shipments.ConsigneeReference2,dw_Shipments.MainHarmonize,dw_Shipments.AMSBL,
 	dw_Shipments.FirstPickupETA,dw_Shipments.FirstPickupETD,dw_Shipments.FreightPrepaidCollectId,dw_ShipmentMasterDatas.MainCarriageATD,dw_ShipmentMasterDatas.MainCarriageFinalDestinationATA,dw_ShipmentMasterDatas.MainCarriageFinalDestinationETA,
 	dw_ShipmentMasterDatas.MainCarriageCarrierNumber,dw_Shipments.ProjectNumber,dw_Shipments.OtherPrepaidCollectId,dw_Shipments.TEU,dw_Shipments.ValueOfGoods,
-	mainCarriageCarrierPartners.Id_Number,valueOfGoodsCurrency.Id_Number,WarehouseLegWarehousePartners.Id_Number,forwarderPartners.Id_Number,createdByUser.Id_Number,customerAgentImportPartners.Id_Number , 1
+	mainCarriageCarrierPartners.Id_Number,valueOfGoodsCurrency.Id_Number,WarehouseLegWarehousePartners.Id_Number,forwarderPartners.Id_Number,createdByUser.Id_Number,customerAgentImportPartners.Id_Number , customerAgentExportPartners.Id_Number
 
 	From dw_Shipments
 	inner JOIN NewDIM_Tenants SourceTenant ON dw_Shipments.Tenant = SourceTenant.[Tenant Number]
@@ -151,7 +151,7 @@
 	
 	inner JOIN NewDIM_Partners forwarderPartners ON dw_Shipments.ForwarderPartnerId = forwarderPartners.Id
     inner JOIN NewDIM_Partners customerAgentImportPartners ON dw_Shipments.CustomAgentImportId = customerAgentImportPartners.Id
-	--inner JOIN NewDIM_Partners customerAgentExportPartners ON dw_Shipments.CustomAgentExportId = customerAgentExportPartners.Id
+	inner JOIN NewDIM_Partners customerAgentExportPartners ON dw_Shipments.CustomAgentExportId = customerAgentExportPartners.Id
 
 
 	inner JOIN NewDIM_Partners mainCarriageCarrierPartners ON dw_ShipmentMasterDatas.MainCarriageCarrierId = mainCarriageCarrierPartners.Id
