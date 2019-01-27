@@ -2852,7 +2852,50 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
 
+            //Z900
 
+            myStringBuilder.Append("Z900");
+            
+            counter++;
+           
+
+            if (counter.ToString().Length > 9)
+            {
+                counter.ToString().Substring(0, 9);
+                myStringBuilder.Append("a" + counter.ToString().PadLeft(9, '0'));
+            }
+            else
+            {
+                myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
+            }
+
+            if (tenantPM.VatNumber != null)
+            {
+                if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber = tenantPM.VatNumber.Substring(0, 9); }
+                myStringBuilder.Append("a" + tenantPM.VatNumber.PadLeft(9, '0'));
+            }
+            else
+            {
+                myStringBuilder.Append("a");
+                myStringBuilder.Append('0', 9);
+            }
+            Random random = new Random();
+            string num = random.Next().ToString();
+            if (num.Length > 15) { num = num.Substring(0, 15); }
+            myStringBuilder.Append("a" + num.PadLeft(15, '0'));
+
+            myStringBuilder.Append("&OF1.31&");
+
+            if (counter.ToString().Length > 9)
+            {
+                counter.ToString().Substring(0, 9);
+                myStringBuilder.Append("a" + counter.ToString().PadLeft(9, '0'));
+            }
+            else
+            {
+                myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
+            }
+            myStringBuilder.Append(' ', 50);
             DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, openFormatReportPM);
 
             return docOut;
