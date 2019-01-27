@@ -65,6 +65,11 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             if (!string.IsNullOrWhiteSpace(requestParams.BranchID))
             {
+                if (requestParams.BranchID.Contains(","))
+                {
+                    string[] branchArray = requestParams.BranchID.Split(',');
+                    requestParams.BranchID = branchArray[0];
+                }
                 int.TryParse(requestParams.BranchID, out tempInt);
                 paymentFilterParamTSHPaymentParams.BranchID = tempInt;
                 paymentFilterParamTSHPaymentParams.BranchIDSpecified = true;
