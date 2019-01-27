@@ -1055,6 +1055,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string courierPendingReasonErrorPlace ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierPendingReasonErrorPlace  
+	   {
+	    
+	     get
+		{
+		   return courierPendingReasonErrorPlace;
+		 }
+		 set
+		 {
+		   if(courierPendingReasonErrorPlace != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierPendingReasonErrorPlace",OldValue=courierPendingReasonErrorPlace,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierPendingReasonErrorPlace=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

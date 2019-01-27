@@ -85,7 +85,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierSuspentionCode, 
 	         CourierSuspentionName, 
 	         SpecialActionStatus, 
-	         SpecialActionsErrorXml,
+	         SpecialActionsErrorXml, 
+	         CourierPendingReasonErrorPlace,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

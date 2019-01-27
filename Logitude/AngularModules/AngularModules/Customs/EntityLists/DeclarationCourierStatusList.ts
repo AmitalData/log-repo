@@ -53,6 +53,7 @@ export class DeclarationCourierStatusList {
 	CourierSuspentionName: string;
 	SpecialActionStatus: string;
 	SpecialActionsErrorXml: string;
+	CourierPendingReasonErrorPlace: string;
 	
 }
  

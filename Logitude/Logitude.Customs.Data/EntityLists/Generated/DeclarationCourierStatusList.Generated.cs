@@ -104,6 +104,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string SpecialActionStatus  { get; set; }
        [DataMember]
        public string SpecialActionsErrorXml  { get; set; }
+       [DataMember]
+       public string CourierPendingReasonErrorPlace  { get; set; }
    }
 
 }
