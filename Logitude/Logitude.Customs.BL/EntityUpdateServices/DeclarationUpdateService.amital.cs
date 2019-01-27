@@ -132,6 +132,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 doTask = false;
             }
+            if(dirtyDeclarationPM.DepositionStatusCode == "L" && dbOccDeclarationPM.DepositionStatusCode != "L")
+            {
+                OpenLogBoxUnifreighTask(dirtyDeclarationPM, "LDR2C", "", false, "");
+                return;
+            }
             bool deleteStatus = false;
             try
             {
