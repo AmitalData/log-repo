@@ -332,7 +332,11 @@ export class CourierWorksheetListTemplate {
     SendPay(event) {
         this.ButtonClick(event);
 
-
+        if (this._CourierWorksheet.CourierPendingReasonErrorPlace == "1" /*=="בתשלום"*/) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Show("קיים Pending עם עצירה בתשלום הצהרה");
+            return;
+        }
 
         let BackButtonLabel = "תיק עמילות"
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
