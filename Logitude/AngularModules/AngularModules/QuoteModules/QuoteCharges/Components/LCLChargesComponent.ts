@@ -1727,6 +1727,11 @@ export class QuoteChargeItem extends BaseComponent {
     set CostExchangeRate(value: number) {
         if (this.EntityPM.CostExchangeRate != value) {
             this.EntityPM.CostExchangeRate = AppTool.Round(value, 5);
+
+            if (this.QuotePM.IsSaleCurrencySameAsCost) {
+                this.SaleExchangeRate = value;
+            }
+
             this.ComputeCostAmounts();
             this.ComputeCostInSalePrice();
         }
