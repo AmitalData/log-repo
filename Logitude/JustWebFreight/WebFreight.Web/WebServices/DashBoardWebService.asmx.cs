@@ -262,7 +262,7 @@ namespace WebFreight.Web.WebServices
                 totalData.CustomersList = this.GetCustomersDataCustom(tenant, LastMonths, LastDays, ShowIndex, DirectionId, TransportModeId,fromDate,toDate);
                 totalData.CountriesList = this.GetCountriesDataCustom(tenant, LastMonths, LastDays, ShowIndex, DirectionId, TransportModeId,fromDate,toDate);
                 totalData.DirectionTransportModeList = this.GetDirectionTransportModeDataCustom(tenant, LastMonths, LastDays, ShowIndex,fromDate,toDate);
-                totalData.ShipmentQuantityList = this.GetShipmentsDataCustom(tenant, LastMonths, LastDays, ShowIndex, DirectionId, TransportModeId,fromDate,toDate);
+                totalData.ShipmentQuantityList = this.GetShipmentsData(tenant, LastMonths, -365, ShowIndex, DirectionId, TransportModeId);
 
             }
             else

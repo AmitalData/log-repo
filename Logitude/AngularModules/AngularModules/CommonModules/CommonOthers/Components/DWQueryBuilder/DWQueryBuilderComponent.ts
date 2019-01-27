@@ -414,7 +414,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
     btnAdd_Click(item) {
 
         this.SelectedItem = item;
-        if (this.SelectedItem && this.SelectedFieldsDataSource.indexOf(this.SelectedItem) == -1) {
+        var myCurrentItem = this.SelectedFieldsDataSource.filter(a => a.DisplayName == this.SelectedItem.DisplayName);
+        if (this.SelectedItem && myCurrentItem && myCurrentItem.length == 0) {
 
             var tempData = this.SelectedFieldsDataSource;
             tempData.push(this.SelectedItem);
@@ -835,6 +836,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     public StartBusyIndicator(myText: string) {
         this.BusyIndicatorText = myText;
         this.ShowBusyIndicator = true;
+        this.CD.detectChanges();
     }
 
     public StopBusyIndicator() {
@@ -1204,10 +1206,25 @@ export class DWObjectFieldsDetails extends BaseComponent {
     }
     public set TextValue(newValue: any) {
         if (this.textValue != newValue) {
-            this.textValue = newValue;
-            this.MyParentClass.SaveChanges();
+            if ((newValue == true || newValue == false) && this.textValue) {
+                this.textValue = newValue;
+
+                if (!this.DontSaveChanges) this.MyParentClass.SaveChanges();
+             
+              
+            }
+            else if (newValue != true || newValue != false) {
+                this.textValue = newValue;
+                if (!this.DontSaveChanges) this.MyParentClass.SaveChanges();
+            }
+
+            this.DontSaveChanges = false;
         }
     }
+
+
+
+
 
     private multiSelectedValueLists: MultiSelectedValue[];
     public get MultiSelectedValueLists() {
@@ -1331,19 +1348,30 @@ export class DWObjectFieldsDetails extends BaseComponent {
         });
     }
 
+
+    DontSaveChanges: boolean = false;
     OperationValueChanged(operation) {
+   
+ 
 
-        if (this.Operation.Code == this.IsNullOp.Code || this.Operation.Code == this.IsNotNullOp.Code) {
-            this.TextValue = "";
-            this.MultiSelectedValueLists = [];
-        }
+        if (operation.Code == this.currentOp.Code || operation.Code == this.beforeOp.Code || operation.Code == this.afterOp.Code || operation.Code == this.previousOp.Code || operation.Code == this.nextOp.Code || operation.Code == this.currentOp.Code) {
+            this.DontSaveChanges = true;
+            //this.TextValue = "";
+            this.Operation = operation;
+        } else {
 
-        this.Operation = operation;
-        if (operation.Code == this.IsNullOp.Code || operation.Code == this.IsNotNullOp.Code) {
-            this.TextValue = operation.Code;
-        }
-        if (operation.Code == this.IsNullOp.Code || operation.Code == this.IsNotNullOp.Code || !AppTool.IsNullOrEmpty(this.TextValue)) {
-            this.MyParentClass.SaveChanges();
+            if (this.Operation.Code == this.IsNullOp.Code || this.Operation.Code == this.IsNotNullOp.Code) {
+                this.TextValue = "";
+                this.MultiSelectedValueLists = [];
+            }
+
+            this.Operation = operation;
+            if (operation.Code == this.IsNullOp.Code || operation.Code == this.IsNotNullOp.Code) {
+                this.TextValue = operation.Code;
+            }
+            if (operation.Code == this.IsNullOp.Code || operation.Code == this.IsNotNullOp.Code || !AppTool.IsNullOrEmpty(this.TextValue)) {
+                this.MyParentClass.SaveChanges();
+            }
         }
     }
 
@@ -1399,7 +1427,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
     }
 
     onTextChange(value) {
-        this.TextValue = value;
+       this.TextValue = value;
+       
     }
 
     AndOrOpsChanged(value) {

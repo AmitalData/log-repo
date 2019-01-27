@@ -1,3 +1,4 @@
+import { Validator } from './../../../../../Infrastructure/Validators/Validator';
 import { Component, OnInit, Output, EventEmitter, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -110,10 +111,21 @@ export class EditTaxReportLineComponent extends BaseComponent {
         if (this.TaxReportLinePM.OutputOrInput == "O") {
             this.UIProperties.SetEnabled("TransmitStatusCode", this.ObjectTableName, false);
         }
+        this.UIProperties.SetRequired("TransmitStatusCode", this.ObjectTableName, true);
     }
 
     //#region Buttons
     OkButtonClicked() {
+
+        if(!this.TaxReportLinePM.TransmitStatusCode){
+            var fieldName: string = TextCodeTranslator.Translate('TaxReportLine.F.TransmitStatusCode');
+            var translatedRequiredError: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+            var fieldError: string = translatedRequiredError.replace("%FieldName", fieldName);
+
+            this.ValidationErrorsList = [];
+            this.ValidationErrorsList.push(fieldError);
+            return;
+        }
 
         // update line
         this.TaxReportLinePM.IsManuallyChanged = true;

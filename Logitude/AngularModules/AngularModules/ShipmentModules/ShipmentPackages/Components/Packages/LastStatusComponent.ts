@@ -3,6 +3,7 @@ import {INTRAWebService} from '../../../../Shipment/Services/INTRAWebService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 
 @Component({
     moduleId: module.id,
@@ -13,9 +14,9 @@ export class LastStatusComponent {
     private ShipmentId: string = null;
     private ContainerId: string = null;
     public ValidationErrorsList: string[] = [];
-    public ItemsSource: LastStatusItem[] = [];
+    public ItemsSource: ObservableCollection;
     constructor() {
-
+        this.ItemsSource = new ObservableCollection([]);
     }
 
     SetWindowArgs(args: any) {
@@ -25,7 +26,8 @@ export class LastStatusComponent {
         var myService = new INTRAWebService();
         myService.GetContainerStatuses(this.ShipmentId, this.ContainerId).subscribe((myResponse: ServiceResponse) => {
 
-            this.ItemsSource = [];
+            var itemsSource: LastStatusItem[] = [];
+            var itemsCollection: LastStatusItem[] = [];
 
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -33,7 +35,6 @@ export class LastStatusComponent {
 
             else {
 
-                var itemsSource: LastStatusItem[] = [];
                 var items: any[] = myResponse.Result;
 
                 items.forEach(item => {
@@ -41,8 +42,10 @@ export class LastStatusComponent {
                 });
 
                 itemsSource.sort((a, b) => { return (a.SortingValue === b.SortingValue) ? 0 : (a.SortingValue < b.SortingValue) ? -1 : 1 }).forEach(item => {
-                    this.ItemsSource.push(item);
+                    itemsCollection.push(item);
                 });
+
+                this.ItemsSource.InsertCollection(itemsCollection);
             }
         });
     }

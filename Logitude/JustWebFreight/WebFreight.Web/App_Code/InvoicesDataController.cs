@@ -300,7 +300,6 @@ namespace WebFreight.Web.App_Code
             }
 
             query2 = query2.Skip(0);
-            query2 = query2.Take(50);
 
             List<ARInvoiceList> listQuery = query2.ToList();
 

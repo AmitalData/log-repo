@@ -1,22 +1,21 @@
-﻿declare var window: any;
+﻿
+
+declare var window: any;
 declare var System: any;
 import {Directive, ElementRef, Input, Output, Component, OnInit, EventEmitter} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
 import {ServiceArgs} from '../../DataContracts/ServiceArgs';
 
 import {SessionLocator} from '../../Utilities/SessionLocator';
-import {AppTool} from '../../Tools';
-
+import {AppTool, DateTool} from '../../Tools';
 
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 
+import {DateAgeHelper} from '../../../Infrastructure/Utilities/DateAgeHelper';
 
 import {CustomEntityArgs} from './DWLogSearchWindowComponent';
 
-
 import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
-
-
 
 
 @Component({
@@ -29,7 +28,7 @@ import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
 
 
 export class DWDateComponent extends BaseComponent {
-
+    DateAgeHelper: DateAgeHelper = new DateAgeHelper(null);
     RangeLists: string[];
     SelectedValue: any;
     DataContext: any;
@@ -37,26 +36,29 @@ export class DWDateComponent extends BaseComponent {
     Item: any;
     IsFirstTime: boolean = true;
     IsLoad: boolean = false;
+
+    @Output() ValueChanged = new EventEmitter();
     constructor() {
         super();
   
     }
 
+    DateValue: Date;
+    SelectedRange: string = "Day";
+    IntervalValue: number = 1;
 
-    SelectedRange: string;
 
     ShowRange: boolean = false;
     ShowInterval: boolean = false;
     ShowLogDatePicker: boolean = false;
 
     ngOnInit() { 
-
-   
+    
         this.FillListRange();
         this.ShowControl();
-        this.GetValue();
-
+        this.InitializeComponent();
     }
+
 
     private operation: string;
     public get Operation() {
@@ -64,20 +66,20 @@ export class DWDateComponent extends BaseComponent {
     }
     public set Operation(newValue: string) {
         if (this.operation != newValue) {
+
+            if (!this.IsFirstTime) this.SetDefultValue(this.operation, newValue);
             this.operation = newValue;
+          
             if (!this.IsFirstTime) {
                 this.ShowControl();
-                this.SetValue();
+                this.DataContext.TextValue = "";
+              this.SetValue();
             }
             this.IsFirstTime = false;
 
         }
     }
 
-
-
-    DateValue: Date;
-    IntervalValue: number;
     ShowControl() {
 
         this.ShowLogDatePicker = false;
@@ -96,8 +98,6 @@ export class DWDateComponent extends BaseComponent {
             this.ShowLogDatePicker = true;
         }
     }
-
-
 
     FillListRange() {
 
@@ -132,49 +132,75 @@ export class DWDateComponent extends BaseComponent {
         }
     }
 
+    SetDefultValue(operation, newoperation) {
 
-
-    SetValue() {
-
-        if (this.Operation == "Before" || this.Operation == "After") {
-            this.SelectedValue = this.DateValue ? this.DateValue.toString():"";
-           
-
-        } else if (this.Operation == "Previous" || this.Operation == "Next" ) {
-            this.SelectedValue = this.Operation;
-            this.SelectedValue += "^";
-            this.SelectedValue += (!AppTool.IsNullOrEmpty(this.IntervalValue) ? this.IntervalValue :0);
-            this.SelectedValue += "^";
-            this.SelectedValue += (!AppTool.IsNullOrEmpty(this.SelectedRange) ? this.SelectedRange : "");
-
-        } else if (this.Operation == "Current") {
-            this.SelectedValue = this.Operation;
-            this.SelectedValue += "^";
-            this.SelectedValue += (!AppTool.IsNullOrEmpty(this.SelectedRange) ? this.SelectedRange:"");
-
+        if ((operation == "After" && newoperation != "Before") || (operation == "Before" && newoperation != "After")) {
+          //  this.DateValue = null;
         }
-
-        if (this.DataContext.TextValue != this.SelectedValue) {
-            this.DataContext.TextValue = this.SelectedValue;
+        else if ((operation == "Previous" && newoperation != "Next") || (operation == "Next" && newoperation != "Previous")) {
+            this.IntervalValue = 1;
+            this.SelectedRange = "Day";
+        } else if ((operation == "Current" && newoperation != "Current")) {
+            this.IntervalValue = 1;
+            this.SelectedRange = "Day";
         }
 
     }
 
-    GetValue() {
+
+    SetValue() {
+
+        var selectedValue = "";
+
+        if (this.Operation == "Before" || this.Operation == "After") {
+            if (this.DateValue) {
+                var myFormats = DateTool.GetDateFormats(this.DateValue);
+                if (myFormats) {
+                    selectedValue = myFormats.ShortDateString;
+                }
+            } 
+            
+        } else if (this.Operation == "Previous" || this.Operation == "Next" ) {
+            selectedValue = this.Operation;
+            selectedValue += "^";
+            selectedValue += (!AppTool.IsNullOrEmpty(this.IntervalValue) ? this.IntervalValue :0);
+            selectedValue += "^";
+            selectedValue += (!AppTool.IsNullOrEmpty(this.SelectedRange) ? this.SelectedRange : "");
+
+        } else if (this.Operation == "Current") {
+            selectedValue = this.Operation;
+            selectedValue += "^";
+            selectedValue += (!AppTool.IsNullOrEmpty(this.SelectedRange) ? this.SelectedRange:"");
+
+        }
+
+        if (this.DataContext.TextValue != selectedValue) {
+            this.ValueChanged.emit(selectedValue);
+        }
+
+    }
+
+    InitializeComponent() {
 
         if (this.Operation == "Before" || this.Operation == "After") {
             if (this.SelectedValue) {
-               
-                this.DateValue = new Date(this.SelectedValue);  
+                var date = new Date(this.SelectedValue);
+                var year = date.getUTCFullYear();
+                var month = date.getUTCMonth() + 1;
+                var day = date.getUTCDate() +2;
+                var value = month + "/" + day + "/" + year;
+                this.DateValue = new Date(value);
             }
  
-        } else if (this.Operation == "Previous" || this.Operation == "Next") {
+        }
 
+        else if (this.Operation == "Previous" || this.Operation == "Next") {
             var values: string[] = this.SelectedValue.toString().split('^');
             if (values.length > 1) this.IntervalValue = Number(values[1]);
             if (values.length > 2) this.SelectedRange = values[2];
             
         }
+
         else if (this.Operation == "Current") {
             var values: string[] = this.SelectedValue.toString().split('^');
             if (values.length > 1) this.SelectedRange = values[1];
@@ -183,15 +209,13 @@ export class DWDateComponent extends BaseComponent {
 
         this.IsLoad = true;
     }
-    SetDate(year: number, month: number, day: number) {
-        var date = new Date();
-        date.setUTCFullYear(year);
-        date.setUTCMonth(month);
-        date.setUTCDate(day);
-        date.setUTCHours(0);
-        date.setUTCMinutes(0);
-        date.setUTCSeconds(0);
-        return date;
-    }
+
+
+
+
+
+
+
+
 }
 

@@ -207,10 +207,10 @@ export class WebFreightDomainService {
         );
     }
 
-    GetExportBIReportToExcel(queryId: string) {
+    GetExportBIReportToExcel(queryId: string, reportId:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/GetExportBIReportToExcel?queryId=' + queryId;
+        var url = this._apiUrl + '/GetExportBIReportToExcel?queryId=' + queryId + '&reportId=' + reportId ; 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
                 var allLists = response.json();
