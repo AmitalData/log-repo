@@ -24,6 +24,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public ComputingPartner Poco { get; set; }
         private ComputingPartnerPM entityPM;
         private ICommonDataContext objectContext;
+        private ContactRepository contactRepository;
+
         private ComputingPartnerRepository entityRepository;
         private ComputingPartnerTableRepository computingPartnerTableRepository;
         public ComputingPartnerService(ICommonDataContext objectContext, ComputingPartnerPM entityPM)
@@ -41,18 +43,21 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             ContactRepository contactRepository = new ContactRepository(tenant);
 
             string email = HttpContext.Current.User.Identity.Name;
+            Contact loggedContact= contactRepository.GetSingleContactByEmail(email, tenant);
 
-            if (email != null)
+            if (loggedContact == null)
             {
-                Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+                loggedContact =  contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant);
                 this.loggedContactId = loggedContact.Id;
             }
 
             else
             {
-                ContactPM loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
                 this.loggedContactId = loggedContact.Id;
             }
+            
+
+
         }
 
         public void Create()

@@ -943,9 +943,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void CreateARPaymentChequeJournals(ARPaymentPM theEntityPm, ARPaymentChequePM arPaymentcheque)
         {
-
-            
-
             int counter = 0;
             // Insert Journal 
             JournalPM journal = new JournalPM();
@@ -1007,6 +1004,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 journalLine.Reference1 = arPaymentcheque.PaymentNumber;
                 journalLine.Reference2 = arPaymentcheque.ChequeNumber;
                 journalLine.DebitAccountId = cashBook.AccountId;
+                journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
                 journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                 journal.JournalLines.Add(journalLine);
             }
@@ -1029,6 +1027,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 journalLine.Reference1 = theEntityPm.PaymentNo;
                 journalLine.Reference2 = arPaymentcheque.ChequeNumber;
                 journalLine.DebitAccountId = this.getGLAccountByPaymentMethodCode(theEntityPm);
+                journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
                 journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                 journal.JournalLines.Add(journalLine);
             }
@@ -1054,9 +1053,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             );
                 AutoReconcileARPaymentServiceExt.InitMust(glAccount, journal, AutoReconcileRecordList);
                 AutoReconcileARPaymentServiceExt.InsertJournalReconcile();
-
-
-
             }
 
             IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;

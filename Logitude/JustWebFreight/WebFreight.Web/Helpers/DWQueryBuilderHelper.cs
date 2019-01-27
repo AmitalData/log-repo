@@ -64,7 +64,7 @@ namespace WebFreight.Web.Helpers
                     {
                         WhereStmt = WhereStmt + " ( ";
                     }
-                    GetWhereStmtForFiltersList(Myfilter.FilterItems, Myfilter.AndOr);
+                    GetWhereStmtForFiltersList(Myfilter.FilterItems, !string.IsNullOrEmpty(Myfilter.AndOr) ? Myfilter.AndOr : "And");
                     if (WhereStmt == " where ")
                     {
                         WhereStmt = "";
@@ -76,13 +76,15 @@ namespace WebFreight.Web.Helpers
                     if (WhereStmt != "" && GetIfFiltersHaveValues(Myfilter.FilterItems) == true)
                     {
                         WhereStmt = WhereStmt + " ) ";
+                        WhereStmt = WhereStmt.Replace("And  (  )", "");
+                        WhereStmt = WhereStmt.Replace("Or  (  )", "");
                     }
 
                 }
                 else
                 {
                     //Myfilter.FilterItems.filter(a => a.TextValue != null).forEach((filter) => {
-                    if (Myfilter.TextValue != null)
+                    if (Myfilter.TextValue != null && !string.IsNullOrEmpty(Myfilter.TextValue.ToString()))
                     {
                         var filter = Myfilter;
                         var OperationSimpol = "";
@@ -290,7 +292,7 @@ namespace WebFreight.Web.Helpers
                 var MyFilterList = new List<DWObjectFieldsDetails>();
                 MyFilterList.Add(Filters);
                 GetWhereJoined(MyFilterList, InnerTables);
-                GetWhereStmtForFiltersList(MyFilterList, Filters.AndOr);
+                GetWhereStmtForFiltersList(MyFilterList, !string.IsNullOrEmpty(Filters.AndOr) ? Filters.AndOr : "And");
             }
 
             //this.Notes = SelectStmt;
@@ -308,7 +310,13 @@ namespace WebFreight.Web.Helpers
 
 
             }
-            string PagingString = " ORDER BY " + Fact + ".Id_Number OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY";
+            var OrderByString = "" + Fact + ".Id_Number";
+            //var HasAggregate = false;
+            if (DWQueryParam.Columns.Where(a => a.IsMeasurement).Count() > 0)
+            {
+                OrderByString = "max(" + Fact + ".Id_Number)";
+            }
+            string PagingString = " ORDER BY " + OrderByString + " OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY";
             string FinalQuery = "";
             if (Filters != null)
             {
