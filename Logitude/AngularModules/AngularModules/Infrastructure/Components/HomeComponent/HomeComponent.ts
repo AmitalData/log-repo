@@ -772,8 +772,13 @@ export class HomeComponent implements OnDestroy{
 
     CloseTab(tabItem: SessionTabItem) {
         var isNeedingConfirmation = false;
-        if (SessionLocator.CurrentSession.CurrentEditComponent) {
-          isNeedingConfirmation = SessionLocator.CurrentSession.CurrentEditComponent.NeedCloseConfirmation();
+        var tab = SessionLocator.CurrentSession.CurrentEditComponent; 
+        if (tabItem.SessionComponent.CurrentEditComponent != null) {
+            tab = tabItem.SessionComponent.CurrentEditComponent;
+            SessionLocator.CurrentSession = tabItem.SessionComponent;
+        }
+        if (tab) {
+            isNeedingConfirmation = tab.NeedCloseConfirmation();
         }
         if (isNeedingConfirmation) {
             var confirmWindow = new ConfirmWindow();
@@ -783,13 +788,13 @@ export class HomeComponent implements OnDestroy{
             confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.DontSave");
             confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
             confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
-            confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(SessionLocator.CurrentSession.CurrentEditComponent.ObjectTableName)));
+            confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(tab.ObjectTableName)));
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
 
 
                     if (!this.SaveCompletedEvent) {
-                        this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                        this.SaveCompletedEvent = tab.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                             if (isSaveSuccess) {
                                 this.Close(tabItem);
                             }
@@ -799,7 +804,7 @@ export class HomeComponent implements OnDestroy{
                         });
                     }
 
-                    SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                    tab.SaveChanges();
                 }
 
                 else if (confirmWindow.No) {

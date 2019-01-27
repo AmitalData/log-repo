@@ -288,33 +288,28 @@ export class VendorChargesAnalysisFilterComponent extends BaseComponent {
         var errors: string[] = [];
 
         if (!this.SelectedDateFilter) {
-            this.ValidationErrorsList.push("Date field is required");
+            errors.push("Date field is required");
         }
 
         if (this.FromDate != null && this.ToDate != null) {
             if (this.ToDate < this.FromDate) {
-                this.ValidationErrorsList.push("From date must be less than to date");
+                errors.push("From date must be less than to date");
             }
-
-            //else {
-            //    if (((this.ToDate.valueOf() - this.FromDate.valueOf()) / (1000 * 60 * 60 * 24)) > 365)
-            //        this.ValidationErrorsList.push("Dates should be within one year");
-            //}
         }
 
         else {
             if (this.FromDate == null) {
-                this.ValidationErrorsList.push("From Date is required");
+                errors.push("From Date is required");
             }
 
             if (this.ToDate == null) {
-                this.ValidationErrorsList.push("To Date is required");
+                errors.push("To Date is required");
             }
         }
 
         this.ValidationErrorsList = errors;
 
-        if (errors.length == 0) {
+        if (this.ValidationErrorsList.length == 0) {
             var myFilterItems: QueryFilterItem[] = [];
             myFilterItems.push(new QueryFilterItem("VendorId", this.VendorId));
             myFilterItems.push(new QueryFilterItem("DateType", this.SelectedDateFilter.Code));
