@@ -1071,7 +1071,8 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             .subscribe(response => {
                 this.IsDepositionStatusCodeButton = false;
                 this.IsDepositionStatusCodeSendDigital = false;
-                this.DepositionStatusCodeIcon = "./Images/LogBox/DSV/U_LOGBOX.png";
+                //this.DepositionStatusCodeIcon = "./Images/LogBox/DSV/U_LOGBOX.png";
+                this.DepositionStatusCodeIcon = "LOGBOX";
                 if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
                     this.IsDepositionStatusCodeButton = true;
                 }
@@ -1090,7 +1091,8 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_PRV_LBL_LOG", "NON", "NON", SessionLocator.Tenant)
                             .subscribe(res => {
                                 if (!res.HasError && res.Result != null) {
-                                    this.DepositionStatusCodeIcon = "./Images/LogBox/DSV/Tab_Logo_Original.png";
+                                    //this.DepositionStatusCodeIcon = "./Images/LogBox/DSV/Tab_Logo_Original.png";
+                                    this.DepositionStatusCodeIcon = "DEFAULT";
                                 }
                             });
                     });
