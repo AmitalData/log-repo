@@ -9,18 +9,13 @@ import {ServiceArgs} from '../../DataContracts/ServiceArgs';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {AppTool, DateTool} from '../../Tools';
 
-
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 
 import {DateAgeHelper} from '../../../Infrastructure/Utilities/DateAgeHelper';
 
-
 import {CustomEntityArgs} from './DWLogSearchWindowComponent';
 
-
 import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
-
-
 
 
 @Component({
@@ -41,6 +36,8 @@ export class DWDateComponent extends BaseComponent {
     Item: any;
     IsFirstTime: boolean = true;
     IsLoad: boolean = false;
+
+    @Output() ValueChanged = new EventEmitter();
     constructor() {
         super();
   
@@ -56,13 +53,12 @@ export class DWDateComponent extends BaseComponent {
     ShowLogDatePicker: boolean = false;
 
     ngOnInit() { 
-
-
+    
         this.FillListRange();
         this.ShowControl();
-        this.GetValue();
-
+        this.InitializeComponent();
     }
+
 
     private operation: string;
     public get Operation() {
@@ -70,17 +66,19 @@ export class DWDateComponent extends BaseComponent {
     }
     public set Operation(newValue: string) {
         if (this.operation != newValue) {
+
+            if (!this.IsFirstTime) this.SetDefultValue(this.operation, newValue);
             this.operation = newValue;
+          
             if (!this.IsFirstTime) {
                 this.ShowControl();
-                this.SetValue();
+                this.DataContext.TextValue = "";
+              this.SetValue();
             }
             this.IsFirstTime = false;
 
         }
     }
-
-
 
     ShowControl() {
 
@@ -100,8 +98,6 @@ export class DWDateComponent extends BaseComponent {
             this.ShowLogDatePicker = true;
         }
     }
-
-
 
     FillListRange() {
 
@@ -136,38 +132,55 @@ export class DWDateComponent extends BaseComponent {
         }
     }
 
-    SetValue() {
+    SetDefultValue(operation, newoperation) {
 
-        this.SelectedValue = "";
-        if (this.Operation == "Before" || this.Operation == "After") {
-            if (this.DateValue) {
-                var myFormats = DateTool.GetDateFormats(this.DateValue);
-                if (myFormats) {
-                    this.SelectedValue = myFormats.ShortDateString;
-                }
-            } 
-            
-        } else if (this.Operation == "Previous" || this.Operation == "Next" ) {
-            this.SelectedValue = this.Operation;
-            this.SelectedValue += "^";
-            this.SelectedValue += (!AppTool.IsNullOrEmpty(this.IntervalValue) ? this.IntervalValue :0);
-            this.SelectedValue += "^";
-            this.SelectedValue += (!AppTool.IsNullOrEmpty(this.SelectedRange) ? this.SelectedRange : "");
-
-        } else if (this.Operation == "Current") {
-            this.SelectedValue = this.Operation;
-            this.SelectedValue += "^";
-            this.SelectedValue += (!AppTool.IsNullOrEmpty(this.SelectedRange) ? this.SelectedRange:"");
-
+        if ((operation == "After" && newoperation != "Before") || (operation == "Before" && newoperation != "After")) {
+          //  this.DateValue = null;
         }
-
-        if (this.DataContext.TextValue != this.SelectedValue) {
-            this.DataContext.TextValue = this.SelectedValue;
+        else if ((operation == "Previous" && newoperation != "Next") || (operation == "Next" && newoperation != "Previous")) {
+            this.IntervalValue = 1;
+            this.SelectedRange = "Day";
+        } else if ((operation == "Current" && newoperation != "Current")) {
+            this.IntervalValue = 1;
+            this.SelectedRange = "Day";
         }
 
     }
 
-    GetValue() {
+
+    SetValue() {
+
+        var selectedValue = "";
+
+        if (this.Operation == "Before" || this.Operation == "After") {
+            if (this.DateValue) {
+                var myFormats = DateTool.GetDateFormats(this.DateValue);
+                if (myFormats) {
+                    selectedValue = myFormats.ShortDateString;
+                }
+            } 
+            
+        } else if (this.Operation == "Previous" || this.Operation == "Next" ) {
+            selectedValue = this.Operation;
+            selectedValue += "^";
+            selectedValue += (!AppTool.IsNullOrEmpty(this.IntervalValue) ? this.IntervalValue :0);
+            selectedValue += "^";
+            selectedValue += (!AppTool.IsNullOrEmpty(this.SelectedRange) ? this.SelectedRange : "");
+
+        } else if (this.Operation == "Current") {
+            selectedValue = this.Operation;
+            selectedValue += "^";
+            selectedValue += (!AppTool.IsNullOrEmpty(this.SelectedRange) ? this.SelectedRange:"");
+
+        }
+
+        if (this.DataContext.TextValue != selectedValue) {
+            this.ValueChanged.emit(selectedValue);
+        }
+
+    }
+
+    InitializeComponent() {
 
         if (this.Operation == "Before" || this.Operation == "After") {
             if (this.SelectedValue) {

@@ -835,6 +835,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     public StartBusyIndicator(myText: string) {
         this.BusyIndicatorText = myText;
         this.ShowBusyIndicator = true;
+        this.CD.detectChanges();
     }
 
     public StopBusyIndicator() {
@@ -1205,7 +1206,10 @@ export class DWObjectFieldsDetails extends BaseComponent {
     public set TextValue(newValue: any) {
         if (this.textValue != newValue) {
             this.textValue = newValue;
-            this.MyParentClass.SaveChanges();
+            if (!this.DontSaveChanges) {
+                this.MyParentClass.SaveChanges();
+            }
+            this.DontSaveChanges = false;
         }
     }
 
@@ -1331,27 +1335,30 @@ export class DWObjectFieldsDetails extends BaseComponent {
         });
     }
 
+
+    DontSaveChanges: boolean = false;
     OperationValueChanged(operation) {
+   
+ 
 
-        if ((this.Operation.Code == this.beforeOp.Code && operation != this.afterOp.Code) || (this.Operation.Code == this.afterOp.Code && operation != this.beforeOp.Code) ) {
-            this.TextValue = "";
-        }
-        if ((this.Operation.Code == this.nextOp.Code && operation != this.previousOp.Code) || (this.Operation.Code == this.previousOp.Code && operation != this.nextOp.Code)) {
-            this.TextValue = "";
-        }
+        if (operation.Code == this.currentOp.Code || operation.Code == this.beforeOp.Code || operation.Code == this.afterOp.Code || operation.Code == this.previousOp.Code || operation.Code == this.nextOp.Code || operation.Code == this.currentOp.Code) {
+            this.DontSaveChanges = true;
+            //this.TextValue = "";
+            this.Operation = operation;
+        } else {
 
+            if (this.Operation.Code == this.IsNullOp.Code || this.Operation.Code == this.IsNotNullOp.Code) {
+                this.TextValue = "";
+                this.MultiSelectedValueLists = [];
+            }
 
-        if (this.Operation.Code == this.IsNullOp.Code || this.Operation.Code == this.IsNotNullOp.Code) {
-            this.TextValue = "";
-            this.MultiSelectedValueLists = [];
-        }
-
-        this.Operation = operation;
-        if (operation.Code == this.IsNullOp.Code || operation.Code == this.IsNotNullOp.Code) {
-            this.TextValue = operation.Code;
-        }
-        if (operation.Code == this.IsNullOp.Code || operation.Code == this.IsNotNullOp.Code || !AppTool.IsNullOrEmpty(this.TextValue)) {
-            this.MyParentClass.SaveChanges();
+            this.Operation = operation;
+            if (operation.Code == this.IsNullOp.Code || operation.Code == this.IsNotNullOp.Code) {
+                this.TextValue = operation.Code;
+            }
+            if (operation.Code == this.IsNullOp.Code || operation.Code == this.IsNotNullOp.Code || !AppTool.IsNullOrEmpty(this.TextValue)) {
+                this.MyParentClass.SaveChanges();
+            }
         }
     }
 
@@ -1407,7 +1414,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
     }
 
     onTextChange(value) {
-        this.TextValue = value;
+       this.TextValue = value;
+       
     }
 
     AndOrOpsChanged(value) {

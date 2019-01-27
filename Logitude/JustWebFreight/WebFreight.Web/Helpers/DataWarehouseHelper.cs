@@ -13,24 +13,25 @@ namespace WebFreight.Web.Helpers
         {
             string result = string.Empty;
 
-            if (!string.IsNullOrEmpty(fieldValue))
+
+            if ((operationCode == "Before" || operationCode == "After")) result = ResolveBeforeAfterDateValue(fieldName, operationCode, fieldValue, tenant);
+            else
             {
-                if ((operationCode == "Before" || operationCode == "After")) result = ResolveBeforeAfterDateValue(fieldName, operationCode, fieldValue, tenant);
-                else
+                if (ValidateFieldValue(operationCode, fieldValue))
                 {
-                    if (ValidateFieldValue(operationCode, fieldValue))
-                    {
-                        DateTime currentDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    DateTime currentDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-                        var valuesArray = fieldValue.Split('^');
-                        if (operationCode == "Previous" && valuesArray.Length == 3) result = ResolvePreviousDateValue(fieldName, valuesArray[1], valuesArray[2], currentDate);
-                        else if (operationCode == "Next" && valuesArray.Length == 3) result = ResolveNextDateValue(fieldName, valuesArray[1], valuesArray[2], currentDate);
-                        else if (operationCode == "Current" && valuesArray.Length == 2) result = ResolveCurrentDateValue(fieldName, valuesArray[1], currentDate);
+                    var valuesArray = fieldValue.Split('^');
+                    if (operationCode == "Previous" && valuesArray.Length == 3) result = ResolvePreviousDateValue(fieldName, valuesArray[1], valuesArray[2], currentDate);
+                    else if (operationCode == "Next" && valuesArray.Length == 3) result = ResolveNextDateValue(fieldName, valuesArray[1], valuesArray[2], currentDate);
+                    else if (operationCode == "Current" && valuesArray.Length == 2) result = ResolveCurrentDateValue(fieldName, valuesArray[1], currentDate);
 
-                    }
                 }
+                
 
             }
+
+
 
             return result;
 
@@ -73,7 +74,7 @@ namespace WebFreight.Web.Helpers
         private string ResolveBeforeAfterDateValue(string fieldName , string operationCode, string fieldvalue, int tenant  )
         {
             string dateValue = fieldvalue;
-            if(operationCode == "After") dateValue += " 23:59:59";
+            if(operationCode == "After" && !string.IsNullOrEmpty(dateValue)) dateValue += " 23:59:59";
             string operationSimpol = operationCode == "After" ? " >'" : "<'";
             string result = fieldName + operationSimpol +dateValue + "'";
 
@@ -159,10 +160,16 @@ namespace WebFreight.Web.Helpers
                     break;
 
                 case "Quarter":
-
-                    fromDate = AddQuarters(currentDate, intervalNumber);
+                    intervalNumber = intervalNumber * 3;
+                    fromDate = currentDate.AddMonths(intervalNumber);
                     fromDate = new DateTime(fromDate.Value.Year, fromDate.Value.Month, 1);
+                    toDate = DateTime.Parse(fromDate.ToString()).AddMonths(intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber));
 
+                    //fromDate = AddQuarters(currentDate, intervalNumber);
+                    //fromDate = new DateTime(fromDate.Value.Year, fromDate.Value.Month, 1);
+                    //intervalNumber = intervalNumber * 3;
+
+                    //toDate = DateTime.Parse(fromDate.ToString()).AddMonths(intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber));
                     break;
 
                 case "Year":
@@ -256,7 +263,7 @@ namespace WebFreight.Web.Helpers
             string result = string.Empty;
             if (range == "Day" && operatorCode == "Current")
             {
-                result = (fieldName + "= '" + (fromDate != null ? fromDate.Value.ToShortDateString():""));
+                result = (fieldName + "= '" + (fromDate != null ? fromDate.Value.ToShortDateString():"") + "'");
             }
             else
             {
