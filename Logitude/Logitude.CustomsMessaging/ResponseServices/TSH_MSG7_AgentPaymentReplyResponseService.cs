@@ -259,14 +259,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 else
                 {
+                    byte[] content = null;
                     
+                    if (customResponse.PrintedPaymentForm != null)
+                    {
+                        if (customResponse.PrintedPaymentForm.PrintedPaymentForm != null)
+                        {
+                            if (customResponse.PrintedPaymentForm.PrintedPaymentForm.content != null)
+                            {
+                                content = customResponse.PrintedPaymentForm.PrintedPaymentForm.content;
+                            }
+                        }
+                    }
                     DocumentsFilingPM documentsFilingPM = myAnalyzePaymentDocumentManager.GetDocumentsFiling(requestParams);
-                    if (documentsFilingPM==null)
+                    if (documentsFilingPM == null)
                     {
                         // eitan : if get first time Attach add contents
                         LogMessagingUtil.Instance.AppendLine("UNIQUEFILINGPOFeature not Exist  but get first time Attach add contents ");
                         myAnalyzePaymentDocumentManager.CreatePaymentDocument(
-                            customResponse.PrintedPaymentForm.PrintedPaymentForm.content
+                            content
                             , requestParams);
                     }
                     else
