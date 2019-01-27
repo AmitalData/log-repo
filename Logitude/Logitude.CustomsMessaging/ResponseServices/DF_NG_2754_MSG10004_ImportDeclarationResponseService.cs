@@ -293,7 +293,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             //     return;
             // }
-
+            if (_MyDeclarationPM.DepositionStatusCode == "R") _MyDeclarationPM.DepositionStatusCode = null;
             if (customResponse.ResponseContentHeader.Exception != null)
             {
                 string userMessage = "";
@@ -333,6 +333,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 UpdateUnifreightEvent("MID", requestParams.LoggingUserId);
                                 userMessage = userMessage + "חסר תצהיר יבואן";
+                                if (string.IsNullOrWhiteSpace(_MyDeclarationPM.DepositionStatusCode)) _MyDeclarationPM.DepositionStatusCode = "R";
                                 break;
                             }
                         case 2244:
@@ -506,7 +507,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AnalyzeErrorPionter(customResponse.Response.Error, _MyDeclarationPM, WCOTypeEnum.WCO, !_IsSubmitDeclarationResponse);
             this._MyDeclarationError = mydDclarationErrorPointerService._declarationErrorPointer;
             LogMessagingUtil.Instance.AppendLine("ErrosXml:Took:" + swErrosXml1.ElapsedMilliseconds);
-
+           
 
             var swTax = Stopwatch.StartNew();
             //Update Declaration Taxes
@@ -683,7 +684,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
-            UpdateDepositionStatusCode();
 
             if (!String.IsNullOrWhiteSpace("itzik and yaron move to herer from DeclarationWebService.asmx"))
             {
@@ -760,33 +760,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private void UpdateDepositionStatusCode()
-        {
-            if (_MyDeclarationError != null && _MyDeclarationError.Entitites != null && _MyDeclarationError.Entitites.Count > 0)
-            {
-                //Go over all the 'Entity'
-                foreach (var entity in _MyDeclarationError.Entitites)
-                {
-                    if (entity.FieldErrors != null)
-                    {
-                        //Go over all the 'FieldErrors'
-                        foreach (var fieldErrors in entity.FieldErrors)
-                        {
-                            //Get all 'FieldErrors' for the 'FieldError'
-                            List<field> fieldList = (from a in entity.FieldErrors
-                                                     where (a.Code == "4589")
-                                                     select a).ToList();
-                            if (fieldList.Count > 0)
-                            {
-                                if (string.IsNullOrWhiteSpace(_MyDeclarationPM.DepositionStatusCode)) _MyDeclarationPM.DepositionStatusCode = "R";
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-            if (_MyDeclarationPM.DepositionStatusCode == "R") _MyDeclarationPM.DepositionStatusCode = null;
-        }
 
         public void SendDeclarationPrint(DeclarationPM declarationPM, SendRequestVIA RequestVIA, GenericRequestParams requestParams) // moran 28.1.15 - Task 10005
         {
