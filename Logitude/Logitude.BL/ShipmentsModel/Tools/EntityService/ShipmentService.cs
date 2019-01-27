@@ -4482,98 +4482,104 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             this.allHouses = new List<Shipment>();
 
-            if (entityPM.ShipmentLevelCode == "C")
+            if (this.isNewEntity)
             {
-                if (entityPM.IsCancelled != entityPoco.IsCancelled)
+                if (entityPM.ShipmentLevelCode == "C")
                 {
-                    isUpdatingHouses = true;
-                }
-                if (entityPM.IsAccountingClosed != entityPoco.IsAccountingClosed)
-                {
-                    isUpdatingHouses = true;
-                }
-                if (entityPM.IsOperationalClosed != entityPoco.IsOperationalClosed)
-                {
-                    isUpdatingHouses = true;
-                }
-                if (entityPM.MainCarriageFromPortId != entityMasterData.MainCarriageFromPortId)
-                {
-                    isUpdatingHouses = true;
-                }
-                if (entityPM.MainCarriageFinalDestinationPortId != entityMasterData.MainCarriageFinalDestinationPortId)
-                {
-                    isUpdatingHouses = true;
-                }
-
-                if (isUpdatingHouses)
-                {
-                    List<string> ids = shipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.Id).ToList();
-
-                    if (ids.Count > 0)
+                    if (entityPM.IsCancelled != entityPoco.IsCancelled)
                     {
-                        ShipmentQuery iShipmentQuery = new ShipmentQuery(this.entityRepository);
-
-                        foreach (string id in ids)
-                        {
-                            ShipmentPM iHousePM = iShipmentQuery.GetSinglePMWithoutComposition(id, this.tenant);
-
-                            if (iHousePM != null)
-                            {
-                                iHousePM.FromPortId = this.entityPM.MainCarriageFromPortId;
-                                iHousePM.ToPortId = this.entityPM.MainCarriageFinalDestinationPortId;
-                                iHousePM.IsCancelled = this.entityPM.IsCancelled;
-                                iHousePM.CancelledDate = this.entityPM.CancelledDate;
-                                iHousePM.IsOperationalClosed = this.entityPM.IsOperationalClosed;
-                                iHousePM.OperationalCloseDate = this.entityPM.OperationalCloseDate;
-                                iHousePM.FirstOperationalCloseDate = this.entityPM.FirstOperationalCloseDate;
-                                iHousePM.IsAccountingClosed = this.entityPM.IsAccountingClosed;
-                                iHousePM.AccountingCloseDate = this.entityPM.AccountingCloseDate;
-                                
-                                ShipmentService iShipmentService = new ShipmentService(this.objectContext, iHousePM, this.serviceContextUser);
-                                iShipmentService.Update();
-                            }
-                        }
+                        isUpdatingHouses = true;
                     }
-                }
-
-
-                //allHouses = entityRepository.GetHouseShipmentsForMaster(entityPM.Id, tenant);
-
-                //if (allHouses.Count > 0)
-                //{
-                //    this.CheckCancelMasterHouses(allHouses);
-                //    this.CheckAccountingCloseMasterHouses(allHouses);
-                //    this.CheckOperationalCloseMasterHouses(allHouses);
-                //}
-
-                if (this.entityComputedFields != null)
-                {
-                    if (this.isNewEntity)
+                    if (entityPM.IsAccountingClosed != entityPoco.IsAccountingClosed)
                     {
-
+                        isUpdatingHouses = true;
+                    }
+                    if (entityPM.IsOperationalClosed != entityPoco.IsOperationalClosed)
+                    {
+                        isUpdatingHouses = true;
+                    }
+                    if (entityPM.MainCarriageFromPortId != entityMasterData.MainCarriageFromPortId)
+                    {
+                        isUpdatingHouses = true;
+                    }
+                    if (entityPM.MainCarriageFinalDestinationPortId != entityMasterData.MainCarriageFinalDestinationPortId)
+                    {
+                        isUpdatingHouses = true;
                     }
 
-                    else
+                    if (isUpdatingHouses)
                     {
                         if (shipmentConsoleShipmentsChangeSet != null)
                         {
-                            entityComputedFields.NumberOfHouses = shipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
-                            shipmentComputedFieldsRepository.Update(entityComputedFields);
+                            List<string> ids = shipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.Id).ToList();
+
+                            if (ids.Count > 0)
+                            {
+                                ShipmentQuery iShipmentQuery = new ShipmentQuery(this.entityRepository);
+
+                                foreach (string id in ids)
+                                {
+                                    ShipmentPM iHousePM = iShipmentQuery.GetSinglePMWithoutComposition(id, this.tenant);
+
+                                    if (iHousePM != null)
+                                    {
+                                        iHousePM.FromPortId = this.entityPM.MainCarriageFromPortId;
+                                        iHousePM.ToPortId = this.entityPM.MainCarriageFinalDestinationPortId;
+                                        iHousePM.IsCancelled = this.entityPM.IsCancelled;
+                                        iHousePM.CancelledDate = this.entityPM.CancelledDate;
+                                        iHousePM.IsOperationalClosed = this.entityPM.IsOperationalClosed;
+                                        iHousePM.OperationalCloseDate = this.entityPM.OperationalCloseDate;
+                                        iHousePM.FirstOperationalCloseDate = this.entityPM.FirstOperationalCloseDate;
+                                        iHousePM.IsAccountingClosed = this.entityPM.IsAccountingClosed;
+                                        iHousePM.AccountingCloseDate = this.entityPM.AccountingCloseDate;
+
+                                        ShipmentService iShipmentService = new ShipmentService(this.objectContext, iHousePM, this.serviceContextUser);
+                                        iShipmentService.Update();
+                                    }
+                                }
+                            }
                         }
                     }
 
-                }
-            }
 
-            else if (entityPM.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(entityPM.MasterShipmentDataId))
-            {
-                if (this.isNewEntity)
-                {
-                    ShipmentComputedFields entityMasterComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.MasterShipmentDataId, entityPM.Tenant);
-                    if (entityMasterComputedFields != null)
+                    //allHouses = entityRepository.GetHouseShipmentsForMaster(entityPM.Id, tenant);
+
+                    //if (allHouses.Count > 0)
+                    //{
+                    //    this.CheckCancelMasterHouses(allHouses);
+                    //    this.CheckAccountingCloseMasterHouses(allHouses);
+                    //    this.CheckOperationalCloseMasterHouses(allHouses);
+                    //}
+
+                    if (this.entityComputedFields != null)
                     {
-                        entityMasterComputedFields.NumberOfHouses += 1;
-                        shipmentComputedFieldsRepository.Update(entityMasterComputedFields);
+                        if (this.isNewEntity)
+                        {
+
+                        }
+
+                        else
+                        {
+                            if (shipmentConsoleShipmentsChangeSet != null)
+                            {
+                                entityComputedFields.NumberOfHouses = shipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
+                                shipmentComputedFieldsRepository.Update(entityComputedFields);
+                            }
+                        }
+
+                    }
+                }
+
+                else if (entityPM.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(entityPM.MasterShipmentDataId))
+                {
+                    if (this.isNewEntity)
+                    {
+                        ShipmentComputedFields entityMasterComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.MasterShipmentDataId, entityPM.Tenant);
+                        if (entityMasterComputedFields != null)
+                        {
+                            entityMasterComputedFields.NumberOfHouses += 1;
+                            shipmentComputedFieldsRepository.Update(entityMasterComputedFields);
+                        }
                     }
                 }
             }
