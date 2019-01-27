@@ -179,7 +179,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             ShipmentPayableRepository shipmentPayableRepository = new ShipmentPayableRepository(context);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
             IQueryable<ShipmentList> iQueryable_shipments = shipmentQuery.GetAllShipmentListTenant(tenant);
-            
+
             if (iQueryable_shipments.Count() > 0)
             {
                 if (!string.IsNullOrEmpty(Direction) && Direction != "All")
@@ -266,22 +266,24 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 }
 
                 iQueryable_shipments = iQueryable_shipments.Where(d => (d.AccountedPayablesInLocalCurrency != null && d.AccountedPayablesInLocalCurrency != 0) || (d.OpenPayablesInLocalCurrency != null && d.OpenPayablesInLocalCurrency != 0));
-                
+
                 List<string> shipmentIds = iQueryable_shipments.Select(s => s.Id).ToList();
                 IQueryable<ShipmentPayable> iQueryable_payables = shipmentPayableRepository.GetShipmentPayablesByShipmentIds(shipmentIds, tenant);
 
-                if (iQueryable_payables.Count() > 0)
+                iQueryable_payables = iQueryable_payables.Where(d => (d.ExpectedAmountLocal != null && d.ExpectedAmountLocal != 0) || (d.AccountedAmountInLocalCurrency != null && d.AccountedAmountInLocalCurrency != 0 ));
+
+                if (!string.IsNullOrEmpty(VendorId))
                 {
-                    if (!string.IsNullOrEmpty(VendorId))
-                    {
-                        iQueryable_payables = iQueryable_payables.Where(d => d.VendorId == VendorId);
-                    }
+                    iQueryable_payables = iQueryable_payables.Where(d => d.VendorId == VendorId);
+                }
 
-                    if (!string.IsNullOrEmpty(ChargesTypeId))
-                    {
-                        iQueryable_payables = iQueryable_payables.Where(d => d.ChargesTypeId == ChargesTypeId);
-                    }
+                if (!string.IsNullOrEmpty(ChargesTypeId))
+                {
+                    iQueryable_payables = iQueryable_payables.Where(d => d.ChargesTypeId == ChargesTypeId);
+                }
 
+                if (iQueryable_payables != null && iQueryable_payables.Count() > 0)
+                {
                     List<ShipmentsJoinPayablesList> myResult = (from myShipment in iQueryable_shipments
                                                                 join myPayable in iQueryable_payables on myShipment.Id equals myPayable.ShipmentId into myShipmentPayable
                                                                 from myItem in myShipmentPayable.DefaultIfEmpty()
@@ -362,16 +364,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                                     where d.ShipmentId == item.ShipmentId && d.PickUpDeliveryTypeCode == "PICK"
                                                                     select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
-                            if(myFirstPickup != null)
+                            if (myFirstPickup != null)
                             {
-                                switch(myFirstPickup.PickUpDeliveryFromTypeCode)
+                                switch (myFirstPickup.PickUpDeliveryFromTypeCode)
                                 {
                                     case "PART":
                                         {
                                             if (!string.IsNullOrEmpty(myFirstPickup.FromAddressId))
                                             {
                                                 Address fromAddress = addressRepository.GetSingleAddress(myFirstPickup.FromAddressId, tenant);
-                                                if(fromAddress != null)
+                                                if (fromAddress != null)
                                                 {
                                                     myRecord.From = fromAddress.City;
                                                     myRecord.FromState = fromAddress.State == null ? null : fromAddress.State.EnglishName;
@@ -407,7 +409,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                 Country fromAddressCountry = CountryRepository.GetSingleCountry(myFirstPickup.FromAddressCountryId, tenant, false);
                                                 if (fromAddressCountry != null)
                                                 {
-                                                    myRecord.FromCountry = fromAddressCountry.EnglishName;                                                   
+                                                    myRecord.FromCountry = fromAddressCountry.EnglishName;
                                                 }
                                             }
 
@@ -443,7 +445,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                                      where d.ShipmentId == item.ShipmentId && d.PickUpDeliveryTypeCode == "DELV"
                                                                      select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
-                            if(myLastDelivery != null)
+                            if (myLastDelivery != null)
                             {
                                 switch (myLastDelivery.PickUpDeliveryToTypeCode)
                                 {
@@ -508,7 +510,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 }
                             }
 
-                            else if(item.Transshipment3ToPortId != null)
+                            else if (item.Transshipment3ToPortId != null)
                             {
                                 Port myPort = portRepository.GetSinglePort(tenant, item.Transshipment3ToPortId);
                                 if (myPort != null)

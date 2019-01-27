@@ -218,6 +218,13 @@ namespace WebFreight.Web.DataProviders
         public double? TotalPrepaid { get; set; }
         public double? TotalCollect { get; set; }
 
+        public string ShipperATTN { get; set; }
+        public string ConsigneeATTN { get; set; }
+        public string ShipperNotExporterATTN { get; set; }
+        public string ConsigneeNotImporterATTN { get; set; }
+        public string Notify1ATTN { get; set; }
+        public string Notify2ATTN { get; set; }
+        public string AgentATTN { get; set; }
     } 
     
     public class ReceivablesCharges
