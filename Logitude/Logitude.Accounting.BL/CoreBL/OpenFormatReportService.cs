@@ -308,18 +308,47 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
 
-                if (item.ForeignAmountDebit != 0)
+                if (item.LocalAmountDebit != 0)
                 {
-                    var ForeignAmountDebit = "+" + item.ForeignAmountDebit;
+                    if (item.ForeignAmountDebit > 0)
+                    {
+                        string ForeignAmountDebit = item.ForeignAmountDebit.ToString();
+                        myStringBuilder.Append("+");
+                        if (ForeignAmountDebit.Length > 15) { ForeignAmountDebit = ForeignAmountDebit.Substring(0, 15); }
+                        myStringBuilder.Append(ForeignAmountDebit.PadLeft(15, '0'));
 
-                    if (ForeignAmountDebit.Length > 15) { ForeignAmountDebit.Substring(0, 15); }
-                    myStringBuilder.Append( ForeignAmountDebit.PadLeft(15, '0'));
+
+                    }
+                    else if(item.ForeignAmountDebit< 0)
+                    {
+
+                        string ForeignAmountDebit = item.ForeignAmountDebit.ToString();
+                        myStringBuilder.Append("-");
+                        if (ForeignAmountDebit.Length > 15) { ForeignAmountDebit = ForeignAmountDebit.Substring(0, 15); }
+                        myStringBuilder.Append(ForeignAmountDebit.PadLeft(15, '0'));
+
+                    }
                 }
                 else
                 {
-                    var ForignAmountCredit = "-" + item.ForeignAmountCredit;
-                    if (ForignAmountCredit.Length > 15) { ForignAmountCredit.Substring(0, 15); }
-                    myStringBuilder.Append( ForignAmountCredit.PadLeft(15, '0'));
+                    if (item.ForeignAmountCredit > 0)
+                    {
+                        string ForeignAmountCredit = item.ForeignAmountCredit.ToString();
+                        myStringBuilder.Append("+");
+                        if (ForeignAmountCredit.Length > 15) { ForeignAmountCredit = ForeignAmountCredit.Substring(0, 15); }
+                        myStringBuilder.Append(ForeignAmountCredit.PadLeft(15, '0'));
+
+
+                    }
+                    else if (item.ForeignAmountCredit < 0)
+                    {
+
+                        string ForeignAmountCredit = item.ForeignAmountCredit.ToString();
+                        myStringBuilder.Append("-");
+                        if (ForeignAmountCredit.Length > 15) { ForeignAmountCredit = ForeignAmountCredit.Substring(0, 15); }
+                        myStringBuilder.Append(ForeignAmountCredit.PadLeft(15, '0'));
+
+                    }
                 }
 
 
@@ -2823,7 +2852,50 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
 
+            //Z900
 
+            myStringBuilder.Append("Z900");
+            
+            counter++;
+           
+
+            if (counter.ToString().Length > 9)
+            {
+                counter.ToString().Substring(0, 9);
+                myStringBuilder.Append("a" + counter.ToString().PadLeft(9, '0'));
+            }
+            else
+            {
+                myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
+            }
+
+            if (tenantPM.VatNumber != null)
+            {
+                if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber = tenantPM.VatNumber.Substring(0, 9); }
+                myStringBuilder.Append("a" + tenantPM.VatNumber.PadLeft(9, '0'));
+            }
+            else
+            {
+                myStringBuilder.Append("a");
+                myStringBuilder.Append('0', 9);
+            }
+            Random random = new Random();
+            string num = random.Next().ToString();
+            if (num.Length > 15) { num = num.Substring(0, 15); }
+            myStringBuilder.Append("a" + num.PadLeft(15, '0'));
+
+            myStringBuilder.Append("&OF1.31&");
+
+            if (counter.ToString().Length > 9)
+            {
+                counter.ToString().Substring(0, 9);
+                myStringBuilder.Append("a" + counter.ToString().PadLeft(9, '0'));
+            }
+            else
+            {
+                myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
+            }
+            myStringBuilder.Append(' ', 50);
             DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, openFormatReportPM);
 
             return docOut;

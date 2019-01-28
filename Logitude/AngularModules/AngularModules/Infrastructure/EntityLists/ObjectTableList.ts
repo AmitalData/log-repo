@@ -54,5 +54,7 @@ export class ObjectTableList {
 		NameField: string;
 		DisableSearchBox: boolean;
 		AllowedInQueues: boolean;
+		LovDisplayMemberPath: string;
+		LovDisplayMemberPathLocal: string;
 	
 }
