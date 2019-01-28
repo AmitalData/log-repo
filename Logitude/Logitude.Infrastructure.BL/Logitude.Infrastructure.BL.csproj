@@ -117,6 +117,7 @@
     <Compile Include="EntityUpdateServices\BatchTaskExecutionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BIReportUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BusinessRoleUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\FeatureToggleUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\BatchTaskExecutionStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\BatchTaskExecutionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\BIReportsTypeUpdateService.Generated.cs" />
