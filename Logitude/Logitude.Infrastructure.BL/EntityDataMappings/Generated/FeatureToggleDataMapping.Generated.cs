@@ -47,7 +47,9 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         SearchFields, 
 	         TenantNumber, 
 	         Inactive, 
-	         ToggleCode,
+	         ToggleCode, 
+	         ToggleName, 
+	         CreatedByUser,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

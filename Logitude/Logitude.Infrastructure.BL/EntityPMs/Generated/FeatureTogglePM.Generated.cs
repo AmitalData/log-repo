@@ -250,6 +250,52 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private string toggleName ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToggleName  
+	   {
+	    
+	     get
+		{
+		   return toggleName;
+		 }
+		 set
+		 {
+		   if(toggleName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToggleName",OldValue=toggleName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toggleName=value;
+		   }
+			
+		 }
+	   }
+	  private string createdByUser ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByUser  
+	   {
+	    
+	     get
+		{
+		   return createdByUser;
+		 }
+		 set
+		 {
+		   if(createdByUser != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUser",OldValue=createdByUser,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   createdByUser=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
