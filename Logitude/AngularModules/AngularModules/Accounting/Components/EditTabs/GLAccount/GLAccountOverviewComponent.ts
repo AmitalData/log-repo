@@ -308,12 +308,20 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     //#region Accounting Notes
     accountingNotesList: AccountingNoteList[] = [];
+    isNotesLoading:boolean = false;
+
     GetAccountingNotes(){
         if(this.AccountPM.CardId){
             this.accountingNotesList = [];
+            this.isNotesLoading = true;
+            // setTimeout(() => {
+
             this._AccountingNoteExtendedListService.GetNotesByCard(this.AccountPM.CardId)
                 .subscribe((res:ServiceResponse) =>
                 {
+                        this.isNotesLoading = false;
+
+
                     if(res.HasError){
                         var msg = new MessageWindow();
                         msg.Show("Get Accounting Note error: " + res.ErrorsArray[0]);
@@ -322,6 +330,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
                         this.accountingNotesList = notesList;
                     }
                 });
+            // }, 2000);
+
         }
 
     }
@@ -334,7 +344,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 400;
         logitudeWindow.Height = 300;
-        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.O.NewAccountingNote");
+        logitudeWindow.Title = notePM ? '' : TextCodeTranslator.Translate("Accounting.O.NewAccountingNote");
 
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./Accounting/Components/Others/AccountingNoteComponent');
