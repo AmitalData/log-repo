@@ -384,10 +384,13 @@ export class BIReportPreviewComponent implements OnInit {
         });
 
         this._InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe(myResult => {
-            this.hasChanged = false;
-            this.StopBusyIndicator();
-            if (arg) {
-                this.ShowQueryBuilder();
+            if (!myResult.HasError) {
+                this.BIReportXMLData = myResult.Result;
+                this.hasChanged = false;
+                this.StopBusyIndicator();
+                if (arg) {
+                    this.ShowQueryBuilder();
+                }
             }
         });
     }
@@ -416,7 +419,7 @@ export class BIReportPreviewComponent implements OnInit {
         logWindow.Show('./CommonModules/CommonOthers/Components/LoadSampleData/DWQueryBuilderComponent');
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
-                if (s != null && d != null && d != "cancel") {
+                if (s != null  ||( d != null && d != "cancel")) {
                     this.DWQueryId = s.ID;
                     this.LoadBIReportData();
                 }

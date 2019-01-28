@@ -1724,11 +1724,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 isUpdated = true;
                                 bITabularViewSettings.Columns.Add(new Column
                                 {
-                                    Code = item.DisplayName.Replace("[","").Replace("]",""),
+                                    Code = item.DisplayName.Replace("[", "").Replace("]", ""),
                                     Name = item.Name,
                                     IsChecked = true,
                                     Width = 150,
                                     DataTypeCode = item.DataTypeCode,
+                                    Index = bITabularViewSettings.Columns.Max(a => a.Index) + 1,
                                 });
                             }
                         }
