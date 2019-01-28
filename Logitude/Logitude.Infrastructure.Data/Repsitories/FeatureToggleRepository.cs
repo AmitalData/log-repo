@@ -14,8 +14,14 @@ namespace Logitude.Infrastructure.Data.Repsitories
 {
    public partial class FeatureToggleRepository:IRepository<FeatureToggle>
    {
-        
-		public List<FeatureToggle> GetMulti(EntityKeyFields entityKeys)
+        public IQueryable<FeatureToggle> GetAllByToggleCodeList(List<string> toggleCodes, int tenant)
+        {
+            return from a in context.FeatureToggles
+                   where a.Tenant == tenant && toggleCodes.Contains(a.ToggleCode)
+                   select a;
+        }
+
+        public List<FeatureToggle> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();
