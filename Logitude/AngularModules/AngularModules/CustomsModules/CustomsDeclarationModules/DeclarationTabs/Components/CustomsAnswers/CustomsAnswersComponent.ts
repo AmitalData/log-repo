@@ -1129,17 +1129,18 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                         }
                         if (this.IsDepositionStatusCodeSendDigital) {
                             this.DepositionStatusCodeText = "נשלחה משימה ליבואן בדיגיטל";
+                            this.DepositionStatusCodeIcon = "DEFAULT";
                         }
                         else {
                             this.DepositionStatusCodeText = "נשלחה משימה ליבואן בלוגבוקס";
                         }
-                        myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_PRV_LBL_LOG", "NON", "NON", SessionLocator.Tenant)
-                            .subscribe(res => {
-                                if (!res.HasError && res.Result != null) {
+                        //myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_PRV_LBL_LOG", "NON", "NON", SessionLocator.Tenant)
+                          //  .subscribe(res => {
+                            //    if (!res.HasError && res.Result != null) {
                                     //this.DepositionStatusCodeIcon = "./Images/LogBox/DSV/Tab_Logo_Original.png";
-                                    this.DepositionStatusCodeIcon = "DEFAULT";
-                                }
-                            });
+                              //      this.DepositionStatusCodeIcon = "DEFAULT";
+                                //}
+                            //});
                     });
             });
     }
