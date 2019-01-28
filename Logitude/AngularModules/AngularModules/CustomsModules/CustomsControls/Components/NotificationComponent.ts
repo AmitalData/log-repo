@@ -24,7 +24,8 @@ import { NotificationWebService } from '../../../Customs/Services/WebServices/No
 import {UserPM} from '../../../Common/EntityPMs/UserPM';
 import { CustomsCollateralPMService } from '../../../Customs/Services/StandardPMs/CustomsCollateralPMService';
 import {SelectedNotifications} from '../../../Customs/DataContract/SelectedNotifications';
-import {NotificationPM} from '../../../Customs/EntityPMs/NotificationPM';
+import { NotificationPM } from '../../../Customs/EntityPMs/NotificationPM';
+import { DeclarationEditComponentController } from '../../../Customs/Controller/DeclarationEditComponentController';
 
 @Component({
     selector: 'NotificationComponent',
@@ -1323,7 +1324,6 @@ export class NotificationComponent extends BaseComponent implements OnInit {
 
                         
                         if (selected.ObjectTableName == "Customs.Declaration") {
-
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
@@ -1332,6 +1332,14 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                         EntityId: selected.EntityId,
                                         ObjectTableName: selected.ObjectTableName
                                     });
+                                    if (selected.NotificationDefinitionCode == "2753A") {
+                                        cmpRef.instance.OnFirstTimeAfterSingleDataLoaded
+                                            .subscribe(myResult => {
+                                                var myDeclarationEditComponentController = cmpRef.instance.EditComponentController as DeclarationEditComponentController;
+                                                myDeclarationEditComponentController.TapagId = selected.Reference2Number;
+                                                console.log("myDeclarationEditComponentController.TapagId = " + selected.Reference2Number);
+                                            });
+                                    }
                                 });
 
 
