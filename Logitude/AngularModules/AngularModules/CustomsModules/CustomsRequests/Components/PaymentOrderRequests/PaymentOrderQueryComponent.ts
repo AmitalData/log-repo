@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../../Customs/Args';
@@ -185,7 +185,7 @@ export class PaymentOrderQueryComponent
                 .subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         this.BankID = myResponse.Result.BankCode;
-                        this.BranchID = myResponse.Result.BranchCode + "," + myResponse.Result.BankCode;
+                        this.BranchID = Number(myResponse.Result.BranchCode).toString() + "," + myResponse.Result.BankCode;
                         this.BankAccount = myResponse.Result.AccountNumber;
                         this.UIProperties.SetEnabled("BankID", "Customs.Bank", false);
                         this.UIProperties.SetEnabled("BranchID", "Customs.CustomsBranch", false);
