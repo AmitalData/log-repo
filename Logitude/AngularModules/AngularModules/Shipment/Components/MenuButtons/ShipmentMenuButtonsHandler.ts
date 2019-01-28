@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {OnDestroy} from '@angular/core';
 import {ShipmentPM} from '../../EntityPMs/ShipmentPM';
 import {NewShipmentComponentArgs, CustomsWizardArgs} from '../../Args';
@@ -387,7 +387,6 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
     public set HasWarnings(value: boolean) { this.hasWarnings = value; }
 
     private CopyShipment() {
-
         var args = new NewShipmentComponentArgs();
         args.IsCopyFromShipment = true;
         args.Shipment = this.EntityPM;
@@ -396,10 +395,20 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         logWindow.WindowArgs = args;
         logWindow.Width = 935;
         logWindow.Height = 570;
-        logWindow.Title = "Copy Shipment";
-        logWindow.Show('./Shipment/Components/NewEntity/NewShipmentComponent');
+
+        if (this.EntityPM.ShipmentLevelCode == "C") {
+            logWindow.Title = "Copy Master";
+            logWindow.Show('./Shipment/Components/NewEntity/NewMasterComponent');
+        }
+
+        else {
+            logWindow.Title = "Copy Shipment";
+            logWindow.Show('./Shipment/Components/NewEntity/NewShipmentComponent');
+        }
+
         logWindow.ComponentLoaded.subscribe(cmp => {
             this.StopFlags();
+
             cmp.MainCarriageFromPortId = this.EntityPM.MainCarriageFromPortId;
             cmp.MainCarriageToPortId = this.EntityPM.MainCarriageToPortId;
         });

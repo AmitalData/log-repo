@@ -16,8 +16,11 @@ namespace HighCPUIISRecycleService
 {
     public partial class HighCPUIISRecycleService : ServiceBase
     {
-        int totalHits = 0; 
-
+        int totalHits = 0;
+        int totalRecycles = 0;
+        DateTime? FirstRecycleTime = null;
+        DateTime? CurrentRecycleTime = null;
+        TimeSpan TenMin = new TimeSpan(0,10,0);
         public HighCPUIISRecycleService()
         {
             InitializeComponent();
@@ -51,8 +54,27 @@ namespace HighCPUIISRecycleService
                         if (totalHits == 60)
                         {
                             EventLog.WriteEntry("CPU Consumption is more than 90% in the last minute");
-                            RecycleApplicationPool("Default Web Site");
+                            if (FirstRecycleTime == null)
+                            {
+                                FirstRecycleTime = DateTime.Now;
+                            }
+                            if (CurrentRecycleTime == null)
+                            {
+                                CurrentRecycleTime = DateTime.Now;
+                            }
+                            if (CurrentRecycleTime.Value.Subtract(FirstRecycleTime.Value) <= TenMin && totalRecycles >= 5)
+                            {
+                                RecycleApplicationPool("Default Web Site");
+                                CurrentRecycleTime = DateTime.Now;
+                                totalRecycles++;
+                            }
+                            else
+                            {
+                                FirstRecycleTime = CurrentRecycleTime;
+                                totalRecycles = 0;
+                            }
                             totalHits = 0;
+                            Thread.Sleep(120000);
                         }
                     }
                     else
