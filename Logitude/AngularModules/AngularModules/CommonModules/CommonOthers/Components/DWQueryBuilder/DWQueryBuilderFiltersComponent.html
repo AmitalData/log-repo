@@ -197,8 +197,10 @@
 
                                 <DWDate [ObjectFieldName]="item.Code"
                                         [DataContext]="item"
+                     
                                         [Operation]="item.Operation.Code"
                                         [SelectedValue]="item.TextValue"
+                                        (ValueChanged)="item.onTextChange($event)"
                                         >
                                 </DWDate>
 
@@ -355,7 +357,9 @@
 
                                         <DWDate [ObjectFieldName]="item.Code"
                                                 [DataContext]="item"
+                                                
                                                 [Operation]="item.Operation.Code"
+                                                 (ValueChanged)="item.onTextChange($event)"
                                                 [SelectedValue]="item.TextValue">
                                         </DWDate>
 
