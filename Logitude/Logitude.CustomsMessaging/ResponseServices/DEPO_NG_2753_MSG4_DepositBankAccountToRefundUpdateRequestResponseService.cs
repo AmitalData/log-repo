@@ -151,7 +151,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             newNotificationPM.AssigneToNotificationTypeCode = typeCode;
             newNotificationPM.EntityId = _MyDepositPM.Id;
             newNotificationPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Deposit");
-            if(!String.IsNullOrWhiteSpace(_MyDepositPM.TapagNumber)) newNotificationPM.Reference2Number = _MyDepositPM.Id;
+            if(!String.IsNullOrWhiteSpace(_MyDepositPM.TapagID)) newNotificationPM.Reference2Number = _MyDepositPM.TapagID;
             string customerId = null;
             string referentUserId = null;
             if (connectedDeclarationPM != null)
