@@ -176,4 +176,8 @@ export class DeclarationEditComponentController implements IEditComponentControl
         return false; 
         
     }
+
+    private _TapagId: string;
+    public get TapagId() { return this._TapagId; }
+    public set TapagId(value: string) { this._TapagId = value; }
 }
