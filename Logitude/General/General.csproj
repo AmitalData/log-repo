@@ -170,6 +170,7 @@
     <Content Include="2018.R4\10 - 2018\Day 11 [Rabaia] DeleteOldAuthenticationTokensStoredProc - Copy.sql" />
     <Content Include="2018.R4\10 - 2018\Day 11 [Rabaia] RemoveForwardingPartnerIdFKConstraint.sql" />
     <Content Include="2018.R5\1 - 2019\Day 16  [Khalid] deleteOldTextCode and Feature DownloadDocuments.sql" />
+    <Content Include="2018.R5\1 - 2019\Day 28 [Samar] delete short text codes for shipment assembly.sql" />
     <Content Include="2018.R5\10 - 2018\Day 15 [Ayman] RemoveAutoCriditAndCreditedReceivableId.sql" />
     <Content Include="2018.R5\11 - 2018\Day 25 [Samar] set shared logistics setting defaults.sql" />
     <Content Include="2018.R5\11 - 2018\Day 28 [Samar] Add new help resources.sql" />
