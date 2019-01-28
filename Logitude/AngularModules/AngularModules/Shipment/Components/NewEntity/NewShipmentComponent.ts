@@ -2797,9 +2797,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
                 this.EntityPM.QuoteId = this.SourceEntityPM.QuoteId;
                 this.EntityPM.QuoteNumber = this.SourceEntityPM.QuoteNumber;
             }
-
-            //this.SetUnits();
-            //this.SetUIProperties_OrderDetails();
         }
     }
     CopyRoutings() {

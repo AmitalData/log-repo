@@ -45,7 +45,20 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return query;
 		}
 
-		private IQueryable<AccountingNote> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AccountingNote> iQueryable, int tenant)
+        public List<AccountingNoteList> GetListByCard(string cardId, int tenant)
+        {
+            IQueryable<AccountingNote> AccountingNoteQuery = (from a in context.AccountingNotes
+                                                              where a.CardId == cardId && a.Tenant == tenant
+                                                              select a);
+
+
+            IQueryable<AccountingNoteList> _query = GetIqueryableList(AccountingNoteQuery);
+            List < AccountingNoteList> _list = _query.ToList();
+            return _list;
+
+        }
+
+        private IQueryable<AccountingNote> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AccountingNote> iQueryable, int tenant)
         {
 			throw new NotImplementedException();
 		}

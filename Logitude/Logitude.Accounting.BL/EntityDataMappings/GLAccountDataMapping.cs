@@ -22,6 +22,7 @@ using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using System.Web;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.BL.CommonDataModel.EntityLists;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -117,6 +118,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.ParentAccountNumber);
             this.CustomMappedPMProperties.Add(PMPropertyNames.PreviousEnglishName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.PreviousLocalName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.CardId);
 
             // GET logged contact, RTL
             ContactPM contact = GetLoggedContact(entityPOCO.Tenant)?? new ContactPM();
@@ -460,6 +462,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 {
                     entityPM.PreviousLocalName = entityPOCO.PreviousLocalName;
                 }
+            }
+
+            //get cardid if exisit
+            CardQuery cardQuery = new CardQuery(entityPM.Tenant);
+            CardList cardList = cardQuery.GetSingleByGLAccount(entityPM.Id, entityPM.Tenant);
+            if(cardList != null)
+            {
+                entityPM.CardId = cardList.Id;
             }
 
         }

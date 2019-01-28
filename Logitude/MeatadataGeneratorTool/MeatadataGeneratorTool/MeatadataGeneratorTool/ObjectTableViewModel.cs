@@ -1562,6 +1562,21 @@ namespace MeatadataGeneratorTool
             }
         }
 
+
+        string lovDisplayMemberPath;
+        public string LovDisplayMemberPath
+        {
+            get { return lovDisplayMemberPath; }
+            set { lovDisplayMemberPath = value; FirePropertyChanged("LovDisplayMemberPath"); }
+        }
+
+        string lovDisplayMemberPathLocal;
+        public string LovDisplayMemberPathLocal
+        {
+            get { return lovDisplayMemberPathLocal; }
+            set { lovDisplayMemberPathLocal = value; FirePropertyChanged("LovDisplayMemberPathLocal"); }
+        }
+
         ObjectFieldsViewModel selectedObjectField;
 
         public ObjectFieldsViewModel SelectedObjectField
