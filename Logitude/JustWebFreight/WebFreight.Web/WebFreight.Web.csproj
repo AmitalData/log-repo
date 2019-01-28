@@ -1597,6 +1597,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DirectionViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DWObjectFieldViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DWObjectTableViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\FeatureToggleViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\InboundEmailViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\LBPTeamMemberViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\ObjectFieldViewsController.Generated.cs" />
@@ -1607,6 +1608,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\TasksSchedulerViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\TeamMemberBusinessRoleViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\TeamViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\ToggleViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\APILogsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\BatchTaskExecutionController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\BIReportController.Generated.cs" />
@@ -1616,6 +1618,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DWObjectFieldController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DWObjectTableController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\EntityStatusController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\FeatureToggleController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\IATACodeController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\InboundEmailController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\QueueMessageMoreDetailsController.Generated.cs" />
@@ -2711,6 +2714,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.BIReportsType.cs" />
+    <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.Toggle.cs" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
