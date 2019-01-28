@@ -940,7 +940,7 @@ export class AppTool {
                     myResult = "Contacts";
                     break;
                 }
-            case "General.Features.Social":
+            case "General.MH.Social":
                 {
                     myResult = "Social";
                     break;
