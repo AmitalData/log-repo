@@ -32,6 +32,12 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public int TenantNumber  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
+       [DataMember]
+       public string ToggleCode  { get; set; }
+       [DataMember]
+       public string ToggleName  { get; set; }
+       [DataMember]
+       public string CreatedByUser  { get; set; }
    }
 
 }

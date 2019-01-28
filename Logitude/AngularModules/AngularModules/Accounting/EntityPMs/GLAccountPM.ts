@@ -509,6 +509,11 @@ export class GLAccountPM {
     public set TotFutureOpenChequesInLocalCur(newValue: number) { if (this.totFutureOpenChequesInLocalCur != newValue) { this.totFutureOpenChequesInLocalCur = newValue; this.MarkAsDirty("TotFutureOpenChequesInLocalCur"); } }
        
 	 
+    private cardId: string;
+    public get CardId() { return this.cardId; }
+    public set CardId(newValue: string) { if (this.cardId != newValue) { this.cardId = newValue; this.MarkAsDirty("CardId"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		
