@@ -74,6 +74,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 paymentFilterParamTSHPaymentParams.BranchID = tempInt;
                 paymentFilterParamTSHPaymentParams.BranchIDSpecified = true;
             }
+            paymentFilterParamTSHPaymentParams.BankAccount = requestParams.BankAccount;
 
             paymentFilterParamTSHPaymentParams.EffectiveDateFrom = requestParams.EffectiveDateFrom;
             if (paymentFilterParamTSHPaymentParams.EffectiveDateFrom.HasValue)
