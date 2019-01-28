@@ -318,8 +318,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     {
                         AddressQuery addressQuery = new AddressQuery(id);
                         AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id);
-                        tenant.CountryCode = add.CountryCode;
-                        tenant.CountryName = add.CountryEnglishName;
+                        if (add != null)
+                        {
+                            tenant.CountryCode = add.CountryCode;
+                            tenant.CountryName = add.CountryEnglishName;
+                        }
                     }
 
                     entity = tenant;
