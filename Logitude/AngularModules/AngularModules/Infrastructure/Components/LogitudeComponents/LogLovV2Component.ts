@@ -90,6 +90,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public HideLastColumn: boolean = false;
     public SelectedValuePath: string;
     public DisplayMemberPath: string;
+    public DisplayMemberPathManuallySet:boolean=false;
     public DataContext: any;
     public DataList: any[];
     public IsFreeText: boolean = false;
@@ -609,7 +610,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                             }
                             this.LanguageFilterValue=lang;
                             this.DrawColumns();
-                            this.SetDisplayMemberPath();
+                            if(!this.DisplayMemberPath){
+                              this.SetDisplayMemberPath();
+                            }
+                            else{
+                                this.DisplayMemberPathManuallySet=true;
+                            }
 
 
                             if (this.ObjectTable) {
@@ -894,7 +900,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     SetDisplayMemberPath(){
-        if (!this.DisplayMemberPath) {
+        if (!this.DisplayMemberPathManuallySet) {
             /// this case we have to show the local display member path if available
             if(this.LanguageFilterValue!='E'){ 
                 if(this.LookUpTable.LovDisplayMemberPathLocal){
