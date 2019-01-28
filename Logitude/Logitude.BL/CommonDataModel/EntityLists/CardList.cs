@@ -91,6 +91,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string StateName { get; set; }
         public bool IsInternationalPartner { get; set; }
         public bool IsAutonomy { get; set; }
+        public string CalculatedLocalName { get; set; }
+        public string CalculatedEnglishName { get; set; }
 
     }
 }

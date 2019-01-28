@@ -419,6 +419,16 @@ export class CardPM {
     public set IsAutonomy(newValue: boolean) { if (this.isAutonomy != newValue) { this.isAutonomy = newValue; this.MarkAsDirty("IsAutonomy"); } }
        
 	 
+    private calculatedLocalName: string;
+    public get CalculatedLocalName() { return this.calculatedLocalName; }
+    public set CalculatedLocalName(newValue: string) { if (this.calculatedLocalName != newValue) { this.calculatedLocalName = newValue; this.MarkAsDirty("CalculatedLocalName"); } }
+       
+	 
+    private calculatedEnglishName: string;
+    public get CalculatedEnglishName() { return this.calculatedEnglishName; }
+    public set CalculatedEnglishName(newValue: string) { if (this.calculatedEnglishName != newValue) { this.calculatedEnglishName = newValue; this.MarkAsDirty("CalculatedEnglishName"); } }
+       
+	 
 
     public OldEntityPM: CardPM;
 		
