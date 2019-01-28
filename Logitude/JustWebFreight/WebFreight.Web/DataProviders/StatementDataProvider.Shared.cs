@@ -85,6 +85,19 @@ namespace WebFreight.Web.DataProviders
             public string ShipmentField18 { get; set; }
             public string ShipmentField19 { get; set; }
             public string ShipmentField20 { get; set; }
+
+            public string ARInvoiceField1 { get; set; }
+            public string ARInvoiceField2 { get; set; }
+            public string ARInvoiceField3 { get; set; }
+            public string ARInvoiceField4 { get; set; }
+            public string ARInvoiceField5 { get; set; }
+            public string ARInvoiceField6 { get; set; }
+            public string ARInvoiceField7 { get; set; }
+            public string ARInvoiceField8 { get; set; }
+            public string ARInvoiceField9 { get; set; }
+            public string ARInvoiceField10 { get; set; }
+
+
             public string Notes { get; set; }
             public DateTime? RegisterDate { get; set; }
             public DateTime? ValueDate { get; set; }
