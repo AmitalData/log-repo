@@ -74,11 +74,14 @@ import {TeamListService} from  './Services/StandardLists/TeamListService';
 import {TeamPMService} from './Services/StandardPMs/TeamPMService'; 
 import { DWQueryBuilderService } from './Services/ExtendedPMs/DWQueryBuilderService';
 
-
 import { BIReportListService } from './Services/StandardLists/BIReportListService';
 import { BIReportPMService } from './Services/StandardPMs/BIReportPMService';
 import { BIReportsTypeListService } from './Services/StandardLists/BIReportsTypeListService';
 import { WebhookKeysListService } from './Services/StandardLists/WebhookKeysListService';
+
+import { ToggleListService } from './Services/StandardLists/ToggleListService';
+import { FeatureToggleListService } from './Services/StandardLists/FeatureToggleListService';
+import { FeatureTogglePMService } from './Services/StandardPMs/FeatureTogglePMService';
 
 export class ModuleProviders {
     
@@ -164,7 +167,9 @@ export class ModuleProviders {
             case "BatchTaskExecutionPMService": { myResult = new BatchTaskExecutionPMService(); break; } 
             case "DWQueryBuilderService": { myResult = new DWQueryBuilderService(); break; }
             case "WebhookKeysListService": { myResult = new WebhookKeysListService(); break; }
-                
+            case "FeatureToggleListService": { myResult = new FeatureToggleListService(); break; }
+            case "FeatureTogglePMService": { myResult = new FeatureTogglePMService(); break; }
+            case "ToggleListService": { myResult = new ToggleListService(); break; }
         }
 
         return myResult;

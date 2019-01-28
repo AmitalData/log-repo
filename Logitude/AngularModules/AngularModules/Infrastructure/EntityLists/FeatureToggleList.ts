@@ -17,6 +17,9 @@ export class FeatureToggleList {
 	SearchFields: string;
 	TenantNumber: number;
 	Inactive: boolean;
+	ToggleCode: string;
+	ToggleName: string;
+	CreatedByUser: string;
 	
 }
  
