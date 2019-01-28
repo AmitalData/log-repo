@@ -547,12 +547,33 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
 
         if (!this.DisplayMemberPath) {
-            if (this.LookUpTable.LookUp2) {
-                this.DisplayMemberPath = this.LookUpTable.LookUp2;
+            /// this case we have to show the local display member path if available
+            if(SessionInfo.LoggedUserPM.ShowLocalNameInLOV){ 
+                if(this.LookUpTable.LovDisplayMemberPathLocal){
+                    this.DisplayMemberPath=this.LookUpTable.LovDisplayMemberPathLocal;
+                }
+                else if(this.LookUpTable.LovDisplayMemberPath){
+                    this.DisplayMemberPath=this.LookUpTable.LovDisplayMemberPath;
+                }
+                else if (this.LookUpTable.LookUp2) {
+                    this.DisplayMemberPath = this.LookUpTable.LookUp2;
+                }
+                else {
+                    this.DisplayMemberPath = this.LookUpTable.LookUp1;
+                }
             }
-            else {
-                this.DisplayMemberPath = this.LookUpTable.LookUp1;
-            }
+            /// this case we have to show the display member path if available
+            else{
+                if(this.LookUpTable.LovDisplayMemberPath){
+                    this.DisplayMemberPath=this.LookUpTable.LovDisplayMemberPath;
+                }
+                else if (this.LookUpTable.LookUp2) {
+                    this.DisplayMemberPath = this.LookUpTable.LookUp2;
+                }
+                else {
+                    this.DisplayMemberPath = this.LookUpTable.LookUp1;
+                }
+           }
         }
 
         if (!this.SelectedValuePath) {
