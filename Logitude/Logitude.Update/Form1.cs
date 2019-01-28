@@ -3498,6 +3498,12 @@ User/Pass",
             }
         }
 
+        private void button40_Click(object sender, EventArgs e)
+        {
+            AddStates addStatesForm = new AddStates();
+            addStatesForm.Show();
+
+        }
     }
 
 

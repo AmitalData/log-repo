@@ -51,6 +51,7 @@ using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
+using Logitude.Accounting.BL.Utils;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -330,6 +331,33 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+        public HttpResponseMessage GetCalculateFututreCheques()
+        {
+            try
+            {
+                try
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                    IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                    FutureOpenChequesBatch FutureOpenChequesBatch = new FutureOpenChequesBatch();
+                    FutureOpenChequesBatch.SetTotalFutureOpenChequesInLocalCurrency(authToken.Tenant);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "OK");
+                }
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
 
         public HttpResponseMessage GetParentAccountId(string id, string parentId)
         {
@@ -576,6 +604,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+    
     }
 
     class MyPeriodM

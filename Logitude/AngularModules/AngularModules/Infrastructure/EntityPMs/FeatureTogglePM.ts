@@ -74,6 +74,16 @@ export class FeatureTogglePM {
     public set ToggleCode(newValue: string) { if (this.toggleCode != newValue) { this.toggleCode = newValue; this.MarkAsDirty("ToggleCode"); } }
        
 	 
+    private toggleName: string;
+    public get ToggleName() { return this.toggleName; }
+    public set ToggleName(newValue: string) { if (this.toggleName != newValue) { this.toggleName = newValue; this.MarkAsDirty("ToggleName"); } }
+       
+	 
+    private createdByUser: string;
+    public get CreatedByUser() { return this.createdByUser; }
+    public set CreatedByUser(newValue: string) { if (this.createdByUser != newValue) { this.createdByUser = newValue; this.MarkAsDirty("CreatedByUser"); } }
+       
+	 
 
     public OldEntityPM: FeatureTogglePM;
 		

@@ -333,6 +333,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         }
 
+        public CardList GetSingleByGLAccount(string glAccountId, int tenant)
+        {
+            CardList cardList = (from a in repository.context.Cards
+                                        where a.GLAccountId == glAccountId && a.Tenant == tenant
+                                        select new CardList()
+                                        {
+                                            Id = a.Id,
+                                            Tenant = a.Tenant,
+                                            EnglishName = a.EnglishName,
+
+                                        }).FirstOrDefault();
+            return cardList;
+        }
         public IQueryable<CardList> GetCardPMsByTenant(int tenant)
         {
             AddressRepository addressRepository = new AddressRepository(tenant);
@@ -1007,6 +1020,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               StateName = card.StateName,
                                               IsInternationalPartner = card.IsInternationalPartner,
                                               IsAutonomy = card.IsAutonomy,
+                                              CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
+                                              CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
                                           };
 
             if(myResult.Count() > 0)
@@ -1082,6 +1097,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               StateName = a.StateName,
                                               IsInternationalPartner = a.IsInternationalPartner,
                                               IsAutonomy = a.IsAutonomy,
+                                              CalculatedEnglishName = string.IsNullOrEmpty(a.EnglishName) ? a.LocalName : a.EnglishName,
+                                              CalculatedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                           });
             return cards;
         }

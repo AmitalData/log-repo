@@ -1,3 +1,7 @@
+import { MessageWindow } from './../../../../Controls/Windows/MessageWindow';
+import { AccountingNoteExtendedListService } from './../../../Services/ExtendedLists/AccountingNoteExtendedListService';
+import { AccountingNoteList } from './../../../EntityLists/AccountingNoteList';
+import { RegionList } from './../../../../Common/EntityLists/RegionList';
 import { AccountingEntityHelper } from './../../../Utilities/AccountingEntityHelper';
 import { EntityResourceService } from './../../../../Infrastructure/Services/EntityResourceService';
 import { LedgerTransactionList } from './../../../EntityLists/LedgerTransactionList';
@@ -24,6 +28,7 @@ import { AgingReportParameters } from '../../../DataContracts/AgingReportParamet
 import { PeriodM } from '../../../DataContracts/PeriodM';
 import { GLAccountList } from '../../../EntityLists/GLAccountList';
 import { FullAccountingSettingList } from '../../../EntityLists/FullAccountingSettingList';
+import { AccountingNoteListService } from '../../../Services/StandardLists/AccountingNoteListService';
 declare var makeAmBarChart;
 
 @Component({
@@ -50,6 +55,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     _GLAccountMoreDataListService: GLAccountMoreDataListService = new GLAccountMoreDataListService();
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
+    _AccountingNoteExtendedListService: AccountingNoteExtendedListService = new AccountingNoteExtendedListService();
 
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
@@ -115,6 +121,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     LoadAllData() {
         this.GetDefaultValues();
         this.GetLastTransactions();
+        this.GetAccountingNotes();
         this.LoadChartData();
         this.SetUIProperties();
 
@@ -292,6 +299,32 @@ export class GLAccountOverviewComponent extends BaseComponent {
         if (document.body) {
             return document.body.clientWidth;
         }
+    }
+    //#endregion
+
+    //#region Accounting Notes
+    accountingNotesList: AccountingNoteList[] = [];
+    GetAccountingNotes(){
+        if(this.AccountPM.CardId){
+            this._AccountingNoteExtendedListService.GetNotesByCard(this.AccountPM.CardId)
+                .subscribe((res:ServiceResponse) =>
+                {
+                    if(res.HasError){
+                        var msg = new MessageWindow();
+                        msg.Show("Get Accounting Note error: " + res.ErrorsArray[0]);
+                    }else{
+                        var notesList = res.Result;
+                        this.accountingNotesList = notesList;
+                    }
+                });
+        }
+
+    }
+    ItemEditButton(item: AccountingNoteList){
+
+    }
+    ItemDeleteButton(item: AccountingNoteList){
+
     }
     //#endregion
 
