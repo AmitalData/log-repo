@@ -10,6 +10,7 @@ namespace Logitude.Infrastructure.BL.CloseTables
 {
     public struct ToggleValues
     {   
+       public const string TestToggle = "TST";  
     }
 }
 

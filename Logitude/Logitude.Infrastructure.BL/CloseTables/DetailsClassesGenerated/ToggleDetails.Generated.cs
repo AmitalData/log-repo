@@ -20,17 +20,27 @@ namespace Logitude.Infrastructure.BL
    {
        public List<ToggleDetails> GetAll()
        {
-		    var all = new List<ToggleDetails>(); 
+		    var all = new List<ToggleDetails>();  
+            all.Add(new ToggleDetails()
+            {    
+                Code = "TST", 
+                Name = "Test Toggle", 
+                SearchFields = "TST,Test Toggle", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(Toggle newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.Name = this.Name;  
+			newPoco.SearchFields = GetSearchFields(this);    
         }
 
 		public string GetSearchFields(Toggle rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Name,",");
         }
    }
 }

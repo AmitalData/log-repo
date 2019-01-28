@@ -956,6 +956,8 @@ namespace MeatadataGeneratorTool.Helpers
                 objectTable.HasApiHelper = GetAttributeBoolValue(entity.Attributes["HasApiHelper"]);
                 objectTable.QueryGroupCode = GetAttributeStringValue(entity.Attributes["Code"]);
                 objectTable.QueryGroupName = GetAttributeStringValue(entity.Attributes["Name"]);
+                objectTable.LovDisplayMemberPath = GetAttributeStringValue(entity.Attributes["LovDisplayMemberPath"]);
+                objectTable.LovDisplayMemberPathLocal = GetAttributeStringValue(entity.Attributes["LovDisplayMemberPathLocal"]);
                 if (entity.Attributes["NoViewController"] != null)
                 {
                     objectTable.NoViewController = GetAttributeBoolValue(entity.Attributes["NoViewController"]);

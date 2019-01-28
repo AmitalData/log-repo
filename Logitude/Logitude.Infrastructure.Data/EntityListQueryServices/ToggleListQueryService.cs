@@ -15,37 +15,31 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.EntityLists;
 
 namespace Logitude.Infrastructure.Data.EntityListQueryServices
-{ 
+{
 
     public partial class ToggleListQueryService
     {
-	    private IQueryable<ToggleList> GetIqueryableList(IQueryable<Toggle> iQueryable)
+        private IQueryable<ToggleList> GetIqueryableList(IQueryable<Toggle> iQueryable)
         {
-		IQueryable<ToggleList> query = (from a in iQueryable
+            IQueryable<ToggleList> query = (from a in iQueryable
                                             select new ToggleList()
-											{
-                     
-					                          Code = a.Code,
-					
-					                          Name = a.Name,
-					
-					                          SearchFields = a.SearchFields,
-					
-		                    	            });
+                                            {
+                                                Code = a.Code,
+                                                Name = a.Name,
+                                                SearchFields = a.SearchFields,
+                                            });
             return query;
-		}
+        }
 
-		private IQueryable<Toggle> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<Toggle> iQueryable)
+        private IQueryable<Toggle> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<Toggle> iQueryable)
         {
-			throw new NotImplementedException();
-		}
-				private IQueryable<Toggle> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<Toggle> iQueryable)
+            return iQueryable;
+        }
+
+        private IQueryable<Toggle> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<Toggle> iQueryable)
         {
-			return iQueryable;
-		}
-		
-			}
-
-
+            return iQueryable;
+        }
+    }
 }
 	

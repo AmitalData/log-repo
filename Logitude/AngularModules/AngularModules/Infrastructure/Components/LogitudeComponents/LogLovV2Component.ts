@@ -546,14 +546,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.PlaceHolder = '';
         }
 
-        if (!this.DisplayMemberPath) {
-            if (this.LookUpTable.LookUp2) {
-                this.DisplayMemberPath = this.LookUpTable.LookUp2;
-            }
-            else {
-                this.DisplayMemberPath = this.LookUpTable.LookUp1;
-            }
-        }
+        
 
         if (!this.SelectedValuePath) {
             this.SelectedValuePath = this.LookUpTable.KeyPropertyPath;
@@ -616,6 +609,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                             }
                             this.LanguageFilterValue=lang;
                             this.DrawColumns();
+                            this.SetDisplayMemberPath();
 
 
                             if (this.ObjectTable) {
@@ -898,6 +892,39 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                                 this.dataColumns.push({ Field: lookupFields[i].FieldName });
                             }
     }
+
+    SetDisplayMemberPath(){
+        if (!this.DisplayMemberPath) {
+            /// this case we have to show the local display member path if available
+            if(this.LanguageFilterValue!='E'){ 
+                if(this.LookUpTable.LovDisplayMemberPathLocal){
+                    this.DisplayMemberPath=this.LookUpTable.LovDisplayMemberPathLocal;
+                }
+                else if(this.LookUpTable.LovDisplayMemberPath){
+                    this.DisplayMemberPath=this.LookUpTable.LovDisplayMemberPath;
+                }
+                else if (this.LookUpTable.LookUp2) {
+                    this.DisplayMemberPath = this.LookUpTable.LookUp2;
+                }
+                else {
+                    this.DisplayMemberPath = this.LookUpTable.LookUp1;
+                }
+            }
+            /// this case we have to show the display member path if available
+            else{
+                if(this.LookUpTable.LovDisplayMemberPath){
+                    this.DisplayMemberPath=this.LookUpTable.LovDisplayMemberPath;
+                }
+                else if (this.LookUpTable.LookUp2) {
+                    this.DisplayMemberPath = this.LookUpTable.LookUp2;
+                }
+                else {
+                    this.DisplayMemberPath = this.LookUpTable.LookUp1;
+                }
+           }
+        }
+    }
+
     SetIsDisabled() {
         this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
         //console.log(this.uiProperty);
@@ -2972,6 +2999,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     SwitchBetweenLocalAndEng(lang:string){
         this.LanguageFilterValue=lang;
         this.DrawColumns();
+        this.SetDisplayMemberPath();
     }
 }
 

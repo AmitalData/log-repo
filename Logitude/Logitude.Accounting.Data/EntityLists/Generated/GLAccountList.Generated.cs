@@ -180,6 +180,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ReconcileMethodLocalName  { get; set; }
        [DataMember]
        public decimal? TotFutureOpenChequesInLocalCur  { get; set; }
+       [DataMember]
+       public string CardId  { get; set; }
    }
 
 }
