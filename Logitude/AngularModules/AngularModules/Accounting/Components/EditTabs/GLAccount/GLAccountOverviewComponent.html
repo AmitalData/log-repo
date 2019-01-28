@@ -214,11 +214,13 @@
                                     <!-- accounting notes -->
                                     <div class="header">
                                         {{ 'Accounting.O.CustomersNotes' | TextCodeTranslationPipe }}
+                                        <IconButton [IsSmall]="true"  [style.float]="isRTL ? 'left' : 'right'" [Name]="'Add'" (click)="OpenAccountingNote(null)"></IconButton>
                                     </div>
                                     <div class="content" style="padding: 5px 0;">
                                         <ul class="accounting-notes-list">
 
                                             <li *ngFor="let note of accountingNotesList">
+                                                <span style="color:gray; font-size: 9px;">2018-02-15</span>>
                                                 <span class="TextTrimming">{{note.Notes}}</span>
                                                 <div class="btns" [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'" >
                                                     <IconButton [IsSmall]="true"  [style.float]="isRTL ? 'right' : 'left'" [Name]="'Edit'" (click)="ItemEditButton(note)"></IconButton>
