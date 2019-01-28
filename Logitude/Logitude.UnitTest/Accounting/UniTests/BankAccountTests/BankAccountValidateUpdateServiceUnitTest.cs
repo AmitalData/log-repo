@@ -15,7 +15,7 @@ using Logitude.BL.Interfaces;
 using Logitude.BL.Security;
 using Microsoft.Practices.Unity;
 
-namespace Logitude.UnitTest.Accounting.UniTests
+namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
 {
     [TestClass]
     public class BankAccountValidateUpdateServiceUnitTest:TestBase

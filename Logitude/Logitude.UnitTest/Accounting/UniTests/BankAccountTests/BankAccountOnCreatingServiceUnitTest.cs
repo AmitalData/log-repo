@@ -6,7 +6,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Logitude.UnitTest.Accounting.UniTests
+namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
 {
     [TestClass]
     public class BankAccountOnCreatingServiceUnitTest
