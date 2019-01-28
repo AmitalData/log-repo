@@ -46,7 +46,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             else
             {
-                this.loggedContactId = loggedContact.Id;
+                if (loggedContact.Tenant != tenant)
+                {
+                    loggedContact = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant);
+                    this.loggedContactId = loggedContact.Id;
+                }
+                else
+                {
+                    this.loggedContactId = loggedContact.Id;
+                }
             }
 
         }
