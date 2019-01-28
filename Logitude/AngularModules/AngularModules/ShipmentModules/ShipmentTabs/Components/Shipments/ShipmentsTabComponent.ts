@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy}  from '@angular/core';
+import {Component, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
@@ -47,8 +47,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
         this.Listen();
     }
 
-    private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null; 
+
     Listen() {
         if (this.entityArgs.EditComponent) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -94,8 +93,19 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
                 this.isLoadHousesRequested = false;
             });
         }
+
+        this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            if (s == "ReloadHouses") {
+                this.LoadAllHouses();
+            }
+        });
     }
+
+    private SessionEvent: any = null;
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null; 
     ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }

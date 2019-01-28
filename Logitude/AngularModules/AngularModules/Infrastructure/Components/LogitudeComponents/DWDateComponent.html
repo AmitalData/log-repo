@@ -18,10 +18,8 @@
                 </div>
             </td>
             <td style="width:100%" *ngIf="ShowLogDatePicker">
-                
-                <LogDatePicker  [HideColumns]="true"  [IsFreeValue]="true"  [SelectedDateValue]="DateValue" [ObjectFieldName]="'DateValue'"  (ValueChanged)="DatePickerValueChange($event)" [DataContext]="DataContext"></LogDatePicker>
-
-
+                <LogDatePicker (ValueChanged)="DatePickerValueChange($event)"   [HideColumns]="true"   [IsFreeValue]="true"  [SelectedDateValue]="DateValue" [ObjectFieldName]="'DateValue'"   [DataContext]="DataContext"></LogDatePicker>
+     
             </td>
         </tr>
     </table>

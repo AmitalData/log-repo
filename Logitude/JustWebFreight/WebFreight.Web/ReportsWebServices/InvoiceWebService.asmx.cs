@@ -3220,7 +3220,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoiceDataProvider.SubTotalLocalCurr = invoiceSubTotals != null ? String.Format("{0:#,0.00}", invoiceSubTotals.Value) : "";
                 invoiceDataProvider.SubTotalInvoiceCurr = invoiceSubTotals_Local != null ? String.Format("{0:#,0.00}", invoiceSubTotals_Local.Value) : "";
                 invoiceDataProvider.TotalInvoiceCurr = invoiceAmount != null ? invoiceAmount.Value : 0;
-                invoiceDataProvider.TotalLocalCurr = invoiceAmountLocal != null ? String.Format("{0:#,0.00}", invoiceAmount.Value) : "";
+                invoiceDataProvider.TotalLocalCurr = invoiceAmountLocal != null ? String.Format("{0:#,0.00}", invoiceAmountLocal.Value) : "";
                 invoiceDataProvider.TotalProfitCurr = profitAmount != null ? profitAmount.Value : 0;
 
                 var result = invoiceDataProvider.TotalInvoiceCurr - Math.Truncate(invoiceDataProvider.TotalInvoiceCurr);
