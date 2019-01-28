@@ -333,6 +333,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         }
 
+        public CardList GetSingleByGLAccount(string glAccountId, int tenant)
+        {
+            CardList cardList = (from a in repository.context.Cards
+                                        where a.GLAccountId == glAccountId && a.Tenant == tenant
+                                        select new CardList()
+                                        {
+                                            Id = a.Id,
+                                            Tenant = a.Tenant,
+                                            EnglishName = a.EnglishName,
+
+                                        }).FirstOrDefault();
+            return cardList;
+        }
         public IQueryable<CardList> GetCardPMsByTenant(int tenant)
         {
             AddressRepository addressRepository = new AddressRepository(tenant);

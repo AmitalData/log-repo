@@ -1,3 +1,4 @@
+import { AccountingNoteExtendedListService } from './Services/ExtendedLists/AccountingNoteExtendedListService';
 //#region import services
 import { AccountingIntegrityCheckListService } from './Services/StandardLists/AccountingIntegrityCheckListService';
 import { AccountingEntityListService } from './Services/StandardLists/AccountingEntityListService';
@@ -242,6 +243,7 @@ export class ModuleProviders {
             case "TaxReportExtendedPMService": { myResult = new TaxReportExtendedPMService(); break; }
             case "AccountingIntegrityCheckListService": { myResult = new AccountingIntegrityCheckListService; break; }
             case "AccountingIntegrityCheckPMService": { myResult = new AccountingIntegrityCheckPMService; break; }
+            case "AccountingNoteExtendedListService": { myResult = new AccountingNoteExtendedListService; break; }
 
 
             //Menu Buttons
