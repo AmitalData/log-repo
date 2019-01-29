@@ -3150,7 +3150,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         DocuemntsReferenceDate = a.InvoiceDate,
                                         CreatedbyUser = a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName,
                                         GLAccountId = a.VendorCard.GLAccountId,
-                                        IsCancelled = false,
+                                        IsCancelled = a.StatusCode =="VD" ? true:false,
                                         VendorId =a.VendorId,
                                     }).ToList();
 
