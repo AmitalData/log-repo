@@ -200,6 +200,10 @@
     <Compile Include="Migrations\201901201024109_shareduserqueriesoracle.Designer.cs">
       <DependentUpon>201901201024109_shareduserqueriesoracle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901291242145_AddMigrationCourierFast.cs" />
+    <Compile Include="Migrations\201901291242145_AddMigrationCourierFast.Designer.cs">
+      <DependentUpon>201901291242145_AddMigrationCourierFast.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -332,6 +336,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901201024109_shareduserqueriesoracle.resx">
       <DependentUpon>201901201024109_shareduserqueriesoracle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901291242145_AddMigrationCourierFast.resx">
+      <DependentUpon>201901291242145_AddMigrationCourierFast.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
