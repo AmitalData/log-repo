@@ -1850,7 +1850,8 @@ namespace Logitude.BL.Helpers
 
             else if (fieldname == "SHIPPERREFERENCES")
             {
-                FieldValue = quotePM.ShipperReference1 + quotePM.ShipperReference2;
+         
+                FieldValue = CombinedReferences(quotePM.ShipperReference1 , quotePM.ShipperReference2);
             }
 
             // Consignee
@@ -1879,7 +1880,8 @@ namespace Logitude.BL.Helpers
 
             else if (fieldname == "CONSIGNEEREFERENCES")
             {
-                FieldValue = quotePM.ConsigneeReference1 + quotePM.ConsigneeReference2;
+ 
+                FieldValue = CombinedReferences(quotePM.ConsigneeReference1, quotePM.ConsigneeReference2);
             }
 
             else if (fieldname == "CUSTOMERNAME")
@@ -1906,7 +1908,8 @@ namespace Logitude.BL.Helpers
 
             else if(fieldname == "CUSTOMERREFERENCES")
             {
-                FieldValue = quotePM.CustomerReference1 + quotePM.CustomerReference2;
+     
+                FieldValue = CombinedReferences(quotePM.CustomerReference1, quotePM.CustomerReference2);
             }
 
             else
@@ -2064,6 +2067,15 @@ namespace Logitude.BL.Helpers
             }
 
             return FieldValue;
+        }
+
+        private static string CombinedReferences(string ref1 , string ref2)
+        {
+            string result = ref1 + ref2;
+            //if (!string.IsNullOrEmpty(ref1) && !string.IsNullOrEmpty(ref2)) result += ",";
+            //result += ref2;
+
+            return result;
         }
 
         public string GetQuoteTemplateHeaderFieldValue(string fieldname, QuotePM quotePM)
