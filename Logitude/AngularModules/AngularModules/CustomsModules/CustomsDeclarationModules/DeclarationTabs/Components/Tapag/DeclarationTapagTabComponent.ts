@@ -54,7 +54,7 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
                                                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                                                 this.LoadTapagsList();
                                                 this.Listen();
-
+                                                this.TapagIdEdit();
                                                 this.IsLoaded = true;
                                             });
                                         });
@@ -117,6 +117,7 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
             .subscribe((myResponse: ServiceResponse) => {
                 SessionLocator.CurrentSession.StopBusyIndicator();
                 this.GetDeclarationTapagsListsOp_Completed(myResponse, false);
+                this.TapagIdEdit();
             });
     }
 
@@ -132,9 +133,9 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
         SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
-    ngAfterViewInit() {
-        this.TapagIdEdit();
-    }
+    //ngAfterViewInit() {
+      //  this.TapagIdEdit();
+    //}
 
     TapagIdEdit() {
         var myDeclarationEditComponentController = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
@@ -143,11 +144,10 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
                 var item = this.tapagObslist.Collection.find(r => r.Id == myDeclarationEditComponentController.TapagId);
                 if (item != null) {
                     this.EditButtonClicked(item);
+                    console.log("TapagId " + myDeclarationEditComponentController.TapagId);
+                    myDeclarationEditComponentController.TapagId = null;
                 }
             }
-            
-            console.log("TapagId " + myDeclarationEditComponentController.TapagId);
-            myDeclarationEditComponentController.TapagId = null;
         }
         
     }
