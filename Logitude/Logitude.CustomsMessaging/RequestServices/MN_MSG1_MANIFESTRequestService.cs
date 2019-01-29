@@ -69,7 +69,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             myMN_MSG1_MANIFEST.Declaration = BuildDeclaration(requestParams);
 
             this.MyRequestSheetParam = new RequestSheetParam();
-            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Shipment");
+            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId;
             this.MyRequestSheetParam.RequestDescription = "מסר מניפסט";
 
