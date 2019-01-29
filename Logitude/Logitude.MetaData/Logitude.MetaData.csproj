@@ -318,7 +318,9 @@
     <None Include="EntityFiles\CommonDataModel\Participant.lxml" />
     <None Include="EntityFiles\CommonDataModel\PartnerType.lxml" />
     <None Include="EntityFiles\CommonDataModel\PasswordPolicy.lxml" />
-    <None Include="EntityFiles\CommonDataModel\PaymentTerm.lxml" />
+    <None Include="EntityFiles\CommonDataModel\PaymentTerm.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\CommonDataModel\PaymentTermDateType.lxml" />
     <None Include="EntityFiles\CommonDataModel\ProductPeriod.lxml" />
     <None Include="EntityFiles\CommonDataModel\ProductType.lxml">

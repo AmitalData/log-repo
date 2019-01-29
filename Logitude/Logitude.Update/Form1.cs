@@ -838,7 +838,7 @@ User/Pass",
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //if (Environment.MachineName == "ABDULLAH-PC") btnUpdateAccounting_Click(null, null);
+            if (Environment.MachineName == "ABDULLAH-PC") btnUpdateAccounting_Click(null, null);
             this.Text += " Environment=" + LogitudeSettings.LogitudeURL;// 4 customs env its must to know which company u updating 
 
             //string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -3498,6 +3498,12 @@ User/Pass",
             }
         }
 
+        private void button40_Click(object sender, EventArgs e)
+        {
+            AddStates addStatesForm = new AddStates();
+            addStatesForm.Show();
+
+        }
     }
 
 

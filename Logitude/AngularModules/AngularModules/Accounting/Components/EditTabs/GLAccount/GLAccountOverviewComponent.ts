@@ -1,3 +1,9 @@
+import { AccountingNotePMService } from './../../../Services/StandardPMs/AccountingNotePMService';
+import { AccountingNotePM } from './../../../EntityPMs/AccountingNotePM';
+import { MessageWindow } from './../../../../Controls/Windows/MessageWindow';
+import { AccountingNoteExtendedListService } from './../../../Services/ExtendedLists/AccountingNoteExtendedListService';
+import { AccountingNoteList } from './../../../EntityLists/AccountingNoteList';
+import { RegionList } from './../../../../Common/EntityLists/RegionList';
 import { AccountingEntityHelper } from './../../../Utilities/AccountingEntityHelper';
 import { EntityResourceService } from './../../../../Infrastructure/Services/EntityResourceService';
 import { LedgerTransactionList } from './../../../EntityLists/LedgerTransactionList';
@@ -24,6 +30,7 @@ import { AgingReportParameters } from '../../../DataContracts/AgingReportParamet
 import { PeriodM } from '../../../DataContracts/PeriodM';
 import { GLAccountList } from '../../../EntityLists/GLAccountList';
 import { FullAccountingSettingList } from '../../../EntityLists/FullAccountingSettingList';
+import { AccountingNoteListService } from '../../../Services/StandardLists/AccountingNoteListService';
 declare var makeAmBarChart;
 
 @Component({
@@ -50,12 +57,15 @@ export class GLAccountOverviewComponent extends BaseComponent {
     _GLAccountMoreDataListService: GLAccountMoreDataListService = new GLAccountMoreDataListService();
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
+    _AccountingNoteExtendedListService: AccountingNoteExtendedListService = new AccountingNoteExtendedListService();
+    _AccountingNotePMService: AccountingNotePMService = new AccountingNotePMService();
 
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         //Resources
+        this._EntityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => { });
         this._EntityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => { });
         this._EntityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { });
 
@@ -115,6 +125,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     LoadAllData() {
         this.GetDefaultValues();
         this.GetLastTransactions();
+        this.GetAccountingNotes();
         this.LoadChartData();
         this.SetUIProperties();
 
@@ -292,6 +303,95 @@ export class GLAccountOverviewComponent extends BaseComponent {
         if (document.body) {
             return document.body.clientWidth;
         }
+    }
+    //#endregion
+
+    //#region Accounting Notes
+    accountingNotesList: AccountingNoteList[] = [];
+    isNotesLoading:boolean = false;
+
+    GetAccountingNotes(){
+        if(this.AccountPM.CardId){
+            this.accountingNotesList = [];
+            this.isNotesLoading = true;
+            // setTimeout(() => {
+
+            this._AccountingNoteExtendedListService.GetNotesByCard(this.AccountPM.CardId)
+                .subscribe((res:ServiceResponse) =>
+                {
+                        this.isNotesLoading = false;
+
+
+                    if(res.HasError){
+                        var msg = new MessageWindow();
+                        msg.Show("Get Accounting Note error: " + res.ErrorsArray[0]);
+                    }else{
+                        var notesList = res.Result;
+                        this.accountingNotesList = notesList;
+                    }
+                });
+            // }, 2000);
+
+        }
+
+    }
+    OpenAccountingNote(notePM: AccountingNotePM){
+
+        var windowArgs: any = {};
+        windowArgs.AccountPM = this.AccountPM;
+        windowArgs.AccountingNotePM = notePM;
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 400;
+        logitudeWindow.Height = 300;
+        logitudeWindow.Title = notePM ? '' : TextCodeTranslator.Translate("Accounting.O.NewAccountingNote");
+
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./Accounting/Components/Others/AccountingNoteComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            this.GetAccountingNotes();
+        });
+
+    }
+    ItemEditButton(_noteList: AccountingNoteList){
+
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+
+        this._AccountingNotePMService.get(_noteList.Id)
+            .subscribe(myResult => {
+
+                var mm: ServiceResponse = myResult;
+                if (!mm.HasError) {
+                    var _notePM = mm.Result;
+                    this.OpenAccountingNote(_notePM);
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+
+
+                }
+                else {
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                }
+            });
+
+
+    }
+    ItemDeleteButton(item: AccountingNoteList){
+        this._AccountingNoteExtendedListService.DeleteNote(item.Id)
+            .subscribe(myResult => {
+
+                var mm: ServiceResponse = myResult;
+                if (!mm.HasError) {
+                    var res = mm.Result;
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.GetAccountingNotes();
+
+                }
+                else {
+                    var msg = new MessageWindow();
+                    msg.Show(mm.ErrorsArray[0]);
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                }
+            });
     }
     //#endregion
 

@@ -592,14 +592,29 @@ namespace WebFreight.Web.Helpers
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet = workbook.Worksheets[0];
 
+            int count = dataTable.Columns.Count;
+            List<DataColumn> deletedColumns = new List<DataColumn>();
+
             // Data Table Format - Index  
-            for (var i = 0; i < dataTable.Columns.Count; i++)
+            for (var i = 0; i < count; i++)
             {
                 var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[i].ColumnName).FirstOrDefault();
+
                 if (agColumn != null)
                 {
                     dataTable.Columns[i].SetOrdinal(agColumn.Index);
+                    if (!agColumn.IsChecked)
+                    {
+                        deletedColumns.Add(dataTable.Columns[i]);
+                    }
+                }
+            }
 
+            if(deletedColumns.Count > 0)
+            {
+                foreach(var item in deletedColumns)
+                {
+                    dataTable.Columns.Remove(item);
                 }
             }
             sheet.ImportDataTable(dataTable, true, 1, 1);

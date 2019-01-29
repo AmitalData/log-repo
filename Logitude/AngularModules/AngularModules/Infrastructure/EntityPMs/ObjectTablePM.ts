@@ -314,9 +314,20 @@ export class ObjectTablePM {
     public get AllowedInQueues() { return this.allowedInQueues; }
     public set AllowedInQueues(newValue: boolean) { if (this.allowedInQueues != newValue) { this.allowedInQueues = newValue; this.MarkAsDirty("AllowedInQueues"); } }
        
-    private displayName: string;
+	 
+    private lovDisplayMemberPath: string;
+    public get LovDisplayMemberPath() { return this.lovDisplayMemberPath; }
+    public set LovDisplayMemberPath(newValue: string) { if (this.lovDisplayMemberPath != newValue) { this.lovDisplayMemberPath = newValue; this.MarkAsDirty("LovDisplayMemberPath"); } }
+       
+	 
+    private lovDisplayMemberPathLocal: string;
+    public get LovDisplayMemberPathLocal() { return this.lovDisplayMemberPathLocal; }
+    public set LovDisplayMemberPathLocal(newValue: string) { if (this.lovDisplayMemberPathLocal != newValue) { this.lovDisplayMemberPathLocal = newValue; this.MarkAsDirty("LovDisplayMemberPathLocal"); } }
+       
+    private displayName: string; /// abed hamodi should add this to the tool and to the pm and the list
     public get DisplayName() { return this.displayName; }
     public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
+
 
 
     public OldEntityPM: ObjectTablePM;
@@ -341,4 +352,4 @@ export class ObjectTablePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

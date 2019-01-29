@@ -136,7 +136,14 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
 
         }
     }
+    //DownloadButtonClicked() {
+    //    this._GLAccountExtendedListService.CalculateFututreCheques().subscribe(myResult => {
+          
+       
 
+          
+    //    });
+    //}
     //#region Properties
     get IsMultiCurrency() { return this.EntityPM.IsMultiCurrency == null ? false : this.EntityPM.IsMultiCurrency; }
     set IsMultiCurrency(value: boolean) {
