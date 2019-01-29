@@ -54,6 +54,8 @@ export class DeclarationCourierStatusList {
 	SpecialActionStatus: string;
 	SpecialActionsErrorXml: string;
 	CourierPendingReasonErrorPlace: string;
+	FastIndividualProcessCode: string;
+	ManualProcessCode: string;
 	
 }
  
