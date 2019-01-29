@@ -39,7 +39,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					
 					                          CardId = a.CardId,
 					
-					                          Notes = a.Notes,
+					                          Notes = a.Notes, 
 					
 		                    	            });
             return query;
@@ -53,7 +53,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 
             IQueryable<AccountingNoteList> _query = GetIqueryableList(AccountingNoteQuery);
-            List < AccountingNoteList> _list = _query.ToList();
+            List < AccountingNoteList> _list = _query.OrderByDescending(d=>d.CreateDate).ToList();
             return _list;
 
         }
