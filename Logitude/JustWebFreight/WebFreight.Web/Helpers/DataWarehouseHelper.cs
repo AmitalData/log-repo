@@ -139,6 +139,12 @@ namespace WebFreight.Web.Helpers
             int intervalNumber = !string.IsNullOrEmpty(interval) ? Int32.Parse(interval) : 0;
             intervalNumber = intervalNumber * -1;
 
+            if (range == "Quarter")
+            {
+                intervalNumber = intervalNumber * 3;
+                range = "Month";
+            }
+
             switch (range)
             {
                 case "Day":
@@ -149,8 +155,10 @@ namespace WebFreight.Web.Helpers
                     break;
 
                 case "Week":
-                    fromDate = currentDate.AddDays(7 * intervalNumber).AddDays(-1);
-                    toDate = currentDate.AddDays(-1);
+
+                    DateTime startOfWeekDate = StartOfWeek(currentDate, DayOfWeek.Monday);
+                    fromDate = startOfWeekDate.AddDays(7 * intervalNumber).AddDays(-1);
+                    toDate = startOfWeekDate.AddDays(-1);
 
                     break;
 
@@ -208,7 +216,9 @@ namespace WebFreight.Web.Helpers
 
                 case "Week":
 
-                    toDate = currentDate.AddDays(7 * (intervalNumber + 1));
+
+                    DateTime startOfWeekDate = StartOfWeek(currentDate, DayOfWeek.Monday);
+                    toDate = startOfWeekDate.AddDays(7 * (intervalNumber + 1));
                     fromDate = DateTime.Parse(toDate.ToString()).AddDays(7 * (intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber)));
                     toDate = toDate.Value.AddDays(-1);
                     break;
