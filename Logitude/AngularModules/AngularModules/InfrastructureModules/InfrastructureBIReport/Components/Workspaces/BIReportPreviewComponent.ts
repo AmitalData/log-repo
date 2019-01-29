@@ -384,10 +384,15 @@ export class BIReportPreviewComponent implements OnInit {
         });
 
         this._InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe(myResult => {
-            this.hasChanged = false;
-            this.StopBusyIndicator();
-            if (arg) {
-                this.ShowQueryBuilder();
+            if (!myResult.HasError) {
+                this.BIReportXMLData = myResult.Result;
+                this.EntityPM = this.BIReportXMLData.BIReportPM;
+                this.EntityId = this.BIReportXMLData.BIReportId;
+                this.hasChanged = false;
+                this.StopBusyIndicator();
+                if (arg) {
+                    this.ShowQueryBuilder();
+                }
             }
         });
     }
@@ -416,7 +421,7 @@ export class BIReportPreviewComponent implements OnInit {
         logWindow.Show('./CommonModules/CommonOthers/Components/LoadSampleData/DWQueryBuilderComponent');
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
-                if (s != null && d != null && d != "cancel") {
+                if (s != null  ||( d != null && d != "cancel")) {
                     this.DWQueryId = s.ID;
                     this.LoadBIReportData();
                 }
@@ -460,7 +465,6 @@ export class BIReportPreviewComponent implements OnInit {
             var windowArgs: any = {};
             windowArgs.father = this;
             logWindow.WindowArgs = windowArgs;
-            logWindow.WindowClosed.subscribe(($event: any) => this.OnNewBIReportWindowClosed($event));
             logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/AgGridColumnsOperations');
             logWindow.ComponentLoaded.subscribe(s => {
                 logWindow.WindowClosed.subscribe(d => {

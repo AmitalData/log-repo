@@ -23,7 +23,7 @@ namespace Logitude.UnitTest
         [TestInitialize]
         public void InitializeTests()
         {
-            ContainerAccessor.Container.RegisterType<ILoggedContactUtil, MockLoggedContactUtil>("MockLoggedContactUtil", new InjectionFactory(c => new MockLoggedContactUtil()));
+            ContainerAccessor.Container.RegisterType<ILoggedContactUtil, MockLoggedContactUtil>("LoggedContactUtil", new InjectionFactory(c => new MockLoggedContactUtil()));
         }
     }
 }

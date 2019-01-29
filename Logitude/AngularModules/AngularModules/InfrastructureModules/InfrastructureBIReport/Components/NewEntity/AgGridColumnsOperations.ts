@@ -14,6 +14,7 @@ export class AgGridColumnsOperations extends BaseComponent {
     public ItemsSource: any[];
     private father: BIReportPreviewComponent;
     public IsAll = false;
+    private itemSource_Unsaved = null; 
 
     constructor() {
         super();
@@ -27,7 +28,7 @@ export class AgGridColumnsOperations extends BaseComponent {
     }
     SetWindowArgs(args: any) {
         this.father = args.father;
-
+        this.itemSource_Unsaved = args.father.BIReportXMLData.BITabularViewSettings.Columns;
         this.BuildList();
     }
 
@@ -37,6 +38,7 @@ export class AgGridColumnsOperations extends BaseComponent {
     }
 
     CancelButtonClicked() {
+        this.father.BIReportXMLData.BITabularViewSettings.Columns = this.itemSource_Unsaved;
         SessionLocator.CurrentSession.CloseCurrentWindowEmit('cancel');
     }
 
