@@ -148,14 +148,17 @@ namespace WebFreight.Web.WebPages
                     Uploader up = new Uploader();
                     List<DocumentsFilingPM> documents = up.GetDocumentByEntityAndTenant(entityId, tenant);
 
-                    if (partnerType == "AG")
+                    if (string.IsNullOrEmpty(token))
                     {
-                        documents = documents.Where(d => d.IsAgentView).ToList();
-                    }
+                        if (partnerType == "AG")
+                        {
+                            documents = documents.Where(d => d.IsAgentView).ToList();
+                        }
 
-                    else if (partnerType == "CS")
-                    {
-                        documents = documents.Where(d => d.IsCustomerView==true).ToList();
+                        else if (partnerType == "CS")
+                        {
+                            documents = documents.Where(d => d.IsCustomerView == true).ToList();
+                        }
                     }
 
                     Dictionary<string, byte[]> CompressedArray = new Dictionary<string, byte[]>();
