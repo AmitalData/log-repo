@@ -408,7 +408,7 @@ namespace Logitude.Accounting.BL.Validators
 
             //contact
             ContactQuery contactQuery = new ContactQuery(tenant);
-            ContactPM contactPM = contactQuery.GetContactByEmailOnly(email, tenant);
+            ContactPM contactPM = contactQuery.GetSingleByEmail(email, tenant);
             return contactPM;
         }
 
