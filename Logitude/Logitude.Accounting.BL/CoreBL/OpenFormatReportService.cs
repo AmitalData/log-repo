@@ -37,10 +37,26 @@ namespace Logitude.Accounting.BL.CoreBL
 {
    public class OpenFormatReportService
     {
+        private static  int rowsCount;
+        private static string random;
+        private static int B100Count;
+        private static int B110Count;
+        private static int C100Count;
+        private static int D110Count;
+        private static int D120Count;
+
+
 
         public static DocumentsFilingPM CreateBKMVDATAFile(string openFormatReportId, int tenant)
-        {
-            OpenFormatReportQueryService openFormatReportQueryService = new OpenFormatReportQueryService(tenant);
+        { 
+             B100Count = 0;
+             B110Count = 0;
+            C100Count = 0;
+            D110Count = 0;
+            D120Count = 0;
+            rowsCount = 0;
+
+        OpenFormatReportQueryService openFormatReportQueryService = new OpenFormatReportQueryService(tenant);
             OpenFormatReportPM openFormatReportPM = openFormatReportQueryService.GetSingle(openFormatReportId, false, false);
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
@@ -51,7 +67,7 @@ namespace Logitude.Accounting.BL.CoreBL
             CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
             List<B110Data> b110Data = gLAccountQueryService.GetB110sForGLAccounts(tenant);
-         
+            
           
             List<UserPM> users = userQuery.GetUserPMsByUserIds(userIds, tenant).ToList();
             List<CurrencyPM> currencies = currencyQuery.GetCurrenciesByTenantPM(tenant).ToList(); ;
@@ -108,6 +124,7 @@ namespace Logitude.Accounting.BL.CoreBL
             foreach (B100Data item in b100Data)
             {
                 counter++;
+                B100Count++;
                 myStringBuilder.Append("B100");
                 if (counter.ToString().Length > 9)
                 {
@@ -423,7 +440,8 @@ namespace Logitude.Accounting.BL.CoreBL
             foreach (B110Data item in b110Data)
             {
                 counter++;
-                if(item.DisplayNumber == "34732")
+                B110Count++;
+                if(item.DisplayNumber == "70099")
                 {
 
                 }
@@ -869,6 +887,7 @@ namespace Logitude.Accounting.BL.CoreBL
             foreach (C100Data item in ARC100)
             {
                 counter++;
+                C100Count++;
                 myStringBuilder.Append("C100");
 
 
@@ -1189,6 +1208,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 List<ARInvoiceLinePM> lines = aRInvoiceLinePMs.Where(d => d.ARInvoiceId == item.ARInvoiceId).ToList();
                 foreach (ARInvoiceLinePM line in lines)
                 {
+                    D110Count++;
                     counter++;
                     myStringBuilder.Append("D110");
 
@@ -1335,6 +1355,7 @@ namespace Logitude.Accounting.BL.CoreBL
             foreach (C100Data item in APC100)
             {
                 counter++;
+                C100Count++;
                 myStringBuilder.Append("C100");
 
 
@@ -1758,6 +1779,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 foreach (APInvoiceLinePM line in lines)
                 {
                     counter++;
+                    D110Count++;
                     myStringBuilder.Append("D110");
 
 
@@ -1904,7 +1926,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             foreach (C100Data item in ARPAymentC100)
             {
-
+                C100Count++;
                 counter++;
                 myStringBuilder.Append("C100");
 
@@ -2286,6 +2308,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 foreach (ARInvoicePaymentPM line in lines)
                 {
                     counter++;
+                    D120Count++;
                     myStringBuilder.Append("D120");
                     ARPaymentChequePM cheque = cheques.Where(d => d.PaymentId == item.ARPaymentId).FirstOrDefault();
 
@@ -2486,7 +2509,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //Deposit
             foreach (C100Data item in DepositC100)
             {
-
+                C100Count++;
                 counter++;
                 myStringBuilder.Append("C100");
 
@@ -2655,6 +2678,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 foreach (BankDepositLinePM line in lines)
                 {
                     counter++;
+                    D120Count++;
                     myStringBuilder.Append("D120");
 
 
@@ -2853,12 +2877,12 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
             //Z900
-
+          
             myStringBuilder.Append("Z900");
             
             counter++;
+            rowsCount = counter;
            
-
             if (counter.ToString().Length > 9)
             {
                 counter.ToString().Substring(0, 9);
@@ -2879,8 +2903,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append("a");
                 myStringBuilder.Append('0', 9);
             }
-            Random random = new Random();
-            string num = random.Next().ToString();
+            Random Random = new Random();
+            string num = Random.Next().ToString();
+            random = num;
             if (num.Length > 15) { num = num.Substring(0, 15); }
             myStringBuilder.Append("a" + num.PadLeft(15, '0'));
 
@@ -2895,23 +2920,16 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
             }
+         
             myStringBuilder.Append(' ', 50);
+
+           
             DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, openFormatReportPM);
 
             return docOut;
 
             
             
-           
-            
-
-
-
-
-            //DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, openFormatReportPM);
-
-            //return docOut;
-
 
 
         }
@@ -3192,6 +3210,325 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             return c100s;
+        }
+
+        public static DocumentsFilingPM CreateINIFile(string openFormatReportId, int tenant)
+        {
+            OpenFormatReportQueryService openFormatReportQueryService = new OpenFormatReportQueryService(tenant);
+            OpenFormatReportPM openFormatReportPM = openFormatReportQueryService.GetSingle(openFormatReportId, false, false);
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
+            FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
+            FullAccountingSettingPM setting = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
+            AddressQuery addressQuery = new AddressQuery(tenant);
+            AddressPM address = addressQuery.GetSingleAddressPM(tenantPM.AddressId, tenant);
+
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.Append("A000");
+            stringBuilder.Append(' ', 4);
+
+            if (rowsCount.ToString().Length > 9)
+            {
+                rowsCount.ToString().Substring(0, 9);
+                stringBuilder.Append("a" + rowsCount.ToString().PadLeft(9, '0'));
+            }
+            else
+            {
+               stringBuilder.Append(rowsCount.ToString().PadLeft(9, '0'));
+            }
+            if (tenantPM.VatNumber != null)
+            {
+                if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber = tenantPM.VatNumber.Substring(0, 9); }
+                stringBuilder.Append("a" + tenantPM.VatNumber.PadLeft(9, '0'));
+            }
+            else
+            {
+               stringBuilder.Append("a");
+                stringBuilder.Append('0', 9);
+            }
+
+            if (random.Length > 15) { random = random.Substring(0, 15); }
+            stringBuilder.Append("a" + random.PadLeft(15, '0'));
+            stringBuilder.Append("&OF1.31&");
+            stringBuilder.Append("511262073");
+            stringBuilder.Append("Unifreight Accounting");
+
+            if(setting != null)
+            {
+                if (setting.SoftwareVersion != null)
+                {
+                    if (setting.SoftwareVersion.Length > 20) { setting.SoftwareVersion = setting.SoftwareVersion.Substring(0, 20); }
+                    stringBuilder.Append("a" + setting.SoftwareVersion.PadLeft(20, ' '));
+                }
+                else
+                {
+                    stringBuilder.Append("a");
+                    stringBuilder.Append(' ', 20);
+                }
+            }
+            else
+            {
+                stringBuilder.Append("a");
+                stringBuilder.Append(' ', 20);
+            }
+
+            stringBuilder.Append("511262073");
+            stringBuilder.Append("Amital Data LTD");
+            stringBuilder.Append("2");
+
+            var date = DateTime.Now;
+             string dateFormat = String.Format("{0:MMddhhmm}", date);
+
+            string filePath = @"D:\OPENFRMT\" + tenantPM.VatNumber + "." + date.Year + @"\" + dateFormat;
+
+            if (filePath.ToString().Length > 50)
+            {
+                filePath.ToString().Substring(0, 50);
+                stringBuilder.Append("a" + filePath.ToString().PadLeft(50, ' '));
+            }
+            else
+            {
+                stringBuilder.Append("a" + filePath.ToString().PadLeft(50, ' '));
+            }
+
+            stringBuilder.Append("2");
+            stringBuilder.Append("2");
+            if (tenantPM.VatNumber != null)
+            {
+                if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber = tenantPM.VatNumber.Substring(0, 9); }
+                stringBuilder.Append("a" + tenantPM.VatNumber.PadLeft(9, '0'));
+            }
+            else
+            {
+                stringBuilder.Append("a");
+                stringBuilder.Append('0', 9);
+            }
+
+
+            if (setting != null)
+            {
+                if (setting.DeductionFileNumber != null)
+                {
+                    if (setting.DeductionFileNumber.Length > 9) { setting.DeductionFileNumber = setting.DeductionFileNumber.Substring(0,9); }
+                    stringBuilder.Append("a" + setting.DeductionFileNumber.PadLeft(9, '0'));
+                }
+                else
+                {
+                    stringBuilder.Append("a");
+                    stringBuilder.Append('0', 9);
+                }
+            }
+            else
+            {
+                stringBuilder.Append("a");
+                stringBuilder.Append('0', 9);
+            }
+            stringBuilder.Append('0', 10);
+            if (tenantPM.Company != null)
+            {
+                if (tenantPM.Company.Length > 50) { tenantPM.Company = tenantPM.Company.Substring(0, 50); }
+                stringBuilder.Append("a" + tenantPM.Company.PadLeft(50, ' '));
+            }
+            else
+            {
+                stringBuilder.Append("a");
+                stringBuilder.Append(' ', 50);
+            }
+
+            if (tenantPM.CompanyAddress != null)
+            {
+                if (tenantPM.CompanyAddress.Length > 50) { tenantPM.CompanyAddress = tenantPM.CompanyAddress.Substring(0, 50); }
+                stringBuilder.Append("a" + tenantPM.CompanyAddress.PadLeft(50, ' '));
+            }
+            else
+            {
+                stringBuilder.Append("a");
+                stringBuilder.Append(' ', 50);
+            }
+            stringBuilder.Append("a");
+            stringBuilder.Append(' ', 10);
+           if(address != null)
+            {
+                if(address.City != null)
+                {
+                    if (address.City.Length > 30) { address.City = address.City.Substring(0, 30); }
+                    stringBuilder.Append("a" + address.City.PadLeft(30, ' '));
+                }
+
+                else
+                {
+                    stringBuilder.Append("a");
+                    stringBuilder.Append(' ', 30);
+                }
+
+                if (address.ZipCode != null)
+                {
+                    if (address.ZipCode.Length > 8) { address.ZipCode = address.ZipCode.Substring(0,8); }
+                    stringBuilder.Append("a" + address.ZipCode.PadLeft(8, ' '));
+                }
+
+                else
+                {
+                    stringBuilder.Append("a");
+                    stringBuilder.Append(' ', 8);
+                }
+            }
+            else
+            {
+                stringBuilder.Append("a");
+                stringBuilder.Append(' ', 30);
+                stringBuilder.Append("a");
+                stringBuilder.Append(' ', 8);
+            }
+            stringBuilder.Append("a");
+            stringBuilder.Append(' ', 4);
+            var fromDate = String.Format("{0:yyyyMMdd}", openFormatReportPM.FromDate);
+            var toDate = String.Format("{0:yyyyMMdd}", openFormatReportPM.ToDate);
+            dateFormat = String.Format("{0:yyyyMMdd}", date);
+
+            stringBuilder.Append(fromDate);
+            stringBuilder.Append(toDate);
+            stringBuilder.Append(dateFormat);
+            var CurrenteDateTime = date.ToString("HHmm");
+            stringBuilder.Append(CurrenteDateTime);
+            stringBuilder.Append("0");
+            stringBuilder.Append("1");
+            stringBuilder.Append("WinZip");
+            stringBuilder.Append("ILS");
+            stringBuilder.Append("0");
+            stringBuilder.Append(' ',46);
+
+            stringBuilder.Append("\n");
+            stringBuilder.Append("B100");
+            if (B100Count.ToString().Length >15)
+            {
+                B100Count.ToString().Substring(0, 15);
+                stringBuilder.Append("a" + B100Count.ToString().PadLeft(15, '0'));
+            }
+            else
+            {
+                stringBuilder.Append("a" + B100Count.ToString().PadLeft(15, '0'));
+            }
+            stringBuilder.Append("\n");
+            stringBuilder.Append("B110");
+            if (B110Count.ToString().Length > 15)
+            {
+                B110Count.ToString().Substring(0, 15);
+                stringBuilder.Append("a" + B110Count.ToString().PadLeft(15, '0'));
+            }
+            else
+            {
+                stringBuilder.Append("a" + B110Count.ToString().PadLeft(15, '0'));
+            }
+            stringBuilder.Append("\n");
+            stringBuilder.Append("C100");
+            if (C100Count.ToString().Length > 15)
+            {
+                C100Count.ToString().Substring(0, 15);
+                stringBuilder.Append("a" + C100Count.ToString().PadLeft(15, '0'));
+            }
+            else
+            {
+                stringBuilder.Append("a" + C100Count.ToString().PadLeft(15, '0'));
+            }
+            stringBuilder.Append("\n");
+            stringBuilder.Append("D110");
+            if (D110Count.ToString().Length > 15)
+            {
+                D110Count.ToString().Substring(0, 15);
+                stringBuilder.Append("a" + D110Count.ToString().PadLeft(15, '0'));
+            }
+            else
+            {
+                stringBuilder.Append("a" + D110Count.ToString().PadLeft(15, '0'));
+            }
+
+            stringBuilder.Append("\n");
+            stringBuilder.Append("D120");
+            if (D120Count.ToString().Length > 15)
+            {
+                D120Count.ToString().Substring(0, 15);
+                stringBuilder.Append("a" + D120Count.ToString().PadLeft(15, '0'));
+            }
+            else
+            {
+                stringBuilder.Append("a" + D120Count.ToString().PadLeft(15, '0'));
+            }
+            DocumentsFilingPM docOut = CreateINIDocumnetFiling(stringBuilder, openFormatReportPM);
+
+            return docOut;
+
+
+
+
+
+
+
+
+
+            //DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, openFormatReportPM);
+
+            //return docOut;
+
+
+
+        }
+        private static DocumentsFilingPM CreateINIDocumnetFiling(StringBuilder lines, OpenFormatReportPM openFormatReport, bool isFromWR = false)
+        {
+            // prepare file string
+            string file = string.Join(Environment.NewLine, lines);
+
+            // create document
+            int tenant = openFormatReport.Tenant;
+            ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
+            DocumentsFilingService docService = new DocumentsFilingService(MyContext, tenant);
+            DocumentTypeRepository docTypeReposioty = new DocumentTypeRepository(MyContext);
+
+            ObjectTableRepository tableRep = new ObjectTableRepository(tenant);
+            ObjectTable table = tableRep.GetObjectTableByName("OpenFormatReport", 0, true);
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
+
+            // user
+            User loggedUser = GetLoggedUser(tenant);
+            DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("INI", tenant);
+
+            string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
+            // string name = "A856." + tenantPM.VatNumber + "." + taxDeductionReport.TaxYear.ToString().Substring(1, 3);
+            DocumentsFilingPM document = new DocumentsFilingPM()
+            {
+                Description = "INI Text File",
+                DocumentTypeId = docType.Id,
+                Tenant = tenant,
+                DirectionCode = "I",
+                EntityId = openFormatReport.Id,
+                EntityNumber = openFormatReport.ReportNumber != null ? openFormatReport.ReportNumber.ToString() : null,
+                ObjectTableId = table.Id,
+                Code = _code,
+                CreatedByUserId = loggedUser.Id,
+                OwnerId = loggedUser.Id,
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                UpdatedByUserId = loggedUser.Id,
+                UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                FileExtension = "txt",
+                SecurityId = "100",
+                FileName = "INI",
+            };
+
+            byte[] bytearray = Encoding.Unicode.GetBytes(file);
+            document.FileData = bytearray;
+            docService.Create(document, document.FileData, loggedUser.Id);
+
+
+            //get document out
+            DocumentsFilingQuery queryService = new DocumentsFilingQuery(tenant);
+            string code = (Convert.ToInt32(_code) + 1).ToString();
+            DocumentsFilingPM docFiling = queryService.GetDocumentsFilingByDocumentCode(code, tenant);
+
+
+            return docFiling;
         }
 
     }
