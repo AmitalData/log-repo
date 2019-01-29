@@ -151,11 +151,15 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     IdentityKey: string;
     @Output() OriginalText = new EventEmitter();
 
+    public isRTL: boolean = false;
+
+
     @Input() DebounceTime: number;
     constructor(private ngzone: NgZone, private cd: ChangeDetectorRef,
         private appref: ApplicationRef) {
         this.show = false;
         this.IdentityKey = AppTool.GetNewGuid();
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
         //SessionLocator.CurrentSession.isShiftClicked = false;
@@ -1512,14 +1516,17 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         windowArgs.TextValue = this.TextValue;
 
         var wind = new LogitudeWindow();
-        wind.IsFullScreen = true;
+        // wind.IsFullScreen = true;
+        wind.Width = 960;
+        wind.Height = 570;
         wind.WindowArgs = windowArgs;
-        wind.Title = this.showLocal ? this.ObjectField.FullNameTextCodeLocalDefaultText :  this.ObjectField.FullNameTextCodeDefaultText;
+        wind.Title = this.showLocal ? this.ObjectField.FullNameTextCodeLocalDefaultText : this.ObjectField.FullNameTextCodeDefaultText;
         wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
-        wind.WindowClosed.subscribe(res=>{
-            console.log("Rsukt--",res);
-            if(res)
+        wind.WindowClosed.subscribe(res => {
+            console.log("Rsukt--", res);
+            if (res)
                 this.TextValue = res;
+            this.TextValueChanges(this.TextValue);
         });
 
 
