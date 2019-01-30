@@ -115,7 +115,10 @@ export class CounterTableComponent extends BaseComponent {
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-
+        let counterLength: number = 15;
+        if (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Quote") {
+            counterLength = 20;
+        }
         var isValidGreaterStartNumber: boolean = true;
 
         if (!AppTool.IsNullOrEmpty(this.StartNumber)) {
@@ -131,20 +134,20 @@ export class CounterTableComponent extends BaseComponent {
 
         else {
             var errors: string[] = [];
-             if (this.CounterSize > 15) {
-                    errors.push("Maximum size allowed for counter is 15");
+            if (this.CounterSize > counterLength) {
+                errors.push("Maximum size allowed for counter is " + counterLength);
                 }
             if (this.UniquePerPrefix == true) {
                 Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
                 if (this.UniquePerPrefix && !AppTool.IsNullOrEmpty(this.Prefix) && !AppTool.IsNullOrEmpty(this.StartNumber)) {
-                    if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) > 15) {
-                        errors.push("Maximum length allowed for [Startnumber + Prefix] is 15");
+                    if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) > counterLength) {
+                        errors.push("Maximum length allowed for [Startnumber + Prefix] is " + counterLength);
                     }
                 }
             }
-            else if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) > 15) {
-                errors.push("Maximum length allowed for [Prefix + StartNumber] is 15");
+            else if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) > counterLength) {
+                errors.push("Maximum length allowed for [Prefix + StartNumber] is " + counterLength);
             }
         
 

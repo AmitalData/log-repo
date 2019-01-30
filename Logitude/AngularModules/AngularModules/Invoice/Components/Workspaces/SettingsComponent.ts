@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList} from '@angular/core';
+import {Component, ViewChildren, QueryList} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
@@ -17,10 +17,12 @@ export class SettingsComponent {
     public HasTransferFeature: boolean = false;
     public AccountingSystemName: string = null;
     public SATSettingsName: string = null;
+    public IsVisible_AccountingSetting: boolean = false;
     constructor(private entityResourceService: EntityResourceService) {
 
         this._entityResourceService = new EntityResourceService();
         this.IsVisible_SATInterface = FeatureLocator.HasFeaturePermession("General", "SATINTERFACE") ? true : false;
+        this.IsVisible_AccountingSetting = FeatureLocator.HasFeaturePermession("General", "HOWTOACCOUNTINGSETTINGS") ? true : false;
 
         if (FeatureLocator.HasFeaturePermession("General", "ACCOUNTINGTRANSFER")) {
             this.HasTransferFeature = true;

@@ -160,7 +160,11 @@ namespace WebFreight.Web.MetaDataUpdate
                             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
                             updateClass.UpgradeClosedTablesForTenantZero();
 
-                            ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
+							InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
+							inframodelUpdateClass.LoadObjectsTenantZero(context);
+
+
+							ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
                             shipmentModelUpdateClass.LoadObjectsTenantZero(context);
 
                             QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
@@ -172,24 +176,26 @@ namespace WebFreight.Web.MetaDataUpdate
                             CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
                             commonmodelUpdateClass.LoadObjectsTenantZero(context);
 
-                            InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
-                            inframodelUpdateClass.LoadObjectsTenantZero(context);
-
+                          
                             GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
                             globalmodelUpdateClass.LoadObjectsTenantZero(context);
 
+							InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
+							modelUpdateClass.LoadObjectsTenantZero(context);
 
-                            updateClass.LoadUpdateTenantZero(context, false);
+							updateClass.LoadUpdateTenantZero(context, false);
 
                             updateClass.LoadOtherFields(context);
                             updateClass.LoadTranslationHeaders();
                             updateClass.LoadMeasurements();
                             updateClass.LoadCreditCardTypes();
                             updateClass.LoadMoveTypes();
-                            //updateClass.loadQueries();
-                            //updateClass.loadScreens();
-                            //updateClass.LoadObjectTableTabs();
-                            updateClass.LoadRolesAndFeatures(0);
+							//updateClass.loadQueries();
+							//updateClass.loadScreens();
+							//updateClass.LoadObjectTableTabs();
+							context.SaveChanges();
+
+							updateClass.LoadRolesAndFeatures(0);
                             updateClass.LoadObjectTableHelperControls();
                             updateClass.LoadEntityStatus();
                             updateClass.LoadEventTypes();

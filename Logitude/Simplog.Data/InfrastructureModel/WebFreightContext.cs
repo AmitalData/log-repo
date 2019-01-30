@@ -357,6 +357,8 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new DWQueryFilterMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
+            modelBuilder.Configurations.Add(new DWCategoriesMap());
+            modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
 
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
@@ -963,6 +965,18 @@ namespace Simplog.Data.InfrastructureModel
         {
             get;
             set;
-        }        
+        }
+
+        public IDbSet<DWCategories> DWCategories
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<DWObjectFieldCategories> DWObjectFieldCategories
+        {
+            get;
+            set;
+        }
     }
 }

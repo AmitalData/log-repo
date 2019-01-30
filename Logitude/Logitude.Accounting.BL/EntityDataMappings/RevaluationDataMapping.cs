@@ -9,6 +9,8 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
+using Logitude.BL.Interfaces;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -61,7 +63,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 RevaluationStatusPM revaluationStatusPM = revaluationStatusQueryService.GetSingle(entityPOCO.Status, false, false);
                 if (revaluationStatusPM != null)
                 {
-                    ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+                    ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
                     if (loggedContact.DontShowLocal)
                     {
 
@@ -81,7 +83,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             }
 
         }
-   }
+
+        private ContactPM GetLoggedContact(int tenant)
+        {
+            ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
+
+    }
 
 
 }

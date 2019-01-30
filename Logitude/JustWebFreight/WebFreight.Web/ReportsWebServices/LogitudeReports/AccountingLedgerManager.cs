@@ -118,6 +118,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             AddressQuery addressQuery = new AddressQuery(addressRepository);
             CurrencyRepository currencyRepository = new CurrencyRepository(myCommonContext);
             ShipmentRepository shipmentRepository = new ShipmentRepository(myShipmentsContext);
+            CardRepository cardRepository = new CardRepository(myCommonContext);
 
             List<Currency> systemCurrencies = currencyRepository.GetCurrencies(tenant).ToList();
             List<ARInvoiceType> ARInvoiceTypes = myInvoiceContext.ARInvoiceTypes.ToList();
@@ -468,6 +469,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Notes = arInvoice.InternalNotes;
                 accountingLedgerRecord.CustomerId = arInvoice.BillToId;
 
+                if (!string.IsNullOrEmpty(arInvoice.BillToId))
+                {
+                    Card card = cardRepository.GetSingleCard(arInvoice.BillToId, tenant);
+                    if (card != null)
+                    {
+                        accountingLedgerRecord.BillToVendor = card.EnglishName;
+                    }
+                }
+
                 if (!string.IsNullOrEmpty(arInvoice.MainEntityId))
                 {
                     Shipment shipment = shipmentRepository.GetSingleShipment(arInvoice.MainEntityId, tenant);
@@ -547,6 +557,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == apInvoice.InvoiceCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.CustomerId = apInvoice.VendorId;
 
+                if (!string.IsNullOrEmpty(apInvoice.VendorId))
+                {
+                    Card card = cardRepository.GetSingleCard(apInvoice.VendorId, tenant);
+                    if (card != null)
+                    {
+                        accountingLedgerRecord.BillToVendor = card.EnglishName;
+                    }
+                }
+
                 if (!string.IsNullOrEmpty(apInvoice.MainEntityReference))
                 {
                     Shipment shipment = shipmentRepository.GetSingleShipmentByShipmentNumber(apInvoice.MainEntityReference, tenant);
@@ -601,6 +620,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.ReferenceType = "A\\R Payment";
                 accountingLedgerRecord.CustomerId = arPayment.BillToId;
 
+                if (!string.IsNullOrEmpty(arPayment.BillToId))
+                {
+                    Card card = cardRepository.GetSingleCard(arPayment.BillToId, tenant);
+                    if (card != null)
+                    {
+                        accountingLedgerRecord.BillToVendor = card.EnglishName;
+                    }
+                }
+
                 if (ARPaymentMethods.Where(d => d.Id == arPayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
                 {
                     if (arPayment.AmountInPaymentCurrency < 0)
@@ -647,6 +675,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.ReferenceNumber = apPayment.PaymentNo;
                 accountingLedgerRecord.ReferenceType = "A\\P Payment";
                 accountingLedgerRecord.CustomerId = apPayment.VendorId;
+
+                if (!string.IsNullOrEmpty(apPayment.VendorId))
+                {
+                    Card card = cardRepository.GetSingleCard(apPayment.VendorId, tenant);
+                    if (card != null)
+                    {
+                        accountingLedgerRecord.BillToVendor = card.EnglishName;
+                    }
+                }
 
                 if (APPaymentMethods.Where(d => d.Id == apPayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
                 {
@@ -752,6 +789,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         currencyRecord.ShipperReference2 = ledger.ShipperReference2;
                         currencyRecord.ShipmentNumber = ledger.ShipmentNumber;
                         currencyRecord.Notes = ledger.Notes;
+                        currencyRecord.BillToVendor = ledger.BillToVendor;
 
                         customerRecord.AccountingLedgerList.Add(currencyRecord);
                     }                    

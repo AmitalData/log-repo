@@ -22,6 +22,8 @@ using Logitude.Accounting.BL.Validators;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
+using Logitude.BL.Interfaces;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.Accounting.BL
 {
@@ -316,22 +318,18 @@ namespace Logitude.Accounting.BL
 
         public virtual ContactPM GetLoggedContact(int tenant)
         {
-
             if (OverrideGetLoggedContactFunc != null)
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                //SecurityUtility.GetAuthenticatedUser()
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-            }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
+
+            ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+            return loggedcontact;
         }
+
+
+
 
     }
 }
