@@ -27,6 +27,8 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.BL.Security;
+using Logitude.BL.Interfaces;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -277,7 +279,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void Trace(BankDepositPM entityPM, BankDeposit entityPOCO, string changesXml)
         {
-            ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+            ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
@@ -307,6 +309,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
         }
+
+
+
+        public ContactPM GetLoggedContact(int tenant)
+        {
+
+            ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
+
 
         protected override void UpdateComposition(BankDepositPM entityPM)
         {
@@ -516,21 +529,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             return bankDeposit;
 
-        }
-
-        private ContactPM GetLoggedContact(int tenant)
-        {
-            //email
-            string email = "";
-            if (HttpContext.Current != null)
-                email = HttpContext.Current.User.Identity.Name;
-            else
-                email = "system@tenant" + tenant.ToString() + ".com";
-
-            //contact
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            ContactPM contactPM = contactQuery.GetContactByEmailOnly(email, tenant);
-            return contactPM;
         }
         #endregion
 
