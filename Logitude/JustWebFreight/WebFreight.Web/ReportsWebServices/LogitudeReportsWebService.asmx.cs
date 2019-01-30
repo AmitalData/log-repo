@@ -705,6 +705,8 @@ namespace WebFreight.Web.ReportsWebServices
                     profitrecord.Notes = a.Notes;
                     profitrecord.RealShipmentType = a.ShipmentTypeName;
 
+                    profitrecord.Master = a.LongMaster;
+
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, a, profitrecord);
 
