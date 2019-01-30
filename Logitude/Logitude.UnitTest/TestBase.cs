@@ -14,6 +14,7 @@ using Logitude.Server.Tools;
 using Logitude.BL.Interfaces;
 using Logitude.BL.Security;
 using Microsoft.Practices.Unity;
+using Logitude.BL.Helpers;
 
 namespace Logitude.UnitTest
 {
@@ -23,7 +24,7 @@ namespace Logitude.UnitTest
         [TestInitialize]
         public void InitializeTests()
         {
-            ContainerAccessor.Container.RegisterType<ILoggedContactUtil, MockLoggedContactUtil>("LoggedContactUtil", new InjectionFactory(c => new MockLoggedContactUtil()));
+            LoggedContactResolver.RegisterMockLoggedContactUtil();
         }
     }
 }
