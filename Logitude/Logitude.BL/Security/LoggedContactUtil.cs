@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Logitude.BL.Security
 {
@@ -14,15 +15,18 @@ namespace Logitude.BL.Security
     {
         public ContactPM GetLoggedContact(int tenant)
         {
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-               //SecurityUtility.GetAuthenticatedUser()
-               AuthenticationUtil.ResolveUserIdentityName(tenant)
-               , tenant);
-            if (loggedContact == null)
+            ContactPM loggedContact;
+
+            if (HttpContext.Current != null)
             {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
+                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(AuthenticationUtil.ResolveUserIdentityName(tenant), tenant);
             }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
+            else
+            {
+                loggedContact = new ContactQuery(tenant).GetSingleByEmail("system@tenant" + tenant + ".com", tenant);
+            }
+
+            loggedContact = loggedContact ?? new ContactPM() { DontShowLocal = true };
             return loggedContact;
         }
     }

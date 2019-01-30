@@ -12,6 +12,9 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using System.Web;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Interfaces;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.Accounting.BL.Validators
 {
@@ -399,17 +402,9 @@ namespace Logitude.Accounting.BL.Validators
 
         private static ContactPM GetLoggedContact(int tenant)
         {
-            //email
-            string email = "";
-            if (HttpContext.Current != null)
-                email = HttpContext.Current.User.Identity.Name;
-            else
-                email = "system@tenant" + tenant.ToString() + ".com";
-
-            //contact
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            ContactPM contactPM = contactQuery.GetSingleByEmail(email, tenant);
-            return contactPM;
+            ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+            return loggedcontact;
         }
 
 
