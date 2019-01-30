@@ -26,11 +26,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.Prefix)
-                .HasMaxLength(10)
+                .HasMaxLength(20)
                 .IsUnicode(false);
 
 			this.Property(t => t.Suffix)
-			   .HasMaxLength(10)
+			   .HasMaxLength(20)
 			   .IsUnicode(false);
 
 			this.Property(t => t.CounterId)

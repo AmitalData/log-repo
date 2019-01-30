@@ -13,7 +13,7 @@ namespace Simplog.Data.QuoteModel.Mapping
 
             // Properties
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.QuoteNumber).IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.QuoteNumber).IsRequired().HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.ShipperReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.QuoteTemplateId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipperReference2).HasMaxLength(50).IsUnicode(false);

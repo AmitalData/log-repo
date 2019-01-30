@@ -562,6 +562,26 @@
     <Compile Include="Migrations\201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.Designer.cs">
       <DependentUpon>201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901230654530_shipmentnumber_length_15_to_40.cs" />
+    <Compile Include="Migrations\201901230654530_shipmentnumber_length_15_to_40.Designer.cs">
+      <DependentUpon>201901230654530_shipmentnumber_length_15_to_40.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901240724374_quotenumber_increate_from_15_to_40.cs" />
+    <Compile Include="Migrations\201901240724374_quotenumber_increate_from_15_to_40.Designer.cs">
+      <DependentUpon>201901240724374_quotenumber_increate_from_15_to_40.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901300536311_shipment_quote_number_length_25.cs" />
+    <Compile Include="Migrations\201901300536311_shipment_quote_number_length_25.Designer.cs">
+      <DependentUpon>201901300536311_shipment_quote_number_length_25.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901300632309_counterdefinition_prefix_suffix_20.cs" />
+    <Compile Include="Migrations\201901300632309_counterdefinition_prefix_suffix_20.Designer.cs">
+      <DependentUpon>201901300632309_counterdefinition_prefix_suffix_20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901300705089_shipment_number_20.cs" />
+    <Compile Include="Migrations\201901300705089_shipment_number_20.Designer.cs">
+      <DependentUpon>201901300705089_shipment_number_20.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -927,6 +947,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.resx">
       <DependentUpon>201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901230654530_shipmentnumber_length_15_to_40.resx">
+      <DependentUpon>201901230654530_shipmentnumber_length_15_to_40.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901240724374_quotenumber_increate_from_15_to_40.resx">
+      <DependentUpon>201901240724374_quotenumber_increate_from_15_to_40.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901300536311_shipment_quote_number_length_25.resx">
+      <DependentUpon>201901300536311_shipment_quote_number_length_25.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901300632309_counterdefinition_prefix_suffix_20.resx">
+      <DependentUpon>201901300632309_counterdefinition_prefix_suffix_20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901300705089_shipment_number_20.resx">
+      <DependentUpon>201901300705089_shipment_number_20.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

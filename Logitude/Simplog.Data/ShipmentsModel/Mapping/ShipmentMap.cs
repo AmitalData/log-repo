@@ -17,7 +17,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ComputedStatusId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ForeignPartnerCountryCode).HasMaxLength(2).IsUnicode(false);            
             this.Property(t => t.ComputedStatusDate);
-            this.Property(t => t.ShipmentNumber).IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ShipmentNumber).IsRequired().HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.ExceptionDescription).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.ExceptionResolvedDescription).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.LastExceptionDescription).HasMaxLength(2000).IsUnicode(true);
@@ -255,8 +255,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.IssuingCarrierReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ShipperName).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.ConsigneeName).HasMaxLength(70).IsUnicode(false);
-            this.Property(t => t.ForwarderShipmentNumber).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.CustomerShipmentNumber).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ForwarderShipmentNumber).HasMaxLength(20).IsUnicode(false);
+            this.Property(t => t.CustomerShipmentNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.CustomsDeclarationNumber).HasMaxLength(35).IsUnicode(false);
             this.Property(t => t.ForwarderPartnerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LastSentByUserId).HasMaxLength(15).IsUnicode(false);
@@ -267,7 +267,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ReleasingAgentContactId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ReleasingAgentReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ReleasingAgentReference2).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.ComputedForwarderShipmentNumber).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ComputedForwarderShipmentNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.ISFNumber).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.ITNumber).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.ENSNumber).HasMaxLength(25).IsUnicode(false);
