@@ -32,6 +32,7 @@ import {CustomFieldResolverPipe} from './Pipes/CustomFieldResolverPipe';
 import {GeneralSendComponent} from './Components/LogitudeComponents/GeneralSendComponent';
 import {LogLabelComponent} from './Components/LogitudeComponents/LogLabelComponent';
 import {LogTextBoxComponent} from './Components/LogitudeComponents/LogTextBoxComponent';
+import {MultilineTextBoxWindow} from './Components/LogitudeComponents/MultilineTextBoxWindow';
 import {LogTextBoxV2Component} from './Components/LogitudeComponents/LogTextBoxV2Component';
 import {LogLovComponent} from './Components/LogitudeComponents/LogLovComponent';
 import {LogLovV2Component} from './Components/LogitudeComponents/LogLovV2Component';
@@ -191,6 +192,7 @@ export const ControlsComponents =
         GeneralSendComponent,
         LogLabelComponent,
         LogTextBoxComponent,
+        MultilineTextBoxWindow,
         LogTextBoxV2Component,
         LogLovComponent,
         LogLovV2Component,
@@ -265,6 +267,7 @@ export const Components =
         LogitudeListBoxComponent,
         GeneralTabComponent,
         GeneratedComponent,
+        MultilineTextBoxWindow,
 
         MainMenuAutomationComponent,
         AutomationsSettingsComponent,
@@ -402,6 +405,9 @@ export class ModuleDeclarations {
             case 'BTEGeneralTabComponent': { myResult = BTEGeneralTabComponent; break; }
             case 'BTELogTabComponent': { myResult = BTELogTabComponent; break; }
             case 'BTEParameterTabComponent': { myResult = BTEParameterTabComponent; break; }
+            case 'MultilineTextBoxWindow': { myResult = MultilineTextBoxWindow; break; }
+
+
         }
 
         return myResult;

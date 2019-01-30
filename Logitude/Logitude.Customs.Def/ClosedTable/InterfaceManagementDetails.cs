@@ -2384,7 +2384,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Code = "5114",
                 InOut = InOutEnum.I.ToString(),
                 Description = "אישור/דחיה תביעה",
-                DcaPrefixName = "SendCLAIM_MSG10_AcceptanceOrRejectionClaimMessage_Out.",
+                DcaPrefixName = "SendCLAIM_MSG5114_AcceptanceOrRejectionClaimMessage_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
                 AllowRestore = true,
