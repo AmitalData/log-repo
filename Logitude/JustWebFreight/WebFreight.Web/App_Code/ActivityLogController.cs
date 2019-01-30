@@ -16,7 +16,7 @@ namespace WebFreight.Web.App_Code
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<controller>/5
+        // GET api/<controller>/5 
         public string Get(int id)
         {
             return "value";
