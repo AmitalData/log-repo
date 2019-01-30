@@ -1592,4 +1592,72 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     }
+    OnMouseLeave() {
+        this.isMouseOver = false;
+    }
+
+
+
+    get multlineTextBoxLines(){
+        var length = 0;
+        if(this.textValue) length = this.textValue.split(/\r*\n/).length;
+        return  length;
+    }
+
+    ExpandButtonClicked(){
+        console.log("[ExpandButtonClicked]");
+
+        //this.isExpanded = !this.isExpanded;
+
+
+
+        // show window
+        var windowArgs: any = {};
+        windowArgs.ObjectTableName = this.ObjectTableName;
+        windowArgs.ObjectFieldName = this.ObjectFieldName;
+        windowArgs.TextValue = this.TextValue;
+
+        var wind = new LogitudeWindow();
+        // wind.IsFullScreen = true;
+        wind.Width = 960;
+        wind.Height = 570;
+        wind.WindowArgs = windowArgs;
+        wind.Title = this.showLocal ? this.ObjectField.FullNameTextCodeLocalDefaultText : this.ObjectField.FullNameTextCodeDefaultText;
+        wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
+        wind.WindowClosed.subscribe(res => {
+            console.log("Rsukt--", res);
+            if (res)
+                this.TextValue = res;
+            this.TextValueChanges(this.TextValue);
+        });
+
+
+
+        // if(SessionLocator.CurrentSession.CurrentWindow){
+        //     var wd = document.getElementsByClassName("LogitudeWindow")[0];
+        // }
+
+        // var rect = wd.getBoundingClientRect();
+
+        // var left = rect.left;
+        // var right = rect.right;
+        // var top = rect.top;
+        // var bottom = rect.bottom;
+
+        // this.InputDivStyle =
+        // {
+        //     'z-index': '9999',
+        //     'position': 'fixed',
+        //     'left': left+'px',
+        //     'right': right+'px',
+        //     'top': top+'px',
+        //     'bottom': bottom+'px',
+        //     'width': wd.clientWidth+'px',
+        //     'height': wd.clientHeight+'px',
+
+        // };
+
+
+
+    }
 }
