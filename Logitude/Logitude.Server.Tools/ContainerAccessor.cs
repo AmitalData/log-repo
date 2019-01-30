@@ -50,7 +50,8 @@ namespace Logitude.Server.Tools
 
         #endregion
 
-
+        
+           
         public static void InitContainer()
         {
             if (_container == null)
