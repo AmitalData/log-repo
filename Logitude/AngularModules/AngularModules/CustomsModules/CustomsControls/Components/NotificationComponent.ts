@@ -43,7 +43,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
     entityListService: EntityListService = new EntityListService();
     notificationWebService: NotificationWebService = new NotificationWebService();
     customsCollateralPMService: CustomsCollateralPMService = new CustomsCollateralPMService();
-    _EntityPMService: EntityPMService;
+    _EntityPMService: EntityPMService = new EntityPMService();
     public selectedItems: ObservableCollection;
     public connectedItems: ObservableCollection;
     ToolTipHeight: number;
@@ -1047,7 +1047,8 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "8374C":
                                 case "8374D":
                                     {
-                                        currentScreenCode = "DCCS";
+                                        //currentScreenCode = "DCCS";
+                                        this.ShowCustomsDeclarationCargoSplit(selected.Reference2Number);
                                         break;
 
                                     }
@@ -1261,43 +1262,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
 
                     case "Customs.DeclarationCargoSplit":
                         {
-                            var windowArgs: any = {};
-                            this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe(response => {
-                                this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                                    this._EntityPMService.getSingle("Customs.DeclarationCargoSplit", selected.EntityId).then((res: any) => {
-                                        res.subscribe((myResponse: any) => {
-
-                                            if (myResponse.HasError) {
-                                                console.log("Error while getting EntityPM", myResponse);
-                                            }
-                                            else {
-                                                windowArgs.CurrentEntity = myResponse.Result;
-                                                var logWindow = new LogitudeWindow();
-
-                                                logWindow.Width = 770;
-                                                logWindow.Height = 750;
-                                                logWindow.Title = "בקשת פיצול מטען ";
-                                                if (myResponse.Result != null) {
-                                                    if (!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber)) {
-                                                        logWindow.Title = logWindow.Title + myResponse.Result.RequestNumber;
-                                                    }
-                                                    if (!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName)) {
-                                                        logWindow.Title = logWindow.Title + " - " + myResponse.Result.ResponseStatusName;
-                                                    }
-                                                }
-
-                                                logWindow.WindowArgs = windowArgs;
-                                                logWindow.ShowCloseButton = true;
-                                                logWindow.Show('./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent');
-                                                logWindow.WindowClosed.subscribe(($event1: any) => {
-                                                });
-                                            }
-                                        });
-
-                                    });
-                                });
-
-                            });
+                            this.ShowCustomsDeclarationCargoSplit(selected.EntityId);
                         }
 
                     default:
@@ -1474,6 +1439,47 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             res.subscribe((aa: any) => {
                 $event.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
             })
+        });
+    }
+
+
+    ShowCustomsDeclarationCargoSplit(EntityId: string) {
+        var windowArgs: any = {};
+        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                this._EntityPMService.getSingle("Customs.DeclarationCargoSplit", EntityId).then((res: any) => {
+                    res.subscribe((myResponse: any) => {
+
+                        if (myResponse.HasError) {
+                            console.log("Error while getting EntityPM", myResponse);
+                        }
+                        else {
+                            windowArgs.CurrentEntity = myResponse.Result;
+                            var logWindow = new LogitudeWindow();
+
+                            logWindow.Width = 770;
+                            logWindow.Height = 750;
+                            logWindow.Title = "בקשת פיצול מטען ";
+                            if (myResponse.Result != null) {
+                                if (!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber)) {
+                                    logWindow.Title = logWindow.Title + myResponse.Result.RequestNumber;
+                                }
+                                if (!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName)) {
+                                    logWindow.Title = logWindow.Title + " - " + myResponse.Result.ResponseStatusName;
+                                }
+                            }
+
+                            logWindow.WindowArgs = windowArgs;
+                            logWindow.ShowCloseButton = true;
+                            logWindow.Show('./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent');
+                            logWindow.WindowClosed.subscribe(($event1: any) => {
+                            });
+                        }
+                    });
+
+                });
+            });
+
         });
     }
 
