@@ -26,6 +26,9 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string Category1 { get; set; }
         public string Category2 { get; set; }
         public string LOVAdditionalColumns { get; set; }
+        public string Category { get; set; }
+        public int CategoryIndex { get; set; }
+
     }
 
 }

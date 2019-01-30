@@ -418,6 +418,7 @@
     <None Include="EntityFiles\InfrastructureModel\ChargesGroup.lxml" />
     <None Include="EntityFiles\InfrastructureModel\CounterDefinition.lxml" />
     <None Include="EntityFiles\InfrastructureModel\Direction.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\DWCategories.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DWObjectField.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DWObjectTable.lxml" />
     <None Include="EntityFiles\InfrastructureModel\EntityStatus.lxml">
