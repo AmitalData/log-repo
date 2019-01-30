@@ -703,7 +703,7 @@ namespace WebFreight.Web.ReportsWebServices
                     profitrecord.Origin = a.MainCarriageFromPortName;
                     profitrecord.Destination = a.ToPortName;
                     profitrecord.Notes = a.Notes;
-
+                    profitrecord.Master = a.LongMaster;
 
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, a, profitrecord);
