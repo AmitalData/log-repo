@@ -57,11 +57,7 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
       //  this.HtmlString = this.CheckHtmlStyle(this.HtmlString);
 
-        //Preview Html
-        if (this.IsDisableMode) {
-            SetHtmlToFrame(this.PreviewDivId , this.HtmlString);
-        }
-        else {
+  
 
             //Froala Editor
             var HtmlID = getHTMLID(this.Id);
@@ -128,18 +124,22 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
             });
 
-            HtmlID.froalaEditor('html.set', this.HtmlString);
-            //this.FroalaReady.emit(true);
+                HtmlID.froalaEditor('html.set', this.HtmlString);
+
+                if (this.IsDisableMode) {
+                  
+                    HtmlID.froalaEditor('edit.off');
+                    HtmlID.froalaEditor('toolbar.hide');
+                }
+      
             this.EditorfroalaSetting.FroalaEditorIsReady = true;
-        }
-
-
+ 
     }
 
     getHtml() {
 
         var html: string = "";
-        if (!this.IsDisableMode) {
+  
             var HtmlID = getHTMLID(this.Id);
             if (this.EditorfroalaSetting.FroalaEditorIsReady) {
                 if (HtmlID) {
@@ -148,14 +148,7 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
                 else html = this.HtmlString;
                 this.EditorfroalaSetting.HtmlString = html;
             }
-        }
-        else {
-            html = GetHtmlFromFrame(this.PreviewDivId);
-            this.EditorfroalaSetting.HtmlString = html;
-        }
-
-     
-
+ 
         return html;
     }
 
@@ -165,19 +158,14 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
         this.HtmlString = this.EditorfroalaSetting.HtmlString =  html;
       //  this.HtmlString = this.CheckHtmlStyle(this.HtmlString);
-        if (!this.IsDisableMode) {
+        
             if (this.EditorfroalaSetting.FroalaEditorIsReady) {
                 var HtmlID = getHTMLID(this.Id);
                 if (HtmlID) {
                     HtmlID.froalaEditor('html.set', html);
                 }
             }
-        }
-        else {
-            var element = document.getElementById(this.PreviewDivId);
-            if (element) SetHtmlToFrame(this.PreviewDivId, html);
-        }
-     
+      
     }
 
 
@@ -203,7 +191,7 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
     public DestroyfroalaEditor() {
 
-        if (!this.IsDisableMode) {
+       
             if (this.EditorfroalaSetting.FroalaEditorIsReady) {
                 var HtmlID = getHTMLID(this.Id);
 
@@ -212,7 +200,7 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
                 }
             }
 
-        }
+        
     }
 
     CheckHtmlStyle(html: string) {
