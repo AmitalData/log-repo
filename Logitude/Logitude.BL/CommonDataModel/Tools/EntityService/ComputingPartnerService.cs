@@ -338,7 +338,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             itemPM.Tenant = tenant;
             itemPM.ComputingPartnerId = entityPM.Id;
-
+            itemPM.CreatedByUserId = this.loggedContactId;
+            itemPM.UpdatedByUserId = this.loggedContactId;
             ComputingPartnerTable itemPoco = new ComputingPartnerTable()
             {
                 Tenant = itemPM.Tenant,
@@ -352,6 +353,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private void UpdatePartnerTable(ComputingPartnerTablePM itemPM)
         {
             ComputingPartnerTable itemPoco = computingPartnerTableRepository.GetSingleComputingPartnerTable(itemPM.Tenant, itemPM.ObjectTableId, itemPM.ComputingPartnerId);
+            itemPM.UpdatedByUserId = this.loggedContactId;
             ComputingPartnerTableMapping.MapEntity(itemPM, itemPoco, false);
             computingPartnerTableRepository.Update(itemPoco);
         }

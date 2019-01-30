@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
@@ -178,9 +178,14 @@ export class NewShippingLineComponent extends BaseComponent implements OnInit {
     }
 
     SubmitCreatingShippingLine() {
+
+        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+
         var myService: ShippingLinePMService = new ShippingLinePMService();
 
         myService.insert(this.ShippingLinePM).subscribe(myResult => {
+
+            SessionLocator.CurrentSession.StopBusyIndicator();
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -194,7 +199,6 @@ export class NewShippingLineComponent extends BaseComponent implements OnInit {
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
             }
         });
     }

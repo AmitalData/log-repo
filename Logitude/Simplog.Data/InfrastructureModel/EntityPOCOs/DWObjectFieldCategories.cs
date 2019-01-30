@@ -12,11 +12,11 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
     {
         [Key]
         public string Id { get; set; }
-        public string DWObjectFieldId { get; set; }
+        public string DWObjectFieldCode { get; set; }
         public string DWCategoryCode { get; set; }
 
-        [ForeignKey("DWObjectFieldId")]
-        public virtual DWObjectField DWObjectField { get; set; }
+        //[ForeignKey("DWObjectFieldCode")]
+        //public virtual DWObjectField DWObjectField { get; set; }
 
         [ForeignKey("DWCategoryCode")]
         public virtual DWCategories DWCategory { get; set; }

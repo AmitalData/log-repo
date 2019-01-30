@@ -133,16 +133,16 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
 
 
             var myProductCode = null;
-            if (!AppTool.IsNullOrEmpty(this.NewActualVsPotential[e.target.columnIndex].ProductTypeCode[0])) {
-                myProductCode = this.NewActualVsPotential[e.target.columnIndex].ProductTypeCode[0];
+            if (!AppTool.IsNullOrEmpty(this.NewActualVsPotential[e.target.columnIndex].ProductTypeCode[e.item.index])) {
+                myProductCode = this.NewActualVsPotential[e.target.columnIndex].ProductTypeCode[e.item.index];
             }
 
-            var actualDate: Date = DateTool.GetDateParts(new Date(this.NewActualVsPotential[e.target.columnIndex].Year[0], this.NewActualVsPotential[e.target.columnIndex].Month, 1)).DateObject;
+            var actualDate: Date = DateTool.GetDateParts(new Date(this.NewActualVsPotential[e.target.columnIndex].Year[e.item.index], this.NewActualVsPotential[e.target.columnIndex].Month, 1)).DateObject;
             var filterAgrs = new ApiQueryFilters();
             filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
             filterAgrs.addAdditionalFilter("ProductCode", myProductCode, null, null, "Equals", false, false, false, "String");
             filterAgrs.addAdditionalFilter("CustomerId", this.EntityPM.Id, null, null, "Equals", false, false, false, "String");
-            filterAgrs.addAdditionalFilter("ActualDataDateYearMonth", this.NewActualVsPotential[e.target.columnIndex].Year[0], this.NewActualVsPotential[e.target.columnIndex].Month[0], null, "Equals", true, true, false, "Date");
+            filterAgrs.addAdditionalFilter("ActualDataDateYearMonth", this.NewActualVsPotential[e.target.columnIndex].Year[e.item.index], this.NewActualVsPotential[e.target.columnIndex].Month[e.item.index], null, "Equals", true, true, false, "Date");
 
             var listArgs = new ListComponentArgs();
             listArgs.Filters = filterAgrs;
@@ -332,6 +332,11 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
                         this.NewActualVsPotential[1].Year.push(actualItem.Year);
                         this.NewActualVsPotential[1].ProductTypeCode.push(actualItem.ProductTypeCode);
                         this.NewActualVsPotential[1].Month.push(actualItem.Month);
+                    }
+                    else if (productItem != null) {
+                        this.NewActualVsPotential[1].Year.push(null);
+                        this.NewActualVsPotential[1].ProductTypeCode.push(productItem.ProductTypeCode);
+                        this.NewActualVsPotential[1].Month.push(null);
                     }
                         if (i == 0) {
                             Graphs = [{

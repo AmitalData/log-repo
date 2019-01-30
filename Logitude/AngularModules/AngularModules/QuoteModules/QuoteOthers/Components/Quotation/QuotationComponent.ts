@@ -71,32 +71,19 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     constructor() {
         super();
 
+        this.Listen();
+        this.PreviewPdfId = Guid.newGuid();
+        this.UploadFileId = Guid.NewRandomString();
+        this.LoadService();
         var _entityResourceService: EntityResourceService = new EntityResourceService();
         _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe(response => {
             this.IsReady = true;
-            // SessionLocator.CurrentSession.StartBusyIndicator("Loading....");
-            this.PreviewPdfId = Guid.newGuid();
-            this.quoteTemplateExtendedPMService = new QuoteTemplateExtendedPMService();
-
             if (!FeatureLocator.HasFeaturePermession("QuoteTemplate", "UPDATE")) this.IsDisableEditQuoteTemplateButton = true;
             if (FeatureLocator.HasFeaturePermession("QuoteTemplate", "FROMLIBRARY")) {
                 this.IsShowFromLibraryLink = true;
             }
-
-
-            this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();
-            this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
-
-            this.quoteTemplatePMService = new QuoteTemplatePMService();
-            this.myQuoteStageListService = new QuoteStageListService();
-            this.quotePMService = new QuotePMService();
-
-            this.UploadFileId = Guid.NewRandomString();
-            this.Listen();
         });
 
-
-       
 
     }
 
@@ -156,6 +143,17 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SendToCustomerEvent);
         
+
+    }
+
+    LoadService() {
+
+        this.quoteTemplateExtendedPMService = new QuoteTemplateExtendedPMService();
+        this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();
+        this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
+        this.quoteTemplatePMService = new QuoteTemplatePMService();
+        this.myQuoteStageListService = new QuoteStageListService();
+        this.quotePMService = new QuotePMService();
 
     }
 
@@ -380,7 +378,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     }
 
 
-    public IsShowTemplateList: boolean = false;
+    public IsShowTemplateList: boolean = true;
     public AttrTitleShowTemplateList: string = TextCodeTranslator.Translate("Quote.Quotation.B.Expand")  ;
     ShowHideTemplateList() {
         if (this.IsShowTemplateList) {

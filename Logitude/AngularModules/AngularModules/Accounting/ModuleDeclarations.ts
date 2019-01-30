@@ -87,6 +87,7 @@ import {ReconciliationShortTitleComponent} from './Components/ShortTiTles/Reconc
 import {ExternalReconciliationShortTitleComponent} from './Components/ShortTiTles/ExternalReconciliationShortTitleComponent';
 import { TaxReportShortTitleComponent } from './Components/ShortTiTles/TaxReportShortTitleComponent';
 import { EditTaxReportLineComponent } from './Components/EditTabs/TaxReport/EditTaxReportLine/EditTaxReportLineComponent';
+import { NewIntegrityCheckComponent } from './Components/NewEntity/NewIntegrityCheckComponent';
 
 
 export const Components =
@@ -181,6 +182,7 @@ export const Components =
         NewTaxDeductionReportComponent,
         IntegrityCheckTabComponent,
         AccountingNoteComponent,
+        NewIntegrityCheckComponent,
     ];
 
 export class ModuleDeclarations {
@@ -281,6 +283,7 @@ export class ModuleDeclarations {
             case "AccountingFlatFileDownloadComponent": { myResult = AccountingFlatFileDownloadComponent; break; }
             case "IntegrityCheckTabComponent": { myResult = IntegrityCheckTabComponent; break; }
             case "AccountingNoteComponent": { myResult = AccountingNoteComponent; break; }
+            case "NewIntegrityCheckComponent": { myResult = NewIntegrityCheckComponent; break; }
         }
 
         return myResult;
