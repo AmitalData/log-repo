@@ -2249,6 +2249,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Transshipment2AdditionalMAWBOBLBL);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Transshipment3AdditionalMAWBOBLBL);
 
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ProjectNumber);
+
             #region Quote
             if (!string.IsNullOrEmpty(entityPM.QuoteId))
             {
