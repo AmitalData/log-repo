@@ -21,11 +21,20 @@ namespace WebFreight.Web.DataProviders
         public DateTime ToDate { get; set; }
         public DateTime? Today_DateTime { get; set; }
         public string Total_TotalWIWorkedHours { get; set; }
+
         public string Total_TotalWIWorkedHours_Employee { get; set; }
         public List<WorkDaysPerProjectData> DetailedWorkHoursPerProjectList { get; set; }
         public List<WorkDaysPerProjectData> SummarizedWorkHoursPerProjectList { get; set; }
+        public List<ProjectsByCategoryGroup> ProjectsByCategoryGroupList { get; set; }
     }
 
+    public class ProjectsByCategoryGroup
+    {
+        public string CategoryId { get; set; }
+        public string CategoryName { get; set; }
+        public string Total { get; set; }
+        public List<WorkDaysPerProjectData> ProjectsRecordList { get; set; }
+    }
 
     public class WorkDaysPerProjectData
     {
@@ -37,9 +46,11 @@ namespace WebFreight.Web.DataProviders
         public string OwnerName { get; set; }
         public string TotalWIWorkedDays_Employee { get; set; }
         public string TotalWIWorkedDays { get; set; }
+        public double TotalWIWorkedDays_number { get; set; }
         public string WINumber { get; set; }
         public string Description { get; set; }
-        public string Category { get; set; }
+        public string CategoryId { get; set; }
+        public string CategoryName { get; set; }
         public string ExternalProjectNumber { get; set; }
 
     }

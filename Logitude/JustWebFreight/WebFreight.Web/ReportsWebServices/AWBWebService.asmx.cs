@@ -150,6 +150,7 @@ namespace WebFreight.Web.ReportsWebServices
                 this.GetAWBPrintingFields(awbDp, shipmentPM);
                 this.GetNotify1Data(awbDp, shipmentPM, addressRepository);
                 this.GetNotify2Data(awbDp, shipmentPM, addressRepository);
+                this.GetAgentData(awbDp, shipmentPM, addressRepository);
 
                 #region PlaceOfDelivery
 
@@ -487,7 +488,7 @@ namespace WebFreight.Web.ReportsWebServices
                             awbDp.ShipperAddress2 = shipperAddress.Address2 == null ? "" : shipperAddress.Address2;
                             awbDp.ShipperCity = shipperAddress.City == null ? "" : shipperAddress.City;
                             awbDp.ShipperCountry = shipperAddress.Country == null ? "" : shipperAddress.Country.EnglishName;
-                            awbDp.ShipperZipCode = shipperAddress.ZipCode == null ? "" : shipperAddress.ZipCode;
+                            awbDp.ShipperZipCode = shipperAddress.ZipCode == null ? "" : shipperAddress.ZipCode;                            
                         }
                     }
                 }
@@ -508,7 +509,8 @@ namespace WebFreight.Web.ReportsWebServices
                         if (actualShipperAddress != null)
                         {
                             awbDp.ShipperAddress_WithName = DataProviders.General.GetAddressWithName(actualShipperAddress);
-                            
+                            awbDp.ShipperATTN = actualShipperAddress.ATTN;
+
                             if (actualShipperAddress.IsLocalLanguage)
                             {
                                 if (actualShipperCard != null && !string.IsNullOrEmpty(actualShipperCard.LocalName))
@@ -543,6 +545,7 @@ namespace WebFreight.Web.ReportsWebServices
                     if (myPartnerAddress != null)
                     {
                         awbDp.ShipperNotExporterAddress_WithName = DataProviders.General.GetAddressWithName(myPartnerAddress);
+                        awbDp.ShipperNotExporterATTN = myPartnerAddress.ATTN;
                     }
                 }
             }            
@@ -616,6 +619,7 @@ namespace WebFreight.Web.ReportsWebServices
                         if (actualConsigneeAddress != null)
                         {
                             awbDp.ConsigneeAddress_WithName = DataProviders.General.GetAddressWithName(actualConsigneeAddress);
+                            awbDp.ConsigneeATTN = actualConsigneeAddress.ATTN;
 
                             if (actualConsigneeAddress.IsLocalLanguage)
                             {
@@ -637,6 +641,20 @@ namespace WebFreight.Web.ReportsWebServices
                                 awbDp.ActualConsigneeNameAddress = awbDp.ActualConsigneeNameAddress + "Fax: " + actualConsigneeAddress.FaxNumber;
                             }
                         }
+                    }
+                }
+            }
+
+            // ConsigneeNotImporter
+            if (!string.IsNullOrEmpty(shipmentPM.ConsigneeNotImporterId))
+            {
+                if (!string.IsNullOrEmpty(shipmentPM.ConsigneeNotImporterAddressId))
+                {
+                    Address myPartnerAddress = addressRepository.GetSingleAddress(shipmentPM.ConsigneeNotImporterAddressId, tenant);
+
+                    if (myPartnerAddress != null)
+                    {
+                        awbDp.ConsigneeNotImporterATTN = myPartnerAddress.ATTN;
                     }
                 }
             }
@@ -2611,7 +2629,6 @@ namespace WebFreight.Web.ReportsWebServices
                         if (notify1Address != null)
                         {
                             awbDp.NotifyAddress_WithName = DataProviders.General.GetAddressWithName(notify1Address);
-
                             awbDp.NotifyPartyAddress1 = string.IsNullOrEmpty(notify1Address.Address1) ? "" : notify1Address.Address1;
                             awbDp.NotifyPartyAddress2 = string.IsNullOrEmpty(notify1Address.Address2) ? "" : notify1Address.Address2;
                             awbDp.NotifyPartyTel = string.IsNullOrEmpty(notify1Address.PhoneNumber) ? "" : notify1Address.PhoneNumber;
@@ -2619,6 +2636,7 @@ namespace WebFreight.Web.ReportsWebServices
                             awbDp.NotifyPartyCity = string.IsNullOrEmpty(notify1Address.City) ? "" : notify1Address.City;
                             awbDp.NotifyPartyCountry = notify1Address.Country == null ? "" : notify1Address.Country.EnglishName;
                             awbDp.NotifyPartyZipCode = string.IsNullOrEmpty(notify1Address.ZipCode) ? "" : notify1Address.ZipCode;
+                            awbDp.Notify1ATTN = notify1Address.ATTN;
                         }
                     }
                 }
@@ -2643,7 +2661,28 @@ namespace WebFreight.Web.ReportsWebServices
                         if (notify2Address != null)
                         {
                             awbDp.NotifyAddress2_WithName = DataProviders.General.GetAddressWithName(notify2Address);
+                            awbDp.Notify2ATTN = notify2Address.ATTN;
                         }
+                    }
+                }
+            }
+        }
+
+        private void GetAgentData(AWBDataProvider awbDp, ShipmentPM shipmentPM, AddressRepository addressRepository)
+        {
+            int tenant = shipmentPM.Tenant;
+            string agentId = shipmentPM.AgentId;
+            string agentAddressId = shipmentPM.AgentAddressId;
+
+            if (!string.IsNullOrEmpty(agentId))
+            {
+                if (!string.IsNullOrEmpty(agentAddressId))
+                {
+                    Address agentAddress = addressRepository.GetSingleAddress(agentAddressId, tenant);
+
+                    if (agentAddress != null)
+                    {
+                        awbDp.AgentATTN = agentAddress.ATTN;
                     }
                 }
             }
