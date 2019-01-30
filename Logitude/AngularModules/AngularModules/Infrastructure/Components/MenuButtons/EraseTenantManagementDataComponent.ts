@@ -171,11 +171,11 @@ export class EraseTenantManagementDataComponent implements OnDestroy {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 this.bteList = mm.Result;
+
+                var window: MessageWindow = new MessageWindow();
                 if (this.bteList.StatusCode == "D") // D- Done
                 {
-                    this.GetCounts();
-
-                    var window: MessageWindow = new MessageWindow();
+                    this.GetCounts();                    
 
                     switch (this.type) {
                         case "B": {
