@@ -94,6 +94,15 @@ namespace Logitude.Customs.BL.Messaging.Maman
             documentRepository.Add(document);
             documentRepository.SubmitChanges();
 
+
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(tenant), tenant);
+            string loggedContactId = "";
+            if (loggedContact != null)
+            {
+                loggedContactId = loggedContact.Id;
+            }
+
             CommunicationLog commLog = new CommunicationLog()
             {
                 Id = IdCounter.GetNumber("CommunicationLog", tenant),
@@ -111,7 +120,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 DocumentId = document.Id,
                 CreateDateUTC = DateTime.UtcNow,
                 LogSettings = settingsData,
-                QueueName = "FTPCommunicationLogQueue" ///using  by FTPCommunicationWorkerRole
+                QueueName = "FTPCommunicationLogQueue" ,///using  by FTPCommunicationWorkerRole
+                CreatedByUserId= loggedContactId
             };
 
             communicationLogRepository.Add(commLog);

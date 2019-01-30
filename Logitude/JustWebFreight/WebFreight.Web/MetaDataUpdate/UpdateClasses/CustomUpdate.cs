@@ -15831,6 +15831,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             AddClosedTables.AddCustomsEnvoirmentType(new CustomsEnvoirmentTypeDetails() { Code = ((int)CustomsDeploymentStage.Test).ToString()  /* "3" */, EnglishName = "Test", LocalName = "בדיקות", }, customsEnvoirmentTypeRepository);
 
+            AddClosedTables.AddCustomsEnvoirmentType(new CustomsEnvoirmentTypeDetails() { Code = ((int)CustomsDeploymentStage.PREPROD).ToString()  /* "5" */, EnglishName = "PRE Production", LocalName = "קדם יצור", }, customsEnvoirmentTypeRepository);
+
             customsEnvoirmentTypeRepository.SubmitChanges();
             AddNewDeclarationErrorMappingSample();
 
