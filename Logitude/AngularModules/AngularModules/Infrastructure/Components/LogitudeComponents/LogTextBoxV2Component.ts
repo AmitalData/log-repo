@@ -460,6 +460,7 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.Detach = true;
         this.show = false;
         this.keydown = false;
+
         this.timerToken = setTimeout(() => {
             this.ShowErrorPopup = false;
             if (this.uiProperty.ValidValue) {
