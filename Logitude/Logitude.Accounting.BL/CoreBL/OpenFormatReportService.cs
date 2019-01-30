@@ -1093,7 +1093,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append('0', 15);
                 }
 
-                myStringBuilder.Append(' ', 15);
+                myStringBuilder.Append('0', 15);
                 string AmountAFDiscount = item.TotalDocumentsAmountAfterDiscount.ToString();
 
                 if (AmountAFDiscount != null)
@@ -1662,7 +1662,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append('0', 15);
                 }
 
-                myStringBuilder.Append(' ', 15);
+                myStringBuilder.Append('0', 15);
                 string AmountAFDiscount = item.TotalDocumentsAmountAfterDiscount.ToString();
 
                 if (AmountAFDiscount != null)
@@ -2083,10 +2083,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(' ', 2);
                     }
 
-                    if (mainaddress.PhoneNumber != null)
+                    if (billingAddress.PhoneNumber != null)
                     {
-                        if (mainaddress.PhoneNumber.Length > 15) { mainaddress.PhoneNumber = mainaddress.PhoneNumber.Substring(0, 15); }
-                        myStringBuilder.Append("a" + mainaddress.PhoneNumber.PadLeft(15, ' '));
+                        if (billingAddress.PhoneNumber.Length > 15) { billingAddress.PhoneNumber = billingAddress.PhoneNumber.Substring(0, 15); }
+                        myStringBuilder.Append("a" + billingAddress.PhoneNumber.PadLeft(15, ' '));
                     }
                     else
                     {
