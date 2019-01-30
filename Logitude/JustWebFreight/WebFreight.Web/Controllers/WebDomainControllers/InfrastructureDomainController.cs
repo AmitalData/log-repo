@@ -1700,6 +1700,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 if (entityPM != null)
                 {
                     QueryData.BIReportPM = entityPM;
+                    QueryData.BIReportId = entityPM.Id;
+
                     if (!string.IsNullOrEmpty(entityPM.AGGridOptionsXML))
                     {
                         var bITabularViewSettings = LogitudeXmlSerializer.DeserializeObject<BITabularViewSettings>(entityPM.AGGridOptionsXML);
@@ -1724,11 +1726,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 isUpdated = true;
                                 bITabularViewSettings.Columns.Add(new Column
                                 {
-                                    Code = item.DisplayName.Replace("[","").Replace("]",""),
+                                    Code = item.DisplayName.Replace("[", "").Replace("]", ""),
                                     Name = item.Name,
                                     IsChecked = true,
                                     Width = 150,
                                     DataTypeCode = item.DataTypeCode,
+                                    Index = bITabularViewSettings.Columns.Max(a => a.Index) + 1,
                                 });
                             }
                         }
@@ -1813,6 +1816,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         DWQueryData.Columns = Columns;
                         DWQueryData.Filters = Filters;
                     }
+                    QueryData_Updated.BIReportPM = entityPM;
+                    QueryData_Updated.BIReportId = entityPM.Id;
                     QueryData_Updated.DWQueryData = DWQueryData;
                     QueryData_Updated.BITabularViewSettings = bITabularViewSettings;
                 }

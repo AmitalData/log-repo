@@ -53,6 +53,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.UpdateFiltersFields();
                     this.SetUIProperties();
 
                     if (this.isLoadMasterRequested) {
@@ -83,6 +84,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.UpdateFiltersFields();
                     this.SetUIProperties();
 
                     if (this.isLoadHousesRequested) {
@@ -96,6 +98,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
 
         this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "ReloadHouses") {
+                this.UpdateFiltersFields();
                 this.LoadAllHouses();
             }
         });
@@ -133,6 +136,9 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
             }
         }
 
+        this.UpdateFiltersFields();
+    }
+    UpdateFiltersFields() {
         this.fromPortId = this.EntityPM.MainCarriageFromPortId;
         this.toPortId = this.EntityPM.MainCarriageFinalDestinationPortId;
         this.branchId = this.EntityPM.BranchId;

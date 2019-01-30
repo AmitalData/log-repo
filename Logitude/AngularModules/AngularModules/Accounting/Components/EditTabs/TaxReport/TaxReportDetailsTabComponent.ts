@@ -231,6 +231,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
         // var filteredLines = [];
         // filteredLines = this.OriginalReportLines.Collection;
+        var filters = new ApiQueryFilters;
 
         //search
         if (!AppTool.IsNullOrEmpty(this.searchText))
@@ -245,7 +246,6 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         //this.InputsOtherCount = filteredLines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "I" && d.TaxReportLinePM.IsEquipment == false).length;
         //this.AllCount = filteredLines.length;
 
-        var filters = new ApiQueryFilters;
 
         //toggle filters
         switch (this.FilterSelectedValue) {

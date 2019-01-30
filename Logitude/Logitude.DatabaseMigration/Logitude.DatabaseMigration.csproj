@@ -594,6 +594,42 @@
     <Compile Include="Migrations\201901281129187_AddToggleCodeToFeature_Samar.Designer.cs">
       <DependentUpon>201901281129187_AddToggleCodeToFeature_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901230654530_shipmentnumber_length_15_to_40.cs" />
+    <Compile Include="Migrations\201901230654530_shipmentnumber_length_15_to_40.Designer.cs">
+      <DependentUpon>201901230654530_shipmentnumber_length_15_to_40.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901240724374_quotenumber_increate_from_15_to_40.cs" />
+    <Compile Include="Migrations\201901240724374_quotenumber_increate_from_15_to_40.Designer.cs">
+      <DependentUpon>201901240724374_quotenumber_increate_from_15_to_40.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901300536311_shipment_quote_number_length_25.cs" />
+    <Compile Include="Migrations\201901300536311_shipment_quote_number_length_25.Designer.cs">
+      <DependentUpon>201901300536311_shipment_quote_number_length_25.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901300632309_counterdefinition_prefix_suffix_20.cs" />
+    <Compile Include="Migrations\201901300632309_counterdefinition_prefix_suffix_20.Designer.cs">
+      <DependentUpon>201901300632309_counterdefinition_prefix_suffix_20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901300705089_shipment_number_20.cs" />
+    <Compile Include="Migrations\201901300705089_shipment_number_20.Designer.cs">
+      <DependentUpon>201901300705089_shipment_number_20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901300729067_AddDWCategoriesTables_Rabaia.cs" />
+    <Compile Include="Migrations\201901300729067_AddDWCategoriesTables_Rabaia.Designer.cs">
+      <DependentUpon>201901300729067_AddDWCategoriesTables_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901300734566_AddDWCategoriesTables2_Rabaia.cs" />
+    <Compile Include="Migrations\201901300734566_AddDWCategoriesTables2_Rabaia.Designer.cs">
+      <DependentUpon>201901300734566_AddDWCategoriesTables2_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901301028160__ChangeCatDWFieldRelationToCode_Rabaia.cs" />
+    <Compile Include="Migrations\201901301028160__ChangeCatDWFieldRelationToCode_Rabaia.Designer.cs">
+      <DependentUpon>201901301028160__ChangeCatDWFieldRelationToCode_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901301122462__ChangeCatDWFieldRelationToCodeFix_Rabaia.cs" />
+    <Compile Include="Migrations\201901301122462__ChangeCatDWFieldRelationToCodeFix_Rabaia.Designer.cs">
+      <DependentUpon>201901301122462__ChangeCatDWFieldRelationToCodeFix_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -983,6 +1019,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901281129187_AddToggleCodeToFeature_Samar.resx">
       <DependentUpon>201901281129187_AddToggleCodeToFeature_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901230654530_shipmentnumber_length_15_to_40.resx">
+      <DependentUpon>201901230654530_shipmentnumber_length_15_to_40.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901240724374_quotenumber_increate_from_15_to_40.resx">
+      <DependentUpon>201901240724374_quotenumber_increate_from_15_to_40.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901300536311_shipment_quote_number_length_25.resx">
+      <DependentUpon>201901300536311_shipment_quote_number_length_25.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901300632309_counterdefinition_prefix_suffix_20.resx">
+      <DependentUpon>201901300632309_counterdefinition_prefix_suffix_20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901300705089_shipment_number_20.resx">
+      <DependentUpon>201901300705089_shipment_number_20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901300729067_AddDWCategoriesTables_Rabaia.resx">
+      <DependentUpon>201901300729067_AddDWCategoriesTables_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901300734566_AddDWCategoriesTables2_Rabaia.resx">
+      <DependentUpon>201901300734566_AddDWCategoriesTables2_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901301028160__ChangeCatDWFieldRelationToCode_Rabaia.resx">
+      <DependentUpon>201901301028160__ChangeCatDWFieldRelationToCode_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901301122462__ChangeCatDWFieldRelationToCodeFix_Rabaia.resx">
+      <DependentUpon>201901301122462__ChangeCatDWFieldRelationToCodeFix_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

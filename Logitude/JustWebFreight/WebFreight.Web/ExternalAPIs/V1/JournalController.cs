@@ -45,70 +45,70 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        //public HttpResponseMessage Post(Logitude.Accounting.BL.APIDataContract.ApiV1.Journal entity)
-        //{
-        //    Logitude.Accounting.BL.APIDataContract.ApiV1.Journal oldEntity = entity;
+        public HttpResponseMessage Post(Logitude.Accounting.BL.APIDataContract.ApiV1.Journal entity)
+        {
+            Logitude.Accounting.BL.APIDataContract.ApiV1.Journal oldEntity = entity;
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
 
-        //            using (TransactionScope scope = TransactionFactory.GetTransaction())
-        //            {
-        //                string token = HttpContext.Current.Request.Headers["Token"];
-        //                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-        //                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-        //                int tenant = entity.Tenant;
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        int tenant = entity.Tenant;
 
-        //                if (entity != null)
-        //                {
-        //                    oldEntity = LogitudeXmlSerializer.DeserializeObject<Logitude.Accounting.BL.APIDataContract.ApiV1.Journal>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
-        //                }
+                        if (entity != null)
+                        {
+                            oldEntity = LogitudeXmlSerializer.DeserializeObject<Logitude.Accounting.BL.APIDataContract.ApiV1.Journal>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
+                        }
 
-        //                IAccountingContext MyContext = AccountingContext.GetContext(entity.Tenant);
-        //                JournalQueryService mappingService = new JournalQueryService(entity.Tenant);
-        //                JournalPM entityPM = mappingService.JournalDataMappingAndValidatin(entity, entity.Tenant);
-                     
-
-
-        //                entityPM.Tenant = entity.Tenant;
+                        IAccountingContext MyContext = AccountingContext.GetContext(entity.Tenant);
+                        JournalQueryService mappingService = new JournalQueryService(entity.Tenant);
+                        JournalPM entityPM = mappingService.JournalDataMappingAndValidatin(entity, entity.Tenant);
 
 
+
+                        entityPM.Tenant = entity.Tenant;
 
 
 
 
 
-        //                entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-        //                JournalUpdateService service = new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-        //                service.Update(entityPM, true);
-
-        //                entity = mappingService.JournalDataMappingAndValidatin(entityPM, entity.Tenant);
-        //                APIHelper.AddCommunicationLog("D", oldEntity, entity, "Journal", entityPM.Id, "Journal API", entity.Tenant);
-
-        //                scope.Complete();
 
 
-        //                return Request.CreateResponse(HttpStatusCode.OK, entity);
-        //            }
-        //        }
+                        entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                        JournalUpdateService service = new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        service.Update(entityPM, true);
 
-        //        catch (Exception ex)
-        //        {
-        //            var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-        //            APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "Journal", null, "Journal API");
-        //            return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-        //        }
-        //    }
+                        entity = mappingService.JournalDataMappingAndValidatin(entityPM, entity.Tenant);
+                        APIHelper.AddCommunicationLog("D", oldEntity, entity, "Journal", entityPM.Id, "Journal API", entity.Tenant);
 
-        //    else
-        //    {
-        //        var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
-        //        APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "Journal", null, "Journal API");
-        //        return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-        //    }
-        //}
+                        scope.Complete();
+
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entity);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                    APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "Journal", null, "Journal API");
+                    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+                }
+            }
+
+            else
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
+                APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "Journal", null, "Journal API");
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
 
         public HttpResponseMessage Put(Logitude.Accounting.BL.APIDataContract.ApiV1.Journal entity)
         {

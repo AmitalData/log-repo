@@ -1,3 +1,4 @@
+import { EntityResourceService } from './../../Services/EntityResourceService';
 
 import { LogitudeWindow } from './../../../Controls/Windows/LogitudeWindow';
 declare var window: any;
@@ -1525,27 +1526,23 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
         //this.isExpanded = !this.isExpanded;
 
+        if(this.ObjectField){
+            this.showMultiLineWindow();
+        }else{
+            var _resSrvc = new EntityResourceService();
+            _resSrvc.getEntityResourceByTableName(this.ObjectTableName)
+            .subscribe((response: any) => {
+                var table = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
+                this.ObjectField = window.ObjectFields.filter(d => d.ObjectTableId === table.Id && d.FieldName === this.ObjectFieldName)[0];
+                if(this.ObjectField)
+                    this.showMultiLineWindow();
+                else
+                    console.error("[Multiline textbox window] no object field found to open the window ", this.ObjectTableName, this.ObjectFieldName);
+             });
+        }
 
 
-        // show window
-        var windowArgs: any = {};
-        windowArgs.ObjectTableName = this.ObjectTableName;
-        windowArgs.ObjectFieldName = this.ObjectFieldName;
-        windowArgs.TextValue = this.TextValue;
 
-        var wind = new LogitudeWindow();
-        // wind.IsFullScreen = true;
-        wind.Width = 960;
-        wind.Height = 570;
-        wind.WindowArgs = windowArgs;
-        wind.Title = this.showLocal ? this.ObjectField.FullNameTextCodeLocalDefaultText :  this.ObjectField.FullNameTextCodeDefaultText;
-        wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
-        wind.WindowClosed.subscribe(res=>{
-            console.log("Rsukt--",res);
-            if(res)
-                this.TextValue = res;
-                this.TextValueChanges(this.TextValue);
-        });
 
 
 
@@ -1575,5 +1572,27 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
+    }
+
+    showMultiLineWindow(){
+        // show window
+        var windowArgs: any = {};
+        windowArgs.ObjectTableName = this.ObjectTableName;
+        windowArgs.ObjectFieldName = this.ObjectFieldName;
+        windowArgs.TextValue = this.TextValue;
+
+        var wind = new LogitudeWindow();
+        // wind.IsFullScreen = true;
+        wind.Width = 960;
+        wind.Height = 570;
+        wind.WindowArgs = windowArgs;
+        wind.Title = this.showLocal ? this.ObjectField.FullNameTextCodeLocalDefaultText :  this.ObjectField.FullNameTextCodeDefaultText;
+        wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
+        wind.WindowClosed.subscribe(res=>{
+            console.log("Rsukt--",res);
+            if(res)
+                this.TextValue = res;
+                this.TextValueChanges(this.TextValue);
+        });
     }
 }

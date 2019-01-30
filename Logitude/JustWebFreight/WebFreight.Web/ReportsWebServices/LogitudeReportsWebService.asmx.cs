@@ -705,6 +705,8 @@ namespace WebFreight.Web.ReportsWebServices
                     profitrecord.Notes = a.Notes;
                     profitrecord.RealShipmentType = a.ShipmentTypeName;
 
+                    profitrecord.Master = a.LongMaster;
+
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, a, profitrecord);
 
@@ -1022,6 +1024,7 @@ namespace WebFreight.Web.ReportsWebServices
                      Debit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.AmountDue),
                      Credit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.AmountDue),
                      Notes = d.InternalNotes,
+                     BillToVendorId = d.BillToId,
                  }).ToList();
 
             List<StatementDataProvider.StatementRecord> list_APInvoices =
@@ -1041,6 +1044,7 @@ namespace WebFreight.Web.ReportsWebServices
                      Credit = d.AmountDue == null ? null : (d.AmountDue > 0 ? d.AmountDue : null),
                      Notes = d.InternalNotes,
                      YourRefrence = d.InvoiceNumber,
+                     BillToVendorId = d.VendorId,
                  }).ToList();
 
             List<StatementDataProvider.StatementRecord> list_ARPayments =
@@ -1057,6 +1061,7 @@ namespace WebFreight.Web.ReportsWebServices
                      RegisterDate = d.RegisterDate,
                      ValueDate = d.ValueDate,
                      PaymentMethod = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name,
+                     BillToVendorId = d.BillToId,
                  }).ToList();
 
             List<StatementDataProvider.StatementRecord> list_APPayments =
@@ -1073,10 +1078,14 @@ namespace WebFreight.Web.ReportsWebServices
                      RegisterDate = d.RegisterDate,
                      ValueDate = d.ValueDate,
                      PaymentMethod = d.PaymentMethod == null ? null : d.PaymentMethod.Name,
+                     BillToVendorId = d.VendorId,
                  }).ToList();
 
             List<StatementDataProvider.StatementRecord> totalList = new List<StatementDataProvider.StatementRecord>();
             totalList = list_ARInvoices.Concat(list_APInvoices).Concat(list_ARPayments).Concat(list_APPayments).ToList();
+
+            List<string> allCardIds = totalList.Select(s => s.BillToVendorId).ToList();
+            IQueryable<Card> allCards = commonContext.Cards.Where(d => d.Tenant == tenant && allCardIds.Contains(d.Id));
 
             List<string> allShipmentIds = totalList.Select(s => s.ShipmentId).ToList();
             List<ShipmentEntityClass> allShipmentData = (from d in shipmentsContext.Shipments.Include("ShipperCard").Include("ConsigneeCard")
@@ -1113,8 +1122,13 @@ namespace WebFreight.Web.ReportsWebServices
                     record.Credit = (double)Math.Abs((decimal)record.Credit);
                 }
 
-                ShipmentEntityClass shipmentEntity = allShipmentData.Where(d => d.ShipmentId == record.ShipmentId).FirstOrDefault();
+                Card card = allCards.Where(d => d.Id == record.BillToVendorId).FirstOrDefault();
+                if(card != null)
+                {
+                    record.BillToVendor = card.EnglishName;
+                }
 
+                ShipmentEntityClass shipmentEntity = allShipmentData.Where(d => d.ShipmentId == record.ShipmentId).FirstOrDefault();
                 if (shipmentEntity != null)
                 {
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentEntity, record);

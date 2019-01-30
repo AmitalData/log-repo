@@ -29,6 +29,11 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Utils;
 using Logitude.BL.Security;
 using System.Timers;
+using WebFreight.Web.AccountingModel;
+using Logitude.BL.Interfaces;
+using WebFreight.Web.Validators;
+using Logitude.BL.Helpers;
+using Microsoft.Practices.Unity;
 
 namespace CommunicationWorkerRole
 {
@@ -152,6 +157,18 @@ namespace CommunicationWorkerRole
 
             StartStatic();
             ContainerAccessor.InitContainer();
+            ContainerAccessor.RegisterTypeFactory<IRulesValidator, RulesValidator>("RulesValidator", new RulesValidator());
+            ContainerAccessor.RegisterTypeFactory<IQuoteTemplateReportHelper, QuoteTemplateReportHelper>("QuoteTemplateReportHelper", new QuoteTemplateReportHelper());
+            ContainerAccessor.Container.RegisterType<ILoggedContactUtil, Logitude.BL.Security.LoggedContactUtil>("LoggedContactUtil", new InjectionFactory(c => new Logitude.BL.Security.LoggedContactUtil()));
+            
+
+            
+
+
+            AccountingRegistrations.Register();
+            
+
+
 
             if (LogitudeSettings.IsCostomsDeploy)
             {
@@ -160,7 +177,12 @@ namespace CommunicationWorkerRole
                 he.DateTimeFormat.ShortDatePattern = "dd-MM-yy";// ' "yyyy/MM/dd" '  ' "DD/MM/YYYY"
                 System.Threading.Thread.CurrentThread.CurrentCulture = he;
             }
-            //TestBatch();
+            bool toTest=false;
+            if (toTest)
+            {
+                TestBatch();
+            }
+            
             UpdateRunningWR();
             
             aTimer.Elapsed += new ElapsedEventHandler(OnSettingsCheckTimedEvent);

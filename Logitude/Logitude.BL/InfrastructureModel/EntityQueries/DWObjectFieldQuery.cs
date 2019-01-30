@@ -48,8 +48,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsMeasurement = a.IsMeasurement,
                         AggregationTypeCode = a.AggregationTypeCode,
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
-                        Category1 = a.Category1,
-                        Category2 = a.Category2,
+                        //Category1 = a.Category1,
+                        //Category2 = a.Category2,
                         LOVAdditionalColumns = a.LOVAdditionalColumns
                     }).FirstOrDefault();
         }
@@ -75,8 +75,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsMeasurement = a.IsMeasurement,
                         AggregationTypeCode = a.AggregationTypeCode,
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
-                        Category1 = a.Category1,
-                        Category2 = a.Category2,
+                        //Category1 = a.Category1,
+                        //Category2 = a.Category2,
                         LOVAdditionalColumns = a.LOVAdditionalColumns
                     }
                   );
@@ -102,8 +102,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsMeasurement = a.IsMeasurement,
                         AggregationTypeCode = a.AggregationTypeCode,
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
-                        Category1 = a.Category1,
-                        Category2 = a.Category2,
+                        //Category1 = a.Category1,
+                        //Category2 = a.Category2,
                         LOVAdditionalColumns = a.LOVAdditionalColumns
                     }
                   );
@@ -130,8 +130,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                 AggregationTypeCode = a.AggregationTypeCode,
                                 DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                                 DisplayName = a.Name,
-                                Category1 = a.Category1,
-                                Category2 = a.Category2,
+                                //Category1 = a.Category1,
+                                //Category2 = a.Category2,
                                 LOVAdditionalColumns = a.LOVAdditionalColumns
 
                             }
@@ -159,8 +159,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          AggregationTypeCode = a.AggregationTypeCode,
                                          DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                                          DisplayName = a.DWObjectTableCode.Replace("DIM_","") + "." + a.Name,
-                                         Category1 = a.Category1,
-                                         Category2 = a.Category2,
+                                         //Category1 = a.Category1,
+                                         //Category2 = a.Category2,
                                          LOVAdditionalColumns = a.LOVAdditionalColumns
                                      }
                   ).ToList();
@@ -187,8 +187,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         MinLength = a.MinLength,
                         IsPrimaryKey = a.IsPrimaryKey,
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
-                        Category1 = a.Category1,
-                        Category2 = a.Category2,
+                        //Category1 = a.Category1,
+                        //Category2 = a.Category2,
                         LOVAdditionalColumns = a.LOVAdditionalColumns
                     }).FirstOrDefault();
         }
@@ -213,8 +213,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsMeasurement = a.IsMeasurement,
                         AggregationTypeCode = a.AggregationTypeCode,
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
-                        Category1 = a.Category1,
-                        Category2 = a.Category2,
+                        //Category1 = a.Category1,
+                        //Category2 = a.Category2,
                         LOVAdditionalColumns = a.LOVAdditionalColumns
                     });
         }
@@ -237,8 +237,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        IsMeasurement = a.IsMeasurement,
                                                        AggregationTypeCode = a.AggregationTypeCode,
                                                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
-                                                       Category1 = a.Category1,
-                                                       Category2 = a.Category2,
+                                                       //Category1 = a.Category1,
+                                                       //Category2 = a.Category2,
                                                        LOVAdditionalColumns = a.LOVAdditionalColumns
                                                    };
 
@@ -272,8 +272,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         MinLength = a.MinLength,
                         IsPrimaryKey = a.IsPrimaryKey,
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
-                        Category1 = a.Category1,
-                        Category2 = a.Category2,
+                        //Category1 = a.Category1,
+                        //Category2 = a.Category2,
                         LOVAdditionalColumns = a.LOVAdditionalColumns
                     }).FirstOrDefault();
         }
@@ -303,10 +303,41 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         MinLength = a.MinLength,
                         IsPrimaryKey = a.IsPrimaryKey,
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
-                        Category1 = a.Category1,
-                        Category2 = a.Category2,
+                        //Category1 = a.Category1,
+                        //Category2 = a.Category2,
                         LOVAdditionalColumns = a.LOVAdditionalColumns
                     }).FirstOrDefault();
+        }
+
+        public IQueryable<DWObjectFieldPM> GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(int tenant, string dwotCode)
+        {
+            return (from aa in repository.webFreightContext.DWObjectFieldCategories
+                    join a in repository.webFreightContext.DWObjectFields on aa.DWObjectFieldCode equals a.Code
+                    join b in repository.webFreightContext.DWCategories on aa.DWCategoryCode equals b.Code
+                    where a.Tenant == tenant && a.DWObjectTableCode == dwotCode
+                    select new DWObjectFieldPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        Name = a.Name,
+                        Code = a.Code,
+                        DimensionTableCode = a.DimensionTableCode,
+                        DataTypeCode = a.DataTypeCode,
+                        DWObjectTableCode = a.DWObjectTableCode,
+                        IsRequiered = a.IsRequired,
+                        MaxLength = a.MaxLength,
+                        MinLength = a.MinLength,
+                        IsPrimaryKey = a.IsPrimaryKey,
+                        IsMeasurement = a.IsMeasurement,
+                        AggregationTypeCode = a.AggregationTypeCode,
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                        //Category1 = a.Category1,
+                        //Category2 = a.Category2,
+                        LOVAdditionalColumns = a.LOVAdditionalColumns,
+                        Category = aa.DWCategoryCode,
+                        CategoryIndex = b.Index
+                    }
+                  );
         }
 
     }

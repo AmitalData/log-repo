@@ -10,7 +10,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.UnitTest.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Logitude.UnitTest.Accounting.UniTests
+namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
 {
     [TestClass]
     public class BankAccountCustomDataMappingUnitTest
