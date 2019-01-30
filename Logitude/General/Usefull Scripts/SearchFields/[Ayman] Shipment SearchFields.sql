@@ -44,6 +44,7 @@ declare @TransportDocumentNumber as varchar(50)
 declare @ImportManifest as varchar(50)
 declare @BookingConfirmationNumber as varchar(25)
 declare @CarrierTransportDocumentNumber as varchar(50)
+declare @ProjectNumber as varchar(100)
 END
 
 -- Ports Firlds
@@ -170,7 +171,7 @@ BEGIN
 		ConsolidatorId, ConsolidatorReference,
 		Field1, Field2, Field3, Field4, Field5, Field6, Field7, Field8, Field9, Field10,
 		CustomsDeclarationNumber, ForwarderShipmentNumber, TransportDocumentNumber,
-		ReleasingAgentId, ReleasingAgentReference1 , ReleasingAgentReference2 
+		ReleasingAgentId, ReleasingAgentReference1 , ReleasingAgentReference2, ProjectNumber
 		
 		FROM Shipments --where Tenant = 1435
 
@@ -197,7 +198,7 @@ BEGIN
 		@ConsolidatorId, @ConsolidatorReference,
 		@Field1, @Field2, @Field3, @Field4, @Field5, @Field6, @Field7, @Field8, @Field9, @Field10,
 		@CustomsDeclarationNumber, @ForwarderShipmentNumber, @TransportDocumentNumber,
-		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2
+		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
 			
@@ -239,6 +240,12 @@ BEGIN
 
 			-- Fields
 			BEGIN
+
+			if (@ProjectNumber is not null AND @ProjectNumber <> '')
+			begin
+				if (@MySearchFields = '') set @MySearchFields = @ProjectNumber
+				else set @MySearchFields = @MySearchFields + ',' + @ProjectNumber	
+			end
 
 			if (@House is not null AND @House <> '')
 			begin
@@ -1754,7 +1761,7 @@ BEGIN
 		@ConsolidatorId, @ConsolidatorReference,
 		@Field1, @Field2, @Field3, @Field4, @Field5, @Field6, @Field7, @Field8, @Field9, @Field10,
 		@CustomsDeclarationNumber, @ForwarderShipmentNumber, @TransportDocumentNumber,
-		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2
+		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber
 		END				
 		CLOSE ShipmentsCursor
 		DEALLOCATE ShipmentsCursor
