@@ -74,6 +74,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new AccountingIntegrityCheckMap());
 	
+            modelBuilder.Configurations.Add(new AccountingNoteMap());
+	
             modelBuilder.Configurations.Add(new AccountingPeriodMap());
 	
             modelBuilder.Configurations.Add(new ARPaymentChequeMap());
@@ -588,6 +590,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<AccountingIntegrityCheck> AccountingIntegrityChecks 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<AccountingNote> AccountingNotes 
 	 {
 	      get; set;
 	 

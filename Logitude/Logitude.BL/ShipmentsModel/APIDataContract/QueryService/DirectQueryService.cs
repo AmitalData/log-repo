@@ -119,6 +119,11 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     temp.CreatedByUserId = MyUserPM.Id;
                 }
 
+                if (string.IsNullOrEmpty(temp.UpdatedByUserId))
+                {
+                    temp.UpdatedByUserId = MyUserPM.Id;
+                }
+
                 if (string.IsNullOrEmpty(temp.BranchId))
                 {
                     temp.BranchId = MyUserPM.BranchId;

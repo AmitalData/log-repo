@@ -2785,6 +2785,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                 cmpRef.instance.BackCompleted.subscribe(bk => {
                     //this.LoadAllScreenData();
                     //this.isWindowOpened = false;
+                    this.RefreshBtnClick();
+
                 });
             });
     }
@@ -2800,6 +2802,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             cmpRef.instance.ComponentRef = cmpRef;
             cmpRef.instance.Run({ EntityPM: __entity, ObjectTableName: 'AccountingIntegrityCheck' });
             cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                this.RefreshBtnClick();
             });
         });
     }

@@ -1,4 +1,4 @@
-﻿import {Component, ViewContainerRef, OnInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
+import {Component, ViewContainerRef, OnInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ContactListService} from '../../../../Common/Services/StandardLists/ContactListService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -14,12 +14,12 @@ export class btnComponentComputingPartner   {
     MoreDetails() {
         var ServiceContact: ContactListService = new ContactListService();
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-        ServiceContact.getSingle(this.rowData.UpdatedByUserId).subscribe(res => {
+        ServiceContact.getSingle(this.rowData.CreatedByUserId).subscribe(res => {
             if (!res.HasError) {
                 if (res.Result != null)
                     this.rowData.CreatedByUserName = res.Result.EnglishName;
             }
-            ServiceContact.getSingle(this.rowData.CreatedByUserId).subscribe(res => {
+            ServiceContact.getSingle(this.rowData.UpdatedByUserId).subscribe(res => {
                 if (!res.HasError) {
                     if (res.Result != null)
                         this.rowData.UpdatedByUserName = res.Result.EnglishName;

@@ -21,16 +21,25 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             var fullAccountingSettingPM = FullAccountingSettingQueryService.Get(accountingIntegrityInParam.Tenant);
             if (fullAccountingSettingPM == null)
             {
-                return "FullAccountingSetting is null for tenant " + accountingIntegrityInParam.Tenant;
+                return "Full Accounting Setting is null for tenant " + accountingIntegrityInParam.Tenant;
             }
             if (accountingIntegrityInParam.FromMonthInclusive.Year != accountingIntegrityInParam.ToMonthInclusive.Year)
             {
-                return "must the same year";
+                return "From date and To date must be same year";
+            }
+            if (accountingIntegrityInParam.FromMonthInclusive == null)
+            {
+                return "From Month not selected";
+            }
+            if (accountingIntegrityInParam.ToMonthInclusive == null)
+            {
+                return "To Month not selected";
             }
             if (accountingIntegrityInParam.FromMonthInclusive.Month > accountingIntegrityInParam.ToMonthInclusive.Month)
             {
-                return "Bad months";
+                return "To month is greater than from month";
             }
+
             if (accountingIntegrityInParam.ToMonthInclusive.Subtract(accountingIntegrityInParam.FromMonthInclusive) > TimeSpan.FromDays(365))
             {
                 return "day  Subtract  > 365 ";
@@ -378,6 +387,6 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
         public DateTime? Month { get; set; }
         public string ExcetionMessage { get; set; }
         public int BadRows { get; set; }
-        public long ElapsedMilliseconds { get; internal set; }
+        public long ElapsedMilliseconds { get;  set; }
     }
 }

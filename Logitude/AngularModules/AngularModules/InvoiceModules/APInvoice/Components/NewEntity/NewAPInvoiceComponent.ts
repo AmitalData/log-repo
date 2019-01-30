@@ -339,7 +339,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
                     var isDuplicated: boolean = myResponse.Result;
 
                     if (isDuplicated) {
-                        warnings.push("Please Note that there is already another invoice with the same number by the same vendor");
+                        warnings.push(TextCodeTranslator.Translate("APInvoice.M.SameInvoiceNumber"));
                         this.FillWarnings(warnings);
                     }
                 }
@@ -724,6 +724,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
                 invoiceLine.ForiegnCurrencyId = payable.CurrencyId;
                 invoiceLine.ForiegnCurrencyCode = payable.CurrencyCode;
                 invoiceLine.Notes = payable.Notes;
+                invoiceLine.PrepaidCollectId = payable.PrepaidCollectId;
 
                 if (invoiceLine.ForiegnCurrencyId == this.EntityPM.InvoiceCurrencyId) {
                     invoiceLine.ForiegnExchangeRate = this.EntityPM.InvoiceCurrencyExchangeRate;

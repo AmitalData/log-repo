@@ -194,7 +194,7 @@ export class LogLabelComponent implements OnInit {
                         }
                     }
                     var translatedText = TextCodeTranslator.Translate(textcodecode);
-                    if (translatedText == null) {
+                    if (AppTool.IsNullOrEmpty(translatedText)) {
                         textcodecode = this.objectfield.FullNameTextCodeCode;
                         translatedText = TextCodeTranslator.Translate(textcodecode);
                     }

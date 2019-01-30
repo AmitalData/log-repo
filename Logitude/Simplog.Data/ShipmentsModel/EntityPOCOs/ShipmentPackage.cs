@@ -123,6 +123,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? ETD { get; set; }
         public DateTime? ETA { get; set; }
         public string Routing { get; set; }
+        public string RoutingIds { get; set; }
         public string VoyageTripNumber { get; set; }
         public bool HasContainerException { get; set; }
     }

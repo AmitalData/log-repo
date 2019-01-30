@@ -343,7 +343,7 @@ export class DWQueryBuilderService {
             key => ({
                 [key]:
 
-                    key != "UIProperties" && key != "MyParentClass" ? this.deepClone(obj[key], hash) : true
+                    key != "UIProperties" && key != "MyParentClass" && key != "Items" ? this.deepClone(obj[key], hash) : true
                     
             })));
     }

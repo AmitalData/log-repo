@@ -170,6 +170,7 @@
     <Content Include="2018.R4\10 - 2018\Day 11 [Rabaia] DeleteOldAuthenticationTokensStoredProc - Copy.sql" />
     <Content Include="2018.R4\10 - 2018\Day 11 [Rabaia] RemoveForwardingPartnerIdFKConstraint.sql" />
     <Content Include="2018.R5\1 - 2019\Day 16  [Khalid] deleteOldTextCode and Feature DownloadDocuments.sql" />
+    <Content Include="2018.R5\1 - 2019\Day 28 [Samar] delete short text codes for shipment assembly.sql" />
     <Content Include="2018.R5\10 - 2018\Day 15 [Ayman] RemoveAutoCriditAndCreditedReceivableId.sql" />
     <Content Include="2018.R5\11 - 2018\Day 25 [Samar] set shared logistics setting defaults.sql" />
     <Content Include="2018.R5\11 - 2018\Day 28 [Samar] Add new help resources.sql" />
@@ -523,6 +524,9 @@
     <Content Include="Main Branch\2019\01 - 2019\Day 08 [Islam] delete wrong query columns.sql" />
     <Content Include="Main Branch\2019\01 - 2019\Day 02 [Samar] set computing partners for objecttable.sql" />
     <Content Include="Main Branch\2019\01 - 2019\Day 16[Itzik]AccountingStreaming - Copy.sql" />
+    <Content Include="Main Branch\2019\01 - 2019\Day 23 [Samar] Fill prepaid collect for invoice lines backward.sql" />
+    <Content Include="Main Branch\2019\01 - 2019\Day 23 [Samar] Set New feature for detailed shipment report.sql" />
+    <Content Include="Main Branch\2019\01 - 2019\Day 27 [Maheera] Add Copy 1 to General ARInvoice.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />

@@ -562,6 +562,38 @@
     <Compile Include="Migrations\201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.Designer.cs">
       <DependentUpon>201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901230833116_IncreasePackagesReferencesLength_Samar.cs" />
+    <Compile Include="Migrations\201901230833116_IncreasePackagesReferencesLength_Samar.Designer.cs">
+      <DependentUpon>201901230833116_IncreasePackagesReferencesLength_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.cs" />
+    <Compile Include="Migrations\201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.Designer.cs">
+      <DependentUpon>201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901231239517_AddShipmentPackageRoutingIds.cs" />
+    <Compile Include="Migrations\201901231239517_AddShipmentPackageRoutingIds.Designer.cs">
+      <DependentUpon>201901231239517_AddShipmentPackageRoutingIds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901241214337_NewTable_AccountingNote.cs" />
+    <Compile Include="Migrations\201901241214337_NewTable_AccountingNote.Designer.cs">
+      <DependentUpon>201901241214337_NewTable_AccountingNote.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901241252449_AddToggleTablesToDB_Samar.cs" />
+    <Compile Include="Migrations\201901241252449_AddToggleTablesToDB_Samar.Designer.cs">
+      <DependentUpon>201901241252449_AddToggleTablesToDB_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901271528466_DisplayMemberPath.cs" />
+    <Compile Include="Migrations\201901271528466_DisplayMemberPath.Designer.cs">
+      <DependentUpon>201901271528466_DisplayMemberPath.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901271103565_IncreaseToggleNameLength_Samar.cs" />
+    <Compile Include="Migrations\201901271103565_IncreaseToggleNameLength_Samar.Designer.cs">
+      <DependentUpon>201901271103565_IncreaseToggleNameLength_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901281129187_AddToggleCodeToFeature_Samar.cs" />
+    <Compile Include="Migrations\201901281129187_AddToggleCodeToFeature_Samar.Designer.cs">
+      <DependentUpon>201901281129187_AddToggleCodeToFeature_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201901230654530_shipmentnumber_length_15_to_40.cs" />
     <Compile Include="Migrations\201901230654530_shipmentnumber_length_15_to_40.Designer.cs">
       <DependentUpon>201901230654530_shipmentnumber_length_15_to_40.cs</DependentUpon>
@@ -947,6 +979,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.resx">
       <DependentUpon>201901221205002_AbedAddImporterDepositionRequestDetailsToShipmentComputedFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901230833116_IncreasePackagesReferencesLength_Samar.resx">
+      <DependentUpon>201901230833116_IncreasePackagesReferencesLength_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.resx">
+      <DependentUpon>201901230947438_AddPrepaidCollectToInvoiceLineLevel_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901231239517_AddShipmentPackageRoutingIds.resx">
+      <DependentUpon>201901231239517_AddShipmentPackageRoutingIds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901241214337_NewTable_AccountingNote.resx">
+      <DependentUpon>201901241214337_NewTable_AccountingNote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901241252449_AddToggleTablesToDB_Samar.resx">
+      <DependentUpon>201901241252449_AddToggleTablesToDB_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901271528466_DisplayMemberPath.resx">
+      <DependentUpon>201901271528466_DisplayMemberPath.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901271103565_IncreaseToggleNameLength_Samar.resx">
+      <DependentUpon>201901271103565_IncreaseToggleNameLength_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901281129187_AddToggleCodeToFeature_Samar.resx">
+      <DependentUpon>201901281129187_AddToggleCodeToFeature_Samar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901230654530_shipmentnumber_length_15_to_40.resx">
       <DependentUpon>201901230654530_shipmentnumber_length_15_to_40.cs</DependentUpon>

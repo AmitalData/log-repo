@@ -72,6 +72,7 @@ using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data.Repsitories;
 using System.IO;
 using WebFreight.Web.App_Code.AngularJS_App_Code.Global;
+using Logitude.Infrastructure.Data.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -382,7 +383,39 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 FeatureQuery featureQuery = new FeatureQuery(tenant);
                 LoggedUserFeatures loggedUserFeatures = featureQuery.GetAllowedFeaturesForLoggedUser(loggedUserId, tenant);
-                List<FeaturePM> myResult = loggedUserFeatures.Features;
+                List<FeaturePM> myResult1 = loggedUserFeatures.Features;
+
+                List<FeaturePM> myResult = new List<FeaturePM>();
+                List<string> toggleCodes = myResult1.Where(d => !string.IsNullOrEmpty(d.ToggleCode)).Select(s => s.ToggleCode).ToList();
+
+                if(toggleCodes.Count == 0)
+                {
+                    myResult = myResult1;
+                }
+
+                else
+                {
+                    FeatureToggleRepository featureToggleRepository = new FeatureToggleRepository(0);
+                    List<FeatureToggle> featureToggles = featureToggleRepository.GetAllByToggleCodeList(toggleCodes, 0).ToList();
+
+                    foreach (FeaturePM item in myResult1)
+                    {
+                        if (string.IsNullOrEmpty(item.ToggleCode))
+                        {
+                            myResult.Add(item);
+                        }
+
+                        else
+                        {
+                            FeatureToggle featureToggle = featureToggles.Where(d => d.TenantNumber == tenant).FirstOrDefault();
+                            if (featureToggle != null)
+                            {
+                                myResult.Add(item);
+                            }
+                        }
+                    }
+                }
+
 
                 //if (tenant == 4)
                 //{
@@ -1648,6 +1681,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 DWSubQueryQuery dWSubQueryQuery = new DWSubQueryQuery(authToken.Tenant);
                 DWSubQueryPM dWSubQueryPM = dWSubQueryQuery.GetSinglePMByQueryid(dWQueryId, authToken.Tenant);
                 DWQueryData DWQueryData = new DWQueryData();
+                DWQueryData.PageIndex = 0;
+                DWQueryData.PageSize = 0;
                 bool isUpdated = false; 
      
                 List<DWObjectFieldsDetails> Columns = null;
@@ -1661,9 +1696,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
                 QueryData.DWQueryData = DWQueryData;
 
+
                 if (entityPM != null)
                 {
                     QueryData.BIReportPM = entityPM;
+                    QueryData.BIReportId = entityPM.Id;
+
                     if (!string.IsNullOrEmpty(entityPM.AGGridOptionsXML))
                     {
                         var bITabularViewSettings = LogitudeXmlSerializer.DeserializeObject<BITabularViewSettings>(entityPM.AGGridOptionsXML);
@@ -1671,7 +1709,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             foreach(var item in bITabularViewSettings.Columns.ToList())
                             {
-                                var queryColumn = Columns.Where(a => a.Name == item.Code).FirstOrDefault();
+                                var queryColumn = Columns.Where(a => a.DisplayName.Replace("[", "").Replace("]", "") == item.Code).FirstOrDefault();
                                 if (queryColumn == null)
                                 {
                                     isUpdated = true;
@@ -1682,16 +1720,18 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         foreach(var item in Columns)
                         {
-                            var queryColumn = bITabularViewSettings.Columns.Where(a => a.Code == item.Name).FirstOrDefault();
+                            var queryColumn = bITabularViewSettings.Columns.Where(a => a.Code == item.DisplayName.Replace("[", "").Replace("]", "")).FirstOrDefault();
                             if (queryColumn == null)
                             {
                                 isUpdated = true;
                                 bITabularViewSettings.Columns.Add(new Column
                                 {
-                                    Code = item.Name,
+                                    Code = item.DisplayName.Replace("[", "").Replace("]", ""),
+                                    Name = item.Name,
                                     IsChecked = true,
                                     Width = 150,
                                     DataTypeCode = item.DataTypeCode,
+                                    Index = bITabularViewSettings.Columns.Max(a => a.Index) + 1,
                                 });
                             }
                         }
@@ -1722,7 +1762,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         bITabularViewSettings.Columns.Add(new Column
                         {
-                            Code = item.Name,
+                            Code = item.DisplayName.Replace("[", "").Replace("]", ""),
+                            Name = item.Name,
                             IsChecked = true,
                             Width = 150,
                             DataTypeCode = item.DataTypeCode,
@@ -1759,8 +1800,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     entityPM.AGGridOptionsXML = ColumnsXML;
                     entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                     entityPOCO.AGGridOptionsXML = entityPM.AGGridOptionsXML;
-                    //BIReportUpdateService service = new BIReportUpdateService(objectContext);
-                   // service.Update(entityPM, true);
                     repository.Update(entityPOCO);
                     repository.SubmitChanges();
 
@@ -1777,6 +1816,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         DWQueryData.Columns = Columns;
                         DWQueryData.Filters = Filters;
                     }
+                    QueryData_Updated.BIReportPM = entityPM;
+                    QueryData_Updated.BIReportId = entityPM.Id;
                     QueryData_Updated.DWQueryData = DWQueryData;
                     QueryData_Updated.BITabularViewSettings = bITabularViewSettings;
                 }

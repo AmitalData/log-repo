@@ -198,6 +198,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddStates.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddStates.Designer.cs">
+      <DependentUpon>AddStates.cs</DependentUpon>
+    </Compile>
     <Compile Include="CopyData.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -248,6 +254,9 @@
       <DependentUpon>CustomsBooModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="SqlFilesExecuter.cs" />
+    <EmbeddedResource Include="AddStates.resx">
+      <DependentUpon>AddStates.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CopyData.resx">
       <DependentUpon>CopyData.cs</DependentUpon>
     </EmbeddedResource>

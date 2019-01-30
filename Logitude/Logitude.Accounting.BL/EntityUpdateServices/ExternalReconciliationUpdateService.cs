@@ -24,6 +24,8 @@ using Logitude.BL.Security;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Server.Tools.Helpers;
+using Logitude.BL.Interfaces;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 { 
@@ -149,12 +151,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     else if(transactionPM.SourceTypeCode == "6") // 6- Cheque Deposit
                     {
                         BankDepositPM depositPM = depositQuery.GetSingle(transactionPM.SourceId, true, false);
+
                         foreach (BankDepositLinePM depLine in depositPM.BankDepositLines)
                         {
-                            ARPaymentChequePM chequePM = arpChequeQuery.GetSingle(depLine.ARPaymentChequeId, false, false);
-                            chequePM.ChangeSetOp = ChangeSetOperation.Update;
-                            chequePM.StatusCode = "4"; // 4- In cashbook
-                            arpChequeUpdateService.Update(chequePM, true);
+
+                            if (transactionPM.Reference1 == depLine.ChequeNumber)
+                            {
+                                ARPaymentChequePM chequePM = arpChequeQuery.GetSingle(depLine.ARPaymentChequeId, false, false);
+                                chequePM.ChangeSetOp = ChangeSetOperation.Update;
+                                chequePM.StatusCode = "4"; // 4- In cashbook
+                                arpChequeUpdateService.Update(chequePM, true);
+                            }
 
                         }
                     }
@@ -287,26 +294,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
-        private static ContactPM GetLoggedContact(int tenant)
-        {
 
+        public static ContactPM GetLoggedContact(int tenant)
+        {
             if (OverrideGetLoggedContactFunc != null)
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                //SecurityUtility.GetAuthenticatedUser()
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-            }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
+
+            ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+            return loggedcontact;
         }
 
+
     }
-   
+
 }
 	 

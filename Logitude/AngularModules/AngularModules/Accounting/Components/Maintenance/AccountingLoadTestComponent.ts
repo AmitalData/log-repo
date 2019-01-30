@@ -47,7 +47,7 @@ export class AccountingLoadTestComponent extends BaseComponent implements AfterV
 
         this.ActionTypeItems.push({ Id: /*0, Code:*/ "", Name: "" });
         this.ActionTypeItems.push({ Id: /*1, Code: */"CreateVendors", Name: "Create Vendors " });
-        this.ActionTypeItems.push({ Id: /*2, Code: */"CreateCustomers", Name: "Create Suppliers " });
+        this.ActionTypeItems.push({ Id: /*2, Code: */"CreateCustomers", Name: "Create Customers" });
         this.ActionTypeItems.push({ Id: /*3, Code: */"CreateJournal", Name: "Create Journal " });
         this.ActionTypeItems.push({ Id: /*4, Code: */"CreateJournalEvery", Name: "Create Journal Every" });
         this.EveryMinuteItems = [1, 5, 30, 60, 90, 120];

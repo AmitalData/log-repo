@@ -28,70 +28,112 @@
 
             <div class="MediaFill">
                 <table>
-                    <tr>
-                        <td>
-                            <ScrollViewer>
-                                <div class="MediaFill">
-                                    <div class="ItemBox" *ngFor="let item of ItemsSource; let i = index" [class.SelectedItem]="item == FieldSelectedItem" (mousedown)="FieldSelectedItem = item">
-                                        <div>
-                                            <table>
-                                                <tr>
-                                                    <td style="float:left;">
-                                                        <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="item.IsChecked" [Checked]="item.IsChecked" [DataContext]="DataContext" (ValueChanged)="onValueChanged(item, $event)"></LogCheckBox>
-                                                    </td>
-                                                    <td style="float:left;">
-                                                        <label style="float:left;" [attr.for]="item.Code">{{item.Code}}</label>
-                                                    </td>
-                                                </tr>
-                                                <tr style="height:3px">
-                                                    <td colspan="2">
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+                 
+                        <tr>
+                            <td>
 
-                            </ScrollViewer>
-                        </td>
-                        <td style="width:10px">
-                            <div></div>
-                        </td>
-                        <td style="width:25px">
-                            <table>
-                                <tr>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                                <tr style="height:20px;">
-                                    <td>
-                                        <button (click)="btnUp_Click()" class="Button" style="width:26px;float:right;">
-                                            <img src="./Images/Icons/ArrowUp.png" style="height:16px;vertical-align:middle;" />
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr style="height:5px">
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                                <tr style="height:20px;">
-                                    <td>
-                                        <button (click)="btnDown_Click()" class="Button" style="width:26px;float:right;">
-                                            <img src="./Images/Icons/ArrowDown.png" style="height:16px;vertical-align:middle;" />
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
+                                <ScrollViewer>
+                                    <table>
+
+                                        <tr style="height:25px;">
+                                            <td>
+                                                <div class="ItemBox">
+                                                    <div>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="float:left; width:35px;">
+                                                                    <CheckBox (Checked)="IsAllClicked($event)" [IsChecked]="IsAll"></CheckBox>
+                                                                </td>
+                                                                <td style="float:left;text-align:left;width: 50px;">
+                                                                    <label style="float:left;text-align:left;width: 50px;">All</label>
+                                                                </td>
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height:3px">
+                                                                <td colspan="3">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="vertical-align:top;">
+                                            <td>
+                                                <div class="MediaFill">
+                                                    <div class="ItemBox" *ngFor="let item of ItemsSource; let i = index" [class.SelectedItem]="item == FieldSelectedItem" (mousedown)="FieldSelectedItem = item">
+                                                        <div>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="float:left;width:35px;">
+                                                                        <!--<LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'IsChecked'" [Checked]="item.IsChecked" [DataContext]="DataContext" (ValueChanged)="onValueChanged(item, $event)"></LogCheckBox>-->
+                                                                        <CheckBox (Checked)="onValueChanged(item,$event)" [IsChecked]="item.IsChecked"></CheckBox>
+                                                                    </td>
+                                                                    <td style="width:5px;float:left;">
+                                                                        <div></div>
+                                                                    </td>
+                                                                    <td style="float:left;text-align:left;">
+                                                                        <label style="float:left;text-align:left;" [attr.for]="item.Name">{{item.Name}}</label>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr style="height:3px">
+                                                                    <td colspan="2">
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </ScrollViewer>
+
+
+                            </td>
+                            <td style="width:10px">
+                                <div></div>
+                            </td>
+                            <td style="width:25px">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:20px;">
+                                        <td>
+                                            <button (click)="btnUp_Click()" class="Button" style="width:26px;float:right;">
+                                                <img src="./Images/Icons/ArrowUp.png" style="height:16px;vertical-align:middle;" />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:5px">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:20px;">
+                                        <td>
+                                            <button (click)="btnDown_Click()" class="Button" style="width:26px;float:right;">
+                                                <img src="./Images/Icons/ArrowDown.png" style="height:16px;vertical-align:middle;" />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                   
                 </table>
             </div>
 

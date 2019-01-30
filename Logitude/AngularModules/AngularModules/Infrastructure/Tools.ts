@@ -915,6 +915,11 @@ export class AppTool {
                 break;
             }
 
+            case "General.MH.SharedLogistics": {
+                myResult = "LogBoxIcon";
+                break;
+            }
+
             case "General.MH.CRM":
             case "General.MH.Dashboard":
             case "General.MH.Importers":
@@ -927,6 +932,17 @@ export class AppTool {
             case "General.MH.Accounting":
                 {
                     myResult = "Dollar";
+                    break;
+                }
+
+            case "General.MH.Contacts":
+                {
+                    myResult = "Contacts";
+                    break;
+                }
+            case "General.MH.Social":
+                {
+                    myResult = "Social";
                     break;
                 }
 

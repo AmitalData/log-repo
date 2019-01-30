@@ -110,7 +110,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         temp.CreatedByUser.ExternalCode = myCreatedByUser.ExternalCode;
                     }
                 }
-                temp.VatNumber = MyEntity.VatNumber;
+                temp.VATNumber = MyEntity.VatNumber;
                 AddressQueryService BillToAddressAddressService = new AddressQueryService(Tenant);
                 if (MyEntity.BillToAddressId != null)
                 {

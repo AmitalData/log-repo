@@ -17,6 +17,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.BL.Interfaces;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -90,24 +92,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
 
-        private static ContactPM GetLoggedContact(int tenant)
-        {
 
+        public static ContactPM GetLoggedContact(int tenant)
+        {
             if (OverrideGetLoggedContactFunc != null)
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                //SecurityUtility.GetAuthenticatedUser()
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-            }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
+
+            ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+            return loggedcontact;
         }
+
 
         protected override void AfterUpdating(TaxReportPM entityPM, EntityPM entityParentPM) {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
@@ -138,7 +135,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 entityPM.ExemptTaxableOutput = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
                 entityPM.OutputLinesCount = lines.Where(d => d.OutputOrInput == "O").Count();
                 entityPM.OtherInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == false).Sum(d => d.VatAmount);
-                entityPM.InputLinesCount = lines.Where(d => d.OutputOrInput == "I").Count();
+                entityPM.InputLinesCount = lines.Where(d => d.OutputOrInput == "I" && d.TransmitStatusCode == "1" ).Count();
                 entityPM.EquipmentInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == true).Sum(d => d.VatAmount);
 
                 //updates

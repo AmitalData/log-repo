@@ -107,5 +107,6 @@
     <Feature Code="&quot;TASKSWITHNORPROJECTSREPORT&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;ReportObjectTable.Features.TasksWithoutProjects&quot;" FeatureDefaultText="&quot;Tasks not Connected to Projects&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;SHIPMENTDETAILS&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;ReportObjectTable.Features.ShipmentDetails&quot;" FeatureDefaultText="&quot;Shipment Details&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;Report.Features.DetailedShipmentCharges&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;Report.Features.Report.Features.DetailedShipmentCharges&quot;" FeatureDefaultText="&quot;Detailed Shipment Charges Analysis&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+    <Feature Code="&quot;Report.Features.VendorCharges&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;Report.Features.Report.Features.VendorCharges&quot;" FeatureDefaultText="&quot;Vendor Charges Analysis&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

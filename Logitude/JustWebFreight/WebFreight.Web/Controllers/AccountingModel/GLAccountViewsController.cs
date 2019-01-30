@@ -51,6 +51,7 @@ using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
+using Logitude.Accounting.BL.Utils;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -76,7 +77,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
 
                 ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
+                ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
 
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("GLAccount", 0, true);
@@ -107,7 +108,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
 
                 ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
+                ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
                 var qs = new GLAccountQueryService(1);
                 var list=qs.GetByDisplayNumber(accountDisplayNumber, tenant);
                 var pm =list.First();
@@ -140,7 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
 
                 ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
+                ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
 
                 var ac = new Logitude.Accounting.BL.CoreBL.AccountBalanceByDateCodeService(null, tenant, accountId, null);
                 ac.ReSetAccountList(false, false);
@@ -324,6 +325,33 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetCalculateFututreCheques()
+        {
+            try
+            {
+                try
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                    IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                    FutureOpenChequesBatch FutureOpenChequesBatch = new FutureOpenChequesBatch();
+                    FutureOpenChequesBatch.SetTotalFutureOpenChequesInLocalCurrency(authToken.Tenant);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "OK");
+                }
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
@@ -576,6 +604,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+    
     }
 
     class MyPeriodM

@@ -9371,7 +9371,7 @@ namespace WebFreight.Web.ReportsWebServices
                 differenceTime_Total += differenceTime;
                 timSheetItem.DifferenceTime = DateFormat(differenceTime);
 
-                var totalWorkHrs = Math.Round((timeFromOffice + timeFromClient + timeFromHome), 2);
+                var totalWorkHrs = Math.Round((timeFromClock + timeFromClient + timeFromHome), 2);
                 totalWorkHrs_Total += totalWorkHrs;
                 timSheetItem.TotalWorkHrs = DateFormat(totalWorkHrs);
 
@@ -9705,7 +9705,6 @@ namespace WebFreight.Web.ReportsWebServices
                                           ProjectId = g.Key.ProjectId,
                                       });
 
-
                 foreach (var item in daysList_Total)
                 {
                     List<TMEmployeeTime> itemGrouplist = iQueryable.Where(d => d.ProjectId == item.ProjectId).ToList();
@@ -9731,17 +9730,34 @@ namespace WebFreight.Web.ReportsWebServices
                                 TMProjectCategoryRepository repo = new TMProjectCategoryRepository(tenant);
                                 category = repo.GetSingle(project.CategoryId, tenant);
                                 if (category != null)
-                                    timSheetItem.Category = category.Name;
+                                {
+                                    timSheetItem.CategoryId = category.Id;
+                                    timSheetItem.CategoryName = category.Name;
+                                }
+                                   
                             }
                         }
 
                         var wIWorkedDays = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2) / 8;
                         totalWIWorkedDays += wIWorkedDays;
                         timSheetItem.TotalWIWorkedDays = DateFormat(wIWorkedDays);
-
+                        timSheetItem.TotalWIWorkedDays_number = wIWorkedDays;
                         result.SummarizedWorkHoursPerProjectList.Add(timSheetItem);
+
                     }
                 }
+
+                List<ProjectsByCategoryGroup> finalResults = (from p in result.SummarizedWorkHoursPerProjectList
+                                                              group p by new { p.CategoryId, p.CategoryName } into g
+                                                              select new ProjectsByCategoryGroup()
+                                                              {
+                                                                  CategoryId = g.Key.CategoryId,
+                                                                  CategoryName = g.Key.CategoryName,
+                                                                  ProjectsRecordList = g.ToList(),
+                                                                  Total = DateFormat((Math.Round(g.Sum(s => s.TotalWIWorkedDays_number), 2))),
+                                                              }).ToList();
+
+                result.ProjectsByCategoryGroupList = finalResults.OrderBy(d => d.CategoryName).ToList();
 
                 if (!string.IsNullOrEmpty(employeeUserId))
                 {
@@ -10336,6 +10352,12 @@ namespace WebFreight.Web.ReportsWebServices
                     myRecord.PortOfDischargeName = a.MainCarriageFinalDestinationPortName;
                     myRecord.Consignee = a.ConsigneeName;
                     myRecord.BookingNumber = a.BookingConfirmationNumber;
+                    myRecord.Transshipment1ETA = a.Transshipment1ETA;
+                    myRecord.Transshipment2ETA = a.Transshipment2ETA;
+                    myRecord.Transshipment3ETA = a.Transshipment3ETA;
+                    myRecord.Transshipment1ETD = a.Transshipment1ETD;
+                    myRecord.Transshipment2ETD = a.Transshipment2ETD;
+                    myRecord.Transshipment3ETD = a.Transshipment3ETD;
 
                     myRecord.FullStatus = a.StatusName;
                     if(!string.IsNullOrEmpty(a.StatusLocation))
