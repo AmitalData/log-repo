@@ -312,7 +312,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public IQueryable<DWObjectFieldPM> GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(int tenant, string dwotCode)
         {
             return (from aa in repository.webFreightContext.DWObjectFieldCategories
-                    join a in repository.webFreightContext.DWObjectFields on aa.DWObjectFieldId equals a.Id
+                    join a in repository.webFreightContext.DWObjectFields on aa.DWObjectFieldCode equals a.Code
                     join b in repository.webFreightContext.DWCategories on aa.DWCategoryCode equals b.Code
                     where a.Tenant == tenant && a.DWObjectTableCode == dwotCode
                     select new DWObjectFieldPM()
