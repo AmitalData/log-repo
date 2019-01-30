@@ -283,16 +283,16 @@ export class CounterInvoiceComponent extends BaseComponent {
                         Validator.TryValidateObject(item, this.ObjectTableName, errors);
 
                         if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
-                            if ((item.StartNumber).toString().length + AppTool.GetCounterPrefixLength(item.Prefix) > 20) {
-                                errors.push("Maximum length allowed for [Prefix + StartNumber] is 20");
+                            if ((item.StartNumber).toString().length + AppTool.GetCounterPrefixLength(item.Prefix) + AppTool.GetCounterPrefixLength(item.Suffix) > 20) {
+                                errors.push("Maximum length allowed for [Prefix + StartNumber + Suffix] is 20");
                             }
                         }
                     });
                 }
                 else {
 
-                    if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) > 20) {
-                        errors.push("Maximum length allowed for [Prefix + StartNumber] is 20");
+                    if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) + AppTool.GetCounterPrefixLength(this.Suffix)> 20) {
+                        errors.push("Maximum length allowed for [Prefix + StartNumber + Suffix] is 20");
                     }
 
                     this.APIHelper.CounterDefinitions.forEach(item => {
