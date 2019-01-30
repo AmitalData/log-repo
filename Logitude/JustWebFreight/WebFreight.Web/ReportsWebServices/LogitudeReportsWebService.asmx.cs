@@ -1005,27 +1005,35 @@ namespace WebFreight.Web.ReportsWebServices
 
             #endregion
 
-            #region Fill Statement Record List
+            #region Fill Statement Record Listc
 
-            List<StatementDataProvider.StatementRecord> list_ARInvoices =
-                (from d in iQueryable_ARInvoice
-                 select new StatementDataProvider.StatementRecord()
-                 {
-                     MasterNumber = d.MasterNumber,
-                     Desicription = d.Description + " " + d.MainEntityReference,
-                     ShipmentId = d.MainEntityId,
-                     HouseNumber = d.HouseNumber,
-                     Date = d.InvoiceDate.Value,
-                     DueDate = d.DueDate.Value,
-                     OurRefrence = d.InvoiceNumber,
-                     YourRefrence = d.CustomerRef,
-                     CurrencyId = d.InvoiceCurrencyId,
-                     Type = d.ARInvoiceTypeCode == "CD" ? "Credit Note" : (d.ARInvoiceTypeCode == "CC" ? "Customs Credit Note" : (d.ARInvoiceTypeCode == "CI" ? "Customs Invoice" : "A\\R Invoice")),
-                     Debit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.AmountDue),
-                     Credit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.AmountDue),
-                     Notes = d.InternalNotes,
-                     BillToVendorId = d.BillToId,
-                 }).ToList();
+            List<StatementDataProvider.StatementRecord> list_ARInvoices = new List<StatementDataProvider.StatementRecord>();
+            List<ARInvoice> iQueryableList = iQueryable_ARInvoice.ToList();
+            foreach(ARInvoice d in iQueryableList)
+            {
+                StatementDataProvider.StatementRecord item = new StatementDataProvider.StatementRecord();
+                item.MasterNumber = d.MasterNumber;
+                  item.Desicription = d.Description + " " + d.MainEntityReference;
+                item.ShipmentId = d.MainEntityId;
+                item.HouseNumber = d.HouseNumber;
+                item.Date = d.InvoiceDate.Value;
+                item.DueDate = d.DueDate.Value;
+                item.OurRefrence = d.InvoiceNumber;
+                item.YourRefrence = d.CustomerRef;
+                item.CurrencyId = d.InvoiceCurrencyId;
+                item.Type = d.ARInvoiceTypeCode == "CD" ? "Credit Note" : (d.ARInvoiceTypeCode == "CC" ? "Customs Credit Note" : (d.ARInvoiceTypeCode == "CI" ? "Customs Invoice" : "A\\R Invoice"));
+                item.Debit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.AmountDue);
+                item.Credit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.AmountDue);
+                item.Notes = d.InternalNotes;
+                item.BillToVendorId = d.BillToVendorId;
+                customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, d, item);
+
+                list_ARInvoices.Add(item);
+            }
+
+
+
+
 
             List<StatementDataProvider.StatementRecord> list_APInvoices =
                 (from d in iQueryable_APInvoice
@@ -8725,6 +8733,8 @@ namespace WebFreight.Web.ReportsWebServices
                                               BranchNumber = d.BankAccountLite != null ? d.BankAccountLite.BranchNumber : null,
                                           }).OrderBy(o => o.PaymentCurrencyCode).ToList();
 
+
+
             foreach (ARPaymentDataProvider item in myResult.ARPaymentDataList)
             {
                 item.PaidAPInvoicesList = new List<ARPaymentDataProvider.ReportARInvoicePayments>();                
@@ -8740,6 +8750,7 @@ namespace WebFreight.Web.ReportsWebServices
                     reportAPIPayment.AmountPaid = null;
                     reportAPIPayment.OriginalAmount = null;
                     reportAPIPayment.InvocieDate = null;
+
                     item.PaidAPInvoicesList.Add(reportAPIPayment);
                 }
 
@@ -8763,6 +8774,10 @@ namespace WebFreight.Web.ReportsWebServices
                             reportAPIPayment.BillTo = apiInvoicePayment.ARInvoice.BillTo.LocalName;
                             reportAPIPayment.InvoiceNumber = apiInvoicePayment.ARInvoice.InvoiceNumber;
                             reportAPIPayment.InvocieDate = apiInvoicePayment.ARInvoice.InvoiceDate;
+                            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                            customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, apiInvoicePayment.ARInvoice, reportAPIPayment);
+
+                            
 
                             if (isLocalCurrency)
                             {
@@ -9416,14 +9431,25 @@ namespace WebFreight.Web.ReportsWebServices
             if (time != 0)
             {
                 var ts = TimeSpan.FromHours(time);
+                var h = 0.0;
                 if(ts.TotalHours < 0)
                 {
                     isMinus = true;
+                    var h_Abs = Math.Abs(ts.TotalHours);
+                     h = System.Math.Floor(h_Abs);
                 }
-                var h = System.Math.Floor(ts.TotalHours);
+                else
+                {
+                     h = System.Math.Floor(ts.TotalHours);
+                }
+               
                 if (Math.Abs(ts.TotalHours) < 1)
                 {
                     h = 0;
+                }
+                if(isMinus)
+                {
+                    h = h * -1;
                 }
                 var m = (ts.TotalHours - h) * 60;
                 if (isMinus)
