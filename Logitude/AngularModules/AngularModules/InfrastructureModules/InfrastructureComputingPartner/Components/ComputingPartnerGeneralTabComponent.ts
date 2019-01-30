@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -35,7 +35,7 @@ export class ComputingPartnerGeneralTabComponent extends BaseComponent {
         this.BuildObsList();
         this.SetUIProperties();
     }
-
+    
     public InActiveEnabled: boolean = true;
     SetUIProperties() {
         var isFieldsEnabled: boolean = SessionLocator.Tenant == this.EntityPM.Tenant? true : false;
@@ -46,6 +46,12 @@ export class ComputingPartnerGeneralTabComponent extends BaseComponent {
         this.InActiveEnabled = isFieldsEnabled;
 
     }
+
+
+
+
+
+
     BuildObsList() {
         this.ItemSourceCollection.Clear();
         var list: Array<AddEditComputingPartnerComponent> = [];

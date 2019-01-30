@@ -133,7 +133,6 @@
     <Compile Include="Utils\CacheUtil.cs" />
     <Compile Include="Utils\FakeFactory.cs" />
     <Compile Include="Utils\LogitudeServerToolsFactory.cs" />
-    <Compile Include="Utils\MockLoggedContactUtil.cs" />
     <Compile Include="Utils\TestsUtil.cs" />
   </ItemGroup>
   <ItemGroup>
