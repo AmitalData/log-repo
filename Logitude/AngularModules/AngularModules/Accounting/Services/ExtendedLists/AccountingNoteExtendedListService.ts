@@ -37,13 +37,28 @@ export class AccountingNoteExtendedListService {
         });
     }
 
+    DeleteNote(noteId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
 
+        var url = ServiceHelper.GetLogitudeURL() + 'api/AccountingNotes' + '/PostDeleteNote?noteId=' + noteId;
 
+        return Observable.defer(() => {
 
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
 
+            var serviceResponse: ServiceResponse = new ServiceResponse();
 
+            return this._http.post(url, null ,{ headers: authHeader }).map((res) => {
 
+                    return serviceResponse;
 
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+
+    }
 
     MapJsonToEntityList(jsonList: any) {
 

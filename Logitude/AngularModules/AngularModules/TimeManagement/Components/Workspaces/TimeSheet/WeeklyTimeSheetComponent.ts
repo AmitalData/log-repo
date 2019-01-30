@@ -150,8 +150,8 @@ export class WeeklyTimeSheetComponent extends BaseComponent {
         this.TotalThuDayClockHours = totalThuDayClockHoursString;
         this.TotalSatDayClockHours = totalSatDayClockHoursString;
         this.TotalFriDayClockHours = totalFriDayClockHoursString;
-        this.TotalWeekClockHours = totalSunDayClockHours + totalMonDayClockHours + totalTueDayClockHours +
-            totalWedDayClockHours + totalThuDayClockHours + totalSatDayClockHours + totalFriDayClockHours;
+        this.TotalWeekClockHours = (totalSunDayClockHours + totalMonDayClockHours + totalTueDayClockHours +
+            totalWedDayClockHours + totalThuDayClockHours + totalSatDayClockHours + totalFriDayClockHours) * 60;
     }
 
     private employeeUserId: string = null;

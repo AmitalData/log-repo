@@ -1,3 +1,4 @@
+import { AccountingNoteComponent } from './Components/Others/AccountingNoteComponent';
 import { IntegrityCheckTabComponent } from './Components/EditTabs/AccountingIntegrityCheck/IntegrityCheckTabComponent';
 import {AccountingWorkspaceComponent} from './Components/Workspaces/AccountingWorkspaceComponent';
 import {GLAccountPageComponent} from './Components/Workspaces/Main/GLAccountPageComponent';
@@ -179,6 +180,7 @@ export const Components =
         AccountingFlatFileDownloadComponent,
         NewTaxDeductionReportComponent,
         IntegrityCheckTabComponent,
+        AccountingNoteComponent,
     ];
 
 export class ModuleDeclarations {
@@ -278,6 +280,7 @@ export class ModuleDeclarations {
             case "AddEditTaxWithholdingLineComponent": { myResult = AddEditTaxWithholdingLineComponent; break; }
             case "AccountingFlatFileDownloadComponent": { myResult = AccountingFlatFileDownloadComponent; break; }
             case "IntegrityCheckTabComponent": { myResult = IntegrityCheckTabComponent; break; }
+            case "AccountingNoteComponent": { myResult = AccountingNoteComponent; break; }
         }
 
         return myResult;
