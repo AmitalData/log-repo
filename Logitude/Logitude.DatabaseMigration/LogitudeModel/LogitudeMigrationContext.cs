@@ -1405,6 +1405,19 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
+
+        public IDbSet<DWCategories> DWCategories
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<DWObjectFieldCategories> DWObjectFieldCategories
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region Shipment Context
@@ -4766,8 +4779,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new AccountingNoteMap());
             modelBuilder.Configurations.Add(new IntegrityCheckStatusMap());
             modelBuilder.Configurations.Add(new HarmonizeCodeMap());
+            modelBuilder.Configurations.Add(new DWCategoriesMap());
+            modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
 
-            
+
+
             base.OnModelCreating(modelBuilder);
         }
     }
