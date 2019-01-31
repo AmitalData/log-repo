@@ -18,7 +18,8 @@ import { DeclarationCargoSplitPMService } from '../../../../../Customs/Services/
 import { DeclarationCargoSplitPM } from '../../../../../Customs/EntityPMs/DeclarationCargoSplitPM';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';//test4
 import {CargoSplitRequestParams} from '../../../../../Customs/DataContract/RequestParams/CargoSplitRequestParams';
-import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
+import { INF_MSG_GenericResponseData } from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
+import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 
 import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPMService';
 
