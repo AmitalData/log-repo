@@ -16,15 +16,11 @@ import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 
 export class MultilineTextBoxWindow implements OnInit {
     public DataContext: any;
-    public ObjectFieldName: string;
-    public ObjectTableName: string;
 
     constructor() {
     }
 
     SetWindowArgs(args){
-        this.ObjectFieldName = args.ObjectFieldName;
-        this.ObjectTableName = args.ObjectTableName;
         this.Text = args.TextValue;
     }
 
