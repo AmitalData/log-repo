@@ -442,8 +442,8 @@
                                                                 <!--PAY-->
                                                                 <table *ngIf="_SelectedTabFilter.Code=='PAY' ">
                                                                     <tr>
-                                                                        <td *ngIf="_SelectedItems == null || (_SelectedItems != null && _SelectedItems.Collection.length == 0)" style="width:100px; text-align:right" dir="ltr"><button class="Button" (click)="SendReadyLOWPAYToBatch()"> {{ ' (' +this._ReadyLOWPAYToBatchSend + ') ' + 'Low תשלום'}}</button></td>
-                                                                        <td *ngIf="_SelectedItems != null && _SelectedItems.Collection.length > 0" style="width:100px; "><button class="Button" (click)="SendReadyLOWPAYToBatch()"> {{ 'תשלום Low מסומנים'}}</button></td>
+                                                                        <td *ngIf="_SelectedItems == null || (_SelectedItems != null && _SelectedItems.Collection.length == 0)" style="width:100px; text-align:right" dir="ltr"><button class="Button" (click)="SendReadyLOWPAYToBatch()"> {{ ' (' +this._PAYReadyNotFastindividual + ') ' + 'תשלום תהליך מהיר'}}</button></td>
+                                                                        <td *ngIf="_SelectedItems != null && _SelectedItems.Collection.length > 0" style="width:100px; "><button class="Button" (click)="SendReadyLOWPAYToBatch()"> {{ 'תשלום תהליך מהיר מסומנים'}}</button></td>
                                                                         <td style="width:5px"></td>
                                                                         <td style="width:100px"></td>
                                                                         <td></td>

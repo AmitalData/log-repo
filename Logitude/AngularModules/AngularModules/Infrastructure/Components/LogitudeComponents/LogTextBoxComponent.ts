@@ -1,3 +1,4 @@
+import { LogitudeWindow } from './../../../Controls/Windows/LogitudeWindow';
 declare var window: any;
 declare var SelectingElement: any;
 import {Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit, OnDestroy, NgZone, ChangeDetectorRef, ApplicationRef, ViewChild} from '@angular/core';
@@ -145,6 +146,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     IsPasted: boolean = false;
 
     LayoutDirection: string = 'ltr';
+    showLocal: boolean = false;
     IdentityKey: string;
     @Output() OriginalText = new EventEmitter();
    
@@ -154,7 +156,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         this.show = false;
         this.IdentityKey = AppTool.GetNewGuid();
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
-
+        this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
         //SessionLocator.CurrentSession.isShiftClicked = false;
         //SessionLocator.CurrentSession.isTabWithShiftClicked = false;
     }
@@ -1463,6 +1465,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     //        setTimeout(() => this.cd.detach(), 1000);
     //    }
     //}
+    isMouseOver: boolean = false;
     OnMouseOver() {
         if (this.IsDisabled) {
             this.InputDivStyle = { 'border': '1px solid #AAAAAA' };
