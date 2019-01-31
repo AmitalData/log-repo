@@ -154,7 +154,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             //Get CourierMaster
             CourierMasterQueryService myCourierMasterQueryService = new CourierMasterQueryService(_Context);
-            _CourierMasterPM = myCourierMasterQueryService.GetSingle(_CourierDeclarationPM.CourierMasterId, false, true);
+            _CourierMasterPM = myCourierMasterQueryService.GetSingle(_CourierDeclarationPM.CourierMasterId, false, false);
             if (_CourierMasterPM == null)
             {
                 return _DeclarationPM;
