@@ -180,4 +180,8 @@ export class DeclarationEditComponentController implements IEditComponentControl
     private _TapagId: string;
     public get TapagId() { return this._TapagId; }
     public set TapagId(value: string) { this._TapagId = value; }
+
+    private _CargoSplitId: string;
+    public get CargoSplitId() { return this._CargoSplitId; }
+    public set CargoSplitId(value: string) { this._CargoSplitId = value; }
 }
