@@ -4,8 +4,7 @@ import {Validator} from '../../Infrastructure/Validators/Validator';
 import {ARPaymentPM} from '../EntityPMs/ARPaymentPM';
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-import { forEach } from '@angular/router/src/utils/collection';
-import { MessageWindow } from '../../controls/Windows/MessageWindow';
+
 export class ARPaymentValidator {
     public Validate(entityPm: ARPaymentPM) {
 
@@ -14,8 +13,6 @@ export class ARPaymentValidator {
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         Validator.TryValidateObject(entityPm, null, validationResults);
-
-      
 
         var isNegativeAmountEnabled: boolean = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments && entityPm.AccountingPaymentMethodCode == "FS" ? true : false;
 
@@ -61,18 +58,9 @@ export class ARPaymentValidator {
         }
 
         var myLinesPaidAmount = 0;
-        var isNoPaidAmount: boolean;
-        entityPm.PaymentInvoices.forEach(item => {
+        entityPm.PaymentInvoices.forEach(item => {            
             myLinesPaidAmount += item.PaymentAmount;
-
-            if (AppTool.IsNullOrZero(item.ForeignAmount)) {
-                isNoPaidAmount = true;
-            }
         });
-
-        if (isNoPaidAmount == true) {
-            validationResults.push("Can't connect lines with zero Amount to Pay");
-        }
 
         var myLinesPaidAmountRounded = AppTool.Round(myLinesPaidAmount, 2);
 
@@ -121,9 +109,8 @@ export class ARPaymentValidator {
                   validationResults.push(msg.replace("%FieldName", "Sello Pago"));
           }
           
-        }
-
-        return validationResults;    
+      }
+        return validationResults;
     }
 
     public static ValidateCurrenctEntity(entityPm: ARPaymentPM) {
@@ -177,18 +164,9 @@ export class ARPaymentValidator {
         }
 
         var result = 0;
-        var isNoPaidAmount: boolean;
         entityPm.PaymentInvoices.forEach(item => {
             result += item.PaymentAmount;
-
-            if (AppTool.IsNullOrZero(item.ForeignAmount)) {
-                isNoPaidAmount = true;
-            }
         });
-
-        if (isNoPaidAmount == true) {
-            errors.push("Can't connect lines with zero Amount to Pay");
-        }
 
         var paymentAmountPaid = AppTool.Round(result, 2);
 
@@ -243,7 +221,6 @@ export class ARPaymentValidator {
         if (errors != null && errors.length > 0) {
             isValid = false;
         }
-
         return errors;
     }
 }

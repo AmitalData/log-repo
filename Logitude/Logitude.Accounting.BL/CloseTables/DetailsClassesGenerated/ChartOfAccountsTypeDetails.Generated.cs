@@ -78,9 +78,9 @@ namespace Logitude.Accounting.BL
             all.Add(new ChartOfAccountsTypeDetails()
             {    
                 Code = "7", 
-                SearchFields = "7,Debtors And Creditorsחו''זים", 
+                SearchFields = "7,Debtors And Creditorsחו\"זים", 
                 Inactive = false, 
-                LocalName = "חו''זים", 
+                LocalName = "חו\"זים", 
                 EnglishName = "Debtors And Creditors", 
 			});
 			

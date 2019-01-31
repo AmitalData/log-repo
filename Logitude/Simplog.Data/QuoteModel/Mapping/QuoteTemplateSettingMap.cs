@@ -991,13 +991,6 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ShowChargeNotePackages).HasColumnName("ShowChargeNotePackages");
             this.Property(t => t.ShowChargeNoteContainers).HasColumnName("ShowChargeNoteContainers");
 
-
-
-            this.Property(t => t.ShowSaleMaxMinAmountPackages).HasColumnName("ShowSaleMaxMinAmountPackages");
-            this.Property(t => t.ShowSaleMaxMinAmountContainers).HasColumnName("ShowSaleMaxMinAmountContainers");
-
-
-
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

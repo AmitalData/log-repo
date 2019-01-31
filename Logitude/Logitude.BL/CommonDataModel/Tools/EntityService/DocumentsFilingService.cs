@@ -247,7 +247,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         //ShipmentCompField.LastDocumentDateTime = DateTime.Now;
                         DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                         var EntityDirection = documentsFilingQuery.GetDirectionForEntity(Poco.EntityId, theEntityPm.ObjectTableId, tenant);
-                        if (CheckIfSignRequired(EntityDirection, this.entityPM.DocumentTypeId, this.entityPM.Tenant) && !this.entityPM.IsDigitallySigned && this.entityPM.HasFile && (!string.IsNullOrEmpty(this.entityPM.FileExtension) && this.entityPM.FileExtension.ToLower() == "pdf"))
+                        if (CheckIfSignRequired(EntityDirection, this.entityPM.DocumentTypeId, this.entityPM.Tenant) && !this.entityPM.IsDigitallySigned && this.entityPM.HasFile)
                         {
                             ShipmentCompField.IsDigitalSignRequired = true;
                             Poco.IsDigitalSignRequired = true;
@@ -403,7 +403,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     Subject = "Document Backup",
                     FolderName = "DocumentFillingBackupQueue",
                     ByteData = logXML,
-                    LoggingEntityReference = entityPM.Code,
                 };
 
                 logParams.QueueParameters = new Dictionary<string, string>() { { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } };
@@ -469,7 +468,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         ShipmentCompField.DocumentsSearchFields = entityRepository.GetEntityDocumentsSearchFields(this.Poco.EntityId, this.Poco.ObjectTableId, this.Poco.Tenant);
                         DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                         var EntityDirection = documentsFilingQuery.GetDirectionForEntity(Poco.EntityId, theEntityPm.ObjectTableId, tenant);
-                        if (CheckIfSignRequired(EntityDirection, this.entityPM.DocumentTypeId, this.entityPM.Tenant) && !this.entityPM.IsDigitallySigned && this.entityPM.HasFile && (!string.IsNullOrEmpty(this.entityPM.FileExtension) && this.entityPM.FileExtension.ToLower() == "pdf"))
+                        if (CheckIfSignRequired(EntityDirection, this.entityPM.DocumentTypeId, this.entityPM.Tenant) && !this.entityPM.IsDigitallySigned && this.entityPM.HasFile)
                         {
                             ShipmentCompField.IsDigitalSignRequired = true;
                             Poco.IsDigitalSignRequired = true;
@@ -671,7 +670,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         ShipmentCompField.DocumentsSearchFields = entityRepository.GetEntityDocumentsSearchFields(this.Poco.EntityId, this.Poco.ObjectTableId, this.Poco.Tenant);
                         DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                         var EntityDirection = documentsFilingQuery.GetDirectionForEntity(Poco.EntityId, theEntityPm.ObjectTableId, tenant);
-                        if (CheckIfSignRequired(EntityDirection, this.entityPM.DocumentTypeId, this.entityPM.Tenant) && !this.entityPM.IsDigitallySigned && this.entityPM.HasFile && (!string.IsNullOrEmpty(this.entityPM.FileExtension) && this.entityPM.FileExtension.ToLower() == "pdf"))
+                        if (CheckIfSignRequired(EntityDirection, this.entityPM.DocumentTypeId, this.entityPM.Tenant) && !this.entityPM.IsDigitallySigned && this.entityPM.HasFile)
                         {
                             ShipmentCompField.IsDigitalSignRequired = true;
                             Poco.IsDigitalSignRequired = true;
@@ -1076,8 +1075,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public void AddToTasksQueue(DocumentsFilingPM extDocPM, bool isnew, string loggedUserId)
         {
-
-
             if (!string.IsNullOrWhiteSpace(this.MetaDataVersionValue))
             {
                 DocumentsFilingMetaDataValueQuery.UpSert(extDocPM, "VER", this.MetaDataVersionValue);
@@ -1221,8 +1218,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                 task2logParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue2Tasks);
                                 Communications.AddCommunicationLog(task2logParams);
                             }
-                            LogMessagingUtil.Instance.AppendLine("AddToTasksQueue (DocumentsFilingService)");
-                            
+
                             // AzureLog.SaveLogsInStorage("After adding document filing queue (Id:" + extDocPM.Id + ",Tenant:" + extDocPM.Tenant + ")", "L", DateTime.Now, "", "", 0, loggedUserId, loggedUserId, null);
                         }
                         catch (Exception ex)

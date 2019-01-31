@@ -461,11 +461,6 @@ export class UserPM {
     public set ShowInboxToolTip(newValue: boolean) { if (this.showInboxToolTip != newValue) { this.showInboxToolTip = newValue; this.MarkAsDirty("ShowInboxToolTip"); } }
        
 	 
-    private showLocalNameInLOV: boolean;
-    public get ShowLocalNameInLOV() { return this.showLocalNameInLOV; }
-    public set ShowLocalNameInLOV(newValue: boolean) { if (this.showLocalNameInLOV != newValue) { this.showLocalNameInLOV = newValue; this.MarkAsDirty("ShowLocalNameInLOV"); } }
-       
-	 
 
     public OldEntityPM: UserPM;
 		

@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .TabCloseIcon:hover {
         background: url('./Images/Tab.X.Blue.png') no-repeat;
@@ -252,7 +252,7 @@
                                                 <button *ngIf="IsCustomizationVisible" (click)="TranslateLabelsClicked()">Translate Labels</button>
                                                 <button *ngIf="IsCustomizationVisible" (click)="TranslationClicked()">Translation</button>
                                                 <button *ngIf="IsCustomizationVisible" (click)="DefaultTranslationClicked()">Default Translation</button>
-                                                <button *ngIf="IsCurrenciesRatesVisible" (click)="CurrenciesRatesClicked()">Currencies Rates</button>
+                                                <button *ngIf="IsLogBox == false" (click)="CurrenciesRatesClicked()">Currencies Rates</button>
                                                 <button *ngIf="IsDataBackupVisible" (click)="DataBackupClicked()">Data Backup</button>
                                                 <button  *ngIf="IsDocumentsBackupVisible" (click)="DocumentsBackupClicked()">Documents Backup</button>                                               
                                                 <button *ngIf="Tenant == 0" (click)="LoadSampleDataClicked()">Load Sample Data</button>
@@ -404,12 +404,6 @@
 
                             <li class="NewTabItem" (click)="AddTab()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!_AmitalBrowserInUse">+</li>
                         </ul>
-                        <div *ngIf="IsShowLastSuccessfulLoginComponent" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'"  style="height:20px;margin-top:-23px">
-                            <LastSuccessfulLoginComponent></LastSuccessfulLoginComponent>
-                           
-                        </div>
-
-
                     </div>
 
                     <div class="TabControlBody" (mouseup)="OnSessionMouseUp($event)" style="background: white;" id="ApplicationSession">

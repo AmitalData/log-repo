@@ -32,7 +32,6 @@ import {CustomFieldResolverPipe} from './Pipes/CustomFieldResolverPipe';
 import {GeneralSendComponent} from './Components/LogitudeComponents/GeneralSendComponent';
 import {LogLabelComponent} from './Components/LogitudeComponents/LogLabelComponent';
 import {LogTextBoxComponent} from './Components/LogitudeComponents/LogTextBoxComponent';
-import {MultilineTextBoxWindow} from './Components/LogitudeComponents/MultilineTextBoxWindow';
 import {LogTextBoxV2Component} from './Components/LogitudeComponents/LogTextBoxV2Component';
 import {LogLovComponent} from './Components/LogitudeComponents/LogLovComponent';
 import {LogLovV2Component} from './Components/LogitudeComponents/LogLovV2Component';
@@ -91,7 +90,10 @@ import {QueryListComponent} from './Components/LogitudeComponents/QueryListCompo
 import {LogitudeListBoxComponent} from './Components/LogitudeComponents/LogitudeListBox/LogitudeListBoxComponent';
 import {GeneralTabComponent} from './GenericComponents/GeneralTabComponent';
 import {GeneratedComponent} from './GenericComponents/GeneratedComponent';
-import { LastSuccessfulLoginComponent } from './Components/LogitudeCustomComponents/LastSuccessfulLoginComponent';
+
+
+
+
 
 import {TipsComponent} from './Components/LogitudeComponents/TipsComponent/TipsComponent';
 
@@ -106,12 +108,9 @@ import {AuditAutomationTabComponent} from './Components/Maintenance/Automation/A
 import {SelectDocumentTypesComponent} from './Components/Maintenance/Automation/SelectDocumentTypesComponent';
 
 import {NewViewComponent} from './Components/NewViewComponent/NewViewComponent';
-import { Export2ExcelControl } from './Components/Export2ExcelControl/Export2ExcelControl';
-import { ExportBI2ExcelControl } from './Components/ExportBI2ExcelControl/ExportBI2ExcelControl';
+import {Export2ExcelControl} from './Components/Export2ExcelControl/Export2ExcelControl';
 import {QueryColumnsEditComponent} from './Components/QueryColumnsComponents/QueryColumnsEditComponent';
-import { btnComponent } from './Components/QueryColumnsComponents/btnComponent';
-import { btnUpdateComponent } from './Components/QueryColumnsComponents/btnUpdateComponent';
-
+import {btnComponent} from './Components/QueryColumnsComponents/btnComponent';
 import {ToComponent} from './Components/QueryColumnsComponents/ToComponent';
 import {NewEntityComponent} from './GenericComponents/NewEntityComponent';
 import {LogSearchWindowComponent} from './Components/LogitudeComponents/LogSearchWindowComponent';
@@ -123,9 +122,8 @@ import {LogTabsComponent} from './Components/LogitudeComponents/LogTabsComponent
 import { MenuButtonsComponentLoader } from './Components/LogitudeComponents/MenuButtonsComponent/MenuButtonsComponentLoader';
 import { LogWaterMarkComponent } from './Components/Templates/LogWaterMarkComponent';
 import {DWLogSearchWindowFieldsComponent} from './Components/QueryColumnsComponents/DWLogSearchWindowFieldsComponent';
-import { ChooseUserComponent } from './Components/NewViewComponent/ChooseUserComponent';
 
-import {DWLogSearchAddFieldsComponent} from './Components/QueryColumnsComponents/DWLogSearchAddFieldsComponent';
+
 
 
 
@@ -193,7 +191,6 @@ export const ControlsComponents =
         GeneralSendComponent,
         LogLabelComponent,
         LogTextBoxComponent,
-        MultilineTextBoxWindow,
         LogTextBoxV2Component,
         LogLovComponent,
         LogLovV2Component,
@@ -246,7 +243,6 @@ export const ControlsComponents =
         FroalaEditorComponent,
         DocsOutTabComponent,
         DocsInTabComponent,
-        LastSuccessfulLoginComponent,
     ];
 export const Components =
     [
@@ -269,7 +265,6 @@ export const Components =
         LogitudeListBoxComponent,
         GeneralTabComponent,
         GeneratedComponent,
-        MultilineTextBoxWindow,
 
         MainMenuAutomationComponent,
         AutomationsSettingsComponent,
@@ -280,16 +275,14 @@ export const Components =
 
         NewViewComponent,
         Export2ExcelControl,
-        ExportBI2ExcelControl,
         QueryColumnsEditComponent,
         btnComponent,
-        btnUpdateComponent,
         ToComponent,
         NewEntityComponent,
         LogSearchWindowComponent,
         DWLogSearchWindowComponent,
-        ChooseUserComponent,
-        DWLogSearchAddFieldsComponent,
+
+
         InfrastructureFieldTemplateComponent,
 
         LogSearchWindowButtonsComponent,
@@ -319,7 +312,6 @@ export const Components =
         BTEGeneralTabComponent,
         BTELogTabComponent,
         BTEParameterTabComponent,
-        LastSuccessfulLoginComponent,
     ];
 
 export class ModuleDeclarations {
@@ -364,19 +356,14 @@ export class ModuleDeclarations {
 
             case 'NewViewComponent': { myResult = NewViewComponent; break; }
             case 'Export2ExcelControl': { myResult = Export2ExcelControl; break; }
-            case 'ExportBI2ExcelControl': { myResult = ExportBI2ExcelControl; break; }
             case 'QueryColumnsEditComponent': { myResult = QueryColumnsEditComponent; break; }
             case 'btnComponent': { myResult = btnComponent; break; }
-            case 'btnUpdateComponent': { myResult = btnUpdateComponent; break; }
             case 'ToComponent': { myResult = ToComponent; break; }
-            case 'DWLogSearchAddFieldsComponent': { myResult = DWLogSearchAddFieldsComponent; break; }
-                
             case 'NewEntityComponent': { myResult = NewEntityComponent; break; }
             case 'LogSearchWindowComponent': { myResult = LogSearchWindowComponent; break; }
             case 'DWLogSearchWindowComponent': { myResult = DWLogSearchWindowComponent; break; }
             case 'StimulsoftViewerComponent': { myResult = StimulsoftViewerComponent; break; }
             case 'TipsComponent': { myResult = TipsComponent; break; }
-            case 'ChooseUserComponent': { myResult = ChooseUserComponent; break; }
 
             case 'ChooseDatesComponent': { myResult = ChooseDatesComponent; break; }
             case 'InfrastructureFieldTemplateComponent': { myResult = InfrastructureFieldTemplateComponent; break; }
@@ -415,10 +402,6 @@ export class ModuleDeclarations {
             case 'BTEGeneralTabComponent': { myResult = BTEGeneralTabComponent; break; }
             case 'BTELogTabComponent': { myResult = BTELogTabComponent; break; }
             case 'BTEParameterTabComponent': { myResult = BTEParameterTabComponent; break; }
-            case 'LastSuccessfulLoginComponent': { myResult = LastSuccessfulLoginComponent; break; }
-            case 'MultilineTextBoxWindow': { myResult = MultilineTextBoxWindow; break; }
-
-
         }
 
         return myResult;

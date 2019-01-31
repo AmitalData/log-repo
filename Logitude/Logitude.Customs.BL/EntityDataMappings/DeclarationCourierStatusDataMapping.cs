@@ -45,6 +45,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.ProcedureCurrentCode = declarationPM.ProcedureCurrentCode;
                 entityPM.ImporterCode = declarationPM.ImporterCode;
             }
+
         }
     }
 

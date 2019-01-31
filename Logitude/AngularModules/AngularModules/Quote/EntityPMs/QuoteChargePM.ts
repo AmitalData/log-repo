@@ -60,11 +60,6 @@ export class QuoteChargePM {
     public set SaleMinAmount(newValue: number) { if (this.saleMinAmount != newValue) { this.saleMinAmount = newValue; this.MarkAsDirty("SaleMinAmount"); } }
        
 	 
-    private saleMaxAmount: number;
-    public get SaleMaxAmount() { return this.saleMaxAmount; }
-    public set SaleMaxAmount(newValue: number) { if (this.saleMaxAmount != newValue) { this.saleMaxAmount = newValue; this.MarkAsDirty("SaleMaxAmount"); } }
-       
-	 
     private isChargeBySteps: boolean;
     public get IsChargeBySteps() { return this.isChargeBySteps; }
     public set IsChargeBySteps(newValue: boolean) { if (this.isChargeBySteps != newValue) { this.isChargeBySteps = newValue; this.MarkAsDirty("IsChargeBySteps"); } }

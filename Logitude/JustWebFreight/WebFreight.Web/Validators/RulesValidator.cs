@@ -134,7 +134,7 @@ namespace WebFreight.Web.Validators
             if (rule != null)
             {
                 List<ObjectTableRuleField> ruleFields = GetRuleFields(rule, tenant);
-                List<RuleConditionField> RuleConditionFields = RuleConditionFieldRepository.GetObjectRuleConditionFieldsByTenant(tenant).Where(f=>f.ObjectTableRuleId == rule.Id).ToList();
+                List<RuleConditionField> RuleConditionFields = RuleConditionFieldRepository.GetObjectRuleConditionFieldsByTenant(tenant).ToList();
 
                 if (rule.AdvancedCondition && rule.Condition != null)
                 {

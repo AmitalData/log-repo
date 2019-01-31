@@ -34,8 +34,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public DateTime? NextDueDate { get; set; }
         [Column("TotalOpenChequesInLocalCur")]
 	    public decimal? TotalOpenChequesInLocalCur { get; set; }
-        [Column("TotFutureOpenChequesInLocalCur")]
-	    public decimal? TotFutureOpenChequesInLocalCur { get; set; }
     }
 }
 	 

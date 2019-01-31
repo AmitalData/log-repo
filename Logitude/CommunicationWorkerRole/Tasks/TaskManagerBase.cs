@@ -27,12 +27,9 @@ namespace CommunicationWorkerRole.Tasks
         }
         public void Run()
         {
-
-
-
-            try
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                try
                 {
                     TaskSchedulerHistoryRepository TaskSchedulerHistoryRepository = new TaskSchedulerHistoryRepository(Tenant);
                     IWebFreightContext objectContext = WebFreightContext.GetContext(Tenant);
@@ -40,20 +37,9 @@ namespace CommunicationWorkerRole.Tasks
                     TaskSchedulerHistoryPM TaskSchedulerHistory = new TaskSchedulerHistoryPM() { Tenant = Tenant, TaskId = TaskId };
                     TaskSchedulerHistoryService.Create(TaskSchedulerHistory);
                     TaskHistoryId = TaskSchedulerHistory.Id;
-                    scope.Complete();
-                }
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                {
-                    TaskSchedulerHistoryRepository TaskSchedulerHistoryRepository = new TaskSchedulerHistoryRepository(Tenant);
-                    IWebFreightContext objectContext = WebFreightContext.GetContext(Tenant);
-                    TaskSchedulerHistoryService TaskSchedulerHistoryService = new TaskSchedulerHistoryService(objectContext, Tenant);
-                    //TaskSchedulerHistoryPM TaskSchedulerHistory = new TaskSchedulerHistoryPM() { Tenant = Tenant, TaskId = TaskId };
-                    //TaskSchedulerHistoryService.Create(TaskSchedulerHistory);
-                    //TaskHistoryId = TaskSchedulerHistory.Id;
-
                     StartTask();
                     TaskSchedulerHistoryQuery TaskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(TaskSchedulerHistoryRepository);
-                    var TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetSingleTaskSchedulerHistoryPM(TaskHistoryId);
+                    TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetSingleTaskSchedulerHistoryPM(TaskHistoryId);
                     if (TaskSchedulerHistory != null)
                     {
                         TaskSchedulerHistory.EndDateTime = DateTime.Now;
@@ -62,13 +48,10 @@ namespace CommunicationWorkerRole.Tasks
                     }
                     scope.Complete();
                 }
-            }
-            catch (Exception ex)
-            {
-                #region Exception handling
-                try
+                catch (Exception ex)
                 {
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    #region Exception handling
+                    try
                     {
                         TaskSchedulerHistoryRepository TaskSchedulerHistoryRepository = new TaskSchedulerHistoryRepository(Tenant);
                         TaskSchedulerHistoryQuery TaskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(TaskSchedulerHistoryRepository);
@@ -86,17 +69,16 @@ namespace CommunicationWorkerRole.Tasks
                         ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "", null);
                         scope.Complete();
                     }
-                }
-                catch (Exception exc)
-                {
-                    ExceptionHandler.HandleException(exc, DateTime.Now, 0, "", "WorkerRole", "", null);
-                    //scope.Complete();
+                    catch (Exception exc)
+                    {
+                        ExceptionHandler.HandleException(exc, DateTime.Now, 0, "", "WorkerRole", "", null);
+                        scope.Complete();
+                    }
+                  
+                    #endregion
                 }
 
-                #endregion
             }
-
-
 
         }
 

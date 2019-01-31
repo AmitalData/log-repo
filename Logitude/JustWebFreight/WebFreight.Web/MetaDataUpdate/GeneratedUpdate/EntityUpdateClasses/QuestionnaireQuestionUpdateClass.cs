@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class QuestionnaireQuestionUpdateClass
@@ -152,10 +149,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "QuestioneerId",
-					  						DefaultText =  @"QuestioneerId",
+					  						DefaultText =  "QuestioneerId",
 					  						ListFieldLable =  "QuestioneerIdListLable",
-					  						ListLableDefaultText =  @"QuestioneerId",
-					  						ListLocalDefaultText =  @"QuestioneerId",
+					  						ListLableDefaultText =  "QuestioneerId",
+					  						ListLocalDefaultText =  "QuestioneerId",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -203,10 +200,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VersionNumber",
-					  						DefaultText =  @"Version",
+					  						DefaultText =  "Version",
 					  						ListFieldLable =  "VersionNumberListLable",
-					  						ListLableDefaultText =  @"Version",
-					  						ListLocalDefaultText =  @"Version",
+					  						ListLableDefaultText =  "Version",
+					  						ListLocalDefaultText =  "Version",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -254,10 +251,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "QuestionNumber",
-					  						DefaultText =  @"Question Number",
+					  						DefaultText =  "Question Number",
 					  						ListFieldLable =  "QuestionNumberListLable",
-					  						ListLableDefaultText =  @"Question Number",
-					  						ListLocalDefaultText =  @"Question Number",
+					  						ListLableDefaultText =  "Question Number",
+					  						ListLocalDefaultText =  "Question Number",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -305,10 +302,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Question",
-					  						DefaultText =  @"Question",
+					  						DefaultText =  "Question",
 					  						ListFieldLable =  "QuestionListLable",
-					  						ListLableDefaultText =  @"Question",
-					  						ListLocalDefaultText =  @"Question",
+					  						ListLableDefaultText =  "Question",
+					  						ListLocalDefaultText =  "Question",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -356,10 +353,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "QuestionTypeCode",
-					  						DefaultText =  @"Question Type Code",
+					  						DefaultText =  "Question Type Code",
 					  						ListFieldLable =  "QuestionTypeCodeListLable",
-					  						ListLableDefaultText =  @"Question Type Code",
-					  						ListLocalDefaultText =  @"Question Type Code",
+					  						ListLableDefaultText =  "Question Type Code",
+					  						ListLocalDefaultText =  "Question Type Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -407,9 +404,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsMandatory",
-					  						DefaultText =  @"Is Mandatory",
+					  						DefaultText =  "Is Mandatory",
 					  						ListFieldLable =  "IsMandatoryListLable",
-					  						ListLableDefaultText =  @"Is Mandatory",
+					  						ListLableDefaultText =  "Is Mandatory",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -458,10 +455,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  @"Created By ",
+					  						DefaultText =  "Created By ",
 					  						ListFieldLable =  "CreatedByUserIdListLable",
-					  						ListLableDefaultText =  @"Created By",
-					  						ListLocalDefaultText =  @"Created By",
+					  						ListLableDefaultText =  "Created By",
+					  						ListLocalDefaultText =  "Created By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -509,9 +506,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  @"Create Date",
+					  						DefaultText =  "Create Date",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  @"Create Date",
+					  						ListLableDefaultText =  "Create Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -559,10 +556,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  @"Update Date",
+					  						DefaultText =  "Update Date",
 					  						ListFieldLable =  "UpdateDateListLable",
-					  						ListLableDefaultText =  @"Update Date",
-					  						ListLocalDefaultText =  @"Update Date",
+					  						ListLableDefaultText =  "Update Date",
+					  						ListLocalDefaultText =  "Update Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -610,7 +607,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
-					  						DefaultText =  @"Updated By",
+					  						DefaultText =  "Updated By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -658,10 +655,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PickListCode",
-					  						DefaultText =  @"Pick List Code",
+					  						DefaultText =  "Pick List Code",
 					  						ListFieldLable =  "PickListCodeListLable",
-					  						ListLableDefaultText =  @"Pick List Code",
-					  						ListLocalDefaultText =  @"Pick List Code",
+					  						ListLableDefaultText =  "Pick List Code",
+					  						ListLocalDefaultText =  "Pick List Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -709,10 +706,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsAddOther",
-					  						DefaultText =  @"Is Add Other",
+					  						DefaultText =  "Is Add Other",
 					  						ListFieldLable =  "IsAddOtherListLable",
-					  						ListLableDefaultText =  @"Is Add Other",
-					  						ListLocalDefaultText =  @"Is  Add Other",
+					  						ListLableDefaultText =  "Is Add Other",
+					  						ListLocalDefaultText =  "Is  Add Other",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -790,14 +787,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

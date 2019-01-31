@@ -13,8 +13,6 @@ using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.Server.Tools.Helpers;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace Logitude.Infrastructure.BL.EntityDataMappings
 {
@@ -48,13 +46,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
             }
             if (entityPM.CreatedByUserId != null)
             {
-                UserQuery query1 = new UserQuery(entityPM.Tenant);
-                UserPM user = query1.GetSinglePMLite(entityPM.CreatedByUserId, entityPM.Tenant);
-                if (user == null) // in case the user is customer care or null
-                {
-                    string email = "system@tenant" + entityPM.Tenant.ToString() + ".com";
-                    user = query1.GetSingleUserPMByEmailLite(email, entityPM.Tenant);
-                }
+                UserQueryService query1 = new UserQueryService(entityPM.Tenant);
+                User user = query1.GetUserById(entityPM.CreatedByUserId, entityPM.Tenant);
                 entityPM.CreatedByUserName = user.EnglishName;
             }
 

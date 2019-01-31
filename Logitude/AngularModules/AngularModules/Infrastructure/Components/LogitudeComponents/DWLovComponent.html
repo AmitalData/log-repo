@@ -424,12 +424,7 @@
     padding-left: 5px;
     padding-right: 3px;
 }
-   .truncate {
-  width: 150px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+
       
       
     .FlipImgHoriz{
@@ -458,9 +453,9 @@
                         <div class="LogLovInputDiv" [ngStyle]="InputDivStyle" >
                             <table>
                                 <tr>
-                                    <td style="position:relative;">
-                                        <input [id]="ElementId" class="DisabledItem truncate"
-                                               [(ngModel)]="DisplayTextNgModel"
+                                    <td style="position:relative">
+                                        <input [id]="ElementId" class="DisabledItem"
+                                               [(ngModel)]="SearchTextNgModel"
                                                (keydown)="OnSearchIputKeyDown($event)"
                                                (keyup)="OnSearchInputKeyUP($event)"
                                                (focus)="OnFocus()"
@@ -487,7 +482,7 @@
                                         <div></div>
                                     </td>
 
-                                    <td *ngIf="false" (click)="OnToggleClicked()" style="width: 10px; cursor:pointer">
+                                    <td (click)="OnToggleClicked()" style="width: 10px; cursor:pointer">
                                         <img [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" src="Images/ToggleIcon.png"/>
                                     </td>
                                       

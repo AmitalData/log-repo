@@ -1,5 +1,4 @@
-﻿#if false
-using Logitude.Accounting.BL.CoreBL.Mapping;
+﻿using Logitude.Accounting.BL.CoreBL.Mapping;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
@@ -42,10 +41,7 @@ namespace Logitude.Accounting.BL.CoreBL
             _GLAccountId = GLAccountId;
             //_ListOfAccountId = new List<string>(new HashSet<string>(listOfAccountId));
             _ListOfAccountId = listOfAccountId;
-            if (_AccountingContext == null)
-            {
-                _AccountingContext = AccountingContext.GetContext(_Tenant);
-            }
+
             //_IncludeChildAccounts = IncludeChildAccounts;
             //_IncludeRelatedCurrenciesAccount = IncludeRelatedCurrenciesAccount;
             AccountBalance = new AccountBalanceM() { Tenant = _Tenant};
@@ -360,7 +356,3 @@ ForeignAmountDebit
 Sum the matching  records from GLAccountTotalByMonths +LedgerTransactions and return the totals
 
 */
-
-
-
-#endif

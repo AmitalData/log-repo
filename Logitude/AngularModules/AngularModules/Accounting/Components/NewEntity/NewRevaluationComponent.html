@@ -1,4 +1,4 @@
-<table>
+﻿<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -111,7 +111,7 @@
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'GLAccount'"
                                             [HideColumns]="true"
-                                           >
+                                            [QueryFilterItems]="GLAccountFilterItems">
                                     </LogLov>
                                 </td>
                                 <td><div></div></td>

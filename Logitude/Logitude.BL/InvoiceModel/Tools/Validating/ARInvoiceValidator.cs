@@ -479,8 +479,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
 
                     double? lineInvoiceAmount = MethodHelper.Round(item.InvoiceCurrencyAmount, 2);
-                    double? exchangeRate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
-                    double? lineInvoiceAmount_Computed = MethodHelper.Round((item.LocalCurrencyAmount / exchangeRate), 2);
+                    double? lineInvoiceAmount_Computed = MethodHelper.Round(item.LocalCurrencyAmount / entityPM.InvoiceCurrencyExchangeRate, 2);
                     if (item.ForiegnCurrencyId == entityPM.InvoiceCurrencyId)
                     {
                         if (lineInvoiceAmount != lineForiegnAmount)
@@ -661,7 +660,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                 #region Local Amount
                 double? localAmount = MethodHelper.Round(entityPM.AmountInLocalCurrency, 2);
-             //   double? rate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
                 double? localAmount_Computed = MethodHelper.Round(entityPM.AmountInInvoiceCurrency * entityPM.InvoiceCurrencyExchangeRate, 2);
                 if (localAmount != localAmount_Computed)
                 {
@@ -822,21 +820,9 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                             {
                                 if (entityPM.InvoiceDate < lastChronologicalDate)
                                 {
-                                    ICommonDataContext context = CommonDataContext.GetContext(entityPM.Tenant);
-                                    Tenant currentTenant = context.Tenants.Where(t => t.Id == entityPM.Tenant).FirstOrDefault();
-                                    string datetimeformat = @"dd\/MM\/yyyy";
-                                    if (!string.IsNullOrEmpty(currentTenant.DateTimeFormat))
-                                    {
-                                        datetimeformat = currentTenant.DateTimeFormat;
-                                    }
+                                    string dateString = lastChronologicalDate.Value.ToString("d", CultureInfo.CurrentCulture);
 
-                                    string dateString = lastChronologicalDate.Value.ToString(datetimeformat, CultureInfo.CurrentCulture);
-
-                                    bool useLocal = true;
-                                    var user = GetLoggedContact(entityPM.Tenant);
-                                    if (user != null) useLocal = !(GetLoggedContact(entityPM.Tenant).DontShowLocal);
-
-                                    string msg = TranslateTextsClass.Translate("ARInvoice.M.ChronologicalDate", entityPM.Tenant, useLocal) + " " + dateString;
+                                    string msg = TranslateTextsClass.Translate("ARInvoice.M.ChronologicalDate", entityPM.Tenant) + " " + dateString;
                                     throw new ApplicationException(msg);
                                 }
                             }
@@ -854,15 +840,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
                 if (tenantPOCO != null && tenantPOCO.AccountingActivated)
                 {
-                    bool useLocal = true;
-                    var user = GetLoggedContact(tenant);
-                    if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
-
                     GLAccountPM glAccount = getGLAccount(billToId, tenant);
 
                     if (glAccount == null)
                     {
-                        string msg = TranslateTextsClass.Translate("ARInvoice.M.BillToGLAccount", tenant, useLocal);
+                        string msg = TranslateTextsClass.Translate("ARInvoice.M.BillToGLAccount", tenant);
                         errors += msg + ";";
                         //throw new ApplicationException(msg);
                     }
@@ -870,7 +852,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         if (glAccount.CurrencyId != invoiceCurrencyId)
                         {
-                            string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceCurrencyGLAccount", tenant, useLocal) + " " + glAccount.CurrencyCode;
+                            string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceCurrencyGLAccount" + " " + glAccount.CurrencyCode, tenant);
                             errors += msg + ";";
                             //throw new ApplicationException(msg);
                         }
@@ -887,14 +869,14 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         var month = accountingDate.Value.Month;
                         if (month > accountingPeriodList.OpenMonth || month < accountingPeriodList.ClosedMonth)
                         {
-                            string msg = TranslateTextsClass.Translate("ARInvoice.M.ClosedMonth", tenant, useLocal);
+                            string msg = TranslateTextsClass.Translate("ARInvoice.M.ClosedMonth", tenant);
                             errors += msg + ";";
                             //throw new ApplicationException(msg);
                         }
                     }
                     else
                     {
-                        string msg = TranslateTextsClass.Translate("ARInvoice.M.ClosedMonth", tenant, useLocal);
+                        string msg = TranslateTextsClass.Translate("ARInvoice.M.ClosedMonth", tenant);
                         errors += msg + ";";
                         //throw new ApplicationException(msg);
                     }
@@ -973,24 +955,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
 
             return myResult;
-        }
-
-        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
-        private static ContactPM GetLoggedContact(int tenant)
-        {
-            if (OverrideGetLoggedContactFunc != null)
-            {
-                return OverrideGetLoggedContactFunc(tenant);
-            }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-            }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
         }
     }
 }

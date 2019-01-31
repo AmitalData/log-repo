@@ -472,11 +472,6 @@ export class ObjectFieldPM {
     public set GeneratedComponentPath(newValue: string) { if (this.generatedComponentPath != newValue) { this.generatedComponentPath = newValue; this.MarkAsDirty("GeneratedComponentPath"); } }
        
 	 
-    private displayOnLookUpLocal: boolean;
-    public get DisplayOnLookUpLocal() { return this.displayOnLookUpLocal; }
-    public set DisplayOnLookUpLocal(newValue: boolean) { if (this.displayOnLookUpLocal != newValue) { this.displayOnLookUpLocal = newValue; this.MarkAsDirty("DisplayOnLookUpLocal"); } }
-       
-	 
      
 	private objectFieldValidations: ObjectFieldValidationPM[];
     get  ObjectFieldValidations() {

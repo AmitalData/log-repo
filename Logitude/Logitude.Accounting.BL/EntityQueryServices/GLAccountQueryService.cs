@@ -9,20 +9,6 @@ using System.Linq;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.EntityDataMappings;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.InvoiceModel;
-using Logitude.Accounting.BL.DataContract;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Server.Infrastructure.Helpers;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.InvoiceModel.EntityLists;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.BL.CoreBL.Reports;
-using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -55,18 +41,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                  .Where(r => r.CollectorId == CollectorId && r.Tenant == tenant)
                  on card.Id equals cust.Id
                  select a.Id);
-            return q;
-        }
-        public IQueryable<string> GetQGLAccIdBySalesmanId(int tenant, string SalesmanId, string AccountTypeCode)
-        {
-            var q = (
-                from a in this.repository.GetQAllByAccountTypeCode(tenant, AccountTypeCode)
-                join card in (this.context as AccountingContext).Cards.Where(r => r.Tenant == tenant)
-                on a.Id equals card.GLAccountId
-                join cust in (this.context as AccountingContext).Customers
-                .Where(r => r.SalesmanUserId == SalesmanId && r.Tenant == tenant)
-                on card.Id equals cust.Id
-                select a.Id);
             return q;
         }
         public bool CheckIfDisplayNumberExists(string displayNo, string internalNumber, int tenant)
@@ -178,7 +152,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             {
                 var catAccounts = repository.GetQAccIdByAcountIdCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5)
                     .ToList();
-             }
+            }
             if (IncludeChildAccounts)
             {
                 var ChildAccounts = repository.GetChildAccounts(GLAccountId, tenant)
@@ -188,27 +162,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return new HashSet<string>(allIdAccounts);
         }
-
-        public HashSet<string> GetAllIdAccountsTypeCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5, string gLAccountType,
-    bool IncludeChildAccounts)
-        {
-            List<String> allIdAccounts = new List<string>() { GLAccountId };
-            if (!String.IsNullOrWhiteSpace(cat1) || !String.IsNullOrWhiteSpace(cat2) || !String.IsNullOrWhiteSpace(cat3) || !String.IsNullOrWhiteSpace(cat4) || !String.IsNullOrWhiteSpace(cat5) || !String.IsNullOrWhiteSpace(gLAccountType))
-            {
-                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType)
-                    .ToList();
-            }
-
-            if (IncludeChildAccounts && allIdAccounts != null && allIdAccounts.Count > 0)
-            {
-                List<String> ChildAccounts = repository.GetChildAccountsList(allIdAccounts, tenant)
-                .Select(ca => ca.Id).ToList();
-                allIdAccounts.AddRange(ChildAccounts);
-            }
-
-            return new HashSet<string>(allIdAccounts);
-        }
-
 
         public List<GLAccountAndMoreDTO> GetCurrentBalanceByType(int tenant)
         {
@@ -384,11 +337,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
         public List<GLAccountCurrencyBalance> GetCurrencyBalances(GLAccountPM gLAccountPM, DateTime revaluationDate, int tenant)
         {
-            DateTime revDate = revaluationDate.Date;
+
             List<GLAccountCurrencyBalance> rvList = new List<GLAccountCurrencyBalance>();
             if (gLAccountPM != null)
             {
-                DateTime monthLastDate = GetDate(revDate);
+                DateTime monthLastDate = GetDate(revaluationDate);
 
                 GLAccountTotalByMonthQueryService gLAccountTotalByMonthsQueryServices = new GLAccountTotalByMonthQueryService(tenant);
                 DateTime monthUpTo = gLAccountTotalByMonthsQueryServices.GLAccountMonthTotalsUpToDate(gLAccountPM.Id, monthLastDate, tenant);
@@ -399,7 +352,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 if (monthUpTo != noMonthsComputed)
                 {
                     List<CurrencySum> monthsSum = gLAccountTotalByMonthsQueryServices.GetSumByMonth(gLAccountPM.Id, monthUpTo.Year, monthUpTo.Month, tenant);
-                    if (monthLastDate == revDate && (monthUpTo.Year == revDate.Year && monthUpTo.Month == revDate.Month)) // rev date is last day of month AND we have all the sums computed already 
+                    if (monthLastDate == revaluationDate && (monthUpTo.Year == revaluationDate.Year && monthUpTo.Month == revaluationDate.Month)) // rev date is last day of month AND we have all the sums computed already 
                     {
                         allSum = monthsSum;
                     }
@@ -409,13 +362,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     {
                         DateTime fromD = new DateTime(monthUpTo.Year, monthUpTo.Month, 1);
                         fromD = fromD.AddMonths(1);
-                        List<CurrencySum> remainingSum = ledgerTransactionQueryService.GetLedgerTransactionTotalLocalAmountFromTo(gLAccountPM.Id, fromD, revDate, tenant);
+                        List<CurrencySum> remainingSum = ledgerTransactionQueryService.GetLedgerTransactionTotalLocalAmountFromTo(gLAccountPM.Id, fromD, revaluationDate, tenant);
                         allSum = MergeLists(monthsSum, remainingSum);
                     }
                 }
                 else // here we need to compute all the period up to the rev date
                 {
-                    allSum = ledgerTransactionQueryService.GetLedgerTransactionTotalLocalAmountFromTo(gLAccountPM.Id, DateTime.MinValue, revDate, tenant);
+                    allSum = ledgerTransactionQueryService.GetLedgerTransactionTotalLocalAmountFromTo(gLAccountPM.Id, DateTime.MinValue, revaluationDate, tenant);
                 }
 
                 foreach (CurrencySum item in allSum)
@@ -490,9 +443,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public List<GLAccountPM> GetByInternalNumber(string internalNumber, int tenant)
         {
-          
-
-
             List<GLAccount> pocos = this.repository.GetByInternalNumber(internalNumber, tenant);
             return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
         }
@@ -595,357 +545,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                };
             return Accounts;
         }
-
-        public TaxDeductionReportData GetTaxDeductionReportData(int? reportYear, int tenant)
-        {
-            Simplog.Data.CommonDataModel.ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
-            IInvoiceContext invoicecontext = InvoiceContext.GetContext(tenant);
-            TaxDeductionReportData taxDeduction = new TaxDeductionReportData();
-            taxDeduction.TaxYear = reportYear;
-            // 1- get ap payments by year and status ad
-            // 2- group appayments by vendorId and percentage
-            // 3- Get Cards by list of vendorids from step 2
-            // 4- Get GlAccounts by list of glaccountids from step 3
-            // 5- GetAddresses by card ids from step 3 with filter of main address.
-            taxDeduction.ByVendorList = new List<ByVendorList>();
-            List<APPayment> payments = (from a in invoicecontext.APPayments
-                                     
-                                        where a.RegisterDate.Value.Year == reportYear && a.Tenant == tenant && a.StatusCode == "AD"
-                                        
-                                        select a).ToList();
-           
-
-          
-
-            List<string> vendorIds = payments.Select(d => d.VendorId).ToList();
-            List<CardList> vendors = (from a in commoncontext.Cards
-
-                                      join d in commoncontext.Addresses on a.Id equals d.CardId
-                                      join dt in commoncontext.AddressTypes on d.AddressTypeId equals dt.Id
-
-                                      where d.AddressTypeId == "M" && vendorIds.Contains(a.Id) && a.CountryCode == "IL"
-                                      select new CardList()
-                                      {
-                                          Id = a.Id,
-                                          CityName = a.CityName,
-                                          MainAddressId = d.Name,
-                                          GLAccountId = a.GLAccountId,
-                                          IsAutonomy = a.IsAutonomy,
-                                          IsInternationalPartner = a.IsInternationalPartner,
-                                          EnglishName= a.EnglishName,
-                                          VatNumber = a.VatNumber,
-                                          LocalName = a.LocalName
-                                      }
-                                      ).ToList();
-
-            List<GLAccountList> glaccounts = (from a in context.GLAccounts.Include("AccountingCompanyType").Include("TaxWithholdingAssessOffice").Include("WithholdingTaxDeductionType")
-                                        where a.AccountTypeCode=="3" && a.ExcludeFromDeductionReport==false
-                                        
-                                          select new GLAccountList()
-                                          {
-                                              Id= a.Id,
-                                              DisplayNumber = a.DisplayNumber,
-                                              Occupation = a.Occupation,
-                                              LocalName = a.LocalName,
-                                              DeductionTypeId = a.AccountingCompanyType != null ? a.AccountingCompanyType.Code : null,
-                                              
-                                              DeductionFileTypeCode = a.WithholdingTaxDeductionType != null? a.WithholdingTaxDeductionType.Code :null,
-                                              DeductionFileTypeName = a.WithholdingTaxDeductionType!= null? a.WithholdingTaxDeductionType.LocalName : null,
-                                              AssessingOfficeCode = a.TaxWithholdingAssessOffice != null ? a.TaxWithholdingAssessOffice.Code :null,
-                                              AssessingOfficeName = a.TaxWithholdingAssessOffice != null? a.TaxWithholdingAssessOffice.LocalName:null,
-                                              EnglishName = a.EnglishName,
-                                              DeductionTypeEnglishName = a.AccountingCompanyType != null ? a.AccountingCompanyType.EnglishName:null,
-                                              DeductionFileNumber= a.DeductionFileNumber
-                                          }
-                                          ).ToList();
-
-      
-
-            List<DBVendorsList> DBVendorsList = (from a in payments
-                                                 join v in vendors on a.VendorId equals v.Id
-                                                 join g in glaccounts on v.GLAccountId equals g.Id
-                                                 select new DBVendorsList()
-                                                 {
-                                                     GlAccountId = g.Id,
-                                                     VendorId = a.VendorId,
-                                                     AmountInLocalCurrency = a.AmountInLocalCurrency,
-                                                     TaxDeductionLocalAmount = a.TaxDeductionLocalAmount,
-                                                     DeductionFileTypeCode = g.DeductionFileTypeCode,
-                                                     RigesterDate = a.RegisterDate,
-
-                                                 }).ToList();
-
-            foreach (DBVendorsList item in DBVendorsList)
-            {
-                LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
-
-
-                LTBFilter.PageSize = 10;
-                LTBFilter.PageStartAtRecordIndex = 0;
-                LTBFilter.Tenant = tenant;
-
-
-
-                LTBFilter.GLAccountId = item.GlAccountId;
-                LTBFilter.From = new DateTime((int)reportYear, 1, 1);
-                LTBFilter.To = new DateTime((int)reportYear, 12, 31);
-                LTBFilter.IncludeRelatedCurrenciesAccount = false;
-                LTBFilter.IncludeChildAccounts = false;
-
-                var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(context, LTBFilter);
-                ledgerTransactionBalanceService.Run();
-
-                item.EndYearBalance = ledgerTransactionBalanceService.Response.EndBalanceLocal != null ? ledgerTransactionBalanceService.Response.EndBalanceLocal : 0;
-
-
-            }
-
-            List<APPaymentList> groupedpayments = (from a in payments
-                                                   join v in vendors on a.VendorId equals v.Id
-                                                   join g in glaccounts on v.GLAccountId equals g.Id
-                                                   group a by
-                                new { a.VendorId, a.TaxDeductionPercentage } into g
-                                                   select new APPaymentList
-                                                   {
-                                                       VendorId = g.Key.VendorId,
-                                                       TaxDeductionPercentage = g.Key.TaxDeductionPercentage,
-                                                       AmountInLocalCurrency = g.Sum(s => s.AmountInLocalCurrency),
-                                                       TaxDeductionLocalAmount = g.Sum(s => s.TaxDeductionLocalAmount),
-                                                       RegisterDate = g.Select(s => s.RegisterDate).FirstOrDefault(),
-                                                   } into s
-                                                   select s).ToList();
-
-
-
-           
-            var groupedByMonthpayments = (from a in payments
-                                          group a by
-                                           new { a.RegisterDate.Value.Month } into g
-                                          select new
-                                          {
-
-                                              g.Key
-                                          });
-            groupedByMonthpayments = groupedByMonthpayments.ToList();
-
-
-            glaccounts = (from a in glaccounts
-                          join v in vendors on a.Id equals v.GLAccountId
-                          select a).ToList();
-
-           
-            
-            foreach (APPaymentList item in groupedpayments)
-            {
-                ByVendorList  byVendorList= new ByVendorList()
-                {
-                    Month= item.RegisterDate.Value.Month,
-                    TaxDeductionPercentage = item.TaxDeductionPercentage,
-                    VendorId = item.VendorId,
-                   
-
-                };
-                byVendorList.EndYearBalance = 0;
-                CardList selectedVendor = (from a in vendors
-                                              where a.Id == item.VendorId
-                                              select a).FirstOrDefault();
-                if (selectedVendor != null)
-                {
-                    GLAccountList gLAccount = (from a in glaccounts
-                                               where a.Id == selectedVendor.GLAccountId
-                                               select a).FirstOrDefault();
-                  
-                    if (gLAccount != null)
-                    {
-                        byVendorList.DisplayNumber = gLAccount.DisplayNumber;
-
-                        byVendorList.Occupation = gLAccount.Occupation;
-                        byVendorList.GLAccountLocalName = gLAccount.LocalName;
-                        byVendorList.AssessingOfficerCode = gLAccount.AssessingOfficeCode;
-                        byVendorList.AssessingOfficerName = gLAccount.AssessingOfficeName;
-                        byVendorList.DeductionFileTypeCode = gLAccount.DeductionFileTypeCode;
-                        byVendorList.DeductionFileNumber = gLAccount.DeductionFileNumber;
-                        byVendorList.DeductionType = gLAccount.DeductionTypeId;
-                        byVendorList.EnglishName = gLAccount.EnglishName;
-
-                        LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
-
-
-                        LTBFilter.PageSize = 10;
-                        LTBFilter.PageStartAtRecordIndex = 0;
-                        LTBFilter.Tenant = tenant;
-
-
-
-                        LTBFilter.GLAccountId = gLAccount.Id;
-                        LTBFilter.From = new DateTime((int)reportYear, 1, 1);
-                        LTBFilter.To = new DateTime((int)reportYear, 12, 31);
-                        LTBFilter.IncludeRelatedCurrenciesAccount = false;
-                        LTBFilter.IncludeChildAccounts = false;
-
-                        var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(context, LTBFilter);
-                        ledgerTransactionBalanceService.Run();
-                       
-                        byVendorList.EndYearBalance = Math.Round( (ledgerTransactionBalanceService.Response.EndBalanceLocal != null ? ledgerTransactionBalanceService.Response.EndBalanceLocal :0).Value,0 );
-                        
-                      
-                    }
-
-
-                    if (byVendorList.EndYearBalance == null)
-                    {
-                        byVendorList.EndYearBalance = 0;
-                    }
-                    
-                        byVendorList.VATNumber = selectedVendor.VatNumber;
-                        byVendorList.VendorName = selectedVendor.EnglishName;
-                        byVendorList.VendorAddress = selectedVendor.MainAddressId;
-                        byVendorList.VendorCity = selectedVendor.CityName;
-                        byVendorList.IsAutonomy = selectedVendor.IsAutonomy;
-                        byVendorList.IsInternationlPartner = selectedVendor.IsInternationalPartner;
-                    byVendorList.VendorLocalName = selectedVendor.LocalName;
-                }
-                byVendorList.SumOfAmountInLocalCurrency = Math.Round(item.AmountInLocalCurrency.Value,0);
-                byVendorList.SumOfTaxDeductionLocalAmount = Math.Round(item.TaxDeductionLocalAmount.Value,0);
-
-
-              
-                taxDeduction.ByVendorList.Add(byVendorList);
-
-            }
-
-            taxDeduction.ByMonthList = new List<ByMonthList>();
-            List<int> months = new List<int> { 1,2,3,4,5,6,7,8,9,10,11,12};
-            foreach (var item in months)
-                
-            {
-                var month = item;
-              //  var year = item.Key.RegisterDate.Value.Year.ToString().Substring(2, 2);
-                ByMonthList byMonthList = new ByMonthList()
-                {
-                    Month = month,
-                    TotalVendors =  DBVendorsList.Where(d => d.RigesterDate.Value.Month == month).Count(),
-                    TotalPaymentsWithoutDivided = Math.Round(DBVendorsList.Where(d => d.RigesterDate.Value.Month == month && d.DeductionFileTypeCode != "18").Sum(d => d.AmountInLocalCurrency).Value,0),
-                    TotalDeductionsWithoutDivided = Math.Round( DBVendorsList.Where(d => d.RigesterDate.Value.Month == month && d.DeductionFileTypeCode != "18").Sum(d => d.TaxDeductionLocalAmount).Value,0),
-                    TotalDivided = Math.Round(DBVendorsList.Where(d => d.RigesterDate.Value.Month == month && d.DeductionFileTypeCode == "18").Sum(d => d.AmountInLocalCurrency).Value,0),
-                    TotalDeductionsFromDivided = Math.Round(DBVendorsList.Where(d => d.RigesterDate.Value.Month == month && d.DeductionFileTypeCode == "18").Sum(d => d.TaxDeductionLocalAmount).Value,0),
-                    ReportMonth = month + "." + reportYear,
-                };
-
-
-              
-                taxDeduction.ByMonthList.Add(byMonthList);
-            }
-
-
-            FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
-            FullAccountingSettingPM setting = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
-            TenantQuery tenantQuery = new TenantQuery(tenant);
-            TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
-            TotalForCompany companyTotal = new TotalForCompany()
-            {
-                DeductionFileNumber = setting.DeductionFileNumber,
-                CompanyName = tenantPM.Company,
-                TotalDeductions = Math.Round(taxDeduction.ByVendorList.Sum(d => d.SumOfTaxDeductionLocalAmount).Value,0),
-                TotalPayments = Math.Round(taxDeduction.ByVendorList.Sum(d => d.SumOfAmountInLocalCurrency).Value,0),
-            };
-            taxDeduction.TotalForCompany = new List<TotalForCompany>();
-            taxDeduction.TotalForCompany.Add(companyTotal);
-            taxDeduction.VendorsCount = DBVendorsList.GroupBy(d=> d.VendorId).Count();
-            taxDeduction.TotalAmountInLocalCurrency = Math.Round(DBVendorsList.Sum(d => d.AmountInLocalCurrency).Value,0);
-            taxDeduction.TotalDeductionInLocalCurrency = Math.Round(DBVendorsList.Sum(d => d.TaxDeductionLocalAmount).Value,0);
-            taxDeduction.TotalAmountInLocalCurrency08 = Math.Round(DBVendorsList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.AmountInLocalCurrency).Value,0);
-            taxDeduction.TotalTaxDeductionInLocalCurrency08 = Math.Round(DBVendorsList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.TaxDeductionLocalAmount).Value,0);
-            taxDeduction.TotalEndBalance = Math.Round(DBVendorsList.Sum(d => d.EndYearBalance).Value,0);
-            return taxDeduction;
-
-
-        }
-
-        public List<B110Data> GetB110sForGLAccounts(int tenant)
-        {
-           
-            List<B110Data> b110s = new List<B110Data>();
-            //List<GLAccountPM> glaccounts = (from a in context.GLAccounts
-            //                                join c in context.ChartOfAccounts on a.ChartOfAccountsId equals c.Id
-
-            //                                where a.Inactive == false && a.Tenant == tenant
-            //                                select new GLAccountPM()
-            //                                {
-            //                                    Id = a.Id,
-            //                                    Tenant = a.Tenant,
-            //                                    ChartOfAccountsCode = c.Code,
-            //                                    DisplayNumber = a.DisplayNumber,
-            //                                    LocalName = a.LocalName,
-            //                                    EnglishName = a.EnglishName,
-            //                                    ChartOfAccountsName = c.LocalName,
-            //                                    AccountTypeCode = a.AccountTypeCode,
-            //                                    IsMultiCurrency = a.IsMultiCurrency,
-            //                                    CurrencyId = a.CurrencyId,
-            //                                    CurrencyCode = a.Currency.Code
-            //                                }).ToList();
-
-            
-            //ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-            //List<AddressData> addresses = (from a in commonDataContext.Cards
-            //                             join d in commonDataContext.Addresses on a.Id equals d.CardId
-            //                             join dt in commonDataContext.AddressTypes on d.AddressTypeId equals dt.Id
-            //                             where a.Tenant == tenant
-            //                             select new AddressData()
-            //                             {
-            //                                 GLAccountId = a.GLAccountId,
-            //                                CardId= a.Id,
-            //                                AddressType = dt.Id,
-            //                                VatNumber = a.VatNumber,
-            //                                CountryCode = a.CountryCode,
-            //                                City = a.CityName,
-            //                                CountryName = a.CountryName,
-            //                                Address1 = d.Address1,
-            //                                ZipCode = a.ZipCode,
-            //                             }).ToList();
-            
-
-            b110s = (from a in context.GLAccounts
-                     join c in context.ChartOfAccounts on a.ChartOfAccountsId equals c.Id
-
-                     where a.Inactive == false && a.Tenant == tenant
-
-                     select new B110Data()
-                                    {
-                                        ChartOfAccountsCode =c.Code,
-                                        DisplayNumber = a.DisplayNumber,
-                                        LocalName = a.LocalName,
-                                        EnglishName = a.EnglishName,
-                                        ChartOfAccountsName = c.LocalName,
-                                        AccountTypeCode = a.AccountTypeCode,
-                                        GLAccountId = a.Id,
-                                        IsMultiCurrency = a.IsMultiCurrency,
-                                        CurrecnyId = a.CurrencyId
-
-                                    }).ToList();
-
-
-            return b110s;
-
-        }
-
-        public List<GLAccountPM> GetGLAccountsByIds(List<string> Ids, int tenant)
-        {
-            List<GLAccountPM> Accounts = (from a in context.GLAccounts
-                                          where Ids.Contains(a.Id) && a.Tenant == tenant
-                                          select new GLAccountPM()
-                                          {
-                                              Id = a.Id,
-                                              Tenant = a.Tenant,
-                                              InternalNumber = a.InternalNumber,
-                                              AccountTypeCode = a.AccountTypeCode,
-                                              DisplayNumber = a.DisplayNumber,
-                                             
-                                          }).ToList();
-            return Accounts;
-        }
-
-        
     }
     public class GLAccountCurrencyBalance
     {

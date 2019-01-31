@@ -31,10 +31,6 @@ namespace DW_Editor_Tool.ViewModels
             set { isClosed = value; FirePropertyChanged("IsClosed"); }
         }
 
-        private string defaultFilterBy;
-        public string DefaultFilterBy { get { return defaultFilterBy; } set { defaultFilterBy = value; FirePropertyChanged("DefaultFilterBy"); } }
-        
-
         public List<DWTableType> DWTableTypes { get { return new List<DWTableType> { new DWTableType("Fact", "Fact"), new DWTableType("Dimension", "Dimension") }; } }
 
         Visibility errorsVisibility = Visibility.Collapsed;

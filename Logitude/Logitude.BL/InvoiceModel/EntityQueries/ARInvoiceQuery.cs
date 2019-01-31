@@ -500,9 +500,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             foreach (MoneyStatusClass d in datalist2)
             {
                 string DatePeriod = "";
-                int count = dates.Count;
-
-                if (count >= 1 ? d.FullDate <= dates[0] : false)
+                if (d.FullDate >= dates[0] && d.FullDate <= dates[1])
                 {
                     DatePeriod = dates[0].Value.Day + "/" + dates[0].Value.Month + (AddYearFlag == true ? "/" + dates[0].Value.Year + "" : "") + "-" + dates[1].Value.Day + "/" + dates[1].Value.Month + (AddYearFlag == true ? "/" + dates[1].Value.Year + "" : "");
                     var NewDatePeriod = DatePeriod;
@@ -522,7 +520,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                        }
                 }
 
-                else if (count >= 2 ? d.FullDate <= dates[1] : false)
+                else if (d.FullDate >= dates[1] && d.FullDate <= dates[2])
                 {
                     DatePeriod = dates[1].Value.Day + "/" + dates[1].Value.Month + (AddYearFlag == true ? "/" + dates[1].Value.Year + "" : "") + "-" + dates[2].Value.Day + "/" + dates[2].Value.Month + (AddYearFlag == true ? "/" + dates[2].Value.Year + "" : "");
                     var NewDatePeriod = DatePeriod;
@@ -543,8 +541,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 }
 
 
-
-                else if (count >= 3 ? d.FullDate <= dates[2] : false)
+                else if (d.FullDate >= dates[2] && d.FullDate <= dates[3])
                 {
                     DatePeriod = dates[2].Value.Day + "/" + dates[2].Value.Month + (AddYearFlag == true ? "/" + dates[2].Value.Year + "" : "") + "-" + dates[3].Value.Day + "/" + dates[3].Value.Month + (AddYearFlag == true ? "/" + dates[3].Value.Year + "" : "");
                     var NewDatePeriod = DatePeriod;
@@ -565,7 +562,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 }
 
 
-                else if (count >= 4 ? d.FullDate <= dates[3] : false)
+                else if (d.FullDate >= dates[3] && d.FullDate <= dates[4])
                 {
                     DatePeriod = dates[3].Value.Day + "/" + dates[3].Value.Month + (AddYearFlag == true ? "/" + dates[3].Value.Year + "" : "") + "-" + dates[4].Value.Day + "/" + dates[4].Value.Month + (AddYearFlag == true ? "/" + dates[4].Value.Year + "" : "");
                     var NewDatePeriod = DatePeriod;
@@ -586,7 +583,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 }
 
 
-                else if (count >= 5 ? d.FullDate <= dates[4] : false)
+                else if (d.FullDate >= dates[4] && d.FullDate <= dates[5])
                 {
                     DatePeriod = dates[4].Value.Day + "/" + dates[4].Value.Month + (AddYearFlag == true ? "/" + dates[4].Value.Year + "" : "") + "-" + dates[5].Value.Day + "/" + dates[5].Value.Month + (AddYearFlag == true ? "/" + dates[5].Value.Year + "" : "");
                     var NewDatePeriod = DatePeriod;
@@ -607,7 +604,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 }
 
 
-                else if (count >= 6 ? d.FullDate <= dates[5] : false)
+                else if (d.FullDate >= dates[5] && d.FullDate <= dates[6])
                 {
                     DatePeriod = dates[5].Value.Day + "/" + dates[5].Value.Month + (AddYearFlag == true ? "/" + dates[5].Value.Year + "" : "") + "-" + dates[6].Value.Day + "/" + dates[6].Value.Month + (AddYearFlag == true ? "/" + dates[6].Value.Year + "" : "");
                     var NewDatePeriod = DatePeriod;
@@ -627,7 +624,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     }
                 }
 
-                else if (count >= 7 ? d.FullDate <= dates[6] : false)
+                else if (d.FullDate >= dates[6] && d.FullDate <= dates[7])
                 {
                     DatePeriod = dates[6].Value.Day + "/" + dates[6].Value.Month + (AddYearFlag == true ? "/" + dates[6].Value.Year + "" : "") + "-" + dates[7].Value.Day + "/" + dates[7].Value.Month + (AddYearFlag == true ? "/" + dates[7].Value.Year + "" : "");
                     var NewDatePeriod = DatePeriod;
@@ -1354,7 +1351,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             TotalAmountForTaxReport = a.TotalAmountForTaxReport,
                             TotalVAT =a.TotalVAT,
                             TotaVatableAmountForTaxReport =a.TotaVatableAmountForTaxReport,
-                            SATApprovalDate = a.SATApprovalDate,
                         };
 
             return query;
@@ -1485,8 +1481,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              TotalAmountForTaxReport = entity.TotalAmountForTaxReport,
                              TotalVAT = entity.TotalVAT,
                              TotaVatableAmountForTaxReport = entity.TotaVatableAmountForTaxReport,
-                             SATApprovalDate = entity.SATApprovalDate,
-
+                             
                          };
 
             return result;
@@ -1591,12 +1586,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               TotalAmountForTaxReport = a.TotalAmountForTaxReport,
                                               TotalVAT = a.TotalVAT,
                                               TotaVatableAmountForTaxReport = a.TotaVatableAmountForTaxReport,
-                                              SATApprovalDate = a.SATApprovalDate,
                                           }).ToList();
             return invoices;
         }
 
-  
         private ARInvoicePM GetSingleMappedEntityPM(ARInvoice entityPOCO, bool withComposition)
         {
             ARInvoicePM entityPM = null;
@@ -1700,7 +1693,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     TotalAmountForTaxReport = entityPOCO.TotalAmountForTaxReport,
                     TotalVAT = entityPOCO.TotalVAT,
                     TotaVatableAmountForTaxReport = entityPOCO.TotaVatableAmountForTaxReport,
-                    SATApprovalDate = entityPOCO.SATApprovalDate,
                 };
 
                 ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
@@ -2012,8 +2004,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              TotalAmountForTaxReport = entity.TotalAmountForTaxReport,
                              TotalVAT = entity.TotalVAT,
                              TotaVatableAmountForTaxReport = entity.TotaVatableAmountForTaxReport,
-                             SATApprovalDate = entity.SATApprovalDate,
-
+                             
                          };
 
             return result;

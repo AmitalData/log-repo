@@ -234,16 +234,6 @@ var LoginComponent = /** @class */ (function () {
     //        this.HidePendingLoading = true;
     //    });
     //}
-    LoginComponent.prototype.onEmailBlur = function (email) {
-        if (email != this.Email) {
-            this.IsShowAreaCaptcha = false;
-            this.CaptchaKey = null;
-            this.CaptchaTextValue = null;
-            if (this.errorMessage == "Please re-enter the characters you see in the image above") {
-                this.errorMessage = "";
-            }
-        }
-    };
     LoginComponent.prototype.PasswordExpirationButtomClicked = function (type) {
         if (type == "Yes") {
             SessionInfo_1.SessionInfo.LoggedUserEmail = this.UserDataPrompt.UserName;
@@ -285,38 +275,30 @@ var LoginComponent = /** @class */ (function () {
         }
     };
     LoginComponent.prototype.LoginClicked = function () {
-        if (!this.Email || !this.Password) {
-            this.errorMessage = "Login failed! invalid user name or password.";
-            return;
-        }
-        if (this.IsShowAreaCaptcha && !this.CaptchaTextValue) {
-            this.errorMessage = "Please re-enter the characters you see in the image above";
-            return;
-        }
         if (IsBrowserSupported() == false) {
             alert("This Browser is not supported in HTML5 version, please use Chrome, Firefox or Opera.");
         }
         else {
             this.SaveDataToCookie();
             this.loginService.LoggedUserEmail = SessionInfo_1.SessionInfo.LoggedUserEmail;
-            this.ShowLoadingIndicator = true;
-            this.LoginParams = {
-                Email: this.Email,
-                Password: this.Password,
-                ByToken: false,
-                CardId: "",
-                CardType: "",
-                IsMobileLogin: false,
-                IsUser: true,
-                GetToken: true,
-                IsAngularLogin: true,
-                MobileVersion: "",
-                ClientType: "Web",
-                CaptchaKey: this.CaptchaKey,
-                CaptchaCode: this.CaptchaTextValue,
-            };
-            this.HidePendingLoading = false;
-            this.PostUserValidation(this.LoginParams);
+            if (this.Email != null && this.Password != null) {
+                this.ShowLoadingIndicator = true;
+                this.LoginParams = {
+                    Email: this.Email,
+                    Password: this.Password,
+                    ByToken: false,
+                    CardId: "",
+                    CardType: "",
+                    IsMobileLogin: false,
+                    IsUser: true,
+                    GetToken: true,
+                    IsAngularLogin: true,
+                    MobileVersion: "",
+                    ClientType: "Web",
+                };
+                this.HidePendingLoading = false;
+                this.PostUserValidation(this.LoginParams);
+            }
         }
     };
     LoginComponent.prototype.PostUserValidation = function (loginParameters) {
@@ -327,11 +309,10 @@ var LoginComponent = /** @class */ (function () {
             if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
                 _this.LoginFailed = true;
                 _this.HidePendingLoading = true;
-                _this.CaptchaKey = userData ? userData.CaptchaKey : "";
                 if (userData && userData.ExceptionMessage) {
                     alert(userData.ExceptionMessage);
                 }
-                if (userData.MustChangePassword) {
+                else if (userData.MustChangePassword) {
                     SessionInfo_1.SessionInfo.LoggedUserEmail = userData.UserName;
                     if (SessionInfo_1.SessionInfo.MainLocation) {
                         SessionInfo_1.SessionInfo.MainLocation.clear();
@@ -353,25 +334,19 @@ var LoginComponent = /** @class */ (function () {
                     _this.IsShowPasswordExpirationDateArea = true;
                 }
                 else {
-                    _this.errorMessage = "";
-                    if (userData.InValidCaptcha) {
-                        if (_this.IsShowAreaCaptcha) {
-                            _this.CaptchaTextValue = "";
-                        }
-                        _this.IsShowAreaCaptcha = true;
-                        _this.CaptchaImageUrl = userData.CaptchaImage;
-                    }
-                    _this.errorMessage = "";
-                    if (userData.InValidCaptcha)
-                        _this.errorMessage = "Please re-enter the characters you see in the image above";
-                    if (userData.IpRestricted)
+                    _this.errorMessage = "Login failed! invalid user name or password.";
+                    if (userData.IpRestricted) {
                         _this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)"; //
-                    if (userData.InActive)
-                        _this.errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                    if (userData.Unlicensed)
+                    }
+                    if (userData.IsLocked) {
+                        _this.errorMessage = "Your account has been locked out!" + " please try again after 30 minutes.";
+                    }
+                    if (userData.InActive) {
+                        _this.errorMessage = "Your account has been deactivated!" + " please contact your administrator.";
+                    }
+                    if (userData.Unlicensed) {
                         _this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
-                    if (userData.InValidMailOrPassword)
-                        _this.errorMessage = "Login failed! invalid user name or password.";
+                    }
                 }
             }
             else {
@@ -399,8 +374,6 @@ var LoginComponent = /** @class */ (function () {
                 IsAngularLogin: true,
                 MobileVersion: "",
                 ClientType: "Web",
-                CaptchaKey: this.CaptchaKey,
-                CaptchaCode: this.CaptchaTextValue,
             };
             this.loginService.CurrentTenant = this.Tenant;
             var f = { valid: true };
@@ -416,40 +389,38 @@ var LoginComponent = /** @class */ (function () {
     LoginComponent.prototype.PostLoginData = function () {
         var _this = this;
         this.loginService.PostLoginData(this.LoginParams).subscribe(function (userData) {
-            if (userData && !userData.HasError) {
-                var data = JSON.stringify(userData);
-                window.sessionStorage.setItem("userdata", data);
-                var mypageUrl = window.location.href;
-                var AngularURL = "";
-                var urlMenu = "";
-                //userData.KeepUserLoggedIn == true &&
-                if (userData.Token && _this.IsHaveTenantInUrl) {
-                    window.localStorage.setItem("Token_" + userData.CurrentTenant, userData.Token);
-                }
-                var pageUrl = window.location.href;
-                var externalTenant = null;
-                if (pageUrl) {
-                    var args = pageUrl.split('&');
-                    if (args[1] && args[1].indexOf('Tenant=') != -1) {
-                        externalTenant = args[1].split('=')[1];
-                    }
-                }
-                if (userData.HtmlVersion) {
-                    var version = userData.HtmlVersion;
-                    AngularURL = SessionInfo_1.SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
-                }
-                else {
-                    AngularURL = SessionInfo_1.SessionInfo.GetLogitudeURL() + "Angular/index.html";
-                }
-                if (mypageUrl && mypageUrl.indexOf("Menu=") > -1) {
-                    urlMenu = mypageUrl.split("Menu=")[1];
-                    AngularURL += ("?Menu=" + urlMenu);
-                    if (externalTenant) {
-                        AngularURL = AngularURL.replace("&Tenant=" + externalTenant, "");
-                    }
-                }
-                document.location.href = AngularURL;
+            var data = JSON.stringify(userData);
+            window.sessionStorage.setItem("userdata", data);
+            var mypageUrl = window.location.href;
+            var AngularURL = "";
+            var urlMenu = "";
+            //userData.KeepUserLoggedIn == true &&
+            if (userData.Token && _this.IsHaveTenantInUrl) {
+                window.localStorage.setItem("Token_" + userData.CurrentTenant, userData.Token);
             }
+            var pageUrl = window.location.href;
+            var externalTenant = null;
+            if (pageUrl) {
+                var args = pageUrl.split('&');
+                if (args[1] && args[1].indexOf('Tenant=') != -1) {
+                    externalTenant = args[1].split('=')[1];
+                }
+            }
+            if (userData.HtmlVersion) {
+                var version = userData.HtmlVersion;
+                AngularURL = SessionInfo_1.SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
+            }
+            else {
+                AngularURL = SessionInfo_1.SessionInfo.GetLogitudeURL() + "Angular/index.html";
+            }
+            if (mypageUrl && mypageUrl.indexOf("Menu=") > -1) {
+                urlMenu = mypageUrl.split("Menu=")[1];
+                AngularURL += ("?Menu=" + urlMenu);
+                if (externalTenant) {
+                    AngularURL = AngularURL.replace("&Tenant=" + externalTenant, "");
+                }
+            }
+            document.location.href = AngularURL;
         });
     };
     LoginComponent.prototype.SaveDataToCookie = function () {

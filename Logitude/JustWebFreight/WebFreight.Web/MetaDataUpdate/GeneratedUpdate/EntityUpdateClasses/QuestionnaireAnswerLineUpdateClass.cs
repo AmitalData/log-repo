@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class QuestionnaireAnswerLineUpdateClass
@@ -145,9 +142,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "QuestionnaireAnswerId",
-					  						DefaultText =  @"Questionnaire Answer Id",
+					  						DefaultText =  "Questionnaire Answer Id",
 					  						ListFieldLable =  "QuestionnaireAnswerIdListLable",
-					  						ListLableDefaultText =  @"Questionnaire Answer Id",
+					  						ListLableDefaultText =  "Questionnaire Answer Id",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -187,10 +184,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "QuestionNumber",
-					  						DefaultText =  @"Question Number",
+					  						DefaultText =  "Question Number",
 					  						ListFieldLable =  "QuestionNumberListLable",
-					  						ListLableDefaultText =  @"Question Number",
-					  						ListLocalDefaultText =  @"Question Number",
+					  						ListLableDefaultText =  "Question Number",
+					  						ListLocalDefaultText =  "Question Number",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -230,10 +227,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AnswerValue",
-					  						DefaultText =  @"Answer Value",
+					  						DefaultText =  "Answer Value",
 					  						ListFieldLable =  "AnswerValueListLable",
-					  						ListLableDefaultText =  @"Answer Value",
-					  						ListLocalDefaultText =  @"Answer Value",
+					  						ListLableDefaultText =  "Answer Value",
+					  						ListLocalDefaultText =  "Answer Value",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -265,14 +262,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

@@ -206,7 +206,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     //{
                     this.Exec_usp_AccountingStreaming(myLedgerTransactionsWithCounters, allGLAccountTotalByMonths.ToList());
                     //CreateReconcileFromStorno(myLedgerTransactionsWithCounters);
-                    ICreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService = new CreateAutoReconcileWhileStreamingService();
+                    var myCreateAutoReconcileWhileStreamingService = new CreateAutoReconcileWhileStreamingService();
                     myCreateAutoReconcileWhileStreamingService.MustInit(_AccountingContext, _JournalPM, myLedgerTransactionsWithCounters);
                     myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming();
                     if (myCreateAutoReconcileWhileStreamingService.ReconciliationList != null &&
@@ -221,7 +221,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             UpdateInReconcileProgressToFalse();
                         }
-                        UpdateJournalWithReconcileNumber(myCreateAutoReconcileWhileStreamingService);
+                        UpdateJornalWithReconcileNumber(myCreateAutoReconcileWhileStreamingService);
 
                     }
                     //}
@@ -273,7 +273,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
-        private void UpdateJournalWithReconcileNumber(ICreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService)
+        private void UpdateJornalWithReconcileNumber(CreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService)
         {
             if (
                                         this._JournalPM.AccountingEntityCode == "10"// - Reconciliation
@@ -289,21 +289,17 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 var myReconciliation = myCreateAutoReconcileWhileStreamingService.ReconciliationList.First();
 
-                var myJournalUpdateService = new JournalUpdateService(this._AccountingContext,new Dictionary<string, IContext>(), this._JournalPM.Tenant);
+                //var myJournalUpdateService = new JournalUpdateService()
+                var myJournalRepository = new JournalRepository(this._AccountingContext);
+                myJournalRepository.UpdateWhileStreaming(this._JournalPM.Tenant, this._JournalPM.Id,
+                    (poco) =>
+                    {
+                        this._JournalPM.AccountingEntityId = myReconciliation.Id;
+                        this._JournalPM.AccountingEntityReference = myReconciliation.Number;
 
-                //var myJournalRepository = //new JournalRepository(this._AccountingContext);
-                myJournalUpdateService.
-            //.GetJournalRepositoryPriv();
-            //myJournalRepository.
-            UpdateWhileStreaming(this._JournalPM.Tenant, this._JournalPM.Id,
-                (poco) =>
-                {
-                    this._JournalPM.AccountingEntityId = myReconciliation.Id;
-                    this._JournalPM.AccountingEntityReference = myReconciliation.Number;
-
-                    poco.AccountingEntityReference = myReconciliation.Number;
-                    poco.AccountingEntityId = myReconciliation.Id;
-                });
+                        poco.AccountingEntityReference = myReconciliation.Number;
+                        poco.AccountingEntityId = myReconciliation.Id;
+                    });
 
             }
         }

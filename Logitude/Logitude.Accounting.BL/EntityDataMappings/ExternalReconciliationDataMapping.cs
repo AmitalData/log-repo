@@ -35,9 +35,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPOCO.Tenant = entityPM.Tenant;
             }
 
-            //entityPOCO.SearchFields = entityPM.ReconciliationNumber!= null ? entityPM.ReconciliationNumber.ToString() : entityPM.SearchFields;
-            BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);
-
+            entityPOCO.SearchFields = entityPM.ReconciliationNumber!= null ? entityPM.ReconciliationNumber.ToString() : entityPM.SearchFields;
         }
 
         public void CustomPOCOToPM(ExternalReconciliationPM entityPM, ExternalReconciliation entityPOCO)
@@ -74,77 +72,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.AccountCurrencyId = (account.IsMultiCurrency == true ? "multi" : account.CurrencyId);
                 }
             }
-
-            BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);
-        }
-
-        public static void BuildSearchFields(ExternalReconciliationPM entityPM, ExternalReconciliation poco, bool isNewEntity)
-        {
-            string result = "";
-
-            // header
-            if (entityPM.ReconciliationNumber != null)
-            {
-                result = string.IsNullOrEmpty(result) ? entityPM.ReconciliationNumber.ToString() : result + "," + entityPM.ReconciliationNumber.ToString();
-            }
-
-            if (entityPM.AccountNumber != null)
-            {
-                result = string.IsNullOrEmpty(result) ? entityPM.AccountNumber.ToString() : result + "," + entityPM.AccountNumber.ToString();
-            }
-
-
-            //lines
-            LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
-            ReconcileExternalPageLineQueryService pageLineQuery = new ReconcileExternalPageLineQueryService(entityPM.Tenant);
-
-            List<string> LedgerTransactionIds = entityPM.ExternalReconciliationLines.Where(d => d.LedgerTransactionId != null).Select(d => d.LedgerTransactionId).ToList();
-            List<string> PageLineIds = entityPM.ExternalReconciliationLines.Where(d => d.ExternalPageLineId != null).Select(d => d.ExternalPageLineId).ToList();
-
-            List<LedgerTransactionPM> LedgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(LedgerTransactionIds, entityPM.Tenant);
-            List<ReconcileExternalPageLinePM> PageLines = pageLineQuery.GetPageLinesPMsByIdList(PageLineIds, entityPM.Tenant);
-
-            foreach (LedgerTransactionPM item in LedgerTransactions)
-            {
-                if (!string.IsNullOrEmpty(item.Reference1))
-                {
-                    if (!(result.Split(',').Contains(item.Reference1)))
-                    {
-                        result = string.IsNullOrEmpty(result) ? item.Reference1 : result + "," + item.Reference1;
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(item.Reference2))
-                {
-                    if (!(result.Split(',').Contains(item.Reference2)))
-                    {
-                        result = string.IsNullOrEmpty(result) ? item.Reference2 : result + "," + item.Reference2;
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(item.Reference3))
-                {
-                    if (!(result.Split(',').Contains(item.Reference3)))
-                    {
-                        result = string.IsNullOrEmpty(result) ? item.Reference3 : result + "," + item.Reference3;
-                    }
-                }
-            }
-
-            foreach (ReconcileExternalPageLinePM item in PageLines)
-            {
-                if (!string.IsNullOrEmpty(item.Reference))
-                {
-                    if (!(result.Split(',').Contains(item.Reference)))
-                    {
-                        result = string.IsNullOrEmpty(result) ? item.Reference : result + "," + item.Reference;
-                    }
-                }
-            }
-
-            entityPM.SearchFields = result;
-            poco.SearchFields = result;
-
         }
 
 

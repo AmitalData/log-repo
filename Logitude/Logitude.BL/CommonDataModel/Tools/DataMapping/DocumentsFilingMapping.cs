@@ -145,24 +145,16 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.IsDigitallySigned = entityPM.IsDigitallySigned;
             poco.SignersList = entityPM.SignersList;
 
-            if (entityPM.IsDeleted)
-            {
-                poco.IsRequested = false;
-                poco.IsDigitalSignRequired = false;
-            }
-            else
-            {
-                poco.IsRequested = entityPM.IsRequested;
-                poco.IsDigitalSignRequired = entityPM.IsDigitalSignRequired;
-            }
             
+            poco.IsRequested = entityPM.IsRequested;
             poco.SecurityId = entityPM.SecurityId;
             poco.LastVersion = entityPM.LastVersion;
             poco.OrigionalDocumentId = entityPM.OrigionalDocumentId;
             poco.IsSharedIn = entityPM.IsSharedIn;
             poco.IsSharedOut = entityPM.IsSharedOut;
             poco.LastShareDate = entityPM.LastShareDate;
-            poco.SignDueDate = entityPM.SignDueDate; 
+            poco.SignDueDate = entityPM.SignDueDate;
+            poco.IsDigitalSignRequired = entityPM.IsDigitalSignRequired;
             poco.EntityNumber = entityPM.EntityNumber;
              
         }

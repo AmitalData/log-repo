@@ -1,8 +1,7 @@
-﻿import { SessionLocator } from './../../../Infrastructure/Utilities/SessionLocator';
-import { GLAccountPMService } from './../../../Accounting/Services/StandardPMs/GLAccountPMService';
-import {Component, OnDestroy, ViewContainerRef, ViewChild, OnInit} from '@angular/core';
+﻿import {Component, OnDestroy} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {CardList} from '../../EntityLists/CardList';
 import {CardListService} from '../../Services/StandardLists/CardListService';
@@ -16,8 +15,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
     templateUrl: './AccountingTab_Full.html',
 })
 
-export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnInit {
-    @ViewChild("TabPlaceholder", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+export class AccountingTab_Full extends BaseComponent implements OnDestroy {
     public EntityPM: any = null;
     public ObjectTableName: string;
     public DataContext = this;
@@ -26,8 +24,6 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
     public CardList: CardList = null;
     private myCardListService: CardListService;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-    private _GLAccountPMService: GLAccountPMService = new GLAccountPMService();
-    ShowMessage: boolean = false;
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -48,7 +44,7 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
                     if (isSaveSuccess) {
                         this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
                         this.LoadCardList();
-
+                        
                     }
                 });
             }
@@ -63,42 +59,6 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
             }
         }
     }
-    ngOnInit()
-    {
-    }
-    LoadOverviewTab() {
-
-        this.ShowMessage = this.GLAccountId == null;
-
-        if (this.GLAccountId) {
-
-            // 1- Get the GLAccount
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-
-            this._GLAccountPMService.get(this.GLAccountId).subscribe(myResult => {
-
-                var response: ServiceResponse = myResult;
-                if (!response.HasError) {
-                    var entity = response.Result;
-
-                    var myComponentPath = "./Accounting/Components/EditTabs/GLAccount/GLAccountOverviewComponent";
-                    SessionLocator.DynamicLoader.Load(myComponentPath, this.viewContainerRef)
-                        .then(cmpRef => {
-                            cmpRef.instance.AccountPM = entity;
-                            cmpRef.instance.LoadAllData();
-                        });
-                }
-                else {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                }
-            });
-
-
-
-
-        }
-
-    }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
@@ -108,27 +68,29 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
         this.myCardListService.getSingle(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.CardList = myResponse.Result;
-                if (this.CardList)
-                {
+                if (this.CardList) {
                     this.GLAccountId = this.CardList.GLAccountId;
                     if (!AppTool.IsNullOrEmpty(this.GLAccountId)) {
                         this.FullAccountingLabel = this.ObjectTableName + " GLAccount";
                     }
 
-                    this.LoadOverviewTab();
-
-
+                    if (this.isFullAccountingClicked) {
+                        this.isFullAccountingClicked = false;
+                        if (!AppTool.IsNullOrEmpty(this.GLAccountId)) {
+                            this.EditGLAccount();
+                        }
+                        else {
+                            this.RunNewGLAccount();
+                        }
+                    }
                 }
             }
         });
     }
-    private isFullAccountingClicked = false;
-    FullAccountingClicked()
-    {
-        if(!this.GLAccountId)
-            this.RunNewGLAccount();
-        else
-            this.EditGLAccount(); // will not be hit!
+    private isFullAccountingClicked = false; 
+    FullAccountingClicked() {
+        this.isFullAccountingClicked = true;
+        this.entityArgs.EditComponent.SaveChanges();
     }
     RunNewGLAccount() {
         var logWindow = new LogitudeWindow();
@@ -155,19 +117,15 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
 
         logWindow.WindowClosed.subscribe(s => {
             if (s) {
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.LoadCardList();
             }
         });
     }
     EditGLAccount() {
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef =>
-            {
+            .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.GLAccountId, ObjectTableName: 'GLAccount' });
-                cmpRef.instance.BackCompleted.subscribe(bk => {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                });
             });
     }
 }

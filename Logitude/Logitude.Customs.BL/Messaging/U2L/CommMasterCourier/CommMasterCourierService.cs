@@ -124,7 +124,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                     AppendLogLine(MyGenericResponseObj.Message);
                     return;
                 }
-                /*
+
                 if (String.IsNullOrWhiteSpace(_LogitudeMasterCourier.HAWB))
                 {
                     MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
@@ -132,7 +132,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                     AppendLogLine(MyGenericResponseObj.Message);
                     return;
                 }
-                */
+
                 MyGenericResponseObj.Stage = "GetSingle";
                 this._CourierMasterPM = myQueryService.GetSingleByAirlineAWBs(airlineId, _LogitudeMasterCourier.HAWB, _LogitudeMasterCourier.MAWB, ResolvedTenant());
                 /// Exist

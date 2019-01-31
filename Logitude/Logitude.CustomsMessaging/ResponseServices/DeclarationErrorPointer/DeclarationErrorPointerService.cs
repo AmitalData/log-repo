@@ -274,7 +274,6 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                 case "4589":
                     {
                         RaiseUnifreightEvent("MID", "MID", "");
-                        if (string.IsNullOrWhiteSpace(_MyDeclarationPM.DepositionStatusCode)) _MyDeclarationPM.DepositionStatusCode = "R";
                         break;
                     }
                 case "2244":

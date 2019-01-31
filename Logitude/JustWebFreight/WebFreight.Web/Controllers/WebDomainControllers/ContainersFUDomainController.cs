@@ -97,26 +97,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 myResult.InTransit = (from myPackage in MyContext.ShipmentPackages
                                       join db_Shipments in MyContext.Shipments on myPackage.ShipmentId equals db_Shipments.Id into PackagesShipments
                                       from myShipment in PackagesShipments
-                                      where
-                                      myPackage.Tenant == tenant
-                                      && myShipment.Tenant == tenant
+                                      where myPackage.Tenant == tenant && myShipment.Tenant == tenant
                                       && myShipment.IsCancelled == false
-                                      && myShipment.DirectionId == "I"
-                                      &&
-                                          (
-                                          myShipment.TransportModeId == "O" && (myShipment.ShipmentTypeId == "FCLD" || myShipment.ShipmentTypeId == "MYGO")
-                                          ||
-                                          myShipment.TransportModeId == "I" && (myShipment.ShipmentTypeId == "FTL" || myShipment.ShipmentTypeId == "MYGI")
-                                          )
                                       && allStatusedIds_DEP.Contains(myShipment.StatusId)
-
-                                      // Task 44634: In Transit Query | follow up is not required
-                                      //&&
-                                      //(
-                                      //myPackage.IsDeliveryFU
-                                      //||
-                                      //myPackage.IsEmptyContainerReturnFU
-                                      //)
+                                      &&
+                                      (
+                                      myPackage.IsDeliveryFU
+                                      ||
+                                      myPackage.IsEmptyContainerReturnFU
+                                      )
                                       select myPackage).Count();
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);

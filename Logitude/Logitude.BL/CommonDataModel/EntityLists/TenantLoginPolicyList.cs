@@ -18,6 +18,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool KeepUserLoggedIn { get; set; }
         public bool ExcludeInternalIPs { get; set; }
         public string AllowedIPs { get; set; }
-        public decimal SessionTimeout { get; set; }
+        public int SessionTimeout { get; set; }
     }
 }

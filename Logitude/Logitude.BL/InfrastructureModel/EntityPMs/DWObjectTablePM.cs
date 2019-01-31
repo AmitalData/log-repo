@@ -15,6 +15,5 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string Code { get; set; }
         public string TypeCode { get; set; }
         public bool IsClosed { get; set; }
-        public string DefaultFilterBy { get; set; }
     }
 }

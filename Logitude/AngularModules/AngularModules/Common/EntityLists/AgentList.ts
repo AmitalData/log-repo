@@ -47,8 +47,5 @@ export class AgentList {
 		Address1: string;
 		Address2: string;
 		Phone: string;
-		PrimaryContactName: string;
-		PrimaryContactEmail: string;
-		PrimaryContactPhone: string;
 	
 }

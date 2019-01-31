@@ -104,7 +104,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 
         public bool AllowedInCustomerFieldsSettings { get; set; }
         public string GeneratedComponentPath { get; set; }
-        public bool DisplayOnLookUpLocal { get; set; }
         private List<ObjectFieldValidationPM> objectFieldValidations;
         [Composition]
         [Include]
@@ -142,7 +141,5 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string HelpTextFieldTranslationId { get; set; }
         public string Code { get; set; }
         public bool CopyToDW { get; set; }
-
-        
     }
 }

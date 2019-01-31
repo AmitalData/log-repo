@@ -69,8 +69,7 @@ namespace Logitude.Customs.BL.BL
                 CalcIsCourierMissingClassification(myDeclarationCourierStatusPM);
                 CalcHighLowValue(myDeclarationCourierStatusPM);
                 CalcDocumentStatusCode(myDeclarationCourierStatusPM);
-                CalcSpecialActionStatus(myDeclarationCourierStatusPM);
-                CalcFastIndividualProcess(myDeclarationCourierStatusPM);
+                CalcFastIndividualProcessCode(myDeclarationCourierStatusPM);
 
                 return myDeclarationCourierStatusPM;
 
@@ -83,28 +82,6 @@ namespace Logitude.Customs.BL.BL
             if (myDeclarationCourierStatusPM == null) return;
             //Set DocumentStatusCode
             if (string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode)) myDeclarationCourierStatusPM.DocumentStatusCode = "M";
-        }
-
-        public void CalcSpecialActionStatus(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
-        {
-            if (myDeclarationCourierStatusPM == null) return;
-
-            //Set SpecialActionStatus
-            DeclarationMamanSpecialActionRepository declarationMamanSpecialActionRepository = new DeclarationMamanSpecialActionRepository(myDeclarationCourierStatusPM.Tenant);
-            List<DeclarationMamanSpecialAction> list = declarationMamanSpecialActionRepository.GetDeclarationMamanSpecialActionByDeclarationId(myDeclarationCourierStatusPM.DeclarationId, myDeclarationCourierStatusPM.Tenant);
-
-            if(list != null && list.Count() > 0)
-            {
-                int isError = list.Where(SA => SA.MamanSpecialActionStatusCode == "2").ToList().Count();
-                if (isError > 0)
-                {
-                    myDeclarationCourierStatusPM.SpecialActionStatus = "X";
-                }
-                else
-                {
-                    myDeclarationCourierStatusPM.SpecialActionStatus = list.All(SA => SA.MamanSpecialActionStatusCode == "1") ? "V" : null;
-                }
-            }
         }
 
         public void CalcHighLowValue(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
@@ -300,18 +277,18 @@ namespace Logitude.Customs.BL.BL
             }
         }
 
-        public void CalcFastIndividualProcess(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        public void CalcFastIndividualProcessCode(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
             if (myDeclarationCourierStatusPM == null) return;
 
-            //Set CalcFastIndividualProcess
+            //Set FastIndividualProcessCode
             if (!string.IsNullOrEmpty(myDeclarationCourierStatusPM.ManualProcessCode))
             {
                 myDeclarationCourierStatusPM.FastIndividualProcessCode = myDeclarationCourierStatusPM.ManualProcessCode;
             }
             else
             {
-                if(myDeclarationCourierStatusPM.HighLowValue == "L")
+                if (myDeclarationCourierStatusPM.HighLowValue == "L")
                 {
                     myDeclarationCourierStatusPM.FastIndividualProcessCode = "F";
                 }
@@ -320,7 +297,6 @@ namespace Logitude.Customs.BL.BL
                     myDeclarationCourierStatusPM.FastIndividualProcessCode = "I";
                 }
             }
-
         }
     }
 }

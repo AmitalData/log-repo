@@ -12,7 +12,6 @@
         color: #b91a1a !important;
     }
 </style>
-<div style="height: 100%;overflow: auto;">
 
 <table>
     <!-- SearchBar -->
@@ -137,7 +136,7 @@
                                                 </div>
                                                 <!--<button class="Button" style="width:45px;" (click)="NewGeneralARInvoice()">New</button>-->
                                                 <div>
-                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:Draft Invoices')">{{'ARInvoice.Q.DraftGeneralInvoices' | TextCodeTranslationPipe}} ({{ARGeneralInvoiceDraftCount}})</p>
+                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:Draft General Invoices')">{{'ARInvoice.Q.DraftGeneralInvoices' | TextCodeTranslationPipe}} ({{ARGeneralInvoiceDraftCount}})</p>
                                                     <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:Approval General Invoices')">{{'ARInvoice.Q.ApprovalGeneralInvoices' | TextCodeTranslationPipe}}</p>
                                                     <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:All General Invoices')">{{'ARInvoice.Q.AllGeneralInvoices' | TextCodeTranslationPipe}}</p>
                                                 </div>
@@ -450,5 +449,3 @@
     </tr>
 
 </table>
-
-</div>

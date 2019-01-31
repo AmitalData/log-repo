@@ -12,7 +12,6 @@ using Simplog.Server.Infrastructure;
 using System.Data.Entity.Core.Objects;
 using System.Diagnostics;
 using System.Data.Entity;
-using Logitude.Server.Tools;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -86,32 +85,30 @@ namespace Logitude.Accounting.Data.Repositories
         }
         private  void InsureUsingOnlyByUpdateService()
         {
-            //return;//mohammad temp fix until itzik is back
-            //int iFrame = 3;
-            //var mth = new StackTrace().GetFrame(iFrame).GetMethod();
-            //var cls = mth.ReflectedType.Name;
-            //if (IsClassValid(mth, cls))
-            //{
-            //    return;
-            //}
-            //iFrame = 4;
-            //mth = new StackTrace().GetFrame(iFrame).GetMethod();
-            //cls = mth.ReflectedType.Name;
-            //if (IsClassValid(mth, cls))
-            //{
-            //    return;
-            //}
-            var myName = this.NameOf();
-            if (myName != "JournalRepositoryPriv")
+            ///return;//mohammad temp fix until itzik is back
+            int iFrame = 3;
+            var mth = new StackTrace().GetFrame(iFrame).GetMethod();
+            var cls = mth.ReflectedType.Name;
+            if (IsClassValid(mth, cls))
             {
-                AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Critical);
-
-                //var checkInsureUsingOnlyByUpdateService = System.Configuration.ConfigurationManager.AppSettings.Get("InsureUsingOnlyByUpdateService");
-                //if (!string.IsNullOrWhiteSpace(checkInsureUsingOnlyByUpdateService))
-                {
-                    throw new Exception("InsureUsingOnlyByUpdateService");
-                }
+                return;
             }
+            iFrame = 4;
+            mth = new StackTrace().GetFrame(iFrame).GetMethod();
+            cls = mth.ReflectedType.Name;
+            if (IsClassValid(mth, cls))
+            {
+                return;
+            }
+
+            AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Critical);
+            
+            var checkInsureUsingOnlyByUpdateService = System.Configuration.ConfigurationManager.AppSettings.Get("InsureUsingOnlyByUpdateService");
+            if (!string.IsNullOrWhiteSpace(checkInsureUsingOnlyByUpdateService))
+            {
+                throw new Exception("InsureUsingOnlyByUpdateService");
+            }
+
         }
 
         private bool IsClassValid(System.Reflection.MethodBase mth, string cls)
@@ -341,13 +338,10 @@ namespace Logitude.Accounting.Data.Repositories
 
         public List<Journal> GetARInvoiceJournals(DateTime? taxReportMonth, int tenant)
         {
-            int days= DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
-            DateTime date = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days);
             return (from a in context.Journals
                     join r in context.JournalLines on a.Id equals r.JournalId
-                    join m in context.JournalAdditionalDatas on a.Id equals m.JournalId
-                    where a.AccountingEntityCode == "2" && (m.TaxReportId == null ||m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode == null) && a.Tenant== tenant
-                    && r.DocumentDate <= date 
+                    where a.AccountingEntityCode == "2" && a.TaxReportStatusCode == "3" && a.Tenant== tenant
+                    && r.DocumentDate <= taxReportMonth
 
                     select a).ToList();
 
@@ -362,16 +356,6 @@ namespace Logitude.Accounting.Data.Repositories
 
 
                     select a).FirstOrDefault();
-        }
-
-        public IQueryable<Journal> GetByJournalsAccountingIds(List<string> ids, int tenant)
-        {
-            var journals = (from a in context.Journals
-                            where a.Tenant == tenant
-                            where ids.Contains(a.Id)
-                            select a);
-
-            return journals;
         }
 
     }

@@ -12,5 +12,4 @@
     <Record Code="&quot;BF&quot;" Name="&quot;Before&quot;" SearchFields="&quot;Before,BF,&quot;" />
     <Record Code="&quot;IM&quot;" Name="&quot;Immediately&quot;" SearchFields="&quot;Immediately,IM,&quot;" />
   </Records>
-  <AdditionalFeatures />
 </entity>

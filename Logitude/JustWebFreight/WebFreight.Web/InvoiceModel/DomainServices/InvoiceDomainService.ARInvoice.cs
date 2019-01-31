@@ -303,6 +303,234 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
             string AutoCreditId = service.CreateAutoCredit(entityId, IsInvoiceNumberManuallySet, AutoCreditManualNumber, AutoCreditDate);
             return AutoCreditId;
         }
+        public string AutoCreditInvoice_Old(string invoiceId, bool IsInvoiceNumberManuallySet, string autoCreditManualNumber, int tenant, DateTime? invoiceDate)
+        {
+            if (objectContext == null)
+            {
+                objectContext = InvoiceContext.GetContext(tenant);
+            }
+
+            aRInvoiceRepository = new ARInvoiceRepository(objectContext);
+            aRInvoiceEntityRepository = new ARInvoiceEntityRepository(objectContext);
+            arInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
+
+            ARInvoicePM entityPM = arInvoiceQuery.GetSinglePM(invoiceId, tenant);
+            ARInvoice entityPOCO = aRInvoiceRepository.GetSingleInvoice(invoiceId);
+
+            if (entityPOCO.StatusCode == "VD")
+            {
+                throw new ApplicationException("thie invoice is already voided");
+            }
+
+            if (entityPOCO.StatusCode == "AR")
+            {
+                throw new ApplicationException("thie invoice is already auto credited");
+            }
+
+            else
+            {
+                #region
+                ARInvoicePM newInvoicePM = new ARInvoicePM()
+                {
+                    Tenant = tenant,
+                    StatusCode = "AC",
+                    IsAutoCredit = true,
+                    ARInvoiceTypeCode = "CD",
+                    DebitAccount = entityPM.DebitAccount,
+                    TransferStatusCode = entityPM.TransferStatusCode,
+                    BillToAddressId = entityPM.BillToAddressId,
+                    BillToId = entityPM.BillToId,
+                    InternalNotes = entityPM.InternalNotes,
+                    InvoiceCurrencyExchangeRate = entityPM.InvoiceCurrencyExchangeRate,
+                    InvoiceCurrencyId = entityPM.InvoiceCurrencyId,
+                    PrintNotes = entityPM.PrintNotes,
+                    PaymentTermId = entityPM.PaymentTermId,
+                    PrepaidCollectId = entityPM.PrepaidCollectId,
+                    LocalCurrencyId = entityPM.LocalCurrencyId,
+                    VatNumber = entityPM.VatNumber,
+                    CreatedByUserId = entityPM.CreatedByUserId,
+                    IssuedByUserId = entityPM.IssuedByUserId,
+                    PrintByUserId = entityPM.PrintByUserId,
+                    InvoiceDate = invoiceDate != null ? invoiceDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant).Date,
+                    DueDate = entityPM.DueDate,
+                    PrintDate = entityPM.PrintDate,
+                    Sent = entityPM.Sent,
+                    ExchangeRateDate = entityPM.ExchangeRateDate,
+                    BranchId = entityPM.BranchId,
+                    ExpectedPaymentDate = entityPM.ExpectedPaymentDate,
+                    ProfitCurrencyId = entityPM.ProfitCurrencyId,
+                    ProfitCurrencyExchangeRate = entityPM.ProfitCurrencyExchangeRate,
+                    MainEntityId = entityPM.MainEntityId,
+                    MainEntityReference = entityPM.MainEntityReference,
+                    MainEntityStatus = entityPM.MainEntityStatus,
+                    AccountingExternalCode = entityPM.AccountingExternalCode,
+                    ConsolidationInvoiceId = null,
+                    IsConstituentInvoice = entityPM.IsConstituentInvoice,
+                    IsConsolidationInvoice = entityPM.IsConsolidationInvoice,
+                    SubTotalInInvoiceCurrency = entityPM.SubTotalInInvoiceCurrency * -1,
+                    SubTotalInLocalCurrency = entityPM.SubTotalInLocalCurrency * -1,
+                    AmountInInvoiceCurrency = entityPM.AmountInInvoiceCurrency * -1,
+                    AmountInLocalCurrency = entityPM.AmountInLocalCurrency * -1,
+                    AmountInProfitCurrency = entityPM.AmountInProfitCurrency * -1,
+                    AmountDue = 0,
+                    AmountDueInLocalCurrency = 0,
+                    AmountDueInProfitCurrency = 0,
+                    CreditedByARInvoiceId = invoiceId,
+                };
+
+                if (entityPM.IsConstituentInvoice)
+                {
+                    entityPM.IsClosed = true;
+                    newInvoicePM.IsClosed = true;
+                }
+
+                if (IsInvoiceNumberManuallySet)
+                {
+                    newInvoicePM.IsInvoiceNumberManuallySet = true;
+                    newInvoicePM.InvoiceNumber = autoCreditManualNumber;
+                }
+
+                int i = 1;
+                foreach (ARInvoiceLinePM item in entityPM.InvoiceLines)
+                {
+                    ARInvoiceLinePM newInvoiceLine = new ARInvoiceLinePM()
+                    {
+                        Tenant = item.Tenant,
+                        ChargesTypeId = item.ChargesTypeId,
+                        CreditAccount = item.CreditAccount,
+                        Description = item.Description,
+                        ForiegnCurrencyId = item.ForiegnCurrencyId,
+                        ForiegnExchangeRate = item.ForiegnExchangeRate,
+                        VatTypeId = item.VatTypeId,
+                        LineNumber = i,
+                        MeasurementId = item.MeasurementId,
+                        EntityId = item.EntityId,
+                        EntityReference = item.EntityReference,
+                        ObjectTableId = item.ObjectTableId,
+                        ReceivableId = item.ReceivableId,
+                        ViewOrder = item.ViewOrder,
+                        ExternalTAXItemId = item.ExternalTAXItemId,
+                        ExternalVATCard = item.ExternalVATCard,
+                        ForiegnCurrencyCode = item.ForiegnCurrencyCode,
+                        InvoiceCurrencyCode = item.InvoiceCurrencyCode,
+                        InvoiceLocalCurrencyCode = item.InvoiceLocalCurrencyCode,
+                        MeasurementCode = item.MeasurementCode,
+                        VatTypeName = item.VatTypeName,
+                        IsExchangeRateFixed = item.IsExchangeRateFixed,
+                        LocalDescription = item.LocalDescription,
+                        PrepaidCollectId = item.PrepaidCollectId,
+                        VatPercentage = item.VatPercentage,
+                        Quantity = item.Quantity,
+                        UnitPrice = item.UnitPrice * -1,
+                        ForiegnCurrencyAmount = item.ForiegnCurrencyAmount * -1,
+                        LocalCurrencyAmount = item.LocalCurrencyAmount * -1,
+                        ProfitCurrencyAmount = item.ProfitCurrencyAmount * -1,
+                        InvoiceCurrencyAmount = item.InvoiceCurrencyAmount * -1,
+                    };
+
+                    newInvoicePM.InvoiceLines.Add(newInvoiceLine);
+                    i++;
+                }
+
+                if (entityPM.IsConsolidationInvoice)
+                {
+                    #region
+
+                    string loggedContactId = this.GetLoggedContact(tenant);
+
+                    IQueryable<ARInvoice> iQueryable_ConnectedInvoices = aRInvoiceRepository.GetConnectedInvoices(tenant, entityPM.Id);
+
+                    foreach (ARInvoice item in iQueryable_ConnectedInvoices)
+                    {
+                        item.IsClosed = false;
+                        item.StatusCode = "NT";
+                        item.ConsolidationInvoiceId = null;
+
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            EntityId = item.Id,
+                            ObjectTableName = "ARInvoice",
+                            Tenant = tenant,
+                            UserId = loggedContactId,
+                            EventTypeCode = "INDS",
+                        });
+                    }
+                    #endregion
+                }
+
+                else
+                {
+                    #region
+
+                    ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                    ShipmentReceivableRepository shipmentRecievableRep = new ShipmentReceivableRepository(tenant);
+
+                    var entityIdAndObjectTables = (from a in entityPM.InvoiceLines
+                                                   group a by new { a.EntityId } into gr
+                                                   select new { EntityId = gr.Key.EntityId }).ToList();
+
+                    List<string> entityIds = (from a in entityIdAndObjectTables select a.EntityId).ToList();
+
+                    List<ShipmentReceivable> receivables = shipmentRecievableRep.GetShipmentReceivablesByEntityIds(entityIds, tenant);
+
+                    bool submitReceivables = false;
+                    foreach (ARInvoiceLinePM item in newInvoicePM.InvoiceLines)
+                    {
+                        if (item.ObjectTableId == null)
+                        {
+
+                            Shipment shipment = shipmentRepository.GetSingleShipment(item.EntityId, tenant);
+                            if (shipment != null)
+                            {
+                                ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
+                                ObjectTable objectTable = null;
+
+                                if (shipment.ShipmentLevelCode == "C")
+                                {
+                                    objectTable = objectTabelRepository.GetObjectTableByName("Master", shipment.Tenant, true);
+                                }
+
+                                else
+                                {
+                                    objectTable = objectTabelRepository.GetObjectTableByName("Shipment", shipment.Tenant, true);
+                                }
+
+                                item.ObjectTableId = objectTable.Id;
+                            }
+                        }
+
+                        ShipmentReceivable receivable = receivables.Where(d => d.Tenant == item.Tenant && d.Id == item.ReceivableId).FirstOrDefault();
+                        if (receivable != null)
+                        {
+                            receivable.ShipmentReceivableLineStatusCode = "OAMT";
+                            receivable.ARInvoiceId = null;
+                            receivable.ARInvoiceLineId = null;
+                            shipmentRecievableRep.Update(receivable);
+                            submitReceivables = true;
+                        }
+                    }
+
+                    if (submitReceivables)
+                    {
+                        shipmentRecievableRep.SubmitChanges();
+                    }
+                    #endregion
+                }
+
+                InsertARInvoice(newInvoicePM);
+
+                entityPOCO.IsCancelled = true;
+                entityPOCO.CancelledByARInvoiceId = newInvoicePM.Id;
+                entityPOCO.StatusCode = "AR";
+                entityPOCO.AmountDue = 0;
+                entityPOCO.AmountDueInLocalCurrency = 0;
+                entityPOCO.AmountDueInProfitCurrency = 0;
+                aRInvoiceRepository.Update(entityPOCO);
+                aRInvoiceRepository.SubmitChanges();
+                return newInvoicePM.Id;
+                #endregion
+            }
+        }
 
         private string GetLoggedContact(int tenant)
         {

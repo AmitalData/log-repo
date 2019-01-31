@@ -10,7 +10,6 @@ using System.Transactions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Monitoring
 {
@@ -48,43 +47,33 @@ namespace WebFreight.Web.Monitoring
             bool isFailed = false;
             using (TransactionScope scope = TransactionFactory.GetNewTransactionWithDefaultIsolationLevel())
             {
-                try
+
+                string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment("mobilenotificationlogqueue");
+                long messagecount = 0;
+                if (!StorageAcountDetails.NameSpaceManager.QueueExists(emailqueueName))
                 {
 
-                    string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment("mobilenotificationlogqueue");
-                    long messagecount = 0;
-                    if (!StorageAcountDetails.NameSpaceManager.QueueExists(emailqueueName))
-                    {
+                    QueueDescription queueDescription = new QueueDescription(emailqueueName);
+                    queueDescription.MaxSizeInMegabytes = 5120;
+                    queueDescription.MaxDeliveryCount = 99999;
+                    queueDescription.LockDuration = new TimeSpan(0, 2, 0);
+                    long messagescount = StorageAcountDetails.NameSpaceManager.CreateQueue(queueDescription).MessageCount;
 
-                        QueueDescription queueDescription = new QueueDescription(emailqueueName);
-                        queueDescription.MaxSizeInMegabytes = 5120;
-                        queueDescription.MaxDeliveryCount = 99999;
-                        queueDescription.LockDuration = new TimeSpan(0, 2, 0);
-                        long messagescount = StorageAcountDetails.NameSpaceManager.CreateQueue(queueDescription).MessageCount;
-
-                    }
-                    else
-                    {
-
-                        messagecount = StorageAcountDetails.NameSpaceManager.GetQueue(emailqueueName).MessageCount;
-                        QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName, ReceiveMode.PeekLock);
-                        // StorageAcountDetails.NameSpaceManager.DeleteQueue(emailqueueName);
-                    }
-
-
-                    if (messagecount > 50)
-                    {
-                        isFailed = true;
-                    }
-
-                    else isFailed = false;
                 }
-
-                catch (Exception errorInfo)
+                else
                 {
-                    ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "MobileNotificationLogQueue", "Bug in MobileNotificationLogQueue Logs", null);
+
+                    messagecount = StorageAcountDetails.NameSpaceManager.GetQueue(emailqueueName).MessageCount;
+                    QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName, ReceiveMode.PeekLock);
                 }
-               
+
+
+                if (messagecount > 50)
+                {
+                    isFailed = true;
+                }
+
+                else isFailed = false;
             }
 
             return isFailed;

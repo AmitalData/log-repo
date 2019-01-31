@@ -249,19 +249,13 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-            string customsResponseXml = File.ReadAllText(@"C:\Users\itzik\Desktop\zevel\1-43468729.xml");
-            WebFreight.Web.CustomWebServices.Testers.Tester.DeSerializeObject3052(customsResponseXml);
-            customsResponseXml = File.ReadAllText(@"C:\Users\itzik\Desktop\zevel\1-20980020.xml");
-            WebFreight.Web.CustomWebServices.Testers.Tester.DeSerializeObject3052(customsResponseXml);
-
             //http://lodmpn05/DSVWebFreightDebug/api/DeclarationWebService/GetDeclarationMandatoryTicketList/?parentEntityId=1-92241&parentEntityCode=Declaration
             //DbContextBaseUtil.ToLog = true;
-            //WebFreight.Web.CustomWebServices.Testers.Tester.TestNOWait();
+            WebFreight.Web.CustomWebServices.Testers.Tester.TestNOWait();
 
             //clsTester.GetDeclarationMandatoryTicketList(parentEntityId: "1-92241", parentEntityCode: "Declaration");
             //clsTester.TestLockTab();
-            //return;
+            return;
             clsTester.TestNull();
         }
 

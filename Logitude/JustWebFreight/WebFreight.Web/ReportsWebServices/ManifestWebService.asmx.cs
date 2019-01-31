@@ -295,7 +295,7 @@ namespace WebFreight.Web.ReportsWebServices
                         manifestDataProvider.FlightDate = String.Format("{0:dd.MMM.yy}", master.MainCarriageETD.Value);
                     }
                 }
-
+                
                 else if (master.TransportModeId == "O")
                 {
                     if (master.MainCarriageCarrierId != null)
@@ -370,7 +370,7 @@ namespace WebFreight.Web.ReportsWebServices
                     CardPM shipper = cardQuery.GetSinglePM(shipmentView.ShipperId, tenant);
                     CustomerPM shipperPM = customerQuery.GetSinglePM(shipmentView.ShipperId, tenant);
 
-                    if (shipperPM != null)
+                    if(shipperPM != null)
                     {
                         customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, shipperPM, detail, "Shipper");
                         customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, shipperPM, newDetail, "Shipper");
@@ -509,7 +509,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     #region Assemblies
 
-                    List<ShipmentAssemblyPM> shipmentAssemblies = shipmentAssemblyQuery.GetShipmentAssemblies(shipmentView.Id, tenant).ToList();
+                    List<ShipmentAssemblyPM> shipmentAssemblies = shipmentAssemblyQuery.GetShipmentAssemblies(shipmentView.Id, tenant).ToList();                    
                     if (shipmentAssemblies.Count > 0)
                     {
                         detail.Assemblies = new List<ShipmentAssemblyLine>();
@@ -962,21 +962,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                     foreach (ShipmentPackage masterPackage in masterPackages)
                     {
-                        PackageType masterPackagetype = (from pa in commonContext.PackageTypes
-                                                   where pa.Id == masterPackage.PackageTypeId
-                                                   select pa).FirstOrDefault();
-
-
                         GroupedContainersClass myBigItem = new GroupedContainersClass();
                         myBigItem.MasterContainerNumber = masterPackage.ContainerNumber;
-                        myBigItem.ContainerType = masterPackagetype == null ? null : masterPackagetype.EnglishName;
-                        myBigItem.ContainerGrossWeight = masterPackage.Weight;
-                        myBigItem.ContainerGrossWeightUnitCode = master.GrossWeightUnitCode;
-                        myBigItem.ContainerVolume = masterPackage.Volume;
-                        myBigItem.ContainerVolumeUnitCode = master.VolumeUnitCode;
-                        myBigItem.ContainerTare = masterPackage.Tare;
-                        myBigItem.ContainerVolumetricWeight = masterPackage.VolumetricWeight;
-                        myBigItem.ContainerVolumetricWeightUnitCode = master.VolumeUnitCode;
                         myBigItem.GroupedShipmentList = new List<GroupedShipmentClass>();
 
                         List<ShipmentPackage> containerPackages = connectedShipmentsPackages.Where(d => d.ContainerNumber == masterPackage.ContainerNumber).ToList();
@@ -986,14 +973,14 @@ namespace WebFreight.Web.ReportsWebServices
                         foreach (ShipmentPackage package in containerPackages)
                         {
                             NewTemplateClass newItem = new NewTemplateClass();
-
+                            
                             newItem.MarksAndNumbers = package.MarksAndNumbers;
                             newItem.Quantity = package.Quantity;
                             newItem.DescriptionOfGoods = package.Description;
                             newItem.Weight = package.Weight;
                             newItem.Volume = package.Volume;
                             newItem.ContainerNumber = package.ContainerNumber;
-                            newItem.ShipmentId = package.ShipmentId;
+                            newItem.ShipmentId = package.ShipmentId;                            
 
                             newTemplateList.Add(newItem);
                         }
@@ -1022,7 +1009,7 @@ namespace WebFreight.Web.ReportsWebServices
                             myShipmentItem.PC = myShipment.FreightPrepaidCollectId;
 
                             #region Shipper
-                            CardPM shipper = cardQuery.GetSinglePM(myShipment.ShipperId, tenant);
+                            CardPM shipper = cardQuery.GetSinglePM(myShipment.ShipperId, tenant);                            
                             if (shipper != null)
                             {
                                 Address shipperAdderss = addressRepository.GetSingleAddress(myShipment.ShipperAddressId, tenant);
@@ -1051,15 +1038,15 @@ namespace WebFreight.Web.ReportsWebServices
                             }
                             else
                             {
-                                myShipmentItem.ShipperAddress = "";
+                                myShipmentItem.ShipperAddress= "";
                             }
                             #endregion
 
                             #region Consignee
                             if (!string.IsNullOrEmpty(myShipment.ConsigneeId))
                             {
-                                CardPM consignee = cardQuery.GetSinglePM(myShipment.ConsigneeId, tenant);
-
+                                CardPM consignee = cardQuery.GetSinglePM(myShipment.ConsigneeId, tenant);                               
+                                
                                 if (consignee != null)
                                 {
                                     Address consigneeAdderss = addressRepository.GetSingleAddress(myShipment.ConsigneeAddressId, tenant);
@@ -1158,6 +1145,13 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.PortOfLoadingCountryCode = master.MainCarriageFromPortCountryCode != null ? master.MainCarriageFromPortCountryCode : "";
                 manifestDataProvider.TodaysDate = String.Format("{0:dd.MMM.yy}", TenantServerConfigration.GetCurrentDateTime(tenant));
 
+                StringBuilder strCon = new StringBuilder();
+                StringBuilder strSeal = new StringBuilder();
+
+                List<ShipmentPackagePM> packagesList = packagesQuery.GetShipmentPackages(master.Id, master.ShipmentNumber, tenant);
+                manifestDataProvider.ContainerNumbersLabel = "";
+                manifestDataProvider.SealNumbersLablel = "";
+
                 if (!string.IsNullOrEmpty(master.MoveTypeId))
                 {
                     MoveType moveType = context.MoveTypes.Where(m => m.Id == master.MoveTypeId).FirstOrDefault();
@@ -1169,49 +1163,57 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
-                StringBuilder strCon = new StringBuilder();
-                StringBuilder strSeal = new StringBuilder();
-
-                List<ShipmentPackagePM> packagesList = packagesQuery.GetShipmentPackages(master.Id, master.ShipmentNumber, tenant);
-                manifestDataProvider.ContainerNumbersLabel = "Container Numbers";
-                manifestDataProvider.SealNumbersLablel = "Seal Numbers";
-
-                manifestDataProvider.ContainerNumbers = "";
-                manifestDataProvider.SealNumbers = "";
-
-                foreach (ShipmentPackagePM package in packagesList)
+                bool computeFields = false;
+                if (master.TransportModeId == "I")
                 {
-                    if (!string.IsNullOrEmpty(package.ContainerNumber))
+                    if (master.ShipmentTypeId == "MyGI" || master.ShipmentTypeId == "FTL")
                     {
-                        strCon.Append(' ');
-                        strCon.Append(package.ContainerNumber);
-                        strCon.Append(',');                        
-                    }
-
-                    if (!string.IsNullOrEmpty(package.ShipperSeal))
-                    {
-                        strSeal.Append(' ');
-                        strSeal.Append(package.ShipperSeal);
-                        strSeal.Append(',');
+                        computeFields = true;
                     }
                 }
 
-                string str_String_con = strCon.ToString();
-                if (!string.IsNullOrEmpty(str_String_con))
+                if (master.TransportModeId == "O")
                 {
-                    str_String_con = str_String_con.TrimStart(' ');
-                    str_String_con = str_String_con.TrimEnd(',');
+                    if (master.ShipmentTypeId == "MyGO" || master.ShipmentTypeId == "FCLD")
+                    {
+                        computeFields = true;
+                    }
                 }
 
-                string str_String_sel = strSeal.ToString();
-                if (!string.IsNullOrEmpty(str_String_sel))
+                if (computeFields)
                 {
-                    str_String_sel = str_String_sel.TrimStart(' ');
-                    str_String_sel = str_String_sel.TrimEnd(',');
+                    manifestDataProvider.ContainerNumbersLabel = "Container Numbers";
+                    manifestDataProvider.SealNumbersLablel = "Seal Numbers";
+
+                    manifestDataProvider.ContainerNumbers = "";
+                    manifestDataProvider.SealNumbers = "";
+
+                    for (int i = 0; i < packagesList.Count; i++)
+                    {
+                        if (i != packagesList.Count - 1)
+                        {
+                            if (packagesList[i].ContainerNumber != null) { strCon.Append(packagesList[i].ContainerNumber.PadRight(15)).Append(", "); }
+                            else { strCon.Append(' ', 15); }
+
+                            if (packagesList[i].ShipperSeal != null) { strSeal.Append(packagesList[i].ShipperSeal.PadRight(15)).Append(", "); }
+                            else { strCon.Append(' ', 15); }
+                        }
+                        else
+                        {
+                            if (packagesList[i].ContainerNumber != null)
+                            {
+                                strCon.Append(packagesList[i].ContainerNumber.PadRight(15));
+                            }
+                            if (packagesList[i].ShipperSeal != null)
+                            {
+                                strSeal.Append(packagesList[i].ShipperSeal.PadRight(15));
+                            }
+                        }
+                    }
                 }
 
-                manifestDataProvider.ContainerNumbers = str_String_con;
-                manifestDataProvider.SealNumbers = str_String_sel;
+                manifestDataProvider.ContainerNumbers = strCon.ToString();
+                manifestDataProvider.SealNumbers = strSeal.ToString();
                 manifestDataProvider.Logo = DataProviders.General.GetLogo(tenant);
             }
 

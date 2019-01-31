@@ -10,7 +10,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {QuoteTemplateTextDesignPM} from '../../../Quote/EntityPMs/QuoteTemplateTextDesignPM';
 import {AppTool} from '../../../Infrastructure/Tools';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+
 @Component({
     selector: 'PageAreaHeaderFooterComponent',
     moduleId: module.id,
@@ -213,7 +213,7 @@ export class PageAreaHeaderFooterComponent extends BaseComponent implements OnIn
 
         if (this.QuoteTemplateSettingPM.IsDirty || (this.DesignAreaFreeTextPM && this.DesignAreaFreeTextPM.IsDirty)) {
             this.IsSaveRuning = true;
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
         }
 
 

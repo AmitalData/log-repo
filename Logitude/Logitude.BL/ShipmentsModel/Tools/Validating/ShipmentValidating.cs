@@ -54,13 +54,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             ValidateShipmentBookingFields(entityPM, isNewEntity);
             ValidateCreditLimitSetting(entityPM, entityPoco, myCommonContext, loggedTenant, isNewEntity);
             //ValidateMultiVatPercentages(entityPM, myCommonContext);
-           
-            if (!entityPM.IsHybrid)
-            {
-                ValidateMasterTypeDueToTransportMode(entityPM);
-                ValidateMainCarriageCarrierDueToTransportMode(entityPM);
-                ValidatePartnerTypes(entityPM);
-            } 
+            ValidateMasterTypeDueToTransportMode(entityPM);
+            ValidateMainCarriageCarrierDueToTransportMode(entityPM);
+            ValidatePartnerTypes(entityPM);
         }
 
         private static void ValidateProductTypePermission(ShipmentPM entityPM, ICommonDataContext myCommonContext)

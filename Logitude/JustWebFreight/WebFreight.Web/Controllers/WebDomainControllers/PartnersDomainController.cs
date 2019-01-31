@@ -47,8 +47,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Airline", "READ", tenant);
+
                 AirlineRepository myRepository = new AirlineRepository(tenant);
                 string myAirlineId = myRepository.GetAllowedAirlineId(tenant);
+
                 return Request.CreateResponse(HttpStatusCode.OK, myAirlineId);
             }
 
@@ -82,29 +84,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
-        public HttpResponseMessage GetCarrierUpdate(string entityId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                CardQuery cardQuery = new CardQuery(authToken.Tenant);
-                CardList myResult = cardQuery.GetCarrierUpdate(entityId, authToken.Tenant, null, null, false, null);
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-
         public HttpResponseMessage GetMessagingRulesForAirline(string myAirlineCode, string myMessageCode)
         {
             try

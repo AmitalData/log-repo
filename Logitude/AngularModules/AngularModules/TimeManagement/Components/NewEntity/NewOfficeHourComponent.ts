@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TMOfficeHourPM} from '../../EntityPMs/TMOfficeHourPM';
 import {TMOfficeHourPMService} from '../../Services/StandardPMs/TMOfficeHourPMService';
@@ -119,20 +119,13 @@ export class NewOfficeHourComponent extends BaseComponent {
         if (this.EntityPM.WorkDate == null)
             this.ValidationErrorsList.push("Work Date Field is required");
 
+        if (this.EntityPM.ExitTime <= this.EntityPM.EntryTime) {
+            this.ValidationErrorsList.push("Exist time Field must be greater than Entry time Field");
 
-
-        if (this.EntityPM.ExitTime != null && this.EntityPM.EntryTime != null) {
-            if (this.EntityPM.ExitTime <= this.EntityPM.EntryTime) {
-                this.ValidationErrorsList.push("Exist time Field must be greater than Entry time Field");
-            }
         }
         if (this.ValidationErrorsList.length == 0) {
-            if (this.EntityPM.ExitTime != null) {
-                this.SetExistDateTime(this.EntityPM.ExitTime.getUTCHours() + ":" + this.EntityPM.ExitTime.getUTCMinutes());
-            }
-                if(this.EntityPM.EntryTime != null) {
-                this.SetEntryDateTime(this.EntityPM.EntryTime.getUTCHours() + ":" + this.EntityPM.EntryTime.getUTCMinutes());
-            }
+            this.SetExistDateTime(this.EntityPM.ExitTime.getUTCHours() + ":" + this.EntityPM.ExitTime.getUTCMinutes());
+            this.SetEntryDateTime(this.EntityPM.EntryTime.getUTCHours() + ":" + this.EntityPM.EntryTime.getUTCMinutes());           
 
             this.InsertTMOfficeHour();
         }

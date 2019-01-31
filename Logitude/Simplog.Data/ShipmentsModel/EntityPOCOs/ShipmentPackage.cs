@@ -114,16 +114,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual TemperatureUnit TemperatureUnit { get; set; }
         public string TemperatureUnitCode { get; set; }
 
+
         [ForeignKey("FlashPointTemperatureUnitCode")]
         public virtual TemperatureUnit FlashPointTemperatureUnit { get; set; }
         public string FlashPointTemperatureUnitCode { get; set; }
 
-        public bool IsMultiHarmonize { get; set; }
-
-        public DateTime? ETD { get; set; }
-        public DateTime? ETA { get; set; }
-        public string Routing { get; set; }
-        public string VoyageTripNumber { get; set; }
-        public bool HasContainerException { get; set; }
     }
 }

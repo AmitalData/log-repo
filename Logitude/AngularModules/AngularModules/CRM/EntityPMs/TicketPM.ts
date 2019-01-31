@@ -574,11 +574,6 @@ export class TicketPM {
     public set SLAId(newValue: string) { if (this.sLAId != newValue) { this.sLAId = newValue; this.MarkAsDirty("SLAId"); } }
        
 	 
-    private entityType: string;
-    public get EntityType() { return this.entityType; }
-    public set EntityType(newValue: string) { if (this.entityType != newValue) { this.entityType = newValue; this.MarkAsDirty("EntityType"); } }
-       
-	 
 
     public OldEntityPM: TicketPM;
 		

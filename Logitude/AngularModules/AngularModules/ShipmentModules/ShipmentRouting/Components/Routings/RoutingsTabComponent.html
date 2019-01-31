@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .BoxItem:hover .DateButton {
         visibility: visible;
@@ -227,14 +227,10 @@
                                                                                         <span class="Value" style="float: left; margin-left: 3px;">{{item.CarrierNumber}}</span>
                                                                                     </div>
 
+
                                                                                     <div style="float: left; margin-left: 10px;" *ngIf="item.IsVesselVisible">
                                                                                         <span class="Label" style="float: left;">{{'Shipment.O.Routings.Vessel' | TextCodeTranslationPipe}}:</span>
                                                                                         <span class="Value" style="float: left; margin-left: 3px;">{{item.VesselName}}</span>
-                                                                                    </div>
-
-                                                                                    <div style="float: left; margin-left: 10px;" *ngIf="item.HasContainers">
-                                                                                        <span class="Label" style="float: left;">Containers:</span>
-                                                                                        <span class="Value" style="float: left; margin-left: 3px;" [attr.title]="item.AllContainers">{{item.DisplayContainers}}</span>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>

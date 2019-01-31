@@ -1,4 +1,4 @@
-import {EventEmitter, Output} from '@angular/core';
+﻿import {EventEmitter, Output} from '@angular/core';
 import {TextCodeTranslator} from './Utilities/TextCodeTranslator';
 import {NumbersPipe} from './Pipes/NumbersPipe';
 
@@ -929,19 +929,6 @@ export class AppTool {
                 break;
             }
 
-            case "General.MH.Documents":
-            case "General.MH.DocumentsFiling":
-            {
-                myResult = "Documents";
-                break;
-            }
-
-            case "General.MH.Depositions": {
-                myResult = "Deposition";
-                break;
-            }
-                
-
             default: {
                 myResult = "Person";
                 break;
@@ -1139,24 +1126,15 @@ export class DateTool {
 
         return myResult;
     }
-    public static TruncateTime(date: Date, setActual: boolean = false) {
+    public static TruncateTime(date: Date) {
         var myResult: Date = null;
 
         if (date != null) {
             var myResult: Date = this.GetDateParts(date).DateObject;
-            if (setActual) {
-                myResult.setHours(0);
-                myResult.setMinutes(0);
-                myResult.setSeconds(0);
-                myResult.setMilliseconds(0);
-            }
-
-            else {
-                myResult.setUTCHours(0);
-                myResult.setUTCMinutes(0);
-                myResult.setUTCSeconds(0);
-                myResult.setUTCMilliseconds(0);
-            }
+            myResult.setUTCHours(0);
+            myResult.setUTCMinutes(0);
+            myResult.setUTCSeconds(0);
+            myResult.setUTCMilliseconds(0);
         }
 
         return myResult;
@@ -1188,27 +1166,20 @@ export class DateTool {
 
         return myResult;
     }
-    public static GetDaysBetweenDates(date1: Date, date2: Date, useFloor: boolean = false) {
+    public static GetDaysBetweenDates(date1: Date, date2: Date) {
         var myResult: number = 0;
 
         if (date1 != null && date2 != null) {
             if (date1 != undefined && date2 != undefined) {
 
-                date1 = this.TruncateTime(date1, useFloor);
-                date2 = this.TruncateTime(date2, useFloor);
+                date1 = this.TruncateTime(date1);
+                date2 = this.TruncateTime(date2);
 
                 var d1 = new Date(date1.toString());
                 var d2 = new Date(date2.toString());
                 var timeDiff = Math.abs(d2.getTime() - d1.getTime());
-                var daysDiff = timeDiff / (1000 * 3600 * 24);
-
-                if (useFloor) {
-                    myResult = Math.floor(daysDiff);
-                }
-
-                else {
-                    myResult = Math.ceil(daysDiff);
-                }
+                var Daysdiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                myResult = Daysdiff;
             }
         }
 

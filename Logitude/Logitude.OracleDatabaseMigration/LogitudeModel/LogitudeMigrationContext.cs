@@ -78,8 +78,6 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         }
 
         #region Common Context
-        public IDbSet<CustomsShipper> CustomsShippers { get; set; }
-        public IDbSet<SharedUserQuery> SharedUserQueries { get; set; }
         public IDbSet<DocumentFilingBackupSetting> DocumentFilingBackupSettings { get; set; }
         public IDbSet<MetodoPago> MetodoPagos { get; set; }
         public IDbSet<BlobFile> BlobFiles
@@ -1571,8 +1569,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<AWBInformation> AWBInformations { get; set; }
         public IDbSet<ShipmentPackageItem> ShipmentPackageItems { get; set; }
         public IDbSet<ShipmentCommodity> ShipmentCommodities { get; set; }
-        public IDbSet<MessagingStock> MessagingStocks { get; set; }
-        public IDbSet<MessagingStockUsageHistory> MessagingStockUsageHistories { get; set; }
+        public IDbSet<AWBMessagingStock> AWBMessagingStocks { get; set; }
+        public IDbSet<AWBStockUsageHistory> AWBStockUsageHistories { get; set; }
         public IDbSet<UserPermittedProduct> UserPermittedProducts { get; set; }
         public IDbSet<AccountingInformationIdentifier> AccountingInformationIdentifiers { get; set; }
         public IDbSet<ManifestStatus> ManifestStatus { get; set; }
@@ -3989,8 +3987,6 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TMLocationMap());
             modelBuilder.Configurations.Add(new TMProjectMap());
             #endregion
-            modelBuilder.Configurations.Add(new SharedUserQueryMap());
-            modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new DocumentFilingBackupSettingMap());
             modelBuilder.Configurations.Add(new CustomerFieldsUpdateSettingMap());
             modelBuilder.Configurations.Add(new BlobFileMap());
@@ -4380,8 +4376,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new SpecialServicesTypeMap());
             modelBuilder.Configurations.Add(new EmailProviderMap());
             modelBuilder.Configurations.Add(new RegionMap());
-            modelBuilder.Configurations.Add(new MessagingStockMap());
-            modelBuilder.Configurations.Add(new MessagingStockUsageHistoryMap());
+            modelBuilder.Configurations.Add(new AWBMessagingStockMap());
+            modelBuilder.Configurations.Add(new AWBStockUsageHistoryMap());
             modelBuilder.Configurations.Add(new QuoteStageMap());
             modelBuilder.Configurations.Add(new QuoteRatingMap());
             modelBuilder.Configurations.Add(new CountryCityMap());

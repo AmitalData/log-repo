@@ -106,9 +106,8 @@ export class LoginService {
     GetTenantManagement() {
 
         var url = this.baseUrlApi + 'TenantManagement/GetSingleTenantManagementPM?id=' + this.CurrentTenant;
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        return this._http.get(url, { headers: authHeader }).map(response => {
+
+        return this._http.get(url, { headers: this.AuthHeader }).map(response => {
             return response.json();
         });
     }

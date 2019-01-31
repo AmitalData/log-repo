@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {Component, ViewChildren, QueryList, ViewChild, ViewContainerRef, Output, EventEmitter} from '@angular/core'
 import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
 import {LocationDirective} from '../../Utilities/LocationDirective';
@@ -13,7 +13,6 @@ import {ObjectTablePM} from '../../../Infrastructure/EntityPMs/ObjectTablePM';
 import {QueryPM} from '../../../Infrastructure/EntityPMs/QueryPM';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import {ServiceLocator} from '../../Locators/ServiceLocator';
-import { retry } from 'rxjs/operators';
 
 @Component({
     moduleId: module.id,
@@ -23,10 +22,6 @@ import { retry } from 'rxjs/operators';
 export class MainMenuComponent {
     public SelectedMenu: MainMenuItem;
     public MainMenuItems: Array<MainMenuItem>;
-    public MainMenuWidth: number = 142;
-    private MainMenuWidthCollapsed: number = 45;
-    private MainMenuWidthOpened: number = 142;
-
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     @ViewChild("MainMenuContainer", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
@@ -37,13 +32,6 @@ export class MainMenuComponent {
         this.MainMenuItems = this.GetMainMenuItemsFromWindow();
         // Layout Direction
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
-        var defaultStatus: string = LastFilterClass.GetFilterValue("Simplog.Infrastructure.Views.MenuView", "Sidebar");
-        if (!AppTool.IsNullOrEmpty(defaultStatus)) {
-            this.IsMainSidebarCollapsed = defaultStatus == "true" ? true : false;
-        } else {
-            this.IsMainSidebarCollapsed = SessionLocator.IsMainSidebarCollapsed;
-        }
-        this.MainMenuWidth = this.IsMainSidebarCollapsed == true ? this.MainMenuWidthCollapsed : this.MainMenuWidthOpened;
     }
 
     private GetMainMenuItemsFromWindow() {
@@ -52,7 +40,6 @@ export class MainMenuComponent {
 
         window.MenusTables.filter(f => f.MenuTypeCode.toUpperCase() == "MAIN").forEach((item) => {
 
-       
             var isAddingItem = false;
 
             if (item.FeatureId == null) {
@@ -64,7 +51,11 @@ export class MainMenuComponent {
                     isAddingItem = true;
                 }
             }
-         
+
+            //if (item.TextCode == "General.MH.GettingStarted") {
+            //    isAddingItem = true;
+            //}
+
             if (isAddingItem) {
                 var menuItem: MainMenuItem = new MainMenuItem(item.TextCode, AppTool.GetMainMenuIconCode(item.TextCode));
                 menuItem.IndexOfOrder = item.IndexOfOrder;
@@ -88,8 +79,6 @@ export class MainMenuComponent {
             }
 
             else {
-             
-
                 this.isLoaderReady = true;
 
                 let locs = this.AllLocations.toArray().filter(f => f.Code == 'MainMenuContainer');
@@ -120,9 +109,6 @@ export class MainMenuComponent {
     }
 
     InitSelectedMenu() {
-
-      
-        
         var mySelectedMenu = this.MainMenuItems[0];
 
         var selectedMenuTextCode: string = null;
@@ -310,8 +296,7 @@ export class MainMenuComponent {
                     }
                     case "General.MH.Reports": {
                         ServiceLocator.SendTotangoUserActivity("Reports", "Main View");
-                        //myComponentPath = "./Report/Components/Workspaces/ReportComponent";
-                        myComponentPath = "./Report/Components/Workspaces/MainReportsWorkspace";
+                        myComponentPath = "./Report/Components/Workspaces/ReportComponent";
                         break;
                     }
                     case "General.MH.Maintenance": {
@@ -334,19 +319,6 @@ export class MainMenuComponent {
                         myComponentPath = "./SharedLogistics/Components/SharedLogisticMainMenuComponent";
                         break;
                     }
-
-                    case "General.MH.Shipments": {
-                        ServiceLocator.SendTotangoUserActivity("SharedLogistics", "Main View");
-                        myComponentPath = "./SharedLogistics/Components/Workspaces/SharedShipmentsWorkspaceComponent";
-                        break;
-                    }
-
-                    case "General.MH.Invoices": {
-                        ServiceLocator.SendTotangoUserActivity("SharedLogistics", "Main View");
-                        myComponentPath = "./SharedLogistics/Components/Workspaces/SharedInvoicesWorkspaceComponent";
-                        break;
-                    }
-
                     case "General.MH.ActivationWizard": {
                         ServiceLocator.SendTotangoUserActivity("ActivationWizard", "Main View");
                         myComponentPath = "./InfrastructureModules/InfrastructureOthers/Components/ActivationWizard/ActivationWizardComponent";
@@ -504,29 +476,6 @@ export class MainMenuComponent {
                         break;
                     }
 
-                    case "General.MH.Depositions": {
-                        ServiceLocator.SendTotangoUserActivity("Customs Shipper", "List View");
-                        var listArgs = new ListComponentArgs();
-                        listArgs.QueryCode = "AllDepositionsQuery";
-                        listArgs.ObjectTableName = "CustomsShipper";
-                        listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
-                        listArgs.HideBackButton = true;
-                        this._entityResourceService.getEntityResourceByTableName("CustomsShipper", 0).subscribe(response => {
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
-                                .then(cmpRef => {
-                                    cmpRef.instance.ComponentRef = cmpRef;
-                                    cmpRef.instance.Run(listArgs);
-                                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
-                                    this.ChangeSessionHeader(this.SelectedMenu);
-                                    this.isChangingSelected = false;
-                                    // this.pointerEvents = 'all';
-                                });
-                        });
-                        break;
-                    }
-
-
-
                     default: {
                         if (this.SelectedMenu.ObjectTableName) {
                             ServiceLocator.SendTotangoUserActivity(this.SelectedMenu.ObjectTableName, "List View");
@@ -610,18 +559,6 @@ export class MainMenuComponent {
     ChangeSessionHeader(menu: MainMenuItem) {
         SessionLocator.CurrentSession.ChangeSessionHeader({ MenuTextCode: menu.TextCode });
     }
-
-    private isMainSidebarCollapsed: boolean = false;
-    public get IsMainSidebarCollapsed() { return this.isMainSidebarCollapsed; }
-    public set IsMainSidebarCollapsed(value: boolean) {
-        if (this.isMainSidebarCollapsed != value) {
-            this.isMainSidebarCollapsed = value;
-            SessionLocator.IsMainSidebarCollapsed = value;
-            LastFilterClass.UpdateFilter("Simplog.Infrastructure.Views.MenuView", "Sidebar", value+"");
-            this.MainMenuWidth = value == true ? this.MainMenuWidthCollapsed : this.MainMenuWidthOpened;
-        }
-    }
-
 }
 
 export class MainMenuItem {

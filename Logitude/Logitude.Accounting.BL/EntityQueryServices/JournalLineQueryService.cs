@@ -129,10 +129,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     LocalAmountCredit = (double)rec.LocalAmount,
                     LocalAmountDebit = 0,
                     ForeignAmountCredit = (double)rec.ForeignAmount,
-                    ForeignAmountDebit = 0,
-                    AccountingDate = rec.AccountingDate,
-                    DueDate = rec.DueDate,
-                    DocumentDate = rec.DocumentDate,
+                    ForeignAmountDebit = 0
 
                 });
             var debitList = new List<string>(){
@@ -151,11 +148,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                      LocalAmountCredit = 0,
                      LocalAmountDebit = (double)rec.LocalAmount,
                      ForeignAmountCredit = 0,
-                     ForeignAmountDebit = (double)rec.ForeignAmount,
-                     AccountingDate = rec.AccountingDate,
-                     DueDate = rec.DueDate,
-                     DocumentDate = rec.DocumentDate,
-
+                     ForeignAmountDebit = (double)rec.ForeignAmount
                  });
 
 
@@ -188,11 +181,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     Math.Round((double)((double)rec.jl.ForeignAmount / (double)rec.myVat), 2)
                     //Math.Round(((decimal)(rec.jl.ForeignAmount / (decimal)((rec.Percentage  + 100) / 100))), 2),
                     //(decimal)Expression.Divide((decimal)rec.ForeignAmount, (decimal)myVat)
-                                        
-                    ,AccountingDate = rec.jl.AccountingDate,
-                    DueDate = rec.jl.DueDate,
-                    DocumentDate = rec.jl.DocumentDate,
-
                 });
 
             var qJLVat =
@@ -228,22 +216,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                      // *1000
                      // )
                      // /100)
-                                         ,
-                     AccountingDate = rec.jl.AccountingDate,
-                     DueDate = rec.jl.DueDate,
-                     DocumentDate = rec.jl.DocumentDate,
-
                  });
             //var qJLVat_260_3 = qJLVat.First(r => r.JournalId == "1-260" && r.JournalLineNumber == 3);
 
             var qJLAll = qJLCredit.Union(qJLDebit).Union(qJLDebitVat).Union(qJLVat);
-            bool UnionreturnsDistinctvalues = true;
-            if (UnionreturnsDistinctvalues)
-            {
-                qJLAll = qJLCredit.Concat(qJLDebit).Concat(qJLDebitVat).Concat(qJLVat);
-            }
-                //qJLAll.ToList();
-                return qJLAll;
+            //qJLAll.ToList();
+            return qJLAll;
         }
 
         //public IQueryable<JournalLineLedgerDTO> GetJournalLineAsLedgerTransactionByAccId(string glAccountId, int tenant)

@@ -12,15 +12,15 @@ export class RoutingTabComponent {
   public RoutingTab(LogitudeShipType: any, ShipmentType: any) {
 
     this.Helper.WaitByIdAndClick('Shipment.TH.Routings');
-    // this.AddPickup();
-    // this.Helper.WaitBusyIndicator();
+    this.AddPickup();
+    this.Helper.WaitBusyIndicator();
     // if (LogitudeShipType == 'D' || LogitudeShipType == 'H') {
     //   this.AddPreCarriage(ShipmentType);
     //   this.AddOnCarriage(ShipmentType);
     // }
     this.EditMainCarriage(LogitudeShipType, ShipmentType);
-    // this.AddDelivery();
-    // this.Helper.WaitBusyIndicator();
+    this.AddDelivery();
+    this.Helper.WaitBusyIndicator();
 
   }
 

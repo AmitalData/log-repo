@@ -1025,7 +1025,6 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new AirlineStatisticsMap());
 			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
 			modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
-			            modelBuilder.Configurations.Add(new CustomsShipperMap());
             #endregion 
             base.OnModelCreating(modelBuilder);
         }

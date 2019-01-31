@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef} from '@angular/core';
+﻿import {Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {TicketPM} from '../../../../../CRM/EntityPMs/TicketPM';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import {TextCodeTranslationPipe} from '../../../../../Controls/Pipes/TextCodeTranslationPipe';
@@ -27,7 +27,6 @@ import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCo
 import {ContactItemClass} from '../../../../../CommonModules/CommonPartners/Components/EditTabs/ContactsTabComponent';
 import {ContactPMService} from '../../../../../Common/Services/StandardPMs/ContactPMService';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
-declare var window: any;
 
 @Component({
     selector: 'DetailsTabComponent',
@@ -51,13 +50,6 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
-        var objectTable = window.ObjectTables.filter(d => d.Id === this.EntityPM.EntityType)[0];
-        if (objectTable != null) {
-            var objectTableName = window.ObjectTables.filter(d => d.Id === this.EntityPM.EntityType)[0].Name;
-            if (objectTableName == "Quote") {
-                this.EntityNumberTitle = "Quote Number";
-            }
-        }
         this.CreateEntities();
         this.SetUIProperties();
         this.getGeneralClassification();
@@ -98,7 +90,6 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
                     this.GetEntityLinkNumberVisibility();
                     this.CreateEntities();
                     this.UpdateEntityDetails();
-                    this.SetUIProperties();
                 }
             });
         }
@@ -243,7 +234,6 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
         }
 
         this.UIProperties.SetEnabled("ShipmentNumber", this.ObjectTableName, this.IsTicketEditEnabled);
-        this.UIProperties.SetEnabled("EntityType", this.ObjectTableName, this.IsTicketEditEnabled);
         this.UIProperties.SetEnabled("CompanyId", this.ObjectTableName, this. IsTicketEditEnabled);
         this.UIProperties.SetEnabled("ContactId", this.ObjectTableName, this.IsTicketEditEnabled);
         this.UIProperties.SetEnabled("CustomerContactId", this.ObjectTableName, this.IsTicketEditEnabled);
@@ -504,14 +494,6 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
         }
     }
 
-    get EntityType() { return this.EntityPM.EntityType; }
-    set EntityType(newValue: string) {
-        if (this.EntityPM.EntityType != newValue) {
-            this.EntityPM.EntityType = newValue;
-            this.GetEntityLinkNumberVisibility();
-        }
-    }
-
     get ShipmentId() { return this.EntityPM.ShipmentId; }
     set ShipmentId(newValue: string) {
         if (this.EntityPM.ShipmentId != newValue) {
@@ -605,7 +587,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     public EntityLinkNumberVisibility = false;
     GetEntityLinkNumberVisibility() {
         var myResult = false;
-        if ((this.EntityObjectTableName == "Shipment" && !AppTool.IsNullOrEmpty(this.ShipmentNumber)) || (this.EntityObjectTableName == "Quote" && !AppTool.IsNullOrEmpty(this.QuoteNumber))) {
+        if (!AppTool.IsNullOrEmpty(this.ShipmentNumber) || !AppTool.IsNullOrEmpty(this.QuoteNumber)) {
             myResult = true;
         }
         this.EntityLinkNumberVisibility = myResult;
@@ -623,21 +605,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
             this.CompanyId = entity.CustomerId;
         }
     }
-    private entityObjectTableName: string;
-    get EntityObjectTableName() { return this.entityObjectTableName; }
-    set EntityObjectTableName(value: string) {
-        if (this.entityObjectTableName != value) {
-            this.entityObjectTableName = value;
-            if (this.EntityObjectTableName == "Shipment") {
-                this.EntityNumberTitle = "Shipment Number";
-            }
-            else {
-
-                this.EntityNumberTitle = "Quote Number";
-            }
-            this.GetEntityLinkNumberVisibility();
-        }
-    }
+    EntityObjectTableName: string;
     ChooseEntity() {
         if (this.IsTicketEditEnabled) {
             var logWindow = new LogitudeWindow();

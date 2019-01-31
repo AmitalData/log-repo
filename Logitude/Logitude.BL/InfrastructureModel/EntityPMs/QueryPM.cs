@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
-using System.ServiceModel.DomainServices.Server;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.InfrastructureModel.EntityPMs
 {
@@ -41,35 +38,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool IsNewFromTenantZeroOnly { get; set; }
         public string NewViewName { get; set; }
         public string EditWizardComponentPath { get; set; }
-        public bool SharedWithAll { get; set; }
-        public bool SharedWithSpecificUsers { get; set; }
-        public string SharedByUserId { get; set; }
-        public string SharedByUserName { get; set; }
-        public string SharedByUserEmail { get; set; }
-
-        private List<SharedUserQueryPM> sharedUserQueries;
-        [Include]
-        [Association("QueryPMSharedUserQueryPM", "Id", "QueryId")]
-        [Composition]
-        [DataMember]
-        public virtual List<SharedUserQueryPM> SharedUserQueries
-        {
-            get
-            {
-                if (sharedUserQueries == null)
-                {
-                    sharedUserQueries = new List<SharedUserQueryPM>();
-                }
-
-                return sharedUserQueries;
-            }
-
-            set
-            {
-                sharedUserQueries = value;
-            }
-        }
-        public bool SpotlightModeActivated { get; set; }
 
     }
 }

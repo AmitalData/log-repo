@@ -100,6 +100,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         //{
                         //    ActivityLog.AddAcitivityLog(entityPM.Tenant, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
+                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "SATInterfaceSetting");
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -159,6 +160,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         //   ActivityLog.AddAcitivityLog(entityPM.Tenant, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
 
+                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "SATInterfaceSetting");
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);

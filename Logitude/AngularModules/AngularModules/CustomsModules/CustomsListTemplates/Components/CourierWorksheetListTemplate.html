@@ -54,6 +54,9 @@
         text-align: center;
         font-size: 15px;
         list-style: none;
+        background-color: #F2F2F2;
+        background-clip: padding-box;
+        border: .5px solid #45494A;
     }
 
     .P-button-drop-menu li span {
@@ -126,11 +129,6 @@
         <span *ngIf="_CourierWorksheet['MamanStatusCode'] == 1 && _CourierWorksheet['AcceptanceStatusCode'] == 2">{{'Customs.CourierMaster.Available.NotAvailable' | TextCodeTranslationPipe }}</span>
     </div>
 
-    <div class="TextTrimming" *ngIf="fieldName == 'SpecialActionStatus'">
-        <img *ngIf="_CourierWorksheet['SpecialActionStatus'] == 'V'" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
-        <img *ngIf="_CourierWorksheet['SpecialActionStatus'] == 'X'" src="./Images/Icons/RedX.png" [attr.title]="_CourierWorksheet['SpecialActionsErrorXml']" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
-    </div>
-
     <div class="TextTrimming" *ngIf="fieldName == 'IsClosedForFollowUp'" style="text-align:right;">
         <span *ngIf="!_CourierWorksheet['IsClosedForFollowUp']">{{'Customs.CourierMaster.Status.Open'  | TextCodeTranslationPipe }}</span>
         <span *ngIf="_CourierWorksheet['IsClosedForFollowUp']">{{'Customs.CourierMaster.Status.Close'  | TextCodeTranslationPipe }}</span>
@@ -158,9 +156,9 @@
     <div class="TextTrimming" *ngIf="fieldName == 'CourierPendingReasonName'" style="text-align:right;">
         <span data-toggle="tooltip" data-placement="bottom" title="{{_CourierWorksheet['PendingRemarks']}}">{{_CourierWorksheet.CourierPendingReasonName}}</span>
     </div>
-
-    <div *ngIf="fieldName == 'CourierPendingReasonCode'" (click)="ButtonClick($event)">
-        <div (click)="ButtonClick($event)">
+    <!--style="width: 14px; height: 14px; margin-top:7.5px; margin-right:16.5px; text-align:right;background-color:red"-->
+    <div *ngIf="fieldName == 'CourierPendingReasonCode'"  style="text-align:right;cursor:default;height:35px;width:120px;" (click)="ButtonClick($event)">
+        <div (click)="ButtonClick($event)" style="margin:3px;">
             <courier-filter-button #MyDropdownMenuFilterComponent (DropdownMenuButtonClicked)="DropdownMenuButtonClicked(event);PrepareDropdownMenuFilter($event,_CourierWorksheet['DeclarationId'])">
                 <div class="class-filter-content">
                     <div>
@@ -169,7 +167,7 @@
                 </div>
 
                 <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose()">
-                    <ul *ngIf="_IsDropdownMenuFilterReady" class="P-button-drop-menu" style="width:120px; ">
+                    <ul *ngIf="_IsDropdownMenuFilterReady" class="P-button-drop-menu" style="width:110px; ">
                         <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] == null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
                             <span>הזנת Pending</span>
                         </li>
@@ -180,25 +178,29 @@
                             <span>מחיקת Pending</span>
                         </li>
 
-                        <li style="text-align: center; border-bottom: 1px solid #555;"></li> 
-
-                        <li *ngIf="!IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','2');">
-                            <span>הפקת תעודת עיכוב</span>
-                        </li>
-                        <li *ngIf="IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','2');">
-                            <span>ביטול תעודת עיכוב</span>
-                        </li>
-                        <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); MamanStickerCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
-                            <span>הפקת מדבקה</span>
-                        </li>
-                        <li *ngIf="IsMamanSticker" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','4');">
-                            <span>ביטול הפקת מדבקה</span>
-                        </li>
-                        <li *ngIf="!IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','5');">
-                            <span>הדפסת מסמכים</span>
-                        </li>
-                        <li *ngIf="IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','5');">
-                            <span>ביטול הדפסת מסמכים</span>
+                        <li>
+                            <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();">
+                                <ul class="P-button-drop-menu" style="width:110px; ">
+                                    <li *ngIf="!IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','2');">
+                                        <span>הפקת תעודת עיכוב</span>
+                                    </li>
+                                    <li *ngIf="IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','2');">
+                                        <span>ביטול תעודת עיכוב</span>
+                                    </li>
+                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); MamanStickerCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                                        <span>הפקת מדבקה</span>
+                                    </li>
+                                    <li *ngIf="MamanStickerDetails != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','4');">
+                                        <span>ביטול הפקת מדבקה</span>
+                                    </li>
+                                    <li *ngIf="!IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','5');">
+                                        <span>הדפסת מסמכים</span>
+                                    </li>
+                                    <li *ngIf="IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','5');">
+                                        <span>ביטול הדפסת מסמכים</span>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -207,7 +209,7 @@
     </div>
 
 
-    <div class="TextTrimming" style="cursor:default;height:35px;width:120px;" *ngIf="fieldName == 'SendSplitButton'" (click)="ButtonClick($event)">
+    <div class="TextTrimming" style="cursor:default;height:35px;width:120px;" *ngIf="fieldName == 'SendSplitButton'"  (click)="ButtonClick($event)">
         <div style="text-align:right;margin-top:5px;cursor:default" (click)="ButtonClick($event)">
             <split-button #currSplitButtonComponent
                           [IsDisabled]="_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O'   "
@@ -216,7 +218,7 @@
                           [ButtonText]="'שלח'"
                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="66">
 
-                <div class="class-MENUSplitButton-content" style="cursor:pointer">
+                <div class="class-MENUSplitButton-content"  style="cursor:pointer">
                     <div>
                         <ul class="x-button-drop-menu" style="width:90px;">
 
@@ -244,7 +246,7 @@
         </div>
     </div>
 
-    <div class="TextTrimming" *ngIf="fieldName == 'MyDeclarationCheckBox'" style="cursor:pointer">
+    <div class="TextTrimming" *ngIf="fieldName == 'MyDeclarationCheckBox'" style="cursor:pointer"  >
         <div style="width: 16px; height:16px; margin-top:10px">
             <input class="CenterCenter" style="box-shadow:none ;width: 16px; height:16px; text-align:center" type="checkbox" [checked]="IsDeclarationChecked" (click)="OnCheckedWithSystemEvent($event)" />
         </div>

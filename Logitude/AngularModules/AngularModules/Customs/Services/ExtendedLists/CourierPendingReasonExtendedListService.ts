@@ -46,18 +46,9 @@ export class CourierPendingReasonExtendedListService {
 
         return Observable.defer(() => {
             return this._http.delete(this._apiUrl + '/DeleteCourierPendingReasonUnifreightStatus/?' + 'courierPendingReasonCode=' + courierPendingReasonCode, { headers: authHeader }).map(response => {
-                var serviceResponse: ServiceResponse = response.json();
-                var _mappedListsArray: Array<CourierPendingReasonPM> = [];
-                if (serviceResponse.Result) {
-                    for (var key in serviceResponse.Result) {
-
-                        var entity: CourierPendingReasonPM;
-                        entity = this.MapJsonToEntityPM(serviceResponse.Result[key]);
-                        _mappedListsArray.push(entity);
-                    }
-                }
-
-                serviceResponse.Result = _mappedListsArray;
+                var myJsonResult = response.json();
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myJsonResult;
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });

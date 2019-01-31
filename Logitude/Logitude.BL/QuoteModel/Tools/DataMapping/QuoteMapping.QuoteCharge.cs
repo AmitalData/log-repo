@@ -33,7 +33,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.CostMinAmount = itemPM.CostMinAmount;
             itemPoco.CostMaxAmount = itemPM.CostMaxAmount;
             itemPoco.SaleMinAmount = itemPM.SaleMinAmount;
-            itemPoco.SaleMaxAmount = itemPM.SaleMaxAmount;
 
             itemPoco.CostCurrencyId = itemPM.CostCurrencyId;
             itemPoco.CostExchangeRate = itemPM.CostExchangeRate;

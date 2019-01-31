@@ -7,7 +7,6 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
 using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -85,71 +84,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                 };
             return advancedFilters;
 
-        }
-
-        public IQueryable<AdvancedQueryFilterPM> GetAdvancedQueryFilterPMsByTenantAndUserAndQuery(int tenant, string userId, string queryId)
-        {
-            IQueryable<AdvancedQueryFilterPM> advancedFilters = null;
-            Query myQuery = repository.context.Queries.Where(d => d.Id == queryId).FirstOrDefault();
-
-            if (myQuery != null)
-            {
-                if (!string.IsNullOrEmpty(myQuery.SharedByUserId) && myQuery.SharedByUserId != userId)
-                {
-                    advancedFilters = from a in repository.context.AdvancedQueryFilters.Include("ObjectField").Include("Query").Include("Query.ObjectTable")
-                                      where (a.Tenant == tenant && a.Query.UserId == myQuery.SharedByUserId && a.QueryId == queryId) || a.Tenant == 0
-                                      select new AdvancedQueryFilterPM()
-                                      {
-                                          DisplayInList = a.ObjectField.DisplayInList,
-                                          Id = a.Id,
-                                          IndexOrder = a.IndexOrder,
-                                          IsCustomFilter = a.ObjectField.IsCustomFilter,
-                                          IsPredefined = a.IsPredefined,
-                                          ObjectFieldId = a.ObjectFieldId,
-                                          ObjectFieldName = a.ObjectField.FieldName,
-                                          Operator = a.Operator,
-                                          PredefinedValue = a.PredefinedValue,
-                                          PredefinedValue2 = a.PredefinedValue2,
-                                          QueryCode = a.Query.Code,
-                                          QueryId = a.QueryId,
-                                          QueryObjectTableName = a.Query.ObjectTable.Name,
-                                          QueryUserId = a.Query.UserId,
-                                          Tenant = a.Tenant,
-                                          DataTypeCode = a.ObjectField.DataTypeCode,
-                                          ObjectFieldOperator = a.ObjectField.Operator,
-                                          UserId = a.UserId,
-                                      };
-                }
-
-                else
-                {
-                    advancedFilters = from a in repository.context.AdvancedQueryFilters.Include("ObjectField").Include("Query").Include("Query.ObjectTable")
-                                      where (a.Tenant == tenant && a.UserId == userId && a.QueryId == queryId) || a.Tenant == 0
-                                      select new AdvancedQueryFilterPM()
-                                      {
-                                          DisplayInList = a.ObjectField.DisplayInList,
-                                          Id = a.Id,
-                                          IndexOrder = a.IndexOrder,
-                                          IsCustomFilter = a.ObjectField.IsCustomFilter,
-                                          IsPredefined = a.IsPredefined,
-                                          ObjectFieldId = a.ObjectFieldId,
-                                          ObjectFieldName = a.ObjectField.FieldName,
-                                          Operator = a.Operator,
-                                          PredefinedValue = a.PredefinedValue,
-                                          PredefinedValue2 = a.PredefinedValue2,
-                                          QueryCode = a.Query.Code,
-                                          QueryId = a.QueryId,
-                                          QueryObjectTableName = a.Query.ObjectTable.Name,
-                                          QueryUserId = a.Query.UserId,
-                                          Tenant = a.Tenant,
-                                          DataTypeCode = a.ObjectField.DataTypeCode,
-                                          ObjectFieldOperator = a.ObjectField.Operator,
-                                          UserId = a.UserId,
-                                      };
-                }
-            }
-
-            return advancedFilters;
         }
 
         public IQueryable<AdvancedQueryFilterPM> GetAdvancedQueryFiltersByTenantAndNoUser(int tenant)

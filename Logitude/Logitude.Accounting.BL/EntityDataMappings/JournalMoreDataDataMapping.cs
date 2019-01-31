@@ -10,7 +10,6 @@ using Logitude.Server.Tools;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs; 
 using Logitude.Accounting.Data;
-using Simplog.Server.Infrastructure;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -20,12 +19,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(JournalMoreDataPM entityPM, JournalMoreData entityPOCO)
         {
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-                entityPOCO.JournalId = entityPM.JournalId;
-                entityPOCO.Tenant = entityPM.Tenant;
-
-            }
+            //throw new NotImplementedException();
         }
 
         public void CustomPOCOToPM(JournalMoreDataPM entityPM, JournalMoreData entityPOCO)

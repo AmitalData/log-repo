@@ -144,7 +144,7 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.SMSServiceUserId = setting.SMSServiceUserId;
                 LogitudeSettings.SMSServiceAuthToken = setting.SMSServiceAuthToken;
                 LogitudeSettings.SMSServicePhoneNumber = setting.SMSServicePhoneNumber;
-                LogitudeSettings.EmailSendingQuota = setting.EmailSendingQuota;
+
                 //LogitudeSettings.ABMProductId = setting.ABMProductId;
 
             }
@@ -233,7 +233,7 @@ namespace CommunicationWorkerRole
             var tst = false;
             if (tst)
             {
-                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "SchedularWorkerRole").ToList();
+                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "RevaluationWorkerRole").ToList();
             }
             foreach (var Service in BatchServicesDefinitions)
             {

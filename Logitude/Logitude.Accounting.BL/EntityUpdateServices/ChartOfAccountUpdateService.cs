@@ -20,9 +20,6 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.BL.Validators;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using System.Web;
-using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -263,33 +260,5 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             base.Validate(entityPM);
         }
-
-        protected override void AfterUpdating(ChartOfAccountPM entityPM, EntityPM entityParentPM)
-        {
-            //
-            // check child and his parents [All Levels]  - TASK 44804
-            //
-            string parentErrorMsg = ChartOfAccountValidator.CheckParentChild(entityPM.ParentId, entityPM.Id, entityPM.Tenant);
-            if(!string.IsNullOrWhiteSpace(parentErrorMsg))
-                throw new ApplicationException(parentErrorMsg);
-
-        }
-
-
-        private ContactPM GetLoggedContact(int tenant)
-        {
-            //email
-            string email = "";
-            if (HttpContext.Current != null)
-                email = HttpContext.Current.User.Identity.Name;
-            else
-                email = "system@tenant" + tenant.ToString() + ".com";
-
-            //contact
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            ContactPM contactPM = contactQuery.GetContactByEmailOnly(email, tenant);
-            return contactPM;
-        }
-
     }
 }

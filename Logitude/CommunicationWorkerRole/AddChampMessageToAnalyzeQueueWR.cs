@@ -14,7 +14,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure;
-using Logitude.Server.Tools.QueueService;
 
 namespace CommunicationWorkerRole
 {
@@ -43,22 +42,20 @@ namespace CommunicationWorkerRole
                                 message.Complete();
                                 LogDoneItemInMemory();
                             }
-                        }                       
-                    }
+                        }
+                       
 
+                    }
                     catch (Exception e)
                     {
                         ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "ChampMessageInWR : SaveMessageToAnalyzeQueue Method", null);
-
                         if (message != null)
                         {
                             message.Abandon();
                         }
-
                         Thread.Sleep(10000);
                     }
                 }
-
                 else
                 {
                     Thread.Sleep(60000);
@@ -71,7 +68,7 @@ namespace CommunicationWorkerRole
         {
             AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
             byte[] messageBytes = Encoding.ASCII.GetBytes(messageData);
-
+            
             AnalyzeQueue analyzeQueue = new AnalyzeQueue()
             {
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
@@ -88,12 +85,10 @@ namespace CommunicationWorkerRole
             analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
             analyzeQueueReposiory.Add(analyzeQueue);
             analyzeQueueReposiory.SubmitChanges();
-
-            DbQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("ChampAnalyzer", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
-            queueservice.Complete();
         }
+
+
+
 
         public override bool OnStart()
         {
@@ -107,32 +102,32 @@ namespace CommunicationWorkerRole
 
             // For information on handling configuration changes
             // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
-            //RoleEnvironment.Changing += RoleEnvironmentChanging;
+            RoleEnvironment.Changing += RoleEnvironmentChanging;
 
             if (!string.IsNullOrEmpty(LogitudeSettings.ChampEnv))
             {
-                //string[] roleId = null;
+                string[] roleId = null;
 
-                string subscribtionName = "ChampSubScription";
-                //try
-                //{
-                //    roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
-                //}
-                //catch
-                //{
-                //    roleId = new string[] { "1", "2"};
+                string subscribtionName;
+                try
+                {
+                    roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
+                }
+                catch
+                {
+                    roleId = new string[] { "1", "2"};
  
-                //}
+                }
 
-                //if (LogitudeSettings.DeploymentStage == "Dev")
-                //{
-                //    subscribtionName = Environment.MachineName + "_" + roleId[roleId.Length - 1];
-                //}
+                if (LogitudeSettings.DeploymentStage == "Dev")
+                {
+                    subscribtionName = Environment.MachineName + "_" + roleId[roleId.Length - 1];
+                }
 
-                //else
-                //{
-                //    subscribtionName = roleId[roleId.Length - 1];
-                //}
+                else
+                {
+                    subscribtionName = roleId[roleId.Length - 1];
+                }
 
                 subscriptionClient = Microsoft.ServiceBus.Messaging.SubscriptionClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(LogitudeSettings.DeploymentStage), "champmessageintopic", subscribtionName);
             }

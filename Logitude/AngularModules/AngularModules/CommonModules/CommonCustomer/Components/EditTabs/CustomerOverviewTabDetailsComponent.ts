@@ -1,4 +1,4 @@
-import {Component, ChangeDetectorRef, OnInit, AfterViewInit,Output,EventEmitter,ViewEncapsulation} from '@angular/core';
+﻿import {Component, ChangeDetectorRef, OnInit, AfterViewInit,Output,EventEmitter,ViewEncapsulation} from '@angular/core';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -106,12 +106,7 @@ export class CustomerOverviewTabDetailsComponent extends BaseComponent implement
     set SelectedDirectionFilterShipment(newValue: string) {
         if (this.selectedDirectionFilterShipment != newValue) {
             this.selectedDirectionFilterShipment = newValue;
-            if (this.SelectedTimeRangeItem.Index == "-1") {
-                this.LoadActivityStatus();
-            }
-            else {
-                this.CommonFiltersShipment();
-            }
+            this.CommonFiltersShipment();
         }
     }
 
@@ -120,13 +115,7 @@ export class CustomerOverviewTabDetailsComponent extends BaseComponent implement
     set SelectedTransportFilterShipment(newValue: string) {
         if (this.selectedTransportFilterShipment != newValue) {
             this.selectedTransportFilterShipment = newValue;
-
-            if (this.SelectedTimeRangeItem.Index == "-1") {
-                this.LoadActivityStatus();
-            }
-            else {
-                this.CommonFiltersShipment();
-            }
+            this.CommonFiltersShipment();
         }
 
     }
@@ -173,21 +162,30 @@ export class CustomerOverviewTabDetailsComponent extends BaseComponent implement
                 LastFilterClass.UpdateFilter(this.filterControlNameSpace, "ActivityFromDate", (value == null ? null : ServiceHelper.GetDateString(this.ActivityFromDate)));
                 LastFilterClass.UpdateFilter(this.filterControlNameSpace, "ActivityToDate", (value == null ? null : ServiceHelper.GetDateString(this.ActivityToDate)));
             }
+            this.LoadQuires();
         }
-        this.LoadQuires();
-
     }
 
   
-    LoadActivityStatus() {
+
+
+    LoadQuires() {
+        var service = new DashboardDomainService(); 
         var service = new DashboardDomainService();
 
         if (this.SelectedTimeRangeItem.Index == "-1") {
             if (this.ActivityFromDate != null && this.ActivityToDate != null) {
-                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "", this.SelectedDirectionFilterShipment, this.SelectedTransportFilterShipment, this.Customer.Id).subscribe(myResult => {
+                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "", this.Customer.Id).subscribe(myResult => {
                     this.FinalShipmentData = myResult;
                     this.CommonFiltersShipment();
-                });            
+                });
+
+                service.GetShipmentByDirectionAndTransmodeCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.Customer.Id).subscribe(myResult => {
+                    this.FinalDirectionAndTransportData = myResult;
+                    this.CommonFiltersDirectionAndTransportMode();
+                });
+
+                this.CommonFiltersCountries();
             }
         }
         else {
@@ -202,28 +200,6 @@ export class CustomerOverviewTabDetailsComponent extends BaseComponent implement
                 this.FinalShipmentData = myResult;
                 this.CommonFiltersShipment();
             });
-        }
-    }
-
-
-    LoadQuires() {
-        var service = new DashboardDomainService(); 
-        this.LoadActivityStatus();
-        if (this.SelectedTimeRangeItem.Index == "-1") {          
-                service.GetShipmentByDirectionAndTransmodeCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.Customer.Id).subscribe(myResult => {
-                    this.FinalDirectionAndTransportData = myResult;
-                    this.CommonFiltersDirectionAndTransportMode();
-                });
-                this.CommonFiltersCountries();
-            }
-        
-        else {
-            var days = this.ComputeDays();
-            var month: number = 0;
-            if (days == -1095) {
-                month = -36;
-                days = 0;
-            }         
             service.GetShipmentByDirectionAndTransmode(this.SelectedDateTypeItem.Index, month, days, this.TenantPM.Id, this.Customer.Id).subscribe(myResult => {
                 this.FinalDirectionAndTransportData = myResult;
                 this.CommonFiltersDirectionAndTransportMode();

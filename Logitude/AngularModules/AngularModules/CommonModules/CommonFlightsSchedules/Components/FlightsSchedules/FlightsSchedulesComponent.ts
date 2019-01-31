@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -43,6 +43,7 @@ export class FlightsSchedulesComponent extends BaseComponent {
     private myPartnersDomainService: PartnersDomainService;
     public myFVRWebService: FVRWebService;
     public myFlightsSchedulesRequestPMService: FlightsSchedulesRequestPMService;
+    private TenantManagmentPM: any;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     public IsResourcesReady: boolean = false;
     public IsSimulateVisible: boolean = false;
@@ -56,6 +57,7 @@ export class FlightsSchedulesComponent extends BaseComponent {
         this.EntityPM.CreateDate = DateTool.GetCurrentDateAsUtc();
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
 
+        this.TenantManagmentPM = InfraSettings.TenantManagementPM;
         this.myAirlineService = new AirlineListService();
         this.myPartnersDomainService = new PartnersDomainService();
         this.myFVRWebService = new FVRWebService();
@@ -220,7 +222,7 @@ export class FlightsSchedulesComponent extends BaseComponent {
     private IsAirlinepNeedsRegistration: boolean = false;
     private IsAirlineRegistered: boolean = false;
     private LoadAllowedAirline() {
-        if (SessionLocator.TenantManagementJS.IsRestrictedByAirline) {
+        if (this.TenantManagmentPM.IsRestrictedByAirline) {
             if (AppTool.IsNullOrEmpty(this.AirlineId)) {
                 this.myPartnersDomainService.GetAllowedAirlineId().subscribe((myResponse: ServiceResponse) => {
                     if (myResponse != null) {
@@ -378,7 +380,7 @@ export class FlightsSchedulesComponent extends BaseComponent {
                 messageWindow.Show(validationErrorMessage);
             }
 
-            else if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TTY)) {
+            else if (AppTool.IsNullOrEmpty(this.TenantManagmentPM.TTY)) {
                 SessionLocator.CurrentSession.StopBusyIndicator();
                 var validationErrorMessage = "Tenant communication parameter (TTY) is missing";
                 var messageWindow = new MessageWindow();
@@ -466,7 +468,7 @@ export class FlightsSchedulesComponent extends BaseComponent {
                 messageWindow.Show(validationErrorMessage);
             }
 
-            else if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TTY)) {
+            else if (AppTool.IsNullOrEmpty(this.TenantManagmentPM.TTY)) {
                 SessionLocator.CurrentSession.StopBusyIndicator();
                 var validationErrorMessage = "Tenant communication parameter (TTY) is missing";
                 var messageWindow = new MessageWindow();

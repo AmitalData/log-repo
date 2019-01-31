@@ -54,11 +54,6 @@ export class GLAccountMoreDataPM {
     public set TotalOpenChequesInLocalCur(newValue: number) { if (this.totalOpenChequesInLocalCur != newValue) { this.totalOpenChequesInLocalCur = newValue; this.MarkAsDirty("TotalOpenChequesInLocalCur"); } }
        
 	 
-    private totFutureOpenChequesInLocalCur: number;
-    public get TotFutureOpenChequesInLocalCur() { return this.totFutureOpenChequesInLocalCur; }
-    public set TotFutureOpenChequesInLocalCur(newValue: number) { if (this.totFutureOpenChequesInLocalCur != newValue) { this.totFutureOpenChequesInLocalCur = newValue; this.MarkAsDirty("TotFutureOpenChequesInLocalCur"); } }
-       
-	 
 
     public OldEntityPM: GLAccountMoreDataPM;
 		

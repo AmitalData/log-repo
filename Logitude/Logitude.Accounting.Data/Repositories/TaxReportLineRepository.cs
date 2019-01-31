@@ -23,12 +23,6 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.TaxReportId == reconciliationKeys.Id
                     select a).ToList();
         }
-        public IQueryable<TaxReportLine> GetByReportId(string reportId, int tenant)
-        {
-            return (from a in context.TaxReportLines
-                    where a.TaxReportId == reportId && a.Tenant == tenant
-                    select a);
-        }
 
     }
 

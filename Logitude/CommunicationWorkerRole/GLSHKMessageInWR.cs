@@ -92,7 +92,7 @@ namespace CommunicationWorkerRole
             BatchServiceCode = "GLSHKMessageIn";
             DoneItemsInRange = new Dictionary<DateTime, int>();
 
-            //RoleEnvironment.Changing += RoleEnvironmentChanging;
+            RoleEnvironment.Changing += RoleEnvironmentChanging;
             TopicDescription champMessageInTopic;
 
             try
@@ -108,9 +108,9 @@ namespace CommunicationWorkerRole
                 }
 
                 SubscriptionDescription myAgentSubscription;
-                //string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
-                //string subscribtionName = roleId[roleId.Length - 1];
-                string subscribtionName = "ChampSubScription";
+                string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
+                string subscribtionName = roleId[roleId.Length - 1];
+
                 if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(champMessageInTopic.Path, subscribtionName))
                 {
                     myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(champMessageInTopic.Path, subscribtionName);

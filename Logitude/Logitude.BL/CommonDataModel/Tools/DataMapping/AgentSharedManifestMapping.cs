@@ -37,7 +37,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.ToPortId = entityPM.ToPortId;
             entityPOCO.StatusCode = entityPM.StatusCode;
             entityPOCO.ShipmentLevelCode = entityPM.ShipmentLevelCode;
-            entityPOCO.CancelledBySenderAgent = entityPM.CancelledBySenderAgent;
 
         }
     }

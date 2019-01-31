@@ -38,8 +38,5 @@ export class WarehouseList {
 		MyWarehouse: boolean;
 		UsoCFDICode: string;
 		SATForeignRFC: string;
-		PrimaryContactName: string;
-		PrimaryContactEmail: string;
-		PrimaryContactPhone: string;
 	
 }

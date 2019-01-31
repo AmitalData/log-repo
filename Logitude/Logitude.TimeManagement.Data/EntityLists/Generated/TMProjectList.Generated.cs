@@ -54,8 +54,6 @@ namespace Logitude.TimeManagement.Data.EntityLists
        public string CategoryId  { get; set; }
        [DataMember]
        public bool IsProrated  { get; set; }
-       [DataMember]
-       public string ExternalProjectNumber  { get; set; }
    }
 
 }

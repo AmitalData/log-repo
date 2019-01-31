@@ -134,4 +134,4 @@ export class QuotePackagePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -19,8 +19,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Code { get; set; }
 
-        public string PartnerCode { get; set; }
-
         public string BankName { get; set; }
         public string BankAddress { get; set; }
         public string Swift { get; set; }
@@ -71,7 +69,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public string PartnerTypeName { get; set; }
         public string MainAddressId { get; set; }
-        public string BillingAddressId { get; set; }
         public string Website { get; set; }
         public string InvoiceCurrencyId { get; set; }
         public string VatTypeId { get; set; }
@@ -117,24 +114,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string SATForeignRFC { get; set; }
 
-        // used for customer API
-        private List<ContactPM> contacts;
-        [Include]
-        [Association("ContactsCards", "Id", "CardId")]
-        public virtual List<ContactPM> Contacts
-        {
-            get
-            {
-                if (contacts == null)
-                {
-                    contacts = new List<ContactPM>();
-                }
-                return contacts;
-            }
-            set { contacts = value; }
-        }
-        //////////////////////////////////////
-        
+
         private List<AddressPM> addresses;
         [Include]
         [Association("CardPMAddressPM", "Id", "CardId")]

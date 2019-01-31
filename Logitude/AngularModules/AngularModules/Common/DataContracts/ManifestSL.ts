@@ -1,7 +1,6 @@
 ﻿import { PartnerSL } from './PartnerSL';
 import { PortSL } from './PortSL';
 import { HouseSL } from './HouseSL';
-import { ShipmentPickUpDeliverySL } from './ShipmentPickUpDeliverySL';
 import {ShipmentPackagePM} from '../../Shipment/EntityPMs/ShipmentPackagePM';
 export class ManifestSL {
     public ShipmentNumber: string;
@@ -178,9 +177,6 @@ export class ManifestSL {
     public ValueOfGoodsCurrencyCode: string;
     public ValueOfGoodsCurrencyAddedManually: boolean;
 
-
-    ShipmentPickUp: ShipmentPickUpDeliverySL;
-    ShipmentDelivery: ShipmentPickUpDeliverySL;
 
     public get Houses(): Array<HouseSL> {
         if (this.houses == null) {

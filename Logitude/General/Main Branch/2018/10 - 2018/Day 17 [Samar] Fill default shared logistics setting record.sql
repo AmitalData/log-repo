@@ -14,8 +14,8 @@ BEGIN
         if not exists (select Id from SharedLogisticsSettings where Tenant = @Tenant)
         begin 
 		    set @RecordId = @Tenant
-            insert into SharedLogisticsSettings(Id, Tenant, IsAgentShared, IsShipperNotExporterShared, IsNotify1Shared, IsNotify2Shared, IsFreightForwarderShared, IsColoaderShared, IsConsigneeNotImporterShared, IsMainCarrierShared, IsPickDelivCarriesShared, IsInvoicesMenuEnabled, IsMoneyTabEnabled, IsIssuingCarrierAgentShared, IsCustomsAgentExportShared, IsCustomsAgentImportShared, IsCustomClearancePoinShared, IsConsolidatorShared, IsReleasingAgentShared)
-            values(@RecordId, @Tenant, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )                            
+            insert into SharedLogisticsSettings(Id, Tenant, IsAgentShared, IsShipperNotExporterShared, IsNotify1Shared, IsNotify2Shared, IsFreightForwarderShared, IsColoaderShared, IsConsigneeNotImporterShared, IsMainCarrierShared, IsPickDelivCarriesShared, IsInvoicesMenuEnabled, IsMoneyTabEnabled)
+            values(@RecordId, @Tenant, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )                            
         end 
 		
            FETCH NEXT FROM TenantsCursor INTO @Tenant      

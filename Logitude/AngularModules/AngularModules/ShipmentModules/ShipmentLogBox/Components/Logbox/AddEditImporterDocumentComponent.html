@@ -143,237 +143,276 @@
     <tr>
         <td>
             <table>
-                <tr style="height:1px;border-bottom:1px solid rgba(217, 218, 220, 1)">
+                <tr style="height:1px;">
+                    <td style="max-width:465px;">
+                        <div class="TextTrimming">
+                            <span class="TextTrimming" style="max-width:415px;text-align:left;font-size:16px;color:#1B90CB;text-overflow: ellipsis;">{{Title}}</span>
+                        </div>
+                    </td>
                     <td>
                         <table>
                             <tr>
-                                <td style="width:56%;">
-                                    <div class="TextTrimming">
-                                        <span class="TextTrimming" style="max-width:415px;text-align:left;font-size:16px;color:#1B90CB;text-overflow: ellipsis;">{{Title}} - Code {{Code}}</span>
+                                <td>
+                                    <div *ngIf="EntityPm.HasFile == true">
+                                        <div style="float:left;">
+                                            <button class="Button" style="width: 133px;margin-right: 15px;font-size: 12px;height:24px;color:gray;float:left;" (click)="ShareWithAgent()" [class.DisableSharedWithAgentButton]="!IssharedWithAgentButtonEnabled"  [class.Disable]="EntityPm.SignRequestByUserEmail">
+                                                <!--<img src="./Images/ShareWithAgentGray.png" /> Share With Agent-->
+                                                <div *ngIf="!EntityPm.IsSharedWithForwarder"><img src="./Images/ShareWithAgentGray.png" style="margin-top: -3px;margin-right: 3px;" />Share With {{AgentLable}}</div>
+                                                <div *ngIf="EntityPm.IsSharedWithForwarder"><img src="./Images/SharedWithAgentB.png" style="margin-top: -3px;margin-right: 3px;" />Shared With {{AgentLable}}</div>
+                                            </button>
+                                            <img src="./Images/SharedNote.png" style="width:22px;height:22px;float:left" class="ActionButtons" (mouseout)="HideNoteClicked()" (mouseover)="ShowNoteClicked()" />
+                                        </div>
+                                        <div style="float:right;">
+                                            <img src="./Images/close.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" [class.Disable]="EntityPm.IsSharedWithForwarder || EntityPm.SignRequestByUserEmail" title="Delete" (click)="DeleteDocumentFile()" />
+                                            <img src="./Images/sendmail.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" title="Send" (click)="SendDocumentFile()" />
+                                            <img src="./Images/DownArrow.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" title="DownLoad" (click)="DownloadDocumentFile()" />
+                                            <img [class.DisableSharedWithAgentButton]="!IssharedWithAgentButtonEnabled" [hidden]="!DocumentTypeId" *ngIf="IsPDF" src="./Images/UploadLB.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" title="Upload File" (click)="UploadClicked()" />
+                                            <div style="float:right;margin-left:3px;margin-top:1px;" *ngIf="!EntityPm.SignRequestByUserEmail">
+                                                <img style="width:20px;height:20px;" *ngIf="EntityPm.IsDigitallySigned" src="./Images/DigitallySigned.png" [title]="EntityPm.SignersList" />
+                                                <img style="width:20px;height:20px;cursor:pointer;" *ngIf="!EntityPm.IsDigitallySigned" src="./Images/DigitallySignedG.png" (click)="SetDigitallySigned(EntityPm)" />
+                                            </div>
+                                            <div style="float:right;margin-left:3px;margin-top:1px;width:22px;height:22px;" *ngIf="EntityPm.SignRequestByUserEmail">
+                                                <img src="./Images/BusyIndicator.gif" style="position:absolute;width:22px;height:22px;"/>
+                                                <img src="./Images/DigitallySignedO.png" style="position:absolute;top:6px;right:5px;"/>
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
-                                <td style="width:50%;">
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                <div *ngIf="EntityPm.HasFile == true">
-                                                    <div style="float:left;">
-                                                        <button class="Button" style="width: 133px;margin-right: 15px;font-size: 12px;height:24px;color:gray;float:left;" (click)="ShareWithAgent()" [class.DisableSharedWithAgentButton]="!IssharedWithAgentButtonEnabled" [class.Disable]="EntityPm.SignRequestByUserEmail">
-                                                            <!--<img src="./Images/ShareWithAgentGray.png" /> Share With Agent-->
-                                                            <div *ngIf="!EntityPm.IsSharedWithForwarder"><img src="./Images/ShareWithAgentGray.png" style="margin-top: -3px;margin-right: 3px;" />Share With {{AgentLable}}</div>
-                                                            <div *ngIf="EntityPm.IsSharedWithForwarder"><img src="./Images/SharedWithAgentB.png" style="margin-top: -3px;margin-right: 3px;" />Shared With {{AgentLable}}</div>
-                                                        </button>
-                                                        <img src="./Images/SharedNote.png" style="width:22px;height:22px;float:left" class="ActionButtons" (mouseout)="HideNoteClicked()" (mouseover)="ShowNoteClicked()" />
-                                                    </div>
-                                                    <div style="float:right;">
-                                                        <img src="./Images/close.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" [class.Disable]="EntityPm.IsSharedWithForwarder || EntityPm.SignRequestByUserEmail" title="Delete" (click)="DeleteDocumentFile()" />
-                                                        <img src="./Images/sendmail.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" title="Send" (click)="SendDocumentFile()" />
-                                                        <img src="./Images/DownArrow.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" title="DownLoad" (click)="DownloadDocumentFile()" />
-                                                        <img [class.DisableSharedWithAgentButton]="!IssharedWithAgentButtonEnabled" [hidden]="!DocumentTypeId" *ngIf="IsPDF" src="./Images/UploadLB.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" title="Upload File" (click)="UploadClicked()" />
-                                                        <div style="float:right;margin-left:3px;margin-top:1px;" *ngIf="!EntityPm.SignRequestByUserEmail">
-                                                            <img style="width:20px;height:20px;" *ngIf="EntityPm.IsDigitallySigned" src="./Images/DigitallySigned.png" [title]="EntityPm.SignersList" />
-                                                            <img style="width:20px;height:20px;cursor:pointer;" *ngIf="!EntityPm.IsDigitallySigned" src="./Images/DigitallySignedG.png" (click)="SetDigitallySigned(EntityPm)" />
-                                                        </div>
-                                                        <div style="float:right;margin-left:3px;margin-top:1px;width:22px;height:22px;" *ngIf="EntityPm.SignRequestByUserEmail">
-                                                            <img src="./Images/BusyIndicator.gif" style="position:absolute;width:22px;height:22px;" />
-                                                            <img src="./Images/DigitallySignedO.png" style="position:absolute;top:6px;right:5px;" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <img id="ShareNote" *ngIf="ShowNote == true" src="./Images/ShareWithAgentNote.png" style="position:fixed;z-index:1;margin-left: 35px;" class="ActionButtons" />
-                                            </td>
-                                        </tr>
-                                    </table>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img id="ShareNote" *ngIf="ShowNote == true" src="./Images/ShareWithAgentNote.png" style="position:fixed;z-index:1;margin-left: 35px;" class="ActionButtons" />
                                 </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
-
-                <tr  style="height:90px;border-bottom:1px solid rgba(217, 218, 220, 1)">
-                    <td >
-                        <div>
+                <tr>
+                    <td style="width:56%;" [class.DisableSharedWithAgentButton]="!IssharedWithAgentButtonEnabled">
+                        <div style="height:100%;border-top:1px solid #BCBEC0;margin-right:5px;">
                             <table>
-                                <tr>
-                                    <td style="width:50%">
-                                        <table>
-                                            <tr style="height:40px;">
-                                                <td style="width:120px">
-                                                    <LogLabel [ObjectFieldName]="'DocumentTypeId'" [ObjectTableName]="'DocumentsFiling'" [DataContext]="DataContext" [Text]="'Document Type'"></LogLabel>
-                                                </td>
-                                                <td>
-                                                    <ul class="FiltersMenu" style="float: left;width:235px;" *ngIf="TypeSelected == false">
-                                                        <li *ngFor="let item of TopTypes" [title]="item.Name" (click)="itemClicked(item.Id,item.Name)" (mouseover)="itemMouseOver(item.Id)" style="width:45px;" [class.SelectedFilter]="DocumentTypeId === item.Id">
-                                                            {{item.OrderedDisplayName}}
-                                                        </li>
-                                                        <li (click)="itemClicked('O','')" (mouseover)="itemMouseOver('O')" style="width:55px;" (mouseleave)="itemMouseLeave('O')" [class.SelectedFilter]="SelectedValue === 'O'">
-                                                            Others
-                                                        </li>
-                                                    </ul>
-                                                    <LogLov *ngIf="ShowTypes == true" [LogitudeForm]="myForm" style="float: left;width: 130px;margin-left: 5px;"
-                                                            [ObjectFieldName]="'DocumentTypeId'"
-                                                            [DataContext]="DataContext" [QueryFilterItems]="MyInActiveFilter"
-                                                            (SelectedItemChanged)="OnDocumentTypeChanged($event)"
-                                                            [LookUpTableName]="'DocumentType'">
-                                                    </LogLov>
-                                                    <div *ngIf="TypeSelected == true">
-                                                        <span style="color:#00C3FF;">{{SelectedName}}<img style="margin-left:5px;cursor:pointer;" src="./Images/RedX.png" (click)="RedxClick()" /></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr style="height:40px;">
-                                                <td style="width:120px">
-                                                    <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="'DocumentsFiling'" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td><LogTextBox [LogitudeForm]="myForm" [ObjectFieldName]="'Description'" [DataContext]="DataContext" [Text]="Description"></LogTextBox></td>
-                                            </tr>
-
-
-                                            <!--<tr style="height:40px;">
-                                                <td>
-                                                    <span *ngIf="MetaDataVisibility == true" style="font-size:14px;color:#00C3FF;margin-left:10px;">Meta Data</span>
-                                                </td>
-                                            </tr>
-                                            <tr style="height:40px;" *ngFor="let item of DocumentTypeMetaData">
-                                                <td>
-                                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
-                                                        {{item.DocumentsMetaDataTypeEnglishName}}
-                                                    </label>
-                                                </td>
-                                            </tr>-->
-
-
-                                            <!--<tr style="height:40px;" *ngFor="let item of DocumentTypeMetaData">
-                                                <td [ngSwitch]="item.DocumentsMetaDataTypeFormat.toLowerCase()">
-                                                    <div *ngSwitchCase="'boolean'" style="display: inline-flex;">
-                                                        <div>
-                                                            <BooleanFilter *ngIf="item.DocumentsFilingMetaDataValuePM" [SelectedValue]="item.DocumentsFilingMetaDataValuePM.MetaDataValue" (SelectedTypeValueChanged)="item.DocumentsFilingMetaDataValuePM.MetaDataValue = $event"></BooleanFilter>
-                                                        </div>
-                                                    </div>
-                                                    <div *ngSwitchCase="'string'" style="display: inline-flex;">
-                                                        <div>
-                                                            <LogTextBox *ngIf="item.DocumentsFilingMetaDataValuePM" [ObjectFieldName]="'MetaDataValue'" [DataContext]="item.DocumentsFilingMetaDataValuePM" [NoValidation]="true" [ObjectTableName]="'DocumentsFilingMetaDataValue'"></LogTextBox>
-                                                        </div>
-                                                    </div>
-                                                    <div *ngSwitchCase="'date'" style="display: inline-flex;">
-                                                        <div>
-                                                            <LogDatePicker *ngIf="item.DocumentsFilingMetaDataValuePM" [ObjectFieldName]="'MetaDataValue'" [DataContext]="item.DocumentsFilingMetaDataValuePM" [ObjectTableName]="'DocumentsFilingMetaDataValue'"></LogDatePicker>
-                                                        </div>
-                                                    </div>
-                                                    <div *ngSwitchCase="'int'" style="display: inline-flex;">
-                                                        <div>
-                                                            <LogTextBox *ngIf="item.DocumentsFilingMetaDataValuePM" [ObjectFieldName]="'MetaDataValue'" [DataContext]="item.DocumentsFilingMetaDataValuePM" [NoValidation]="true" [ObjectTableName]="'DocumentsFilingMetaDataValue'"></LogTextBox>
-                                                            <div style="height: 22px;min-height: 22px;max-height: 22px;width: 100%;border: 1px solid #AAAAAA;outline: none;font-size: 11px;color: #45494A;background: white;box-shadow: inset 0 0 3px #AAAAAA;">
-                        <input type="number" *ngIf="item.DocumentsFilingMetaDataValuePM" [(ngModel)]="item.DocumentsFilingMetaDataValuePM.MetaDataValue" />
-                    </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>-->
-
-
-
-                                        </table>
+                                <tr style="height:40px;">
+                                    <td>
+                                        <span style="font-size:16px;color:#6D7071;">Document Details (Meta Data)</span>
                                     </td>
-
-                                    <td style="height:75px;width:50%" [class.Disable]="IsPrivateLabel">
-
+                                </tr>
+                                <tr>
+                                    <td>
                                         <table>
                                             <tr>
-                                                <td style="width:57px;vertical-align:top"><span style="left:2px;top:5px;font-size:12px;;vertical-align:top"></span></td>
+                                                <td style="width:150px;">
+                                                    <table style="width:150px;">
+                                                        <tr style="height:40px;">
+                                                            <td>
+                                                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                                    Code
+                                                                </label>
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr style="height:40px;">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'DocumentTypeId'" [ObjectTableName]="'DocumentsFiling'" [DataContext]="DataContext" [Text]="'Document Type'"></LogLabel>
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr style="height:40px;">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="'DocumentsFiling'" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr style="height:40px;">
+                                                            <td>
+                                                                <span *ngIf="MetaDataVisibility == true" style="font-size:14px;color:#00C3FF;margin-left:10px;">Meta Data</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="height:40px;" *ngFor="let item of DocumentTypeMetaData">
+                                                            <td>
+                                                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                                    {{item.DocumentsMetaDataTypeEnglishName}}
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
                                                 <td>
-                                                    <div style="height:75px">
-                                                        <LogTextBox  style="height:80px" [Placeholder]="'Notes'" [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'Notes'" [IsMultiline]="true" [DataContext]="DataContext" [Text]="Notes"></LogTextBox>
-                                                    </div>
+                                                    <table>
+                                                        <tr style="height:40px;">
+                                                            <td>
+                                                                <label style="color: rgb(110, 113, 114);">
+                                                                    {{Code}}
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="height:40px;">
+                                                            <td>
+                                                                <ul class="FiltersMenu" style="float: left;width:235px;" *ngIf="TypeSelected == false">
+                                                                    <li *ngFor="let item of TopTypes" [title]="item.Name" (click)="itemClicked(item.Id,item.Name)" (mouseover)="itemMouseOver(item.Id)" style="width:45px;" [class.SelectedFilter]="DocumentTypeId === item.Id">
+                                                                        {{item.OrderedDisplayName}}
+                                                                    </li>
+                                                                    <li (click)="itemClicked('O','')" (mouseover)="itemMouseOver('O')" style="width:55px;" (mouseleave)="itemMouseLeave('O')" [class.SelectedFilter]="SelectedValue === 'O'">
+                                                                        Others
+                                                                    </li>
+                                                                </ul>
+                                                                <LogLov *ngIf="ShowTypes == true" [LogitudeForm]="myForm" style="float: left;width: 130px;margin-left: 5px;"
+                                                                        [ObjectFieldName]="'DocumentTypeId'"
+                                                                        [DataContext]="DataContext" [QueryFilterItems]="MyInActiveFilter"
+                                                                        (SelectedItemChanged)="OnDocumentTypeChanged($event)"
+                                                                        [LookUpTableName]="'DocumentType'">
+                                                                </LogLov>
+                                                                <div *ngIf="TypeSelected == true">
+                                                                    <span style="color:#00C3FF;">{{SelectedName}}<img style="margin-left:5px;cursor:pointer;" src="./Images/RedX.png" (click)="RedxClick()" /></span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="height:40px;">
+                                                            <td>
+                                                                <LogTextBox [LogitudeForm]="myForm" [ObjectFieldName]="'Description'" [DataContext]="DataContext" [Text]="Description"></LogTextBox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="height:40px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="height:40px;" *ngFor="let item of DocumentTypeMetaData">
+                                                            <td [ngSwitch]="item.DocumentsMetaDataTypeFormat.toLowerCase()">
+                                                                <div *ngSwitchCase="'boolean'" style="display: inline-flex;">
+                                                                    <div>
+                                                                        <BooleanFilter *ngIf="item.DocumentsFilingMetaDataValuePM" [SelectedValue]="item.DocumentsFilingMetaDataValuePM.MetaDataValue" (SelectedTypeValueChanged)="item.DocumentsFilingMetaDataValuePM.MetaDataValue = $event"></BooleanFilter>
+                                                                    </div>
+                                                                </div>
+                                                                <div *ngSwitchCase="'string'" style="display: inline-flex;">
+                                                                    <div>
+                                                                        <LogTextBox *ngIf="item.DocumentsFilingMetaDataValuePM" [ObjectFieldName]="'MetaDataValue'" [DataContext]="item.DocumentsFilingMetaDataValuePM" [NoValidation]="true" [ObjectTableName]="'DocumentsFilingMetaDataValue'"></LogTextBox>
+                                                                    </div>
+                                                                </div>
+                                                                <div *ngSwitchCase="'date'" style="display: inline-flex;">
+                                                                    <div>
+                                                                        <LogDatePicker *ngIf="item.DocumentsFilingMetaDataValuePM" [ObjectFieldName]="'MetaDataValue'" [DataContext]="item.DocumentsFilingMetaDataValuePM" [ObjectTableName]="'DocumentsFilingMetaDataValue'"></LogDatePicker>
+                                                                    </div>
+                                                                </div>
+                                                                <div *ngSwitchCase="'int'" style="display: inline-flex;">
+                                                                    <div>
+                                                                        <LogTextBox *ngIf="item.DocumentsFilingMetaDataValuePM" [ObjectFieldName]="'MetaDataValue'" [DataContext]="item.DocumentsFilingMetaDataValuePM" [NoValidation]="true" [ObjectTableName]="'DocumentsFilingMetaDataValue'"></LogTextBox>
+                                                                        <!--<div style="height: 22px;min-height: 22px;max-height: 22px;width: 100%;border: 1px solid #AAAAAA;outline: none;font-size: 11px;color: #45494A;background: white;box-shadow: inset 0 0 3px #AAAAAA;">
+                                                                            <input type="number" *ngIf="item.DocumentsFilingMetaDataValuePM" [(ngModel)]="item.DocumentsFilingMetaDataValuePM.MetaDataValue" />
+                                                                        </div>-->
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
                                             </tr>
-                                            
                                         </table>
+                                    </td>
+                                </tr>
+                                <tr style="height:110px;" [class.Disable]="IsPrivateLabel">
+                                    <td>
+                                        <div class="CustomTabControl">
+                                            <div class="CustomTabControlHead">
+                                                <ul style="width:57%;">
+                                                    <li style="width:120px;font-size:13px;color:#45494A;border-radius: 2px 2px 0 0;border: 1px solid #A3AEB9;border-bottom: 0px;">
+                                                        <div class="InnerChild" style="text-align:center;line-height:30px;">
+                                                            <span style="left:2px;top:5px;font-size:12px;">Notes</span>
+                                                        </div>
+                                                    </li>
 
+                                                </ul>
+                                            </div>
+                                            <div class="TabControlBody" style="height:calc(100% - 16px);">
+                                                <!-- Category -->
+                                                <div id="DocsTab" class="LocationDirectiveHolder">
+                                                    <div class="LocationDirective" LocationDirective Code="CAT" style="height:calc(100% - 6px);">
+                                                        <div class="BodyBackground MediaFill">
+                                                            <LogTextBox [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'Notes'" [IsMultiline]="true" [DataContext]="DataContext" [Text]="Notes"></LogTextBox>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style="height:10px;">
+                                    <td>
+                                        <div>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                     </td>
+                    <td style="width:50%;">
+                        <div style="border:1px solid #BCBEC0;border-radius:7px;height:100%;">
+                            <div style="height:30px;border-radius: 7px 7px 0 0;" class="HeaderBackGround"></div>
+                            <div style="height:calc(100% - 20px);">
+                                <input [attr.id]="UploadFileId" type="file" (change)="FileUploaderOpen($event)" style="display:none;width:65px" class="upload" />
+                                <table *ngIf="IsPDF"> 
+                                    <tr>
+                                        <td>
+                                            <iframe id="pdfQuoteViewerFrame" name="pdfQuoteViewerFrame" [src]="IFrameURI | SafePipe" style="width:100%;height:100%;margin-bottom:5px;">Loading...</iframe>
+                                            
+                                        </td>
+                                    </tr> 
 
+                                </table>
+                                <table *ngIf="!IsPDF">
+                                    <tr>
+                                        <td><div></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td> 
+                                            <table>
+                                                <tr *ngIf="FileStatusText == 'File Uploaded'">
+                                                    <td style="height:1px;text-align:center;">
+                                                        <span style="font-size: 21px;color:gray;">Document preview is available for</span>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="FileStatusText == 'File Uploaded'">
+                                                    <td style="height:1px;text-align:center;">
+                                                        <span style="font-size: 21px;color:gray;"> PDF files only.</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div style="text-align:center">
+                                                            <span style="font-size: 21px;color:gray;">{{FileStatusText}}</span>
+                                                            <button [disabled]="!DocumentTypeId" class="Button" style="width: 166px;margin-left: 124px;font-size: 16px;height:30px;color:black;" (click)="UploadClicked()" [class.DisableSharedWithAgentButton]="!IssharedWithAgentButtonEnabled" [class.Disable]="EntityPm.SignRequestByUserEmail">Browse</button>
+                                                        </div> 
+                                                    </td>
+                                                </tr>
+                                            </table> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><div></div></td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
 
-                <tr style="height:10px;"><td></td></tr>
-
-
-                <tr>
-               <td style="width:100%">
-                   <div style="height:100%;">
-         
-                       <div style="height:100%">
-                           <input [attr.id]="UploadFileId" type="file" (change)="FileUploaderOpen($event)" style="display:none;width:65px" class="upload" />
-                           <table *ngIf="IsPDF">
-                               <tr>
-                                   <td>
-                                       <iframe id="pdfQuoteViewerFrame" name="pdfQuoteViewerFrame" [src]="IFrameURI | SafePipe" style="width:100%;height:100%;margin-bottom:5px;">Loading...</iframe>
-
-                                   </td>
-                               </tr>
-
-                           </table>
-                           <table *ngIf="!IsPDF">
-                               <tr>
-                                   <td><div></div></td>
-                               </tr>
-                               <tr>
-                                   <td>
-                                       <table>
-                                           <tr *ngIf="FileStatusText == 'File Uploaded'">
-                                               <td style="height:1px;text-align:center;">
-                                                   <span style="font-size: 21px;color:gray;">Document preview is available for PDF files only.</span>
-                                               </td>
-                                           </tr>
-                                           
-                                           <tr>
-                                               <td>
-                                                   <div style="text-align:center">
-                                                       <span style="font-size: 21px;color:gray;">{{FileStatusText}}</span>
-                                                       <button [disabled]="!DocumentTypeId" class="Button CenterCenter" style="width: 166px;font-size: 16px;height:30px;color:black;text-align:center" (click)="UploadClicked()" [class.DisableSharedWithAgentButton]="!IssharedWithAgentButtonEnabled" [class.Disable]="EntityPm.SignRequestByUserEmail">Browse</button>
-                                                   </div>
-                                               </td>
-                                           </tr>
-
-
-                                       </table>
-                                   </td>
-                               </tr>
-                               <tr>
-                                   <td><div></div></td>
-                               </tr>
-
-                           </table>
-                       </div>
-                   </div>
-               </td>
-               </tr>
-
-
                 <tr style="height:1px;">
-
+                    <td><div style="margin-top: 7px;"></div></td>
                     <td>
-                        <table>
-                            <tr>
-                                <td><div style="margin-top: 7px;"></div></td>
-                                <td>
-                                    <div style="margin-top: 7px;">
-                                        <button class="RedButton" (click)="SaveChanges()" style="width:57px;float: right;margin-left: 7px;margin-right: 7px;">OK</button>
-                                        <button class="Button" (click)="CancelButtonClicked()" style="width:57px;float: right;">Cancel</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                        <div style="margin-top: 7px;">
+                            <button class="RedButton" (click)="SaveChanges()" style="width:57px;float: right;margin-left: 7px;margin-right: 7px;">OK</button>
+                            <button class="Button" (click)="CancelButtonClicked()" style="width:57px;float: right;">Cancel</button>
+                        </div>
                     </td>
-                   
                 </tr>
             </table>
         </td>

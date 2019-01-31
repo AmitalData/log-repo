@@ -25,13 +25,9 @@
     "@angular/platform-browser": "^4.2.4",
     "@angular/platform-browser-dynamic": "^4.2.4",
     "@angular/router": "^4.2.4",
-    "ag-grid-angular": "^20.0.0",
-    "ag-grid-community": "^20.0.0",
-    "ag-grid-enterprise": "^20.0.0",
     "core-js": "^2.4.1",
     "g": "^2.0.1",
     "happypack": "^4.0.1",
-    "magic-string": "^0.25.1",
     "rxjs": "^5.4.2",
     "ts-loader": "^3.5.0",
     "zone.js": "^0.8.14"

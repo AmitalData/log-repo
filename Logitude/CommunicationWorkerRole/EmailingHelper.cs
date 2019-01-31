@@ -185,47 +185,34 @@ namespace CommunicationWorkerRole
 
 
                             string imageName = getBetween(imageString, "cid:", "'");
-                            string fileName = !string.IsNullOrEmpty(imageName) ? imageName.ToLower() : "";
 
-                    
                             // Download file from Azure Storage
-                        
-                       
-                            int tenant = (fileName == "logo0" || fileName == "smalllogo0" || fileName == "sharedlogtsitcslogo0" || fileName == "appmobilelogo" || fileName == "applestore" || fileName == "googleplay") ? 0 : parameters.Tenant;
+                            string fileName = !string.IsNullOrEmpty(imageName) ? imageName.ToLower() : "";
+                            int tenant = (fileName == "logo0" || fileName == "smalllogo0" || fileName == "appmobilelogo" || fileName == "applestore" || fileName == "googleplay") ? 0 : parameters.Tenant;
 
-                            if ((fileName == "logo0" || fileName == "smalllogo0" || fileName == "sharedlogtsitcslogo0"))
+                            if ((fileName == "logo0" || fileName == "smalllogo0"))
                             {
                                 string newImageName = SystemLogoHelper.GetEnvironmentLogoName(imageName.Contains("small"));
                                 parameters.Body = parameters.Body.Replace(imageName, newImageName);
                                 imageName = newImageName;
                             }
 
-
-                            #region Download Image
-                            string extension = "jpg";
-                            string originalImageName = imageName;
-
-                            if (!string.IsNullOrEmpty(fileName) && fileName.Contains("sharedlogtsitcslogo"))
-                            {
-                                extension = "png";
-                                originalImageName = "sharedLogtsitcslogo" + tenant;
-                            }
-
-
-                            string image = imageName + "." + extension;
+                            string image = imageName;
+                            image += ".";
+                            image += "jpg";
 
                             Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
                             {
-                                FileName = originalImageName,
+                                FileName = imageName,
                                 FolderName = "logos",
-                                Extension = extension,
+                                Extension = "jpg",
                                 Tenant = tenant,
 
                             };
                             Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
                             byte[] datainByte = storageservice.Read(fileInfo);
 
-                            #endregion
+
 
 
                             //CloudBlobContainer blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
@@ -243,7 +230,7 @@ namespace CommunicationWorkerRole
                                 MemoryStream memstream = new MemoryStream(datainByte);
                                 memstream.Seek(0, SeekOrigin.Begin);
 
-                                LinkedResource logo = new LinkedResource(memstream, "image/" + extension);
+                                LinkedResource logo = new LinkedResource(memstream, "image/jpg");
                                 logo.ContentId = imageName;
                                 logo.ContentType.Name = image;
 

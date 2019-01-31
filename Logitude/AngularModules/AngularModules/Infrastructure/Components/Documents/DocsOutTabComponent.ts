@@ -1,4 +1,4 @@
-declare var System: any;
+﻿declare var System: any;
 declare var window: any;
 import {Component, OnInit, OnDestroy, ElementRef, EventEmitter, Output}  from '@angular/core';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -111,19 +111,14 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
     
 
     ngOnInit() {
-        this.TabHeaderTextCode = "DocsOut.O.DocsOut";// this.ObjectTableName + ".TH.DocsOut";
 
         var table = window.ObjectTables.filter(d => d.Id == this.ObjectTableId)[0];
         if (table) {
             this.ObjectTableName = table.Name;
-        }
+        } else this.ObjectTableName = "Shipment";
 
-        else this.ObjectTableName = "Shipment";
+        this.TabHeaderTextCode = "DocsOut.O.DocsOut";// this.ObjectTableName + ".TH.DocsOut";
 
-        // Ayman:
-        // we need this for Translation
-        // Please don't remove it
-        this.TabHeaderTextCode = this.ObjectTableName + ".TH.DocsOut";
 
         if (this.InitializeDocsOutForAnotherObjectTable) {
             this.InitializeDocsOutForAnotherObjectTable.subscribe(($event: any) => {
@@ -1135,3 +1130,4 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
     }
 
 }
+    

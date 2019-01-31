@@ -20,7 +20,6 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {CardPM} from '../../EntityPMs/CardPM';
 
 import {AddressPM} from '../../EntityPMs/AddressPM';
-import {ContactPM} from '../../EntityPMs/ContactPM';
 
 @Injectable()
 
@@ -212,7 +211,6 @@ export class CardPMService {
             }
 			
                this.MapAddresses(entityPM, jsonPM, mapParent); // Call composition tables map methods
-               this.MapContacts(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -226,15 +224,6 @@ export class CardPMService {
 						
 							 
             entityPM.OldEntityPM.Addresses.push(newAddressPM);
-            }
-			   			   			   
-            entityPM.OldEntityPM.Contacts = [];
-            for (var item in entityPM.Contacts) {
-            var myContactPM = entityPM.Contacts[item];
-            var newContactPM: ContactPM = this.clone(myContactPM);
-						
-							 
-            entityPM.OldEntityPM.Contacts.push(newContactPM);
             }
 			   
 		}
@@ -269,31 +258,6 @@ export class CardPMService {
             }
             newAddressPM.IsDirty = false;
             entityPM.Addresses.push(newAddressPM);
-        }
-    }
-    MapContacts(entityPM: CardPM, jsonPM: any, mapParent: boolean = true) {
-
-        entityPM.Contacts = new Array<ContactPM>();
-        for (var item in jsonPM.Contacts) {
-
-            var jItem = jsonPM.Contacts[item];
-            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
-                continue;
-            }
-            var newContactPM: ContactPM;
-            newContactPM = new ContactPM();
-				                
-            var pmKeysArray = Object.keys(jItem);
-            for (var pmKey in pmKeysArray) {
-			
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
-                    continue;
-                }
-                var pmProperty = pmKeysArray[pmKey];
-                newContactPM[pmProperty] = jItem[pmProperty];
-            }
-            newContactPM.IsDirty = false;
-            entityPM.Contacts.push(newContactPM);
         }
     }
 

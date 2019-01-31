@@ -1,4 +1,3 @@
-import { Settings } from './../../Settings';
 declare var window: any;
 import { Component, Type, ComponentRef, ViewContainerRef, ViewChild, Output, EventEmitter, ViewChildren, QueryList, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import {ObjectTablePM} from '../../EntityPMs/ObjectTablePM';
@@ -170,7 +169,7 @@ export class EditComponent implements OnDestroy {
                 else {
                     this.StopBusyIndicator();
                     this.ValidationErrorsList = pmResponse.ErrorsArray;
-                    //console.error(pmResponse.ErrorsArray);
+                    //console.error(pmResponse.ErrorsArray); 
                 }
             }, error => {
                 this.StopBusyIndicator();
@@ -345,22 +344,6 @@ export class EditComponent implements OnDestroy {
             }
 
             else {
-                this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
-            }
-        } else if (this.ObjectTableName == "ARInvoice") {
-
-            //get f. acc. Settings
-            if (SessionLocator.TenantPM.AccountingActivated)
-            {
-                    var myObjectTable = window.ObjectTables.filter(x => x.Name === "ARInvoice")[0];
-                    var myObjectTableId = myObjectTable.Id;
-
-                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.FullAccHeaderScreen")[0];
-                    myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
-                    this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
-            }
-            else
-            {
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
         }
@@ -551,7 +534,7 @@ export class EditComponent implements OnDestroy {
         }
 
         //this.ObjectTableTabs = myTabsSorted;
-
+                                    
         myTabsSorted.forEach(item => {
 
             var itemTab: TabItem = new TabItem(item);
@@ -570,7 +553,7 @@ export class EditComponent implements OnDestroy {
                     }
                 }
             }
-
+            
             this.TabsItemsSource.push(itemTab);
         });
     }
@@ -580,7 +563,7 @@ export class EditComponent implements OnDestroy {
             case "Master":
             case "Shipment":
                 {
-                    // SHCO: Shipment Consolidations
+                    // SHCO: Shipment Consolidations                    
                     if (this.EntityPM.ShipmentLevelCode == "H" || this.EntityPM.ShipmentLevelCode == "D") {
                         var indexOfTab = allTabs.findIndex(t => t.Code == "SHCO");
                         if (indexOfTab > -1) {
@@ -588,7 +571,7 @@ export class EditComponent implements OnDestroy {
                         }
                     }
 
-                    // SHMS: Shipment Master
+                    // SHMS: Shipment Master                    
                     if (this.EntityPM.ShipmentLevelCode != "H") {
                         var indexOfTab = allTabs.findIndex(t => t.Code == "SHMS");
                         if (indexOfTab > -1) {
@@ -691,7 +674,7 @@ export class EditComponent implements OnDestroy {
             }
             case "ARPayment": {
 
-
+                
                 break;
             }
         }
@@ -889,46 +872,36 @@ export class EditComponent implements OnDestroy {
     //}
 
     // Commands
-     BackButtonClicked() {
-         var isNeedingConfirmation = this.NeedCloseConfirmation();
-         if (isNeedingConfirmation) {
-             var confirmWindow = new ConfirmWindow();
-             confirmWindow.Width = 450;
-             confirmWindow.Height = 190;
-             confirmWindow.ShowCancelButton = true;
-             confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.DontSave");
-             confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
-             confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
-             confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName)));
-             confirmWindow.WindowClosed.subscribe((event: any) => {
-                 if (confirmWindow.Yes) {
-                     this.SaveEntityChanges(true);
-                 }
+    BackButtonClicked() {
+        if (!this.EntityPM) {
+            this.Close();
+        }
 
-                 else if (confirmWindow.No) {
-                     this.Close();
-                 }
-             });
-         }
-         else {
-             this.Close();
-         }
-     }
+        else if (!this.EntityPM.IsDirty) {
+            this.Close();
+        }
 
-     public NeedCloseConfirmation() {
-         var myResult = true; 
-         if (!this.EntityPM) {
-             myResult = false;
-         }
+        else {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 450;
+            confirmWindow.Height = 190;
+            confirmWindow.ShowCancelButton = true;
+            confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.DontSave");
+            confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
+            confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+            confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName)));
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.SaveEntityChanges(true);
+                }
 
-         else if (!this.EntityPM.IsDirty) {
-             myResult = false;
-         }
-         else if (this.ObjectTableName == "TaxReport" || this.ObjectTableName == "BankDeposit") {
-             myResult = false;
-         }
-         return myResult;
-     }
+                else if (confirmWindow.No) {
+                    this.Close();
+                }
+            });
+        }
+    }
+
     Close() {
         if (this.IsInsideWindow) {
             SessionLocator.CurrentSession.CloseCurrentWindow();
@@ -991,7 +964,7 @@ export class EditComponent implements OnDestroy {
 
                             if (this.ObjectTable.CacheOnClient) {
                                 CachedDataManager.RefreshTableData(this.ObjectTableName, true);
-                            }
+                            }                            
 
                             if (isClosing) {
                                 this.SaveAndCloseCompleted.emit(true);
@@ -1080,7 +1053,7 @@ export class EditComponent implements OnDestroy {
                                   }
                                   this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
                               }
-
+                              
                             }
                         }
 
@@ -1223,13 +1196,13 @@ export class EditComponent implements OnDestroy {
     private FireSaveCompleted(isSaveSuccess: boolean) {
         this.SaveCompleted.emit(isSaveSuccess);
 
-        //Abed Code
+        //Abed Code 
         if (this.ObjectTableName == "Shipment" && this.EntityPM.IsRefreshFollowUp) {
             this.EntityPM.IsRefreshFollowUp = false;
             SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
-
+    
     private _Subscription: Subscription = new Subscription();//itzik///https://stackoverflow.com/a/42274637
     public SubscriptionAdd(teardown: TeardownLogic) {
         //    this.someService.change.subscribe(() => {
@@ -1385,8 +1358,8 @@ export class EditComponent implements OnDestroy {
 
    nextPreviousTimerToken: any;
    LoadNextPreviousEntity() {
+  
 
-     var selectedTab=this.PreSelectedTabCode;
      this.NextButtonDisabled = true;
      this.PreviousButtonDisabled = true;
      this.cd.detectChanges();
@@ -1411,16 +1384,15 @@ export class EditComponent implements OnDestroy {
      SessionLocator.CurrentSession.RemoveEditComponent(this);
      this.ngOnDestroy();
 
-
+    
 
      var args: any = {};
      args.EntityId = this.NavigationIds[this.CurrentNavigatedIndex];
      args.ObjectTableName = this.ObjectTableName;
      args.BackButtonLabel = this.BackButtonLabel;
      args.NavigationIds = this.NavigationIds;
-     args.SelectedTabCode=selectedTab;
      this.Run(args);
-
+     
    }
 
    SetNextPreviousButtonsEnablity() {
@@ -1516,7 +1488,7 @@ export class EditComponentDefaultController implements IEditComponentController 
     ResetMustRefresh() { };
     IsInBatchRequest: boolean;
     IsDisabled(itemTabCode: string): boolean {
-        return false;
+        return false; 
     }
 }
 export interface IEditComponentController {

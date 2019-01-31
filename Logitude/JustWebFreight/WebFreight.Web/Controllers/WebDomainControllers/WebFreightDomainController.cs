@@ -294,38 +294,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-
-        public HttpResponseMessage GetExportBIReportToExcel(string queryId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                string ObjectTableName = "Shipment";
-                var data = new ExportToExcelHelper().ExportBIQueryToExcel(queryId, tenant);
-                BlobFileInfo fileInfo = new BlobFileInfo()
-                {
-                    FileName = ObjectTableName + DateTime.Now.ToShortDateString(),
-                    FolderName = "others",
-                    Extension = "xls",
-                    Tenant = tenant,
-                    FileSize = data.Length,
-
-                };
-                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                storageservice.Write(data, fileInfo);
-
-                return Request.CreateResponse(HttpStatusCode.OK, ObjectTableName + DateTime.Now.ToShortDateString());
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
         #region SendBlockToServer
         int counter = -1;
         long sentBytes = 0;

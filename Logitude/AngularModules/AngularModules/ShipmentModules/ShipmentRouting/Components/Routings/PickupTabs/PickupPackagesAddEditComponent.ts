@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -6,7 +6,6 @@ import {ShipmentPickUpDeliveryPackagePM} from '../../../../../Shipment/EntityPMs
 import {PickupPackageItem} from './PickupPackagesTabComponent';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {Cloner} from '../../../../../Infrastructure/Utilities/Cloner';
-import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     moduleId: module.id,
@@ -28,7 +27,7 @@ export class PickupPackagesAddEditComponent extends BaseComponent {
         this.EntityPM = dataContext.EntityPM;
         this.IsNewEntity = dataContext.IsNewEntity;
         this.SetLabels();
-        this.Clone();        
+        this.Clone();
     }
 
     public DimensionsLabel: string;
@@ -57,18 +56,6 @@ export class PickupPackagesAddEditComponent extends BaseComponent {
         }
     }
 
-    MultiHarmonizeClicked() {
-        var logWindow = new LogitudeWindow();
-        logWindow.WindowArgs = { PackagePM: this.EntityPM, IsEditingEnabled: this.DataContext.IsEditingEnabled };
-        logWindow.Title = "Multi-Harmonize";
-        logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPackageHarmonizeComponent");
-        logWindow.WindowClosed.subscribe(s => {
-            if (s) {
-                this.DataContext.SetUIProperties_Harmonize();
-            }
-        });
-    }
-
     private myCloner: Cloner;
     private Clone() {
         this.myCloner = new Cloner(this.EntityPM);
@@ -84,11 +71,6 @@ export class PickupPackagesAddEditComponent extends BaseComponent {
         this.myCloner.AddField('Height');
         this.myCloner.AddField('Description');
         this.myCloner.AddEntity(this.EntityPM);
-
-        if (this.DataContext.fatherComponent) {
-            this.myCloner.AddEntity(this.DataContext.fatherComponent.EntityPM);
-            this.myCloner.AddEntity(this.DataContext.fatherComponent.ShipmentPM);
-        }
     }
     private RejectChanges() {
         this.myCloner.RejectChanges();

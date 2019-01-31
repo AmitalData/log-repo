@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+﻿import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -654,79 +654,6 @@ export class InvoiceDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-    GetARPaymentSATCancellationStatus(paymentId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/GetARPaymentSATCancellationStatus?paymentId=' + paymentId ;
-
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
-    }
-
-    GetStatusOfARPaymentCheques(paymentId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/GetStatusOfARPaymentCheques?paymentId=' + paymentId;
-
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
-    }
-
-    GetARInvoiceSATCancellationStatus(invoiceId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/GetARInvoiceSATCancellationStatus?invoiceId=' + invoiceId;
-
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
-    }
-
-    getConnectedARPayments(invoiceId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/getConnectedARPayments?invoiceId=' + invoiceId;
-
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
-    }
-
-    getConnectedAPPayments(invoiceId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/getConnectedAPPayments?invoiceId=' + invoiceId;
-
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
-    }
-
-
-    
 
     MapARPaymentJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ARPaymentPM = null) {
         if (!entityPM) {

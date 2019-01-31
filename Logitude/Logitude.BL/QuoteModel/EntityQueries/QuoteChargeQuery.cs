@@ -113,7 +113,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 SaleUnitPrice4InSaleCurrency = a.SaleUnitPrice4InSaleCurrency,
                                                 SaleUnitPrice5InSaleCurrency = a.SaleUnitPrice5InSaleCurrency,
                                                 SaleAmountInSaleCurrency = a.SaleAmountInSaleCurrency,
-                                                SaleMaxAmount = a.SaleMaxAmount,
                                             }).FirstOrDefault();
 
             return myResult;
@@ -202,7 +201,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                               SaleUnitPrice4InSaleCurrency = a.SaleUnitPrice4InSaleCurrency,
                                               SaleUnitPrice5InSaleCurrency = a.SaleUnitPrice5InSaleCurrency,
                                               SaleAmountInSaleCurrency = a.SaleAmountInSaleCurrency,
-                                              SaleMaxAmount = a.SaleMaxAmount,
                                           }).ToList();
 
             QuotePriceStepsRepository quotePriceStepsRepository = new QuotePriceStepsRepository(this.repository.context);

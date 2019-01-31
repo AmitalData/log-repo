@@ -46,12 +46,6 @@ namespace Simplog.Data.InvoiceModel.Repositories
             return (from a in context.ARInvoicePayments where a.ARInvoiceId == invoiceId && a.Tenant == tenant select a);
         }
 
-
-        public IQueryable<ARPayment> GetARInvoicePaymentTransferedByInvoiceId(string invoiceId, int tenant)
-        {
-            return ( from a in context.ARInvoicePayments join payment in context.ARPayments on a.ARPaymentId equals payment.Id where payment.TransferStatusCode == "TR" where  a.ARInvoiceId == invoiceId && a.Tenant == tenant   select payment);
-        }
-
         public double? GetInvoicePaymentTotalAmountForPayment(string paymentid, int tenant)
         {
             double? value = 0;

@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Logitude.Accounting.BL.CoreBL.Batch
+namespace Logitude.Accounting.BL.TestService
 {
     public class BatchTaxReportService : BatchTaskExecutionsService
     {
@@ -28,7 +28,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             PNCFileArgs parameterArgs = serializer.Deserialize(stringReader) as PNCFileArgs;
 
             // Call the service
-            DocumentsFilingPM docFilingPM = TaxReportService.CreatePNC874File(parameterArgs.ReportId, parameterArgs.Tenant, BatchTaskExecution.CreatedByUserId);
+            DocumentsFilingPM docFilingPM = TaxReportService.CreatePNC874File(parameterArgs.ReportId, parameterArgs.Tenant);
 
         }
     }

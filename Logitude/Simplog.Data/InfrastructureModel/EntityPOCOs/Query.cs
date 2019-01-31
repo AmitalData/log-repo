@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.Serialization;
 using System.ServiceModel.DomainServices.Server;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 
@@ -36,10 +35,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool IsHiddenFromView { get; set; }
         public bool IsNewFromTenantZeroOnly { get; set; }
         public string EditWizardComponentPath { get; set; }
-        public bool SharedWithAll { get; set; }
-        public bool SharedWithSpecificUsers { get; set; }
-        public string SharedByUserId { get; set; }
-        public bool SpotlightModeActivated { get; set; }
 
         [ForeignKey("FeatureId")]
         public virtual Feature Feature { get; set; }
@@ -56,10 +51,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         [ForeignKey("QueryGroupCode")]
         public virtual QueryGroup QueryGroup { get; set; }
 
-        [ForeignKey("SharedByUserId")]
-        public User SharedByUser { get; set; }
-
         public Query OriginalQuery { get; set; }
-        public List<Query> CopiedQueries { get; set; }
+        public List<Query> CopiedQueries { get; set; }      
     }
 }

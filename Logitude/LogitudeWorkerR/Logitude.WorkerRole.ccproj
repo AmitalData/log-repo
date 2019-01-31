@@ -55,7 +55,6 @@
     <Folder Include="Profiles" />
   </ItemGroup>
   <ItemGroup>
-    <PublishProfile Include="Profiles\LogitudePreWRProduction.azurePubxml" />
     <PublishProfile Include="Profiles\preproduction1WRProduction.azurePubxml" />
     <PublishProfile Include="Profiles\preproduction1WRProduction1.azurePubxml" />
   </ItemGroup>

@@ -64,7 +64,6 @@ namespace WebFreight.Web
                     response.CreatedBy = data.resource.revision != null ? data.resource.revision.fields["System.CreatedBy"] : "";
                     response.ChangedBy = data.resource.revision != null ? data.resource.revision.fields["System.ChangedBy"] : "";
                     response.AssignedTo = data.resource.revision != null ? data.resource.revision.fields["System.AssignedTo"] : "";
-                    response.TaskState = data.resource.revision != null ? data.resource.revision.fields["System.State"] : "";
 
                     if (response.CreatedBy.Contains('<'))
                     {
@@ -82,12 +81,10 @@ namespace WebFreight.Web
                     }
 
                     response.Description = data.resource.revision != null ? data.resource.revision.fields["System.Description"] : "";
-                    var remainingWorkOld = 0.0;
-                    var remainingWorkNew = 0.0;
+                    var remainingWorkOld = 0;
+                    var remainingWorkNew = 0;
                     if (data.resource.fields != null)
                     {
-                        response.IterationPath = data.resource.revision != null ? data.resource.revision.fields["System.IterationPath"] : "";
-
                         var remainingWork = data.resource.fields["Microsoft.VSTS.Scheduling.RemainingWork"];
                         if (remainingWork != null)
                         {
@@ -107,7 +104,7 @@ namespace WebFreight.Web
                             }
                         }
                     }
-
+                    
                     response.Relations = JsonConvert.DeserializeObject<RelationClass[]>(data.resource.revision.relations.ToString());
                 }
 
@@ -122,7 +119,7 @@ namespace WebFreight.Web
                 }
                 if (errorInfo.Message == "Invalid Token1")
                 {
-                    //throw errorInfo;
+                    throw errorInfo;
                 }
                 string errorMessage = errorInfo.Message;
                 AzureLog.SaveLogsInStorage("TFS Page error  " + Environment.NewLine + errorMessage, "E", DateTime.Now, errorInfo.Message, errorInfo.StackTrace, 0, null, null, null);
@@ -190,7 +187,7 @@ namespace WebFreight.Web
                     Console.WriteLine(vssex.Message);
                     string errorMessage = vssex.Message;
                     AzureLog.SaveLogsInStorage("VssServiceException connection Problem   " + Environment.NewLine + errorMessage, "E", DateTime.Now, vssex.Message, vssex.StackTrace, 0, null, null, null);
-                    //throw;
+                    throw;
                 }
             }
 

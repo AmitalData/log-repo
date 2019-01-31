@@ -22,7 +22,7 @@ namespace WebFreight.Web.Monitoring
             {
                 Response.Write("<status>Fail</status>");
             }
-            else 
+            else
             {
                 Response.Write("<status>OK</status>");
             }

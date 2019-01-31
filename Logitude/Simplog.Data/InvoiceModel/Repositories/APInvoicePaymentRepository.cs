@@ -41,15 +41,6 @@ namespace Simplog.Data.InvoiceModel.Repositories
             return (from a in context.APInvoicePayments where a.APPaymentId == paymentid && a.Tenant == tenant select a);
         }
 
-        public IQueryable<APPayment> GetAPInvoicePaymentTransferedByInvoiceId(string invoiceId, int tenant)
-        {
-            return (from a in context.APInvoicePayments join payment in context.APPayments on a.APPaymentId equals payment.Id where payment.TransferStatusCode == "TR" where a.APInvoiceId == invoiceId && a.Tenant == tenant select payment);
-        }
-
-
-
-
-
         public IQueryable<APInvoicePayment> GetAPInvoicePaymentByInvoiceId(string invoiceId, int tenant)
         {
             return (from a in context.APInvoicePayments where a.APInvoiceId == invoiceId && a.Tenant == tenant select a);

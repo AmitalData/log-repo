@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {Component, OnInit, Output, EventEmitter, AfterViewInit} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -106,7 +106,6 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
             HtmlListComponentName: 'btnComponent',
             HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/btnComponent',
         });
-        
 
         for (var i = 0; i < this.ObjectFields.length; i++) {
             this.columns.push({
@@ -120,10 +119,6 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
                 ColumnHeaderTemplateName: this.ObjectFields[i].ColumnHeaderTemplateName,
             });
         }
-        
-
-
-
 
         if (this.ObjectTableName == "Port") {
             if (this.columns.length > 0){
@@ -156,21 +151,6 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
                     }
                 }
             }
-        }
-
-
-        if ((this.ObjectTableName == "Airline" || this.ObjectTableName == "ShippingLine") && this.TenantPM.Id != 0) {
-
-            this.columns.push({
-                FieldName: this.ObjectTableName,
-                DataTypeCode: 'String',
-                Display: '',
-                IsCustomTemplate: true,
-                Styles: { width: '80px' },
-                HtmlListComponentName: 'btnComponent',
-                HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/btnUpdateComponent',
-            });
-
         }
     }
 

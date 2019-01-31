@@ -109,26 +109,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Field18 { get; set; }
         public string Field19 { get; set; }
         public string Field20 { get; set; }
-        public string Field21 { get; set; }
-        public string Field22 { get; set; }
-        public string Field23 { get; set; }
-        public string Field24 { get; set; }
-        public string Field25 { get; set; }
-        public string Field26 { get; set; }
-        public string Field27 { get; set; }
-        public string Field28 { get; set; }
-        public string Field29 { get; set; }
-        public string Field30 { get; set; }
-        public string Field31 { get; set; }
-        public string Field32 { get; set; }
-        public string Field33 { get; set; }
-        public string Field34 { get; set; }
-        public string Field35 { get; set; }
-        public string Field36 { get; set; }
-        public string Field37 { get; set; }
-        public string Field38 { get; set; }
-        public string Field39 { get; set; }
-        public string Field40 { get; set; }
 
         public bool NewMessage { get; set; }
        
@@ -437,7 +417,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public double? GrossWeightPerTon { get; set; }
         public DateTime? ManifestLastSharingDate { get; set; }
         //public string MainCarriageFinalDestinationPortId { get; set; }
-        public string MainCarriageFinalDestinationPortCode { get; set; }
+        //public string MainCarriageFinalDestinationPortCode { get; set; }
         //public string MainCarriageFinalDestinationPortName { get; set; }
         //public string MainCarriageFinalDestinationCountryCode { get; set; }
         //public string MainCarriageFinalDestinationCountryName { get; set; }
@@ -488,15 +468,5 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Notify2Reference { get; set; }
         public string ShipperNotExporterReference { get; set; }
         public string ConsigneeNotImporterReference { get; set; }
-        public string ProjectNumber { get; set; }
-        public DateTime? ContainerLastStatusDate { get; set; }
-
-        public string BasicFreightId { get; set; }
-        public string DestinationPortChargesId { get; set; }
-        public string DestinationHaulageChargesId { get; set; }
-        public string AdditionalChargesId { get; set; }
-        public string FreightPayerId { get; set; }
-        public string FreightPayerAddressId { get; set; }
-
     }
 }

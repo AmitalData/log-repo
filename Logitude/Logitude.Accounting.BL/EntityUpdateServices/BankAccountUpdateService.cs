@@ -67,28 +67,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (entityPM.LocalName != entityPOCO.LocalName && (!String.IsNullOrEmpty(entityPM.LocalName) || !String.IsNullOrEmpty(entityPOCO.LocalName)))
                 {
                     //myEventNotes = "Previous Local Name: " + (entityPOCO.LocalName == null ? "" : entityPOCO.LocalName);
-                    //myEventNotes += " Local Name Changed" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + entityPOCO.LocalName 
-                    //                              + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + entityPM.LocalName + ". ";
-                    myEventNotes += GetOldNewEventNote("Local Name", entityPOCO.LocalName, EntityPM.LocalName);
+                    myEventNotes += " Local Name Changed" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + entityPOCO.LocalName 
+                                                  + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + entityPM.LocalName + ". ";
                     
                 }
                 if (entityPM.EnglishName != entityPOCO.EnglishName && (!String.IsNullOrEmpty(entityPM.EnglishName) || !String.IsNullOrEmpty(entityPOCO.EnglishName)))
                 {
-                    //myEventNotes += " English Name Changed" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + entityPOCO.EnglishName
-                    //                              + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + entityPM.EnglishName + ". ";
-                    myEventNotes += GetOldNewEventNote("English Name", entityPOCO.EnglishName, EntityPM.EnglishName);
-
-                }
-
-                if (entityPM.BranchNumber != entityPOCO.BranchNumber && (!String.IsNullOrEmpty(entityPM.BranchNumber) || !String.IsNullOrEmpty(entityPOCO.BranchNumber)))
-                {
-                    myEventNotes += GetOldNewEventNote("Branch Number", entityPOCO.BranchNumber, EntityPM.BranchNumber);
-
-                }
-
-                if (entityPM.AccountNumber != entityPOCO.AccountNumber && (!String.IsNullOrEmpty(entityPM.AccountNumber) || !String.IsNullOrEmpty(entityPOCO.AccountNumber)))
-                {
-                    myEventNotes += GetOldNewEventNote("Account Number", entityPOCO.AccountNumber, EntityPM.AccountNumber);
+                    myEventNotes += " English Name Changed" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + entityPOCO.EnglishName
+                                                  + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + entityPM.EnglishName + ". ";
 
                 }
                 if (entityPM.Inactive != entityPOCO.Inactive)
@@ -145,13 +131,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             BankAccountValidateService validateService = new BankAccountValidateService(MainContext as IAccountingContext);
             validateService.Validate(entityPM);
-            if (validateService.ErrorsList.Count > 0)
-            {
-                foreach(string error in validateService.ErrorsList)
-                {
-                    this.ErrorsList.Add(error);
-                }
-            }
             base.Validate(entityPM);
         }
 
@@ -175,14 +154,5 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
             return loggedContact;
         }
-
-        private static string GetOldNewEventNote(string fieldName, string oldValue, string newValue)
-        {
-            string oldLabel = TranslateTextsClass.Translate("Accounting.General.O.OldValue",0);
-            string newLabel = TranslateTextsClass.Translate("Accounting.General.O.NewValue",0);
-            string note = string.Format("{0} {1} {2} {3} {4}{5}",fieldName, oldLabel,oldValue??"", newLabel,newValue ?? "",Environment.NewLine);
-            return note;
-        }
     }
-
 }

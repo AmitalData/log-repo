@@ -204,11 +204,6 @@ export class BankDepositPM {
     public set BankAccountNumber(newValue: string) { if (this.bankAccountNumber != newValue) { this.bankAccountNumber = newValue; this.MarkAsDirty("BankAccountNumber"); } }
        
 	 
-    private journalQueueId: string;
-    public get JournalQueueId() { return this.journalQueueId; }
-    public set JournalQueueId(newValue: string) { if (this.journalQueueId != newValue) { this.journalQueueId = newValue; this.MarkAsDirty("JournalQueueId"); } }
-       
-	 
 
     public OldEntityPM: BankDepositPM;
 		

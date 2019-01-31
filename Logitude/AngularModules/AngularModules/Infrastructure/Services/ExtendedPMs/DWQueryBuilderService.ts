@@ -5,177 +5,176 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { ServiceResponse } from '../../DataContracts/ServiceResponse';
-import { ClassLevelValidator } from '../../Validators/ClassLevelValidator';
-import { Guid } from '../../Utilities/Guid';
-import { InfraSettings } from '../../Utilities/InfraSettings';
-import { ServiceHelper } from '../../Utilities/ServiceHelper';
-import { SessionInfo } from '../../Utilities/SessionInfo';
-import { PerformanceLogger } from '../../Utilities/PerformanceLogger';
-import { CustomFieldClass } from '../../DataContracts/CustomFieldClass'
-import { ApiQueryFilters } from '../../DataContracts/ApiQueryFilters';
-import { DWObjectFieldPM } from '../../EntityPMs/DWObjectFieldPM';
-import { DWObjectFieldsDetails } from '../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent';
-import { DWQueryData } from '../../../Common/DataContracts/DWQueryData';
+import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
+import {ServiceResponse} from '../../DataContracts/ServiceResponse';
+import {ClassLevelValidator} from '../../Validators/ClassLevelValidator';
+import {Guid} from '../../Utilities/Guid';
+import {InfraSettings} from '../../Utilities/InfraSettings';
+import {ServiceHelper} from '../../Utilities/ServiceHelper';
+import {SessionInfo} from '../../Utilities/SessionInfo';
+import {PerformanceLogger} from '../../Utilities/PerformanceLogger';
+import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
+import {ApiQueryFilters} from '../../DataContracts/ApiQueryFilters';
+import {DWObjectFieldPM} from '../../EntityPMs/DWObjectFieldPM';
 
 
 @Injectable()
 
 export class DWQueryBuilderService {
-    private _http: Http;
-    private _apiUrl: string;
-    constructor() {
+ private _http: Http;
+ private _apiUrl: string;
+ constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/dwquerybuilder';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/dwquerybuilder';      
     }
 
+ 
+ 
+ GetDWQueryData(sql: string,table : string) {
+     var authHeader = new Headers();
+     authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+     var MySql = encodeURIComponent(sql);
+     return this._http.get(this._apiUrl + "/GetDWQueryData" + '?SQL=' + MySql + '&Table=' + table, { headers: authHeader }).map(response => {
 
 
-    GetDWQueryData(sql: string, table: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var MySql = encodeURIComponent(sql);
-        return this._http.get(this._apiUrl + "/GetDWQueryData" + '?SQL=' + MySql + '&Table=' + table, { headers: authHeader }).map(response => {
+         var result = response.json();
+
+         //var entity: DWObjectFieldPM;
+         //var DWObjectFieldPMLists: DWObjectFieldPM[];
+         //DWObjectFieldPMLists = new Array<DWObjectFieldPM>();
 
 
-            var result = response.json();
-
-            //var entity: DWObjectFieldPM;
-            //var DWObjectFieldPMLists: DWObjectFieldPM[];
-            //DWObjectFieldPMLists = new Array<DWObjectFieldPM>();
-
-
-            //result.forEach((item) => {
-            //    entity = this.MapJsonToEntityPM(item);
-            //    DWObjectFieldPMLists.push(entity);
-            //});
+         //result.forEach((item) => {
+         //    entity = this.MapJsonToEntityPM(item);
+         //    DWObjectFieldPMLists.push(entity);
+         //});
 
 
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-            pmresponse.Result = result;
-            return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+         var pmresponse: ServiceResponse;
+         pmresponse = new ServiceResponse();
+         pmresponse.Result = result;
+         return pmresponse;
+     }).catch(ServiceHelper.HandleServiceError);
 
 
-    }
+ }
 
-    GetDWDataForDimTabel(Tabel: string, Field: string, SearchData: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetDWDataForDimTabel" + '?Tabel=' + Tabel + '&Field=' + Field + '&SearchData=' + SearchData, { headers: authHeader }).map(response => {
-
-
-            var result = response.json();
-
-            //var entity: DWObjectFieldPM;
-            //var DWObjectFieldPMLists: DWObjectFieldPM[];
-            //DWObjectFieldPMLists = new Array<DWObjectFieldPM>();
+ GetDWDataForDimTabel(Tabel: string, Field: string, SearchData: string) {
+     var authHeader = new Headers();
+     authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+     return this._http.get(this._apiUrl + "/GetDWDataForDimTabel" + '?Tabel=' + Tabel + '&Field=' + Field + '&SearchData=' + SearchData, { headers: authHeader }).map(response => {
 
 
-            //result.forEach((item) => {
-            //    entity = this.MapJsonToEntityPM(item);
-            //    DWObjectFieldPMLists.push(entity);
-            //});
+         var result = response.json();
+
+         //var entity: DWObjectFieldPM;
+         //var DWObjectFieldPMLists: DWObjectFieldPM[];
+         //DWObjectFieldPMLists = new Array<DWObjectFieldPM>();
 
 
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-            pmresponse.Result = result;
-            return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+         //result.forEach((item) => {
+         //    entity = this.MapJsonToEntityPM(item);
+         //    DWObjectFieldPMLists.push(entity);
+         //});
 
 
-    }
-
-    getByFilters(filters: ApiQueryFilters) {
-
-        var callTime = new Date();
-
-        var urlparameters = '/getbyfilters?';
-        var mykeys = Object.keys(filters);
-        var addtionalFiltersValues = null;
-        for (var i in mykeys) {
-            var propName = mykeys[i];
-            var propValue = filters[propName];
-
-            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
-
-            if (urlparameters != "?") {
-                urlparameters = urlparameters.concat('&');
-            }
-            if (!ignoreFilter) {
-                propValue = encodeURIComponent(propValue);
-                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-            }
-
-            if (propName == "AdditionalFilters" && propValue.length > 0)
-                addtionalFiltersValues = JSON.stringify(propValue);
+         var pmresponse: ServiceResponse;
+         pmresponse = new ServiceResponse();
+         pmresponse.Result = result;
+         return pmresponse;
+     }).catch(ServiceHelper.HandleServiceError);
 
 
-        }
-        if (addtionalFiltersValues) {
-            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
-        }
+ }
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        var callUrl = this._apiUrl.concat(urlparameters);//
+ getByFilters(filters: ApiQueryFilters) {
 
+     var callTime = new Date();
 
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+     var urlparameters = '/getbyfilters?';
+     var mykeys = Object.keys(filters);
+     var addtionalFiltersValues = null;
+     for (var i in mykeys) {
+         var propName = mykeys[i];
+         var propValue = filters[propName];
 
-                var serviceResponse: ServiceResponse = new ServiceResponse();;
-                serviceResponse = response.json();
-                var _mappedListsArray: Array<any> = [];
-                //if (serviceResponse.Result) {
-                //    for (var key in serviceResponse.Result) {
+         var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
 
-                //        var entity: any;
-                //        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
-                //        _mappedListsArray.push(entity);
+         if (urlparameters != "?") {
+             urlparameters = urlparameters.concat('&');
+         }
+         if (!ignoreFilter) {
+             propValue = encodeURIComponent(propValue);
+             urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+         }
 
-                //    }
-                //}
-
-                //serviceResponse.Result = MyData;
-                serviceResponse.CallTime = callTime;
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Shipment", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
-
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
-    }
-
-    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: DWObjectFieldPM = null) {
+         if (propName == "AdditionalFilters" && propValue.length > 0)
+             addtionalFiltersValues = JSON.stringify(propValue);
 
 
+     }
+     if (addtionalFiltersValues) {
+         urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+     }
+
+     var authHeader = new Headers();
+     authHeader.append('Token', SessionInfo.Token);
+     var callUrl = this._apiUrl.concat(urlparameters);//
+
+
+     return Observable.defer(() => {
+         return this._http.get(callUrl, {
+             headers: authHeader
+         }).map(response => {
+
+             var serviceResponse: ServiceResponse = new ServiceResponse();;
+             serviceResponse = response.json();
+             var _mappedListsArray: Array<any> = [];
+             //if (serviceResponse.Result) {
+             //    for (var key in serviceResponse.Result) {
+
+             //        var entity: any;
+             //        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+             //        _mappedListsArray.push(entity);
+
+             //    }
+             //}
+
+             //serviceResponse.Result = MyData;
+             serviceResponse.CallTime = callTime;
+             var servertime = response.headers.get('ServerExecutionTime');
+             PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Shipment", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
+
+             return serviceResponse;
+         }).catch(ServiceHelper.HandleServiceError);
+     });
+ }  
+
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: DWObjectFieldPM = null) {
+
+         
         if (!entityPM) {
-
+            
             entityPM = new DWObjectFieldPM();
         }
 
-        var customFields: Array<string> = [];
+		var customFields: Array<string> = [];
         for (var i = 1; i < 11; i++) {
             customFields.push("Field" + i);
         }
-        var jsonPMKeys = Object.keys(jsonPM);
+            var jsonPMKeys = Object.keys(jsonPM);
 
-        for (var key in jsonPMKeys) {
-            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+            for (var key in jsonPMKeys) {
+			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
                 continue;
             }
-            var property = jsonPMKeys[key];
-
-            if (customFields.indexOf(property) > -1) {
+                var property = jsonPMKeys[key];
+				
+			  if(customFields.indexOf(property) > -1)
+                {
                 if (jsonPM[property]) {
                     var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
                     entityPM[property] = customFieldClass;
@@ -184,180 +183,32 @@ export class DWQueryBuilderService {
             else {
                 entityPM[property] = jsonPM[property];
             }
+                 
+            }
+			
+			 
+            
 
-        }
+		if (mapParent) {
+                entityPM.OldEntityPM = this.clone(entityPM);
 
-
-
-
-        if (mapParent) {
-            entityPM.OldEntityPM = this.clone(entityPM);
-
-        }
+		}
         else {
 
             entityPM.OldEntityPM = null;
         }
-        entityPM.IsDirty = false;
+		entityPM.IsDirty = false;
         return entityPM;
     }
 
-    insert(entityPM: DWQueryData) {
 
-        return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-
-            var validator: ClassLevelValidator;
-
-            validator = new ClassLevelValidator();
-
-            var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
-
-
-            //var response: EntityPMServiceResponse;
-            //response = new EntityPMServiceResponse();
-            if (errorsArray.length == 0) {
-                //var mappedEntity: QueryColumnPM;
-                //mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-                //////////////////////////////////////////////////////
-
-                var temp = this.deepClone(entityPM);
-
-                /////////////////////////////////////////////////////
-                return this._http.post(this._apiUrl, JSON.stringify(temp),
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
-                        if (pm) {
-                            //var mappedResult: QueryColumnPM;
-                            //mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                            //response.Result = mappedResult;
-                        }
-
-
-
-                        return null;//response;
-
-                    });
-            }
-            else {
-
-                //response.HasError = true;
-                //response.ErrorsArray = errorsArray;
-
-                return null;//Observable.of(response);
-
-            }
-        }
-
-        );
-    }
-    public deepClone(obj, hash = new WeakMap()) {
-        // Do not try to clone primitives or functions
-        if (Object(obj) !== obj || obj instanceof Function) {
-            return obj;
-        }
-
-        if (hash.has(obj)) {
-            //return hash.get(obj); // Cyclic reference
-            return;
-        }
-
-        try { // Try to run constructor (without arguments, as we don't know them)
-            var result = new obj.constructor();
-        }
-        catch (e) { // Constructor failed, create object without running the constructor
-            result = Object.create(Object.getPrototypeOf(obj));
-        }
-
-        // Optional: support for some standard constructors (extend as desired)
-        if (obj instanceof Map) {
-            Array.from(obj, ([key, val]) => result.set(this.deepClone(key, hash),
-                this.deepClone(val, hash)));
-        }
-        else if (obj instanceof Set) {
-            Array.from(obj, (key) => result.add(this.deepClone(key, hash)));
-        }
-
-        // Register in hash    
-        hash.set(obj, result);
-
-        // Clone and assign enumerable own properties recursively
-        return Object.assign(result, ...Object.keys(obj).map(
-            key => ({
-                [key]:
-
-                    key != "UIProperties" && key != "MyParentClass" ? this.deepClone(obj[key], hash) : true
-                    
-            })));
-    }
-    CustomMapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entities: DWQueryData = null) {
-
-
-        if (!entities) {
-            entities = new DWQueryData();
-            entities.Columns = [];
-            //entities.Filters = 
-        }
-
-        ///////////
-
-        //if (!entities) {
-
-        //    entities = new PickListGeneralEntitiesArgs();
-        //    entities.CustomPickListPMs = [];
-        //    entities.RemovedCustomPickListPMs = [];
-        //}
-
-        //var jsonPMKeys = Object.keys(jsonPM);
-
-        //for (var key in jsonPMKeys) {
-        //    if (jsonPMKeys[key] === "UIProperties") {
-
-        //        continue;
-        //    }
-
-        //    var property = jsonPMKeys[key];
-        //    entities[property] = jsonPM[property];
-        //}
-
-        ///////////
-        var jsonPMKeys = Object.keys(jsonPM);
-
-        for (var key in jsonPMKeys) {
-            if (jsonPMKeys[key] === "UIProperties") {
-
-                continue;
-            }
-
-            var property = jsonPMKeys[key];
-            entities[property] = jsonPM[property];
-        }
-
-
-        //entityPM.IsDirty = false;
-
-        //if (getCallMap) {
-        //    entityPM.OldEntityPM = this.clone(entityPM);
-
-        //}
-        //else {
-
-        //    entityPM.OldEntityPM = null;
-        //}
-
-        return entities;
-    }
-
-    public clone(jsonPM: any) {
+	  public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
 
         var jsonPMKeys = Object.keys(jsonPM);
         for (var key in jsonPMKeys) {
-
+            
             if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
                 continue;
             }
@@ -369,12 +220,12 @@ export class DWQueryBuilderService {
         return entityPM;
     }
 
-    public GetNewEntityPM() {
-        var entityPM: DWObjectFieldPM;
-        entityPM = new DWObjectFieldPM();
-        entityPM.Tenant = InfraSettings.TenantPM.Id;
-        return entityPM;
+	  public GetNewEntityPM() {		 
+		    var entityPM: DWObjectFieldPM;
+			entityPM = new DWObjectFieldPM();
+			entityPM.Tenant = InfraSettings.TenantPM.Id;
+			return entityPM;
     }
-
+		 
 
 }

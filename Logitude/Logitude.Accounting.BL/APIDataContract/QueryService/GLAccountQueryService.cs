@@ -411,10 +411,10 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 else
                 {
                     GLAccountCurrencyQueryService accountcurrencyQueryService = new GLAccountCurrencyQueryService(MyEntity.Tenant);
-                    GLAccountCurrencyPM gLAccountCurrencyPM = accountcurrencyQueryService.GetEntityByCurrencyAndGLAccountId(parentGLAccount.Id, MyEntity.CurrencyId, parentGLAccount.Tenant);
+                    GLAccountCurrencyPM gLAccountCurrencyPM = accountcurrencyQueryService.GetEntityByCurrencyAndGLAccountId(parentGLAccount.Id, parentGLAccount.CurrencyId, parentGLAccount.Tenant);
 
                     CurrencyQueryService currencyQueryService = new CurrencyQueryService(MyEntity.Tenant);
-                    Currency currency = currencyQueryService.GetCurrencyById(MyEntity.CurrencyId, parentGLAccount.Tenant);
+                    Currency currency = currencyQueryService.GetCurrencyById(parentGLAccount.CurrencyId, parentGLAccount.Tenant);
                     if (gLAccountCurrencyPM != null)
                     {
                         throw new Exception("The parent GLAccount(" + parentGLAccount.DisplayNumber + ") already has split GLAccount with currency (" + currency.Code + ")");
@@ -427,7 +427,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                         GLAccountCurrencyPM newGLAccountCurrency = new GLAccountCurrencyPM()
                         {
 
-                            CurrencyId = MyEntity.CurrencyId,
+                            CurrencyId = parentGLAccount.CurrencyId,
                             MainGLAccountId = parentGLAccount.Id,
 
                             GLAccountId = MyEntity.Id,

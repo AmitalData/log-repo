@@ -21,8 +21,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CustomerTenantAccessRepository repository;
 
-    
-
         public CustomerTenantAccessQuery()
         {
             repository = new CustomerTenantAccessRepository();
@@ -315,43 +313,5 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return entity;
         }
-
-
-        public IQueryable<int> GetCustomerTenantAccessListsByCustomer( List<int?> customertenant , string stockTypeCode)
-        {
-            IQueryable<int> results = (from a in repository.context.CustomerTenantAccesses
-                                                      where customertenant.Contains(a.CustomerTenant) && a.StockTypeCode == stockTypeCode
-                                                      select a.CustomerTenant);
-            return results;
-
-
-        }
-
-        public List<string> GetCustomerTenantAccessListsByIdsLists(List<string> ids, string stockTypeCode)
-        {
-            List<string> results = (from a in repository.context.CustomerTenantAccesses
-                                    where ids.Contains(a.Id) && a.StockTypeCode == stockTypeCode
-                                    select a.Id).ToList();
-            return results;
-
-
-        }
-
-      
-        public IQueryable<CustomerTenantAccessList> GetCustomerTenantAccessesByImporterVat(string ImporterVat)
-        {
-
-            IQueryable<CustomerTenantAccessList> results = (from a in repository.context.CustomerTenantAccesses
-                                                            where a.CompanyVat == ImporterVat
-                                                            select new CustomerTenantAccessList()
-                                                            {
-                                                                Id = a.Id,
-                                                                CustomerTenant = a.CustomerTenant,
-
-                                                            });
-            return results;
-        }
-
-
     }
 }

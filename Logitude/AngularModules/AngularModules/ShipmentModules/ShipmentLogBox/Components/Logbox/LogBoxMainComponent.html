@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .MenuFilters {
         color: #909293;
@@ -73,29 +73,23 @@
                                                         <tr><td style="width:10px;vertical-align:top"><span></span></td><td style="vertical-align:top;"><p style="margin-left:10px">My Message</p></td>  </tr>-->
                                                         <tr style="height:20px;">
 
-                                                            <td style="height:20px;vertical-align:top;text-align:center;" colspan="2">
+                                                            <td style="height:20px;vertical-align:top" colspan="2">
 
-                                                                <table style="width:170px;height:22px;margin-left:8px;display:inline;">
-                                                                    <tr *ngIf="isPrivateLabel == true">
-                                                                        <td style="width:130px;vertical-align:top"> 
-                                                                            You can now define what document types will create a digital sign task for you -
+                                                                <table style="width:170px;height:22px;margin-left:8px;">
+                                                                    <tr>
+                                                                        <td style="width:130px;vertical-align:top">
+                                                                            <!--<div style="display:inline;height:20px;vertical-align:top" class="CheckBox">
+                                                                                <[disabled]="IsStartSave" [(ngModel)]="DontShow" (change)="DontShowAginTipAreaClick()" [attr.id]="DontShowA1gimToolTipAreaCheckBoxId"
+                                                                                <input style="text-align:center;display:inline" type="checkbox" />
+                                                                                <label style="display:inline" [attr.for]="DontShowA1gimToolTipAreaCheckBoxId">Don't Show again</label>
+                                                                            </div>-->
+                                                                            You can now define what document types will create a digital sign task for you - 
                                                                         </td>
                                                                         <td style="width:40px;vertical-align:top">
                                                                             <a class="Link" style="margin-right:15px;margin-left:15px;height:auto" (click)="LearnMoreToolTipArea()">Learn More</a>
                                                                         </td>
                                                                         <td style="width:40px;vertical-align:top">
                                                                             <a class="Link" style="height:auto" (click)="CloseToolTipArea()">Dismiss</a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr *ngIf="isPrivateLabel == false" style="float:right;direction:rtl;">
-                                                                        <td style="width:130px;vertical-align:top">
-                                                                            ניתן להגדיר סוגי מסמכים שנדרשים לחתימה דיגטלית
-                                                                        </td>
-                                                                        <td style="width:40px;vertical-align:top">
-                                                                            <a class="Link" style="margin-right:15px;margin-left:15px;height:auto" (click)="LearnMoreToolTipArea()">הגדר כעת</a>
-                                                                        </td>
-                                                                        <td style="width:40px;vertical-align:top">
-                                                                            <a class="Link" style="height:auto" (click)="CloseToolTipArea()">התעלם</a>
                                                                         </td>
                                                                     </tr>
                                                                 </table>

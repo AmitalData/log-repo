@@ -1,10 +1,4 @@
-<table>
-
-    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-        <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-        </td>
-    </tr>
+﻿<table>
     <tr style="height:30px;">
         <td style="color:#1B90CB;font-size:14px;"> Filter By: </td>
     </tr>
@@ -31,7 +25,7 @@
                                 Potential
                             </label>
                         </div>
-                    </td>
+                    </td> 
 
                     <td style="width:60px">
                         <div class="RadioButton">
@@ -40,7 +34,7 @@
                                 In Use
                             </label>
                         </div>
-                    </td>
+                    </td> 
 
                     <td style="width:20px"><div></div></td>
                     <td style="width:110px;">Additional Service</td>
@@ -69,7 +63,7 @@
                             </tr>
                         </table>
                     </td>
-
+                    
                     <!--run button-->
                     <td style="width:15px;"><div></div></td>
                     <td style="width:80px;">
@@ -91,7 +85,7 @@
                     <td style="width:100px;">
                         <ComboBox [ItemsSource]="CustomerStatusList" [Binding]="'Name'" [SelectedItem]="SelectedCustomerStatus" (SelectedItemChanged)="SelectedCustomerStatus = $event"></ComboBox>
                     </td>
-
+                    
                     <td><div></div></td>
                 </tr>
             </table>

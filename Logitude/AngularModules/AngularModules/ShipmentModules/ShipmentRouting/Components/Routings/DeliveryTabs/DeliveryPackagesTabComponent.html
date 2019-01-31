@@ -1,4 +1,4 @@
-
+﻿
 <div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
@@ -30,11 +30,11 @@
                             <button [disabled]="!IsEditingEnabled" class="Button" (click)="CopyfromShipmentPackagesButtonClicked()">Copy from Shipment Packages</button>
                         </td>
 
-                        <td style="width:5px;" *ngIf="IsFCLEntity && IsContainersFUVisible && DirectionId == 'I' && TypeCode != 'EMPT'">
+                        <td style="width:5px;" *ngIf="IsFCLEntity && IsContainersFUVisible && DirectionId == 'I'">
                             <div></div>
                         </td>
 
-                        <td style="width: 1px" *ngIf="IsFCLEntity && IsContainersFUVisible && DirectionId == 'I' && TypeCode != 'EMPT'">
+                        <td style="width: 1px" *ngIf="IsFCLEntity && IsContainersFUVisible && DirectionId == 'I'">
                             <button class="Button" (click)="ConnectPackagesButtonClicked()">Connect Packages</button>
                         </td>
 

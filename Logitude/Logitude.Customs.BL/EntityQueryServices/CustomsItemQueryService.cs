@@ -31,34 +31,5 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return pm;
         }
 
-        public string GetQuantityTypeByClassificationCode(string classificationCode, int tenant)
-        {
-            CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(tenant);
-            CustomsItemPM customsItem = customsItemQueryService.GetCustomsItemByClassificationCode(classificationCode);
-
-            PropertiesDetailsHistoryPM propertiesDetailsHistory = null;
-            MeasurmentUnitPM measurmentUnit = null;
-            string QuantityTypeCode = null;
-
-            PropertiesDetailsHistoryQueryService propertiesDetailsHistoryQueryService = new PropertiesDetailsHistoryQueryService(tenant);
-            if (customsItem != null)
-            {
-                propertiesDetailsHistory = propertiesDetailsHistoryQueryService.GetPropertiesDetailsHistoryByCustomsItemId(customsItem.ID);
-
-            }
-            MeasurmentUnitQueryService measurmentUnitQueryService = new MeasurmentUnitQueryService(tenant);
-
-            if (propertiesDetailsHistory != null && propertiesDetailsHistory.MeasurementUnitID.HasValue)
-            {
-                measurmentUnit = measurmentUnitQueryService.GetMeasurmentUnitByMalamId(propertiesDetailsHistory.MeasurementUnitID.Value);
-            }
-
-            if (measurmentUnit != null)
-            {
-                QuantityTypeCode = measurmentUnit.Code;
-            }
-            return QuantityTypeCode;
-        }
-
     }
 }

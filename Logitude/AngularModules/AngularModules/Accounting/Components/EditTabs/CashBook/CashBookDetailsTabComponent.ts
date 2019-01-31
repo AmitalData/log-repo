@@ -40,16 +40,6 @@ export class CashBookDetailsTabComponent extends BaseComponent {
         this.EntityPM = entityArgs.EntityPM;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         //this.ItemSource = this.EntityPM.CashBookLines;
-        this.LoadScreen();
-
-
-        //if (this.TotalSum > 0) {
-        //    this.UIProperties.SetEnabled("AccountId", this.ObjectTableName, false);
-        //}
-
-        this.SetUIProperties();
-    }
-    LoadScreen() {
         this.RemoveDepositedLines();
         this.CalculateTotals();
         this.ComputeFilterTotals();
@@ -72,8 +62,14 @@ export class CashBookDetailsTabComponent extends BaseComponent {
                     }
                 }
             });
-    }
 
+
+        //if (this.TotalSum > 0) {
+        //    this.UIProperties.SetEnabled("AccountId", this.ObjectTableName, false);
+        //}
+
+        this.SetUIProperties();
+    }
 
     SetUIProperties() {
         this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, false); // always dim, WI 41740
@@ -98,7 +94,6 @@ export class CashBookDetailsTabComponent extends BaseComponent {
                 this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.LoadScreen();
                         this.SetUIProperties();
                     }
                 });
@@ -109,7 +104,6 @@ export class CashBookDetailsTabComponent extends BaseComponent {
                     if (isLoadSuccess) {
                         this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
                         console.log("Entity Reloaded");
-                        this.LoadScreen();
                         this.SetUIProperties();
                     }
                 });

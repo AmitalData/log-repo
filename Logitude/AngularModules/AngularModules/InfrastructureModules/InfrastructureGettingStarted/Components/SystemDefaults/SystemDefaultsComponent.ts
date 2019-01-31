@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+﻿import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
@@ -535,7 +535,7 @@ export class SystemDefaultsComponent extends BaseComponent{
 
     get RegulatedAgentVisibility() {
         var myResult = false;
-        if (SessionLocator.TenantManagementJS.ManagesRegisteredAgent) {
+        if (SessionLocator.TenantManagementPM.ManagesRegisteredAgent) {
             myResult = true;
         }
 

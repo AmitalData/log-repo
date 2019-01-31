@@ -56,8 +56,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                SecurityUtility.CheckContactFeature("FilingInbox", "READ", authToken.Tenant);
                 FilingInboxQuery filingInboxQuery = new FilingInboxQuery(authToken.Tenant);
                 FilingInboxPM filingInboxPM = filingInboxQuery.GetSinglePM(id, authToken.Tenant);
                 
@@ -88,7 +86,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("FilingInbox", "NEW", authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         FilingInboxService service = new FilingInboxService(MyContext, entityPM.Tenant);
@@ -135,7 +132,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("FilingInbox", "UPDATE", authToken.Tenant);
 
                         string entityName = "FilingInbox" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "FilingInboxPM" + entityPM.Id + entityPM.Tenant;

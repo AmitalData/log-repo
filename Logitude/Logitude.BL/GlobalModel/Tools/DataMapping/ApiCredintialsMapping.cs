@@ -41,7 +41,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             poco.UpdateDate = entityPM.UpdateDate;
             poco.UpdatedBy = entityPM.UpdatedBy;
             poco.UsedFor = entityPM.UsedFor;
-           // poco.ComputingPartnerId = entityPM.ComputingPartnerId;
+            poco.ComputingPartnerId = entityPM.ComputingPartnerId;
        
         }
     }

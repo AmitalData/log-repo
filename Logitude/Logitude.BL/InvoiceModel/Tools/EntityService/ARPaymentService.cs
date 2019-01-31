@@ -232,8 +232,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             var setApproved = theEntityPm.SetApproved;
             var setCancelApproved = theEntityPm.SetCancelApproval;
-            var setVoided = theEntityPm.SetVoided;
-            var SetReSendQBO = theEntityPm.SetReSendQBO;
+            var setVoided = theEntityPm.SetVoided; 
 
             // PaymentCheque And CashBook
             this.AddARPaymentChequeAndCashBook(theEntityPm, theEntityPm.SetApproved);
@@ -248,7 +247,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.UpdatePaymentOpenAmount();
             ARPaymentHelper service = new ARPaymentHelper();
-            if (payment.ExternalAccountingEntityId != null || SetReSendQBO)
+            if (payment.ExternalAccountingEntityId != null)
             {
                 service.ARPaymentQuickbooksValidating(theEntityPm, true, false, payment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved);
             }
@@ -355,7 +354,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (entityPM.SetApproved)
             {
                 if (entityPM.StatusCode != "AD")
-
                 {
                     entityPM.StatusCode = "AD";
                 }
@@ -1330,8 +1328,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             List<ARPaymentChequePM> aRPaymentCheques = query.GetListByPaymentId(entityPm.Id, tenant);
                             if (aRPaymentCheques != null)
                             {
-                                var list = aRPaymentCheques.Where(a => a.StatusCode == "6" || a.StatusCode == "3").ToList();
-                                if (list != null && list.Count() != 0)
+                                var list = aRPaymentCheques.Where(a => a.StatusCode != "1").ToList();
+                                if (list == null || (list != null && list.Count() == 0))
                                 {
                                     string msg = TranslateTextsClass.Translate("ARPayment.M.CANTCancelARPayment", entityPm.Tenant, useLocal) + "{ ";
                                     foreach (var item in list)
@@ -1343,7 +1341,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 else
                                 {
                                     IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
-                                    foreach (var item in aRPaymentCheques)
+                                    foreach (var item in list)
                                     {
                                         item.StatusCode = "5";
                                         paymentUpdate.Update(item);
@@ -1353,7 +1351,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     ICashBookQueryServiceExt cashQuery = ContainerAccessor.Container.Resolve(typeof(ICashBookQueryServiceExt), "CashBookQueryServiceExt", new ParameterOverride("", 1)) as ICashBookQueryServiceExt;
                                     ICashBookUpdateServiceExt cashBookUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookUpdateServiceExt), "CashBookUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookUpdateServiceExt;
                                     CashBookPM cashBook = cashQuery.GetByPaymentAndCurrencyAndBranch(entityPm.PaymentCurrencyId, "2", entityPm.BranchId, tenant);
-                                    cashBook.TotalAmount = cashBook.TotalAmount - aRPaymentCheques.Sum(a => a.ForeignAmount);
+                                    cashBook.TotalAmount = cashBook.TotalAmount - list.Sum(a => a.ForeignAmount);
                                     cashBook.ChangeSetOp = ChangeSetOperation.Update;
                                     cashBookUpdate.Update(cashBook);
                                     CreateVoidedARPaymentEvent("ARPayment Cancel");

@@ -31,7 +31,7 @@ namespace Logitude.Accounting.BL
             all.Add(new AccountingEntityDetails()
             {    
                 Code = "5", 
-                LocalName = "תשלום לספק", 
+                LocalName = "קבלה ספק", 
                 EnglishName = "APPayment", 
 			});
 			 

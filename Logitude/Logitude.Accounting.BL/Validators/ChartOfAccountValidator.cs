@@ -7,11 +7,6 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using System.Web;
-using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.Accounting.BL.Validators
 {
@@ -65,51 +60,21 @@ namespace Logitude.Accounting.BL.Validators
             return chartOfAccountQuery.CheckWhetherCodeExists(code, id, tenant);
         }
 
+
         public static string CheckParent(string parentId, string childTypeCode, int tenant)
         {
             IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
             ChartOfAccountQueryService chartOfAccountQuery = new ChartOfAccountQueryService(accountingContext);
-            ChartOfAccountPM parentPM = chartOfAccountQuery.GetSingle(parentId, false, false);
-
-            // null
+            ChartOfAccountPM parentPM = chartOfAccountQuery.GetSingle(parentId, false, true);
             if (parentPM == null)
             {
                 return TextCodesTranslator.TranslateText("ChartOfAccounts.O.ParentDoesNotExist", tenant);
             }
-
-            // parent type
-            if (parentPM.TypeCode != childTypeCode)
+            else if (parentPM.TypeCode != childTypeCode)
             {
                 return TextCodesTranslator.TranslateText("ChartOfAccounts.O.WrongParentType", tenant);
             }
-
             return null;
-        }
-
-        public static string CheckParentChild(string parentId, string childId, int tenant)
-        {
-            // GET logged contact, RTL
-            ContactPM contact = GetLoggedContact(tenant);
-            bool showLocals = !contact.DontShowLocal;
-
-            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
-            ChartOfAccountRepository repo = new ChartOfAccountRepository(accountingContext);
-            ChartOfAccount parent = repo.GetSingle(parentId, tenant);
-
-            if (parent != null && childId != null)
-            {
-                if (parent.Id == childId)
-                    return TextCodesTranslator.TranslateText("ChartOfAccounts.O.ParentIsChild", tenant, showLocals);
-                else
-                {
-                    if (parent.ParentId != null)
-                        return CheckParentChild(parent.ParentId, childId, tenant);
-                    else
-                        return null;
-                }
-            }
-            else
-                return null;
         }
 
         public static bool CheckConnected(ChartOfAccountPM entityPm)
@@ -127,21 +92,6 @@ namespace Logitude.Accounting.BL.Validators
             return false;
 
 
-        }
-
-        private static ContactPM GetLoggedContact(int tenant)
-        {
-            //email
-            string email = "";
-            if (HttpContext.Current != null)
-                email = HttpContext.Current.User.Identity.Name;
-            else
-                email = "system@tenant" + tenant.ToString() + ".com";
-
-            //contact
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            ContactPM contactPM = contactQuery.GetContactByEmailOnly(email, tenant);
-            return contactPM;
         }
 
     }

@@ -24,7 +24,6 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
 //import {AutomaticExternalRconcilMthodsPM}  '../../Services/StandardPMs/AutomaticExternalRconcilMthodsPM';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
-import {ObjectsUpdater} from '../../../Infrastructure/Locators/ObjectsUpdater';
 
 @Component({
     moduleId: module.id,
@@ -34,7 +33,6 @@ import {ObjectsUpdater} from '../../../Infrastructure/Locators/ObjectsUpdater';
 })
 
 export class FullAccountingSettingsComponent extends BaseComponent implements OnInit, AfterViewInit {
-
 
     public DataContext: FullAccountingSettingsComponent = this;
     //public myForm: ControlGroup;
@@ -80,11 +78,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     ngAfterViewInit() {
         //this.SetUIProperties();
     }
-    ReloadTenantPM(): any {
 
-        SessionLocator.TenantPM.AccountingActivated = this.AccountingActivated;
-
-    }
     SetUIProperties() {
 
         var enableAllFields = false;
@@ -127,7 +121,6 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             } else if (value == false) {
                 this.AccountingActivationDate = null;
             }
-            this.ReloadTenantPM();
             this.SetUIProperties();
         }
     }
@@ -315,12 +308,6 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
-    get SoftwareVersion() { return this.EntityPM.SoftwareVersion; }
-    set SoftwareVersion(value: string) {
-        if (this.EntityPM.SoftwareVersion != value) {
-            this.EntityPM.SoftwareVersion = value;
-        }
-    }
 
     //automaticExternalRconcilMthods: AutomaticExternalRconcilMthodsPM;
     //get AutomaticExternalRconcilMthods() { return this.taxWithholdingGLAccount; }
@@ -361,7 +348,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     }
     //#endregion
 
-    //Commands
+    //Commands 
     CancelButtonClicked() {
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }

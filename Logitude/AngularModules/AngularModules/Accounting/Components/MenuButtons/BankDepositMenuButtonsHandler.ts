@@ -1,5 +1,4 @@
-﻿import { BankDepositExtendedPMService } from './../../Services/ExtendedPMs/BankDepositExtendedPMService';
-declare var window: any;
+﻿declare var window: any;
 import {BankDepositPM} from '../../EntityPMs/BankDepositPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -32,46 +31,13 @@ export class BankDepositMenuButtonsHandler {
     private _documentOutPMService: DocumentOutPMService = new DocumentOutPMService();
     private _documentTypePMService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
     private _exportDocumentService: ExportDocumentService = new ExportDocumentService();
-    private _BankDepositExtendedPMService: BankDepositExtendedPMService = new BankDepositExtendedPMService();
 
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
-
-
-        this.Listen();
     }
-
-    private LoadCompletedEvent: any = null;
-    Listen() {
-
-
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-
-            if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                    if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                        console.log("Entity Reloaded");
-                    }
-                });
-            }
-
-        }
-    }
-
-
-
-
-
-
-
-
-
-
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         if (this.EntityPM != null) {
@@ -110,8 +76,6 @@ export class BankDepositMenuButtonsHandler {
                             {
                                 if (!this.EntityPM.Id)
                                     button.IsDisabled = true;
-                                else if (this.EntityPM.JournalQueueId == null)
-                                    button.IsDisabled = true;
                                 else
                                     button.IsDisabled = false;
 
@@ -133,8 +97,8 @@ export class BankDepositMenuButtonsHandler {
 
         if (!this.EntityPM.CreateDate) {
             // will override in server, its required even on client!!
-            this.EntityPM.CreateDate = new Date();
-            this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
+            this.EntityPM.CreateDate = new Date(); 
+            this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId; 
             this.EntityPM.UpdateDate = new Date();
             this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
         }
@@ -142,7 +106,7 @@ export class BankDepositMenuButtonsHandler {
 
 
         switch (menuButton.EventCode) {
-
+            
             case "BankDepositApprove":
                 {
                     this.entityArgs.EditComponent.ValidationErrorsList = [];
@@ -153,13 +117,6 @@ export class BankDepositMenuButtonsHandler {
                         if (this.EntityPM.LocalDepositAmount == 0)
                         {
                             var msg = TextCodeTranslator.Translate("Accounting.General.O.ZeroDeposit");
-                            this.entityArgs.EditComponent.ValidationErrorsList = [];
-                            this.entityArgs.EditComponent.ValidationErrorsList.push(msg);
-                            return;
-                        }
-                        else if (this.EntityPM.LocalDepositAmount < 0)
-                        {
-                            var msg = TextCodeTranslator.Translate("Accounting.O.minusDepositNotAllowed");
                             this.entityArgs.EditComponent.ValidationErrorsList = [];
                             this.entityArgs.EditComponent.ValidationErrorsList.push(msg);
                             return;
@@ -184,32 +141,15 @@ export class BankDepositMenuButtonsHandler {
                 }
             case "CancelDeposit":
                 {
-                    ///// save in server
-                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-                    this._BankDepositExtendedPMService.cancelDeposit(this.EntityPM.Id).subscribe(myResult => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.EntityPM.IsCanceled = true;
+                    this.entityArgs.EditComponent.SaveChanges();
+                    this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                        if (isSaveSuccess) {
 
-                        var mm: ServiceResponse = myResult;
-                        if (!mm.HasError) {
-                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-
-                        }
-                        else {
-                            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = mm.ErrorsArray;
+                        } else {
+                            this.EntityPM.IsCanceled = false;
                         }
                     });
-
-                    ///// old save pattern: update in client then submitchanges
-                    // this.EntityPM.IsCanceled = true;
-                    // this.entityArgs.EditComponent.SaveChanges();
-                    // this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    //     if (isSaveSuccess) {
-
-                    //     } else {
-                    //         this.EntityPM.IsCanceled = false;
-                    //     }
-                    // });
-
                     return;
                 }
 
@@ -226,7 +166,7 @@ export class BankDepositMenuButtonsHandler {
 
             this.entityArgs.EditComponent.SaveChanges();
         }
-
+  
     }
 
     private StartBusyIndicator(message: string) {

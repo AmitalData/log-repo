@@ -1918,25 +1918,25 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool excludeFromDeductionReport ;
+	  private bool isPartOfDeductionReport ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool ExcludeFromDeductionReport  
+       public bool IsPartOfDeductionReport  
 	   {
 	    
 	     get
 		{
-		   return excludeFromDeductionReport;
+		   return isPartOfDeductionReport;
 		 }
 		 set
 		 {
-		   if(excludeFromDeductionReport != value)
+		   if(isPartOfDeductionReport != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExcludeFromDeductionReport",OldValue=excludeFromDeductionReport,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPartOfDeductionReport",OldValue=isPartOfDeductionReport,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
-		   excludeFromDeductionReport=value;
+		   isPartOfDeductionReport=value;
 		   }
 			
 		 }
@@ -1960,167 +1960,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Parent",OldValue=parent,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   parent=value;
-		   }
-			
-		 }
-	   }
-	  private string deductionTypeName ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DeductionTypeName  
-	   {
-	    
-	     get
-		{
-		   return deductionTypeName;
-		 }
-		 set
-		 {
-		   if(deductionTypeName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeductionTypeName",OldValue=deductionTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   deductionTypeName=value;
-		   }
-			
-		 }
-	   }
-	  private string deductionFileTypeCode ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DeductionFileTypeCode  
-	   {
-	    
-	     get
-		{
-		   return deductionFileTypeCode;
-		 }
-		 set
-		 {
-		   if(deductionFileTypeCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeductionFileTypeCode",OldValue=deductionFileTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   deductionFileTypeCode=value;
-		   }
-			
-		 }
-	   }
-	  private string deductionFileTypeName ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DeductionFileTypeName  
-	   {
-	    
-	     get
-		{
-		   return deductionFileTypeName;
-		 }
-		 set
-		 {
-		   if(deductionFileTypeName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeductionFileTypeName",OldValue=deductionFileTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   deductionFileTypeName=value;
-		   }
-			
-		 }
-	   }
-	  private string assessingOfficeName ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AssessingOfficeName  
-	   {
-	    
-	     get
-		{
-		   return assessingOfficeName;
-		 }
-		 set
-		 {
-		   if(assessingOfficeName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssessingOfficeName",OldValue=assessingOfficeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   assessingOfficeName=value;
-		   }
-			
-		 }
-	   }
-	  private string deductionTypeEnglishName ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DeductionTypeEnglishName  
-	   {
-	    
-	     get
-		{
-		   return deductionTypeEnglishName;
-		 }
-		 set
-		 {
-		   if(deductionTypeEnglishName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeductionTypeEnglishName",OldValue=deductionTypeEnglishName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   deductionTypeEnglishName=value;
-		   }
-			
-		 }
-	   }
-	  private decimal? totalOpenChequesInLocalCur ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public decimal? TotalOpenChequesInLocalCur  
-	   {
-	    
-	     get
-		{
-		   return totalOpenChequesInLocalCur;
-		 }
-		 set
-		 {
-		   if(totalOpenChequesInLocalCur != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalOpenChequesInLocalCur",OldValue=totalOpenChequesInLocalCur,NewValue=value,PropertyType="decimal?"};
-		    NotifyPropertyChanged(values);
-		   totalOpenChequesInLocalCur=value;
-		   }
-			
-		 }
-	   }
-	  private decimal? totFutureOpenChequesInLocalCur ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public decimal? TotFutureOpenChequesInLocalCur  
-	   {
-	    
-	     get
-		{
-		   return totFutureOpenChequesInLocalCur;
-		 }
-		 set
-		 {
-		   if(totFutureOpenChequesInLocalCur != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotFutureOpenChequesInLocalCur",OldValue=totFutureOpenChequesInLocalCur,NewValue=value,PropertyType="decimal?"};
-		    NotifyPropertyChanged(values);
-		   totFutureOpenChequesInLocalCur=value;
 		   }
 			
 		 }

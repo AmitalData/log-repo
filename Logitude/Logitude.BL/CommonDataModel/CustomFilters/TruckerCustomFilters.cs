@@ -28,16 +28,6 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
             {
                 if (item.IsCustom)
                 {
-                    if (item.FieldName == "CountryId")
-                    {
-                        string filterFieldId = item.FieldValue as string;
-
-                        if (!string.IsNullOrEmpty(filterFieldId))
-                        {
-                            queryableData = queryableData.Where(c => c.Card.CountryId == filterFieldId);
-                        }
-                    }
-
                     if (item.FieldName == "PaymentTermId")
                     {
                         string filterFieldId = item.FieldValue as string;

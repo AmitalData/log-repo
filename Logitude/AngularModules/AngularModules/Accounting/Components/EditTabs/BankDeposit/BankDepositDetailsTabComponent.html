@@ -91,7 +91,7 @@
         z-index: 10;
 
         width: 350px;
-
+        
         color: #717171;
         text-align: center;
         background: #fff5ce;
@@ -124,7 +124,7 @@
         -webkit-animation: animationFrames ease 1s;
         -webkit-animation-iteration-count: 1;
         -webkit-transform-origin: 50% 50%;
-        -webkit-animation-fill-mode:forwards; /*Chrome 16+, Safari 4+*/
+        -webkit-animation-fill-mode:forwards; /*Chrome 16+, Safari 4+*/ 
         -moz-animation: animationFrames ease 1s;
         -moz-animation-iteration-count: 1;
         -moz-transform-origin: 50% 50%;
@@ -210,7 +210,7 @@
                     <!-- Header -->
                     <tr class="TabTitleRow">
                         <td colspan="3">
-                            {{IsLinesSelection ? txt_NewDeposit : txt_DepositDetails }}
+                            {{IsLinesSelection ? txt_NewDeposit : txt_DepositDetails }} 
                             <div style="width: 60px; float: right;">
                                 <!--<button class="Button" (click)="ReconcileButtonClicked()">Reconicle</button>-->
                             </div>
@@ -283,17 +283,17 @@
                                             <tr *ngIf="IsLinesSelection" class="FormFieldRow">
                                                 <td style="width: 150px;">
                                                     <LogLabel [Text]="'Accounting.General.O.CashbookTotal' | TextCodeTranslationPipe"
-                                                              [NoObjectField]="true"
+                                                              [NoObjectField]="true" 
                                                               [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td style="width: 220px;">
-                                                    <LogTextBox [ObjectFieldName]="'_CashbookTotal'"
+                                                    <LogTextBox [ObjectFieldName]="'_CashbookTotal'" 
                                                                 [Text]="_CashbookTotal"
-                                                                [InputType]="'number'"
-                                                                [DataContext]="DataContext"
-                                                                [NoObjectField]="true"
-                                                                [ObjectTableName]="ObjectTableName"
+                                                                [InputType]="'number'" 
+                                                                [DataContext]="DataContext" 
+                                                                [NoObjectField]="true" 
+                                                                [ObjectTableName]="ObjectTableName" 
                                                                 [HideColumns]="true"></LogTextBox>
                                                 </td>
                                                 <td><div></div></td>
@@ -308,7 +308,7 @@
                                                 </td>
 
                                                 <td style="width: 180px;">
-                                                    <LogTextBox [ObjectFieldName]="'ForeignAmount'" [InputType]="'unsDecimal'" [DataContext]="DataContext"
+                                                    <LogTextBox [ObjectFieldName]="'ForeignAmount'" [InputType]="'number'" [DataContext]="DataContext"
                                                                 [Text]="ForeignAmount"
                                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
@@ -450,7 +450,7 @@
                                                 </td>
 
                                                 <td style="width: 180px;">
-                                                    <LogTextBox [ObjectFieldName]="'LocalDepositAmount'" [InputType]="'number'"
+                                                    <LogTextBox [ObjectFieldName]="'LocalDepositAmount'" [InputType]="'number'" 
                                                                 [DataContext]="DataContext" [Text]="LocalDepositAmount"
                                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
@@ -465,9 +465,9 @@
                                                 </td>
 
                                                 <td style="width: 180px;">
-                                                    <LogTextBox [ObjectFieldName]="'ForeignAmount'" [InputType]="'number'"
+                                                    <LogTextBox [ObjectFieldName]="'ForeignAmount'" [InputType]="'number'" 
                                                                 [DigitsAfterPoint]="2"
-                                                                [DataContext]="DataContext" [Text]="ForeignAmount"
+                                                                [DataContext]="DataContext" [Text]="ForeignAmount" 
                                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
                                                 <td><div></div></td>
@@ -498,7 +498,7 @@
                         </td>
                         <td style="width: 350px; padding: 5px;">
                             <div style="padding-left: 15px; width: 350px;">
-
+                            
                                 <ul class="FiltersMenu">
                                     <li id="cashcheques" (click)="FilterItemClicked('cash')"  style="width: 105px; height: 22px;"
                                         [class.SelectedFilter]="FilterSelectedValue === 'cash'">
@@ -509,7 +509,7 @@
                                         {{'Accounting.General.O.postdatedCheques' | TextCodeTranslationPipe}} ({{PostdatesCount}})
                                     </li>
                                 </ul>
-
+                            
                             </div>
                             <!--<div style="float: right; padding: 4px; width: 250px;">
                                 <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Cheque No. / Bank Account'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>

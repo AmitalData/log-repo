@@ -43,7 +43,6 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
     GrossWeightLabel: string;
     DimensionsLabel: string;
     ObjectTableName: string;
-    VolumetricWeightLabel: string;
     ActualReleaseDateOldValue: Date;
     ExpectedReleaseDateOldValue: Date;
 
@@ -199,8 +198,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
         this.VolumeLabel = "Volume (" + this.warehouseReleasePM.VolumeUnitCode + ")";
         this.GrossWeightLabel = "Gross Weight (" + this.warehouseReleasePM.GrossWeightUnitCode + ")";
         this.DimensionsLabel = "Dim(L-W-H) (" + SessionLocator.TenantPM.DimensionsUnitCode + ")";
-        this.VolumetricWeightLabel = "Volumetric Weight (" + this.warehouseReleasePM.ChargeableWeightUnitCode + ")";
-        
+
     }
 
     IsScreenEnabled: boolean = true;

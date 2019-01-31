@@ -3,30 +3,23 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Global.Data.GlobalModel.Helpers;
-using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using Syncfusion.XlsIO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
-using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.ServiceModel.DomainServices.Server;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Services;
 using System.Xml;
 using System.Xml.Serialization;
-using System.Diagnostics;
 
 namespace WebFreight.Web.Helpers
 {
@@ -266,17 +259,6 @@ namespace WebFreight.Web.Helpers
                 if (stop == false)
                 {
                     MethodsInfo = getMethodsInfo("WebFreight.Web.CRMModel.DomainServices.EmployeeGroupDomainService", query);
-                    if (MethodsInfo != null)
-                    {
-                        getListMethodInfo = MethodsInfo.ListMethodInfo;
-                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
-                        context = MethodsInfo.context;
-                        stop = true;
-                    }
-                }
-                if (stop == false)
-                {
-                    MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.AccountingDomainService", query);
                     if (MethodsInfo != null)
                     {
                         getListMethodInfo = MethodsInfo.ListMethodInfo;
@@ -550,49 +532,6 @@ namespace WebFreight.Web.Helpers
             //    ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "ExcelExportService : ExportQueryToExcel Method", ip);
             //}
 
-
-            return memory.ToArray();
-        }
-
-        public byte[] ExportBIQueryToExcel(string queryId, int tenant)
-        {
-            DWSubQueryRepository subQueryRep = new DWSubQueryRepository(tenant);
-            DWSubQuery dWSubQuery = subQueryRep.GetSingleDWSubQueryByDWQueryId(queryId, tenant);
-            string SQL = dWSubQuery.SQLString;
-            string objectTable = "Shipment";
-            var currentDb = GlobalDbHelper.GetGlobalDBWithNoCache(0);
-            string dbConnectionInfo = currentDb.SharedDWConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
-            DataTable dataTable = new DataTable();
-
-            using (var scope = TransactionFactory.GetNewTransaction())
-            {
-                using (SqlConnection sourceConnection = new SqlConnection(connection.ConnectionString))
-                {
-                    sourceConnection.Open();
-                    SqlCommand commandSourceData = new SqlCommand(SQL, sourceConnection);
-                    SqlDataReader reader = commandSourceData.ExecuteReader();
-                    dataTable.Load(reader);
-                    reader.Close();
-                }
-                scope.Complete();
-            }
-            //byte[] binaryDataResult = null;
-            //using (MemoryStream memStream = new MemoryStream())
-            //{
-            //    BinaryFormatter brFormatter = new BinaryFormatter();
-            //    dataTable.RemotingFormat = SerializationFormat.Binary;
-            //    brFormatter.Serialize(memStream, dataTable);
-            //    binaryDataResult = memStream.ToArray();
-            //}
-
-            System.IO.MemoryStream memory = new System.IO.MemoryStream();
-            ExcelEngine excelEngine = new ExcelEngine();
-            IApplication application = excelEngine.Excel;
-            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
-            IWorksheet sheet = workbook.Worksheets[0];
-            sheet.ImportDataTable(dataTable,true, 1, 1);
-            workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
 
             return memory.ToArray();
         }

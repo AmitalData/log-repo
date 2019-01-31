@@ -40,7 +40,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
         [Column("ReportNumber")]
-	    public string ReportNumber { get; set; }
+	    public int? ReportNumber { get; set; }
         [ForeignKey("TaxDeductionReportStatus")]
         [Column("StatusTypeCode")]
 	    public string StatusTypeCode { get; set; }

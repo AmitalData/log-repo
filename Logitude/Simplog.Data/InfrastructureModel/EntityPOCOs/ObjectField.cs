@@ -98,9 +98,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool DisplayInDocumentReferences { get; set; }
 
         public bool CopyToDW { get; set; }
-
-        public bool DisplayOnLookUpLocal { get; set; }
-
+        
         [ForeignKey("CustomerPermissionTypeCode")]
         public PermissionType CustomerPermissionType { get; set; }
 

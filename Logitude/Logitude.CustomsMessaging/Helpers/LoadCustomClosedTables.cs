@@ -914,13 +914,6 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             //InsertClosedTableRecord(collateralAnswerStatusTable, collateralAnswerStatusObjectTable, customsClosedTables, customsClosedTableRepository);
             //addedClosedTables.Add(collateralAnswerStatusTable);
 
-
-            // merge up 
-            //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData refundCustomerActivityType = closedSystemTables.Where(d => d.id == "1248").FirstOrDefault();
-            //ObjectTable refundCustomerActivityTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.RefundCustomerActivityType", 0, false);
-            //InsertClosedTableRecord(refundCustomerActivityType, refundCustomerActivityTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            //addedClosedTables.Add(refundCustomerActivityType);
-
             //var newclosedSystemTables = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData>(closedSystemTables); 
             var justAdded = new List<string>();
             foreach (SYSTBL_NG_9001_MSG_SystemTablesResponseTableData closedTable in closedSystemTables)

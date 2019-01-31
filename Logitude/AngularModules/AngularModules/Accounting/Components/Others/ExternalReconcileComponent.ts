@@ -1266,7 +1266,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             this.ReloadScreen();
             this.BankReloadScreen();
         }
-
+        
 
     }
     ShowEmptyAutoReco() {
@@ -1274,8 +1274,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         messageWindow.Width = 400;
         messageWindow.Height = 150;
         messageWindow.RTL = this.isRTL;
-        messageWindow.Title = " ";
-        messageWindow.Show(TextCodeTranslator.Translate("Accounting.O.Noautorecofoundbymethodchangemethod"));
+      //messageWindow.Title = "No Reconcile";
+      messageWindow.Show(TextCodeTranslator.Translate("Accounting.O.Noautorecofoundbymethodchangemethod"));
     }
     CloseAlert() {
         this.showAlert = false;
@@ -1413,9 +1413,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         });
     }
 
-    labelCount = 0;
+    labelCount = 0; 
     LabelClicked() {
-        var feature = FeatureLocator.IsFeatureGrantedByCode("ExtRecoGenerateTestRecords");
+        var feature = FeatureLocator.IsFeatureGrantedByCode("ExtRecoGenerateTestRecords");        
         if (feature)
         {
             this.labelCount++;
@@ -1558,7 +1558,7 @@ class TransactionLineModel extends BaseComponent {
         }
         this.IconCode = iconTxt;
 
-        //#endregion
+        //#endregion 
     }
 
     get GroupHash() { return this.LedgerTransactionPM.GroupHash };
@@ -1642,7 +1642,7 @@ class TransactionLineModel extends BaseComponent {
         //    return this.parent.lastColorOperation == true;
         //}
     }
-    //#endregion
+    //#endregion 
 
     CalculatOriginalCurruncy() {
         //

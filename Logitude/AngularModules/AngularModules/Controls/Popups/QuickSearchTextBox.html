@@ -1,6 +1,6 @@
-
+﻿
 <div class="LogitudeQuickSearchTextBox" [ngStyle]="{height: HideBox ? '0px' : '22px'}">
-    <input *ngIf="!HideBox" type="text" placeholder="{{Watermark}}" [(ngModel)]="SearchText" (focus)="OnFucos();" (blur)="OnLostFucos();" [disabled]="IsDisabled"   id="{{NewId}}"/>
+    <input *ngIf="!HideBox" type="text" placeholder="{{Watermark}}" [(ngModel)]="SearchText" (focus)="OnFucos();" (blur)="OnLostFucos();" [disabled]="IsDisabled" />
     <img class="LogitudeQuickSearchSearchIcon" src="./Images/Search.png" *ngIf="IsIconsVisible && IsSearchIconVisible && !HideIcons && !HideBox" />
     <img class="LogitudeQuickSearchDeleteIcon" src="./Images/RedX2.png" *ngIf="IsIconsVisible &&IsDeleteIconVisible && !HideIcons && !HideBox" (click)="DeleteClicked()" />
 

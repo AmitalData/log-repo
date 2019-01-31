@@ -122,14 +122,7 @@ namespace CommunicationWorkerRole
             {
                 case "D":
                     {
-                        if (task.RepeatInMinutes > 0)
-                        {
-                            task.NextRunTime = task.NextRunTime.Value.AddMinutes(task.RepeatInMinutes + 0.0);
-                        }
-                        else
-                        {
-                            task.NextRunTime = task.NextRunTime.Value.AddDays(1);
-                        } 
+                        task.NextRunTime = task.NextRunTime.Value.AddDays(1);
                         queueservice.InitializeQueue("SchedularQueue", 0);
                         queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() } }, null, null, null, task.NextRunTime);
                         break;

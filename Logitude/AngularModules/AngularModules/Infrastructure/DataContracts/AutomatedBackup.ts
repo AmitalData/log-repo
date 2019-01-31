@@ -19,7 +19,7 @@ export class AutomatedBackup {
     public Delaytime: number;
     public DelaytimeIndicator: string;
     public Type: string;
-    public IsAutomationResultEmailAllActiveUsers: boolean;
+  
     AautomationConditionLists: AutomationCondition[];
     AutomationSetValueLists: AutomationSetValue[];
     DelayAautomationConditionLists: AutomationCondition[];

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+﻿import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {ServiceHelper} from '../Utilities/ServiceHelper';
@@ -204,22 +204,9 @@ export class WebFreightDomainService {
                 }
             });
         }
-        );
-    }
 
-    GetExportBIReportToExcel(queryId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/GetExportBIReportToExcel?queryId=' + queryId;
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = allLists;
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+        );
+
     }
 
     getHypridPartnerLogo(logoId: string) {
@@ -284,8 +271,4 @@ export class NewTraceEventResult {
     public LastStatusLogDate: Date;
     public LogDateTime: Date;
     public StatusChanged: boolean;
-    public LastSharedEventId: string;
-    public LastSharedEventLocation: string;
-    public LastSharedEventNotes: string;
-    public LastSharedEventDate: Date;
 }

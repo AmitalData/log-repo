@@ -1,12 +1,10 @@
-﻿using Logitude.AmitalMessaging.Utils;
-using Simplog.Server.Infrastructure.Helpers;
+﻿using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
-using UnifreightIIG.Common.AgentPaymentReplyServiceReference;
 
 namespace WebFreight.Web.CustomWebServices.Testers
 {
@@ -31,12 +29,6 @@ namespace WebFreight.Web.CustomWebServices.Testers
                     int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(4180411244);
                 }
             }
-        }
-
-        public static void  DeSerializeObject3052(string customsResponseXml)
-        {
-            var customsResponse = XmlGenericUtil<TSH_MSG7_AgentPaymentReply>.DeSerializeObject(customsResponseXml);
-
         }
     }
 }

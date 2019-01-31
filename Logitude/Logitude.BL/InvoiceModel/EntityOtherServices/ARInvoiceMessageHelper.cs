@@ -143,8 +143,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             MeasurementRepository measurementRepository = new MeasurementRepository(this.commonContext);
             AddressQuery addressQuery = new AddressQuery(new AddressRepository(this.commonContext));
             ShipmentQuery shipmentQuery = new ShipmentQuery(new ShipmentRepository(this.shipmentsContext));
-            ShipmentReceivableRepository shipmentReceivableRepository = new ShipmentReceivableRepository(this.shipmentsContext);
-            PrepaidCollectRepository prepaidCollectRepository = new PrepaidCollectRepository(tenant);
 
             foreach (ARInvoice item in invoices)
             {
@@ -248,8 +246,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 invoiceElement.InvoiceLines = new List<ARInvoiceLineElement>();
                 List<ARInvoiceLine> dueVatLines = new List<ARInvoiceLine>();
                 List<ARInvoiceLine> lines = allInvoicesLines.Where(d => d.ARInvoiceId == item.Id).OrderBy(o => o.ChargesType.ViewOrder).ToList();
-                List<string> receivablesIds = allInvoicesLines.Select(s => s.ReceivableId).ToList();
-                List<ShipmentReceivable> receivables = shipmentReceivableRepository.GetShipmentReceivablesByIds(receivablesIds, tenant);
 
                 int count = 1;
                 foreach (ARInvoiceLine myline in lines)
@@ -304,19 +300,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         if (myMeasurement != null)
                         {
                             lineElement.MeasurementCode = myMeasurement.Code;
-                        }
-                    }
-
-                    ShipmentReceivable shipmentReceivable = receivables.Where(d => d.Id == myline.ReceivableId).FirstOrDefault();
-                    if (shipmentReceivable != null)
-                    {
-                        if (!string.IsNullOrEmpty(shipmentReceivable.PrepaidCollectId))
-                        {
-                            PrepaidCollect prepaidCollect = prepaidCollectRepository.GetSinglePrepaidCollect(shipmentReceivable.PrepaidCollectId);
-                            if (prepaidCollect != null)
-                            {
-                                lineElement.PrepaidCollect = prepaidCollect.Name;
-                            }
                         }
                     }
 

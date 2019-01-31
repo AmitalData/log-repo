@@ -1,8 +1,7 @@
-
+﻿
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {PickUpDeliveryPackageHarmonizePM} from './PickUpDeliveryPackageHarmonizePM';
 
 export class ShipmentPickUpDeliveryPackagePM {
 
@@ -82,50 +81,9 @@ export class ShipmentPickUpDeliveryPackagePM {
     public get OriginalShipmentPackageId() { return this.originalShipmentPackageId; }
     public set OriginalShipmentPackageId(newValue: string) { this.originalShipmentPackageId = newValue; this.MarkAsDirty(); }
 
-    private isMultiHarmonize: boolean;
-    public get IsMultiHarmonize() { return this.isMultiHarmonize; }
-    public set IsMultiHarmonize(newValue: boolean) { if (this.isMultiHarmonize != newValue) { this.isMultiHarmonize = newValue; this.MarkAsDirty("IsMultiHarmonize"); } }
-
-    private pickUpDeliveryPackageHarmonizes: PickUpDeliveryPackageHarmonizePM[];
-    get PickUpDeliveryPackageHarmonizes() {
-        if (this.pickUpDeliveryPackageHarmonizes == null) {
-            this.pickUpDeliveryPackageHarmonizes = [];
-        }
-
-        return this.pickUpDeliveryPackageHarmonizes;
-    }
-    set PickUpDeliveryPackageHarmonizes(newValue: PickUpDeliveryPackageHarmonizePM[]) {
-        if (this.pickUpDeliveryPackageHarmonizes != newValue) {
-            this.pickUpDeliveryPackageHarmonizes = newValue;
-        }
-    }
-    public AddPickUpDeliveryPackageHarmonizePM(item: PickUpDeliveryPackageHarmonizePM) {
-        if (item != null) {
-            var index = this.PickUpDeliveryPackageHarmonizes.indexOf(item);
-            if (index == -1) {
-
-                item.EntityParentPM = this;
-
-                this.PickUpDeliveryPackageHarmonizes.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemovePickUpDeliveryPackageHarmonizePM(item: PickUpDeliveryPackageHarmonizePM) {
-        if (item != null) {
-            var index = this.PickUpDeliveryPackageHarmonizes.indexOf(item);
-            if (index > -1) {
-                this.PickUpDeliveryPackageHarmonizes.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue; this.MarkAsDirty(); }
-
-    public PickUpDeliveryPackageHarmonizesChangeSet: Array<PickUpDeliveryPackageHarmonizePM> = [];
 
     public OldEntityPM: ShipmentPickUpDeliveryPackagePM;
 
@@ -137,11 +95,9 @@ export class ShipmentPickUpDeliveryPackagePM {
     public IsDirty: boolean;
     MarkAsDirty(propertyName: string = null) {
         this.IsDirty = true;
-
         if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
         }
-
         if (propertyName != null) {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShipmentPickUpDeliveryPackage");
 

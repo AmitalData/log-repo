@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OpportunityUpdateClass
@@ -175,9 +172,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OwnerId",
-					  						DefaultText =  @"Owner",
+					  						DefaultText =  "Owner",
 					  						ListFieldLable =  "OwnerIdListLable",
-					  						ListLableDefaultText =  @"Owner",
+					  						ListLableDefaultText =  "Owner",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -232,9 +229,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Subject",
-					  						DefaultText =  @"Subject",
+					  						DefaultText =  "Subject",
 					  						ListFieldLable =  "SubjectListLable",
-					  						ListLableDefaultText =  @"Subject",
+					  						ListLableDefaultText =  "Subject",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -294,9 +291,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerId",
-					  						DefaultText =  @"Customer",
+					  						DefaultText =  "Customer",
 					  						ListFieldLable =  "CustomerIdListLable",
-					  						ListLableDefaultText =  @"Customer",
+					  						ListLableDefaultText =  "Customer",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -352,9 +349,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LeadSourceId",
-					  						DefaultText =  @"Source",
+					  						DefaultText =  "Source",
 					  						ListFieldLable =  "LeadSourceIdListLable",
-					  						ListLableDefaultText =  @"Lead Source",
+					  						ListLableDefaultText =  "Lead Source",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -412,9 +409,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContactId",
-					  						DefaultText =  @"Contact",
+					  						DefaultText =  "Contact",
 					  						ListFieldLable =  "ContactIdListLable",
-					  						ListLableDefaultText =  @"Contact",
+					  						ListLableDefaultText =  "Contact",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -470,9 +467,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EstimatedClosingDate",
-					  						DefaultText =  @"Est. Closing Date",
+					  						DefaultText =  "Est. Closing Date",
 					  						ListFieldLable =  "EstimatedClosingDateListLable",
-					  						ListLableDefaultText =  @"Est. Closing Date",
+					  						ListLableDefaultText =  "Est. Closing Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -528,9 +525,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StageId",
-					  						DefaultText =  @"Stage",
+					  						DefaultText =  "Stage",
 					  						ListFieldLable =  "StageIdListLable",
-					  						ListLableDefaultText =  @"Stage",
+					  						ListLableDefaultText =  "Stage",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -585,9 +582,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Probability",
-					  						DefaultText =  @"Probability (%)",
+					  						DefaultText =  "Probability (%)",
 					  						ListFieldLable =  "ProbabilityListLable",
-					  						ListLableDefaultText =  @"Probability (%)",
+					  						ListLableDefaultText =  "Probability (%)",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -643,9 +640,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  @"Create Date",
+					  						DefaultText =  "Create Date",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  @"Create Date",
+					  						ListLableDefaultText =  "Create Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -701,9 +698,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  @"Created By",
+					  						DefaultText =  "Created By",
 					  						ListFieldLable =  "CreatedByUserIdListLable",
-					  						ListLableDefaultText =  @"Created By",
+					  						ListLableDefaultText =  "Created By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -759,9 +756,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  @"Update Date",
+					  						DefaultText =  "Update Date",
 					  						ListFieldLable =  "UpdateDateListLable",
-					  						ListLableDefaultText =  @"Update Date",
+					  						ListLableDefaultText =  "Update Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -817,9 +814,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
-					  						DefaultText =  @"Updated By",
+					  						DefaultText =  "Updated By",
 					  						ListFieldLable =  "UpdatedByUserIdListLable",
-					  						ListLableDefaultText =  @"Updated By",
+					  						ListLableDefaultText =  "Updated By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -875,9 +872,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RatingCode",
-					  						DefaultText =  @"Rating",
+					  						DefaultText =  "Rating",
 					  						ListFieldLable =  "RatingCodeListLable",
-					  						ListLableDefaultText =  @"Rating",
+					  						ListLableDefaultText =  "Rating",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -932,9 +929,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsClosed",
-					  						DefaultText =  @"Is Closed",
+					  						DefaultText =  "Is Closed",
 					  						ListFieldLable =  "IsClosedListLable",
-					  						ListLableDefaultText =  @"Is Closed",
+					  						ListLableDefaultText =  "Is Closed",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -989,9 +986,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActualClosingDate",
-					  						DefaultText =  @"Actual Closing Date",
+					  						DefaultText =  "Actual Closing Date",
 					  						ListFieldLable =  "ActualClosingDateListLable",
-					  						ListLableDefaultText =  @"Actual Closing Date",
+					  						ListLableDefaultText =  "Actual Closing Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1047,9 +1044,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClosingDescription",
-					  						DefaultText =  @"Closing Description",
+					  						DefaultText =  "Closing Description",
 					  						ListFieldLable =  "ClosingDescriptionListLable",
-					  						ListLableDefaultText =  @"Closing Description",
+					  						ListLableDefaultText =  "Closing Description",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1104,9 +1101,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerName",
-					  						DefaultText =  @"Customer",
+					  						DefaultText =  "Customer",
 					  						ListFieldLable =  "CustomerNameListLable",
-					  						ListLableDefaultText =  @"Customer",
+					  						ListLableDefaultText =  "Customer",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1160,9 +1157,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search Subject / Customer / Contact",
+					  						DefaultText =  "Search Subject / Customer / Contact",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  @"Search...",
+					  						ListLableDefaultText =  "Search...",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1216,9 +1213,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OwnerName",
-					  						DefaultText =  @"Owner",
+					  						DefaultText =  "Owner",
 					  						ListFieldLable =  "OwnerNameListLable",
-					  						ListLableDefaultText =  @"Owner",
+					  						ListLableDefaultText =  "Owner",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1273,9 +1270,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StageName",
-					  						DefaultText =  @"Stage",
+					  						DefaultText =  "Stage",
 					  						ListFieldLable =  "StageNameListLable",
-					  						ListLableDefaultText =  @"Stage",
+					  						ListLableDefaultText =  "Stage",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1330,9 +1327,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RatingName",
-					  						DefaultText =  @"Rating",
+					  						DefaultText =  "Rating",
 					  						ListFieldLable =  "RatingNameListLable",
-					  						ListLableDefaultText =  @"Rating",
+					  						ListLableDefaultText =  "Rating",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1386,7 +1383,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClosedToCompetitorId",
-					  						DefaultText =  @"ClosedToCompetitorId",
+					  						DefaultText =  "ClosedToCompetitorId",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1440,7 +1437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MyOpenOpportunities",
-					  						DefaultText =  @"My Open Opportunities",
+					  						DefaultText =  "My Open Opportunities",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1494,7 +1491,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AllOpenOpportunities",
-					  						DefaultText =  @"All Open Opportunities",
+					  						DefaultText =  "All Open Opportunities",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1548,7 +1545,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MyClosedOpportunities",
-					  						DefaultText =  @"My Closed Opportunities",
+					  						DefaultText =  "My Closed Opportunities",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1602,7 +1599,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AllClosedOpportunities",
-					  						DefaultText =  @"All Closed Opportunities",
+					  						DefaultText =  "All Closed Opportunities",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1658,11 +1655,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NumberOfShipments",
-					  						DefaultText =  @"No. Of Shipments",
+					  						DefaultText =  "No. Of Shipments",
 					  						ListFieldLable =  "NumberOfShipmentsListLable",
-					  						ListLableDefaultText =  @"No. Of Shipments",
+					  						ListLableDefaultText =  "No. Of Shipments",
 					  						ShortFieldLable =  "NumberOfShipments",
-					  						ShortFieldLableDefaultText =  @"Shipments",
+					  						ShortFieldLableDefaultText =  "Shipments",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1716,7 +1713,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpportunityProducts",
-					  						DefaultText =  @"Opportunity Products",
+					  						DefaultText =  "Opportunity Products",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1773,9 +1770,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ValueField",
-					  						DefaultText =  @"Value",
+					  						DefaultText =  "Value",
 					  						ListFieldLable =  "ValueFieldListLable",
-					  						ListLableDefaultText =  @"Value",
+					  						ListLableDefaultText =  "Value",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1829,7 +1826,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpportunityCompetitors",
-					  						DefaultText =  @"Opportunity Competitors",
+					  						DefaultText =  "Opportunity Competitors",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1885,9 +1882,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastStageDate",
-					  						DefaultText =  @"Last Stage Date",
+					  						DefaultText =  "Last Stage Date",
 					  						ListFieldLable =  "LastStageDateListLable",
-					  						ListLableDefaultText =  @"Last Stage Date",
+					  						ListLableDefaultText =  "Last Stage Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1943,9 +1940,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastStageIdBeforeClosure",
-					  						DefaultText =  @"Last stage before closure",
+					  						DefaultText =  "Last stage before closure",
 					  						ListFieldLable =  "LastStageIdBeforeClosureListLable",
-					  						ListLableDefaultText =  @"Last stage before closure",
+					  						ListLableDefaultText =  "Last stage before closure",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2000,9 +1997,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CountryName",
-					  						DefaultText =  @"Country",
+					  						DefaultText =  "Country",
 					  						ListFieldLable =  "CountryNameListLable",
-					  						ListLableDefaultText =  @"Country",
+					  						ListLableDefaultText =  "Country",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2058,9 +2055,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastCompletedActivityDate",
-					  						DefaultText =  @"Last Activity Date",
+					  						DefaultText =  "Last Activity Date",
 					  						ListFieldLable =  "LastCompletedActivityDateListLable",
-					  						ListLableDefaultText =  @"Last Activity Date",
+					  						ListLableDefaultText =  "Last Activity Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2114,7 +2111,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpenByStageOpp",
-					  						DefaultText =  @"Open By Stage Opp",
+					  						DefaultText =  "Open By Stage Opp",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2169,9 +2166,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LeadDescription",
-					  						DefaultText =  @"Description",
+					  						DefaultText =  "Description",
 					  						ListFieldLable =  "LeadDescriptionListLable",
-					  						ListLableDefaultText =  @"Lead Description",
+					  						ListLableDefaultText =  "Lead Description",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2228,9 +2225,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastCompletedActivityTypeCode",
-					  						DefaultText =  @"Last Activity",
+					  						DefaultText =  "Last Activity",
 					  						ListFieldLable =  "LastCompletedActivityTypeCodeListLable",
-					  						ListLableDefaultText =  @"Last Activity",
+					  						ListLableDefaultText =  "Last Activity",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2285,9 +2282,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastActivitySubject",
-					  						DefaultText =  @"Last Activity Subject",
+					  						DefaultText =  "Last Activity Subject",
 					  						ListFieldLable =  "LastActivitySubjectListLable",
-					  						ListLableDefaultText =  @"Last Activity Subject",
+					  						ListLableDefaultText =  "Last Activity Subject",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2344,9 +2341,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NextActivityDate",
-					  						DefaultText =  @"Next Activity Date",
+					  						DefaultText =  "Next Activity Date",
 					  						ListFieldLable =  "NextActivityDateListLable",
-					  						ListLableDefaultText =  @"Next Activity Date",
+					  						ListLableDefaultText =  "Next Activity Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2400,9 +2397,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastCompletedActivityTypeName",
-					  						DefaultText =  @"Last Completed Activity Type",
+					  						DefaultText =  "Last Completed Activity Type",
 					  						ListFieldLable =  "LastCompletedActivityTypeNameListLable",
-					  						ListLableDefaultText =  @"Last Completed Activity Type",
+					  						ListLableDefaultText =  "Last Completed Activity Type",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2456,9 +2453,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IndustryName",
-					  						DefaultText =  @"Industry",
+					  						DefaultText =  "Industry",
 					  						ListFieldLable =  "IndustryNameListLable",
-					  						ListLableDefaultText =  @"Industry",
+					  						ListLableDefaultText =  "Industry",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2515,9 +2512,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NextActivityTypeCode",
-					  						DefaultText =  @"Next Activity",
+					  						DefaultText =  "Next Activity",
 					  						ListFieldLable =  "NextActivityTypeCodeListLable",
-					  						ListLableDefaultText =  @"Next Activity",
+					  						ListLableDefaultText =  "Next Activity",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2572,9 +2569,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NextActivitySubject",
-					  						DefaultText =  @"Next Activity Subject",
+					  						DefaultText =  "Next Activity Subject",
 					  						ListFieldLable =  "NextActivitySubjectListLable",
-					  						ListLableDefaultText =  @"Next Activity Subject",
+					  						ListLableDefaultText =  "Next Activity Subject",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2628,9 +2625,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NextActivityTypeName",
-					  						DefaultText =  @"Next Activity",
+					  						DefaultText =  "Next Activity",
 					  						ListFieldLable =  "NextActivityTypeNameListLable",
-					  						ListLableDefaultText =  @"Next Activity",
+					  						ListLableDefaultText =  "Next Activity",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2685,9 +2682,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Notes",
-					  						DefaultText =  @"Notes",
+					  						DefaultText =  "Notes",
 					  						ListFieldLable =  "NotesListLable",
-					  						ListLableDefaultText =  @"Notes",
+					  						ListLableDefaultText =  "Notes",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2743,9 +2740,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StageDueDate",
-					  						DefaultText =  @"Stage Due Date",
+					  						DefaultText =  "Stage Due Date",
 					  						ListFieldLable =  "StageDueDateListLable",
-					  						ListLableDefaultText =  @"Stage Due Date",
+					  						ListLableDefaultText =  "Stage Due Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2801,9 +2798,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BusinessUnitId",
-					  						DefaultText =  @"Business Unit",
+					  						DefaultText =  "Business Unit",
 					  						ListFieldLable =  "BusinessUnitIdListLable",
-					  						ListLableDefaultText =  @"Business Unit",
+					  						ListLableDefaultText =  "Business Unit",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2857,9 +2854,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BusinessUnitName",
-					  						DefaultText =  @"Business Unit",
+					  						DefaultText =  "Business Unit",
 					  						ListFieldLable =  "BusinessUnitNameListLable",
-					  						ListLableDefaultText =  @"Business Unit",
+					  						ListLableDefaultText =  "Business Unit",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2912,7 +2909,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StageProbability",
-					  						DefaultText =  @"Stage Probability",
+					  						DefaultText =  "Stage Probability",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2965,7 +2962,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RatingIndexOrder",
-					  						DefaultText =  @"Rating Index Order",
+					  						DefaultText =  "Rating Index Order",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3020,7 +3017,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LeadUserId",
-					  						DefaultText =  @"User",
+					  						DefaultText =  "User",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3076,7 +3073,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LeadPartnerId",
-					  						DefaultText =  @"Partner",
+					  						DefaultText =  "Partner",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3133,7 +3130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AgentId",
-					  						DefaultText =  @"Agent",
+					  						DefaultText =  "Agent",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3190,7 +3187,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForeignClientId",
-					  						DefaultText =  @"Foreign Client",
+					  						DefaultText =  "Foreign Client",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3244,7 +3241,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpportunityAdditionalServices",
-					  						DefaultText =  @"Opportunity Additional Services",
+					  						DefaultText =  "Opportunity Additional Services",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3298,9 +3295,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContactName",
-					  						DefaultText =  @"Contact",
+					  						DefaultText =  "Contact",
 					  						ListFieldLable =  "ContactNameListLable",
-					  						ListLableDefaultText =  @"Contact",
+					  						ListLableDefaultText =  "Contact",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3355,9 +3352,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContactPhone",
-					  						DefaultText =  @"Tel",
+					  						DefaultText =  "Tel",
 					  						ListFieldLable =  "ContactPhoneListLable",
-					  						ListLableDefaultText =  @"Tel",
+					  						ListLableDefaultText =  "Tel",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3410,7 +3407,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ConcurrencyGUID",
-					  						DefaultText =  @"ConcurrencyGUID",
+					  						DefaultText =  "ConcurrencyGUID",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3466,7 +3463,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClosingReasonId",
-					  						DefaultText =  @"Closing Reason",
+					  						DefaultText =  "Closing Reason",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3521,9 +3518,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCancelled",
-					  						DefaultText =  @"Is Cancelled",
+					  						DefaultText =  "Is Cancelled",
 					  						ListFieldLable =  "IsCancelledListLable",
-					  						ListLableDefaultText =  @"Is Cancelled",
+					  						ListLableDefaultText =  "Is Cancelled",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3577,7 +3574,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CancelledOpportunities",
-					  						DefaultText =  @"Cancelled Opportunities",
+					  						DefaultText =  "Cancelled Opportunities",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3631,9 +3628,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClosingReasonName",
-					  						DefaultText =  @"Closing Reason",
+					  						DefaultText =  "Closing Reason",
 					  						ListFieldLable =  "ClosingReasonNameListLable",
-					  						ListLableDefaultText =  @"Closing Reason",
+					  						ListLableDefaultText =  "Closing Reason",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3687,9 +3684,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LeadSourceName",
-					  						DefaultText =  @"Source",
+					  						DefaultText =  "Source",
 					  						ListFieldLable =  "LeadSourceNameListLable",
-					  						ListLableDefaultText =  @"Source",
+					  						ListLableDefaultText =  "Source",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3743,9 +3740,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContactEmail",
-					  						DefaultText =  @"Contact Email",
+					  						DefaultText =  "Contact Email",
 					  						ListFieldLable =  "ContactEmailListLable",
-					  						ListLableDefaultText =  @"Contact Email",
+					  						ListLableDefaultText =  "Contact Email",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3801,9 +3798,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActivityWatch",
-					  						DefaultText =  @"Activity Watch",
+					  						DefaultText =  "Activity Watch",
 					  						ListFieldLable =  "ActivityWatchListLable",
-					  						ListLableDefaultText =  @"Activity Watch",
+					  						ListLableDefaultText =  "Activity Watch",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3859,7 +3856,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpportunityTypeId",
-					  						DefaultText =  @"Opportunity Type",
+					  						DefaultText =  "Opportunity Type",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3913,9 +3910,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpportunityTypeName",
-					  						DefaultText =  @"Opportunity Type",
+					  						DefaultText =  "Opportunity Type",
 					  						ListFieldLable =  "OpportunityTypeNameListLable",
-					  						ListLableDefaultText =  @"Opportunity Type",
+					  						ListLableDefaultText =  "Opportunity Type",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3969,9 +3966,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LeadPartnerName",
-					  						DefaultText =  @"Partner",
+					  						DefaultText =  "Partner",
 					  						ListFieldLable =  "LeadPartnerNameListLable",
-					  						ListLableDefaultText =  @"Partner",
+					  						ListLableDefaultText =  "Partner",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4024,7 +4021,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsClosedLost",
-					  						DefaultText =  @"IsClosedLost",
+					  						DefaultText =  "IsClosedLost",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4077,7 +4074,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerRankCode",
-					  						DefaultText =  @"CustomerRankCode",
+					  						DefaultText =  "CustomerRankCode",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4130,7 +4127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerRankName",
-					  						DefaultText =  @"CustomerRankName",
+					  						DefaultText =  "CustomerRankName",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4183,7 +4180,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PostToFollowersAsWon",
-					  						DefaultText =  @"PostToFollowersAsWon",
+					  						DefaultText =  "PostToFollowersAsWon",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4236,7 +4233,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClosingReasonCode",
-					  						DefaultText =  @"ClosingReasonCode",
+					  						DefaultText =  "ClosingReasonCode",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4289,7 +4286,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerExternalId",
-					  						DefaultText =  @"CustomerExternalId",
+					  						DefaultText =  "CustomerExternalId",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4342,7 +4339,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCopy",
-					  						DefaultText =  @"IsCopy",
+					  						DefaultText =  "IsCopy",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4395,7 +4392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CopyFromEntityId",
-					  						DefaultText =  @"CopyFromEntityId",
+					  						DefaultText =  "CopyFromEntityId",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4448,7 +4445,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCustomerBlockedBusinessUnit",
-					  						DefaultText =  @"IsCustomerBlockedBusinessUnit",
+					  						DefaultText =  "IsCustomerBlockedBusinessUnit",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4466,7 +4463,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup OpportunityQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "APPO", Name = "Opportunity" }, queryGroupRepository);
 						QueryGroup OpportunityQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "f5c0", Name = " Query Group" }, queryGroupRepository);
@@ -4506,7 +4503,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query MyOpenOpportunitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityTextCode_0.Id, Code = "My Open Opportunities",  QueryGroupCode = "APPO", IndexOrder = 0, Tenant = 0, ObjectTableId = OpportunityObjectTable.Id, QuerySection = "Opportunity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityFeature_0.Id, DefaultSortName = "EstimatedClosingDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query MyOpenOpportunitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityTextCode_0.Id, Code = "My Open Opportunities",  QueryGroupCode = "APPO", IndexOrder = 0, Tenant = 0, ObjectTableId = OpportunityObjectTable.Id, QuerySection = "Opportunity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityFeature_0.Id, DefaultSortName = "EstimatedClosingDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MyOpenOpportunitiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyOpenOpportunitiesQuery.Id, IndexOrder = 0, ObjectFieldId = OpportunityObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == OpportunityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4527,7 +4524,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AllOpenOpportunitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityTextCode_1.Id, Code = "All Open Opportunities",  QueryGroupCode = "APPO", IndexOrder = 1, Tenant = 0, ObjectTableId = OpportunityObjectTable.Id, QuerySection = "Opportunity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityFeature_1.Id, DefaultSortName = "EstimatedClosingDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllOpenOpportunitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityTextCode_1.Id, Code = "All Open Opportunities",  QueryGroupCode = "APPO", IndexOrder = 1, Tenant = 0, ObjectTableId = OpportunityObjectTable.Id, QuerySection = "Opportunity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityFeature_1.Id, DefaultSortName = "EstimatedClosingDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllOpenOpportunitiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenOpportunitiesQuery.Id, IndexOrder = 0, ObjectFieldId = OpportunityObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == OpportunityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4548,7 +4545,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query MyClosedOpportunitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityTextCode_2.Id, Code = "My Closed Opportunities",  QueryGroupCode = "APPO", IndexOrder = 2, Tenant = 0, ObjectTableId = OpportunityObjectTable.Id, QuerySection = "Opportunity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityFeature_2.Id, DefaultSortName = "EstimatedClosingDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query MyClosedOpportunitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityTextCode_2.Id, Code = "My Closed Opportunities",  QueryGroupCode = "APPO", IndexOrder = 2, Tenant = 0, ObjectTableId = OpportunityObjectTable.Id, QuerySection = "Opportunity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityFeature_2.Id, DefaultSortName = "EstimatedClosingDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MyClosedOpportunitiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyClosedOpportunitiesQuery.Id, IndexOrder = 0, ObjectFieldId = OpportunityObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == OpportunityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4569,7 +4566,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AllClosedOpportunitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityTextCode_3.Id, Code = "All Closed Opportunities",  QueryGroupCode = "APPO", IndexOrder = 3, Tenant = 0, ObjectTableId = OpportunityObjectTable.Id, QuerySection = "Opportunity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityFeature_3.Id, DefaultSortName = "EstimatedClosingDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllClosedOpportunitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityTextCode_3.Id, Code = "All Closed Opportunities",  QueryGroupCode = "APPO", IndexOrder = 3, Tenant = 0, ObjectTableId = OpportunityObjectTable.Id, QuerySection = "Opportunity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityFeature_3.Id, DefaultSortName = "EstimatedClosingDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllClosedOpportunitiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClosedOpportunitiesQuery.Id, IndexOrder = 0, ObjectFieldId = OpportunityObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == OpportunityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4590,7 +4587,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AllOpportunitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityTextCode_4.Id, Code = "All Opportunities",  QueryGroupCode = "APPO", IndexOrder = 4, Tenant = 0, ObjectTableId = OpportunityObjectTable.Id, QuerySection = "Opportunity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityFeature_4.Id, DefaultSortName = "EstimatedClosingDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllOpportunitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityTextCode_4.Id, Code = "All Opportunities",  QueryGroupCode = "APPO", IndexOrder = 4, Tenant = 0, ObjectTableId = OpportunityObjectTable.Id, QuerySection = "Opportunity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityFeature_4.Id, DefaultSortName = "EstimatedClosingDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllOpportunitiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpportunitiesQuery.Id, IndexOrder = 0, ObjectFieldId = OpportunityObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == OpportunityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4610,7 +4607,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query CancelledOpportunitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityTextCode_5.Id, Code = "Cancelled Opportunities",  QueryGroupCode = "APPO", IndexOrder = 5, Tenant = 0, ObjectTableId = OpportunityObjectTable.Id, QuerySection = "Opportunity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityFeature_5.Id, DefaultSortName = "EstimatedClosingDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query CancelledOpportunitiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityTextCode_5.Id, Code = "Cancelled Opportunities",  QueryGroupCode = "APPO", IndexOrder = 5, Tenant = 0, ObjectTableId = OpportunityObjectTable.Id, QuerySection = "Opportunity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityFeature_5.Id, DefaultSortName = "EstimatedClosingDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CancelledOpportunitiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledOpportunitiesQuery.Id, IndexOrder = 0, ObjectFieldId = OpportunityObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == OpportunityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4633,7 +4630,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query OpenByStageQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityTextCode_6.Id, Code = "Open By Stage",  QueryGroupCode = "APPO", IndexOrder = 6, Tenant = 0, ObjectTableId = OpportunityObjectTable.Id, QuerySection = "Opportunity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityFeature_6.Id, DefaultSortName = "StageDueDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query OpenByStageQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityTextCode_6.Id, Code = "Open By Stage",  QueryGroupCode = "APPO", IndexOrder = 6, Tenant = 0, ObjectTableId = OpportunityObjectTable.Id, QuerySection = "Opportunity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityFeature_6.Id, DefaultSortName = "StageDueDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn OpenByStageQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenByStageQuery.Id, IndexOrder = 0, ObjectFieldId = OpportunityObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == OpportunityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4692,9 +4689,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {                
-			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
-			   ObjectTable OpportunityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Opportunity" && d.Tenant == 0).FirstOrDefault();  
+	    {    
+			 ObjectTable OpportunityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Opportunity" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode OpportunityMainTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Opportunity.TH.Overview", DefaultText = "Main",LocalDefaultText = null, ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature OpportunityMainFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Opportunity.Tab.Overview", ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.Overview", NameTextCodeDefaultText = "Main", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -4720,20 +4716,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature OpportunityEventsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Opportunity.Tab.Events", ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPOV",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityOverviewTabComponent", FeatureId = OpportunityMainFeature_TH0.Id, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.OverviewTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityMainTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPOV",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityOverviewTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "Opportunity.Tab.Overview" && d.ObjectTableId == OpportunityObjectTable.Id).FirstOrDefault().Id, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.OverviewTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Opportunity.TH.Overview" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPGN",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityGeneralTabComponent", FeatureId = OpportunityGeneralFeature_TH1.Id, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.OpportunityGeneralTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityGeneralTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPGN",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityGeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "Opportunity.Tab.General" && d.ObjectTableId == OpportunityObjectTable.Id).FirstOrDefault().Id, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.OpportunityGeneralTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Opportunity.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPPR",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityProductsTabComponent", FeatureId = OpportunityProductsFeature_TH2.Id, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.ProductsTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityProductsTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPPR",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityProductsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "Opportunity.Tab.Products" && d.ObjectTableId == OpportunityObjectTable.Id).FirstOrDefault().Id, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.ProductsTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Opportunity.TH.Products" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPDO",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityDocsOutTabComponent", FeatureId = OpportunityDocsOutFeature_TH3.Id, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.DocsOutTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityDocsOutTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPDO",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityDocsOutTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "Opportunity.Tab.DocsOut" && d.ObjectTableId == OpportunityObjectTable.Id).FirstOrDefault().Id, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.DocsOutTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Opportunity.TH.DocsOut" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPDI",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityDocsInTabComponent", FeatureId = OpportunityDocsInFeature_TH4.Id, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.DocsInTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityDocsInTextCode_TH4.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPDI",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOpportunity/Components/EditTabs/OpportunityDocsInTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "Opportunity.Tab.DocsIn" && d.ObjectTableId == OpportunityObjectTable.Id).FirstOrDefault().Id, ControlPath = "Logitude.CRM.Views.Tabs.OpportunityTabs.DocsInTabControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Opportunity.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = OpportunityEventsFeature_TH5.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = OpportunityEventsTextCode_TH5.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "Opportunity.Tab.Events" && d.ObjectTableId == OpportunityObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = OpportunityObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Opportunity.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -4743,17 +4739,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature OpportunityFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature OpportunityFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature OpportunityFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature OpportunityFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.PackageFeature", NameTextCodeDefaultText = "Opportunity Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature OpportunityFeature_OUTLOOKCONNETION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OUTLOOKCONNETION", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.OutlookConnection", NameTextCodeDefaultText = @"Outlook Connection" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature OpportunityFeature_Opportunity_Feature_EXCEL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Opportunity.Feature.EXCEL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.EXCEL", NameTextCodeDefaultText = @"Download to Excel" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature OpportunityFeature_More = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "More", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.More", NameTextCodeDefaultText = @"More" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+		   Feature OpportunityFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.PackageFeature", NameTextCodeDefaultText = "Opportunity Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 
@@ -5202,7 +5188,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable OpportunityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Opportunity" && d.Tenant == 0).FirstOrDefault();       
     
 			   Feature OpportunityFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CloseAsWon", ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.CloseAsWon", NameTextCodeDefaultText = "Close as Won", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -5222,6 +5208,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
       
     
 			   Feature OpportunityFeature_MB4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CREATETENANT", ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.CreateTenant", NameTextCodeDefaultText = "Create Tenant", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+      
+    
+			   Feature OpportunityFeature_MB5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "More", ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.More", NameTextCodeDefaultText = "More", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 			   Feature OpportunityFeature_MB50 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Cancel", ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature OpportunityFeature_MB51 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReOpen", ObjectTableId = OpportunityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Opportunity.Features.ReOpen", NameTextCodeDefaultText = "Re-open", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -5327,15 +5317,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   MenuButton OpportunityMenuButton5 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 100, 
-						IsActive = false,
+						Index = 5, 
+						IsActive = true,
 						LabelTextCodeCode = "Opportunity.B.More",
 						LabelTextCodeDefaultText = "More",
 						Tenant = 0,
 						MenuButtonGroupId = OpportunityMenuButtonGroup.Id,
 						ObjectTableId = OpportunityObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = null,
+						FeatureId = OpportunityFeature_MB5.Id,
 						Style = null,
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
@@ -5408,14 +5398,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

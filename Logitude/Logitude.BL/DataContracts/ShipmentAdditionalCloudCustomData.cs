@@ -26,7 +26,6 @@ namespace Logitude.BL.DataContracts
         public List<TaxesDetails> TaxesDetails { get; set; }
         public List<GoodsValueDetails> GoodsValueDetails { get; set; }
         public string DenyReason { get; set; }
-        public PaymentData PaymentData { get; set; }
         //public string VersionId { get; set; }
 
         /*
@@ -83,15 +82,5 @@ namespace Logitude.BL.DataContracts
         public string CountryName { get; set; }
         public string SupplierName { get; set; }
         public string SupplierFreight { get; set; }
-    }
-
-    public class PaymentData
-    {
-        public string sum { get; set; }
-        public string currency { get; set; }
-        public string op { get; set; }
-        public string DCdisable { get; set; }
-        public string DclickTK { get; set; }
-        public string thtk { get; set; }
     }
 }

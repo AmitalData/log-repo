@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, ViewContainerRef, ViewChildren, QueryList, Output, EventEmitter, HostListener} from '@angular/core';
+﻿import {Component, AfterViewInit, ViewContainerRef, ViewChildren, QueryList, Output, EventEmitter, HostListener} from '@angular/core';
 import {Settings} from '../../Infrastructure/Settings';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
@@ -6,7 +6,7 @@ import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTransla
 export class MessageWindow {
     public Width: number = 320;
     public Height: number = 170;
-    //public Message: string = null;
+    public Message: string = null;
     public Title: string = "Message";
     public IsOverAll: boolean = false;
     LayoutDirection: string = 'ltr';
@@ -16,27 +16,11 @@ export class MessageWindow {
     public RTL: boolean = false;
     public ShowSuccessIcon: boolean = false;
     public ShowErrorIcon: boolean = false;
-    public ShowWarningIcon: boolean = false;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
         this.Title = TextCodeTranslator.Translate("General.O.Message");
         this.OkButtonText = TextCodeTranslator.Translate("General.B.Ok");
     }
-
-
-
-    private message: string = null;
-    get Message() { return this.message; }
-    set Message(newValue: string) {
-        this.message = newValue;
-        if (this.InstanceComponent) {
-            this.InstanceComponent.Message = newValue;
-        }
-    }
-
-
-
-
 
     private ComponentRef: any = null;
     private InstanceComponent: MessageWindowTemplateComponent = null;
@@ -106,7 +90,7 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
     LayoutDirection: string = 'ltr';
     public ShowSuccessIcon: boolean = false;
     public ShowErrorIcon: boolean = false;
-    public ShowWarningIcon: boolean = false;
+
     public RTL: boolean = false;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
@@ -133,9 +117,6 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
         this.RTL = myWindow.RTL;
         this.ShowSuccessIcon = myWindow.ShowSuccessIcon;
         this.ShowErrorIcon = myWindow.ShowErrorIcon;
-        this.ShowWarningIcon = myWindow.ShowWarningIcon;
-        
-
         if (myWindow.Width != null) {
             this.Width = myWindow.Width + "px";
         }
@@ -236,9 +217,6 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
             path = "./Images/SuccessIcon.png";
         if (this.ShowErrorIcon)
             path = "./Images/ErrorIcon.png";
-        if (this.ShowWarningIcon)
-            path = "./Images/SimplogIcons/Warning.png";
-        
         return path;
     }
 }

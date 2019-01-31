@@ -11,7 +11,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
     {
        [Key]
         public string Id { get; set; }
-        public int WebTokenLifeTimeInMinutes { get; set; }
-        public int WebTokenExpirationWarningInMinutes { get; set; }
+        public int WebTokenLifeTime { get; set; }
+        public int WebTokenExpirationWarning  { get; set; }
     }
 }

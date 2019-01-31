@@ -1,4 +1,4 @@
-* {
+﻿* {
     margin: 0px;
     border: 0px;
     padding: 0px;
@@ -12,7 +12,7 @@
     -webkit-box-sizing: border-box;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    /*-webkit-text-stroke: 0.1px;*/
+    -webkit-text-stroke: 0.1px;
     /*-webkit-text-stroke: 1px rgba(0, 0, 0, 0.7);*/
 }
 
@@ -54,11 +54,6 @@ img {
     vertical-align: middle;
     /*display: block;    
     margin: auto;*/
-}
-
-button {
-    font-size: 11px;
-    color: #45494A;
 }
 
 .LogitudeSmallScrollViewer::-webkit-scrollbar {

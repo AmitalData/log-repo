@@ -10,7 +10,6 @@ namespace Logitude.BL.InvoiceModel.CloseTables
 {
     public struct SATTransferStatusValues
     {   
-       public const string CancellationRequestSent = "CS";  
        public const string NoTransferNeeded = "ND";  
        public const string NotTransferred = "NT";  
        public const string Transferred = "TD";  

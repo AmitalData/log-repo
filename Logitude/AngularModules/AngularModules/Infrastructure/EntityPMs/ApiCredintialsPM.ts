@@ -85,6 +85,11 @@ export class ApiCredintialsPM {
     public set MaskedSeconderyAccessKey(newValue: string) { if (this.maskedSeconderyAccessKey != newValue) { this.maskedSeconderyAccessKey = newValue; this.MarkAsDirty("MaskedSeconderyAccessKey"); } }
        
 	 
+    private computingPartnerId: string;
+    public get ComputingPartnerId() { return this.computingPartnerId; }
+    public set ComputingPartnerId(newValue: string) { if (this.computingPartnerId != newValue) { this.computingPartnerId = newValue; this.MarkAsDirty("ComputingPartnerId"); } }
+       
+	 
 
     public OldEntityPM: ApiCredintialsPM;
 		

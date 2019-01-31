@@ -1,4 +1,4 @@
-// General
+﻿// General
 import {OperationsComponent} from './Components/Workspaces/OperationsComponent';
 import {ShipmentsComponent} from './Components/Workspaces/ShipmentsComponent';
 import {ContainersFUsComponent} from './Components/Workspaces/ContainersFUsComponent';
@@ -31,9 +31,7 @@ import {MasterActionConfirmationComponent} from './Components/MenuButtons/Master
 import {ShipmentSpotlightComponent} from './Components/Spotlight/ShipmentSpotlightComponent';
 import {SpotLightDateComponent} from './Components/Spotlight/SpotLightDateComponent';
 import {SplitShipmentComponent} from './Components/SplitShipment/SplitShipmentComponent';
-import { SplitPartialPackageComponent } from './Components/SplitShipment/SplitPartialPackageComponent';
-import { RemoveTasksButtonListTemplate } from './Components/ListTemplates/RemoveTasksButtonListTemplate';
-
+import {SplitPartialPackageComponent} from './Components/SplitShipment/SplitPartialPackageComponent';
 
 export const Components =
     [
@@ -69,7 +67,6 @@ export const Components =
         CustomReferenceListTemplate,
         SplitShipmentComponent,
         SplitPartialPackageComponent,
-        RemoveTasksButtonListTemplate,
 
     ];
 
@@ -117,7 +114,6 @@ export class ModuleDeclarations {
             case "SpotLightDateComponent": { myResult = SpotLightDateComponent; break; }
             case "SplitShipmentComponent": { myResult = SplitShipmentComponent; break; }
             case "SplitPartialPackageComponent": { myResult = SplitPartialPackageComponent; break; }
-            case "RemoveTasksButtonListTemplate": { myResult = RemoveTasksButtonListTemplate; break; }
         }
 
         return myResult;

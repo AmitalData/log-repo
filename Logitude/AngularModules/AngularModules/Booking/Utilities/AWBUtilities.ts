@@ -1,5 +1,5 @@
-import {BookingPM} from '../EntityPMs/BookingPM';
-import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
+﻿import {BookingPM} from '../EntityPMs/BookingPM';
+import {InfraSettings} from '../../Infrastructure/Utilities/InfraSettings';
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 
 export class AWBUtilities {
@@ -116,6 +116,7 @@ export class AWBUtilities {
     public static ValidateAWBFFR(bookingPM: BookingPM) {
         var myResult = new AWBFFRValidator();
 
+        var myTenantManagementPM = InfraSettings.TenantManagementPM;
         var todayDate = DateTool.GetCurrentDateTimeAsUtc();
         var mainETD = new Date(bookingPM.MainCarriageETD.valueOf());
 
@@ -141,7 +142,7 @@ export class AWBUtilities {
             }
         }
         
-        if (SessionLocator.TenantManagementJS.AWBMessagesCCSTypeCode == "GLSHK") {
+        if (myTenantManagementPM.AWBMessagesCCSTypeCode == "GLSHK") {
             myResult.FFR = bookingPM.TenantZeroAirlineGLSHKFFR;
 
             if (AppTool.IsNullOrEmpty(bookingPM.TenantZeroAirlinePIMA)) {
@@ -150,7 +151,7 @@ export class AWBUtilities {
                 myResult.AirlineFieldErrorMessage = "Airline communication parameter (PIMA) is missing";
             }
 
-            if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PIMA)) {
+            if (AppTool.IsNullOrEmpty(myTenantManagementPM.PIMA)) {
                 myResult.IsValid = false;
                 myResult.TenantManagementFieldHasError = true;
                 myResult.TenantManagementFieldErrorMessage = "Tenant communication parameter (PIMA) is missing";
@@ -171,7 +172,7 @@ export class AWBUtilities {
                 myResult.AirlineFieldErrorMessage = "This Airline doesn't support transmitting messages";
             }
 
-            if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TTY)) {
+            if (AppTool.IsNullOrEmpty(myTenantManagementPM.TTY)) {
                 myResult.IsValid = false;
                 myResult.TenantManagementFieldHasError = true;
                 myResult.TenantManagementFieldErrorMessage = "Tenant communication parameter (TTY) is missing";
@@ -188,8 +189,9 @@ export class AWBUtilities {
 
     public static ValidateAWBFSR(bookingPM: BookingPM) {
         var myResult = new AWBFFRValidator();
+        var myTenantManagementPM = InfraSettings.TenantManagementPM;
 
-        if (SessionLocator.TenantManagementJS.AWBMessagesCCSTypeCode == "GLSHK") {
+        if (myTenantManagementPM.AWBMessagesCCSTypeCode == "GLSHK") {
             myResult.FSR = bookingPM.TenantZeroAirlineGLSHKFSRFSA;
 
             if (AppTool.IsNullOrEmpty(bookingPM.TenantZeroAirlinePIMA)) {
@@ -198,7 +200,7 @@ export class AWBUtilities {
                 myResult.AirlineFieldErrorMessage = "Airline communication parameter (PIMA) is missing";
             }
 
-            if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PIMA)) {
+            if (AppTool.IsNullOrEmpty(myTenantManagementPM.PIMA)) {
                 myResult.IsValid = false;
                 myResult.TenantManagementFieldHasError = true;
                 myResult.TenantManagementFieldErrorMessage = "Tenant communication parameter (PIMA) is missing";
@@ -219,7 +221,7 @@ export class AWBUtilities {
                 myResult.AirlineFieldErrorMessage = "This Airline doesn't support transmitting messages";
             }
 
-            if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TTY)) {
+            if (AppTool.IsNullOrEmpty(myTenantManagementPM.TTY)) {
                 myResult.IsValid = false;
                 myResult.TenantManagementFieldHasError = true;
                 myResult.TenantManagementFieldErrorMessage = "Tenant communication parameter (TTY) is missing";

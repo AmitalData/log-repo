@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -163,8 +163,8 @@ export class AddEditReceivableComponent {
                 else {
                     //var acctEntity = this.DataContext.ShipmentPM.ShipmentReceivables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && (f.ShipmentReceivableLineStatusCode == "ACCT" || f.ShipmentReceivableLineStatusCode == "DRFT"))[0];
                     //var openEntity = this.DataContext.ShipmentPM.ShipmentReceivables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && (f.ShipmentReceivableLineStatusCode == "EMPT" || f.ShipmentReceivableLineStatusCode == "OAMT"))[0];
-                    var acctEntity = this.DataContext.ShipmentPM.ShipmentReceivables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && f.CurrencyId == item.CurrencyId && f.ShipmentReceivableLineStatusCode == "ACCT")[0];
-                    var openEntity = this.DataContext.ShipmentPM.ShipmentReceivables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && f.CurrencyId == item.CurrencyId && f.ShipmentReceivableLineStatusCode != "ACCT")[0];
+                    var acctEntity = this.DataContext.ShipmentPM.ShipmentReceivables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && f.ShipmentReceivableLineStatusCode == "ACCT")[0];
+                    var openEntity = this.DataContext.ShipmentPM.ShipmentReceivables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && f.ShipmentReceivableLineStatusCode != "ACCT")[0];
 
                     if (acctEntity == null) {
                         openEntity.Quantity = item.Quantity;

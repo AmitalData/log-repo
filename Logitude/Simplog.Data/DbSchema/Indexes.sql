@@ -633,10 +633,3 @@ ON [dbo].[FailedLoginLogs]([GMTDateTime])
     CREATE NONCLUSTERED INDEX [IX_FailedTokenLogs_GMTDateTime]
 ON [dbo].[FailedTokenLogs]([GMTDateTime])
   end   
-
-  CREATE NONCLUSTERED INDEX IX_ContactActivityLogs_Tenant_LogDateTime_PartnerTypeId ON [dbo].[ContactActivityLogs]
-	(
-	Tenant,
-	LogDateTime,
-	PartnerTypeId
-	) WITH( STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]

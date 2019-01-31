@@ -1,9 +1,10 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+﻿import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {TenantPMService} from '../../../Common/Services/StandardPMs/TenantPMService';
+import {TenantManagementPMService} from '../../../Infrastructure/Services/StandardPMs/TenantManagementPMService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {AppTool} from '../../../Infrastructure/Tools';

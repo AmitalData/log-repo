@@ -27,7 +27,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
             invoiceContext = context;
         }
 
-        public IQueryable<APPaymentTransferStatus> GetAPPaymentTransferStatus()
+        public IQueryable<APPaymentTransferStatus> GetARPaymentTransferStatus()
         {
             return context.APPaymentTransferStatuses;
         }

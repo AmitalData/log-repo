@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -131,8 +131,7 @@ export class GroupageComponent {
         insideShipmentPack.Reference2 = shipmentListItem.Reference2;
         insideShipmentPack.Reference3 = shipmentListItem.Reference3;
         insideShipmentPack.Reference4 = shipmentListItem.Reference4;
-        insideShipmentPack.CommodityNumber = shipmentListItem.CommodityNumber;
-        insideShipmentPack.CommodityName = shipmentListItem.CommodityName;
+        insideShipmentPack.CommodityNumber = insideShipmentPack.CommodityNumber;
         shipmentPackagePM.AddInsideShipmentPackagePM(insideShipmentPack);
 
         var logWindow = new LogitudeWindow();
@@ -161,8 +160,7 @@ export class GroupageComponent {
             insideShipmentPack.Reference2 = shipmentListItem.Reference2;
             insideShipmentPack.Reference3 = shipmentListItem.Reference3;
             insideShipmentPack.Reference4 = shipmentListItem.Reference4;
-            insideShipmentPack.CommodityNumber = shipmentListItem.CommodityNumber;
-            insideShipmentPack.CommodityName = shipmentListItem.CommodityName;
+            insideShipmentPack.CommodityNumber = insideShipmentPack.CommodityNumber;
             MasterListItem.EntityPM.AddInsideShipmentPackagePM(insideShipmentPack);
 
             var indexOfItem = this.ShipmentsPackages.indexOf(shipmentListItem);
@@ -223,8 +221,7 @@ export class GroupageComponent {
                 newPackage.Reference2 = item.EntityPM.Reference2;
                 newPackage.Reference3 = item.EntityPM.Reference3;
                 newPackage.Reference4 = item.EntityPM.Reference4;
-                newPackage.CommodityNumber = item.EntityPM.CommodityNumber;
-                newPackage.CommodityName = item.EntityPM.CommodityName;
+                newPackage.CommodityNumber = newPackage.CommodityNumber;
                 this.EntityPM.AddPackage(newPackage);
 
                 item.EntityPM.InsideShipmentPackages.forEach(insideItem => {
@@ -248,7 +245,6 @@ export class GroupageComponent {
                     newInsidePackage.Reference3 = insideItem.Reference3;
                     newInsidePackage.Reference4 = insideItem.Reference4;
                     newInsidePackage.CommodityNumber = insideItem.CommodityNumber;
-                    newInsidePackage.CommodityName = insideItem.CommodityName;
                     newPackage.AddInsideShipmentPackagePM(newInsidePackage);
                 });
             });
@@ -331,8 +327,8 @@ export class GroupageListItem {
                 }
             });
 
-            this.Weight = AppTool.Round(myWeight, 3);
-            this.Volume = AppTool.Round(myVolume, 3);
+            this.EntityPM.Weight = AppTool.Round(myWeight, 3);
+            this.EntityPM.Volume = AppTool.Round(myVolume, 3);
         }
     }
 
@@ -390,20 +386,6 @@ export class GroupageListItem {
     set Reference4(newValue: string) {
         if (this.EntityPM.Reference4 != newValue) {
             this.EntityPM.Reference4 = newValue;
-        }
-    }
-
-    get CommodityNumber() { return this.EntityPM.CommodityNumber; }
-    set CommodityNumber(newValue: string) {
-        if (this.EntityPM.CommodityNumber != newValue) {
-            this.EntityPM.CommodityNumber = newValue;
-        }
-    }
-
-    get CommodityName() { return this.EntityPM.CommodityName; }
-    set CommodityName(newValue: string) {
-        if (this.EntityPM.CommodityName != newValue) {
-            this.EntityPM.CommodityName = newValue;
         }
     }
 

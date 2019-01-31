@@ -59,7 +59,7 @@ export class NewARInvoiceComponent extends BaseComponent {
             this.IsIntercompanyVisible = true;
         }
 
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
+        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARInvoiceEditExchangeRate")) {
             this.IsEditExchangeRateVisible = true;
         }
     }
@@ -200,26 +200,19 @@ export class NewARInvoiceComponent extends BaseComponent {
     SetUIProperties_ExchangeRate() {
         var isFieldtEnabled = true;
 
-        if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARInvoiceEditExchangeRate")) {
-            isFieldtEnabled = false
+        if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
+            isFieldtEnabled = false;
         }
 
-        else {
-            if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-                isFieldtEnabled = false;
-            }
-
-            else if (SessionLocator.TenantPM.CurrencyId == null) {
-                isFieldtEnabled = false;
-            }
-
-            else if (SessionLocator.TenantPM.CurrencyId == this.InvoiceCurrencyId) {
-                isFieldtEnabled = false;
-            }
+        else if (SessionLocator.TenantPM.CurrencyId == null) {
+            isFieldtEnabled = false;
         }
 
-        //this.RateIsEnabled = isFieldtEnabled;
-        this.RateIsEnabled = true;
+        else if (SessionLocator.TenantPM.CurrencyId == this.InvoiceCurrencyId) {
+            isFieldtEnabled = false;
+        }
+
+        this.RateIsEnabled = isFieldtEnabled;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isFieldtEnabled);
     }
     SetUIProperties_Constituent(isBillToHasConstituentEnabled: boolean) {

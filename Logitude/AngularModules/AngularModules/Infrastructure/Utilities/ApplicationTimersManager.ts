@@ -206,7 +206,7 @@ export class ApplicationTimersManager {
                         logWindow.WindowArgs = args;
                         logWindow.Width = 1000;
                         logWindow.Height = 250;
-                        logWindow.IsHideWindowMargin = true;
+                        logWindow.IsFullScreen = true;
                         logWindow.IsHideHeader = true;
                         SessionLocator.HomeComponent.ShowLockIndicator = true;
                         logWindow.Show('./InfrastructureModules/InfrastructureUser/Components/UserUnlockComponent/UserUnlockComponent');

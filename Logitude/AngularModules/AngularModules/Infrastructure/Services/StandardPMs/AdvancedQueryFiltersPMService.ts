@@ -47,21 +47,6 @@ export class AdvancedQueryFiltersPMService {
        
     }
 
-    getadvancedqueryfiltersbytenantByQuery(tenant: number, userid: string, queryId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenantandquery?' + 'tenant=' + tenant + '&loggedcontactid=' + userid + '&queryId=' + queryId, {
-                headers: authHeader
-            }).map(response => {
-                var pms = response.json();
-
-                return pms;
-            });
-        });
-    }
-
     getuseradvancedqueryfilterbytenantobjecttablequery(tenant: number,objecttableid:string,queryid:string, userid: string) {
 
 

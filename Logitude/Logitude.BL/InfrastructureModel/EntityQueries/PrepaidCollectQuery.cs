@@ -41,12 +41,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                    };
         }
 
-        public PrepaidCollectPM GetSinglePM(string id, int tenant)
-        {
-            return (from a in repository.context.PrepaidCollects
-                    where a.Id == id
-                    select new PrepaidCollectPM() { Id = a.Id, Name = a.Name, SearchFields = a.SearchFields, }).FirstOrDefault();
-        }
         public PrepaidCollectPM GetSinglePM(string id)
         {
             return (from a in repository.context.PrepaidCollects

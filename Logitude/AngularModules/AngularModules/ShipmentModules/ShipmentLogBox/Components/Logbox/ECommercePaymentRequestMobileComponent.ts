@@ -1,4 +1,4 @@
-declare var System: any, window: any;
+﻿declare var System: any, window: any;
 import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
 import {TransportsFilter} from '../../../../Controls/TransportsFilter';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef} from '@angular/core';
@@ -187,24 +187,6 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get TotalChargesInNIS() { return this.AdditionalData.RequestPaymentData.TotalChargesInNIS }
     public set TotalChargesInNIS(newValue: string) { this.AdditionalData.RequestPaymentData.TotalChargesInNIS = newValue; }
 
-    public get sum() { return this.AdditionalData.PaymentData.sum }
-    public set sum(newValue: string) { this.AdditionalData.PaymentData.sum = newValue; }
-
-    public get currency() { return this.AdditionalData.PaymentData.currency }
-    public set currency(newValue: string) { this.AdditionalData.PaymentData.currency = newValue; }
-
-    public get op() { return this.AdditionalData.PaymentData.op }
-    public set op(newValue: string) { this.AdditionalData.PaymentData.op = newValue; }
-
-    public get DCdisable() { return this.AdditionalData.PaymentData.DCdisable }
-    public set DCdisable(newValue: string) { this.AdditionalData.PaymentData.DCdisable = newValue; }
-
-    public get DclickTK() { return this.AdditionalData.PaymentData.DclickTK }
-    public set DclickTK(newValue: string) { this.AdditionalData.PaymentData.DclickTK = newValue; }
-
-    public get thtk() { return this.AdditionalData.PaymentData.thtk }
-    public set thtk(newValue: string) { this.AdditionalData.PaymentData.thtk = newValue; }
-
      
      
     ShowPaymentDetailsScreen: boolean = false;
@@ -220,11 +202,5 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     ValidationErrorsList: any[];
     MyAdditionalData: any = null;
-
-    OnPayClick() {
-        //alert("Yes");
-        document.forms["form"].submit();
-    }
-
     
 }

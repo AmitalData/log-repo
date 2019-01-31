@@ -1,4 +1,4 @@
-import {Component, ViewChildren, QueryList} from '@angular/core';
+﻿import {Component, ViewChildren, QueryList} from '@angular/core';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {AppTool} from '../../../../../Infrastructure/Tools';
@@ -102,7 +102,7 @@ export class AWBOverviewTabComponent {
             this.IsFNAReasonStatusVisible = true;
         }
 
-        if (SessionLocator.TenantPM.Id == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
+        if (SessionLocator.TenantPM.Id == 65 || SessionLocator.TenantManagementPM.IsEAWBOnlyDemo) {
             this.IsDemoTenantStatusVisible = true;
         }
 
@@ -279,7 +279,7 @@ export class AWBOverviewTabComponent {
         }
 
         if (this.IsFullWizard) {
-            if (SessionLocator.TenantManagementJS.AWBMessagesCCSTypeCode == "GLSHK") {
+            if (SessionLocator.TenantManagementPM.AWBMessagesCCSTypeCode == "GLSHK") {
                 if (this.EntityPM.TenantZeroAirlineGLSHKFSRFSA) {
                     isFSRButtonEnabled = true;
                 }

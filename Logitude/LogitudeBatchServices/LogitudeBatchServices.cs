@@ -1,9 +1,4 @@
-﻿using Logitude.BL.Interfaces;
-using Logitude.BL.Security;
-using Logitude.Customs.BL.EntityQueryServiceExt;
-using Logitude.Server.Tools;
-using Microsoft.Practices.Unity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -66,11 +61,6 @@ namespace LogitudeBatchServices
             this.OnStart(args);
             Console.ReadLine();
             this.OnStop();
-        }
-
-        public void RegisterClasses()
-        {
-            ContainerAccessor.Container.RegisterType<ILoggedContactUtil, LoggedContactUtil>("LoggedContactUtil", new InjectionFactory(c => new LoggedContactUtil()));
         }
     }
 }

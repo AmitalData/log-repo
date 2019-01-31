@@ -123,14 +123,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string Address2 { get; set; }
         public string Phone { get; set; }
         public string CompetitorFields { get; set; }
-        public DateTime? ActivationDate { get; set; }
-        public DateTime? InactiveDate { get; set; }
-        public DateTime? ActivationRequestDate { get; set; }
-        public string ActivatedByUserId { get; set; }
-        public string SetAsInactiveByUserId { get; set; }
-        public string ActivationRequestedByUserId { get; set; }
-        public string ActivatedByUserName { get; set; }
-        public string SetAsInactiveByName { get; set; }
-        public string ActivationRequestedByUserName { get; set; }
+
+
     }
 }

@@ -90,21 +90,11 @@
                                                         <LogLabel [ObjectFieldName]="'BankCode'" [DataContext]="DataContext" [TextCode]="'Customs.BankAccountToRefundQuery.O.BankCode'"></LogLabel>
                                                     </td>
                                                     <td style="width: 120px;">
-                                                        <LogTextBox *ngIf="CountryCode != 'IL'"
-                                                                    [ObjectFieldName]="'BankCode'"
+                                                        <LogTextBox [ObjectFieldName]="'BankCode'"
                                                                     [DataContext]="DataContext"
                                                                     [HideColumns]="true"
                                                                     [AddCommasToNumbers]="false"
                                                                     [Text]="BankCode"></LogTextBox>
-
-                                                        <LogLov *ngIf="CountryCode == 'IL'"
-                                                                [ObjectFieldName]="'BankCode'"
-                                                                [DataContext]="DataContext"
-                                                                [LookUpTableName]="'Customs.Bank'"
-                                                                [SelectedValue]="BankCode"
-                                                                [HideLastColumn]="true"
-                                                                [HideColumns]="true">
-                                                        </LogLov>
                                                     </td>
                                                 </tr>
 
@@ -139,7 +129,6 @@
                                                                 [DataContext]="DataContext"
                                                                 [LookUpTableName]="'Customs.CustomsBranch'"
                                                                 [SelectedValue]="AccountBranch"
-                                                                [DependencyFilter1Value]="BankCode"
                                                                 [HideLastColumn]="true"
                                                                 [HideColumns]="true">
                                                         </LogLov>

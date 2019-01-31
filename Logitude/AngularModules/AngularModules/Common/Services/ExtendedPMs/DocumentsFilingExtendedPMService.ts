@@ -1,4 +1,4 @@
-import {Injectable, } from '@angular/core';
+﻿import {Injectable, } from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
@@ -186,23 +186,6 @@ export class DocumentsFilingExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return this._http.get(this._apiUrl + "/GetCreateDocumentsFiling" + '?documentTypeId=' + documentTypeId + '&entityId=' + entityId + '&childEntityId=' + childEntityId + '&childReference=' + childReference + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&tenant=' + tenant, { headers: authHeader }).map(response => {
-            var result = response.json();
-
-            var entity: DocumentsFilingPM;
-            entity = this.MapJsonToEntityPM(result);
-
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-            pmresponse.Result = entity;
-            return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
-    }
-
-
-    CreateDocumentShipmentEvent( entityId: string,objectTableName: string, Notes: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetCreateDocumentShipmentEvent" + '?entityId=' + entityId + '&objectTableName=' + entityId + '&Notes=' + Notes, { headers: authHeader }).map(response => {
             var result = response.json();
 
             var entity: DocumentsFilingPM;

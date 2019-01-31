@@ -17,9 +17,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string AddressId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string LocalAddressId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CompanyAddress { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

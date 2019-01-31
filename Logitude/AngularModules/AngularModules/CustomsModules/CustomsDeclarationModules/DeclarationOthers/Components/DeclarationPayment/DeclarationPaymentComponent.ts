@@ -54,6 +54,7 @@ import { DeclarationPaymentPMService } from '../../../../../Customs/Services/Sta
 import {DeclarationWebService} from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import {CustomsSettingExtendedListService} from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+
 import {ErrorLogPMFileLoggerService} from '../../../../../Infrastructure/Services/ExtendedPMs/ErrorLogPMFileLoggerService';
 import {ErrorLogPM} from '../../../../../Infrastructure/EntityPMs/ErrorLogPM';
 import { DateTimeFormat } from '../../../../../Infrastructure/Utilities/DateTimeZone';
@@ -220,12 +221,13 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     public get FuturePaymentTime() { return this._FuturePaymentTime; }
     public set FuturePaymentTime(newValue: Date) {
 
-        if (newValue) {
+        if (newValue)
+        {
             var date: Date = this.FuturePaymentDateTime;
             if (this.paymentPM.FuturePaymentDateTime && typeof (this.paymentPM.FuturePaymentDateTime) == 'string') {
                 date = this.GetDateFromString(this.paymentPM.FuturePaymentDateTime);
             }
-
+           
             // var date = new Date(Date.parse(this.paymentPM.FuturePaymentDateTime + "")); // sometimes this variable contains string value of date, so convert it to date
             //else
             //    var date = this.GetTodaysDate();// new Date();
@@ -234,13 +236,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             this.FuturePaymentDateTime = datetime;
             this._FuturePaymentTime = datetime;
         }
-        else {
+        else
+        {
             this._FuturePaymentTime = newValue;
         }
 
     }
 
-    private _GetCreditInternalBankId: string;
+    private _GetCreditInternalBankId: string; 
     get GetCreditInternalBankId() { return this._GetCreditInternalBankId; }
     set GetCreditInternalBankId(value: string) {
         this._GetCreditInternalBankId = value;
@@ -538,19 +541,19 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         this.RefreshScreen();
 
-        //if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
+        if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
 
-        //    /*
-        //    Auto Filling screen data - check field Default “CGG_PAYHAND_FIL” in Unifreight  , if TRUE - WI 32966
-        //    PaymentMethodType - 1(Masab)
-        //    PaymentMethodAmount - Total Tax (same as double click on the field)
-        //    */
+            /*
+            Auto Filling screen data - check field Default “CGG_PAYHAND_FIL” in Unifreight  , if TRUE - WI 32966
+            PaymentMethodType - 1(Masab)
+            PaymentMethodAmount - Total Tax (same as double click on the field)
+            */
 
 
-        //    //this.OldAutoFillPaymentScreen();
-        //    this.AutoFillPaymentScreenByDefault();
+            //this.OldAutoFillPaymentScreen();
+            this.AutoFillPaymentScreenByDefault();
 
-        //}
+        }
 
 
 
@@ -602,24 +605,18 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     this.FuturePaymentTime = DateTool.GetDateParts(customFileCreditResponseData.PaymentDateTime).DateObject;
                 }
 
-                if (!AppTool.IsNullOrEmpty(customFileCreditResponseData.BankCode)) {
+                if (!AppTool.IsNullOrEmpty(customFileCreditResponseData.BankCode)){
                     var customBankListService: CustomBankListService = new CustomBankListService();
                     customBankListService.getAll().subscribe((response: ServiceResponse) => {
                         let allCustomBankList: CustomBankList[] = response.Result;
                         let bank: CustomBankList = allCustomBankList.filter(d => d.InternalCode == customFileCreditResponseData.BankCode && !d.InActive)[0];
                         if (!AppTool.IsNullOrEmpty(bank)) {
                             this.GetCreditInternalBankId = bank.Id;
-                            //if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
-                            //    this.JustAutoFillPaymentScreen();
-                            //}
-                            if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
-                                this.AutoFillPaymentScreenByDefault();
+                            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection.length == 1) {
+                                this.JustAutoFillPaymentScreen();
                             }
                         }
                     });
-                }
-                else if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
-                    this.AutoFillPaymentScreenByDefault();
                 }
                 SessionLocator.CurrentSession.StopBusyIndicator();
             });
@@ -634,18 +631,18 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 //.getSingleFromCache(this.DeclarationPM.SignedByUserId)
                 .getSingle(this.DeclarationPM.SignedByUserId)
                 .subscribe((response: ServiceResponse) => {
-                    var user: UserList = response.Result;
-                    console.log("[Response] userListService.getSingleFromCache: ", user);
+                var user: UserList = response.Result;
+                console.log("[Response] userListService.getSingleFromCache: ", user);
 
-                    if (!AppTool.IsNullOrEmpty(user)) {
-                        if (user.PersonalId == this.DeclarationPM.SignerPersonalId) {
-                            this.paymentPM.CreatedByUserId = this.DeclarationPM.SignedByUserId;
-                            this.CreatedByUserId = this.DeclarationPM.SignedByUserId;
-
-
-                        }
+                if (!AppTool.IsNullOrEmpty(user)) {
+                    if (user.PersonalId == this.DeclarationPM.SignerPersonalId) {
+                        this.paymentPM.CreatedByUserId = this.DeclarationPM.SignedByUserId;
+                        this.CreatedByUserId = this.DeclarationPM.SignedByUserId;
+                        
+                        
                     }
-                });
+                }
+            });
 
 
         }
@@ -668,20 +665,20 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAYCASH_FIL", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant)
             .subscribe((response: ServiceResponse) => {
-                let obj = response.Result;
-                if (obj) {
-                    let DefaultValue = obj['DefaultValue'];
-                    if (DefaultValue == "Y") {
-                        if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
-                            this.JustAutoFillPaymentScreenCash();
+                    let obj = response.Result;
+                    if (obj) {
+                        let DefaultValue = obj['DefaultValue'];
+                        if (DefaultValue == "Y") {
+                            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                                this.JustAutoFillPaymentScreenCash();
+                            }
+                        }
+                        else {
+                            this.AutoFillPaymentScreen();
                         }
                     }
-                    else {
-                        this.AutoFillPaymentScreen();
-                    }
-                }
-            });
-
+                });
+        
     }
 
     AutoFillPaymentScreen() {
@@ -932,7 +929,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         //get declaration display only
         declarationDisplayOnly = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
 
-        if (declarationDisplayOnly) {
+        if (declarationDisplayOnly)
+        {
             this.IsDisplayOnly = true;
             this.ErrorMessage = "לתצוגה בלבד - " + SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
 
@@ -943,7 +941,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             this.OkButtonEnabled = false;
             this.SendButtonEnabled = false;
         }
-        else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
+        else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage)
+        {
             this.ShowStorageStatusMessage = true;
             this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
             this.IsDisplayOnly = false;
@@ -970,7 +969,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
 
             var declarationDisplayOnly2 = displayOnlyCheckResult.IsDisplayOnly ? true : false;
-            if (declarationDisplayOnly2) {
+            if (declarationDisplayOnly2)
+            {
                 this.IsDisplayOnly = true;
                 this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
 
@@ -978,7 +978,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 this.OkButtonEnabled = false;
                 this.SendButtonEnabled = false;
             }
-            else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
+            else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage)
+            {
                 this.ShowStorageStatusMessage = true;
                 this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
                 this.IsDisplayOnly = false;
@@ -1170,7 +1171,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
     IsFuturePaymentDateValid() {
 
-        if (this.FuturePaymentDateTime) {
+        if (this.FuturePaymentDateTime)
+        {
 
             var newDate = new Date();
             var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0);
@@ -1227,13 +1229,15 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         }
 
         var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(); // WI 32593
-        var isPaymentDateValid = this.IsPaymentDateValid();
+        var isPaymentDateValid = this.IsPaymentDateValid(); 
 
-        if (isFuturePaymentDateValid && isPaymentDateValid) {
+        if (isFuturePaymentDateValid && isPaymentDateValid)
+        {
             this.ValidationErrorsList = [];
             this.ActivateUnifreightInstructionOK();
         }
-        else {
+        else
+        {
             this.ValidationErrorsList = [];
             if (!isFuturePaymentDateValid)
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.futuredatecantbepast"));
@@ -1348,10 +1352,12 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         //#region Validate dates
         var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(); // WI 32593
         var isPaymentDateValid = this.IsPaymentDateValid();
-        if (isFuturePaymentDateValid && isPaymentDateValid) {
+        if (isFuturePaymentDateValid && isPaymentDateValid)
+        {
             this.ValidationErrorsList = [];
         }
-        else {
+        else
+        {
             this.ValidationErrorsList = [];
             if (!isFuturePaymentDateValid)
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.futuredatecantbepast"));
@@ -1363,7 +1369,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         if (this.ValidationErrorsList.length > 0) return;
 
         // Validate payment date with future date
-        if (this.FuturePaymentDateTime && this.PaymentDate) {
+        if (this.FuturePaymentDateTime && this.PaymentDate)
+        {
 
             this.PaymentDate = new Date(Date.parse(this.PaymentDate + "")); // sometimes this variable contains string value of date, so convert it to date
             this.FuturePaymentDateTime = new Date(Date.parse(this.FuturePaymentDateTime + "")); // sometimes this variable contains string value of date, so convert it to date
@@ -1371,13 +1378,15 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             var paymentDate = new Date(this.PaymentDate.getFullYear(), this.PaymentDate.getMonth(), this.PaymentDate.getDate(), 0, 0, 0);
             var futurePaymentDateTime = new Date(this.FuturePaymentDateTime.getFullYear(), this.FuturePaymentDateTime.getMonth(), this.FuturePaymentDateTime.getDate(), 0, 0, 0);
 
-            if (futurePaymentDateTime > paymentDate) {
+            if (futurePaymentDateTime > paymentDate)
+            {
                 //valid
                 var confirmWindow = new ConfirmWindow();
                 confirmWindow.Title = TextCodeTranslator.Translate("Customs.General.O.Warning");
                 confirmWindow.ShowCancelButton = false;
                 confirmWindow.ShowNoButton = true;
-                confirmWindow.WindowClosed.subscribe((event: any) => {
+                confirmWindow.WindowClosed.subscribe((event: any) =>
+                {
                     if (confirmWindow.No) {
                         console.log("[!] Send payment canceled");
                         return;
@@ -1390,11 +1399,13 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.paymentDateSmallerThanFuture"));
 
             }
-            else {
+            else
+            {
                 this.SendMethodStep1();
             }
         }
-        else {
+        else
+        {
             this.SendMethodStep1();
         }
 
@@ -2136,7 +2147,7 @@ export class PaymentMethodModel extends BaseComponent {
         this._BanksList = val;
         this.LoggIt("PaymentMethodModel.SetBanksList");
     }
-    LoggIt(stack: string) {
+    LoggIt(stack:string) {
         if (!this.parent._2LogBankList) {
             return;
         }
@@ -2148,15 +2159,15 @@ export class PaymentMethodModel extends BaseComponent {
         errorLogPM.LogDate = DateTool.GetCurrentDateTimeAsUtc();
 
         let myBankList = this._BanksList.map(r => JSON.stringify({
-            'InternalBankId': r.Id, 'LocalName': r.LocalName, 'EnglishName': r.EnglishName
+            'InternalBankId':r.Id, 'LocalName':r.LocalName, 'EnglishName':r.EnglishName
         }));
 
         errorLogPM.Exception = "BanksList:";
-        errorLogPM.Exception += JSON.stringify(myBankList);
-        errorLogPM.Exception += "\r\n";
+        errorLogPM.Exception += JSON.stringify(myBankList); 
+        errorLogPM.Exception += "\r\n"; 
         errorLogPM.Exception += "SelectedBank:";
         errorLogPM.Exception += JSON.stringify(this.SelectedBank);
-        errorLogPM.Exception += "\r\n";
+        errorLogPM.Exception += "\r\n"; 
         errorLogPM.Exception += "DeclarationPaymentMethodPM:"
         errorLogPM.Exception += JSON.stringify({ 'DeclarationId': this.methodPM.DeclarationId, 'Line': this.methodPM.Line, 'SequenceNumeric': this.methodPM.SequenceNumeric });
 
@@ -2207,173 +2218,170 @@ export class PaymentMethodModel extends BaseComponent {
                 //this.BanksList = result;
                 this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_BLOCK_BANK", "NON", "NON", SessionLocator.Tenant)
                     .subscribe(
-                        (responseDefault: ServiceResponse) => {
-                            let obj = responseDefault.Result;
-                            if (obj) {
-                                BlockAgentBankForMasabDefaultValue = obj['DefaultValue'];
+                    (responseDefault: ServiceResponse) => {
+                        let obj = responseDefault.Result;
+                        if (obj) {
+                            BlockAgentBankForMasabDefaultValue = obj['DefaultValue'];
 
-                            }
+                        }
 
-                            this.customsSettingExtendedListService.GetSettingByTenant().subscribe((response: ServiceResponse) => {
-                                var list = response.Result;
+                        this.customsSettingExtendedListService.GetSettingByTenant().subscribe((response: ServiceResponse) => {
+                            var list = response.Result;
 
-                                if (!AppTool.IsNullOrEmpty(list)) {
-                                    var customsSetting = list;
-                                    this.BanksList = result;
-                                    if (result.length == 0) {
-                                        this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {  // window.CustomBanks.filter(d => d.PayerTypeCode == "3" && !d.InActive)[0].Id; //CustomBankDataProvider.GetCachedList<CustomBankList>().Where(d => d.PayerTypeCode == "3" && !d.InActive).ToList();
-                                            if (response) {
-                                                if (!response.HasError) {
+                            if (!AppTool.IsNullOrEmpty(list)) {
+                                var customsSetting = list;
+                                this.BanksList = result;
+                                if (result.length == 0) {
+                                    this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {  // window.CustomBanks.filter(d => d.PayerTypeCode == "3" && !d.InActive)[0].Id; //CustomBankDataProvider.GetCachedList<CustomBankList>().Where(d => d.PayerTypeCode == "3" && !d.InActive).ToList();
+                                        if (response) {
+                                            if (!response.HasError) {
 
-                                                    this.agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
-                                                    if (this.agentBanks.length == 1) {
-                                                        this.InternalBankId = this.agentBanks[0].Id;
-                                                        this.SelectedBank = this.agentBanks[0];
-                                                        this.BanksList = this.agentBanks;
+                                                this.agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
+                                                if (this.agentBanks.length == 1) {
+                                                    this.InternalBankId = this.agentBanks[0].Id;
+                                                    this.SelectedBank = this.agentBanks[0];
+                                                    this.BanksList = this.agentBanks;
 
+                                                }
+                                                else {
+                                                    if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
+                                                        this.SendCreditToGetBank();
                                                     }
-                                                    else {
-                                                        if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
-                                                            if (!AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
-                                                                this.InternalBankId = this.parent.GetCreditInternalBankId;
-                                                            }
-                                                            this.SendCreditToGetBank();
-                                                        }
-                                                        this.BanksList = this.agentBanks;
-                                                        if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
-                                                            //   GetCustomBankDefaultForCard();
-                                                        }
+                                                    this.BanksList = this.agentBanks;
+                                                    if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
+                                                        //   GetCustomBankDefaultForCard();
                                                     }
                                                 }
                                             }
-                                        });
-                                    }
-                                    else {
-                                        if (customsSetting != null) {
-                                            //this.InternalBankId = null;
-                                            if (!AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
-                                                this.InternalBankId = this.parent.GetCreditInternalBankId;
+                                        }
+                                    });
+                                }
+                                else {
+                                    if (customsSetting != null) {
+                                        this.InternalBankId = null;
+                                        if (!AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
+                                            this.InternalBankId = this.parent.GetCreditInternalBankId;
+                                        }
+                                        //Check GDFDATA - “CGG_BLOCK_BANK” , in case “Y” -   don't allow user to choose a bank that is not connected to the Customer -
+                                        //if (customsSetting.BlockAgentBankForMasab) {
+
+                                        //case: block Agent banks
+                                        if (BlockAgentBankForMasabDefaultValue == "Y") {
+                                            //if (result.length == 1)
+                                            //{
+                                            //    if (this.InternalBankId == null) {
+                                            //        this.InternalBankId = this.BanksList[0].Id;
+                                            //    }
+                                            //    var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
+                                            //    this.SelectedBank = bank;
+
+                                            //}
+                                            //else if (result.length > 1)
+                                            //{
+                                            //    if (this.InternalBankId != null) {
+                                            //        var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
+                                            //        this.SelectedBank = bank;
+                                            //    }
+
+                                            //}
+
+                                            this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
+                                                if (response) {
+                                                    if (!response.HasError) {
+                                                        var agentBanks = [];
+                                                        agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
+                                                        agentBanks = agentBanks.concat(this.BanksList);
+
+                                                        if (result.length == 1) {
+                                                            if (AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
+                                                                this.InternalBankId = this.BanksList[0].Id;
+                                                            }
+                                                            var bank: CustomBankList = agentBanks.filter(d => d.Id == this.InternalBankId)[0];
+                                                            this.SelectedBank = bank;
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                        }
+                                        //
+                                        //case: do not block Agent banks
+                                        else {
+                                            //if no banks
+                                            if (result.length == 0) {
+                                                this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
+                                                    if (response) {
+                                                        if (!response.HasError) {
+                                                            this.agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
+                                                            if (this.agentBanks.length > 0) {
+                                                                this.BanksList = this.agentBanks;
+                                                                if (this.agentBanks.length == 1) {
+                                                                    if (this.InternalBankId == null) {
+                                                                        this.InternalBankId = this.BanksList[0].Id;
+                                                                    }
+                                                                }
+                                                                else {
+                                                                    if (this.InternalBankId != null) {
+                                                                        var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
+                                                                        this.SelectedBank = bank;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                });
                                             }
-                                            //Check GDFDATA - “CGG_BLOCK_BANK” , in case “Y” -   don't allow user to choose a bank that is not connected to the Customer -
-                                            //if (customsSetting.BlockAgentBankForMasab) {
-
-                                            //case: block Agent banks
-                                            if (BlockAgentBankForMasabDefaultValue == "Y") {
-                                                //if (result.length == 1)
-                                                //{
-                                                //    if (this.InternalBankId == null) {
-                                                //        this.InternalBankId = this.BanksList[0].Id;
-                                                //    }
-                                                //    var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
-                                                //    this.SelectedBank = bank;
-
-                                                //}
-                                                //else if (result.length > 1)
-                                                //{
-                                                //    if (this.InternalBankId != null) {
-                                                //        var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
-                                                //        this.SelectedBank = bank;
-                                                //    }
-
-                                                //}
-
+                                            //one bank
+                                            else if (result.length == 1) {
+                                                if (this.InternalBankId == null) {
+                                                    this.InternalBankId = this.BanksList[0].Id;
+                                                }
                                                 this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
                                                     if (response) {
                                                         if (!response.HasError) {
                                                             var agentBanks = [];
                                                             agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
-                                                            agentBanks = agentBanks.concat(this.BanksList);
-
-                                                            if (result.length == 1) {
-                                                                if (AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
-                                                                    this.InternalBankId = this.BanksList[0].Id;
-                                                                }
-                                                                var bank: CustomBankList = agentBanks.filter(d => d.Id == this.InternalBankId)[0];
+                                                            this.BanksList = this.BanksList.concat(agentBanks);
+                                                            if (this.InternalBankId != null) {
+                                                                var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
                                                                 this.SelectedBank = bank;
                                                             }
                                                         }
                                                     }
                                                 });
                                             }
-                                            //
-                                            //case: do not block Agent banks
-                                            else {
-                                                //if no banks
-                                                if (result.length == 0) {
-                                                    this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
-                                                        if (response) {
-                                                            if (!response.HasError) {
-                                                                this.agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
-                                                                if (this.agentBanks.length > 0) {
-                                                                    this.BanksList = this.agentBanks;
-                                                                    if (this.agentBanks.length == 1) {
-                                                                        if (this.InternalBankId == null) {
-                                                                            this.InternalBankId = this.BanksList[0].Id;
-                                                                        }
-                                                                    }
-                                                                    else {
-                                                                        if (this.InternalBankId != null) {
-                                                                            var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
-                                                                            this.SelectedBank = bank;
-                                                                        }
-                                                                    }
-                                                                }
+
+                                            //two or more & dont block agent
+                                            else if (result.length > 1) {
+                                                var agentBanks = [];
+                                                //fill connected banks
+                                                var connectedBanks = result.filter(d => !d.InActive);
+
+                                                //fill agent
+                                                this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
+                                                    if (response) {
+                                                        if (!response.HasError) {
+                                                            agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
+                                                            //fill the LOV
+                                                            this.BanksList = connectedBanks.concat(agentBanks);
+
+                                                            //select bank
+                                                            if (this.InternalBankId != null) {
+                                                                var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
+                                                                this.SelectedBank = bank;
                                                             }
                                                         }
-                                                    });
-                                                }
-                                                //one bank
-                                                else if (result.length == 1) {
-                                                    if (this.InternalBankId == null) {
-                                                        this.InternalBankId = this.BanksList[0].Id;
                                                     }
-                                                    this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
-                                                        if (response) {
-                                                            if (!response.HasError) {
-                                                                var agentBanks = [];
-                                                                agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
-                                                                this.BanksList = this.BanksList.concat(agentBanks);
-                                                                if (this.InternalBankId != null) {
-                                                                    var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
-                                                                    this.SelectedBank = bank;
-                                                                }
-                                                            }
-                                                        }
-                                                    });
-                                                }
-
-                                                //two or more & dont block agent
-                                                else if (result.length > 1) {
-                                                    var agentBanks = [];
-                                                    //fill connected banks
-                                                    var connectedBanks = result.filter(d => !d.InActive);
-
-                                                    //fill agent
-                                                    this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
-                                                        if (response) {
-                                                            if (!response.HasError) {
-                                                                agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
-                                                                //fill the LOV
-                                                                this.BanksList = connectedBanks.concat(agentBanks);
-
-                                                                //select bank
-                                                                if (this.InternalBankId != null) {
-                                                                    var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
-                                                                    this.SelectedBank = bank;
-                                                                }
-                                                            }
-                                                        }
-                                                    });
-
-                                                }
+                                                });
 
                                             }
+
                                         }
                                     }
-
                                 }
-                            });
+
+                            }
                         });
+                    });
             }
         });
     }
@@ -2440,7 +2448,7 @@ export class PaymentMethodModel extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(BankCode)) {
             let bank: CustomBankList = allCustomBankList
                 .filter(d => d.InternalCode == BankCode && !d.InActive)[0];
-            //.filter(d => d.BankCode == BankCode && !d.InActive)[0];
+                //.filter(d => d.BankCode == BankCode && !d.InActive)[0];
 
             if (!AppTool.IsNullOrEmpty(bank)) {
                 this.InternalBankId = bank.Id;
@@ -2830,7 +2838,7 @@ export class PaymentProtestModel extends BaseComponent {
             logWindow.WindowArgs = windowArgs;
             logWindow.WindowClosed.subscribe(($event: any) => this.SelectionCompleted($event));
 
-            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/SupplierInvoiceSelectionComponent');
+          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/SupplierInvoiceSelectionComponent');
         }
     }
 

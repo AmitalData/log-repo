@@ -525,10 +525,6 @@ namespace Logitude.Server.Tools
 
         public static void AddEmailCommunicationLogQueue(EmailCommunicationParams communicationParams, int tenant)
         {
-            if (!string.IsNullOrEmpty(communicationParams.To) && communicationParams.To.Contains("system@tenant"))
-            {
-                return;
-            }
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             DocumentRepository documentRepository = new DocumentRepository(commonContext);
             UserRepository userRepository = new UserRepository(commonContext);

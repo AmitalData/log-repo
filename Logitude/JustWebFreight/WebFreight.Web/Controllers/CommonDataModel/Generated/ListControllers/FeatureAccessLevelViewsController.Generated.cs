@@ -49,7 +49,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
     {
 	  
        
-        public HttpResponseMessage GetSingle(string code)
+        public HttpResponseMessage GetSingle()
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				FeatureAccessLevelRepository  featureAccessLevelRepository = new FeatureAccessLevelRepository(MyContext);
 				FeatureAccessLevelList entityList = null;
-				FeatureAccessLevel entityPoco = featureAccessLevelRepository.GetSingleFeatureAccessLevel(code );
+				FeatureAccessLevel entityPoco = featureAccessLevelRepository.GetSingleFeatureAccessLevel( );
 
 				if (entityPoco != null)
 				{
@@ -102,7 +102,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				FeatureAccessLevelQuery featureAccessLevelQuery = new FeatureAccessLevelQuery(featureAccessLevelRepository);
 			    IQueryable<FeatureAccessLevelList> entityLists = featureAccessLevelQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Code);
+				entityLists = entityLists.OrderBy(d => d.);
 				List<FeatureAccessLevelList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
@@ -286,7 +286,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Code);
+                                entityLists = entityLists.OrderBy(d => d.);
                                 break;
                             }
                     }
@@ -295,7 +295,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
             }
 		    else
             {
-                entityLists = entityLists.OrderBy(d => d.Code);
+                entityLists = entityLists.OrderBy(d => d.);
             }
 
 			ServiceResponse response = new ServiceResponse();

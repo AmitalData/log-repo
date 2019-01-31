@@ -53,7 +53,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         AccountTypeName = a.GLAccountType != null ? a.GLAccountType.EnglishName : null,
                                                         RevenueExpenseName = a.RevenueExpense != null ? a.RevenueExpense.EnglishName : null,
                                                         ReconcileMethodName = a.ReconcileMethod != null ? a.ReconcileMethod.EnglishName : null,
-                                                        ReconcileMethodLocalName = a.ReconcileMethod != null ? a.ReconcileMethod.LocalName : null,
                                                         CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
                                                         ChartOfAccountsTypeName = a.ChartOfAccountsType != null ? a.ChartOfAccountsType.EnglishName : null,
                                                         CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
@@ -67,24 +66,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         AutomaticReconcileName = a.AutomaticReconcile != null ?
                                                             !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile2) ?
                                                                 !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile3) ?
-                                                                    a.AutomaticReconcile.AutomaticReconcileField1.EnglishName 
-                                                                    + "+" + a.AutomaticReconcile.AutomaticReconcileField2.EnglishName
-                                                                    + "+" + a.AutomaticReconcile.AutomaticReconcileField3.EnglishName
-                                                                    : a.AutomaticReconcile.AutomaticReconcileField1.EnglishName
-                                                                    + "+" + a.AutomaticReconcile.AutomaticReconcileField2.EnglishName
-                                                                : a.AutomaticReconcile.AutomaticReconcileField1.EnglishName 
+                                                                    a.AutomaticReconcile.AutomaticReconcile1 + "+" + a.AutomaticReconcile.AutomaticReconcile2 + "+" + a.AutomaticReconcile.AutomaticReconcile3
+                                                                    : a.AutomaticReconcile.AutomaticReconcile1 + "+" + a.AutomaticReconcile.AutomaticReconcile2
+                                                                : a.AutomaticReconcile.AutomaticReconcile1 
                                                             : null,
-                                                   AutomaticReconcileLocalName = a.AutomaticReconcile != null ?
-                                                            !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile2) ?
-                                                                !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile3) ?
-                                                                    a.AutomaticReconcile.AutomaticReconcileField1.LocalName
-                                                                    + "+" + a.AutomaticReconcile.AutomaticReconcileField2.LocalName
-                                                                    + "+" + a.AutomaticReconcile.AutomaticReconcileField3.LocalName
-                                                                    : a.AutomaticReconcile.AutomaticReconcileField1.LocalName
-                                                                    + "+" + a.AutomaticReconcile.AutomaticReconcileField2.LocalName
-                                                                : a.AutomaticReconcile.AutomaticReconcileField1.LocalName
-                                                            : null,
-                                                   PreviousEnglishName = a.PreviousEnglishName,
+                                                        PreviousEnglishName = a.PreviousEnglishName,
                                                         PreviousEnglishNameChangeDate = a.PreviousEnglishNameChangeDate,
                                                         PreviousLocalName = a.PreviousLocalName,
                                                         PreviousLocalNameChangeDate = a.PreviousLocalNameChangeDate,
@@ -105,16 +91,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         IsVATExempt = a.IsVATExempt,
                                                         LocalBalanceInDue = md.LocalBalanceInDue,
                                                         NextDueDate = md.NextDueDate,
-                                                        TotalOpenChequesInLocalCur = md.TotalOpenChequesInLocalCur,
-                                                        TotFutureOpenChequesInLocalCur = md.TotFutureOpenChequesInLocalCur,
-
-                                                        //categories
-                                                        Category1Name = a.Category1.EnglishName,
-                                                        Category2Name = a.Category2.EnglishName,
-                                                        Category3Name = a.Category3.EnglishName,
-                                                        Category4Name = a.Category4.EnglishName,
-                                                        Category5Name = a.Category5.EnglishName,
-                                               });
+                                                     });
             return query;
         }
 

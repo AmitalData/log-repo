@@ -27,7 +27,7 @@ namespace WebFreight.Web.Helpers.Quickbooks
             }
             catch (Exception ex)
             {
-                throw new ApplicationException(ex.ToString());
+                return null;
             }
         }
 
@@ -69,7 +69,7 @@ namespace WebFreight.Web.Helpers.Quickbooks
             catch (Exception ex)
             {
 
-                throw new ApplicationException(ex.ToString());
+                return null;
 
             }
 
@@ -86,8 +86,8 @@ namespace WebFreight.Web.Helpers.Quickbooks
             }
 
             catch (Exception ex)
-            {
-                throw new ApplicationException(ex.ToString());
+            {            
+                return null;
             }
 
 
@@ -104,7 +104,7 @@ namespace WebFreight.Web.Helpers.Quickbooks
 
             catch (Exception ex)
             {
-                throw new ApplicationException(ex.ToString());
+                return null;
             }
         }
 
@@ -119,7 +119,7 @@ namespace WebFreight.Web.Helpers.Quickbooks
             }
             catch (Exception ex)
             {
-                throw new ApplicationException(ex.ToString());
+                return null;
             }
         }
 
@@ -135,7 +135,7 @@ namespace WebFreight.Web.Helpers.Quickbooks
 
             catch (Exception ex)
             {
-                throw new ApplicationException(ex.ToString());
+                return null;
             }
         }
 
@@ -150,7 +150,7 @@ namespace WebFreight.Web.Helpers.Quickbooks
 
             catch (Exception ex)
             {
-                throw new ApplicationException(ex.ToString());
+                return null;
             }
         }
 
@@ -166,7 +166,7 @@ namespace WebFreight.Web.Helpers.Quickbooks
 
             catch (Exception ex)
             {
-                throw new ApplicationException(ex.ToString());
+                return null;
             }
         }
         

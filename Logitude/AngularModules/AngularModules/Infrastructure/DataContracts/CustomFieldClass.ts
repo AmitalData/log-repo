@@ -28,21 +28,13 @@ export class CustomFieldClass {
         var date: Date = null;
         if (!AppTool.IsNullOrEmpty(s)) {
             date = new Date();
-            // date.setUTCFullYear(Number(s.substr(0, 4)));
-            // date.setUTCMonth(Number(s.substr(4, 2)) - 1);
-            // date.setUTCDate(Number(s.substr(6, 2)));
-            // date.setUTCHours(Number(s.substr(8, 2)));
-            // date.setUTCMinutes(Number(s.substr(10, 2)));
-            // date.setUTCSeconds(Number(s.substr(12, 2)));
-            date.setUTCDate(1);
             date.setUTCFullYear(Number(s.substr(0, 4)));
             date.setUTCMonth(Number(s.substr(4, 2)) - 1);
             date.setUTCDate(Number(s.substr(6, 2)));
             date.setUTCHours(Number(s.substr(8, 2)));
             date.setUTCMinutes(Number(s.substr(10, 2)));
             date.setUTCSeconds(Number(s.substr(12, 2)));
-            date.setUTCMilliseconds(0);
-          }
+        }
 
         return date;
 

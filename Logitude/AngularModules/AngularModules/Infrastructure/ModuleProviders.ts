@@ -63,20 +63,13 @@ import {BusinessRolePMService} from './Services/StandardPMs/BusinessRolePMServic
 import { BatchTaskExecutionListService } from './Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionPMService } from './Services/StandardPMs/BatchTaskExecutionPMService';
 
-import { AnalyzeQueueMenuButtonsHandler } from './Components/MenuButtons/AnalyzeQueueMenuButtonsHandler';
 import {TenantManagementMenuButtonsHandler} from './Components/MenuButtons/TenantManagementMenuButtonsHandler';
 //
 import {BusinessProcessQueueListService} from  './Services/StandardLists/BusinessProcessQueueListService'; 
 import {BusinessProcessQueuePMService} from  './Services/StandardPMs/BusinessProcessQueuePMService';
 import {TeamListService} from  './Services/StandardLists/TeamListService'; 
 import {TeamPMService} from './Services/StandardPMs/TeamPMService'; 
-import { DWQueryBuilderService } from './Services/ExtendedPMs/DWQueryBuilderService';
-
-
-import { BIReportListService } from './Services/StandardLists/BIReportListService';
-import { BIReportPMService } from './Services/StandardPMs/BIReportPMService';
-import { BIReportsTypeListService } from './Services/StandardLists/BIReportsTypeListService';
-import { WebhookKeysListService } from './Services/StandardLists/WebhookKeysListService';
+import {DWQueryBuilderService} from './Services/ExtendedPMs/DWQueryBuilderService';
 
 export class ModuleProviders {
     
@@ -85,9 +78,6 @@ export class ModuleProviders {
         var myResult: any = null;
 
         switch (name) {
-            case "BIReportPMService": { myResult = new BIReportPMService(); break; }
-            case "BIReportsTypeListService": { myResult = new BIReportsTypeListService(); break; }
-            case "BIReportListService": { myResult = new BIReportListService(); break; }
             case "BusinessHoursHolidayListService": { myResult = new BusinessHoursHolidayListService(); break; }
             case "ChargesGroupListService": { myResult = new ChargesGroupListService(); break; }
             case "CustomPickListListService": { myResult = new CustomPickListListService(); break; }
@@ -148,8 +138,7 @@ export class ModuleProviders {
             case "ErrorLogListService": { myResult = new ErrorLogListService(); break; }
             case "BatchTaskExecutionListService": { myResult = new BatchTaskExecutionListService(); break; }
             case "ErrorLogPMService": { myResult = new ErrorLogPMService(); break; }
-            case "ApiCredintialsListService": { myResult = new ApiCredintialsListService(); break; }                
-            case "AnalyzeQueueMenuButtonsHandler": { myResult = new AnalyzeQueueMenuButtonsHandler(); break; }
+            case "ApiCredintialsListService": { myResult = new ApiCredintialsListService(); break; }
             case "TenantManagementMenuButtonsHandler": { myResult = new TenantManagementMenuButtonsHandler(); break; }
             case "ErrorLogPMFileLoggerService": { myResult = new ErrorLogPMFileLoggerService(); break; }
             case "BusinessProcessQueueListService": { myResult = new BusinessProcessQueueListService(); break; }  
@@ -159,9 +148,7 @@ export class ModuleProviders {
             case "TeamListService": { myResult = new TeamListService(); break; }   
             case "TeamPMService": { myResult = new TeamPMService(); break; }   
             case "BatchTaskExecutionPMService": { myResult = new BatchTaskExecutionPMService(); break; } 
-            case "DWQueryBuilderService": { myResult = new DWQueryBuilderService(); break; }
-            case "WebhookKeysListService": { myResult = new WebhookKeysListService(); break; }
-                
+            case "DWQueryBuilderService": { myResult = new DWQueryBuilderService(); break; }        
         }
 
         return myResult;

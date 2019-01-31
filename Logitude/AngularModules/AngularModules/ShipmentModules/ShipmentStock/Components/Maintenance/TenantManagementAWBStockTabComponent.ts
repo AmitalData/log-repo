@@ -1,12 +1,12 @@
-import {Component, OnInit}  from '@angular/core';
+﻿import {Component, OnInit}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {TenantManagementPM} from '../../../../Infrastructure/EntityPMs/TenantManagementPM';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
-import {MessagingStockList} from '../../../../Shipment/EntityLists/MessagingStockList';
-import {MessagingStockPM} from '../../../../Shipment/EntityPMs/MessagingStockPM';
-import {MessagingStockPMService} from '../../../../Shipment/Services/StandardPMs/MessagingStockPMService';
+import {AWBMessagingStockList} from '../../../../Shipment/EntityLists/AWBMessagingStockList';
+import {AWBMessagingStockPM} from '../../../../Shipment/EntityPMs/AWBMessagingStockPM';
+import {AWBMessagingStockPMService} from '../../../../Shipment/Services/StandardPMs/AWBMessagingStockPMService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {DateTool} from '../../../../Infrastructure/Tools';
@@ -26,7 +26,7 @@ export class TenantManagementAWBStockTabComponent implements OnInit {
     public IsEditingAllowed: boolean = false;
     ngOnInit() {
         if (this.EntityPM != null) {
-            this.entityResourceService.getEntityResourceByTableName("MessagingStock").subscribe((res1: any) => {
+            this.entityResourceService.getEntityResourceByTableName("AWBMessagingStock").subscribe((res1: any) => {
                 this.IsEditingAllowed = this.IsTenantManagementEditable();
 
                 this.BuilItemsSource();
@@ -44,13 +44,13 @@ export class TenantManagementAWBStockTabComponent implements OnInit {
         return myResult;
     }
 
-    public ItemsSource: MessagingStockList[];
+    public ItemsSource: AWBMessagingStockList[];
     public BuilItemsSource() {
         this.ItemsSource = [];
 
         var service: ShipmentDomainService = new ShipmentDomainService();
-        service.GetMessagingStockListForTenantManagmentTab(this.EntityPM.Id).subscribe(result => {
-            var allStocks: MessagingStockList[] = result.Result;
+        service.GetAWBMessagingStockListForTenantManagmentTab(this.EntityPM.Id).subscribe(result => {
+            var allStocks: AWBMessagingStockList[] = result.Result;
 
             allStocks.sort((a, b) => { return (DateTool.GetDateFromDate(a.StartDate) === DateTool.GetDateFromDate(b.StartDate)) ? 0 : (DateTool.GetDateFromDate(a.StartDate) > DateTool.GetDateFromDate(b.StartDate)) ? -1 : 1 }).forEach(item => {
                 this.ItemsSource.push(item);
@@ -60,7 +60,7 @@ export class TenantManagementAWBStockTabComponent implements OnInit {
 
     AddStockClicked() {
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Title = "New Messaging Stock";
+        logitudeWindow.Title = "New AWB Messaging Stock";
         logitudeWindow.Width = 800;
         logitudeWindow.Height = 600;
 
@@ -72,9 +72,9 @@ export class TenantManagementAWBStockTabComponent implements OnInit {
         logitudeWindow.Show('./ShipmentModules/ShipmentStock/Components/Maintenance/AddEditAWBStockComponent');
     }
 
-    public EditStockClicked(item: MessagingStockList) {
+    public EditStockClicked(item: AWBMessagingStockList) {
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Title = "Edit Messaging Stock";
+        logitudeWindow.Title = "Edit AWB Messaging Stock";
         logitudeWindow.Width = 800;
         logitudeWindow.Height = 600;
 

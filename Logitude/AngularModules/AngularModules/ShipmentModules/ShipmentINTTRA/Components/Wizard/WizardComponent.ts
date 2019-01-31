@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -10,9 +10,6 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
-import { CardList } from '../../../../Common/EntityLists/CardList';
-import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
-import { ShipmentTool } from '../../../../Shipment/Tools';
 
 @Component({
     moduleId: module.id,
@@ -30,19 +27,11 @@ export class WizardComponent extends BaseComponent {
     public IsLimited: boolean = false;
     public IsDevelopment: boolean = false;
     public SimulatorIsVisible: boolean = false;
-    public IsEditingEnabled: boolean = false;
-    public IsDemoAreaVisible: boolean = false;
     private myService: INTRAWebService;
-    private CardListService: CardListService;
     private entityArgs: EntityArgs;
     constructor() {
         super();
         this.myService = new INTRAWebService();
-        this.CardListService = new CardListService();
-
-        if (SessionLocator.Tenant == 65 || SessionLocator.TenantManagementJS.IsINTTRAOnlyDemo) {
-            this.IsDemoAreaVisible = true;
-        }
     }
 
     SetWindowArgs(args: any) {
@@ -53,7 +42,6 @@ export class WizardComponent extends BaseComponent {
         this.SimulatorIsVisible = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "INTTRASimulator") ? true : false;
         this.SetSendingLimitation(this.EntityPM.INTTRASIStatusCode);
         this.Clone();
-        this.SetUIProperties();
 
         if (!this.IsLimited) {
             this.myService.Validate(this.ShipmentId).subscribe((myResponse: ServiceResponse) => {
@@ -112,57 +100,6 @@ export class WizardComponent extends BaseComponent {
 
         this.IsLimited = isLimited;
     }
-    SetUIProperties() {
-        this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
-
-        this.UIProperties.SetEnabled("EmergencyContactId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("INTTRAContractNumber", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("INTTRADocumentTypeCode", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("INTTRADocumentQTY", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("INTTRAIsFreighted", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("FreightPayerId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("BasicFreightId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("DestinationPortChargesId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("DestinationHaulageChargesId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("AdditionalChargesId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("INTTRAInstructions", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("INTTRAComments", this.ObjectTableName, this.IsEditingEnabled);
-
-        this.SetUIProperties_BasicFreight();
-        this.SetUIProperties_FreightPayerAddress();
-    }
-    SetUIProperties_BasicFreight() {
-
-        var isRequired: boolean = false;
-
-        if (AppTool.IsNullOrEmpty(this.BasicFreightId)) {
-            isRequired = true;
-        }
-
-        this.UIProperties.SetRequired("BasicFreightId", this.ObjectTableName, isRequired);
-    }
-    SetUIProperties_FreightPayerAddress() {
-
-        var isEnabled: boolean = false;
-
-        if (this.IsEditingEnabled) {
-            if (this.FreightPayerId != null) {
-                isEnabled = true;
-            }
-        }
-
-        this.UIProperties.SetEnabled("FreightPayerAddressId", this.ObjectTableName, isEnabled);
-
-        var isRequired: boolean = false;
-
-        if (!AppTool.IsNullOrEmpty(this.FreightPayerId)) {
-            if (AppTool.IsNullOrEmpty(this.FreightPayerAddressId)) {
-                isRequired = true;
-            }
-        }
-
-        this.UIProperties.SetRequired("FreightPayerAddressId", this.ObjectTableName, isRequired);
-    }
 
     get EmergencyContactId() { return this.EntityPM.EmergencyContactId; }
     set EmergencyContactId(value: string) {
@@ -192,6 +129,13 @@ export class WizardComponent extends BaseComponent {
         }
     }
 
+    get SIHasAttachList() { return this.EntityPM.SIHasAttachList; }
+    set SIHasAttachList(value: boolean) {
+        if (this.EntityPM.SIHasAttachList != value) {
+            this.EntityPM.SIHasAttachList = value;
+        }
+    }
+
     get INTTRADocumentQTY() { return this.EntityPM.INTTRADocumentQTY; }
     set INTTRADocumentQTY(value: number) {
         if (this.EntityPM.INTTRADocumentQTY != value) {
@@ -210,73 +154,6 @@ export class WizardComponent extends BaseComponent {
     set INTTRAIsFreighted(value: boolean) {
         if (this.EntityPM.INTTRAIsFreighted != value) {
             this.EntityPM.INTTRAIsFreighted = value;
-        }
-    }
-
-    get BasicFreightId() { return this.EntityPM.BasicFreightId; }
-    set BasicFreightId(value: string) {
-        if (this.EntityPM.BasicFreightId != value) {
-            this.EntityPM.BasicFreightId = value;
-            this.SetUIProperties_BasicFreight();
-        }
-    }
-
-    get DestinationPortChargesId() { return this.EntityPM.DestinationPortChargesId; }
-    set DestinationPortChargesId(value: string) {
-        if (this.EntityPM.DestinationPortChargesId != value) {
-            this.EntityPM.DestinationPortChargesId = value;
-        }
-    }
-
-    get DestinationHaulageChargesId() { return this.EntityPM.DestinationHaulageChargesId; }
-    set DestinationHaulageChargesId(value: string) {
-        if (this.EntityPM.DestinationHaulageChargesId != value) {
-            this.EntityPM.DestinationHaulageChargesId = value;
-        }
-    }
-
-    get AdditionalChargesId() { return this.EntityPM.AdditionalChargesId; }
-    set AdditionalChargesId(value: string) {
-        if (this.EntityPM.AdditionalChargesId != value) {
-            this.EntityPM.AdditionalChargesId = value;
-        }
-    }
-
-    get FreightPayerId() { return this.EntityPM.FreightPayerId; }
-    set FreightPayerId(value: string) {
-        if (this.EntityPM.FreightPayerId != value) {
-            this.EntityPM.FreightPayerId = value;
-
-            if (AppTool.IsNullOrEmpty(value)) {
-                this.FreightPayerAddressId = null;
-            }
-
-            else {
-                this.CardListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var list: CardList = myResponse.Result;
-                        if (list) {
-                            this.FreightPayerAddressId = list.MainAddressId;
-                        }
-                    }
-                });
-            }
-        }
-    }
-
-    get FreightPayerAddressId() { return this.EntityPM.FreightPayerAddressId; }
-    set FreightPayerAddressId(value: string) {
-        if (this.EntityPM.FreightPayerAddressId != value) {
-            this.EntityPM.FreightPayerAddressId = value;
-
-            this.SetUIProperties_FreightPayerAddress();
-        }
-    }
-
-    get SIHasAttachList() { return this.EntityPM.SIHasAttachList; }
-    set SIHasAttachList(value: boolean) {
-        if (this.EntityPM.SIHasAttachList != value) {
-            this.EntityPM.SIHasAttachList = value;
         }
     }
 
@@ -324,9 +201,8 @@ export class WizardComponent extends BaseComponent {
         SessionLocator.CurrentSession.StartBusyIndicator("Sending...");
 
         this.myService.Validate(this.ShipmentId).subscribe((myResponse: ServiceResponse) => {
-
             if (myResponse.HasError) {
-                SessionLocator.CurrentSession.StopBusyIndicator();                
+                SessionLocator.CurrentSession.StopBusyIndicator();
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
 
@@ -379,13 +255,6 @@ export class WizardComponent extends BaseComponent {
                                     SessionLocator.CurrentSession.StopBusyIndicator();
                                 }
 
-                                else if (myResult.HasStockError == true) {
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
-
-                                    var messageWindow: MessageWindow = new MessageWindow();
-                                    messageWindow.Show("No Stock");
-                                }
-
                                 else {
 
                                     if (!this.IsDevelopment) {
@@ -426,18 +295,12 @@ export class WizardComponent extends BaseComponent {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('EmergencyContactId');
         this.myCloner.AddField('INTTRAContractNumber');
-        this.myCloner.AddField('INTTRADocumentTypeCode');
-        this.myCloner.AddField('INTTRADocumentQTY');
-        this.myCloner.AddField('INTTRAIsFreighted');
-        this.myCloner.AddField('FreightPayerId');
-        this.myCloner.AddField('FreightPayerAddressId');
-        this.myCloner.AddField('BasicFreightId');
-        this.myCloner.AddField('DestinationPortChargesId');
-        this.myCloner.AddField('DestinationHaulageChargesId');
-        this.myCloner.AddField('AdditionalChargesId');
         this.myCloner.AddField('INTTRAInstructions');
         this.myCloner.AddField('INTTRAComments');
         this.myCloner.AddField('SIHasAttachList');
+        this.myCloner.AddField('INTTRADocumentQTY');
+        this.myCloner.AddField('INTTRADocumentTypeCode');
+
         this.myCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {

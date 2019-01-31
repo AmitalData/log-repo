@@ -241,21 +241,6 @@ export class VendorPM {
     public set IRSNumber(newValue: string) { if (this.iRSNumber != newValue) { this.iRSNumber = newValue; this.MarkAsDirty("IRSNumber"); } }
        
 	 
-    private primaryContactName: string;
-    public get PrimaryContactName() { return this.primaryContactName; }
-    public set PrimaryContactName(newValue: string) { if (this.primaryContactName != newValue) { this.primaryContactName = newValue; this.MarkAsDirty("PrimaryContactName"); } }
-       
-	 
-    private primaryContactEmail: string;
-    public get PrimaryContactEmail() { return this.primaryContactEmail; }
-    public set PrimaryContactEmail(newValue: string) { if (this.primaryContactEmail != newValue) { this.primaryContactEmail = newValue; this.MarkAsDirty("PrimaryContactEmail"); } }
-       
-	 
-    private primaryContactPhone: string;
-    public get PrimaryContactPhone() { return this.primaryContactPhone; }
-    public set PrimaryContactPhone(newValue: string) { if (this.primaryContactPhone != newValue) { this.primaryContactPhone = newValue; this.MarkAsDirty("PrimaryContactPhone"); } }
-       
-	 
     private card: string;
     public get Card() { return this.card; }
     public set Card(newValue: string) { if (this.card != newValue) { this.card = newValue; this.MarkAsDirty("Card"); } }

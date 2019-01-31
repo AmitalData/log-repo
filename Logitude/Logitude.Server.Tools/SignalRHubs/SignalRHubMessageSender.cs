@@ -102,14 +102,10 @@ namespace Logitude.Server.Tools.SignalRHubs
                 brMessage.Properties["EventParameter"] = eventParameter;
 
                 // message.TimeToLive = new TimeSpan(0, 5, 0);
-                if (LogitudeSettings.DeploymentStage != "logitudepreproduction")
-                {
-                    TopicClient client = Microsoft.ServiceBus.Messaging.TopicClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(LogitudeSettings.DeploymentStage), StorageAcountDetails.SignalRHubTopicName);
+                TopicClient client = Microsoft.ServiceBus.Messaging.TopicClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(LogitudeSettings.DeploymentStage), StorageAcountDetails.SignalRHubTopicName);
 
 
-                    client.Send(brMessage);
-                }
-             
+                client.Send(brMessage);
 
                 scope.Complete();
             }

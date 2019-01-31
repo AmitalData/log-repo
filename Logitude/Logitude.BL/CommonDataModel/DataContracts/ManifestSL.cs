@@ -71,8 +71,8 @@ namespace Logitude.BL.CommonDataModel.DataContracts
         public string ShipmentTypeName { get; set; }
    
         public string AgentName { get; set; }
-        public string OrginalAgentId { get; set; }
 
+  
         public string AgentReference1 { get; set; }
         public string AgentReference2 { get; set; }
 
@@ -198,8 +198,7 @@ namespace Logitude.BL.CommonDataModel.DataContracts
         public string ValueOfGoodsCurrencyCode { get; set; }
         public bool   ValueOfGoodsCurrencyAddedManually { get; set; }
 
-        public ShipmentPickUpDeliverySL ShipmentPickUp { get; set; }
-        public ShipmentPickUpDeliverySL ShipmentDelivery { get; set; }
+
 
         public string LongMaster { get; set; }
         public List<HouseSL> Houses
@@ -246,11 +245,4 @@ namespace Logitude.BL.CommonDataModel.DataContracts
 
 
     }
-
-    
-
-
-
-
-
 }

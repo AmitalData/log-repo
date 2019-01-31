@@ -46,33 +46,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 : base(mainContext, additionalContexts, tenant)
             { }
         }
-
-        private class JournalRepositoryPriv : JournalRepository
-        {
-
-            public JournalRepositoryPriv(IAccountingContext mainContext)
-                : base(mainContext)
-            { }
-        }
-
+        
         string localAccountingCurrencyId;
         protected StornoOverrideM _StornoOverrideM;
-
-        protected override void AddContext(JournalPM myTEntityPM)
-        {
-            base.AddContext(myTEntityPM);
-            this.Repository = GetJournalRepositoryPriv();
-                //new JournalRepositoryPriv((IAccountingContext)this.MainContext);
-            //this.entityRepository.SetInsureUsingOnlyByUpdateService();
-        }
-
+        
+        
+ 
         protected override void OnCreating(JournalPM entityPM, EntityPM entityParentPM)
         {
             var JournalUpdateOnCreatingFactory = new JournalUpdateOnCreating.Factory();
             var JournalUpdateInsert = JournalUpdateOnCreatingFactory.Create(this.MainContext as IAccountingContext);
             JournalUpdateInsert.OnCreating(entityPM, entityParentPM);
-
-          
         }
 
 
@@ -108,36 +92,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
-
+    
 
 
         protected override void OnUpdating(JournalPM entityPM, Journal entityPOCO)
         {
             var journalUpdate = GetJournalOnUpdtatingObject();
-
+            
             journalUpdate.OnUpdating(entityPM, entityPOCO, ChangeTrackingEntityPM);
-
-            
-        }
-        private JournalRepository GetJournalRepositoryPriv()
-        {
-            return (new JournalRepositoryPriv((IAccountingContext)this.MainContext) as JournalRepository);
-        }
-
-
-        internal void UpdateWhileStreaming(int tenant, string id, Action<Journal> updatePoco)
-        {
-            var repoPriv = GetJournalRepositoryPriv();
-            repoPriv.UpdateWhileStreaming(tenant, id, updatePoco);
-        }
-
-        internal void SetStatusCodeFailed(string seedJournalId, int tenant)
-        {
-            var repoPriv = GetJournalRepositoryPriv();
-            var poco = repoPriv.GetSingle(seedJournalId, tenant);
-            poco.StatusCode = ((int)Def.EntityPMs.JournalStatusTypePM.StatusCodeEnum.Failed).ToString();
-            repoPriv.Update(poco);
-            
         }
 
         public virtual JournalUpdateOnUpdating GetJournalOnUpdtatingObject()
@@ -363,21 +325,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 entityPM.StatusCode = journalOldStatusCode;
                 throw;
-            }
-
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-                JournalAdditionalDataUpdateService additionalDataUpdateService = new JournalAdditionalDataUpdateService((IAccountingContext)this.MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                JournalAdditionalDataPM journalAdditionalDataPM = new JournalAdditionalDataPM()
-                {
-                    JournalId = entityPM.Id,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    TaxReportId = null,
-                    TaxReportTransmitStatusCode = null,
-                    Tenant = entityPM.Tenant,
-                };
-
-                additionalDataUpdateService.Update(journalAdditionalDataPM, true);
             }
 
 

@@ -1,4 +1,4 @@
-
+﻿
 <div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
@@ -6,7 +6,7 @@
                 <table>
                     <tr>
                         <td>
-                            <div class="TabTitle" [hidden]="IsTitleHidden">{{TabHeaderTextCode | TextCodeTranslationPipe}}</div>
+                            <div class="TabTitle" [hidden]="IsTitleHidden">{{'General.O.Communications' | TextCodeTranslationPipe}}</div>
                         </td>
 
                         <td style="width: 21px;">
@@ -32,9 +32,6 @@
                                 <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'CommunicationLog.CH.CreateDateListLable' | TextCodeTranslationPipe}}</td>
                                 <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'CommunicationLog.CH.LastStatusDateListLable' | TextCodeTranslationPipe}}</td>
                                 <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'CommunicationLog.CH.LastStatusDateUTCListLable' | TextCodeTranslationPipe}}</td>
-                                <td style="width: 60px; min-width: 60px; max-width: 60px;">
-                                    <div></div>
-                                </td>
                                 <td style="width: 60px; min-width: 60px; max-width: 60px;">
                                     <div></div>
                                 </td>
@@ -76,13 +73,13 @@
                                                 </td>
                                                 <td style="width:25px;" *ngIf="item.EmailDeliveryError != null && item.CommunicationStatusTypeCode == 'D'">
                                                     <HelpIcon [IconSize]='25' [Header]="'Email Delivery Error'" [Text]="item.EmailDeliveryError" [IconPath]="'./Images/Warning_icon_24.png'"></HelpIcon>
-                                                </td>
+                                                 </td>
                                                 <td>
                                                     <div></div>
                                                 </td>
                                             </tr>
                                         </table>
-                                    </div>
+                                    </div>                                   
                                 </td>
 
                                 <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
@@ -119,10 +116,6 @@
 
                                 <td class="CellStretched" style="width: 60px; min-width: 60px; max-width: 60px;">
                                     <button class="Button" (click)="ViewXMLClicked(item)">{{'CommunicationLog.B.View' | TextCodeTranslationPipe}}</button>
-                                </td>
-
-                                <td class="CellStretched" style="width: 60px; min-width: 60px; max-width: 60px;">
-                                    <button class="Button" (click)="EditItemClicked(item)">{{'CommunicationLog.B.Details' | TextCodeTranslationPipe}}</button>
                                 </td>
 
                                 <td class="LastChild" style="min-width: 20px;">

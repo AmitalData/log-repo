@@ -351,11 +351,6 @@ namespace WebFreight.Web.WebPages
                     data = manager.DownloadStaticFile(documentName, "how-to");
                     break;
 
-                case "68":
-                    documentName = "accounting_setting_guide.pdf";
-                    data = manager.DownloadStaticFile(documentName, "how-to");
-                    break;
-
                 case "REL001":
                     documentName = "december_2015_release.pdf";
                     data = manager.DownloadStaticFile(documentName, "how-to");
@@ -428,11 +423,6 @@ namespace WebFreight.Web.WebPages
 
                 case "REL015":
                     documentName = "september_2018_release.pdf";
-                    data = manager.DownloadStaticFile(documentName, "how-to");
-                    break;
-
-                case "REL016":
-                    documentName = "december_2018_release.pdf";
                     data = manager.DownloadStaticFile(documentName, "how-to");
                     break;
             }

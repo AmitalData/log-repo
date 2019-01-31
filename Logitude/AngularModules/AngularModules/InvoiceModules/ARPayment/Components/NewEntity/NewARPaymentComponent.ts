@@ -47,14 +47,12 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     public DisplaySATSettings: boolean = false;
     public EnableNegativeOffsetARPayments: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
-    public IsCreatedFromInvoiceSide: boolean = false;
     get IsNegativeAmountEnabled() { return this.EnableNegativeOffsetARPayments == true && this.AccountingPaymentMethodCode == "FS" ? true : false; }
-    public isRTL: boolean = false;  
+    public isRTL: boolean = false;
+  
     constructor(private _entityResourceService: EntityResourceService) {
         super();
-
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
         this.TodayDate = DateTool.GetCurrentDateAsUtc();
         this.TenantPM = SessionLocator.TenantPM;
 
@@ -68,9 +66,9 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.DisplaySATSettings = true;
         }
 
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
+        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARPaymentEditExchangeRate")) {
             this.IsEditExchangeRateVisible = true;
-        } 
+        }
     }
 
     ngOnInit() {
@@ -78,17 +76,14 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     }
 
     SetWindowArgs(args: any) {
+
         if (args) {
             this.invoicePm = args['ARInvoice'];
             this.customerId = args['CustomerId'];
         }
 
         if (this.invoicePm != null) {
-            this.IsCreatedFromInvoiceSide = true;
-            this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);            
-            this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.invoicePm.Id));
         }
     }
 
@@ -124,27 +119,23 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         });
     }
 
-    public RateIsEnabled = false;
     SetUIProperties() {
-        var isRateEnabled = true;
+        this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, this.invoicePm != null && AppTool.IsNullOrEmpty(this.invoicePm.Id));
 
-        if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARPaymentEditExchangeRate")) {
-            isRateEnabled = false;
+        var rateIsEnabled = true;
+        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, true);
+
+        if (this.invoicePm != null && !AppTool.IsNullOrEmpty(this.invoicePm.Id)) {
+            this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+            rateIsEnabled = false;
         }
 
-        else {
-            if (this.IsCreatedFromInvoiceSide) {
-                isRateEnabled = false;
-            }
-
-            else if (this.PaymentCurrencyId == this.TenantPM.CurrencyId || this.PaymentCurrencyId == null || this.TenantPM.CurrencyId == null) {
-                isRateEnabled = false;
-            }
+        else if (this.newARPaymentPM.PaymentCurrencyId == this.TenantPM.CurrencyId || this.newARPaymentPM.PaymentCurrencyId == null || this.TenantPM.CurrencyId == null) {
+            this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+            rateIsEnabled = false;
         }
 
-        //this.RateIsEnabled = isRateEnabled;
-        this.RateIsEnabled = true;
-        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isRateEnabled);
+        this.RateIsEnabled = rateIsEnabled;
 
         this.SetUIProperties_Payment();
     }
@@ -181,17 +172,17 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         this.FillTipoCadenaPagoList();
         this.CreateARPayment();
 
-        if (this.IsCreatedFromInvoiceSide) {
-            this.newARPaymentPM.BillToId = this.invoicePm.BillToId;
-            this.newARPaymentPM.BillToName = this.invoicePm.BillToName;
-            this.newARPaymentPM.BillToAddressId = this.invoicePm.BillToAddressId;
-            this.newARPaymentPM.BillToPartnerTypeId = this.invoicePm.BillToPartnerTypeId;
+        if (this.invoicePm != null && !AppTool.IsNullOrEmpty(this.invoicePm.Id)) {
+            this.BillToId = this.invoicePm.BillToId;
+            this.BillToAddressId = this.invoicePm.BillToAddressId;
             this.newARPaymentPM.PaymentCurrencyId = this.invoicePm.InvoiceCurrencyId;
             this.newARPaymentPM.PaymentCurrencyCode = this.invoicePm.InvoiceCurrencyCode;
             this.newARPaymentPM.ExchangeRateDate = this.invoicePm.ExchangeRateDate;
             this.newARPaymentPM.PaymentCurrencyExchangeRate = this.invoicePm.InvoiceCurrencyExchangeRate;
 
-          if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {             
+          if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+             
+
             if (!AppTool.IsNullOrEmpty(this.invoicePm.MetodoPagoCode)) {
               this.MetodoPagoCode = this.invoicePm.MetodoPagoCode;
               this.UIProperties.SetEnabled("MetodoPagoCode", this.ObjectTableName, false);
@@ -203,7 +194,6 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             if (!AppTool.IsNullOrEmpty(this.customerId)) {
                 this.BillToId = this.customerId;
             }
-
             this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
             this.newARPaymentPM.PaymentCurrencyExchangeRate = 1;
         }
@@ -383,13 +373,33 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         this.newARPaymentPM.UpdatedByUserId = SessionLocator.LoggedUserId;
         this.newARPaymentPM.CreateDate = DateTool.GetCurrentDateAsUtc();
         this.newARPaymentPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
-        this.newARPaymentPM.LocalCurrencyId = SessionLocator.TenantPM.CurrencyId;
-        this.newARPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
-
         if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
             this.newARPaymentPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
-        }       
+        }
+        this.newARPaymentPM.LocalCurrencyId = SessionLocator.TenantPM.CurrencyId;
+        this.newARPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
+       
     }
+
+    // Properties 
+    public RateIsEnabled = false;
+    //get RateIsEnabled()
+    //{
+    //    var result = true;
+    //    this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, true);
+
+    //    if (!AppTool.IsNullOrEmpty(this.invoicePm.Id)) {
+    //        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+    //        result = false;
+    //    }
+
+    //    else if (this.newARPaymentPM.PaymentCurrencyId == this.TenantPM.CurrencyId || this.newARPaymentPM.PaymentCurrencyId == null || this.TenantPM.CurrencyId == null) {
+    //        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+    //        result = false;
+    //    }
+
+    //    return true;
+    //}
 
     get RegisterDate() { return this.newARPaymentPM.RegisterDate; }
     set RegisterDate(newValue: Date) {
@@ -447,11 +457,9 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     // BillTo Properties
     get BillToId() { return this.newARPaymentPM.BillToId; }
     set BillToId(newValue: string) {
-        if (this.IsCreatedFromInvoiceSide == false) {
-            if (this.newARPaymentPM.BillToId != newValue) {
-                this.newARPaymentPM.BillToId = newValue;
-                this.GetCardProperties();
-            }
+        if (this.newARPaymentPM.BillToId != newValue) {
+            this.newARPaymentPM.BillToId = newValue;
+            this.GetCardProperties();
         }
     }
 
@@ -477,7 +485,6 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (AppTool.IsNullOrEmpty(this.newARPaymentPM.BillToId)) {
             this.FillDataFromCardList(new CardList());
         }
-
         else {
             var myService: CardListService = new CardListService();
             myService.getSingle(this.newARPaymentPM.BillToId).subscribe((resp: ServiceResponse) => {
@@ -503,7 +510,6 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
             this.newARPaymentPM.BillToPartnerTypeId = null;
         }
-
         else {
             if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                 this.PaymentCurrencyId = list.InvoiceCurrencyId;
@@ -596,10 +602,8 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
     get BillToAddressId() { return this.newARPaymentPM.BillToAddressId; }
     set BillToAddressId(newValue: string) {
-        if (this.IsCreatedFromInvoiceSide == false) {
-            if (this.newARPaymentPM.BillToAddressId != newValue) {
-                this.newARPaymentPM.BillToAddressId = newValue;
-            }
+        if (this.newARPaymentPM.BillToAddressId != newValue) {
+            this.newARPaymentPM.BillToAddressId = newValue;
         }
     }
 
@@ -614,22 +618,18 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
     get PaymentCurrencyId() { return this.newARPaymentPM.PaymentCurrencyId; }
     set PaymentCurrencyId(newValue: string) {
-        if (this.IsCreatedFromInvoiceSide == false) {
-            if (this.newARPaymentPM.PaymentCurrencyId != newValue) {
-                this.newARPaymentPM.PaymentCurrencyId = newValue;
-                this.SetUIProperties();
-                this.SetCurrencyCode();
-                this.SetCurrencyRateData();
-            }
+        if (this.newARPaymentPM.PaymentCurrencyId != newValue) {
+            this.newARPaymentPM.PaymentCurrencyId = newValue;
+            this.SetUIProperties();
+            this.SetCurrencyCode();
+            this.SetCurrencyRateData();
         }
     }
 
     get PaymentCurrencyExchangeRate() { return this.newARPaymentPM.PaymentCurrencyExchangeRate; }
     set PaymentCurrencyExchangeRate(newValue: number) {
-        if (this.IsCreatedFromInvoiceSide == false) {
-            if (this.newARPaymentPM.PaymentCurrencyExchangeRate != newValue) {
-                this.newARPaymentPM.PaymentCurrencyExchangeRate = AppTool.Round(newValue, 5);
-            }
+        if (this.newARPaymentPM.PaymentCurrencyExchangeRate != newValue) {
+            this.newARPaymentPM.PaymentCurrencyExchangeRate = AppTool.Round(newValue,5);
         }
     }
 
@@ -852,18 +852,6 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
         this.ValidationErrorsList = errors;
 
-        if (errors.length == 0) {
-            if (this.IsCreatedFromInvoiceSide) {
-                if (this.BillToId != this.invoicePm.BillToId) {
-                    errors.push("Bill to doesn't match the invoice bill to");
-                }
-
-                if (this.PaymentCurrencyId != this.invoicePm.InvoiceCurrencyId) {
-                    errors.push("Payment currency doesn't match the invoice currency");
-                }
-            }
-        }
-
         if (this.ValidationErrorsList.length == 0) {
             // Check Full Accounting 
             if (SessionLocator.TenantPM.AccountingActivated == true /*&& (this.newARPaymentPM.ARPaymentMethodCode == "CH" || this.newARPaymentPM.ARPaymentMethodCode == "CA")*/) {
@@ -893,7 +881,6 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
     CompleteSubmission(errors) {
         this.ValidationErrorsList = errors;
-
         if (this.ValidationErrorsList.length == 0) {
 
             if (this.invoicePm != null && !AppTool.IsNullOrEmpty(this.invoicePm.Id)) {
@@ -918,9 +905,10 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         record.PaymentAmount = record.ForeignAmount;
         record.ExchangeRate = invoicePM.InvoiceCurrencyExchangeRate;
         record.ARInvoiceMetodoPagoCode = invoicePM.MetodoPagoCode;
-
-        entityPM.PaymentInvoices = [];
-        entityPM.PaymentInvoices.push(record);
+        var index = entityPM.PaymentInvoices.indexOf(record, 0);
+        if (index == -1) {
+            entityPM.PaymentInvoices.push(record);
+        }
 
         if (entityPM.OpenAmount > connectAmount) {
             entityPM.OpenAmount = entityPM.OpenAmount - connectAmount;
@@ -951,7 +939,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: this.newARPaymentPM.Id, EntityPM: this.newARPaymentPM, ObjectTableName: 'ARPayment' });
+                    cmpRef.instance.Run({ EntityId: this.newARPaymentPM.Id, EntityPM: this.newARPaymentPM, /*BackButtonLabel: backButtonLabel,*/ ObjectTableName: 'ARPayment' });
 
                     let isEditComponentSaved = false;
 

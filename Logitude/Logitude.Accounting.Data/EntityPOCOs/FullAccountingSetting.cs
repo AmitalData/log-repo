@@ -119,8 +119,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string DefaultExternalDiffGLAccountId { get; set; }
 	      
         public virtual GLAccount DefaultExternalDiffGLAccount { get; set; }
-        [Column("SoftwareVersion")]
-	    public string SoftwareVersion { get; set; }
     }
 }
 	 

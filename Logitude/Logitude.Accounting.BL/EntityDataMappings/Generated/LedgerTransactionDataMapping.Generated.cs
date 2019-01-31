@@ -101,8 +101,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsExternalReconcile, 
 	         InReconcileProgress, 
 	         ForeignAmount, 
-	         ReconcileRemarks, 
-	         OriginalJournalId,
+	         ReconcileRemarks,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

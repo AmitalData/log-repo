@@ -5,7 +5,6 @@ using Simplog.Server.Infrastructure.Helpers;
 
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.Helpers;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -41,17 +40,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select a).FirstOrDefault();
 
         }
-
-        public int GetCommunicationLogCountForTenantInLasthour(int tenant)
-        {
-
-            DateTime datetime = TenantServerConfigration.GetCurrentDateTime(tenant).AddHours(-1);
-            return (from a in context.CommunicationLogs
-                    where a.Tenant == tenant && a.CreateDate > datetime 
-                    select a).Count();
-        }
-
-
 
         public CommunicationLog GetSingleCommunicationLog(string id, int tenant, DateTime? createDate)
         {
@@ -109,17 +97,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from a in context.CommunicationLogs.Include("Document")
                     where a.EntityId == entityId && a.QueueName == queueName && a.Tenant == tenant && a.Subject == subject
-                    select a).OrderByDescending(d => d.CreateDate).FirstOrDefault();
+                    select a).OrderByDescending(d=>d.CreateDate).FirstOrDefault();
 
         }
 
-        public List<CommunicationLog> GetShareManifestCommunicationLogByEntityIdAndQueueNameAndSubject(string entityId, string queueName, string subject , string subject2)
-        {
-            return (from a in context.CommunicationLogs.Include("Document")
-                    where a.EntityId == entityId && a.QueueName == queueName && (a.Subject == subject  ||  a.Subject == subject2)
-                    select a).OrderByDescending(d => d.CreateDate).ToList();
 
-        }
 
         public void Add(CommunicationLog entity)
         {

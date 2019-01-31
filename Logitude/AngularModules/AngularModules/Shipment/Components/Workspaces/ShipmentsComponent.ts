@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+﻿import {Component, EventEmitter, Output} from '@angular/core';
 import {AppTool, DateTool, FontTool} from '../../../Infrastructure/Tools';
 import {ShipmentDomainService, ShipmentsSummary, FlightSummary} from '../../Services/ShipmentDomainService';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
@@ -79,7 +79,6 @@ export class ShipmentsComponent {
     public IsQueryVisible_INTTRAGroup: boolean = false;
     public IsQueryVisible_ExpectedDeparturesNotTransmitted: boolean = false;
     public IsQueryVisible_ShippingInstructionsLast7Days: boolean = false;
-    public IsQueryVisible_ContainerStatusLast7Days: boolean = false;
     private SetQueriesVisibility() {
 
         this.IsNewButtonVisible = false;
@@ -99,7 +98,7 @@ export class ShipmentsComponent {
         this.IsQueryVisible_EAWBGroup = FeatureLocator.HasFeaturePermession("Shipment", "EXPECTEDDEPATURE") || FeatureLocator.HasFeaturePermession("Shipment", "AIRLINESUPDATES") ? true : false;
         this.IsQueryVisible_ExpectedDepartures = FeatureLocator.HasFeaturePermession("Shipment", "EXPECTEDDEPATURE") ? true : false;
         this.IsQueryVisible_AirlinesUpdates = FeatureLocator.HasFeaturePermession("Shipment", "AIRLINESUPDATES") ? true : false;
-        this.IsMessagingStockVisible = SessionLocator.TenantManagementJS.IsAWBStockPrepaid;
+        this.IsMessagingStockVisible = SessionLocator.TenantManagementPM.IsAWBStockPrepaid;
 
         // Others
         this.IsQueryVisible_AllFollowUps = FeatureLocator.HasFeaturePermession("Shipment", "ALLFOLLOWUPS") ? true : false;
@@ -118,8 +117,7 @@ export class ShipmentsComponent {
         // INNTRA
         this.IsQueryVisible_ExpectedDeparturesNotTransmitted = FeatureLocator.HasFeaturePermession("Shipment", "ExpectedDeparturesNotTransmitted") ? true : false;
         this.IsQueryVisible_ShippingInstructionsLast7Days = FeatureLocator.HasFeaturePermession("Shipment", "ShippingInstructionsLast7Days") ? true : false;
-        this.IsQueryVisible_ContainerStatusLast7Days = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusLast7Days") ? true : false;
-        if (this.IsQueryVisible_ExpectedDeparturesNotTransmitted || this.IsQueryVisible_ShippingInstructionsLast7Days || this.IsQueryVisible_ContainerStatusLast7Days) {
+        if (this.IsQueryVisible_ExpectedDeparturesNotTransmitted || this.IsQueryVisible_ShippingInstructionsLast7Days) {
             this.IsQueryVisible_INTTRAGroup = true;
         }
     }
@@ -163,7 +161,6 @@ export class ShipmentsComponent {
     public CreditLimitBlockedCount: string;
     public ExpectedDeparturesNotTransmittedCount: string;
     public ShippingInstructionsLast7DaysCount: string;
-    public ContainerStatusLast7DaysCount: string;
     LoadQueriesCounts() {
         if (this.IsCloudDeployment == false) {
             this.myShipmentDomainService.GetShipmentsCounts(this.SelectedDirectionFilter, this.SelectedTransportFilter).subscribe((myResponse: ServiceResponse) => {
@@ -185,7 +182,6 @@ export class ShipmentsComponent {
                             this.CreditLimitBlockedCount = myResult.CreditLimitBlockedCount > 1000 ? "1000+" : myResult.CreditLimitBlockedCount.toString();
                             this.ExpectedDeparturesNotTransmittedCount = myResult.ExpectedDeparturesNotTransmittedCount > 1000 ? "1000+" : myResult.ExpectedDeparturesNotTransmittedCount.toString();
                             this.ShippingInstructionsLast7DaysCount = myResult.ShippingInstructionsLast7DaysCount > 1000 ? "1000+" : myResult.ShippingInstructionsLast7DaysCount.toString();
-                            this.ContainerStatusLast7DaysCount = myResult.ContainerStatusLast7DaysCount > 1000 ? "1000+" : myResult.ContainerStatusLast7DaysCount.toString();
                         }
                     }
                 }
@@ -704,7 +700,7 @@ export class ShipmentsComponent {
         logWindow.Width = 800;
         logWindow.Height = 550;
         logWindow.Title = "Messaging Stock";
-        logWindow.Show('./ShipmentModules/ShipmentStock/Components/MessagingStock/StockWindowComponent');
+        logWindow.Show('./ShipmentModules/ShipmentStock/Components/AWBMessagingStock/StockWindowComponent');
     }
     SendShipmentFSRClicked() {
         this._entityResourceService.getEntityResourceByTableName("Master").subscribe(response=> {

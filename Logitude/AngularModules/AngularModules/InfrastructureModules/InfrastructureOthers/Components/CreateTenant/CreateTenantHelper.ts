@@ -85,7 +85,6 @@ export class CreateTenantHelper {
                                     windowArgs.Phone = contactList.Mobile;
                                     windowArgs.CountryName = this.CountryName;
                                     windowArgs.CountryCode = this.CountryCode;
-                                    windowArgs.ObjecttableName = this.ObjecttableName;
                                     logWindow.WindowArgs = windowArgs;
                                     logWindow.Width = 400;
                                     logWindow.Height = 120;

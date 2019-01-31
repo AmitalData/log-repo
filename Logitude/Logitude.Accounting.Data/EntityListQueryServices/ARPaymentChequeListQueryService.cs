@@ -49,8 +49,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                          BankAccount = a.BankAccount,
 
-                                                         PaymentNumber = a.PaymentId != null ? a.Payment.PaymentNo : null,
-
                                                      });
             return query;
         }
@@ -136,8 +134,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                          BankBranch = a.BankBranch,
 
                                                          BankAccount = a.BankAccount,
-
-                                                         PaymentNumber = a.PaymentId != null ? a.Payment.PaymentNo : null,
 
                                                      });
             return query;

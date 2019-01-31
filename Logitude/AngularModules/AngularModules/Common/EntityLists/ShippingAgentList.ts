@@ -38,8 +38,5 @@ export class ShippingAgentList {
 		MetodoPagoCode: string;
 		UsoCFDICode: string;
 		SATForeignRFC: string;
-		PrimaryContactName: string;
-		PrimaryContactEmail: string;
-		PrimaryContactPhone: string;
 	
 }

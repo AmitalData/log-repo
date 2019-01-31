@@ -687,7 +687,40 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string statusEnglishName ;
+
+	   private List<TaxReportLinePM> taxReportLines;
+	 
+		     
+	   [Include]
+	   [Association("TaxReportTaxReportLine", "Id","TaxReportId")]
+	   [DataMember]
+	   public virtual List<TaxReportLinePM> TaxReportLines  
+	   {
+	        get
+             {
+                 if (taxReportLines == null)
+                 {
+                     taxReportLines = new List<TaxReportLinePM>();
+                 }
+                 return taxReportLines;
+              }
+             set { taxReportLines = value; }
+	    }
+		   
+	   private List<TaxReportLinePM>  deletedTaxReportLines;
+	   public virtual List<TaxReportLinePM> DeletedTaxReportLines  
+	   {
+	        get
+             {
+                 if ( deletedTaxReportLines == null)
+                 {
+                      deletedTaxReportLines = new List<TaxReportLinePM>();
+                 }
+                 return  deletedTaxReportLines;
+              }
+             set {  deletedTaxReportLines = value; }
+	    }
+	  	  private string statusEnglishName ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
@@ -752,29 +785,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NeedsRebulid",OldValue=needsRebulid,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   needsRebulid=value;
-		   }
-			
-		 }
-	   }
-	  private bool isNew ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsNew  
-	   {
-	    
-	     get
-		{
-		   return isNew;
-		 }
-		 set
-		 {
-		   if(isNew != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsNew",OldValue=isNew,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isNew=value;
 		   }
 			
 		 }

@@ -1,4 +1,4 @@
-
+﻿
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {DynamicLoader} from './Utilities/DynamicLoader';
 import {ServiceHelper} from './Utilities/ServiceHelper';
@@ -73,8 +73,7 @@ export class RootComponent implements OnInit {
 
             else {
                 this.LoadLoginPage();
-                var IsPREQ = SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq";
-                if (url && IsPREQ == false && url.indexOf('localhost') == -1) {
+                if (url && url.indexOf('localhost') == -1) {
                     window.onbeforeunload = function (e) {
                         var message = "";
                         if (SessionLocator.ExternalParams && SessionLocator.ExternalParams.OneTimePasswordId) {

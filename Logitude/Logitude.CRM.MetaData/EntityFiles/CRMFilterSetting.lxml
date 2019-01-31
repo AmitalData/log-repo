@@ -12,5 +12,4 @@
     <Record UserId="1-250" ControlNameSpace="&quot;Simplog.Infrastructure.Views.MenuView&quot;" FilterName="&quot;MainMenu&quot;" FilterValue="&quot;General.MH.Maintenance&quot;" />
     <Record UserId="1-1" ControlNameSpace="&quot;Logitude.CRM.Views.CRMPages.DashboardTabsControls.ByCreateDateControl&quot;" FilterName="&quot;CreateDate&quot;" FilterValue="&quot;-365&quot;" />
   </Records>
-  <AdditionalFeatures />
 </entity>

@@ -70,8 +70,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPM.OpenAmountCurrencyCode = "";
                 entityPM.OpenAmountCurrencySign = "";
             }
-
-
         }
 
         private static void RetrieveJournalFields(LedgerTransactionPM entityPM, LedgerTransaction entityPOCO)
@@ -100,8 +98,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             entityPM.SourceId = parent.AccountingEntityId; // hidden id to use in link
             entityPM.SourceNumber = parent.AccountingEntityReference; // display number
             entityPM.SourceTypeCode = parent.AccountingEntityCode; // source type code from AccountingEntities
-
-            entityPM.OriginalJournalId = parent.OriginalJournalId;
         }
 
 

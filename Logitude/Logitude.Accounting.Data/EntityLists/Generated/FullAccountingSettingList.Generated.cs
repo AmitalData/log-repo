@@ -88,8 +88,6 @@ namespace Logitude.Accounting.Data.EntityLists
        public string DefaultDifferencesGLAccountId  { get; set; }
        [DataMember]
        public string DefaultExternalDiffGLAccountId  { get; set; }
-       [DataMember]
-       public string SoftwareVersion  { get; set; }
    }
 
 }

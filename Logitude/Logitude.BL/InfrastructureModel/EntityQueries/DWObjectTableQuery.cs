@@ -40,7 +40,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TypeCode =a.TypeCode,
                         Code = a.Code,
                         IsClosed=  a.IsClosed,
-                        DefaultFilterBy = a.DefaultFilterBy
                     }).FirstOrDefault();
         }
 
@@ -57,7 +56,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TypeCode = a.TypeCode,
                         Code = a.Code,
                         IsClosed = a.IsClosed,
-                        DefaultFilterBy = a.DefaultFilterBy
                     }
                   );
         }
@@ -74,7 +72,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TypeCode = a.TypeCode,
                         Code = a.Code,
                         IsClosed = a.IsClosed,
-                        DefaultFilterBy = a.DefaultFilterBy
                     }).FirstOrDefault();
         }
 
@@ -90,7 +87,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TypeCode = a.TypeCode,
                         Code = a.Code,
                         IsClosed = a.IsClosed,
-                        DefaultFilterBy = a.DefaultFilterBy
                     });
         }
 
@@ -105,7 +101,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   TypeCode = a.TypeCode,
                                                   Code = a.Code,
                                                   IsClosed = a.IsClosed,
-                                                  DefaultFilterBy = a.DefaultFilterBy
                                               };
 
             return result;

@@ -61,7 +61,7 @@
     .SimpleGridHeaderRow{
         pointer-events: none;
     }
-
+    
     .SimpleGridViewRow:hover{
         background: #f8f8f8;
     }
@@ -77,7 +77,7 @@
     .trashIcon:hover{
         opacity: 1;
     }
-
+    
     .NoRows{
         text-align: center;
         color: #a0a0a0;
@@ -110,7 +110,7 @@
         -webkit-animation: animationFrames ease 0.5s;
         -webkit-animation-iteration-count: 1;
         -webkit-transform-origin: 50% 50%;
-        -webkit-animation-fill-mode:forwards; /*Chrome 16+, Safari 4+*/
+        -webkit-animation-fill-mode:forwards; /*Chrome 16+, Safari 4+*/ 
         -moz-animation: animationFrames ease 0.5s;
         -moz-animation-iteration-count: 1;
         -moz-transform-origin: 50% 50%;
@@ -310,7 +310,7 @@
         background:  #e45cea;
     }
 
-
+    
     .SaveAlert{
         position: absolute;
         top: 20px;
@@ -319,7 +319,7 @@
         z-index: 10;
 
         width: 350px;
-
+        
         color: #717171;
         text-align: center;
         background: #fff5ce;
@@ -344,7 +344,7 @@
         color: #a78757;
     }
 
-
+    
     .exc-remark-button {
         cursor: pointer;
         width: 16px;
@@ -373,7 +373,7 @@
         cursor: default;
         padding: 0px 10px;
         padding-bottom: 6px;
-
+        
 
         /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fefff7+0,f2d4a4+100 */
         background: #fefff7; /* Old browsers */
@@ -440,22 +440,22 @@
         opacity: 0.6;
     }
 
-
+    
     .scroll1::-webkit-scrollbar {
       width: 4px;
     }
-
+ 
     .scroll1::-webkit-scrollbar-track {
       background: #ddd;
         border-radius: 15px;
     }
-
+ 
     .scroll1::-webkit-scrollbar-thumb {
-      background: #818181;
+      background: #818181; 
         border-radius: 15px;
     }
     .scroll1::-webkit-scrollbar:hover {
-      background: #818181;
+      background: #818181; 
         border-radius: 15px;
       width: 8px;
 
@@ -486,7 +486,7 @@
 <!--<div class="alert-animation Alert">
     <!--<div class="alert-close" (click)="CloseAlert()">×</div>-->
     <!--<div class="alert-title">{{'Accounting.General.O.Reconciled' | TextCodeTranslationPipe}}</div>-->
-
+    
     <!--<div class="LeftCenter ConfirmIcon">&#10003;</div>-->
 
     <!--<div style="padding: 43px 15px 10px 50px;font-size: 13px;">
@@ -496,15 +496,11 @@
 
 </div>-->
 <!-- Alert -->
-<div *ngIf="showAlert && recoCallback" class="alert-animation SaveAlert"
-     [style.text-align]="isRTL ? 'right' : 'left'"
+<div *ngIf="showAlert" class="alert-animation SaveAlert" 
+     [style.text-align]="isRTL ? 'right' : 'left'" 
      style="min-width: 325px;width: fit-content;background: #c0e8c2;border: 1px solid #54a758;color: #6a7769;" >
     <div class="alert-close" (click)="CloseAlert()" [style.right]="isRTL ? 'initial' : '5px'" [style.left]="isRTL ? '5px' : 'initial'" style="color: #439c47;text-decoration: underline;">{{'Accounting.General.B.Close' | TextCodeTranslationPipe}}</div>
-
-    <span *ngIf="!recoCallback.isSplitted">{{'Accounting.General.O.Reconciliation' | TextCodeTranslationPipe}} <a *ngIf="RecoPM" href="#" (click)="OpenReco()"> {{RecoPM.Number }}</a> {{'Accounting.General.O.wascreatedsuccessfully' | TextCodeTranslationPipe}}.</span>
-    <span *ngIf="recoCallback.isSplitted" >{{recoCallback.splittedRecoCount}} {{'Accounting.O.MultiRecoCreated' | TextCodeTranslationPipe}}.</span>
-
-
+    {{'Accounting.General.O.Reconciliation' | TextCodeTranslationPipe}} <a *ngIf="RecoPM" href="#" (click)="OpenReco()"> {{RecoPM.Number }}</a> {{'Accounting.General.O.wascreatedsuccessfully' | TextCodeTranslationPipe}}.
 </div>
 
 
@@ -641,7 +637,7 @@
         </td>
     </tr>
 
-
+    
 
     <!-- .::(1)::. First Section Lines -->
     <tr style="height: 240px;">
@@ -649,18 +645,18 @@
         <td style="padding-bottom: 3px; vertical-align: top;">
 
             <div class="GeneratedGridContainer" style="height: calc(100% - 20px)">
-                <logitude-grid GridWidth="100%" GridHeight="100%"
-                               [ObjectTable]="ObjectTableName"
-                               [dataSource]="DataSource"
+                <logitude-grid GridWidth="100%" GridHeight="100%" 
+                               [ObjectTable]="ObjectTableName" 
+                               [dataSource]="DataSource" 
                                [FireCheckBoxChecked]="FireCheckBoxChecked"
-                               [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                               [columns]="columns"
-                               [autoLoad]="true"
+                               [MenuHeaderchangeevent]="MenuHeaderchangeevent" 
+                               [columns]="columns" 
+                               [autoLoad]="true" 
                                [QueryChangeEvent]="onQueryChangeEvent"
-                               [IsCustomTemplate]="true"
-                               [PassAdditionalDataToTemplates]="true"
-                               [ColumnsReady]="ColumnsReady"
-                               [MarkIsChecked]="MarkIsChecked"
+                               [IsCustomTemplate]="true" 
+                               [PassAdditionalDataToTemplates]="true" 
+                               [ColumnsReady]="ColumnsReady" 
+                               [MarkIsChecked]="MarkIsChecked" 
                                [CheckBoxFilterChanged]="CheckBoxFilterChanged"
                                 (DataLoaded)="onDataLoaded()">
                 </logitude-grid>
@@ -684,7 +680,7 @@
                     </log-column>
 
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'20'">
-                        <log-cell-template template="let item" [IgnoreMods]="true"  title="{{GetIndicatorText(item)}}">
+                        <log-cell-template template="let item" [IgnoreMods]="true" title="{{item.OpenAmount != item.OriginalAmount ? 'Partial transaction' : 'Open transaction'}}">
                             <div class="circleDraw" [class.orangeCircle]="item.OpenAmount != item.OriginalAmount"></div>
                         </log-cell-template>
                     </log-column>
@@ -807,7 +803,7 @@
                     <!--  -->
                     <log-column [header]="''" [width]="'90'" [binding]="'button'">
                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                            <img *ngIf="!item.isLineValid" [title]="'Reconciliations.O.AmountMustBSmaller2OpenAmount' | TextCodeTranslationPipe"
+                            <img *ngIf="!item.isLineValid" [title]="'Reconciliations.O.AmountMustBSmaller2OpenAmount' | TextCodeTranslationPipe" 
                                  style="padding-top: 2px;" class="exc-remark-button exc-remark-button-red" tabindex="-1" src="./Images/error-16.png" />
                         </log-cell-template>
                     </log-column>
@@ -861,7 +857,7 @@
                         <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
-
+                    
 
                     <td style="width: 110px; padding-left: 5px;">
                         <button class="Button" (click)="SaveAsDraftButton()">{{'Accounting.General.O.Saveasdraft' | TextCodeTranslationPipe}}</button>

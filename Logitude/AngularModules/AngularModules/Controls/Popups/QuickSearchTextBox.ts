@@ -1,4 +1,4 @@
-
+﻿/// <reference path="../../infrastructure/locators/objectslocator.ts" />
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {AppTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
@@ -9,7 +9,6 @@ import {PartnersDomainService} from '../../Common/Services/PartnersDomainService
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {ShipmentDomainService} from '../../Shipment/Services/ShipmentDomainService'; 
 import {ObjectsLocator}  from  '../../Infrastructure/Locators/ObjectsLocator';
-import { IdGeneratorPipe } from '../pipes/idgeneratorpipe';
 
 @Component({
     moduleId: module.id,
@@ -42,7 +41,6 @@ export class QuickSearchTextBox implements OnInit {
     private myShipmentDomainService: ShipmentDomainService;
     public ShowViewAll: boolean = false;
     public IsIconsVisible: boolean = true;
-    public NewId: string;
     @Output() DataLoaded: EventEmitter<any[]> = new EventEmitter<any[]>();
     @Output() DataLoadedCount: EventEmitter<number> = new EventEmitter<number>();
     @Output() ViewAllClicked = new EventEmitter();
@@ -52,8 +50,6 @@ export class QuickSearchTextBox implements OnInit {
     }
 
     ngOnInit() {
-        var pipe: IdGeneratorPipe = new IdGeneratorPipe();
-        this.NewId = pipe.transform(this.ObjectTableName + '_Search');
         this.SetWatermark();
         this.SetAPIFilters();        
     }

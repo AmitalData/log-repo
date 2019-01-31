@@ -47,18 +47,18 @@
                 <table style="vertical-align:top"> 
                     <tr style="vertical-align:top;height:35px">
                         <td style="width:5px"><div></div></td>
-                        <td style="width:200px;">  <LogLabel [ObjectFieldName]="'PackageTypeId'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel></td>
-                        <td style="width:270px"><LogLov style="width:230px"  [ObjectFieldName]="'PackageTypeId'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem" [DependencyFilter2Value]="IsDependencyFilter2Value" [LookUpTableName]="'PackageType'"></LogLov></td>
+                        <td style="width:200px;">  <LogLabel [ObjectFieldName]="'PackageTypeId'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM"></LogLabel></td>
+                        <td style="width:270px"><LogLov style="width:230px"  [ObjectFieldName]="'PackageTypeId'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM" [DependencyFilter2Value]="IsDependencyFilter2Value" [LookUpTableName]="'PackageType'"></LogLov></td>
                         <td><div></div></td>
                     </tr>
 
                       
 
                      
-                    <tr *ngIf="warehouseEntryPackageItem && warehouseEntryPackageItem.IsContainer" style="vertical-align:top;height:35px">
+                    <tr *ngIf="warehouseEntryPackagePM && warehouseEntryPackagePM.IsContainer" style="vertical-align:top;height:35px">
                         <td style="width:5px"><div></div></td>
-                        <td style="width:150px;">  <LogLabel [ObjectFieldName]="'ContainerNumber'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel></td>
-                        <td style="width:270px"><LogTextBox style="width:230px"  (LostFocus)="ContainerNumberLostFocus($event)" [ObjectFieldName]="'ContainerNumber'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox></td>
+                        <td style="width:150px;">  <LogLabel [ObjectFieldName]="'ContainerNumber'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM"></LogLabel></td>
+                        <td style="width:270px"><LogTextBox style="width:230px"  (LostFocus)="ContainerNumberLostFocus($event)" [ObjectFieldName]="'ContainerNumber'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM"></LogTextBox></td>
                         <td><div></div></td>
                     </tr>
 
@@ -67,22 +67,22 @@
 
                     <tr style="vertical-align:top;height:35px">
                         <td style="width:5px"><div></div></td>
-                        <td style="width:150px;">  <LogLabel  [ObjectFieldName]="'Quantity'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel></td>
-                        <td style="width:270px"><LogTextBox  style="width:230px" [ObjectFieldName]="'Quantity'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox></td>
+                        <td style="width:150px;">  <LogLabel  [ObjectFieldName]="'Quantity'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM"></LogLabel></td>
+                        <td style="width:270px"><LogTextBox (ValueChanged)="OnQuantityChange()" style="width:230px" [ObjectFieldName]="'Quantity'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM"></LogTextBox></td>
                         <td><div></div></td>
                     </tr>
 
 
 
-                    <tr *ngIf="warehouseEntryPackageItem && !warehouseEntryPackageItem.IsContainer" style="vertical-align:top;height:35px">
+                    <tr *ngIf="warehouseEntryPackagePM && !warehouseEntryPackagePM.IsContainer" style="vertical-align:top;height:35px">
                         <td style="width:5px"><div></div></td>
-                        <td style="width:150px;">  <LogLabel [Text]="warehouseEntryPackageItem.DimensionsLabel" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel></td>
+                        <td style="width:150px;">  <LogLabel [Text]="DimensionsLabel" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM"></LogLabel></td>
                         <td style="width:270px">
 
                             <table>
                                 <tr>
                                     <td>
-                                        <LogTextBox   [ObjectFieldName]="'Length'"  [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem" [HideColumns]="true" [DisableZeroPadding]="true"></LogTextBox>
+                                        <LogTextBox (ValueChanged)="OnDimensionsChange($event,'Length')"  [Text]="warehouseEntryPackagePM.Length" [ObjectFieldName]="'Length'"  [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM" [HideColumns]="true" [DisableZeroPadding]="true"></LogTextBox>
                                     </td>
 
                                     <td style="width: 1px;">
@@ -90,7 +90,7 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox   [ObjectFieldName]="'Width'"  [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem" [HideColumns]="true" [DisableZeroPadding]="true"></LogTextBox>
+                                        <LogTextBox (ValueChanged)="OnDimensionsChange($event,'Width')" [Text]="warehouseEntryPackagePM.Width" [ObjectFieldName]="'Width'"  [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM" [HideColumns]="true" [DisableZeroPadding]="true"></LogTextBox>
                                     </td> 
 
                                     <td style="width: 1px;">
@@ -98,7 +98,7 @@
                                     </td>   
                                      
                                     <td>
-                                        <LogTextBox   [ObjectFieldName]="'Height'"  [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem" [HideColumns]="true" [DisableZeroPadding]="true"></LogTextBox>
+                                        <LogTextBox (ValueChanged)="OnDimensionsChange($event,'Height')" [Text]="warehouseEntryPackagePM.Height" [ObjectFieldName]="'Height'"  [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM" [HideColumns]="true" [DisableZeroPadding]="true"></LogTextBox>
                                     </td>
 
                                     <td style="width: 36px;">
@@ -114,40 +114,29 @@
                   
                     <tr style="vertical-align:top;height:35px">
                         <td style="width:5px"><div></div></td>
-                        <td style="width:150px;">  <LogLabel  [Text]="warehouseEntryPackageItem.VolumeLabel" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel></td>
+                        <td style="width:150px;">  <LogLabel  [Text]="VolumeLabel" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM"></LogLabel></td>
                         <td style="width:270px">
                         
-                            <LogTextBox style="width:230px" [ObjectFieldName]="'Volume'" [Text]="warehouseEntryPackageItem.Volume" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox>
-                            
+                           <LogTextBox *ngIf="!IsVolumRefresh" (ValueChanged)="OnVolumChange($event)" style="width:230px" [ObjectFieldName]="'Volume'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM" ></LogTextBox>
+                            <LogTextBox *ngIf="IsVolumRefresh" (ValueChanged)="OnVolumChange($event)" style="width:230px" [ObjectFieldName]="'Volume'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM"></LogTextBox>
                         
                         </td>
                         <td><div></div></td>
                     </tr>
 
-                    
-                    <tr style="vertical-align:top;height:35px">
-                        <td style="width:5px"><div></div></td>
-                        <td style="width:150px;">  <LogLabel [Text]="warehouseEntryPackageItem.VolumetricWeightLabel" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel></td>
-                        <td style="width:270px"><LogTextBox style="width:230px" [ObjectFieldName]="'VolumetricWeight'" [Text]="warehouseEntryPackageItem.VolumetricWeight" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox></td>
-                        
-
-                        <td><div></div></td>
-                    </tr>
-
-
                      
                     <tr style="vertical-align:top;height:35px">
                         <td style="width:5px"><div></div></td>
-                        <td style="width:150px;">  <LogLabel  [Text]="warehouseEntryPackageItem.GrossWeightLabel"  [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel></td>
-                        <td style="width:270px"><LogTextBox style="width:230px" [ObjectFieldName]="'Weight'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem" [DisableZeroPadding]="true"></LogTextBox></td>
+                        <td style="width:150px;">  <LogLabel  [Text]="GrossWeightLabel"  [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM"></LogLabel></td>
+                        <td style="width:270px"><LogTextBox style="width:230px" [ObjectFieldName]="'Weight'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM" [DisableZeroPadding]="true"></LogTextBox></td>
                         <td><div></div></td>
                     </tr>
 
 
-                    <tr *ngIf="warehouseEntryPackageItem && warehouseEntryPackageItem.IsContainer" style="vertical-align:top;height:35px">
+                    <tr *ngIf="warehouseEntryPackagePM && warehouseEntryPackagePM.IsContainer" style="vertical-align:top;height:35px">
                         <td style="width:5px"><div></div></td>
-                        <td style="width:150px;">  <LogLabel [ObjectFieldName]="'Seal'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel></td>
-                        <td style="width:270px"><LogTextBox style="width:230px" [ObjectFieldName]="'Seal'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem" ></LogTextBox></td>
+                        <td style="width:150px;">  <LogLabel [ObjectFieldName]="'Seal'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM"></LogLabel></td>
+                        <td style="width:270px"><LogTextBox style="width:230px" [ObjectFieldName]="'Seal'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM" ></LogTextBox></td>
                         <td><div></div></td>
                     </tr>
 
@@ -156,18 +145,18 @@
                      
                     <tr style="vertical-align:top;height:35px">
                         <td style="width:5px"><div></div></td>
-                        <td style="width:150px;">  <LogLabel [ObjectFieldName]="'Harmonize'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel></td>
-                        <td style="width:270px"><LogTextBox style="width:230px" [ObjectFieldName]="'Harmonize'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox></td>
+                        <td style="width:150px;">  <LogLabel [ObjectFieldName]="'Harmonize'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM"></LogLabel></td>
+                        <td style="width:270px"><LogTextBox style="width:230px" [ObjectFieldName]="'Harmonize'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM"></LogTextBox></td>
                         <td><div></div></td>
                     </tr>
-                
+            
 
                  <tr style="vertical-align:top;height:3px"><td colspan="4"></td></tr>
 
                     <tr class="FormFieldRow">
                         <td style="width:5px"><div></div></td>
                         <td style="width:150px;vertical-align:top;">
-                            <LogLabel [ObjectFieldName]="'Location'"  [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'Location'"  [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM"></LogLabel>
                         </td>
 
                         <td style="width: 270px;">
@@ -175,7 +164,7 @@
                                 <tr>
                                     <td style="width:230px;height:60px;">
                                         <div class="MediaFill">
-                                            <LogTextBox [ObjectFieldName]="'Location'"  [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem" [IsMultiline]="true"></LogTextBox>
+                                            <LogTextBox [ObjectFieldName]="'Location'"  [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM" [IsMultiline]="true"></LogTextBox>
                                         </div>
                                     </td>
                                 </tr>
@@ -211,7 +200,7 @@
 
                     <tr style="height:15px">
                       
-                        <td style="width:345px;">  <LogLabel [ObjectFieldName]="'Description'" [Text]="'Description Of Goods'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel></td>
+                        <td style="width:345px;">  <LogLabel [ObjectFieldName]="'Description'" [Text]="'Description Of Goods'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM"></LogLabel></td>
 
                   
                     </tr>
@@ -221,9 +210,7 @@
                       
                         <td style="width:345px;height:100px">
                             <div style="height: 100%; width:320px;height:100px">
-
-                                <LogTextBox style="width:315px;" [ObjectFieldName]="'Description'" [Text]="warehouseEntryPackageItem.Description" [ObjectTableName]="ObjectTableName" [DataContext]="warehouseEntryPackageItem" [IsMultiline]="true"></LogTextBox>
-
+                                <LogTextBox style="width:315px;" [IsMultiline]="true" [ObjectFieldName]="'Description'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackagePM"></LogTextBox>
                             </div>
                         </td>
 

@@ -66,7 +66,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string CertPago { get; set; }
         public string CadPago { get; set; }
         public string SelloPago { get; set; }
-        public DateTime? SATApprovalDate { get; set; }
 
         public string BankAccountLiteId { get; set; }
         [ForeignKey("BankAccountLiteId")]

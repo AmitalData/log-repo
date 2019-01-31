@@ -39,7 +39,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string StatusName { get; set; }
         public string ShipmentLevelCode { get; set; }
         public string ShipmentTypeId { get; set; }
-        public bool CancelledBySenderAgent { get; set; }
+
 
 
 

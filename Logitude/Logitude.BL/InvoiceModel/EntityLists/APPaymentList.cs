@@ -59,7 +59,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string AccountingPaymentMethodId { get; set; }
         public string BankAccountId { get; set; }
         public string BranchName { get; set; }
-        public DateTime? FirstApproveDate { get; set; }
 
     }
 }

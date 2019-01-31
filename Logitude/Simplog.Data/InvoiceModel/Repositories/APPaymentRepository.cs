@@ -50,13 +50,6 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             return context.APPayments.Where(d => d.Tenant == tenant && d.StatusCode == "DR");
         }
-
-        public IQueryable<APPayment> GetErrorInTransferAPPayments(int tenant)
-        {
-            return context.APPayments.Where(d => d.Tenant == tenant && d.TransferStatusCode == "ET");
-        }
-
-
         public IQueryable<APPayment> GetOpenedAPPayments(int tenant)
         {
             return ( from d in context.APPayments.Include("PaymentMethod")

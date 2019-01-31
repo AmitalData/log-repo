@@ -257,7 +257,7 @@ namespace WebFreight.Web.WebServices
         private List<CustomersDataClass> GetCustomersData(int tenant, int lastMonths, int lastDays, int measurment, string directionId, string transmodeId)
         {
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-            List<DashBoardClass> list = shipmentQuery.GetTop10DashBoard(null,lastMonths, lastDays, measurment, tenant, 10, false,directionId, transmodeId).ToList();
+            List<DashBoardClass> list = shipmentQuery.GetTop10DashBoard(null,lastMonths, lastDays, measurment, tenant, 10, false).ToList();
 
             if (!string.IsNullOrEmpty(directionId))
             {

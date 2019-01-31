@@ -34,8 +34,6 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.NextDueDate).HasColumnName("NextDueDate");
 
             this.Property(t => t.TotalOpenChequesInLocalCur).HasColumnName("TotalOpenChequesInLocalCur").HasPrecision(16, 2);
-
-            this.Property(t => t.TotFutureOpenChequesInLocalCur).HasColumnName("TotFutureOpenChequesInLocalCur").HasPrecision(16, 2);
         }
     }
 }

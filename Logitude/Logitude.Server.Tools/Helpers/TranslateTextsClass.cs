@@ -190,7 +190,11 @@ namespace Logitude.Server.Tools.Helpers
         public static string Translate(string textCodeCode, int tenant, bool getLocalDefaultText)
         {
 
-            string key = "TranslateTextsClass/Translate1," + textCodeCode + "," + tenant.ToString() + "," + getLocalDefaultText;
+            // GET logged contact, RTL
+            Contact contact = GetLoggedContact(tenant);
+            bool showLocals = contact != null ? !contact.DontShowLocalLabels : true;
+
+            string key = "TranslateTextsClass/Translate1," + textCodeCode + "," + tenant.ToString() + "," + showLocals;
             var val = CacheManager.GetOrInsertNewObject<string>(key, () =>
             {
                 string result = string.Empty;
@@ -213,7 +217,7 @@ namespace Logitude.Server.Tools.Helpers
                         TextCode textCode = textCodeRepository.GetTextCodeByTenantAndCode(textCodeCode, tenant);
                         if (textCode != null)
                         {
-                            if (getLocalDefaultText)
+                            if (showLocals)
                             {
                                 result = textCode.LocalDefaultText;
                             }
@@ -230,6 +234,8 @@ namespace Logitude.Server.Tools.Helpers
 
             //return "! " + Result;
         }
+        //Yuval Chalup 14.04.2015 --->
+
 
         // moran 7.4.16 - AMI-55700 -->
         public static string GetRequiredFieldForTableMessageTranslation(string requiredTextCodeCode, string fieldName, string tableName, string entityReference, int tenant)

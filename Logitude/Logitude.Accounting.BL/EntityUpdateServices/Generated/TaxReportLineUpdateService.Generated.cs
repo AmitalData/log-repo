@@ -22,7 +22,7 @@ using Logitude.Accounting.Data;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 { 
-   public partial class TaxReportLineUpdateService:EntityUpdateService<TaxReportLine,TaxReportLinePM,EntityPM>
+   public partial class TaxReportLineUpdateService:EntityUpdateService<TaxReportLine,TaxReportLinePM,TaxReportPM>
    {
    
         TaxReportLineRepository entityRepository;

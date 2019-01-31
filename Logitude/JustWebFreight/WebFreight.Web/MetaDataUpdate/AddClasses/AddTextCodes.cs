@@ -24,7 +24,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 textCode.DefaultTextPlural = textCodeDetails.DefaultTextPlural;
                 textCode.TextCodeTypeCode = textCodeDetails.TextCodeTypeCode;
                 textCode.InActive = textCodeDetails.InActive;
-                textCode.IsSpellChecked = textCodeDetails.IsSpellChecked;
                 textCodeRepository.Update(textCode);
                 return textCode;
             }
@@ -40,8 +39,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     ObjectTableId = textCodeDetails.ObjectTableId,
                     Tenant = textCodeDetails.Tenant,
                     LocalDefaultText=textCodeDetails.LocalDefaultText,
-                    IsSpellChecked = textCodeDetails.IsSpellChecked,
-            };
+                    
+                };
                 textCodeRepository.Add(newTextCode);
                 return newTextCode;
             }

@@ -25,7 +25,7 @@ export class ClaimRelatedEntityClaimDecisionTabComponent extends BaseComponent {
     public ClaimsRelatedEntitiesRefundslist: ObservableCollection;
 
     public CurrentEditComponentId: string;
-    public IsControlEnabled: boolean = true;
+    private IsControlEnabled: boolean = true;
 
     ValidationErrors: string[] = [];
 
@@ -107,7 +107,7 @@ export class ClaimRelatedEntityClaimDecisionTabComponent extends BaseComponent {
     public get DepositingAmount() { return this.EntityPM.DepositingAmount; }
     public set DepositingAmount(newValue: number) { this.EntityPM.DepositingAmount = newValue; }
 
-    public get RefundAmount() { return this.EntityPM.RefundAmount; }
+    public get RefundAmount() { return this.EntityPM.RefundAmount ; }
     public set RefundAmount(newValue: number) { this.EntityPM.RefundAmount = newValue; }
 
     public get DecisionNote() { return this.EntityPM.DecisionNote; }

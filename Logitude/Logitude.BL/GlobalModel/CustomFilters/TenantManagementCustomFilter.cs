@@ -39,12 +39,6 @@ namespace Logitude.BL.GlobalModel.CustomFilters
                     {
                         queryableData = queryableData.Where(c => !c.IsRecurring);
                     }
-
-                    if (item.FieldName == "PackageCodeSearchField")
-                    {
-                        string packageCode = item.FieldValue.ToString();
-                        queryableData = queryableData.Where(c => c.PackageCodeSearchField.Contains(packageCode));
-                    }
                 }
             }
 

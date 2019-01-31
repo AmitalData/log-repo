@@ -23,13 +23,6 @@ namespace Logitude.BL.InvoiceModel
 		    var all = new List<SATTransferStatusDetails>();  
             all.Add(new SATTransferStatusDetails()
             {    
-                Code = "CS", 
-                SearchFields = "CS,Cancellation Request Sent", 
-                Name = "Cancellation Request Sent", 
-			});
-			 
-            all.Add(new SATTransferStatusDetails()
-            {    
                 Code = "ND", 
                 SearchFields = "ND,No Transfer Needed", 
                 Name = "No Transfer Needed", 

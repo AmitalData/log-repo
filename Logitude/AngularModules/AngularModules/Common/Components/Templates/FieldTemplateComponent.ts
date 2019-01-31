@@ -1,5 +1,5 @@
-import {Component, ChangeDetectorRef} from '@angular/core';
-import {AppTool, DateTool, FontTool} from '../../../Infrastructure/Tools';
+﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
@@ -15,9 +15,6 @@ export class FieldTemplateComponent {
     public IsSpotLightTemplate: boolean = false;
     public isPotentialCustomer: boolean = false;
     public IsHeaderScreenTemplate: boolean = false;
-    public  CustomsShipperValidityEndDateBackgroudColor: string;
-
-
     constructor(private cd: ChangeDetectorRef) {
 
     }
@@ -59,35 +56,7 @@ export class FieldTemplateComponent {
                     this.SetAgentSharedManifestStatusColorTemplate();
                 }
             }
-
-
-            if (this.ObjectTableName == "CustomsShipper") {
-                if (this.FieldName == "ValidityEndDate") {
-
-                    this.CustomsShipperValidityEndDateBackgroudColor = this.transform(this.FieldValue);
-                }
-            }
-                
-
         }
-    }
-
-    transform(fieldValue: any): string {
-
-        var myFieldDate: Date = new Date(fieldValue);
-
-        var myResult = FontTool.Green;
-        if (myFieldDate) {
-            var todayDate = DateTool.GetCurrentDateTimeAsUtc();
-            if (myFieldDate.valueOf() <= todayDate.valueOf()) {
-                myResult = FontTool.Red;
-            }
-            else if (DateTool.AddDays(todayDate, 30).valueOf() > myFieldDate.valueOf()) {
-                myResult = FontTool.Orange;
-            }
-        }
-
-        return myResult;
     }
 
     // Rank
@@ -147,7 +116,15 @@ export class FieldTemplateComponent {
         }
 
     }
-    
+
+
+
+
+
+
+
+
+
     public LastShipmentDateColor: string = null;
     public LastShipmentDateValue: string = null;
     private SetLastShipmentDateTemplate() {
@@ -167,7 +144,7 @@ export class FieldTemplateComponent {
                 this.LastShipmentDateColor = "Red";
             }
 
-            var days = DateTool.GetDaysBetweenDates(myFieldDate, DateTool.GetCurrentDateAsUtc(), true);
+            var days = DateTool.GetDaysBetweenDates(myFieldDate, DateTool.GetCurrentDateAsUtc());
 
             if (days == 0) {
                 this.LastShipmentDateValue = "Today";

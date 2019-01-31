@@ -579,7 +579,7 @@ export class EditDocumentComponent implements OnInit {
                             if (item.DocumentTypeId == this.DocumentTypeId && item.TemplateType == "P" && this.TemplateFormatCode == "P" && item.EditorTool == "R") {
 
                                 var template = new DocumentTypeTemplateViewModel(item);
-                                if (!item.InActive || item.IsDefault || item.Id == this.DocumentTypeTemplateId) {
+                                if (!item.InActive || item.IsDefault) {
                                     this.ReportTemplates.push(template);
                                 }
                                 this.DocumenttypetemplateLists.push(template);
@@ -592,7 +592,8 @@ export class EditDocumentComponent implements OnInit {
 
                                     var template = new DocumentTypeTemplateViewModel(item);
 
-                                    if (!item.InActive || item.IsDefault || (item.Id == this.DocumentTypeTemplateId)) {
+
+                                    if (!item.InActive || item.IsDefault) {
                                         this.ReportTemplates.push(template);
                                     }
                                     this.DocumenttypetemplateLists.push(template);
@@ -928,7 +929,7 @@ export class EditDocumentComponent implements OnInit {
     }
 
 
-    ShowDesignStimul(item: DocumentTypeTemplateViewModel) {
+    ShowDesginStimul(item: DocumentTypeTemplateViewModel) {
 
         var title = "";
         if (item != null) {
@@ -1281,7 +1282,7 @@ export class EditDocumentComponent implements OnInit {
             this.ReportTemplates = this.DocumenttypetemplateLists;
         }
         else {
-            this.ReportTemplates = this.DocumenttypetemplateLists.filter(d => d.InActive == false || d.IsDefault == true || (this.SelectedDocumentTypeTemplateViewModel && this.SelectedDocumentTypeTemplateViewModel.Id == d.Id));
+            this.ReportTemplates = this.DocumenttypetemplateLists.filter(d=> d.InActive == false || d.IsDefault == true);
         }
 
 

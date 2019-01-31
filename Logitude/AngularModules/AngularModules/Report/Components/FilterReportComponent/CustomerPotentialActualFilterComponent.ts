@@ -1,4 +1,4 @@
-import {Component}  from '@angular/core';
+﻿import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
@@ -539,30 +539,6 @@ export class CustomerPotentialActualFilterComponent extends BaseComponent {
         if (this.SelectedProdustTypeFilter != "All") {
             if (this.ProductTypeComboList.filter(d => d.Checked).length == 0) {
                 this.ValidationErrorsList.push("Please select product type");
-            }
-        }
-
-        if (!this.SelectedTimeRangeFilter) {
-            this.ValidationErrorsList.push("Time Range field is required");
-        }
-
-        if (!this.SelectedViewByFilter) {
-            this.ValidationErrorsList.push("View by field is required");
-        }
-
-        if (!this.SelectedProductFilter) {
-            this.ValidationErrorsList.push("Product field is required");
-        }
-
-        if (!this.SelectedBusinessUnitFilter) {
-            this.ValidationErrorsList.push("Business unit field is required");
-        }
-
-        if (this.SelectedBusinessUnitFilter) {
-            if (this.SelectedBusinessUnitFilter.Code != "A") {
-                if (!this.SelectedUserFilter) {
-                    this.ValidationErrorsList.push("User field is required");
-                }
             }
         }
 

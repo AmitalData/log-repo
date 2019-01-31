@@ -178,8 +178,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.SetAsSent = false;
             entityPM.SetApproved = false;
             entityPM.SetReTransfer = false;
-            entityPM.SetCancelDraft = false;
-            entityPM.SetReSendQBO = false;
+            entityPM.SetCancelDraft = false;          
+    
             //Full Accounting 
             TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(entityPM.Tenant);

@@ -14,9 +14,6 @@ import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGeneric
 import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
-import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
 import {AccountingTransferTypeList} from '../../EntityLists/AccountingTransferTypeList';
 
 @Injectable()
@@ -31,9 +28,9 @@ export class AccountingTransferTypeListService {
     }
 
     getSingle(code: string) {
-	    var callTime = new Date();
+
         var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return Observable.defer(() => {
             return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, {
@@ -49,9 +46,6 @@ export class AccountingTransferTypeListService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = entity;  
-				serviceResponse.CallTime = callTime;
-			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AccountingTransferType", "GetSingleList", 'code=' + code); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -62,9 +56,8 @@ export class AccountingTransferTypeListService {
 
     getAll() {
 
-	   var callTime = new Date();
 	   var authHeader = new Headers();
-       authHeader.append('Token', SessionInfo.Token);
+       authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
        return Observable.defer(() => {
             return this._http.get(this._apiUrl+'/getall', {
                 headers: authHeader
@@ -85,9 +78,6 @@ export class AccountingTransferTypeListService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = _mappedListsArray;  
-				serviceResponse.CallTime = callTime;
-			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AccountingTransferType", "GetAll", ""); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -98,8 +88,7 @@ export class AccountingTransferTypeListService {
 
 	
     getByFilters(filters: ApiQueryFilters) {
-
-	   var callTime = new Date();       
+       
         var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
@@ -113,10 +102,7 @@ export class AccountingTransferTypeListService {
                 urlparameters = urlparameters.concat('&');
             }
             if (!ignoreFilter)
-                {
-					propValue = encodeURIComponent(propValue);
-					urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-				}
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
 
             if (propName == "AdditionalFilters" && propValue.length > 0)
                 addtionalFiltersValues = JSON.stringify(propValue);
@@ -128,7 +114,7 @@ export class AccountingTransferTypeListService {
         }
 
         var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var callUrl = this._apiUrl.concat(urlparameters);//
         
 		
@@ -151,20 +137,14 @@ export class AccountingTransferTypeListService {
 				 }
                 }   
 
-                serviceResponse.Result = _mappedListsArray;      
-		        serviceResponse.CallTime = callTime;
-			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AccountingTransferType", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
-                 				
-				            
+                serviceResponse.Result = _mappedListsArray;                  
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });        
     }
 
     getSingleFromCache(code: string) {
-
-	   var callTime = new Date(); 	    
+	    
 		 if (!SessionLocator.UseCachedData) {
             return this.getSingle(code);
         }
@@ -177,7 +157,6 @@ export class AccountingTransferTypeListService {
             return Observable.defer(() => {
 
                 var filteredData = AccountingTransferTypeListService.CachedData.filter(a => a.Code === code)[0];
-				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return Observable.of(serviceResponse);
 
@@ -185,7 +164,7 @@ export class AccountingTransferTypeListService {
         }
         else {
 
-            return CachedDataManager.GetClosedTableData("AccountingTransferType").map(cachedJson=> {
+            return CachedDataManager.GetClosedTableData("AccountingTransferTypes").map(cachedJson=> {
 
                 var _mappedListsArray: Array<AccountingTransferTypeList> = [];
                 if (cachedJson) {
@@ -202,10 +181,6 @@ export class AccountingTransferTypeListService {
 
                 var filteredData = AccountingTransferTypeListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.Result = filteredData; 
-				serviceResponse.CallTime = callTime;
-			     
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "AccountingTransferType", "GetSingleListFromCache", 'code=' + code); 
-
                 return serviceResponse;
 
             }).catch(ServiceHelper.HandleServiceError);
@@ -214,20 +189,10 @@ export class AccountingTransferTypeListService {
 
     }
 
-    getAllFromCache(filters: ApiQueryFilters= new ApiQueryFilters(true)) {
-
-	     var callTime = new Date(); 	           
+    getAllFromCache(filters: ApiQueryFilters) {
+        
 		 if (!SessionLocator.UseCachedData) {
             return this.getByFilters(filters);
-        }
-
-        var mykeys = Object.keys(filters);
-        var addtionalFiltersValues = null;
-        for (var i in mykeys) {
-            var propName = mykeys[i];
-            var propValue = filters[propName];
-            if (propName == "AdditionalFilters" && propValue.length > 0)
-                addtionalFiltersValues = JSON.stringify(propValue);
         }
 
         var serviceResponse: ServiceResponse;
@@ -236,23 +201,16 @@ export class AccountingTransferTypeListService {
         if (AccountingTransferTypeListService.CachedData.length > 0) {
 
             return Observable.defer(() => {
-                if(filters.GetAll)
-				{
-					serviceResponse.Result = AccountingTransferTypeListService.CachedData; 
-				}
-				else
-				{
-					var filteredData = InfraGenericFilter.GetFilteredArray(AccountingTransferTypeListService.CachedData, filters);
-					serviceResponse.Result = filteredData; 
-					serviceResponse.CallTime = callTime;
-				}
+
+                var filteredData = InfraGenericFilter.GetFilteredArray(AccountingTransferTypeListService.CachedData, filters);
+				serviceResponse.Result = filteredData; 
                 return Observable.of(serviceResponse);
 
             });
         }
         else {
 
-            return CachedDataManager.GetClosedTableData("AccountingTransferType").map(cachedJson=> {
+            return CachedDataManager.GetClosedTableData("AccountingTransferTypes").map(cachedJson=> {
 
                 var _mappedListsArray: Array<AccountingTransferTypeList> = [];
                 if (cachedJson) {
@@ -265,25 +223,10 @@ export class AccountingTransferTypeListService {
                     }
                 }
 
-
-
                 AccountingTransferTypeListService.CachedData = _mappedListsArray;
-                if(filters.GetAll)
-				{
-					serviceResponse.Result = _mappedListsArray; 
-				}
-				else
-				{
-							
-					_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
 
-							      
-			   
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "AccountingTransferType", "GetAllFromCache", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
-                 	
-					serviceResponse.Result = _mappedListsArray; 
-					serviceResponse.CallTime = callTime;
-				}
+                var filteredData = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
+				serviceResponse.Result = filteredData; 
                 return serviceResponse;
 
             }).catch(ServiceHelper.HandleServiceError);

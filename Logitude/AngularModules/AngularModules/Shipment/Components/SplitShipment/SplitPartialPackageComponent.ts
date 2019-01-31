@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -101,7 +101,7 @@ export class SplitPartialPackageComponent extends BaseComponent {
         }
     }
 
-    OnGrossWeightLostFocus(input1: number) {
+    OnGrossWeightLostFocus(input: number) {
 
     }
 

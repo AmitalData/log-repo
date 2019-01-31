@@ -44,7 +44,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         UpdatedBy = a.UpdatedBy,
                         UsedFor = a.UsedFor,
                         Tenant = a.Tenant,
-                        //ComputingPartnerId = a.ComputingPartnerId,
+                        ComputingPartnerId = a.ComputingPartnerId,
                     });
         }
 
@@ -66,7 +66,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                            UpdatedBy = a.UpdatedBy,
                                            UsedFor = a.UsedFor,
                                            Tenant = a.Tenant,
-                                           //ComputingPartnerId = a.ComputingPartnerId,
+                                           ComputingPartnerId = a.ComputingPartnerId,
                                        }).FirstOrDefault();
 
 
@@ -92,7 +92,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              UpdatedBy = a.UpdatedBy,
                                              UsedFor = a.UsedFor,
                                              Tenant = a.Tenant,
-                                             //ComputingPartnerId = a.ComputingPartnerId,
+                                             ComputingPartnerId = a.ComputingPartnerId,
                                          }).FirstOrDefault();
 
             return entity;
@@ -116,7 +116,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         UpdatedBy = a.UpdatedBy,
                         UsedFor = a.UsedFor,
                         Tenant = a.Tenant,
-                        //ComputingPartnerId = a.ComputingPartnerId,
+                        ComputingPartnerId = a.ComputingPartnerId,
                     });
         }
 
@@ -137,7 +137,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        UpdatedBy = a.UpdatedBy,
                        UsedFor = a.UsedFor,
                        Tenant = a.Tenant,
-                       //ComputingPartnerId = a.ComputingPartnerId,
+                       ComputingPartnerId = a.ComputingPartnerId,
                    };
         }
     }

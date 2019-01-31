@@ -23,11 +23,11 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 {
     public partial class ShipmentsDomainService
     {
-        public IQueryable<DashBoardClass> GetTop10DashBoard(int lastMonths,int lastDays, int measurment, int currentTenant, int top, bool includeOthers,string directionId,string TransportmodeId)
+        public IQueryable<DashBoardClass> GetTop10DashBoard(int lastMonths,int lastDays, int measurment, int currentTenant, int top, bool includeOthers)
         {
             shipmentQuery = new ShipmentQuery(currentTenant);
             SecurityUtility.AuthenticationOnTenant(currentTenant);
-            return shipmentQuery.GetTop10DashBoard(null,lastMonths,lastDays, measurment, currentTenant, top, includeOthers, directionId, TransportmodeId);
+            return shipmentQuery.GetTop10DashBoard(null,lastMonths,lastDays, measurment, currentTenant, top, includeOthers);
         }
 
         public List<DashBoardClass> GetShipmentsByTop10CountriesDashBoard(int lastMonths,int lastDays, int measurment, int currentTenant, int top, bool includeOthers, string customerid,string directionId,string transmodeId)

@@ -224,11 +224,6 @@ export class FullAccountingSettingPM {
     public set DefaultExternalDiffGLAccountId(newValue: string) { if (this.defaultExternalDiffGLAccountId != newValue) { this.defaultExternalDiffGLAccountId = newValue; this.MarkAsDirty("DefaultExternalDiffGLAccountId"); } }
        
 	 
-    private softwareVersion: string;
-    public get SoftwareVersion() { return this.softwareVersion; }
-    public set SoftwareVersion(newValue: string) { if (this.softwareVersion != newValue) { this.softwareVersion = newValue; this.MarkAsDirty("SoftwareVersion"); } }
-       
-	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		

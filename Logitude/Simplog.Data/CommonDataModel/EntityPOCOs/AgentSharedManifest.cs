@@ -35,9 +35,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ToPortId { get; set; }
         public string StatusCode { get; set; }
 
-        public bool CancelledBySenderAgent { get; set; }
-        
-
         [ForeignKey("StatusCode")]
         public virtual SharedManifestsStatus SharedManifestsStatus { get; set; }
 

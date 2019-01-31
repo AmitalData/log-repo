@@ -20,7 +20,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             }
 
             poco.AddressId = entityPM.AddressId;
-            poco.LocalAddressId = entityPM.LocalAddressId;
             poco.CurrencyId = entityPM.CurrencyId;
             poco.Direction = entityPM.Direction;
             poco.Email = entityPM.Email;

@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {Component, ViewChildren, QueryList, Output, EventEmitter} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -13,9 +13,13 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {AWBOCIPM} from '../../../../Shipment/EntityPMs/AWBOCIPM';
 import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
+import {TenantManagementPM} from '../../../../Infrastructure/EntityPMs/TenantManagementPM';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
+import {CardList} from '../../../../Common/EntityLists/CardList';
 import {StateList} from '../../../../Common/EntityLists/StateList';
+import {AirlineList} from '../../../../Common/EntityLists/AirlineList';
+import {AirlinePM} from '../../../../Common/EntityPMs/AirlinePM';
 import {CCSWebService, AWBPrintResult} from '../../../../Infrastructure/Services/WebServices/CCSWebService';
 import {DocumentOutPM} from '../../../../Common/EntityPMs/DocumentOutPM';
 import {DocumentTypePM} from '../../../../Common/EntityPMs/DocumentTypePM';
@@ -31,6 +35,7 @@ import {StateListService} from '../../../../Common/Services/StandardLists/StateL
 import {AirlineListService} from '../../../../Common/Services/StandardLists/AirlineListService';
 import {CurrencyRatesService, LastRate} from '../../../../Common/Services/CurrencyRatesService';
 import {PartnersDomainService, AirlineMessagingRuleList} from '../../../../Common/Services/PartnersDomainService';
+import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {InfrastructureDomainService} from '../../../../Infrastructure/Services/InfrastructureDomainService';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
@@ -49,6 +54,7 @@ export class AWBWizardComponent {
     @Output() SaveCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     public TenantPM: TenantPM;
     public EntityPM: ShipmentPM;
+    public TenantManagementPM: TenantManagementPM;
     public DataContext: AWBWizardComponent = this;
     public IsFHL: boolean = false;
     public IsFWB: boolean = false;
@@ -63,6 +69,7 @@ export class AWBWizardComponent {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(public entityArgs: EntityArgs, public _documentTypeListExtendedService: DocumentTypeListExtendedService, public _documentOutPMService: DocumentOutPMService, public _documentTypePMService: DocumentTypePMExtendedService) {
         this.TenantPM = SessionLocator.TenantPM;
+        this.TenantManagementPM = SessionLocator.TenantManagementPM;
         this.myPartnersDomainService = new PartnersDomainService();
 
         ServiceLocator.SendTotangoUserActivity("AWBWizard", "View");
@@ -736,7 +743,7 @@ export class AWBWizardComponent {
 
     // Allowed Airline
     private LoadAllowedAirline() {
-        if (SessionLocator.TenantManagementJS.IsRestrictedByAirline) {
+        if (this.TenantManagementPM.IsRestrictedByAirline) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageCarrierId)) {
                     if (this.EntityPM.TransportModeId == "A") {
@@ -2501,10 +2508,10 @@ export class AWBWizardComponent {
         var isRunningPrintingManager: boolean = false;
 
         if (FeatureLocator.IsPackage_EAWB()) {
-            if (SessionLocator.TenantManagementJS.IsAWBStockPrepaid) {
+            if (SessionLocator.TenantManagementPM.IsAWBStockPrepaid) {
                 var isDemoTenant = false;
 
-                if (this.TenantPM.Id == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
+                if (this.TenantPM.Id == 65 || SessionLocator.TenantManagementPM.IsEAWBOnlyDemo) {
                     isDemoTenant = true;
                 }
 
@@ -2903,9 +2910,9 @@ export class AWBWizardComponent {
         var isValidForSending = true;
         var validationErrorMessage = "";
 
-        var isCargonautEnabled = SessionLocator.TenantManagementJS.IsCargonautEnabled;
-        var isDEXXConnectionEnabled = SessionLocator.TenantManagementJS.IsDEXXConnectionEnabled;
-        var isDemoTenantManagement = SessionLocator.TenantManagementJS.IsEAWBOnlyDemo;
+        var isCargonautEnabled = this.TenantManagementPM.IsCargonautEnabled;
+        var isDEXXConnectionEnabled = this.TenantManagementPM.IsDEXXConnectionEnabled;
+        var isDemoTenantManagement = this.TenantManagementPM.IsEAWBOnlyDemo;
 
         var myCCSValidator: AWBCCSValidator = AWBHelper.ValidateAWBCCS(this.EntityPM);
 

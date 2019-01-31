@@ -51,6 +51,8 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? SaleContainerType3UnitPrice { get; set; }
         public double? SaleContainerType4UnitPrice { get; set; }
         public double? SaleContainerType5UnitPrice { get; set; }
+        public double? CostMinAmount { get; set; }
+        public double? SaleMinAmount { get; set; }
         public string PriceBreaks { get; set; }
         public string VatTypeId { get; set; }
         public double? VatPercentage { get; set; }
@@ -66,9 +68,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? SaleUnitPrice5InSaleCurrency { get; set; }
         public double? SaleAmountInSaleCurrency { get; set; }
 
-        public double? CostMaxAmount { get; set; }
-        public double? CostMinAmount { get; set; }
-        public double? SaleMinAmount { get; set; }
-        public double? SaleMaxAmount { get; set; }
+
     }
 }

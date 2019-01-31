@@ -1,4 +1,4 @@
-<table>
+﻿<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -19,7 +19,7 @@
                                 [DataContext]="DataContext"
                                 [ObjectTableName]="ObjectTableName"
                                 [SelectedValue]="OwnerId"
-                                [LookUpTableName]="'User'">
+                                [LookUpTableName]="'User'" >
                         </LogLov>
                     </td>
                     <td>
@@ -89,19 +89,6 @@
                                 [SelectedValue]="CategoryId"
                                 [LookUpTableName]="'TMProjectCategory'">
                         </LogLov>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <!-- ExternalProjectNumber -->
-                <tr class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'ExternalProjectNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'ExternalProjectNumber'" [Text]="ExternalProjectNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                     </td>
                     <td>
                         <div></div>

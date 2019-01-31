@@ -209,22 +209,5 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return myResult;
         }
 
-        public List<APInvoiceLinePM> GetInvoiceLinesByInvoiceIds(List<string> invoiceIds, int tenant)
-        {
-            List<APInvoiceLinePM> lines = (from a in repository.context.APInvoiceLines
-                                          where a.Tenant == tenant
-                                          && invoiceIds.Contains(a.APInvoiceId)
-                                          select new APInvoiceLinePM() {
-
-                                              APInvoiceId = a.APInvoiceId,
-                                              Description = a.Description,
-                                              VatPercentage = a.VatPercentage,
-                                              LineNumber = a.LineNumber,
-                                          }).ToList();
-
-
-            return lines;
-        }
-
     }
 }

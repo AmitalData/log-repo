@@ -28,13 +28,11 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.LockDateTime);
+               
+              
+               
 
-            this.Property(t => t.CaptchaKey)
-                .HasMaxLength(40)
-                .IsUnicode(false);
-
-
-
+         
 
             // Table & Column Mappings
             this.ToTable("ContactPasswords");
@@ -47,8 +45,8 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.IsLocked).HasColumnName("IsLocked");
             this.Property(t => t.NumberOfRetries).HasColumnName("NumberOfRetries");
             this.Property(t => t.LockDateTime).HasColumnName("LockDateTime");
-            this.Property(t => t.CaptchaKey).HasColumnName("CaptchaKey");
 
+            
             this.Property(t => t.IsSendNotificationForMobile).HasColumnName("IsSendNotificationForMobile");
             this.Property(t => t.PasswordExpirationDate).HasColumnName("PasswordExpirationDate");
             this.Property(t => t.IsBCrypt).HasColumnName("IsBCrypt");

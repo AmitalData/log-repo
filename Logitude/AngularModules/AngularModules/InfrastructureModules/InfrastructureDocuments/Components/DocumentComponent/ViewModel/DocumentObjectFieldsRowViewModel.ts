@@ -18,7 +18,7 @@ export class DocumentObjectFieldsRowViewModel   {
    Id: string;
     TranslatedText: string;
     FullNameTextCodeCode: string;
-    Order: number;
+
 
     DisplayListOnly: boolean;
     private _entityResourceService: EntityResourceService = new EntityResourceService();

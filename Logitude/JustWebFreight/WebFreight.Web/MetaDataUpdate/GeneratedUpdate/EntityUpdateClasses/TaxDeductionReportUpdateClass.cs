@@ -121,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ServerModuleName =  "Accounting",
 			      				    NewWizardComponentPath =  "./Accounting/Components/NewEntity/NewTaxDeductionReportComponent",
 			      				    NoTS =  false,
-			      				    HasMenuButtons =  true,
+			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
@@ -174,11 +174,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  @"Create Date",
-					  						FullLocalDefaultText =  @"תאריך יצירה",
+					  						DefaultText =  "Create Date",
+					  						FullLocalDefaultText =  "תאריך יצירה",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  @"Create Date",
-					  						ListLocalDefaultText =  @"תאריך יצירה",
+					  						ListLableDefaultText =  "Create Date",
+					  						ListLocalDefaultText =  "תאריך יצירה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -232,8 +232,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  @"Created By",
-					  						FullLocalDefaultText =  "נוצר ע\''י",
+					  						DefaultText =  "Created By",
+					  						FullLocalDefaultText =  "נוצר ע\"י",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -287,11 +287,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  @"Update Date",
-					  						FullLocalDefaultText =  @"תאריך עדכון",
+					  						DefaultText =  "Update Date",
+					  						FullLocalDefaultText =  "תאריך עדכון",
 					  						ListFieldLable =  "UpdateDateListLable",
-					  						ListLableDefaultText =  @"Update Date",
-					  						ListLocalDefaultText =  @"תאריך עדכון",
+					  						ListLableDefaultText =  "Update Date",
+					  						ListLocalDefaultText =  "תאריך עדכון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -345,7 +345,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
-					  						DefaultText =  @"Updated By",
+					  						DefaultText =  "Updated By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -399,9 +399,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search ...",
+					  						DefaultText =  "Search ...",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  @"Search ...",
+					  						ListLableDefaultText =  "Search ...",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -421,15 +421,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "ReportNumber",
 					  						OldFieldName =  "ReportNumber",
 					  						ObjectTableName =  "TaxDeductionReport",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
-					  						MaxLength =  20,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  20,
+					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
@@ -455,11 +455,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReportNumber",
-					  						DefaultText =  @"Report Number",
-					  						FullLocalDefaultText =  @"מספר דוח",
+					  						DefaultText =  "Report Number",
+					  						FullLocalDefaultText =  "מספר דוח",
 					  						ListFieldLable =  "ReportNumberListLable",
-					  						ListLableDefaultText =  @"Report Number",
-					  						ListLocalDefaultText =  @"מספר דוח",
+					  						ListLableDefaultText =  "Report Number",
+					  						ListLocalDefaultText =  "מספר דוח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -513,11 +513,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusTypeCode",
-					  						DefaultText =  @"Status Type",
-					  						FullLocalDefaultText =  @"סטטוס",
+					  						DefaultText =  "Status Type",
+					  						FullLocalDefaultText =  "סטטוס",
 					  						ListFieldLable =  "StatusTypeCodeListLable",
-					  						ListLableDefaultText =  @"Status Type",
-					  						ListLocalDefaultText =  @"סטטוס",
+					  						ListLableDefaultText =  "Status Type",
+					  						ListLocalDefaultText =  "סטטוס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -571,11 +571,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsAdditionalReportExist",
-					  						DefaultText =  @"Additional Report Exist",
-					  						FullLocalDefaultText =  @"האם קיים דוח משלים",
+					  						DefaultText =  "Additional Report Exist",
+					  						FullLocalDefaultText =  "האם קיים דוח משלים",
 					  						ListFieldLable =  "IsAdditionalReportExistListLable",
-					  						ListLableDefaultText =  @"Additional Report Exist",
-					  						ListLocalDefaultText =  @"האם קיים דוח משלים",
+					  						ListLableDefaultText =  "Additional Report Exist",
+					  						ListLocalDefaultText =  "האם קיים דוח משלים",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -629,11 +629,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TaxYear",
-					  						DefaultText =  @"Tax Year",
-					  						FullLocalDefaultText =  @"שנת מס",
+					  						DefaultText =  "Tax Year",
+					  						FullLocalDefaultText =  "שנת מס",
 					  						ListFieldLable =  "TaxYearListLable",
-					  						ListLableDefaultText =  @"Tax Year",
-					  						ListLocalDefaultText =  @"שנת מס",
+					  						ListLableDefaultText =  "Tax Year",
+					  						ListLocalDefaultText =  "שנת מס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -687,11 +687,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Email",
-					  						DefaultText =  @"Email",
-					  						FullLocalDefaultText =  @"כתובת מייל לדיווח",
+					  						DefaultText =  "Email",
+					  						FullLocalDefaultText =  "כתובת מייל לדיווח",
 					  						ListFieldLable =  "EmailListLable",
-					  						ListLableDefaultText =  @"Email",
-					  						ListLocalDefaultText =  @"כתובת מייל לדיווח",
+					  						ListLableDefaultText =  "Email",
+					  						ListLocalDefaultText =  "כתובת מייל לדיווח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -745,11 +745,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ErrorMessage",
-					  						DefaultText =  @"Error Message",
-					  						FullLocalDefaultText =  @"הערות שגיאה",
+					  						DefaultText =  "Error Message",
+					  						FullLocalDefaultText =  "הערות שגיאה",
 					  						ListFieldLable =  "ErrorMessageListLable",
-					  						ListLableDefaultText =  @"Error Message",
-					  						ListLocalDefaultText =  @"הערות שגיאה",
+					  						ListLableDefaultText =  "Error Message",
+					  						ListLocalDefaultText =  "הערות שגיאה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -803,11 +803,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUser",
-					  						DefaultText =  @"Created By User",
-					  						FullLocalDefaultText =  "נוצר ע\''י",
+					  						DefaultText =  "Created By User",
+					  						FullLocalDefaultText =  "נוצר ע\"י",
 					  						ListFieldLable =  "CreatedByUserListLable",
-					  						ListLableDefaultText =  @"Created By User",
-					  						ListLocalDefaultText =  "נוצר ע\''י",
+					  						ListLableDefaultText =  "Created By User",
+					  						ListLocalDefaultText =  "נוצר ע\"י",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -861,64 +861,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Status",
-					  						DefaultText =  @"Status",
-					  						FullLocalDefaultText =  @"סטטוס",
+					  						DefaultText =  "Status",
+					  						FullLocalDefaultText =  "סטטוס",
 					  						ListFieldLable =  "StatusListLable",
-					  						ListLableDefaultText =  @"Status",
-					  						ListLocalDefaultText =  @"סטטוס",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  true,
-					  						IsCustom =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "StatusLocalName",
-					  						OldFieldName =  "StatusLocalName",
-					  						ObjectTableName =  "TaxDeductionReport",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  100,
-					  						IsRequired =  false,
-					  						DisplayOnLookUp =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  100,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "StatusLocalName",
-					  						ListPropertyPath =  "StatusLocalName",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "StatusLocalName",
-					  						DefaultText =  @"StatusLocalName",
+					  						ListLableDefaultText =  "Status",
+					  						ListLocalDefaultText =  "סטטוס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -936,7 +883,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup TaxDeductionReportQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "1c9c", Name = " Query Group" }, queryGroupRepository);
 						QueryGroup TaxDeductionReportQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "bc45", Name = " Query Group" }, queryGroupRepository);
@@ -952,7 +899,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ALLTaxDeductionReportsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaxDeductionReportTextCode_0.Id, Code = "ALLTaxDeductionReports",  QueryGroupCode = "1c9c", IndexOrder = 0, Tenant = 0, ObjectTableId = TaxDeductionReportObjectTable.Id, QuerySection = "TaxDeductionReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TaxDeductionReportFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ALLTaxDeductionReportsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaxDeductionReportTextCode_0.Id, Code = "ALLTaxDeductionReports",  QueryGroupCode = "1c9c", IndexOrder = 0, Tenant = 0, ObjectTableId = TaxDeductionReportObjectTable.Id, QuerySection = "TaxDeductionReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TaxDeductionReportFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ALLTaxDeductionReportsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTaxDeductionReportsQuery.Id, IndexOrder = 0, ObjectFieldId = TaxDeductionReportObjectFields.Where(d => d.FieldName == "TaxYear" && d.ObjectTableId == TaxDeductionReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -972,7 +919,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen TaxDeductionReportGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TaxDeductionReport..GeneralTabScreen", Name = ".GeneralTabScreen", ObjectTableId = TaxDeductionReportObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen TaxDeductionReportGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TaxDeductionReport.GeneralTabScreen", Name = ".GeneralTabScreen", ObjectTableId = TaxDeductionReportObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
             ScreenField TaxDeductionReportGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TaxDeductionReportObjectFields.Where(d => d.FieldName == "IsAdditionalReportExist").FirstOrDefault().Id, ScreenId = TaxDeductionReportGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
@@ -980,7 +927,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
            
 	      
 
-	         Screen TaxDeductionReportTaxDeductionReportHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TaxDeductionReport.HeaderScreen", Name = "TaxDeductionReportHeaderScreen", ObjectTableId = TaxDeductionReportObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen TaxDeductionReportTaxDeductionReportHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TaxDeductionReportTaxDeductionReportHeaderScreen", Name = "TaxDeductionReportHeaderScreen", ObjectTableId = TaxDeductionReportObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
             ScreenField TaxDeductionReportTaxDeductionReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TaxDeductionReportObjectFields.Where(d => d.FieldName == "TaxYear").FirstOrDefault().Id, ScreenId = TaxDeductionReportTaxDeductionReportHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
@@ -992,15 +939,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {                
-			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
-			   ObjectTable TaxDeductionReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxDeductionReport" && d.Tenant == 0).FirstOrDefault();  
+	    {    
+			 ObjectTable TaxDeductionReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxDeductionReport" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TaxDeductionReportGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.TH.General", DefaultText = "General",LocalDefaultText = "פרטים", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature TaxDeductionReportGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxDeductionReport.Tab.General", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReportFeatures.TDGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode TaxDeductionReportLogTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.TH.Log", DefaultText = "Log",LocalDefaultText = "לוג", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode TaxDeductionReportLogTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.TH.Log", DefaultText = "Log",LocalDefaultText = null, ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature TaxDeductionReportLogFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxDeductionReport.Tab.Log", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReportFeatures.LOG", NameTextCodeDefaultText = "Log", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
@@ -1008,14 +954,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature TaxDeductionReportEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxDeductionReport.Tab.Events", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReportFeatures.TDEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TDGN",HtmlComponentName = "GeneralTabComponent",HtmlComponentUrl = "./Infrastructure/GenericComponents/GeneralTabComponent", FeatureId = TaxDeductionReportGeneralFeature_TH0.Id, ControlPath = "TaxDeductionReportGeneralControl", ObjectTableId = TaxDeductionReportObjectTable.Id, TabNameTextCodeId = TaxDeductionReportGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TDGN",HtmlComponentName = "GeneralTabComponent",HtmlComponentUrl = "./Infrastructure/GenericComponents/GeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "TaxDeductionReport.Tab.General" && d.ObjectTableId == TaxDeductionReportObjectTable.Id).FirstOrDefault().Id, ControlPath = "TaxDeductionReportGeneralControl", ObjectTableId = TaxDeductionReportObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TaxDeductionReport.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "LOG",HtmlComponentName = "TaxDeductionReportLogTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportLogTabComponent", FeatureId = TaxDeductionReportLogFeature_TH1.Id, ControlPath = "TaxDeductionReportLogTabComponent", ObjectTableId = TaxDeductionReportObjectTable.Id, TabNameTextCodeId = TaxDeductionReportLogTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "LOG",HtmlComponentName = "TaxDeductionReportLogTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportLogTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "TaxDeductionReport.Tab.Log" && d.ObjectTableId == TaxDeductionReportObjectTable.Id).FirstOrDefault().Id, ControlPath = "TaxDeductionReportLogTabComponent", ObjectTableId = TaxDeductionReportObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TaxDeductionReport.TH.Log" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TDEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TaxDeductionReportEventsFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TaxDeductionReportObjectTable.Id, TabNameTextCodeId = TaxDeductionReportEventsTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TDEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "TaxDeductionReport.Tab.Events" && d.ObjectTableId == TaxDeductionReportObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TaxDeductionReportObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TaxDeductionReport.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1036,7 +982,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CREV",
                 EnglishName =  "Created",
-                LocalName =  "חדש",
+                LocalName =  "Created",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -1054,7 +1000,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "UPEV",
                 EnglishName =  "Updated",
-                LocalName =  "עודכן",
+                LocalName =  "Updated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -1072,80 +1018,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable TaxDeductionReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxDeductionReport" && d.Tenant == 0).FirstOrDefault(); 			   Feature TaxDeductionReportFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TXFL", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReport.Features.DownloadTextfile", NameTextCodeDefaultText = "Download Text file", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature TaxDeductionReportFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DNPD", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReport.Features.DownloadPDFfile", NameTextCodeDefaultText = "Download PDF file", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-              
-
-		   TextCodeRepository.SubmitChanges();
-		   FeaturesRepository.SubmitChanges();
-		   MenuButtonGroup TaxDeductionReportMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
-				{
-					MenuButtonGroupType = "TaxDeductionReportEdit",
-					Name = "TaxDeductionReportEditButtonsGroup",
-					ObjectTableId = TaxDeductionReportObjectTable.Id,
-					Tenant = 0
-				}, menuButtonGroupRepository, tenantMenuButtonGroups);        
-   
-			   MenuButton TaxDeductionReportMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-					{
-						EventCode = "TDMR",
-						Index = 100, 
-						IsActive = false,
-						LabelTextCodeCode = "TaxDeductionReport.B.More",
-						LabelTextCodeDefaultText = "More",
-						Tenant = 0,
-						MenuButtonGroupId = TaxDeductionReportMenuButtonGroup.Id,
-						ObjectTableId = TaxDeductionReportObjectTable.Id,
-						MenuButtonType = "dropdownbutton",
-						FeatureId = null,
-						Style = null,
-						LocalDefaultText = "יותר",
-					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-
-			   MenuButton TaxDeductionReportMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-					{
-						EventCode = "TXFL",
-						Index = 0, 
-						IsActive = true,
-						LabelTextCodeCode = "TaxDeductionReport.B.DownloadTextfile",
-						LabelTextCodeDefaultText = "Download Text file",
-						Tenant = 0,
-						MenuButtonGroupId = TaxDeductionReportMenuButtonGroup.Id,
-						ParentMenuButtonId = TaxDeductionReportMenuButton0.Id,
-						ObjectTableId = TaxDeductionReportObjectTable.Id,
-						MenuButtonType = "menuitem",
-						FeatureId=  TaxDeductionReportFeature_MB00.Id,
-						Style = null,
-						LocalDefaultText = "הורד קובץ טקסט",
-					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-	   
-			   MenuButton TaxDeductionReportMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-					{
-						EventCode = "DNPD",
-						Index = 1, 
-						IsActive = true,
-						LabelTextCodeCode = "TaxDeductionReport.B.DownloadPDFfile",
-						LabelTextCodeDefaultText = "Download PDF file",
-						Tenant = 0,
-						MenuButtonGroupId = TaxDeductionReportMenuButtonGroup.Id,
-						ParentMenuButtonId = TaxDeductionReportMenuButton0.Id,
-						ObjectTableId = TaxDeductionReportObjectTable.Id,
-						MenuButtonType = "menuitem",
-						FeatureId=  TaxDeductionReportFeature_MB01.Id,
-						Style = null,
-						LocalDefaultText = "PDF הורד קובץ ",
-					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-	   
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

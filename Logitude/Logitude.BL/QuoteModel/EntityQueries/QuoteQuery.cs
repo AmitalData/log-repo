@@ -2098,10 +2098,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         VatPercentage = item.VatPercentage,
                         VatTypeName = item.VatTypeName,
                         UOMPercentage = item.CostMeasurementCode == "PRVL" || item.CostMeasurementCode == "PRFR" ? "%" : "",
-                        CostMinAmount = item.CostMinAmount,
-                        CostMaxAmount = item.CostMaxAmount,
-                        SaleMinAmount = item.SaleMinAmount,
-                        SaleMaxAmount = item.SaleMaxAmount,
                     };
 
                     entityPM.QuoteCostCharges.Add(costChargePM);
@@ -2204,6 +2200,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         SaleContainerType3UnitPrice = item.SaleContainerType3UnitPrice,
                         SaleContainerType4UnitPrice = item.SaleContainerType4UnitPrice,
                         SaleContainerType5UnitPrice = item.SaleContainerType5UnitPrice,
+                        SaleMinAmount = item.SaleMinAmount,
+                        CostMinAmount = item.CostMinAmount,
                         VatTypeId = item.VatTypeId,
                         VatPercentage = item.VatPercentage,
                         VatTypeName = item.VatTypeName,
@@ -2216,10 +2214,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         SaleUnitPrice4InSaleCurrency = item.SaleUnitPrice4InSaleCurrency,
                         SaleUnitPrice5InSaleCurrency = item.SaleUnitPrice5InSaleCurrency,
                         SaleAmountInSaleCurrency = item.SaleAmountInSaleCurrency,
-                        CostMinAmount = item.CostMinAmount,
-                        CostMaxAmount = item.CostMaxAmount,
-                        SaleMinAmount = item.SaleMinAmount,
-                        SaleMaxAmount = item.SaleMaxAmount,
                     };
 
                     if (item.IsChargeBySteps)

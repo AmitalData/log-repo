@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
@@ -39,7 +39,7 @@ export class ClaimRelatedEntityAdditionalDataTabComponent extends BaseComponent 
     public ClaimsRelatedEntsExpDeclarsList: ObservableCollection;
 
     public CurrentEditComponentId: string;
-    private isControlEnabled: boolean = false;
+    private isControlEnabled: boolean = true;
 
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();

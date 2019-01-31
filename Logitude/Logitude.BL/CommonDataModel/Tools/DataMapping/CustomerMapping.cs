@@ -77,12 +77,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.PrimaryContactName = entityPM.PrimaryContactName;
             entityPOCO.PrimaryContactEmail = entityPM.PrimaryContactEmail;
             entityPOCO.PrimaryContactPhone = entityPM.PrimaryContactPhone;
-            entityPOCO.ActivatedByUserId = entityPM.ActivatedByUserId;
-            entityPOCO.ActivationRequestedByUserId = entityPM.ActivationRequestedByUserId;
-            entityPOCO.SetAsInactiveByUserId = entityPM.SetAsInactiveByUserId;
-            entityPOCO.ActivationDate = entityPM.ActivationDate;
-            entityPOCO.ActivationRequestDate = entityPM.ActivationRequestDate;
-            entityPOCO.InactiveDate = entityPM.InactiveDate;
 
             if (!entityPM.IsHybrid || isNewState) //islam: if hybrid and not a new call dont map the field
             {

@@ -24,7 +24,6 @@ export class AddEditMamanStickerComponent
     public EntityPM: DeclarationMamanSpecialActionPM;
     isWindowMode: boolean = true;
     ValidationErrorsList: any[] = [];
-    IsLoaded: boolean = false;
 
     private _EntityResourceService: EntityResourceService = new EntityResourceService();
     private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
@@ -36,7 +35,6 @@ export class AddEditMamanStickerComponent
         SessionLocator.CurrentSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             SessionLocator.CurrentSession.StopBusyIndicator();
-            this.IsLoaded = true;
         });
     }
 

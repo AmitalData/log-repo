@@ -46,10 +46,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.PrimaryContactName).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.PrimaryContactEmail).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.PrimaryContactPhone).HasMaxLength(25).IsUnicode(false);
-            this.Property(t => t.ActivatedByUserId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.SetAsInactiveByUserId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ActivationRequestedByUserId).HasMaxLength(15).IsUnicode(false);
-
+            
             // Table & Column Mappings
             this.ToTable("Customers");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
@@ -109,12 +106,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.PrimaryContactName).HasColumnName("PrimaryContactName");
             this.Property(t => t.PrimaryContactEmail).HasColumnName("PrimaryContactEmail");
             this.Property(t => t.PrimaryContactPhone).HasColumnName("PrimaryContactPhone");
-            this.Property(t => t.ActivationDate).HasColumnName("ActivationDate");
-            this.Property(t => t.InactiveDate).HasColumnName("InactiveDate");
-            this.Property(t => t.ActivationRequestDate).HasColumnName("ActivationRequestDate");
-            this.Property(t => t.ActivatedByUserId).HasColumnName("ActivatedByUserId");
-            this.Property(t => t.SetAsInactiveByUserId).HasColumnName("SetAsInactiveByUserId");
-            this.Property(t => t.ActivationRequestedByUserId).HasColumnName("ActivationRequestedByUserId");
 
             // Relationships
             this.HasOptional(t => t.BillToCard).WithMany().HasForeignKey(d => d.BillToId);
@@ -133,9 +124,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.Freelancer).WithMany().HasForeignKey(d => d.FreelancerId);
             this.HasOptional(t => t.BeforeDeactiveStatus).WithMany().HasForeignKey(d => d.BeforeDeactiveStatusCode);
             this.HasOptional(t => t.CustomerSize).WithMany().HasForeignKey(d => d.CustomerSizeId);
-            this.HasOptional(t => t.ActivatedByUser).WithMany().HasForeignKey(d => d.ActivatedByUserId);
-            this.HasOptional(t => t.SetAsInactiveByUser).WithMany().HasForeignKey(d => d.SetAsInactiveByUserId);
-            this.HasOptional(t => t.ActivationRequestedByUser).WithMany().HasForeignKey(d => d.ActivationRequestedByUserId);
         }
     }
 }

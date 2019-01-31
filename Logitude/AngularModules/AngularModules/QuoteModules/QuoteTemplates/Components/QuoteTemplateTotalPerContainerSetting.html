@@ -23,7 +23,7 @@
                                                 <table>
                                                     <tr>
                                                         <td style="width:5px;"><div style="width:5px"></div></td>
-                                                        <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.TotalPerContainerTable' | TextCodeTranslationPipe}} </div></td>
+                                                        <td style="width:50px;"><div style="width:50px;">Total Per Container Table</div></td>
                                                         <td></td>
                                                     </tr>
                                                 </table>
@@ -57,7 +57,7 @@
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                                                            <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.Totals' | TextCodeTranslationPipe}} </div></td>
+                                                                                                            <td style="width:50px;"><div style="width:50px;">Totals</div></td>
                                                                                                             <td></td>
                                                                                                         </tr>
                                                                                                     </table>
@@ -75,7 +75,7 @@
                                                                                                         <td style="width:8px"></td>
                                                                                                         <td>
 
-                                                                                                            <RadioButton [Name]="'TotalCurrency'" [IsChecked]="TotalPerContainersCurrencyType == 'LOCAL'" (Checked)="TotalPerContainersCurrencyType = 'LOCAL'" [Text]="'QuoteTemplate.S.ShowTotalInLocalCurrency' | TextCodeTranslationPipe"></RadioButton>
+                                                                                                            <RadioButton [Name]="'TotalCurrency'" [IsChecked]="TotalPerContainersCurrencyType == 'LOCAL'" (Checked)="TotalPerContainersCurrencyType = 'LOCAL'" [Text]="'Show Total in Local Currency'"></RadioButton>
 
                                                                                                         </td>
 
@@ -86,7 +86,7 @@
                                                                                                         <td style="width:8px"></td>
                                                                                                         <td>
 
-                                                                                                            <RadioButton [Name]="'TotalCurrency'" [IsChecked]="TotalPerContainersCurrencyType == 'SALE'" (Checked)="TotalPerContainersCurrencyType = 'SALE'" [Text]="'QuoteTemplate.S.ShowTotalInSaleCurrency' | TextCodeTranslationPipe" ></RadioButton>
+                                                                                                            <RadioButton [Name]="'TotalCurrency'" [IsChecked]="TotalPerContainersCurrencyType == 'SALE'" (Checked)="TotalPerContainersCurrencyType = 'SALE'" [Text]="'Show Total in Sale Currency'"></RadioButton>
 
                                                                                                         </td>
 
@@ -118,7 +118,7 @@
 
                                                                                         <td>
                                                                                             <div>
-                                                                                                <CheckBox [Text]="'QuoteTemplate.S.ShowTitle' | TextCodeTranslationPipe"  [IsChecked]="ShowTitleTotalPerContainersTable" (Checked)="ShowTitleTotalPerContainersTable = $event"></CheckBox>
+                                                                                                <CheckBox [Text]="'Show Title'" [IsChecked]="ShowTitleTotalPerContainersTable" (Checked)="ShowTitleTotalPerContainersTable = $event"></CheckBox>
                                                                                             </div>
                                                                                         </td>
                                                                                     </tr>
@@ -127,7 +127,7 @@
 
                                                                                         <td>
                                                                                             <div>
-                                                                                                <CheckBox [Text]="'QuoteTemplate.S.ShowPageBreakBeforeTable' | TextCodeTranslationPipe"  [IsChecked]="ShowPageBreakBeforeTotalPerContainersTable" (Checked)="ShowPageBreakBeforeTotalPerContainersTable = $event"></CheckBox>
+                                                                                                <CheckBox [Text]="'Show Page Break Before Table'" [IsChecked]="ShowPageBreakBeforeTotalPerContainersTable" (Checked)="ShowPageBreakBeforeTotalPerContainersTable = $event"></CheckBox>
                                                                                             </div>
                                                                                         </td>
                                                                                     </tr>
@@ -161,7 +161,7 @@
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                                                            <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.QuoteLabels' | TextCodeTranslationPipe}} </div></td>
+                                                                                                            <td style="width:50px;"><div style="width:50px;">Quote Labels</div></td>
                                                                                                             <td></td>
                                                                                                         </tr>
                                                                                                     </table>
@@ -177,7 +177,7 @@
 
 
 
-                                                                                                        <log-column [width]="'195'"  [header]="'QuoteTemplate.S.EnglishLabel' | TextCodeTranslationPipe" >
+                                                                                                        <log-column [width]="'195'" [header]="'English Label'">
                                                                                                             <log-cell-template template="let item" #logcelltemplate>
 
                                                                                                                 <table>
@@ -217,7 +217,7 @@
 
 
 
-                                                                                                        <log-column [width]="'195'" [header]="'QuoteTemplate.S.LocalLabel' | TextCodeTranslationPipe">
+                                                                                                        <log-column [width]="'195'" [header]="'Local Label'">
                                                                                                             <log-cell-template template="let item" #logcelltemplate>
 
 
@@ -309,7 +309,7 @@
                                                 <table>
                                                     <tr>
                                                         <td style="width:5px;"><div style="width:5px"></div></td>
-                                                        <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.TotalPerContainerDesign' | TextCodeTranslationPipe}} </div></td>
+                                                        <td style="width:50px;"><div style="width:50px;">Total Per Container Design</div></td>
                                                         <td></td>
                                                     </tr>
                                                 </table>
@@ -394,7 +394,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseButtonClicked()">{{'QuoteTemplate.B.Cancel' | TextCodeTranslationPipe}} </button>
+                        <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -402,7 +402,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
+                        <button class="RedButton" (click)="SaveButtonClicked()">Save</button>
                     </td>
                 </tr>
             </table>

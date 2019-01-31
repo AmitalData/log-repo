@@ -10,7 +10,7 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
-
+ 
 namespace Logitude.WarehouseLib.Data.EntityPOCOs
 {
    
@@ -69,8 +69,6 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public double? Height { get; set; }
         [Column("IsContainer")]
 	    public bool IsContainer { get; set; }
-        [Column("VolumetricWeight")]
-	    public double? VolumetricWeight { get; set; }
     }
 }
 	 

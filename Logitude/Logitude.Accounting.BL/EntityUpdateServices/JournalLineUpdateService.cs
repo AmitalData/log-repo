@@ -6,27 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.Data;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class JournalLineUpdateService : EntityUpdateService<JournalLine, JournalLinePM, JournalPM>
     {
 
-        private class JournalLineRepositoryPriv : JournalLineRepository
-        {
-
-            public JournalLineRepositoryPriv(IAccountingContext mainContext)
-                : base(mainContext)
-            { }
-        }
-        protected override void AddContext(JournalLinePM myTEntityPM)
-        {
-            base.AddContext(myTEntityPM);
-            this.Repository = new JournalLineRepositoryPriv((IAccountingContext)this.MainContext);
-
-        }
 
         protected override void OnCreating(JournalLinePM entityPM, JournalPM entityParentPM)
         {

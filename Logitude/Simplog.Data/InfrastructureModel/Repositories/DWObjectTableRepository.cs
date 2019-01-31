@@ -83,7 +83,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public IQueryable<DWObjectTable> GetDWObjectTables(int tenant)
         {
-            return webFreightContext.DWObjectTables;//.Where(a => a.Tenant == tenant);
+            return webFreightContext.DWObjectTables.Where(a => a.Tenant == tenant);
         }
   
     }

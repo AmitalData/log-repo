@@ -1,43 +1,38 @@
-
-<table style="height: 24px">
+﻿<table style="height: 24px">
     <tr>
-        <td>
+
+        <td style="width: 1px; padding-left: 10px; padding-right: 5px;">
             <table>
                 <tr>
-                    <td style="width:1px">
-                        <img src="./Images/Opportunity.png" />
-                    </td>
-
-                    <td style="width:1px;font-family: Arial; font-size: 16px;">Opportunity: </td>
-
-                    <td style="padding-left:5px;width:1px">
+                    <td style="width:10px"><img src="./Images/Opportunity.png" /></td>
+                    <td style="width:80px;font-family: Arial; font-size: 16px;">Opportunity: </td>
+                    <td  style="padding-left:5px;width:1px">
                         <span style="font-family: Arial; font-size: 16px; font-weight: bold;text-decoration:none" class="hyperlink" (click)="ViewCustomerMethod()">      {{EnglishName}}</span>
-                    </td>
-
+</td>
                     <td style="width: 10px; min-width: 10px;">
                         <div></div>
                     </td>
-
                     <td style="width:80px">
                         <div>
                             <span><img style="width: 20px; height: 20px; vertical-align: middle; margin:0; margin-left: -0px;" [attr.src]="RankSource1" [attr.title]="RankName" /></span>
                             <span><img style="width: 20px; height: 20px; vertical-align: middle; margin:0; margin-left: -3px;" [attr.src]="RankSource2" [attr.title]="RankName" /></span>
                             <span><img style="width: 20px; height: 20px; vertical-align: middle; margin:0; margin-left: -3px;" [attr.src]="RankSource3" [attr.title]="RankName" /></span>
                         </div>
+                      
                     </td>
-
                     <td *ngIf="EntityPM.IsCancelled == true" style="width:70px">
                         <div class="ShortTitleControl" style="background: Red;font-size:12px;padding-left: 5px;">
                             <span style="color: white;font-size:12px;">Cancelled</span>
                         </div>
                     </td>
-
                     <td>
-                        <div></div>
-                    </td>
 
+                    </td>
+                   
+                  
                 </tr>
             </table>
         </td>
     </tr>
+
 </table>

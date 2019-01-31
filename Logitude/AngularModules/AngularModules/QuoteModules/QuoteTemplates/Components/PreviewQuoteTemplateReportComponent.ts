@@ -40,7 +40,7 @@ export class PreviewQuoteTemplateReportComponent implements OnInit, AfterViewIni
 
 
     GetQuoteTemplatePdfReport() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
         this.quoteTemplateSectionExtendedPMService.GetQuoteTemplatePdfReport(this.QuoteId, this.QuoteTemplateId, SessionLocator.LoggedUserId, this.isFromLibrary).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             SessionLocator.CurrentSession.StopBusyIndicator();

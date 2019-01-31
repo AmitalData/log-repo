@@ -62,14 +62,6 @@ using Logitude.Server.Tools;
 using Simplog.Global.Data.GlobalModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using System.Threading;
-using Logitude.Server.Tools.QueueService;
-using Logitude.Infrastructure.BL.EntityPMs;
-using Logitude.Infrastructure.Data;
-using Logitude.Infrastructure.BL.EntityUpdateServices;
-using System.Xml.Serialization;
-using WebFreight.Web.DataContracts;
-using Logitude.Infrastructure.BL.EntityQueryServices;
-using Logitude.Infrastructure.Data.Repsitories;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -270,57 +262,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     allowedPackages = inf.PackagesCodes;
                 }
 
-                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-                IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
-                FeatureRepository iFeatureRepository = new FeatureRepository(commonDataContext);
-
-                FeatureQuery featureQuery = new FeatureQuery(iFeatureRepository);
+                FeatureQuery featureQuery = new FeatureQuery(tenant);
                 List<FeaturePM> myResult = featureQuery.GetSelectedAndUnSelectedFeatures(RoleId, allowedPackages, tenant);
-
-
-                Tenant iTenant = (from d in commonDataContext.Tenants where d.Id == tenant select d).FirstOrDefault();
-                List<string> allTextCodesIds = myResult.Where(d => d.NameTextCodeId != null).Select(s => s.NameTextCodeId).ToList();
-                List<TextCode> allTextCodes = (from d in webFreightContext.TextCodes where allTextCodesIds.Contains(d.Id) select d).ToList();
-                List<Translation> allTranslations = new List<Translation>();
-
-                if (iTenant.Language != null)
-                {
-                    TranslationHeader iTranslationHeader = (from d in webFreightContext.TranslationHeaders where d.Code == iTenant.Language select d).FirstOrDefault();
-                    if (iTranslationHeader != null)
-                    {
-                        allTranslations = (from d in webFreightContext.Translations
-                                           where d.TranslationHeaderCode == iTranslationHeader.Code
-                                           && d.Tenant == tenant
-                                           && allTextCodesIds.Contains(d.TextCodeId)
-                                           select d).ToList();
-                    }
-                }
 
                 foreach (FeaturePM item in myResult)
                 {
-                    if (!string.IsNullOrEmpty(item.NameTextCodeId))
+                    if (!string.IsNullOrEmpty(item.NameTextCodeCode))
                     {
-                        TextCode iTextCode = allTextCodes.Where(d => d.Id == item.NameTextCodeId).FirstOrDefault();
-                        if (iTextCode != null)
-                        {
-                            item.TranslatedName = iTextCode.DefaultText;
-
-                            Translation iTranslation = allTranslations.Where(d => d.TextCodeId == item.NameTextCodeId).FirstOrDefault();
-                            if (iTranslation != null)
-                            {
-                                item.TranslatedName = iTranslation.TranslatedText;
-                            }
-                        }
+                        item.TranslatedName = TranslateTextsClass.Translate(item.NameTextCodeCode, tenant);
                     }
                 }
-
-                //foreach (FeaturePM item in myResult)
-                //{
-                //    if (!string.IsNullOrEmpty(item.NameTextCodeCode))
-                //    {
-                //        item.TranslatedName = TranslateTextsClass.Translate(item.NameTextCodeCode, tenant);
-                //    }
-                //}
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -446,7 +397,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage PutFeatures(FeaturesUpdateHelper args)
+        public HttpResponseMessage Put(FeaturesUpdateHelper args)
         {
             try
             {
@@ -503,7 +454,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             this.BuildFeatureChangesAdded(ref myFeatureChanges, featuresAdded);
                             this.BuildFeatureChangesRemoved(ref myFeatureChanges, featuresRemoved);
 
-                            if (myFeatureChanges != null)
+                            if(myFeatureChanges != null)
                             {
                                 string loggedUserEmail = authToken.Email;
                                 string loggedUserId = this.GetLoggedUserId(loggedUserEmail, tenant);
@@ -949,7 +900,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                         UserName = d.User == null ? null : d.User.Contact.EnglishName,
                                                     }).ToList();
 
-                return Request.CreateResponse(HttpStatusCode.OK, myResult.OrderByDescending(d => d.EventDateTime));
+                return Request.CreateResponse(HttpStatusCode.OK, myResult.OrderByDescending(d=> d.EventDateTime));
             }
 
             catch (Exception ex)
@@ -1170,7 +1121,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
+                
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("TenantManagement", "TenantManagement.Action.EraseData", tenant);
 
@@ -1181,11 +1132,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 if (!string.IsNullOrEmpty(authToken.Email))
                 {
                     Contact contact = contactRepository.GetSingleContactByEmail(authToken.Email, tenant);
-                    if (contact != null)
+                    if(contact != null)
                     {
                         User user = userRepository.GetSingleUser(contact.Id, tenant);
 
-                        if (user == null)
+                        if(user == null)
                         {
                             throw new Exception("Not a user");
                         }
@@ -1208,42 +1159,101 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     ip = HttpContext.Current.Request.UserHostAddress;
                 }
 
-                if (string.IsNullOrEmpty(ip) && ip != "82.213.2.230")
+                if(string.IsNullOrEmpty(ip) && ip != "82.213.2.230")
                 {
                     throw new Exception("Not logged in from company IP");
                 }
 
-                EraseTenantDataArgs args = new EraseTenantDataArgs() { Type = type, EntityId = entityId };
-                var stringwriter = new System.IO.StringWriter();
-                var serializer = new XmlSerializer(typeof(EraseTenantDataArgs));
-                serializer.Serialize(stringwriter, args);
-                string xmlParameters = stringwriter.ToString();
-
-                BatchTaskExecutionPM taskExe = new BatchTaskExecutionPM()
+                switch (type)
                 {
-                    Subject = "Delete Records",
-                    Tenant = tenant,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    ClassName = "WebFreight.Web.Helpers.APIHelpers.EraseTenantDataHelper,WebFreight.Web",
-                    CreateDate = DateTime.Now,
-                    PrametersXml = xmlParameters,
-                    StatusCode = "C",
-                };
+                    case "B":
+                        {
+                            //Thread.Sleep(180000);
+                            string strConnString = this.GetConnection(entityId);
+                            using (SqlConnection cn = new SqlConnection(strConnString))
+                            {
+                                SqlCommand cmd = new SqlCommand("dbo.usp_DeleteBusinessRecords", cn);
+                                cmd.CommandType = CommandType.StoredProcedure;
 
-                IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
-                BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-                bteUpdateService.Update(taskExe, true);
+                                SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.VarChar);
+                                param1.Direction = ParameterDirection.Input;
+                                param1.Value = entityId;
+                                cmd.Parameters.Add(param1);
 
-                // 2- Send to queue
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
-                queueservice.Send(new Dictionary<string, string>()
-                {
-                    { "BatchTaskExecutionId", taskExe.Id },
-                    { "Tenant", tenant.ToString() }
-                });
+                                cn.Open();
+                                cmd.CommandTimeout = 10;
+                                cmd.ExecuteNonQuery();
+                                cn.Close();
+                            }
 
-                return Request.CreateResponse(HttpStatusCode.OK, taskExe);
+                            break;
+                        }
+
+                    case "P":
+                        {
+                            string strConnString = this.GetConnection(entityId);
+                            using (SqlConnection cn = new SqlConnection(strConnString))
+                            {
+                                SqlCommand cmd = new SqlCommand("dbo.usp_DeleteCustomerRecords", cn);
+                                cmd.CommandType = CommandType.StoredProcedure;
+
+                                SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.VarChar);
+                                param1.Direction = ParameterDirection.Input;
+                                param1.Value = entityId;
+                                cmd.Parameters.Add(param1);
+
+                                cn.Open();
+                                cmd.ExecuteNonQuery();
+                                cn.Close();
+                            }
+
+                            break;
+                        }
+
+                    case "T":
+                        {
+                            string strConnString = this.GetConnection(entityId);
+                            using (SqlConnection cn = new SqlConnection(strConnString))
+                            {
+                                SqlCommand cmd = new SqlCommand("dbo.usp_DeleteTicketsRecords", cn);
+                                cmd.CommandType = CommandType.StoredProcedure;
+
+                                SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.VarChar);
+                                param1.Direction = ParameterDirection.Input;
+                                param1.Value = entityId;
+                                cmd.Parameters.Add(param1);
+
+                                cn.Open();
+                                cmd.ExecuteNonQuery();
+                                cn.Close();
+                            }
+
+                            break;
+                        }
+
+                    case "C":
+                        {
+                            string strConnString = this.GetConnection(entityId);
+                            using (SqlConnection cn = new SqlConnection(strConnString))
+                            {
+                                SqlCommand cmd = new SqlCommand("dbo.usp_DeleteCRMRecords", cn);
+                                cmd.CommandType = CommandType.StoredProcedure;
+
+                                SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.VarChar);
+                                param1.Direction = ParameterDirection.Input;
+                                param1.Value = entityId;
+                                cmd.Parameters.Add(param1);
+
+                                cn.Open();
+                                cmd.ExecuteNonQuery();
+                                cn.Close();
+                            }
+
+                            break;
+                        }
+                }                
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Ok");
             }
 
             catch (Exception ex)
@@ -1302,7 +1312,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
+        
         public HttpResponseMessage GetResetCountersForTenant(int entityId, string code)
         {
             try
@@ -1311,7 +1321,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
-                IWebFreightContext webFreightContext = WebFreightContext.GetContext(entityId);
+                IWebFreightContext webFreightContext = WebFreightContext.GetContext(entityId); 
                 CounterRepository counterRepository = new CounterRepository(webFreightContext);
                 CounterDefinitionRepository counterDefRep = new CounterDefinitionRepository(webFreightContext);
                 CounterStatRepository counterStatRep = new CounterStatRepository(webFreightContext);
@@ -1561,7 +1571,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 //IQueryable<TaskSchedulerHistory> iQueryable = taskSchedulerHistoryRepository.GetTaskSchedulerHistory(tenant, taskId);                
                 //IQueryable<TaskSchedulerHistoryList> query2 = taskSchedulerHistoryQuery.GetIQueryableEntityList(iQueryable);
-
+                
                 return Request.CreateResponse(HttpStatusCode.OK, query2);
             }
 
@@ -1571,128 +1581,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetResendAnalyzeQueue(string AnalyzeQueueId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
 
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                AnalyzeQueue analyzeQueue = null;
-
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                {
-                    AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
-                    analyzeQueue = analyzeQueueRepository.GetSingleAnalyzeQueue(AnalyzeQueueId);
-
-                    if (analyzeQueue != null)
-                    {
-                        analyzeQueue.Retries = 0;
-                        analyzeQueue.Status = "W";
-                        analyzeQueue.ErrorMessage = null;
-                        analyzeQueue.StackTrace = null;
-                        analyzeQueue.DoneDate = null;
-
-                        analyzeQueue.AckReason = null;
-                        analyzeQueue.AWBNumber = null;
-
-                        analyzeQueue.Tenant = 0;
-                        analyzeQueue.ConnectedToEntity = false;
-                        analyzeQueue.ConnectedToTenant = false;
-                        analyzeQueue.EntityReference = null;
-                        analyzeQueue.CommunicationLogId = null;
-
-                        analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
-
-                        analyzeQueueRepository.Update(analyzeQueue);
-                        analyzeQueueRepository.SubmitChanges();
-                    }
-
-                    scope.Complete();
-                }
-
-                if (analyzeQueue != null)
-                {
-                    DbQueueService queueservice = new DbQueueService();
-                    queueservice.InitializeQueue("ChampAnalyzer", tenant);
-                    queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
-                    queueservice.Complete();
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, true);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetByBIReportId(string Id)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                BIReportQueryService query = new BIReportQueryService(authToken.Tenant);
-                BIReportPM entityPM = query.GetSingle(Id, false, false);
-                BIReportXMLData QueryData = new BIReportXMLData();
-
-                if (entityPM != null)
-                {
-                    QueryData.BIReportPM = entityPM;
-                    if (!string.IsNullOrEmpty(entityPM.AGGridOptionsXML))
-                    {
-                        var Columns = LogitudeXmlSerializer.DeserializeObject<List<BIReportColumnData>>(entityPM.AGGridOptionsXML);
-                        QueryData.Columns = Columns;
-                    }
-                }
-                return Request.CreateResponse(HttpStatusCode.OK, QueryData);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage PutBIReport(BIReportXMLData QueryData)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                var ColumnsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Columns);
-                IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
-                BIReportRepository repository = new BIReportRepository(objectContext);
-
-                var entityPM = QueryData.BIReportPM;
-
-                var entityPOCO = repository.GetSingle(entityPM.Id, entityPM.Tenant);
-                if (entityPM != null)
-                {
-                    entityPM.AGGridOptionsXML = ColumnsXML;
-                    entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-
-                    entityPOCO.AGGridOptionsXML = ColumnsXML;
-                    BIReportUpdateService service = new BIReportUpdateService(objectContext);
-                   // service.Update(entityPM, true);
-
-                    repository.Update(entityPOCO);
-                    repository.SubmitChanges();
-                }
-                return Request.CreateResponse(HttpStatusCode.OK, entityPM);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
     }
 }
 

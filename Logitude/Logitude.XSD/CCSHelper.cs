@@ -68,8 +68,8 @@ namespace Logitude.XSD
         private IShipmentsContext shipmentContext;
         private ShipmentRepository shipmentRepository;
         private ShipmentMasterDataRepository shipmentMasterDataRepository;
-        private MessagingStockRepository stockRepository;
-        private MessagingStockUsageHistoryRepository usageHistoryRepository;
+        private AWBMessagingStockRepository stockRepository;
+        private AWBStockUsageHistoryRepository usageHistoryRepository;
         private ShipmentCarrierStatusRepository shipmentCarrierStatusRepository;
         private ICommonDataContext commonContext;
         private DocumentRepository documentRepository;
@@ -220,8 +220,8 @@ namespace Logitude.XSD
 
             if (IsAWBStockPrepaid)
             {
-                this.stockRepository = new MessagingStockRepository(shipmentContext);
-                this.usageHistoryRepository = new MessagingStockUsageHistoryRepository(shipmentContext);
+                this.stockRepository = new AWBMessagingStockRepository(shipmentContext);
+                this.usageHistoryRepository = new AWBStockUsageHistoryRepository(shipmentContext);
             }
         }
         private void CheckStockValidity()
@@ -230,8 +230,8 @@ namespace Logitude.XSD
             {
                 if (IsAWBStockPrepaid)
                 {
-                    IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(Tenant, "Champ");
-                    IQueryable<MessagingStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantMessagingStockUsageHistory(Tenant);
+                    IQueryable<AWBMessagingStock> myStocksData = stockRepository.GetAWBMessagingStocksByTenant(Tenant);
+                    IQueryable<AWBStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantAWBStockUsageHistory(Tenant);
 
                     myStocksData = myStocksData.Where(d => d.StartDate <= TodayDate && d.EndDate > TodayDate && d.Remaining > 0 && !d.IsCancelled);
 
@@ -908,8 +908,8 @@ namespace Logitude.XSD
                 {
                     int? myStocksRemaining = 0;
 
-                    IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(Tenant, "Champ");
-                    IQueryable<MessagingStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantMessagingStockUsageHistory(Tenant);
+                    IQueryable<AWBMessagingStock> myStocksData = stockRepository.GetAWBMessagingStocksByTenant(Tenant);
+                    IQueryable<AWBStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantAWBStockUsageHistory(Tenant);
 
                     myStocksData = myStocksData.Where(d => d.StartDate <= TodayDate && d.EndDate > TodayDate && d.Remaining > 0 && !d.IsCancelled);
 
@@ -920,7 +920,7 @@ namespace Logitude.XSD
 
                     Result.StockRemainingBefore = myStocksRemaining == null ? 0 : myStocksRemaining.Value;
 
-                    MessagingStockUsageHistory usageHistory = null;
+                    AWBStockUsageHistory usageHistory = null;
 
                     if (Shipment.BookingId != null)
                     {
@@ -945,11 +945,11 @@ namespace Logitude.XSD
                     {
                         DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
 
-                        MessagingStock myStock = myStocksData.OrderBy(o => o.EndDate).FirstOrDefault();
+                        AWBMessagingStock myStock = myStocksData.OrderBy(o => o.EndDate).FirstOrDefault();
 
-                        usageHistory = new MessagingStockUsageHistory()
+                        usageHistory = new AWBStockUsageHistory()
                         {
-                            Id = IdCounter.GetNumber("MessagingStockUsageHistory", Tenant),
+                            Id = IdCounter.GetNumber("AWBStockUsageHistory", Tenant),
                             Tenant = Tenant,
                             StockId = myStock.Id,
                             EntityId = ShipmentId,

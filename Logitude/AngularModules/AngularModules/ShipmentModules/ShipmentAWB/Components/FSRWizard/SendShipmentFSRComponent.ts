@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+﻿import {Component, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -242,7 +242,7 @@ export class SendShipmentFSRComponent extends BaseComponent implements OnInit {
             }
         }
 
-        if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TTY)) {
+        if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementPM.TTY)) {
             errors.push("Tenant communication parameter (TTY) is missing");
         }
 

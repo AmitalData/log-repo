@@ -22,7 +22,5 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string ExternalId { get; set; }
         public bool CurrentMonth { get; set; }
         public string FromDateTypeCode { get; set; }
-        public string CalculatedLocalName { get; set; }
-        public string CalculatedEnglishName { get; set; }
     }
 }

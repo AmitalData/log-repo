@@ -161,11 +161,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Year",
-					  						DefaultText =  @"Year",
-					  						FullLocalDefaultText =  @"שנה",
+					  						DefaultText =  "Year",
+					  						FullLocalDefaultText =  "שנה",
 					  						ListFieldLable =  "YearListLable",
-					  						ListLableDefaultText =  @"Year",
-					  						ListLocalDefaultText =  @"שנה",
+					  						ListLableDefaultText =  "Year",
+					  						ListLocalDefaultText =  "שנה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -213,11 +213,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PeriodTypeCode",
-					  						DefaultText =  @"Type",
-					  						FullLocalDefaultText =  @"סוג תקופה",
+					  						DefaultText =  "Type",
+					  						FullLocalDefaultText =  "סוג תקופה",
 					  						ListFieldLable =  "PeriodTypeCodeListLable",
-					  						ListLableDefaultText =  @"Type",
-					  						ListLocalDefaultText =  @"סוג תקופה",
+					  						ListLableDefaultText =  "Type",
+					  						ListLocalDefaultText =  "סוג תקופה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -265,11 +265,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PeriodTypeName",
-					  						DefaultText =  @"Period Type",
-					  						FullLocalDefaultText =  @"סוג תקופה",
+					  						DefaultText =  "Period Type",
+					  						FullLocalDefaultText =  "סוג תקופה",
 					  						ListFieldLable =  "PeriodTypeNameListLable",
-					  						ListLableDefaultText =  @"Period Type",
-					  						ListLocalDefaultText =  @"סוג תקופה",
+					  						ListLableDefaultText =  "Period Type",
+					  						ListLocalDefaultText =  "סוג תקופה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -317,11 +317,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpenMonth",
-					  						DefaultText =  @"Open Month",
-					  						FullLocalDefaultText =  @"חודש פתוח",
+					  						DefaultText =  "Open Month",
+					  						FullLocalDefaultText =  "חודש פתוח",
 					  						ListFieldLable =  "OpenMonthListLable",
-					  						ListLableDefaultText =  @"OpenMonth",
-					  						ListLocalDefaultText =  @"חודש פתוח",
+					  						ListLableDefaultText =  "OpenMonth",
+					  						ListLocalDefaultText =  "חודש פתוח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -369,11 +369,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClosedMonth",
-					  						DefaultText =  @"Closed Month",
-					  						FullLocalDefaultText =  @"חודש סגור",
+					  						DefaultText =  "Closed Month",
+					  						FullLocalDefaultText =  "חודש סגור",
 					  						ListFieldLable =  "ClosedMonthListLable",
-					  						ListLableDefaultText =  @"Closed Month",
-					  						ListLocalDefaultText =  @"חודש סגור",
+					  						ListLableDefaultText =  "Closed Month",
+					  						ListLocalDefaultText =  "חודש סגור",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -398,9 +398,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {                
-			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
-			   ObjectTable AccountingPeriodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingPeriod" && d.Tenant == 0).FirstOrDefault();  
+	    {    
+			 ObjectTable AccountingPeriodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingPeriod" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode AccountingPeriodGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriod.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature AccountingPeriodGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPeriod.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -410,12 +409,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature AccountingPeriodEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPeriod.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingPeriodGeneralFeature_TH0.Id, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.AccountingPeriodGeneralTabControl", ObjectTableId = AccountingPeriodObjectTable.Id, TabNameTextCodeId = AccountingPeriodGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == AccountingPeriodObjectTable.Id).FirstOrDefault().Id, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.AccountingPeriodGeneralTabControl", ObjectTableId = AccountingPeriodObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "AccountingPeriod.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingPeriodEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AccountingPeriodObjectTable.Id, TabNameTextCodeId = AccountingPeriodEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == AccountingPeriodObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AccountingPeriodObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "AccountingPeriod.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -588,14 +587,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

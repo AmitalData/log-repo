@@ -45,9 +45,10 @@ export class NewConsolidationComponent extends BaseComponent {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
         this.InitializeServices();
         
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
+
+        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARInvoiceEditExchangeRate")) {
             this.IsEditExchangeRateVisible = true;
-        }        
+        }
     }
 
     private myCardListService: CardListService;
@@ -129,26 +130,19 @@ export class NewConsolidationComponent extends BaseComponent {
     SetUIProperties_ExchangeRate() {
         var isFieldtEnabled = true;
 
-        if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARInvoiceEditExchangeRate")) {
+        if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
             isFieldtEnabled = false;
         }
 
-        else {
-            if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-                isFieldtEnabled = false;
-            }
-
-            else if (SessionLocator.LocalCurrencyId == null) {
-                isFieldtEnabled = false;
-            }
-
-            else if (SessionLocator.LocalCurrencyId == this.InvoiceCurrencyId) {
-                isFieldtEnabled = false;
-            }
+        else if (SessionLocator.LocalCurrencyId == null) {
+            isFieldtEnabled = false;
         }
-        
-        //this.RateIsEnabled = isFieldtEnabled;
-        this.RateIsEnabled = true;
+
+        else if (SessionLocator.LocalCurrencyId == this.InvoiceCurrencyId) {
+            isFieldtEnabled = false;
+        }
+
+        this.RateIsEnabled = isFieldtEnabled;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isFieldtEnabled);
     }
     SetUIProperties_DueDate() {

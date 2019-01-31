@@ -12,7 +12,5 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string FullLocalDefaultText { get; set; }
         public bool IsBusinessUnitEnabled { get; set; }
         public bool IsMemoryAdded { get; set; }
-        public bool IsOld { get;  set; }
-        public bool IsCoreFeature { get;  set; }
     }
 }

@@ -32,16 +32,6 @@ namespace WebFreight.Web.Security
             if (HttpContext.Current != null)
             {
                 string email = HttpContext.Current.User.Identity.Name;
-
-                if (HttpContext.Current.Items!=null)
-                {
-                    string val = HttpContext.Current.Items["Session"] as string;
-                    if (val == "SessionExpiration")
-                    {
-                        throw new Exception("Sorry! this user is not authorized! due to session expiration");
-                    }
-                }
-
                 ContactInfo contactinfo = GetContactInfo(email, tenant);
                 if (contactinfo == null || string.IsNullOrEmpty(email))
                 {
@@ -557,7 +547,7 @@ namespace WebFreight.Web.Security
                                 RolesIds = allRolesIds,
                                 PackagesCodes = allPackages,
                             };
-                            //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
+                            myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
                             
 
                             CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
@@ -576,7 +566,7 @@ namespace WebFreight.Web.Security
                                 
                             };
 
-                            //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
+                            myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
 
 
                             CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
@@ -588,22 +578,22 @@ namespace WebFreight.Web.Security
             return myContactInfo;
         }
 
-        //private static string GetComputingPartnerCode(AuthenticationToken authToken)
-        //{
-        //    string computingPartnerCode = "";
-        //    if (authToken != null && !string.IsNullOrEmpty(authToken.APICredentialID))
-        //    {
-        //            ApiCredintialsRepository apiCredintialsRepository = new ApiCredintialsRepository();
-        //            ApiCredintials apiCredintials = apiCredintialsRepository.GetSingleApiCredintials(authToken.APICredentialID, authToken.Tenant);
-        //            if (apiCredintials != null && !string.IsNullOrEmpty(apiCredintials.ComputingPartnerId))
-        //            {
-        //                ComputingPartnerRepository computingPartnerRepository = new ComputingPartnerRepository(authToken.Tenant);
-        //                computingPartnerCode = computingPartnerRepository.GetSingleComputingPartnerCodeById(apiCredintials.ComputingPartnerId);
-        //            }
+        private static string GetComputingPartnerCode(AuthenticationToken authToken)
+        {
+            string computingPartnerCode = "";
+            if (authToken != null && !string.IsNullOrEmpty(authToken.APICredentialID))
+            {
+                    ApiCredintialsRepository apiCredintialsRepository = new ApiCredintialsRepository();
+                    ApiCredintials apiCredintials = apiCredintialsRepository.GetSingleApiCredintials(authToken.APICredentialID, authToken.Tenant);
+                    if (apiCredintials != null && !string.IsNullOrEmpty(apiCredintials.ComputingPartnerId))
+                    {
+                        ComputingPartnerRepository computingPartnerRepository = new ComputingPartnerRepository(authToken.Tenant);
+                        computingPartnerCode = computingPartnerRepository.GetSingleComputingPartnerCodeById(apiCredintials.ComputingPartnerId);
+                    }
                 
-        //    }
-        //    return computingPartnerCode;
-        //}
+            }
+            return computingPartnerCode;
+        }
 
         private static List<string> GetAllPackagesCodes(string email, int tenant, bool isCustomerCare)
         {
@@ -848,17 +838,6 @@ namespace WebFreight.Web.Security
         {
             if (HttpContext.Current != null)
             {
-
-                if (HttpContext.Current.Items != null)
-                {
-                    string val = HttpContext.Current.Items["Session"] as string;
-                    if (val == "SessionExpiration")
-                    {
-                        throw new Exception("Sorry! this user is not authorized! due to session expiration");
-                    }
-                }
-
-
                 if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
                 {
                     return HttpContext.Current.User.Identity.Name;
@@ -1078,26 +1057,6 @@ namespace WebFreight.Web.Security
             }
 
             return exists;
-        }
-
-        public static bool CheckIsUserCustomerCare(string email)
-        {
-            bool isCustomerCare = false;
-            IGlobalContext globalObjectContext = GlobalContext.GetContext();
-            GlobalContact zeroContact = globalObjectContext.GlobalContacts.Where(d => d.GlobalTenantId == 0 && d.Email == email && d.InActive == false).FirstOrDefault();
-            if (zeroContact != null)
-            {
-                ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
-                var logitudeUser = (from a in commonDataContext.Users
-                                    where a.Id == zeroContact.Id
-                                    select a).FirstOrDefault();
-                if (logitudeUser != null)
-                {
-                    if (logitudeUser.Tenant == 0) isCustomerCare = !logitudeUser.IsDistributor;
-                }
-            }
-
-            return isCustomerCare;
         }
     }
 }

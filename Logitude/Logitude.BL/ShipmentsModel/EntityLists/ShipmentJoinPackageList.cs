@@ -31,7 +31,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string AgentReference2 { get; set; }
         public string ContainerCode { get; set; }
         public string ShipmentId { get; set; }
-        public string PackageId { get; set; }
         public string TransportModeId { get; set; }
         public string MainCarriageCarrierPrefix { get; set; }
         public string AgentId { get; set; }
@@ -63,26 +62,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Field18 { get; set; }
         public string Field19 { get; set; }
         public string Field20 { get; set; }
-        public string Field21 { get; set; }
-        public string Field22 { get; set; }
-        public string Field23 { get; set; }
-        public string Field24 { get; set; }
-        public string Field25 { get; set; }
-        public string Field26 { get; set; }
-        public string Field27 { get; set; }
-        public string Field28 { get; set; }
-        public string Field29 { get; set; }
-        public string Field30 { get; set; }
-        public string Field31 { get; set; }
-        public string Field32 { get; set; }
-        public string Field33 { get; set; }
-        public string Field34 { get; set; }
-        public string Field35 { get; set; }
-        public string Field36 { get; set; }
-        public string Field37 { get; set; }
-        public string Field38 { get; set; }
-        public string Field39 { get; set; }
-        public string Field40 { get; set; }
 
         public string House { get; set; }
         public string ConsigneeName { get; set; }
@@ -134,7 +113,5 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Transshipment2VesselId { get; set; }
         public string Transshipment1VesselId { get; set; }
         public string MainCarriageVesselId { get; set; }
-
-        public string BookingConfirmationNumber { get; set; }
     }
 }

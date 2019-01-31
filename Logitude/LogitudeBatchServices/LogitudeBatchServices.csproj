@@ -41,9 +41,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.Diagnostics.dll</HintPath>
       <Private>True</Private>
@@ -109,18 +106,6 @@
     <ProjectReference Include="..\CommunicationWorkerRole\CommunicationWorkerRole.csproj">
       <Project>{d5834b27-2c00-4ab3-9aa3-4266314b5aba}</Project>
       <Name>CommunicationWorkerRole</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
-      <Project>{A663E7EF-B858-4BB6-BC33-E473F51B8E56}</Project>
-      <Name>Logitude.BL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logitude.Customs.BL\Logitude.Customs.BL.csproj">
-      <Project>{D2951C0F-8A2B-4EE2-933A-8B6B4134F766}</Project>
-      <Name>Logitude.Customs.BL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
-      <Project>{9B477A08-8EE2-4457-88FE-17E8A6EC4D00}</Project>
-      <Name>Logitude.Server.Tools</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

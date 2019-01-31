@@ -120,7 +120,6 @@
         font-size: 15px;
         /*font-weight: bold;*/
         font-family: sans-serif;
-        direction: ltr;
     }
     .labels-table td{
         text-align: center;
@@ -158,13 +157,14 @@
         <td>
             <div class="TableHolder">
                 <table>
-                    <!-- <tr class="TabTitleRow">
+                    <tr class="TabTitleRow">
                         <td>{{'GLAccount.TH.Overview' | TextCodeTranslationPipe}}</td>
-                    </tr> -->
+                    </tr>
                     <tr>
 
                         <td style="vertical-align: top;">
                             <div>
+
                                 <!-- Widget: Balance Section -->
                                 <div [style.float]="isRTL ? 'right' : 'left'" *ngIf="GLAccountMoreData" class="widget">
                                     <div class="content-no-header" style="height: 90px;">
@@ -175,14 +175,14 @@
                                                 <td class="header-labels">{{ 'GLAccounts.O.OpenTransactions' | TextCodeTranslationPipe }}</td>
                                             </tr>
                                             <tr>
-                                                <td class="amount-labels" [class.red]="GLAccountMoreData.BalanceInLocalCurrency<=0">{{ (GLAccountMoreData.BalanceInLocalCurrency ?GLAccountMoreData.BalanceInLocalCurrency:0) | NumbersPipe:'N2' }}</td>
-                                                <td class="amount-labels" [class.red]="GLAccountMoreData.LocalBalanceInDue<=0">{{ (GLAccountMoreData.LocalBalanceInDue?GLAccountMoreData.LocalBalanceInDue:0) | NumbersPipe:'N2' }}</td>
+                                                <td class="amount-labels" [class.red]="GLAccountMoreData.BalanceInLocalCurrency<=0">{{ GLAccountMoreData.BalanceInLocalCurrency | NumbersPipe:'N2' }}</td>
+                                                <td class="amount-labels" [class.red]="GLAccountMoreData.LocalBalanceInDue<=0">{{ GLAccountMoreData.LocalBalanceInDue | NumbersPipe:'N2' }}</td>
                                                 <td class="amount-labels" style="color: black;">{{ GLAccountOpenTransactionsCount }}</td>
                                             </tr>
                                             <tr>
-                                                <td><a style="font-size: 12px;" (click)="DisplayTransactionsLinkClicked()">{{ 'GLAccounts.O.DispalyTransactions' | TextCodeTranslationPipe }}</a></td>
-                                                <td style="font-size: 12px;">{{ 'GLAccounts.O.NextDueDate' | TextCodeTranslationPipe }}: {{GLAccountMoreData.NextDueDate | DateTimePipe:'SD'}}</td>
-                                                <td><a style="font-size: 12px;" (click)="ReconcileLinkClicked()">{{ 'GLAccounts.O.Reconcile' | TextCodeTranslationPipe }}</a></td>
+                                                <td><a style="font-size: 11px;" (click)="DisplayTransactionsLinkClicked()">{{ 'GLAccounts.O.DispalyTransactions' | TextCodeTranslationPipe }}</a></td>
+                                                <td style="font-size: 11px;">{{ 'GLAccounts.O.NextDueDate' | TextCodeTranslationPipe }}: {{GLAccountMoreData.NextDueDate | DateTimePipe:'SD'}}</td>
+                                                <td><a style="font-size: 11px;" (click)="ReconcileLinkClicked()">{{ 'GLAccounts.O.Reconcile' | TextCodeTranslationPipe }}</a></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -204,31 +204,31 @@
                                             <li class="Last-Transaction-Item RecentEntityItem" *ngFor="let transaction of lastTransactionsList">
 
                                                 <!-- SourceType -->
-                                                <div style="width: 30px; padding: 10px 5px 2px 5px;    font-size: 11px;">
+                                                <div style="width: 30px; padding: 10px 5px 2px 5px;">
                                                     <span title="{{transaction['SourceType']}}"
                                                           [class]="'SourceTypeIcon color-' + transaction['SourceTypeCode']"
                                                           (click)="OpenSource(transaction['SourceId'])"
                                                           style="font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">{{GetIconText(transaction)}}</span>
                                                 </div>
-                                                <div style="width: 50px;padding: 9px 0;    font-size: 11px;">
+                                                <div style="width: 50px;padding: 9px 0;">
                                                     <a href="javascript:;" (click)="OpenSource(transaction, transaction['SourceId'])">
                                                         {{ transaction['SourceNumber'] }}
                                                     </a>
                                                 </div>
 
-                                                <div style="width: 100px;padding: 9px 0;    font-size: 11px;">
+                                                <div style="width: 100px;padding: 9px 0;">
                                                     {{ transaction.AccountingDate | DateTimePipe:'SD' }}
                                                 </div>
-                                                <div class="TextTrimming" style="width: 110px;    font-size: 12px;padding: 9px 0;color:#00a24d; text-align: right; direction: ltr;" [class.red]='GetTransAmount(transaction)>0'>
-                                                    {{ GetTransAmount(transaction) | NumbersPipe:'N2' }}
+                                                <div class="TextTrimming" style="width: 100px;padding: 9px 0;color:#00a24d; text-align: right; direction: ltr;" [class.red]='transaction["OpenAmount"]>0'>
+                                                    {{ (transaction["OpenAmount"] != 0 ? -1*Abs(transaction["OpenAmount"]) : Abs(transaction["OpenAmount"]))| NumbersPipe:'N2' }}
                                                 </div>
 
-                                                <div style="width: 150px;padding: 9px 5px;    font-size: 11px;">
+                                                <div style="width: 145px;padding: 9px 5px;">
                                                     {{ GetReferencesText(transaction) }}
                                                 </div>
-                                                <!-- <div style="width: 20px;padding: 5px 0;height: 100%;" title="{{GetIndicatorText(transaction)}}">
+                                                <div style="width: 20px;padding: 5px 0;height: 100%;" title="{{transaction['OpenAmount'] != CalculateOriginalAmount(transaction) ? 'Partial transaction' : 'Open transaction'}}">
                                                     <div class="circleDraw" style="height: 7px;" [class.orangeCircle]="transaction['OpenAmount'] != CalculateOriginalAmount(transaction)"></div>
-                                                </div> -->
+                                                </div>
 
                                             </li>
                                         </ul>

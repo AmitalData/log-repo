@@ -66,11 +66,11 @@ namespace WebFreight.Web.Helpers
         {
             ShipmentQuery repository = new ShipmentQuery(Tenant);
             ShipmentPM myShipment = repository.GetSinglePMWithoutComposition(shipmentId, Tenant);
-
+           
             if (myShipment != null)
             {
-                string myResult = null;
-                myResult = this.MapEntity(myShipment);
+                string myResult = null;                
+                myResult = this.MapEntity(myShipment);                
 
                 if (!string.IsNullOrEmpty(myResult))
                 {
@@ -97,13 +97,13 @@ namespace WebFreight.Web.Helpers
                     {
                         ShipmentId = shipmentId,
                         MessageType = "CBAS",
-                        Status = "SENT",
+                        Status = "SENT",                        
                     };
 
                     ShipmentCustomsTransmissionHelper transmissionHelper = new ShipmentCustomsTransmissionHelper(Tenant);
                     transmissionHelper.Run(args);
                 }
-            }
+            }            
         }
         private string MapEntity(ShipmentPM myShipment)
         {
@@ -149,7 +149,7 @@ namespace WebFreight.Web.Helpers
             {
                 Card agentCard = cardRepository.GetSingleCard(myShipment.IssuingCarrierAgentId, myShipment.Tenant);
                 Address agentAddress = addressRepository.GetSingleAddress(myShipment.IssuingCarrierAddressId, myShipment.Tenant);
-
+                
                 main.Append(this.CreateString_N01(agentCard, null, "agent"));
                 main.Append(this.CreateString_N02(agentAddress, null));
                 main.Append(this.CreateString_N03(agentCard, agentAddress));
@@ -198,7 +198,7 @@ namespace WebFreight.Web.Helpers
             str.Append(this.buildLine("", 10, "R", ' '));
             str.Append(this.buildLine(tenantName, 30, "R", ' '));
             str.Append(this.buildLine("", 25, "R", ' '));
-
+            
             return str.ToString();
         }
         private string CreateString_SC1(ShipmentPM myShipment)
@@ -256,7 +256,7 @@ namespace WebFreight.Web.Helpers
 
             Address shipperAddress = addressRepository.GetSingleAddress(myShipment.ShipperAddressId, myShipment.Tenant);
             string shipperStateCode = shipperAddress == null ? "" : (shipperAddress.State == null ? "" : shipperAddress.State.Code);
-
+            
             string carrierCode = "";
             string vesselName = "";
             Card carrier = cardRepository.GetSingleCard(myShipment.MainCarriageCarrierId, myShipment.Tenant);
@@ -406,7 +406,7 @@ namespace WebFreight.Web.Helpers
             {
                 string[] names = contact.EnglishName.Split(' ');
                 contactFirstName = names[0];
-
+                
                 if (names.Length > 1)
                 {
                     contactLastName = names[1];
@@ -421,26 +421,26 @@ namespace WebFreight.Web.Helpers
             str.Append(this.buildLine(contactFirstName, 13, "R", ' '));
             str.Append(this.buildLine(contactLastName, 20, "R", ' '));
             str.Append(this.buildLine(consignee_n, 1, "R", ' '));
-
+            
             return str.ToString();
         }
         private string CreateString_N02(Address address, Contact contact)
         {
             StringBuilder str = new StringBuilder(80);
 
-            string phone = address == null ? null : address.PhoneNumber;
+            string phone = address.PhoneNumber;
 
             if (contact != null)
             {
-                if (!string.IsNullOrEmpty(contact.BusinessPhone))
+                if(!string.IsNullOrEmpty(contact.BusinessPhone))
                 {
                     phone = contact.BusinessPhone;
                 }
             }
-
+            
             str.Append("N02");
-            str.Append(this.buildLine(address == null ? null : address.Address1, 32, "R", ' '));
-            str.Append(this.buildLine(address == null ? null : address.Address2, 32, "R", ' '));
+            str.Append(this.buildLine(address.Address1, 32, "R", ' '));
+            str.Append(this.buildLine(address.Address2, 32, "R", ' '));
             str.Append(this.buildLine(phone, 13, "R", ' '));
 
             return str.ToString();
@@ -449,14 +449,14 @@ namespace WebFreight.Web.Helpers
         {
             StringBuilder str = new StringBuilder(80);
 
-            string stateCode = address == null ? null : (address.State == null ? "" : address.State.Code);
-            string countryCode = address == null ? null : (address.Country == null ? "" : address.Country.Code);
+            string stateCode = address.State == null ? "" : address.State.Code;
+            string countryCode = address.Country == null ? "" : address.Country.Code;
 
             str.Append("N03");
-            str.Append(this.buildLine(address == null ? null : address.City, 25, "R", ' '));
+            str.Append(this.buildLine(address.City, 25, "R", ' '));
             str.Append(this.buildLine(stateCode, 2, "R", ' '));
             str.Append(this.buildLine(countryCode, 2, "R", ' '));
-            str.Append(this.buildLine(address == null ? null : address.ZipCode, 9, "R", ' '));
+            str.Append(this.buildLine(address.ZipCode, 9, "R", ' '));
             str.Append(this.buildLine(partner.VatNumber, 9, "R", ' '));
             str.Append("E");
             str.Append("D");
@@ -467,10 +467,10 @@ namespace WebFreight.Web.Helpers
         private string CreateString_CL1(ShipmentPM myShipment, IQueryable<ShipmentPackage> packages)
         {
             StringBuilder str = new StringBuilder(80);
-
+            
             int lineNumber = 1;
 
-            if (packages.Count() > 0)
+            if(packages.Count() > 0)
             {
                 foreach (ShipmentPackage item in packages)
                 {
@@ -488,7 +488,7 @@ namespace WebFreight.Web.Helpers
                     str.Append(this.buildLine("", 8, "R", ' '));
                 }
             }
-
+            
             return str.ToString();
         }
         private string CreateString_CL2(ShipmentPM myShipment, IQueryable<ShipmentPackage> packages)

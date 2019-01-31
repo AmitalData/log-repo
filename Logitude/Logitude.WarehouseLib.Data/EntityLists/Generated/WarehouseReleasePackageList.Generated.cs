@@ -64,10 +64,6 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public string VolumeUnitCode  { get; set; }
        [DataMember]
        public string GrossWeightUnitCode  { get; set; }
-       [DataMember]
-       public double? VolumetricWeight  { get; set; }
-       [DataMember]
-       public string ChargeableWeightUnitCode  { get; set; }
    }
 
 }

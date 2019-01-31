@@ -86,20 +86,14 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
                         
 					
 	    }
-        
+
 		protected override void FillDefaultValuesOnUpdate(WarehouseEntryPackagePM entityPM)
         {       
            
 		    DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 			entityPM.UpdateDate =  myDate;
-					  
-            string email = "system@tenant" + entityPM.Tenant + ".com";
-            if (HttpContext.Current != null)
-            {
-                email = HttpContext.Current.User.Identity.Name; 
-            }
-             
-		    //string email = HttpContext.Current.User.Identity.Name;
+					 
+		    string email = HttpContext.Current.User.Identity.Name;
             ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
             Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
 			if (loggedContact != null)

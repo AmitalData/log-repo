@@ -17,7 +17,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string Email { get; set; }
         public string Website { get; set; }
         public string AddressId { get; set; }
-        public string LocalAddressId { get; set; }
         public string Format { get; set; }
         public string Language { get; set; }
         public string Direction { get; set; }
@@ -93,6 +92,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsSharedLogisticsActivated { get; set; }
         public bool IsWebAccessActivated { get; set; }
 
+
         public bool IsMobileActivated { get; set; }
         public bool SharedLogisticsMessageLink { get; set; }
         public bool IsCustomerTelRequired { get; set; }
@@ -104,6 +104,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public bool ExportQuotationsToIntegratedSystem { get; set; }
 
+
         public virtual AccountingSetting AccountingSetting { get; set; }
 
         [Include]
@@ -113,10 +114,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ExternalReference]
         [Association("TenantAddress", "AddressId", "Id", IsForeignKey = true)]
         public virtual Address Address { get; set; }
-
-        [ExternalReference]
-        [Association("TenantLocalAddress", "LocalAddressId", "Id", IsForeignKey = true)]
-        public virtual Address LocalAddress { get; set; }
 
         public string RegulatedAgentNumber { get; set; }
         public bool RegulatedAgentRegimeActivated { get; set; }
@@ -163,7 +160,5 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public string DefaultSLAId { get; set; }
         public string StockTypeCode { get; set; }
-        public int TenantEmailSendingQuota { get; set; }
-
     }
 }

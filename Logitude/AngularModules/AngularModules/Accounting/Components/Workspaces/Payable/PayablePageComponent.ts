@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
@@ -40,8 +40,6 @@ export class PayablePageComponent {
     //Counts
     public APPaymentsDraftsCount: string;
     public APPaymentsOpenedCount: string;
-    public APInvoicesDraftsCount: string;
-    public APInvoicesUnpaidCount: string;
 
     RecentGLAccountsCount: number = 0;
 
@@ -276,8 +274,6 @@ export class PayablePageComponent {
             if (myResult != null) {
                 this.APPaymentsDraftsCount = myResult.APPaymentsDraftsCount > 1000 ? "1000+" : myResult.APPaymentsDraftsCount.toString();
                 this.APPaymentsOpenedCount = myResult.APPaymentsOpenedCount > 1000 ? "1000+" : myResult.APPaymentsOpenedCount.toString();
-                this.APInvoicesDraftsCount = myResult.APInvoicesDraftsCount > 1000 ? "1000+" : myResult.APInvoicesDraftsCount.toString();
-                this.APInvoicesUnpaidCount = myResult.APInvoicesUnpaidCount > 1000 ? "1000+" : myResult.APInvoicesUnpaidCount.toString();
             }
         });
     }

@@ -92,8 +92,6 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public DateTime? ReleaseDate  { get; set; }
        [DataMember]
        public int TotalQuantity  { get; set; }
-       [DataMember]
-       public string ChargeableWeightUnitCode  { get; set; }
    }
 
 }

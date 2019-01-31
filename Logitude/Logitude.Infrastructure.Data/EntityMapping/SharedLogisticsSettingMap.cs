@@ -48,22 +48,6 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             this.Property(t => t.IsMoneyTabEnabled).HasColumnName("IsMoneyTabEnabled");
 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.IsIssuingCarrierAgentShared).HasColumnName("IsIssuingCarrierAgentShared");
-
-            this.Property(t => t.IsCustomsAgentExportShared).HasColumnName("IsCustomsAgentExportShared");
-
-            this.Property(t => t.IsCustomsAgentImportShared).HasColumnName("IsCustomsAgentImportShared");
-
-            this.Property(t => t.IsCustomClearancePoinShared).HasColumnName("IsCustomClearancePoinShared");
-
-            this.Property(t => t.IsConsolidatorShared).HasColumnName("IsConsolidatorShared");
-
-            this.Property(t => t.IsReleasingAgentShared).HasColumnName("IsReleasingAgentShared");
-
-            this.Property(t => t.IsShipperShared).HasColumnName("IsShipperShared");
-
-            this.Property(t => t.IsConsigneeShared).HasColumnName("IsConsigneeShared");
         }
     }
 }

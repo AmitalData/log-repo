@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {AppTool, FormatTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -9,8 +9,6 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ShipmentDeliveryPM} from '../../../../Shipment/EntityPMs/ShipmentDeliveryPM';
 import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { PickUpDeliveryPackageHarmonizePM } from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
 
 @Component({
     moduleId: module.id,
@@ -48,18 +46,6 @@ export class AddEditOceanPackageComponent {
         this.DimensionsLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Dimensions').replace('%UnitCode', this.DataContext.ShipmentPM.DimensionsUnitCode);
         this.GrossWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Weight').replace('%WeightCode', this.DataContext.ShipmentPM.GrossWeightUnitCode);
         this.VolumetricWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.VolumetricWeight').replace('%WeightCode', this.DataContext.ShipmentPM.ChargeableWeightUnitCode);
-    }
-
-    MultiHarmonizeClicked() {
-        var logWindow = new LogitudeWindow();
-        logWindow.WindowArgs = { PackagePM: this.EntityPM, ShipmentPM: this.DataContext.ShipmentPM ,IsEditingEnabled: this.DataContext.IsEditingEnabled };
-        logWindow.Title = "Container Multi-Harmonize";
-        logWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/AddEditPackageHarmonizeComponent");
-        logWindow.WindowClosed.subscribe(s => {
-            if (s) {
-                this.DataContext.SetUIProperties_Harmonize();                
-            }
-        });
     }
 
     CancelButtonClicked() {
@@ -182,28 +168,6 @@ export class AddEditOceanPackageComponent {
 
                     if (DeliveryPackagePM.Length != this.EntityPM.Length) {
                         DeliveryPackagePM.Length = this.EntityPM.Length;
-                    }
-
-                    if (DeliveryPackagePM.IsMultiHarmonize != this.EntityPM.IsMultiHarmonize) {
-                        DeliveryPackagePM.IsMultiHarmonize = this.EntityPM.IsMultiHarmonize;
-                    }
-
-                    if (DeliveryPackagePM.PickUpDeliveryPackageHarmonizes != null && DeliveryPackagePM.PickUpDeliveryPackageHarmonizes.length > 0) {
-                        for (var i = DeliveryPackagePM.PickUpDeliveryPackageHarmonizes.length - 1; i >= 0; i--) {
-                            var item = DeliveryPackagePM.PickUpDeliveryPackageHarmonizes[i];
-                            DeliveryPackagePM.RemovePickUpDeliveryPackageHarmonizePM(item);
-                        }
-                    }
-
-                    if (this.EntityPM.ShipmentPackageHarmonizes.length > 0) {
-                        this.EntityPM.ShipmentPackageHarmonizes.forEach(harmonizeItem => {
-                            if (harmonizeItem != null) {
-                                var harmonize = new PickUpDeliveryPackageHarmonizePM(null);
-                                harmonize.Harmonize = harmonizeItem.Harmonize;
-                                harmonize.Tenant = harmonizeItem.Tenant;
-                                DeliveryPackagePM.AddPickUpDeliveryPackageHarmonizePM(harmonize);
-                            }
-                        });
                     }
                 }
             }

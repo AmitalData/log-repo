@@ -804,52 +804,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string externalReconcileNumber ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExternalReconcileNumber  
-	   {
-	    
-	     get
-		{
-		   return externalReconcileNumber;
-		 }
-		 set
-		 {
-		   if(externalReconcileNumber != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalReconcileNumber",OldValue=externalReconcileNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   externalReconcileNumber=value;
-		   }
-			
-		 }
-	   }
-	  private bool isExternalReconcile ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsExternalReconcile  
-	   {
-	    
-	     get
-		{
-		   return isExternalReconcile;
-		 }
-		 set
-		 {
-		   if(isExternalReconcile != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExternalReconcile",OldValue=isExternalReconcile,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isExternalReconcile=value;
-		   }
-			
-		 }
-	   }
    }
    
 }

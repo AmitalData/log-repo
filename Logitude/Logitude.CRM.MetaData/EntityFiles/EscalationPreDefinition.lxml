@@ -14,5 +14,4 @@
     <Record Code="&quot;GN&quot;" Name="&quot;Group Notify&quot;" SearchFields="&quot;Group Notify,GN,&quot;" />
     <Record Code="&quot;OW&quot;" Name="&quot;Owner&quot;" SearchFields="&quot;Owner,OW,&quot;" />
   </Records>
-  <AdditionalFeatures />
 </entity>

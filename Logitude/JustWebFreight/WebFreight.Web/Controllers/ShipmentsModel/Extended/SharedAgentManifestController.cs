@@ -12,7 +12,6 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -39,7 +38,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
     public class SharedAgentManifestController : ApiController
     {
 
-        public HttpResponseMessage GetSharedAgentManifest(string shipmentId, bool isUpdateAgent ,int tenant)
+        public HttpResponseMessage GetSharedAgentManifest(string shipmentId, int tenant)
         {
             try
             {
@@ -87,6 +86,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
                     //Card
                     if (!string.IsNullOrEmpty(pm.Notify1Id)) notify1Card = cardRepository.GetSingleCard(pm.Notify1Id, tenant);
+                    // if (!string.IsNullOrEmpty(pm.Notify2Id)) notify2Card = cardRepository.GetSingleCard(pm.Notify2Id, tenant);
+
 
                     //Country
                     if (!string.IsNullOrEmpty(pm.Notify1CountryId)) countryNotify1 = countryRepository.GetSingleCountry(pm.Notify1CountryId, tenant);
@@ -137,9 +138,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
                     }
 
+                  
                     #endregion
 
-                    #region Notify1SL
+                        #region Notify1SL
                     PartnerSL notify1SL = new PartnerSL()
                     {
                         Id = pm.Notify1Id,
@@ -154,7 +156,19 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     };
                     #endregion
 
-                    #region fromPortSL
+                        #region Notify2SL
+                    //PartnerSL notify2SL = new PartnerSL()
+                    //{
+                    //    Id = pm.Notify2Id,
+                    //    Code = notify2Card != null ? notify2Card.Code : "",
+                    //    EnglishName = pm.Notify2Name,
+                    //    Address1 = pm.Notify2AddressId,
+                    //    Address2 = pm.Notify2AddressId,
+
+                    //};
+                    #endregion
+
+                        #region fromPortSL
 
                     PortSL mainCarriageFromPortSL = new PortSL()
                     {
@@ -240,8 +254,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
                     #endregion
 
-
-                    #region ManifestSL
+                        #region ManifestSL
 
                     PortRepository portRepository = new PortRepository(tenant);
 
@@ -274,7 +287,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         Transshipment2ToPort = transshipment2ToPort,
                         Transshipment3FromPort = transshipment3FromPort,
                         Transshipment3ToPort = transshipment3ToPort,
-                        
+
                         AgentReference1 = pm.AgentReference1,
                         AgentReference2 = pm.AgentReference2,
                         ShipmentLevelCode = pm.ShipmentLevelCode,
@@ -370,28 +383,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         MasterDate = pm.CreateDateTime,
                         MoveTypeCode = pm.MoveTypeCode,
                         MoveTypeName = !string.IsNullOrEmpty(pm.MoveTypeName) ? pm.MoveTypeName : pm.MoveTypeCode,
-                        OrginalAgentId = pm.AgentId,
+                     
 
                     };
-
-
-
-                    #region Pickup  Delivery Leg
-                    ShipmentPickUpQuery shipmentPickUpQuery = new ShipmentPickUpQuery(tenant);
               
-                    ShipmentPickUpPM shipmentPickUpPM = shipmentPickUpQuery.GetFistShipmentPickUpPMByTenantAndShipmentId(pm.Id, pm.ShipmentNumber, pm.Tenant);
-                    if (shipmentPickUpPM != null) manifestSL.ShipmentPickUp = BuildShipmentPickUpDeliverySL(shipmentPickUpPM, null);
-
-
-                    ShipmentDeliveryQuery shipmentDeliveryQuery = new ShipmentDeliveryQuery(tenant);
-                    ShipmentDeliveryPM shipmentDeliveryPM = shipmentDeliveryQuery.GetFirstShipmentDeliveryPMsByTenantAndShipment(pm.Id, pm.ShipmentNumber , pm.Tenant);
-                    if (shipmentDeliveryPM != null) manifestSL.ShipmentDelivery = BuildShipmentPickUpDeliverySL(null, shipmentDeliveryPM);
                     #endregion
-
-
-
-                    #endregion
-
 
                     TransLateOtherShipmentDetails(pm , manifestSL , tenant, destinationAgentTenant);
 
@@ -474,6 +470,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
                             #endregion
 
+
+
                             #region houseConsigneeSL
                             PartnerSL houseConsigneeSL = new PartnerSL()
                             {
@@ -490,6 +488,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
                             #endregion
 
+
+
                             #region houseNotify1SL
                             PartnerSL houseNotify1SL = new PartnerSL()
                             {
@@ -504,6 +504,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
                             };
                             #endregion
+
 
                             #region houseNotify2SL
                             //PartnerSL houseNotify2SL = new PartnerSL()
@@ -652,7 +653,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         #endregion
                     }
 
-  
+
+
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         //string manifestXML = LogitudeXmlSerializer.SerializeObjectToXmlString(manifestSL);
@@ -672,7 +674,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                             LoggingUserId = loggedContact.Id,
                             LoggingObjectTableId = table.Id,
                             LoggingEntityId = pm.Id,
-                            Subject = !isUpdateAgent ? "Shared Manifest" : "Update Shared Agent",
+                            Subject = "Shared Manifest",
                             FolderName = "AgentsSharedLogisticsQueue",
                             ByteData = manifestXML,
                         };
@@ -832,7 +834,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             {
 
                 CardRepository cardRepository = new CardRepository(tenant);
-                string result = cardRepository.GetActiveCardIdByCode(code, tenant);
+                string result = cardRepository.GetCardIdByCode(code, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
 
             }
@@ -1314,135 +1316,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             }
         }
 
-        private ShipmentPickUpDeliverySL BuildShipmentPickUpDeliverySL(ShipmentPickUpPM shipmentPickUpPM , ShipmentDeliveryPM shipmentDeliveryPM)
-        {
-            int tenant = shipmentPickUpPM!=null ? shipmentPickUpPM.Tenant: shipmentDeliveryPM.Tenant;
-            CardRepository cardRepository = new CardRepository(tenant);
-            ShipmentPickUpDeliverySL ShipmentPickUpDeliverySL = new ShipmentPickUpDeliverySL();
-
-            ShipmentPickUpDeliverySL.PickUpDeliveryTypeCode = shipmentPickUpPM != null ? "PICK" : "DELV";
-            ShipmentPickUpDeliverySL.MainCarriageATA = shipmentPickUpPM != null ? shipmentPickUpPM.ATA : shipmentDeliveryPM.ATA;
-            ShipmentPickUpDeliverySL.MainCarriageATD = shipmentPickUpPM != null ? shipmentPickUpPM.ATD : shipmentDeliveryPM.ATD;
-            ShipmentPickUpDeliverySL.MainCarriageETA = shipmentPickUpPM != null ? shipmentPickUpPM.ETA : shipmentDeliveryPM.ETA;
-            ShipmentPickUpDeliverySL.MainCarriageETD = shipmentPickUpPM != null ? shipmentPickUpPM.ETD : shipmentDeliveryPM.ETD;
-            ShipmentPickUpDeliverySL.TransportModeCode = shipmentPickUpPM != null ? shipmentPickUpPM.TransportModeCode : shipmentDeliveryPM.TransportModeCode;
-            ShipmentPickUpDeliverySL.TransportModeName = shipmentPickUpPM != null ? shipmentPickUpPM.TransportModeName : shipmentDeliveryPM.TransportModeName;
-
-            #region From
-            string pickUpDeliveryFromTypeCode = shipmentPickUpPM != null ? shipmentPickUpPM.PickUpDeliveryFromTypeCode : shipmentDeliveryPM.PickUpDeliveryFromTypeCode;
-            ShipmentPickUpDeliverySL.PickUpDeliveryFromTypeCode = pickUpDeliveryFromTypeCode;
-
-
-            if (pickUpDeliveryFromTypeCode == "PORT")
-            {
-                string fromPortCode = shipmentPickUpPM!=null ? shipmentPickUpPM.FromPortCode: shipmentDeliveryPM.FromPortCode;
-                string fromPortName = shipmentPickUpPM != null ? shipmentPickUpPM.FromPortName : shipmentDeliveryPM.FromPortName;
-                string fromPortCountryCode = shipmentPickUpPM != null ? shipmentPickUpPM.FromPortCountryCode : shipmentDeliveryPM.FromPortCountryCode;
-                PortSL fromPort = new PortSL()
-                {
-                    Code = fromPortCode,
-                    EnglishName = fromPortName,
-                    CountryCode = fromPortCountryCode,
-                };
-                ShipmentPickUpDeliverySL.FromPort = fromPort;
-            }
-            else if (pickUpDeliveryFromTypeCode == "PART")
-            {
-                string fromPartnerCardId = shipmentPickUpPM != null ? shipmentPickUpPM.FromPartnerCardId : shipmentDeliveryPM.FromPartnerCardId; 
-
-                Card fromPartnerCard = fromPartnerCard = cardRepository.GetSingleCard(fromPartnerCardId, tenant);
-                if (fromPartnerCard != null)
-                {
-                    PartnerSL fromPartner = new PartnerSL()
-                    {
-                        Id = fromPartnerCardId,
-                        Code = fromPartnerCard != null ? fromPartnerCard.Code : "",
-                        EnglishName = fromPartnerCard.EnglishName,
-                        Address1 = fromPartnerCard.Address1,
-                        Address2 = fromPartnerCard.Address2,
-                        City = fromPartnerCard.CityName,
-                        CountryCode = fromPartnerCard.CountryCode,
-                        CountryName = fromPartnerCard.CountryName,
-
-                    };
-
-                    ShipmentPickUpDeliverySL.FromPartner = fromPartner;
-                }
-            }
-            else if (pickUpDeliveryFromTypeCode == "CASL")
-            {
-                string fromAddressZipCode = shipmentPickUpPM != null ? shipmentPickUpPM.FromAddressZipCode : shipmentDeliveryPM.FromAddressZipCode; 
-                string fromAddressCountryCode = shipmentPickUpPM != null ? shipmentPickUpPM.FromAddressCountryCode : shipmentDeliveryPM.FromAddressCountryCode;
-                string fromAddressCountryName = shipmentPickUpPM != null ? shipmentPickUpPM.FromAddressCountryName : shipmentDeliveryPM.FromAddressCountryName;
-                string fromAddressCity = shipmentPickUpPM != null ? shipmentPickUpPM.FromAddressCity : shipmentDeliveryPM.FromAddressCity; 
-
-                ShipmentPickUpDeliverySL.FromAddressZipCode = fromAddressZipCode;
-                ShipmentPickUpDeliverySL.FromAddressCountryCode = fromAddressCountryCode;
-                ShipmentPickUpDeliverySL.FromAddressCountryName = fromAddressCountryName;
-                ShipmentPickUpDeliverySL.FromAddressCity = fromAddressCity;
-            
-            }
-
-            #endregion
-
-            #region To
-            string pickUpDeliveryToTypeCode = shipmentPickUpPM != null ? shipmentPickUpPM.PickUpDeliveryToTypeCode : shipmentDeliveryPM.PickUpDeliveryToTypeCode;
-            ShipmentPickUpDeliverySL.PickUpDeliveryToTypeCode = pickUpDeliveryToTypeCode;
-
-            if (pickUpDeliveryToTypeCode == "PORT")
-            {
-                string ToPortCode = shipmentPickUpPM != null ? shipmentPickUpPM.ToPortCode : shipmentDeliveryPM.ToPortCode;
-                string ToPortName = shipmentPickUpPM != null ? shipmentPickUpPM.ToPortName : shipmentDeliveryPM.ToPortName;
-                string ToPortCountryCode = shipmentPickUpPM != null ? shipmentPickUpPM.ToPortCountryCode : shipmentDeliveryPM.ToPortCountryCode;
-                PortSL ToPort = new PortSL()
-                {
-                    Code = ToPortCode,
-                    EnglishName = ToPortName,
-                    CountryCode = ToPortCountryCode,
-                };
-                ShipmentPickUpDeliverySL.ToPort = ToPort;
-            }
-            else if (pickUpDeliveryToTypeCode == "PART")
-            {
-                string ToPartnerCardId = shipmentPickUpPM != null ? shipmentPickUpPM.ToPartnerCardId : shipmentDeliveryPM.ToPartnerCardId;
-
-                Card ToPartnerCard = ToPartnerCard = cardRepository.GetSingleCard(ToPartnerCardId, tenant);
-                if (ToPartnerCard != null)
-                {
-                    PartnerSL ToPartner = new PartnerSL()
-                    {
-                        Id = ToPartnerCardId,
-                        Code = ToPartnerCard != null ? ToPartnerCard.Code : "",
-                        EnglishName = ToPartnerCard.EnglishName,
-                        Address1 = ToPartnerCard.Address1,
-                        Address2 = ToPartnerCard.Address2,
-                        City = ToPartnerCard.CityName,
-                        CountryCode = ToPartnerCard.CountryCode,
-                        CountryName = ToPartnerCard.CountryName,
-
-                    };
-
-                    ShipmentPickUpDeliverySL.ToPartner = ToPartner;
-                }
-            }
-            else if (pickUpDeliveryToTypeCode == "CASL")
-            {
-                string ToAddressZipCode = shipmentPickUpPM != null ? shipmentPickUpPM.ToAddressZipCode : shipmentDeliveryPM.ToAddressZipCode;
-                string ToAddressCountryCode = shipmentPickUpPM != null ? shipmentPickUpPM.ToAddressCountryCode : shipmentDeliveryPM.ToAddressCountryCode;
-                string ToAddressCountryName = shipmentPickUpPM != null ? shipmentPickUpPM.ToAddressCountryName : shipmentDeliveryPM.ToAddressCountryName;
-                string ToAddressCity = shipmentPickUpPM != null ? shipmentPickUpPM.ToAddressCity : shipmentDeliveryPM.ToAddressCity;
-
-                ShipmentPickUpDeliverySL.ToAddressZipCode = ToAddressZipCode;
-                ShipmentPickUpDeliverySL.ToAddressCountryCode = ToAddressCountryCode;
-                ShipmentPickUpDeliverySL.ToAddressCountryName = ToAddressCountryName;
-                ShipmentPickUpDeliverySL.ToAddressCity = ToAddressCity;
-            }
-
-            #endregion
-
-            return ShipmentPickUpDeliverySL;
-        }
-
         private static List<ShipmentPackagePM> ReBulidShipmentPackages(int tenant, List<ShipmentPackagePM> shipmentPackages)
         {
             PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
@@ -1535,7 +1408,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 AgentSharedManifestQuery agentSharedManifestQuery = new AgentSharedManifestQuery(authToken.Tenant);
                 List<SharedManifestsStatusClass> result = agentSharedManifestQuery.GetAgentSharedManifestsForDashBoard(lastMonths, lastDays, selectedIndex ,  authToken.Tenant);
@@ -1549,59 +1421,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             }
         }
 
-
-        public HttpResponseMessage GetIsAgentSharedManifests(string agentId , string entityid)
-        {
-            try
-            {
-
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                bool result = false;
-
-                AgentSharedManifestHelper agentSharedManifestHelper = new AgentSharedManifestHelper();
-                List<ManifestSL> manifestSLLists = agentSharedManifestHelper.GetAgentShareManifestSLByEntityId(entityid, authToken.Tenant);
-
-                if (manifestSLLists.Count> 0)
-                {
-                    var manifestSL = manifestSLLists.Where(d => d.OrginalAgentId == agentId).FirstOrDefault();
-                    if (manifestSL != null)
-                    {
-                        result = true;
-                    }
-                }
-
-                if (!result)
-                {
-                    foreach (ManifestSL manifestSL in manifestSLLists.Where(d => string.IsNullOrEmpty(d.OrginalAgentId)).ToList())
-                    {
-                        if (manifestSL != null)
-                        {
-                            AgentRepository agentRepository = new AgentRepository(authToken.Tenant);
-                            Agent agent = agentRepository.GetSingleAgentBySharedKey(manifestSL.AgentSharedKey, authToken.Tenant);
-                            if (agent != null)
-                            {
-                                if (agent.Id == agentId)
-                                {
-                                    result = true;
-                                    return Request.CreateResponse(HttpStatusCode.OK, result);
-                                }
-                            }
-
-                        }
-                    }
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
 
     }
 

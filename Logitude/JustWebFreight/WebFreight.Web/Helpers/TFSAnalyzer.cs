@@ -184,7 +184,6 @@ namespace WebFreight.Web.Helpers
         public string Description { get; set; }
         public double? RemainingWork { get; set; }
         public string IterationPath { get; set; }
-        public string TaskState { get; set; }
         public RelationClass[] Relations { get; set; }
     }
 

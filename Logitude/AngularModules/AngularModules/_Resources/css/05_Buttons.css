@@ -1,4 +1,4 @@
-.HyperlinkButton:hover, .HyperlinkButton:focus {
+﻿.HyperlinkButton:hover, .HyperlinkButton:focus {
     height: auto !important;
     width: auto !important;
     background: none !important;
@@ -180,11 +180,11 @@
 }
 
 .RedButton {
-    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%) !important;
-    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
-    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) )) !important;
-    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
 }
 
 .Button {
@@ -212,15 +212,18 @@
     cursor: pointer;
 }
 
-button:not(.ag-paging-button), .Button, .RedButton, .GreenButton, .EntityChangesButton {
+button, .Button, .RedButton, .GreenButton, .EntityChangesButton {
     height: 22px;
     padding: 0 5px;
     /*width: 100%;*/
     /*min-width: 100%;*/
+
     /*display:inline-block;
-    width: auto !important;*/
-    display: block;
-    width: 100%;
+    width: auto !important;*/ 
+
+    display: block ;
+    width: 100% ;
+    
     /*min-width: 100%;*/
 }
 

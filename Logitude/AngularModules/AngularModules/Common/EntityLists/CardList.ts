@@ -85,8 +85,8 @@ export class CardList {
 		MetodoPagoCode: string;
 		UsoCFDICode: string;
 		FirmCode: string;
-		StateName: string;
-		IsInternationalPartner: boolean;
-		IsAutonomy: boolean;
+        StateName: string;
+        IsInternationalPartner: boolean;
+        IsAutonomy: boolean;
 	
 }

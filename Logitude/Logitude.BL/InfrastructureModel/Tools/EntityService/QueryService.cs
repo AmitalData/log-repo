@@ -33,13 +33,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private QueryPM entityPM;
         private IWebFreightContext objectContext;
         private QueryRepository entityRepository;
-        private SharedUserQueryRepository sharedUserQueryRepository;
         public QueryService(IWebFreightContext objectContext, int tenant)
         {
             this.tenant = tenant;
             this.ObjectContext = objectContext;
             this.entityRepository = new QueryRepository(objectContext);
-            this.sharedUserQueryRepository = new SharedUserQueryRepository(objectContext);
         }
 
         public void Create(QueryPM theEntityPm)
@@ -47,18 +45,23 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
             this.entityPM.Id = IdCounter.GetNumber("Query", tenant).ToString();
-            this.entityPM.Code = this.entityPM.Id;
+            this.entityPM.Code = this.entityPM.Id;//CodeCounter.GetNumber("Query", tenant).ToString();
             this.Poco = new Query();
             this.Poco.Id = this.entityPM.Id;
-            
+
+
             if (!string.IsNullOrEmpty(theEntityPm.NewViewName))
             {
                 ObjectTableRepository tableRep = new ObjectTableRepository(tenant);
                 ObjectTable table = tableRep.GetSingleObjectTable(theEntityPm.ObjectTableId,0,true);
+
                 TextCodeRepository textCodeRep = new TextCodeRepository(objectContext);
 
                 TextCode textCode = new TextCode()
                 {
+
+
+
                     Id = IdCounter.GetNumber("TextCode", tenant).ToString(),
                     ObjectTableId = theEntityPm.ObjectTableId,
                     TextCodeTypeCode = "Q",
@@ -67,6 +70,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     Tenant = theEntityPm.Tenant,
                     DefaultText = theEntityPm.NewViewName,
                     Code = table.Name + ".Q." + theEntityPm.Id,
+
                 };
 
                 textCodeRep.Add(textCode);
@@ -87,34 +91,36 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                         CacheManager.CacheWrapper.Invalidate(zeroCodeslistName);
                     }
                 }
+
+                //nametextcodecode=objecttablename.Q.code
+                //defaulttext=newviewname
             }
 
-            foreach (SharedUserQueryPM itemPM in theEntityPm.SharedUserQueries)
-            {
-                this.CreateSharedUserQuery(itemPM);
-            }
-
+          
             QueryValidating.Validate(theEntityPm);
             QueryTracing.Trace(theEntityPm, Poco, isNewEntity);
             QueryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
 
+
+
+
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
+
         }
 
-        private List<SharedUserQueryPM> sharedUserQueriesChangeSet;
         public void Update(QueryPM theEntityPm)
         {
             this.isNewEntity = false;
             this.entityPM = theEntityPm;
             this.Poco = entityRepository.GetSingleQuery(theEntityPm.Id);
-            
+
+           
+          
+
             QueryValidating.Validate(theEntityPm);
-
-            this.sharedUserQueriesChangeSet = theEntityPm.SharedUserQueries;
-            this.UpdateSharedUserQueriesCollection();
-
             QueryTracing.Trace(theEntityPm, Poco, isNewEntity);
+
 
             TextCodeRepository textCodeRep = new TextCodeRepository(objectContext);
             TextCode textCode = textCodeRep.GetSingleTextCodeByTenant(theEntityPm.NameTextCodeId, theEntityPm.Tenant);
@@ -148,70 +154,5 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.SubmitChanges();
         }
 
-        private void UpdateSharedUserQueriesCollection()
-        {
-            if (sharedUserQueriesChangeSet != null)
-            {
-                foreach (SharedUserQueryPM itemPM in sharedUserQueriesChangeSet)
-                {
-                    switch (itemPM.ChangeSetOp)
-                    {
-                        case ChangeSetOperation.Insert:
-                            {
-                                this.CreateSharedUserQuery(itemPM);
-                                break;
-                            }
-
-                        case ChangeSetOperation.Update:
-                            {
-                                this.UpdateSharedUserQuery(itemPM);
-                                break;
-                            }
-
-                        case ChangeSetOperation.Delete:
-                            {
-                                this.DeleteSharedUserQuery(itemPM);
-                                break;
-                            }
-
-                        default: { break; }
-                    }
-                }
-            }
-        }
-        private void CreateSharedUserQuery(SharedUserQueryPM itemPM)
-        {
-            itemPM.Id = IdCounter.GetNumber("SharedUserQuery", tenant).ToString();
-            itemPM.QueryId = this.entityPM.Id;
-            itemPM.Tenant = tenant;           
-
-            SharedUserQuery itemPoco = new SharedUserQuery()
-            {
-                Id = itemPM.Id,
-                QueryId = itemPM.QueryId,
-                Tenant = tenant
-            };
-
-            SharedUserQueryMapping.MapEntity(itemPM, itemPoco, true);
-            sharedUserQueryRepository.Add(itemPoco);
-        }
-        private void UpdateSharedUserQuery(SharedUserQueryPM itemPM)
-        {
-            SharedUserQuery itemPoco = sharedUserQueryRepository.GetSingleSharedUserQuery(itemPM.Id, tenant);
-            if (itemPoco != null)
-            {
-                SharedUserQueryMapping.MapEntity(itemPM, itemPoco, false);
-                sharedUserQueryRepository.Update(itemPoco);
-            }
-        }
-        private void DeleteSharedUserQuery(SharedUserQueryPM itemPM)
-        {
-            SharedUserQuery itemPoco = sharedUserQueryRepository.GetSingleSharedUserQuery(itemPM.Id, tenant);
-
-            if (itemPoco != null)
-            {
-                sharedUserQueryRepository.Remove(itemPoco);
-            }
-        }
     }
 }

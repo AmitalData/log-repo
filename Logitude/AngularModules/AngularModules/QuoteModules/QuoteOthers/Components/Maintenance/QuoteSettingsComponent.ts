@@ -1,11 +1,10 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {QuoteSettingPM} from '../../../../Quote/EntityPMs/QuoteSettingPM';
 import {QuoteDomainService} from '../../../../Quote/Services/QuoteDomainService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
     moduleId: module.id,
@@ -18,13 +17,9 @@ export class QuoteSettingsComponent extends BaseComponent {
     public DataContext = this;
     public IsResourcesReady: boolean = false;
     public ValidationErrorsList: string[] = [];
-    public SaleCurrencySettings: CodeNameClass[] = [];
     private myService: QuoteDomainService;
     constructor(private entityResourceService: EntityResourceService) {
         super();
-
-        this.SaleCurrencySettings.push(new CodeNameClass("F", "Fixed"));
-        this.SaleCurrencySettings.push(new CodeNameClass("S", "Same as cost currency"));
 
         this.myService = new QuoteDomainService();
 
@@ -40,14 +35,6 @@ export class QuoteSettingsComponent extends BaseComponent {
                     if (!this.EntityPM) {
                         this.EntityPM = new QuoteSettingPM();
                         this.EntityPM.Tenant = SessionLocator.Tenant;
-                    }
-
-                    if (this.EntityPM.IsSaleAsCostCurrency) {
-                        this.selectedSaleCurrencySetting = this.SaleCurrencySettings.filter(f => f.Code == "S")[0];
-                    }
-
-                    else {
-                        this.selectedSaleCurrencySetting = this.SaleCurrencySettings.filter(f => f.Code == "F")[0];
                     }
 
                     this.IsResourcesReady = true;
@@ -133,31 +120,6 @@ export class QuoteSettingsComponent extends BaseComponent {
         }
     }
 
-    get IsSaleAsCostCurrency() { return this.EntityPM.IsSaleAsCostCurrency; }
-    set IsSaleAsCostCurrency(value: boolean) {
-        if (this.EntityPM.IsSaleAsCostCurrency != value) {
-            this.EntityPM.IsSaleAsCostCurrency = value;
-        }
-    }
-
-    private selectedSaleCurrencySetting: CodeNameClass;
-    get SelectedSaleCurrencySetting() { return this.selectedSaleCurrencySetting; }
-    set SelectedSaleCurrencySetting(value: CodeNameClass) {
-        if (this.selectedSaleCurrencySetting != value) {
-            this.selectedSaleCurrencySetting = value;
-
-            var isSaleAsCostCurrency: boolean = false;
-
-            if (value) {
-                if (value.Code == "S") {
-                    isSaleAsCostCurrency = true;
-                }
-            }
-
-            this.IsSaleAsCostCurrency = isSaleAsCostCurrency;
-        }
-    }
-    
     CancelButtonClicked() {
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }

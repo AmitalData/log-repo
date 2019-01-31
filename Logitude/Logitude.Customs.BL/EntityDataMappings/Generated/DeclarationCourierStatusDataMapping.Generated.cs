@@ -34,7 +34,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TotalInvoiceAmountInUSD, 
 	         CourierPendingReasonCode, 
 	         PendingRemarks, 
-	         SpecialActionStatus, 
 	         FastIndividualProcessCode, 
 	         ManualProcessCode,
 	      }
@@ -86,9 +85,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         MamanErrorXml, 
 	         CourierSuspentionCode, 
 	         CourierSuspentionName, 
-	         SpecialActionStatus, 
-	         SpecialActionsErrorXml, 
-	         CourierPendingReasonErrorPlace, 
 	         FastIndividualProcessCode, 
 	         ManualProcessCode,
 	      }
@@ -152,11 +148,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PendingRemarks))
             {
 				entityPOCO.PendingRemarks = entityPM.PendingRemarks;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SpecialActionStatus))
-            {
-				entityPOCO.SpecialActionStatus = entityPM.SpecialActionStatus;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FastIndividualProcessCode))
@@ -233,11 +224,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.PendingRemarks = entityPOCO.PendingRemarks;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SpecialActionStatus))
-            {
-					entityPM.SpecialActionStatus = entityPOCO.SpecialActionStatus;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FastIndividualProcessCode))
             {
 					entityPM.FastIndividualProcessCode = entityPOCO.FastIndividualProcessCode;
@@ -307,11 +293,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PendingRemarks))
             {
                 oldEntityPM.PendingRemarks = entityPM.PendingRemarks;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SpecialActionStatus))
-            {
-                oldEntityPM.SpecialActionStatus = entityPM.SpecialActionStatus;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FastIndividualProcessCode))

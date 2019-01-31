@@ -100,7 +100,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             
             this.Property(t => t.DocumentFilingInbox).HasColumnName("DocumentFilingInbox");
             this.Property(t => t.ShowLogBoxToolTip).HasColumnName("ShowLogBoxToolTip");
-            this.Property(t => t.ShowLocalNameInLOV).HasColumnName("ShowLocalNameInLOV");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

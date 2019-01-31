@@ -25,6 +25,6 @@ namespace Logitude.BL.GlobalModel.EntityPMs
 
        public string maskedPrimaryAccessKey { get; set; }
        public string maskedSeconderyAccessKey { get; set; }
-        //public string ComputingPartnerId { get; set; }
+        public string ComputingPartnerId { get; set; }
     }
 }
