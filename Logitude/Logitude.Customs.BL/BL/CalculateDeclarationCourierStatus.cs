@@ -69,6 +69,7 @@ namespace Logitude.Customs.BL.BL
                 CalcIsCourierMissingClassification(myDeclarationCourierStatusPM);
                 CalcHighLowValue(myDeclarationCourierStatusPM);
                 CalcDocumentStatusCode(myDeclarationCourierStatusPM);
+                CalcFastIndividualProcessCode(myDeclarationCourierStatusPM);
 
                 return myDeclarationCourierStatusPM;
 
@@ -276,5 +277,26 @@ namespace Logitude.Customs.BL.BL
             }
         }
 
+        public void CalcFastIndividualProcessCode(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        {
+            if (myDeclarationCourierStatusPM == null) return;
+
+            //Set FastIndividualProcessCode
+            if (!string.IsNullOrEmpty(myDeclarationCourierStatusPM.ManualProcessCode))
+            {
+                myDeclarationCourierStatusPM.FastIndividualProcessCode = myDeclarationCourierStatusPM.ManualProcessCode;
+            }
+            else
+            {
+                if (myDeclarationCourierStatusPM.HighLowValue == "L")
+                {
+                    myDeclarationCourierStatusPM.FastIndividualProcessCode = "F";
+                }
+                else
+                {
+                    myDeclarationCourierStatusPM.FastIndividualProcessCode = "I";
+                }
+            }
+        }
     }
 }

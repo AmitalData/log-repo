@@ -68,6 +68,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 MamanErrorXml = d.MamanErrorXml,
                                                                 CourierSuspentionCode = d.CourierSuspentionCode,
                                                                 CourierSuspentionName = d.CourierSuspention != null ? d.CourierSuspention.LocalName : null,
+                                                                FastIndividualProcessCode = a.FastIndividualProcessCode,
+                                                                ManualProcessCode = a.ManualProcessCode,
                                                               });
             return query;
 		}

@@ -214,8 +214,14 @@ export class CourierWorksheetListTemplate {
             }
         }
 
-        if (this._CourierWorksheet.HighLowValue == "H"
-            || (this._CourierWorksheet.HighLowValue == "L" && this._CourierWorksheet.CourierCustomStatusCode == "2")) {
+        //if (this._CourierWorksheet.HighLowValue == "H"
+        //    || (this._CourierWorksheet.HighLowValue == "L" && this._CourierWorksheet.CourierCustomStatusCode == "2")) {
+        //    this.IsHighLow = true;
+        //}
+        //else {
+        //    this.IsHighLow = false;
+        //}
+        if (this._CourierWorksheet.FastIndividualProcessCode == "I") {
             this.IsHighLow = true;
         }
         else {
