@@ -67,6 +67,8 @@ export class CourierWorksheetListTemplate {
     SuspentionReasonTip: string;
 
     MamanStickerDetails: DeclarationMamanSpecialActionPM = null;
+    MamanStickerDetails: DeclarationMamanSpecialActionPM = null;
+    MamanStickerDetails: DeclarationMamanSpecialActionPM = null;
     IsReceivingDelayCertificate: boolean = false;
     IsPrintDocuments: boolean = false;
 

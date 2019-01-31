@@ -2195,7 +2195,9 @@ export class PaymentMethodModel extends BaseComponent {
                 });
 
             }
-            this.LoadBanks();
+            else {
+                this.LoadBanks();
+            }
         }
 
         if (parent.PaymentMethodsList.Length == 1) {
