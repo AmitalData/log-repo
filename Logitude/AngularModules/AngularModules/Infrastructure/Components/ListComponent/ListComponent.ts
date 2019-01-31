@@ -2797,14 +2797,38 @@ export class ListComponent implements OnInit, AfterViewInit {
         __entity.CreateDateTimeUTC = new Date();
         __entity.Tenant = this.Tenant;
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
-        .then(cmpRef => {
-            cmpRef.instance.ComponentRef = cmpRef;
-            cmpRef.instance.Run({ EntityPM: __entity, ObjectTableName: 'AccountingIntegrityCheck' });
-            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                this.RefreshBtnClick();
-            });
+        var FinalText = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.TranslateTable(this.ObjectTableName));
+        var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+        if (useLocal == true) {
+            var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
+            var ChangedText = GeneralText.split('%')[0];
+            var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
+            FinalText = NewText + " " + ChangedText;
+        }
+        var windowTitle = FinalText;
+
+        var windowArgs = {
+            EntityPM: __entity
+        };
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 400;
+        logWindow.Height = 240;
+        logWindow.Title = windowTitle;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.RefreshBtnClick();
         });
+        logWindow.Show('./Accounting/Components/NewEntity/NewIntegrityCheckComponent');
+
+        // SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        // .then(cmpRef => {
+        //     cmpRef.instance.ComponentRef = cmpRef;
+        //     cmpRef.instance.Run({ EntityPM: __entity, ObjectTableName: 'AccountingIntegrityCheck' });
+        //     cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+        //         this.RefreshBtnClick();
+        //     });
+        // });
     }
 
     // Run New APPaymnet

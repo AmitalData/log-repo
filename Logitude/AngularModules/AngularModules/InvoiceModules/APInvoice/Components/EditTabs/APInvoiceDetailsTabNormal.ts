@@ -213,15 +213,15 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         var result = true;
 
         if (this.EntityPM != null) {
-            this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, true);
+            //this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, true);
 
             if (!this.IsScreenEnabled) {
-                this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, false);
+                //this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, false);
                 return false;
             }
 
             else if (this.EntityPM.InvoiceCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.InvoiceCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null) {
-                this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, false);
+                //this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, false);
                 return false;
             }
         }

@@ -159,10 +159,8 @@ namespace CommunicationWorkerRole
             ContainerAccessor.InitContainer();
             ContainerAccessor.RegisterTypeFactory<IRulesValidator, RulesValidator>("RulesValidator", new RulesValidator());
             ContainerAccessor.RegisterTypeFactory<IQuoteTemplateReportHelper, QuoteTemplateReportHelper>("QuoteTemplateReportHelper", new QuoteTemplateReportHelper());
-            ContainerAccessor.Container.RegisterType<ILoggedContactUtil, Logitude.BL.Security.LoggedContactUtil>("LoggedContactUtil", new InjectionFactory(c => new Logitude.BL.Security.LoggedContactUtil()));
-            
+            LoggedContactResolver.RegisterLoggedContactUtil();
 
-            
 
 
             AccountingRegistrations.Register();

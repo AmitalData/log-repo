@@ -489,8 +489,18 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
         }
 
         bool amount2addMore = false;
-
-        public bool Amount2addMore { get => amount2addMore; set => amount2addMore = value; }
+        public bool Amount2addMore
+        {
+            get
+            {
+                return amount2addMore;
+            }
+            set
+            {
+                amount2addMore = value;
+            }
+        }
+        //public bool Amount2addMore { get => amount2addMore; set => amount2addMore = value; } // Wrong Format For JEnkins
 
         private void CreateVendors(IAccountingContext accountingContext,
             ChartOfAccountProvider chartOfAccountProvider,
