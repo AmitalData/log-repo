@@ -121,7 +121,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
                                 var declarationPaymentsPM = myDeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
-                                if (declarationPaymentsPM != null && declarationPaymentsPM.PaymentDate.HasValue)
+                                if (declarationPaymentsPM != null && declarationPaymentsPM.PaymentDate.HasValue && declarationPaymentsPM.PaymentDate < DateTime.Now)
                                 {
                                     if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTimeSpecified == true)
                                     {
