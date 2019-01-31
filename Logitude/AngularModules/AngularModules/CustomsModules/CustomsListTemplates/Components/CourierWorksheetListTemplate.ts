@@ -66,9 +66,9 @@ export class CourierWorksheetListTemplate {
     SuspentionReasonText: string;
     SuspentionReasonTip: string;
 
+    ReceivingDelayCertificateDetails: DeclarationMamanSpecialActionPM = null;
     MamanStickerDetails: DeclarationMamanSpecialActionPM = null;
-    MamanStickerDetails: DeclarationMamanSpecialActionPM = null;
-    MamanStickerDetails: DeclarationMamanSpecialActionPM = null;
+    PrintDocumentDetails: DeclarationMamanSpecialActionPM = null;
     IsReceivingDelayCertificate: boolean = false;
     IsPrintDocuments: boolean = false;
 
@@ -216,19 +216,14 @@ export class CourierWorksheetListTemplate {
             }
         }
 
-        //if (this._CourierWorksheet.HighLowValue == "H"
-        //    || (this._CourierWorksheet.HighLowValue == "L" && this._CourierWorksheet.CourierCustomStatusCode == "2")) {
-        //    this.IsHighLow = true;
-        //}
-        //else {
-        //    this.IsHighLow = false;
-        //}
-        if (this._CourierWorksheet.FastIndividualProcessCode == "I") {
+        if (this._CourierWorksheet.HighLowValue == "H"
+            || (this._CourierWorksheet.HighLowValue == "L" && this._CourierWorksheet.CourierCustomStatusCode == "2")) {
             this.IsHighLow = true;
         }
         else {
             this.IsHighLow = false;
         }
+
 
         if (this._CourierWorksheet.CourierCustomStatusCode == "2") {
             this.SuspentionReasonTip = this._CourierWorksheet.CourierSuspentionName;
@@ -403,12 +398,15 @@ export class CourierWorksheetListTemplate {
         this._DeclarationMamanSpecialActionListService.getByFilters(filters).subscribe((response: ServiceResponse) => {
             this.IsReceivingDelayCertificate = false;
             this.IsPrintDocuments = false;
+            this.ReceivingDelayCertificateDetails = null;
             this.MamanStickerDetails = null;
+            this.PrintDocumentDetails = null;
             if (!response.HasError && response.Result != null) {
                 response.Result.forEach((declarationMamanSpecialActionPMItem: DeclarationMamanSpecialActionPM) => {
                     switch (declarationMamanSpecialActionPMItem.MamanSpecialActionCode) {
                         case "2": {
                             this.IsReceivingDelayCertificate = true;
+                            this.ReceivingDelayCertificateDetails = declarationMamanSpecialActionPMItem;
                             break;
                         }
                         case "4": {
@@ -417,6 +415,7 @@ export class CourierWorksheetListTemplate {
                         }
                         case "5": {
                             this.IsPrintDocuments = true;
+                            this.PrintDocumentDetails = declarationMamanSpecialActionPMItem;
                             break;
                         }
                     }
@@ -538,12 +537,16 @@ export class CourierWorksheetListTemplate {
     SendMamanSpecialAction(declarationId: string, actionCode: string, mamanSpecialActionCode: string) {
         var titleText: string = "מסר פעולות מיוחדות";
         var questionText: string = "אשר שליחת מסר ביטול פעולה מיוחדת";
-        
+        var declarationMamanSpecialActionPM: DeclarationMamanSpecialActionPM = null;
+
         switch (mamanSpecialActionCode) {
             case "2": {
                 if (actionCode == "U") {
                     titleText = "הפקת תעודת עיכוב";
                     questionText = "אשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
+                    if (this.ReceivingDelayCertificateDetails != null) {
+                        declarationMamanSpecialActionPM = this.ReceivingDelayCertificateDetails;
+                    }
                 }
                 else if (actionCode == "C") {
                     titleText = "ביטול תעודת עיכוב";
@@ -560,6 +563,9 @@ export class CourierWorksheetListTemplate {
                 if (actionCode == "U") {
                     titleText = "הדפסת מסמכים";
                     questionText = "אשר שליחת מסר פעולה מיוחדת של הדפסת מסמכים";
+                    if (this.PrintDocumentDetails != null) {
+                        declarationMamanSpecialActionPM = this.PrintDocumentDetails;
+                    }
                 }
                 else if (actionCode == "C") {
                     titleText = "ביטול הדפסת מסמכים";
@@ -581,19 +587,33 @@ export class CourierWorksheetListTemplate {
                 this._IsDropdownMenuFilterReady = false;
                 SessionLocator.CurrentSession.StartBusyIndicatorCreating();
                 if (actionCode == "U") {
-                    var declarationMamanSpecialActionPM: DeclarationMamanSpecialActionPM = new DeclarationMamanSpecialActionPM();
-                    declarationMamanSpecialActionPM.Tenant = SessionLocator.Tenant;
-                    declarationMamanSpecialActionPM.DeclarationId = declarationId;
-                    declarationMamanSpecialActionPM.MamanSpecialActionCode = mamanSpecialActionCode;
+                    if (declarationMamanSpecialActionPM == null) {
+                        declarationMamanSpecialActionPM = new DeclarationMamanSpecialActionPM()
+                        declarationMamanSpecialActionPM.Tenant = SessionLocator.Tenant;
+                        declarationMamanSpecialActionPM.DeclarationId = declarationId;
+                        declarationMamanSpecialActionPM.MamanSpecialActionCode = mamanSpecialActionCode;
 
-                    this._DeclarationMamanSpecialActionPMService.insert(declarationMamanSpecialActionPM).subscribe(res => {
-                        this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, "U", mamanSpecialActionCode)
-                            .subscribe((myResponse: ServiceResponse) => {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
-                                var myMessageWindow = new MessageWindow();
-                                myMessageWindow.Show(myResponse.Result);
-                            });
-                    });
+                        this._DeclarationMamanSpecialActionPMService.insert(declarationMamanSpecialActionPM).subscribe(res => {
+                            this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, "U", mamanSpecialActionCode)
+                                .subscribe((myResponse: ServiceResponse) => {
+                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    var myMessageWindow = new MessageWindow();
+                                    myMessageWindow.Show(myResponse.Result);
+                                });
+                        });
+                    }
+                    else {
+                        declarationMamanSpecialActionPM.MamanSpecialActionStatusCode = null;
+                        declarationMamanSpecialActionPM.MamanSpecialActionsErrorXml = null;
+                        this._DeclarationMamanSpecialActionPMService.update(declarationMamanSpecialActionPM).subscribe(res => {
+                            this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, "U", mamanSpecialActionCode)
+                                .subscribe((myResponse: ServiceResponse) => {
+                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    var myMessageWindow = new MessageWindow();
+                                    myMessageWindow.Show(myResponse.Result);
+                                });
+                        });
+                    }
                 }
                 else {
                     this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, "C", mamanSpecialActionCode)
