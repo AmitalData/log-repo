@@ -32,6 +32,7 @@ export class AddCourierPendingToUnifreightStatusComponent
     _entityResourceService: EntityResourceService = new EntityResourceService();
 
     public CourierPendingReasonList: ObservableCollection = new ObservableCollection([]);
+    public DeleteCourierPendingReasonList: ObservableCollection = new ObservableCollection([]);
 
     constructor() {
         super();
@@ -98,6 +99,7 @@ export class AddCourierPendingToUnifreightStatusComponent
 
     OkButtonClicked() {
         if (this.CourierPendingReasonList != null) {
+            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
             this.CourierPendingReasonList.Collection.forEach((item: CourierPendingReasonLineComponent) => {
                 if (item.isNew) {
                     item.entityPM.UnifreightStatusCode = this.UnifreightStatusCode;
@@ -110,8 +112,31 @@ export class AddCourierPendingToUnifreightStatusComponent
                     });
                 }
             });
+            SessionLocator.CurrentSession.StopBusyIndicator();
         }
+
+        if (this.DeleteCourierPendingReasonList != null) {
+            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.DeleteCourierPendingReasonList.Collection.forEach((deleteItem: CourierPendingReasonLineComponent) => {
+                this._CourierPendingReasonExtendedListService.DeleteCourierPendingReasonUnifreightStatus(deleteItem.PendingCode).subscribe(response => {
+                    if (response.HasError) {
+                        this.ValidationErrorsList = [];
+                        this.ValidationErrorsList.push(response.ErrorsArray[0]);
+                        return;
+                    }
+                });
+            });
+            SessionLocator.CurrentSession.StopBusyIndicator();
+        }
+            
         this.CancelButtonClicked();
+    }
+
+    DeletePendingCommand(item: CourierPendingReasonLineComponent) {
+        if (!item.isNew) {
+            this.DeleteCourierPendingReasonList.Insert(item);
+        }
+        this.CourierPendingReasonList.Remove(item);
     }
 }
 
@@ -160,18 +185,4 @@ export class CourierPendingReasonLineComponent extends BaseComponent {
     public get PendingLocalName() { return this.entityPM.LocalName; }
     public set PendingLocalName(newValue: string) { this.entityPM.LocalName = newValue; }
 
-    DeleteCommand() {
-        if (!this.isNew) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-            this.parent._CourierPendingReasonExtendedListService.DeleteCourierPendingReasonUnifreightStatus(this.PendingCode).subscribe(response => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                if (response.HasError) {
-                    this.parent.ValidationErrorsList = [];
-                    this.parent.ValidationErrorsList.push(response.ErrorsArray[0]);
-                    return;
-                }
-            });
-        }
-        this.parent.CourierPendingReasonList.Remove(this);
-    }
 }
