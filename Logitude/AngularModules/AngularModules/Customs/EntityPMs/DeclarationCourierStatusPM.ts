@@ -239,6 +239,16 @@ export class DeclarationCourierStatusPM {
     public set CourierSuspentionName(newValue: string) { if (this.courierSuspentionName != newValue) { this.courierSuspentionName = newValue; this.MarkAsDirty("CourierSuspentionName"); } }
        
 	 
+    private fastIndividualProcessCode: string;
+    public get FastIndividualProcessCode() { return this.fastIndividualProcessCode; }
+    public set FastIndividualProcessCode(newValue: string) { if (this.fastIndividualProcessCode != newValue) { this.fastIndividualProcessCode = newValue; this.MarkAsDirty("FastIndividualProcessCode"); } }
+       
+	 
+    private manualProcessCode: string;
+    public get ManualProcessCode() { return this.manualProcessCode; }
+    public set ManualProcessCode(newValue: string) { if (this.manualProcessCode != newValue) { this.manualProcessCode = newValue; this.MarkAsDirty("ManualProcessCode"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		
