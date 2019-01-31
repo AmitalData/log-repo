@@ -588,7 +588,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                         throw new BusinessErrorException("Error in parsing Pack Weight (" + package.PackWeight + ") into decimal");
                     }
                 }
-                ConsignmentPackagePM.PackageTypeCode = TranslatePackingType(package.PackTypeId);
+                if (string.IsNullOrWhiteSpace(package.PackTypeId))
+                {
+                    package.PackTypeId = "PP";
+                }
                 ConsignmentPackagePM.MarksNumbers = package.SignNum;
                 ConsignmentPackagePM.Tenant = ResolvedTenant();
                 ConsignmentPackagePM.ChangeSetOp = ChangeSetOperation.Insert;
@@ -747,7 +750,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     throw new BusinessErrorException("Error in parsing INVOICELINENO (" + this._INVOICE.INVOICELINENO + ") into integer");
                 }
             }
-            this._MySupplierInvoicePM.AccountTypeCode = this._INVOICE.ACCOUNTTYPE;
+            if (!string.IsNullOrWhiteSpace(this._INVOICE.ACCOUNTTYPE))
+            {
+                this._MySupplierInvoicePM.AccountTypeCode = this._INVOICE.ACCOUNTTYPE;
+            }
+            else
+            {
+                this._MySupplierInvoicePM.AccountTypeCode = "380";
+            }
+                
             this._MySupplierInvoicePM.InvoiceNumber = this._INVOICE.INVOICENUMBER;
             if (!string.IsNullOrWhiteSpace(this._INVOICE.VENDORNUMBER))
             {
