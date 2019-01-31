@@ -54,7 +54,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string MeasurementId { get; set; }
         public bool IsExchangeRateFixed { get; set; }
         public string EntityId { get; set; }
-        //public string ObjectTableId { get; set; }//dummy field
+        public string ObjectTableId { get; set; }//dummy field
         public string EntityReference { get; set; }//dummy field
         public double? ProfitCurrencyAmount { get; set; }
         public string InvoiceLocalCurrencyCode { get; set; }
@@ -87,5 +87,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsBackToBack { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsExpense { get; set; }
+        public string AutoCreditDummyReceivableId { get; set; }
     }
 }

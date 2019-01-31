@@ -1,5 +1,4 @@
-﻿//test task 46490!!
-using Logitude.Accounting.BL.CoreBL;
+﻿using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.CoreBL.Mapping;
 using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.Def.EntityPMs;
@@ -38,7 +37,6 @@ using Logitude.Accounting.BL.CoreBL.BuildTenant;
 using static Logitude.Accounting.Data.EntityListQueryServices.ARPaymentChequeListQueryService;
 using System.Configuration;
 using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
-using Logitude.Accounting.BL.CloseTables;
 //using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 
 namespace WebFreight.Web.AccountingWebServices.Testers
@@ -73,7 +71,6 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _ButtonIsApprovedJournalTOTZero_Click,
             _ButtonReverseTotalFIX_Click,
             _ButtonReverseGLBalanceFIX_Click,
-            _AccountingIntegrityService_Click,
 
         }
 
@@ -171,9 +168,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 param = LogitudeXmlSerializer.DeserializeObject<AccountBalanceParam>(_TextBoxParam.Text);
 
 
-                var ac = new AccountBalanceByDateCodeService(null, param.Tenant, param.GLAccountId, null);
+                var ac = new AccountBalanceService(null, param.Tenant, param.GLAccountId, null);
                 ac.ReSetAccountList(param.IncludeChildAccounts, param.IncludeRelatedCurrenciesAccount);
-                ac.CalculateBalance(GLAccountTotalDateTypeValues.Accountingdate, param.accoutingDate, param.includeAccoutingDateLTransaction, param.verbose);
+                ac.CalculateBalance(param.accoutingDate, param.includeAccoutingDateLTransaction, param.verbose);
                 var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<CurrencySum>>(ac.AccountBalance.Totals);
                 //ac.AccountBalance.Totals
 
@@ -279,7 +276,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 }
 
                 param = LogitudeXmlSerializer.DeserializeObject<ParamBasic>(_TextBoxParam.Text);
-                var s = new ReverseEngineerGLAccountBalance(/*param.MyDate,*/ param.MyTenant);
+                var s = new ReverseEngineerGLAccountBalance(param.MyDate, param.MyTenant);
                 s.CheckDbIntegrity();
 
                 var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<GLAccountBalanceDTO>>(s.CompareReport.GLAccountBalanceList);
@@ -304,67 +301,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             }
         }
 
-        
-              protected void _AccountingIntegrityService_Click(object sender, EventArgs e)
-        {
-            AccountingIntegrityInParam param = null;
-            var paramDefault = new AccountingIntegrityInParam()
-            {
-                Tenant = 1064,
-                FromMonthInclusive = DateTime.Now.AddMonths(-3),
-                ToMonthInclusive = DateTime.Now,
 
-            };
-            string serializeObjectstring = "";
-            try
-            {
-
-                if (GetMyLastAction() != MyLastAction._AccountingIntegrityService_Click)
-                {
-                    return;
-                }
-                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
-                {
-                    return;
-                }
-
-                param = JsonConvert.DeserializeObject<AccountingIntegrityInParam>(_TextBoxParam.Text);
-
-                
-                var accountingIntegrityService = new AccountingIntegrityService();
-                
-                string errorMessage = accountingIntegrityService.CheckParams(param);
-                if (!string.IsNullOrEmpty(errorMessage))
-                {
-                    throw new Exception(errorMessage);
-                }
-                var res= accountingIntegrityService.CheckIntegrity(param);
-
-                serializeObjectstring = JsonConvert.SerializeObject(res);
-                
-
-
-            }
-            catch (Exception)
-            {
-                param = null;
-                throw;
-            }
-            finally
-            {
-                _MyLastAction.Value = MyLastAction._AccountingIntegrityService_Click.ToString();
-                if (param == null)
-                {
-                    _TextBoxParam.Text = JsonConvert.SerializeObject(paramDefault);
-                }
-                else
-                {
-                    _TextBoxParam.Text = JsonConvert.SerializeObject(param);
-                }
-
-                _LabelLog.Text = serializeObjectstring?? LogMessagingUtil.Instance.ToString();
-            }
-        }
 
         protected void _ButtonReverseGLBalanceFIX_Click(object sender, EventArgs e)
         {
@@ -392,7 +329,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var MyTenant = (int)param.MyTenant;
                 var MyDate = (DateTime)param.MyDate;
 
-                var s = new ReverseEngineerGLAccountBalance(/*MyDate,*/ MyTenant);
+                var s = new ReverseEngineerGLAccountBalance(MyDate, MyTenant);
                 s.FIXCheckDbIntegrity();
 
                 var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<GLAccountBalanceDTO>>(s.CompareReport.GLAccountBalanceList);
@@ -936,7 +873,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 From = DateTime.Now.AddMonths(-1),
                 To = DateTime.Now,
                 CurrencyId = (new AccountingSettingResolver()).ResolveAccountingCurrencyId(1),
-                DateTypeCode="1",
+
                 GLAccountId = "1-1",
 
                 SearchFields = "",
@@ -970,7 +907,6 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 Category3Id = "",
                 Category4Id = "",
                 Category5Id = "",
-                AccountTypeCode = "2",
                 SearchFields = "",
                 IncludeChildAccounts = true,
                 IsReconciled = false,
@@ -1146,8 +1082,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             dynamic param = null;
             var paramDefault = new
             {
-                MyTenant = 1064,
-                
+                MyTenant = 989,
 
             };
             try
@@ -1168,7 +1103,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var tenant = (int)param.MyTenant;
                 Response.Clear();
                 var myDueLocalBalanceService = new DueLocalBalanceService();
-                myDueLocalBalanceService.ReBuild(tenant, "");
+                myDueLocalBalanceService.ReBuild(tenant);
 
                 //var myAllCardServiceDS = new GLAccountDashboard();
                 //var dic = myAllCardServiceDS.GetCardsLocalBalanceGByChartOfAccountsTypeCode(tenant);
@@ -1202,8 +1137,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             dynamic param = null;
             var paramDefault = new
             {
-                MyTenant = 1064,
-                AccountId = "1-216569"
+                MyTenant = 989,
 
             };
             try
@@ -1222,10 +1156,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 param = JsonConvert.DeserializeObject(_TextBoxParam.Text);
 
                 var tenant = (int)param.MyTenant;
-                string AccountId = param.AccountId;
                 Response.Clear();
-                    var myDueLocalBalanceService = new DueLocalBalanceService();
-                    var listDiff = myDueLocalBalanceService.ReverseEngineer(tenant, AccountId);
+                var myDueLocalBalanceService = new DueLocalBalanceService();
+                var listDiff = myDueLocalBalanceService.ReverseEngineer(tenant);
 
                 //var myAllCardServiceDS = new GLAccountDashboard();
                 //var dic = myAllCardServiceDS.GetCardsLocalBalanceGByChartOfAccountsTypeCode(tenant);
@@ -1365,9 +1298,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var accountingContext = AccountingContext.GetContext(tenant);
                 var systemCheckTotals = new SystemCheckTotals();
                 systemCheckTotals.TotalSumMustBeZero(tenant);
-                var json =systemCheckTotals.TotalSumPerAccountGroupByDateTypeDiff(tenant);
 
-                _LabelResult.Text = json;
+
+
                 //var journalJson = JsonConvert.SerializeObject(journal);
                 //_LabelResult.Text = journalJson;
 

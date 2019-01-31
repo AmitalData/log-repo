@@ -88,8 +88,6 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
             this.Property(t => t.DirectionId).HasColumnName("DirectionId").HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.TotalQuantity).HasColumnName("TotalQuantity");
-
-            this.Property(t => t.ChargeableWeightUnitCode).HasColumnName("ChargeableWeightUnitCode").HasMaxLength(3).IsUnicode(false);
         }
     }
 }

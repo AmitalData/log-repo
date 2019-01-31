@@ -69,7 +69,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             myMN_MSG1_MANIFEST.Declaration = BuildDeclaration(requestParams);
 
             this.MyRequestSheetParam = new RequestSheetParam();
-            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Shipment");
             this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId;
             this.MyRequestSheetParam.RequestDescription = "מסר מניפסט";
 
@@ -154,7 +154,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             //Get CourierMaster
             CourierMasterQueryService myCourierMasterQueryService = new CourierMasterQueryService(_Context);
-            _CourierMasterPM = myCourierMasterQueryService.GetSingle(_CourierDeclarationPM.CourierMasterId, false, false);
+            _CourierMasterPM = myCourierMasterQueryService.GetSingle(_CourierDeclarationPM.CourierMasterId, false, true);
             if (_CourierMasterPM == null)
             {
                 return _DeclarationPM;

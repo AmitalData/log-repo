@@ -56,8 +56,6 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                SecurityUtility.CheckContactFeature("AccountingPaymentMethod", "READ", authToken.Tenant);
                 AccountingPaymentMethodQuery accountingPaymentMethodQuery = new AccountingPaymentMethodQuery(authToken.Tenant);
                 AccountingPaymentMethodPM accountingPaymentMethodPM = accountingPaymentMethodQuery.GetSinglePM(id, authToken.Tenant);
                 
@@ -88,7 +86,6 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("AccountingPaymentMethod", "NEW", authToken.Tenant);
                 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entityPM.Tenant);
                         AccountingPaymentMethodService service = new AccountingPaymentMethodService(MyContext, entityPM.Tenant);
@@ -136,7 +133,6 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("AccountingPaymentMethod", "UPDATE", authToken.Tenant);
 
                         string entityName = "AccountingPaymentMethod" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "AccountingPaymentMethodPM" + entityPM.Id + entityPM.Tenant;

@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdateClasses
 {
    public class AnalyzeQueueUpdateClass
@@ -82,41 +79,38 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    DBTableName =  "AnalyzeQueues",
 			      				    ObjectTableSingular =  "Analyze Queue",
 			      				    ObjectTablePlural =  "AnalyzeQueues",
-			      				    DefaultText =  "Analyze Queue",
-			      				    Name =  "Analyze Queues",
-			      				    IsNewWizard =  false,
 			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  true,
+			      				    IsNewWizard =  false,
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
-			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
-			      				    CustomFieldsCount =  0,
-			      				    HasCustomFields =  false,
+			      				    EnableEditFromLOV =  false,
 			      				    InActive =  false,
-			      				    SearchFields =  "AnalyzeQueue,AnalyzeQueues,,,",
 			      				    IsSaveButtonVisible =  true,
-			      				    EnableSecurity =  true,
-			      				    ObjectTableTypeCode =  "MD",
 			      				    IsComposition =  false,
-			      				    MaxNumberOfCustomFields =  0,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    HasDocuments =  false,
-			      				    IsLookUp =  false,
-			      				    IsEditable =  true,
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  true,
-			      				    HasFiltersMenu =  false,
-			      				    SortingByObjectField =  "CreateDate",
-			      				    ClientModuleName =  "Infrastructure",
+			      				    ObjectTableTypeCode =  "MD",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    DefaultText =  "Analyze Queue",
 			      				    Code =  "ANQU",
+			      				    Name =  "AnalyzeQueue Query Group",
+			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Infrastructure",
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -131,10 +125,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CommunicationLog",
-					  						DataTypeCode =  "LookUp",
-					  						MaxLength =  15,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  true,
@@ -146,39 +139,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "CommunicationLog",
 					  						ListPropertyPath =  "CommunicationLog",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "CommunicationLogId",
+					  						DefaultText =  "Communication Log",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "CommunicationLogId",
-					  						DefaultText =  @"Communication Log",
-					  						HelpTextCode =  "CommunicationLogId",
-					  						Code =  "CommunicationLogId",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  true,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -189,10 +176,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "EntityReference",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  15,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  true,
@@ -204,41 +190,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "EntityReference",
 					  						ListPropertyPath =  "EntityReference",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "EntityReference",
+					  						DefaultText =  "EntityReference",
+					  						ListFieldLable =  "EntityReferenceListLable",
+					  						ListLableDefaultText =  "Entity Reference",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "EntityReference",
-					  						DefaultText =  @"EntityReference",
-					  						ListFieldLable =  "EntityreferenceListLable",
-					  						ListLableDefaultText =  @"Entity Reference",
-					  						HelpTextCode =  "EntityReference",
-					  						Code =  "EntityReference",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -249,10 +229,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "ObjectTableName",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  0,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  true,
@@ -264,41 +243,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ObjectTableName",
 					  						ListPropertyPath =  "ObjectTableName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "ObjectTableName",
+					  						DefaultText =  "Object Table Name",
+					  						ListFieldLable =  "ObjectTableNameListLable",
+					  						ListLableDefaultText =  "ObjectTableName",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "ObjectTableName",
-					  						DefaultText =  @"Object Table Name",
-					  						ListFieldLable =  "ObjectTableNameListLable",
-					  						ListLableDefaultText =  @"ObjectTableName",
-					  						HelpTextCode =  "ObjectTableName",
-					  						Code =  "ObjectTableName",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -309,10 +282,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "From",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  40,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  true,
@@ -324,41 +296,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "From",
 					  						ListPropertyPath =  "From",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "From",
+					  						DefaultText =  "From",
+					  						ListFieldLable =  "FromListLable",
+					  						ListLableDefaultText =  "From",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "From",
-					  						DefaultText =  @"From",
-					  						ListFieldLable =  "FromListLable",
-					  						ListLableDefaultText =  @"From",
-					  						HelpTextCode =  "From",
-					  						Code =  "From",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -369,10 +335,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "CreateDate",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "DateTime",
-					  						DataTypeCode =  "DateTime",
-					  						MaxLength =  0,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  true,
@@ -384,41 +349,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "CreateDate",
 					  						ListPropertyPath =  "CreateDate",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "CreateDate",
+					  						DefaultText =  "Create Date",
+					  						ListFieldLable =  "CreateDateListLable",
+					  						ListLableDefaultText =  "Create Date",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  @"Create Date",
-					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  @"Create Date",
-					  						HelpTextCode =  "CreateDate",
-					  						Code =  "CreateDate",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -429,10 +388,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "FileSize",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Double",
-					  						DataTypeCode =  "Double",
-					  						MaxLength =  0,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  true,
@@ -444,41 +402,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "FileSize",
 					  						ListPropertyPath =  "FileSize",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "FileSize",
+					  						DefaultText =  "File Size (KB)",
+					  						ListFieldLable =  "FileSizeListLable",
+					  						ListLableDefaultText =  "File Size (KB)",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "FileSize",
-					  						DefaultText =  @"File Size (KB)",
-					  						ListFieldLable =  "FileSizeListLable",
-					  						ListLableDefaultText =  @"File Size (KB)",
-					  						HelpTextCode =  "FileSize",
-					  						Code =  "FileSize",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -489,10 +441,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "Status",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  4,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  4,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  true,
@@ -504,41 +455,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Status",
 					  						ListPropertyPath =  "Status",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "Status",
+					  						DefaultText =  "Status Name",
+					  						ListFieldLable =  "StatusListLable",
+					  						ListLableDefaultText =  "Status",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "Status",
-					  						DefaultText =  @"Status Name",
-					  						ListFieldLable =  "StatusListLable",
-					  						ListLableDefaultText =  @"Status",
-					  						HelpTextCode =  "Status",
-					  						Code =  "Status",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -549,10 +494,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "ErrorMessage",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  500,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  500,
+					  						IsRequired =  true,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  true,
@@ -564,41 +508,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ErrorMessage",
 					  						ListPropertyPath =  "ErrorMessage",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "ErrorMessage",
+					  						DefaultText =  "Error Message",
+					  						ListFieldLable =  "ErrorMessageListLable",
+					  						ListLableDefaultText =  "Error Message",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "ErrorMessage",
-					  						DefaultText =  @"Error Message",
-					  						ListFieldLable =  "ErrorMessageListLable",
-					  						ListLableDefaultText =  @"Error Message",
-					  						HelpTextCode =  "ErrorMessage",
-					  						Code =  "ErrorMessage",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  true,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -609,10 +547,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "Subject",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  40,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  true,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  true,
@@ -624,41 +561,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Subject",
 					  						ListPropertyPath =  "Subject",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  true,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "Subject",
+					  						DefaultText =  "Subject",
+					  						ListFieldLable =  "SubjectListLable",
+					  						ListLableDefaultText =  "Subject",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "Subject",
-					  						DefaultText =  @"Subject",
-					  						ListFieldLable =  "SubjectListLable",
-					  						ListLableDefaultText =  @"Subject",
-					  						HelpTextCode =  "Subject",
-					  						Code =  "Subject",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  true,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -669,10 +600,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "Retries",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Integer",
-					  						DataTypeCode =  "Integer",
-					  						MaxLength =  0,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  true,
@@ -684,41 +614,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Retries",
 					  						ListPropertyPath =  "Retries",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "Retries",
+					  						DefaultText =  "Retries",
+					  						ListFieldLable =  "RetriesListLable",
+					  						ListLableDefaultText =  "Retries",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "Retries",
-					  						DefaultText =  @"Retries",
-					  						ListFieldLable =  "RetriesListLable",
-					  						ListLableDefaultText =  @"Retries",
-					  						HelpTextCode =  "Retries",
-					  						Code =  "Retries",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -729,10 +653,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "ConnectedToTenant",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Boolean",
-					  						DataTypeCode =  "Boolean",
-					  						MaxLength =  0,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  true,
@@ -744,41 +667,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ConnectedToTenant",
 					  						ListPropertyPath =  "ConnectedToTenant",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "ConnectedToTenant",
+					  						DefaultText =  "Connected To Tenant",
+					  						ListFieldLable =  "ConnectedToTenantListLable",
+					  						ListLableDefaultText =  "Connected To Tenant",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "ConnectedToTenant",
-					  						DefaultText =  @"Connected To Tenant",
-					  						ListFieldLable =  "ConnectedToTenantListLable",
-					  						ListLableDefaultText =  @"Connected To Tenant",
-					  						HelpTextCode =  "ConnectedToTenant",
-					  						Code =  "ConnectedToTenant",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -789,10 +706,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "ConnectedToEntity",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Boolean",
-					  						DataTypeCode =  "Boolean",
-					  						MaxLength =  0,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  true,
@@ -804,41 +720,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ConnectedToEntity",
 					  						ListPropertyPath =  "ConnectedToEntity",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "ConnectedToEntity",
+					  						DefaultText =  "Connected To Entity",
+					  						ListFieldLable =  "ConnectedToEntityListLable",
+					  						ListLableDefaultText =  "Connected To Entity",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "ConnectedToEntity",
-					  						DefaultText =  @"Connected To Entity",
-					  						ListFieldLable =  "ConnectedToEntityListLable",
-					  						ListLableDefaultText =  @"Connected To Entity",
-					  						HelpTextCode =  "ConnectedToEntity",
-					  						Code =  "ConnectedToEntity",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -849,10 +759,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  1000,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -864,41 +773,36 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
-					  						ValidForQuerySection2 =  "AnalyzeQueueFollowUp",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
+					  						ValidForQuerySection2 =  "AnalyzeQueueFollowUp",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "Search EntityReference / From / Create Date / Tenant / Status / Subject",
+					  						HelpTextCode =  "SearchFields",
+					  						HelpTextDefaultText =  "Searching by :\n1: Entity References \n2: Tenants \n3: From \n4: Subjects \n5: Statuses \n6: Create Date",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search EntityReference / From / Create Date / Tenant / Status / Subject",
-					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  @"Searching by :\n1: Entity References \n2: Tenants \n3: From \n4: Subjects \n5: Statuses \n6: Create Date",
-					  						Code =  "SearchFields",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -909,10 +813,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "TenantName",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  100,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  true,
@@ -924,41 +827,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "TenantName",
 					  						ListPropertyPath =  "TenantName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "TenantName",
+					  						DefaultText =  "Tenant Name",
+					  						ListFieldLable =  "TenantNameListLable",
+					  						ListLableDefaultText =  "Tenant Name",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "TenantName",
-					  						DefaultText =  @"Tenant Name",
-					  						ListFieldLable =  "TenantNameListLable",
-					  						ListLableDefaultText =  @"Tenant Name",
-					  						HelpTextCode =  "TenantName",
-					  						Code =  "TenantName",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -969,10 +866,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "AWBNumber",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  20,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  20,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  true,
@@ -984,41 +880,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "AWBNumber",
 					  						ListPropertyPath =  "AWBNumber",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "AWBNumber",
+					  						DefaultText =  "AWB #",
+					  						ListFieldLable =  "AWBNumberListLable",
+					  						ListLableDefaultText =  "AWB #",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "AWBNumber",
-					  						DefaultText =  @"AWB #",
-					  						ListFieldLable =  "AWBNumberListLable",
-					  						ListLableDefaultText =  @"AWB #",
-					  						HelpTextCode =  "AWBNumber",
-					  						Code =  "AWBNumber",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1029,10 +919,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "AckReason",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  256,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  256,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -1044,41 +933,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "AckReason",
 					  						ListPropertyPath =  "AckReason",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "AckReason",
+					  						DefaultText =  "Ack Reason",
+					  						ListFieldLable =  "AckReasonListLable",
+					  						ListLableDefaultText =  "Ack Reason",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "AckReason",
-					  						DefaultText =  @"Ack Reason",
-					  						ListFieldLable =  "AckReasonListLable",
-					  						ListLableDefaultText =  @"Ack Reason",
-					  						HelpTextCode =  "AckReason",
-					  						Code =  "AckReason",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1089,10 +972,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "DoneDate",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "DateTime",
-					  						DataTypeCode =  "DateTime",
-					  						MaxLength =  0,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  true,
@@ -1104,41 +986,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "DoneDate",
 					  						ListPropertyPath =  "DoneDate",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						IsRestrictable =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AnalyzeQueue",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "DoneDate",
+					  						DefaultText =  "Done Date",
+					  						ListFieldLable =  "DoneDateListLable",
+					  						ListLableDefaultText =  "Done Date",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "DoneDate",
-					  						DefaultText =  @"Done Date",
-					  						ListFieldLable =  "DoneDateListLable",
-					  						ListLableDefaultText =  @"Done Date",
-					  						HelpTextCode =  "DoneDate",
-					  						Code =  "DoneDate",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1147,81 +1023,81 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AnalyzeQueueQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ANQU", Name = "Analyze Queues" }, queryGroupRepository);
+	        QueryGroup AnalyzeQueueQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ANQU", Name = "AnalyzeQueue Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable AnalyzeQueueObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AnalyzeQueue" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> AnalyzeQueueObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AnalyzeQueue").ToList();   
 
 			   TextCode AnalyzeQueueTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.Q.TodayAnalyzeQueues", DefaultText = @"Today",LocalDefaultText = null, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AnalyzeQueueFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TODAYANALYZEQUS", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.TodayAnalyzeQueues", NameTextCodeDefaultText = "Today Analyze Queues", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AnalyzeQueueFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AnalyzeQueue.Q.TodayAnalyzeQueues", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueueFeatures.TodayAnalyzeQueues", NameTextCodeDefaultText = "Today Analyze Queues", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
 
 			   TextCode AnalyzeQueueTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.Q.AllAnalyzeQueues", DefaultText = @"All Analyze Queues",LocalDefaultText = null, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AnalyzeQueueFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLANALYZEQUS", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.AllAnalyzeQueues", NameTextCodeDefaultText = "All Analyze Queues", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AnalyzeQueueFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AnalyzeQueue.Q.AllAnalyzeQueues", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueueFeatures.AllAnalyzeQueues", NameTextCodeDefaultText = "All Analyze Queues", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query TodayAnalyzeQueuesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AnalyzeQueueTextCode_0.Id, Code = "Today Analyze Queues",  QueryGroupCode = "ANQU", IndexOrder = 0, Tenant = 0, ObjectTableId = AnalyzeQueueObjectTable.Id, QuerySection = "AnalyzeQueue", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AnalyzeQueueFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query TodayAnalyzeQueuesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AnalyzeQueueTextCode_0.Id, Code = "Today Analyze Queues",  QueryGroupCode = "ANQU", IndexOrder = 0, Tenant = 0, ObjectTableId = AnalyzeQueueObjectTable.Id, QuerySection = "AnalyzeQueue", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AnalyzeQueueFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
 	
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 1, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 2, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "From" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 1, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "From" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 3, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "EntityReference" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 2, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "EntityReference" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 4, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 3, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 5, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "FileSize" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 4, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "FileSize" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 6, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 5, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 7, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ErrorMessage" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 6, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ErrorMessage" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 8, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 7, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 9, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Retries" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 8, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Retries" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 10, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToTenant" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 9, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToTenant" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 11, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToEntity" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 10, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToEntity" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 12, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "DoneDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id, IndexOrder = 11, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "DoneDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter TodayAnalyzeQueuesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TodayAnalyzeQueuesQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter TodayAnalyzeQueuesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "Today", QueryId = TodayAnalyzeQueuesQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
-			  Query AllAnalyzeQueuesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AnalyzeQueueTextCode_1.Id, Code = "All Analyze Queues",  QueryGroupCode = "ANQU", IndexOrder = 1, Tenant = 0, ObjectTableId = AnalyzeQueueObjectTable.Id, QuerySection = "AnalyzeQueue", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AnalyzeQueueFeature_1.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllAnalyzeQueuesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AnalyzeQueueTextCode_1.Id, Code = "All Analyze Queues",  QueryGroupCode = "ANQU", IndexOrder = 1, Tenant = 0, ObjectTableId = AnalyzeQueueObjectTable.Id, QuerySection = "AnalyzeQueue", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AnalyzeQueueFeature_1.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllAnalyzeQueuesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 1, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 2, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "From" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 1, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "From" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 3, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "EntityReference" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 2, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "EntityReference" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 4, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 3, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 5, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "FileSize" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 4, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "FileSize" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 6, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 5, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 7, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ErrorMessage" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 6, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ErrorMessage" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 8, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 7, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 9, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Retries" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 8, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Retries" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 10, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToTenant" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 9, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToTenant" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 11, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToEntity" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 10, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToEntity" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 12, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "DoneDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id, IndexOrder = 11, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "DoneDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -1233,75 +1109,75 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 		       
 	      
 
-	         Screen AnalyzeQueueHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AnalyzeQueue.HeaderScreen", Name = "Header Screen", ObjectTableId = AnalyzeQueueObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen AnalyzeQueueAnalyzeQueueHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AnalyzeQueueAnalyzeQueue.HeaderScreen", Name = "AnalyzeQueue.HeaderScreen", ObjectTableId = AnalyzeQueueObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().Id, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().Id, ScreenId = AnalyzeQueueAnalyzeQueueHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "From").FirstOrDefault().Id, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "From").FirstOrDefault().Id, ScreenId = AnalyzeQueueAnalyzeQueueHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().Id, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().Id, ScreenId = AnalyzeQueueAnalyzeQueueHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = AnalyzeQueueAnalyzeQueueHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
-		    AnalyzeQueueObjectTable.HeaderScreenId = AnalyzeQueueHeaderScreenScreen0.Id;
+		    AnalyzeQueueObjectTable.HeaderScreenId = AnalyzeQueueAnalyzeQueueHeaderScreenScreen0.Id;
 	   		  
 	      
 
-	         Screen AnalyzeQueueGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AnalyzeQueue.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = AnalyzeQueueObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 8, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen AnalyzeQueueAnalyzeQueueGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AnalyzeQueueAnalyzeQueue.GeneralTabScreen", Name = "AnalyzeQueue.GeneralTabScreen", ObjectTableId = AnalyzeQueueObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 8, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "From").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "From").FirstOrDefault().Id, ScreenId = AnalyzeQueueAnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().Id, ScreenId = AnalyzeQueueAnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "FileSize").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "FileSize").FirstOrDefault().Id, ScreenId = AnalyzeQueueAnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Status").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Status").FirstOrDefault().Id, ScreenId = AnalyzeQueueAnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = AnalyzeQueueAnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Retries").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Retries").FirstOrDefault().Id, ScreenId = AnalyzeQueueAnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "TenantName").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "TenantName").FirstOrDefault().Id, ScreenId = AnalyzeQueueAnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "AWBNumber").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "AWBNumber").FirstOrDefault().Id, ScreenId = AnalyzeQueueAnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToTenant").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToTenant").FirstOrDefault().Id, ScreenId = AnalyzeQueueAnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToEntity").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToEntity").FirstOrDefault().Id, ScreenId = AnalyzeQueueAnalyzeQueueGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {                
-			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
-			   ObjectTable AnalyzeQueueObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AnalyzeQueue" && d.Tenant == 0).FirstOrDefault();  
+	    {    
+			 ObjectTable AnalyzeQueueObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AnalyzeQueue" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode AnalyzeQueueMessageBodyTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.TH.MessageBody", DefaultText = "Message Body",LocalDefaultText = null, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AnalyzeQueueMessageBodyFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MESSAGEBODY", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.MessageBody", NameTextCodeDefaultText = "Message Body", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AnalyzeQueueMessageBodyFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AnalyzeQueue.Tab.MessageBody", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueueFeatures.AQMB", NameTextCodeDefaultText = "Message Body", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode AnalyzeQueueGeneralTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AnalyzeQueueGeneralFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AnalyzeQueueGeneralFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AnalyzeQueue.Tab.General", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueueFeatures.AQGC", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode AnalyzeQueueErrorsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.TH.AnalyzeQueueErrors", DefaultText = "Errors",LocalDefaultText = null, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature AnalyzeQueueErrorsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AnalyzeQueue.Tab.Errors", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueueFeatures.AQER", NameTextCodeDefaultText = "Errors", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode AnalyzeQueueEventsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AnalyzeQueueEventsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AnalyzeQueueEventsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AnalyzeQueue.Tab.Events", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueueFeatures.AQEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AQMB",HtmlComponentName = "",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/AnalyzeQueue/MessageBodyTabComponent", FeatureId = AnalyzeQueueMessageBodyFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.MaintenanceControls.MessageBody", ObjectTableId = AnalyzeQueueObjectTable.Id, TabNameTextCodeId = AnalyzeQueueMessageBodyTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AQMB",HtmlComponentName = "",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/AnalyzeQueue/MessageBodyTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "AnalyzeQueue.Tab.MessageBody" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.MaintenanceControls.MessageBody", ObjectTableId = AnalyzeQueueObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "AnalyzeQueue.TH.MessageBody" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AQGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AnalyzeQueueGeneralFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AnalyzeQueueObjectTable.Id, TabNameTextCodeId = AnalyzeQueueGeneralTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AQGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "AnalyzeQueue.Tab.General" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AnalyzeQueueObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "AnalyzeQueue.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AQER",HtmlComponentName = "",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/AnalyzeQueue/AnalyzeQueueErrorsTabComponent", FeatureId = AnalyzeQueueMessageBodyFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.MaintenanceControls.AnalyzeQueueErrors", ObjectTableId = AnalyzeQueueObjectTable.Id, TabNameTextCodeId = AnalyzeQueueErrorsTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AQER",HtmlComponentName = "",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/AnalyzeQueue/AnalyzeQueueErrorsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "AnalyzeQueue.Tab.Errors" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.MaintenanceControls.AnalyzeQueueErrors", ObjectTableId = AnalyzeQueueObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "AnalyzeQueue.TH.AnalyzeQueueErrors" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AQEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AnalyzeQueueEventsFeature_TH3.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AnalyzeQueueObjectTable.Id, TabNameTextCodeId = AnalyzeQueueEventsTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AQEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "AnalyzeQueue.Tab.Events" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AnalyzeQueueObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "AnalyzeQueue.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1311,13 +1187,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 		   Feature AnalyzeQueueFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueue.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature AnalyzeQueueFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueue.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature AnalyzeQueueFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueue.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AnalyzeQueueFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueue.Features.PackageFeature", NameTextCodeDefaultText = "AnalyzeQueue Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature AnalyzeQueueFeature_ANALYZEQUEUEERRORS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ANALYZEQUEUEERRORS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.AnalyzeQueueErrors", NameTextCodeDefaultText = @"Error" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+		   Feature AnalyzeQueueFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueue.Features.PackageFeature", NameTextCodeDefaultText = "AnalyzeQueue Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 
@@ -1327,17 +1197,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "UPAQ",
-                ShortView =  false,
-                IsManualEntry =  false,
-                LocalName =  "Analyze Queue Updated",
                 EnglishName =  "Analyze Queue Updated",
-                EventTypeCategoryCode =  "OPE",
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
+                LocalName =  "Analyze Queue Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
                 ObjectTableId = AnalyzeQueueObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
@@ -1347,48 +1210,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable AnalyzeQueueObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AnalyzeQueue" && d.Tenant == 0).FirstOrDefault();       
-    
-			   Feature AnalyzeQueueFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RESEND", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueue.Features.Resend", NameTextCodeDefaultText = "Resend", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-
- 
-
-		   TextCodeRepository.SubmitChanges();
-		   FeaturesRepository.SubmitChanges();
-		   MenuButtonGroup AnalyzeQueueMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
-				{
-					MenuButtonGroupType = "AnalyzeQueueEdit",
-					Name = "AnalyzeQueueEditButtonsGroup",
-					ObjectTableId = AnalyzeQueueObjectTable.Id,
-					Tenant = 0
-				}, menuButtonGroupRepository, tenantMenuButtonGroups);        
-   
-			   MenuButton AnalyzeQueueMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-					{
-						EventCode = "Resend",
-						Index = 0, 
-						IsActive = true,
-						LabelTextCodeCode = "AnalyzeQueue.B.Resend",
-						LabelTextCodeDefaultText = "Resend",
-						Tenant = 0,
-						MenuButtonGroupId = AnalyzeQueueMenuButtonGroup.Id,
-						ObjectTableId = AnalyzeQueueObjectTable.Id,
-						MenuButtonType = "button",
-						FeatureId = AnalyzeQueueFeature_MB0.Id,
-						Style = null,
-						LocalDefaultText = null,
-					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

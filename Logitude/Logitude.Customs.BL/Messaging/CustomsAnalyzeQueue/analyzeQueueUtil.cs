@@ -56,8 +56,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
     public class AnalyzeQueueUtil
     {
 
-        public AnalyzeQueue SaveMessageToAnalyzeQueue(string fileName, byte[] messageData, int tenant, InterfaceDetails defInterfaceDetail
-            ,AnalyzeResultModel analyzeResultModel=null)
+        public AnalyzeQueue SaveMessageToAnalyzeQueue(string fileName, byte[] messageData, int tenant, InterfaceDetails defInterfaceDetail)
         {
             AnalyzeQueue analyzeQueue = null;
             //var defInterfaceDetail = (new CustomsPartnerFtpDetails()).GetAllInterfaceDetails().First(r => r.Code == customsPartnerFtpPM.InterfaceName);
@@ -85,7 +84,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                     FileSize = System.Text.Encoding.UTF8.GetBytes(" ").Length,
                     FileName = fileName,
 
-                    CommunicationLogId = BuildCommunicationLog(messageData, tenant, defInterfaceDetail, analyzeResultModel)
+                    CommunicationLogId = BuildCommunicationLog(messageData, tenant, defInterfaceDetail)
                 };
 
                 analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
@@ -99,7 +98,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
 
 
-        public string BuildCommunicationLog(byte[] bytearray, int tenant, InterfaceDetails defInterfaceDetail, AnalyzeResultModel analyzeResultModel=null)///using  by SendWEBAPIMessage2MamanWRWR
+        public string BuildCommunicationLog(byte[] bytearray, int tenant, InterfaceDetails defInterfaceDetail)///using  by SendWEBAPIMessage2MamanWRWR
         {
 
 
@@ -167,19 +166,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 LogSettings = settingsData,
                 //QueueName = def.QueueName //SBQueueNames.SendWEBAPIMessage2MamanQ.ToString() ///using  by SendWEBAPIMessage2MamanWR
             };
-            analyzeResultModel = analyzeResultModel ?? new AnalyzeResultModel();
-            if (!string.IsNullOrWhiteSpace(analyzeResultModel.EntityID) &&
-                    !string.IsNullOrWhiteSpace(analyzeResultModel.ObjectTableID))
-            {
 
-                commLog.ObjectTableId = analyzeResultModel.ObjectTableID;
-                commLog.EntityId = analyzeResultModel.EntityID;
-                LogMessagingUtil.Instance.AppendLine($".ObjectTableId = {analyzeResultModel.ObjectTableID}");
-                LogMessagingUtil.Instance.AppendLine($".EntityId = {analyzeResultModel.EntityID}");
-                LogMessagingUtil.Instance.AppendLine($".EntityReference = {analyzeResultModel.EntityReference}");
-
-
-            }
             communicationLogRepository.Add(commLog);
             communicationLogRepository.SubmitChanges();
 

@@ -63,27 +63,11 @@
                                                                                             </td>
 
                                                                                             <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
-                                                                                                <table>
-                                                                                                    <tr>
-                                                                                                        <td style="width:45px;"><div></div></td>
-
-                                                                                                        <td>
-                                                                                                            <CheckBox [IsEnabled]="false" [IsChecked]="item.SuggestedIsChecked" (Checked)="item.SuggestedIsChecked = $event"></CheckBox>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </table>                                                                                                
+                                                                                                <CheckBox [IsEnabled]="false" [IsChecked]="item.SuggestedIsChecked" (Checked)="item.SuggestedIsChecked = $event"></CheckBox>
                                                                                             </td>
 
                                                                                             <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px; position: relative;">
-                                                                                                <table>
-                                                                                                    <tr>
-                                                                                                        <td style="width:30px;"><div></div></td>
-
-                                                                                                        <td>
-                                                                                                            <CheckBox [IsEnabled]="item.IsEnabled" [IsChecked]="item.ChooseIsChecked" (Checked)="item.ChooseIsChecked = $event"></CheckBox>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </table>                                                                                                
+                                                                                                <CheckBox [IsEnabled]="item.IsEnabled" [IsChecked]="item.ChooseIsChecked" (Checked)="item.ChooseIsChecked = $event"></CheckBox>
                                                                                             </td>
                                                                                         </tr>
 
@@ -115,7 +99,7 @@
                                             </tr>
 
                                             <!-- Carriers -->
-                                            <tr style="height:80px;">
+                                            <tr>
                                                 <td style="width:5px;"></td>
 
                                                 <td>
@@ -130,7 +114,7 @@
                                                             </table>
                                                         </div>
 
-                                                        <div class="SimpleGridViewBody SimpleGridViewBody2">
+                                                        <div class="SimpleGridViewBody">
                                                             <table>
                                                                 <tr style="height: 1px;">
                                                                     <td>
@@ -144,27 +128,11 @@
                                                                                             </td>
 
                                                                                             <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
-                                                                                                <table>
-                                                                                                    <tr>
-                                                                                                        <td style="width:45px;"><div></div></td>
-
-                                                                                                        <td>
-                                                                                                            <CheckBox [IsEnabled]="false" [IsChecked]="item.SuggestedIsChecked" (Checked)="item.SuggestedIsChecked = $event"></CheckBox>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </table>                                                                                                
+                                                                                                <CheckBox [IsEnabled]="false" [IsChecked]="item.SuggestedIsChecked" (Checked)="item.SuggestedIsChecked = $event"></CheckBox>
                                                                                             </td>
 
                                                                                             <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px; position: relative;">
-                                                                                                <table>
-                                                                                                    <tr>
-                                                                                                        <td style="width:30px;"><div></div></td>
-
-                                                                                                        <td>
-                                                                                                            <CheckBox [IsChecked]="item.ChooseIsChecked" (Checked)="item.ChooseIsChecked = $event"></CheckBox>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </table>                                                                                                
+                                                                                                <CheckBox [IsChecked]="item.ChooseIsChecked" (Checked)="item.ChooseIsChecked = $event"></CheckBox>
                                                                                             </td>
                                                                                         </tr>
 
@@ -187,10 +155,6 @@
                                                 </td>
 
                                                 <td style="width:5px;"></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><div></div></td>
                                             </tr>
 
                                         </table>

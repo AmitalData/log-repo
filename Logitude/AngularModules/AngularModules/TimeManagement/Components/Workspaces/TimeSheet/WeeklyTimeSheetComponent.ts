@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TMEmployeeTimePM} from '../../../EntityPMs/TMEmployeeTimePM';
@@ -82,9 +82,8 @@ export class WeeklyTimeSheetComponent extends BaseComponent {
             this.TueDate = DateTool.NextDay(this.periodStartDate, 2);
             this.WedDate = DateTool.NextDay(this.periodStartDate, 3);
             this.ThuDate = DateTool.NextDay(this.periodStartDate, 4);
-            this.FriDate = DateTool.NextDay(this.periodStartDate, 5);
-            this.SatDate = DateTool.NextDay(this.periodStartDate, 6);
-
+            this.SatDate = DateTool.NextDay(this.periodStartDate, 5);
+            this.FriDate = DateTool.NextDay(this.periodStartDate, 6);
         }
     }
 

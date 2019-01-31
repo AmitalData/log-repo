@@ -126,8 +126,7 @@
                 this.Category2Id ="";
                 this.Category3Id ="";
                 this.Category4Id ="";
-                this.Category5Id = "";
-                this.AccountTypeCode = "2";
+                this.Category5Id ="";
                 this.From =  lastMonth;
                 this.To = today;
                 this.IncludeChildAccounts = true;
@@ -822,19 +821,13 @@ div#two {
                     <li>
                         SysCheck
 
-                            <asp:Button ID="_AccountingIntegrityService" runat="server" Text="AccountingIntegrityService" OnClick="_AccountingIntegrityService_Click" />
-
                             <asp:Button ID="_ButtonSysCheckTotalSumIsZero" runat="server" Text="TotalSumIsZero" OnClick="_ButtonSysCheckTotalSumIsZero_Click" />
                         <asp:Button ID="_ButtonSysCheckLdegerTransSumIsZero" runat="server" Text="LdegerTransSumSumIsZero" OnClick="_ButtonSysCheckLdegerTransSumIsZero_Click" />
                         <asp:Button ID="_ButtonSysCheckGLAccJL2Total" runat="server" Text="GLAccJL2Total" OnClick="_ButtonSysCheckGLAccJL2Total_Click" />
                         <asp:Button ID="_ButtonIsApprovedJournalTOTZero" runat="server" Text="IsApprovedJournalTOTZero" OnClick="_ButtonIsApprovedJournalTOTZero_Click" />
                     </li>
                     </li>
-                    <li>
-                        <asp:Button ID="_ButtonReverseDueDate" runat="server" Text="ReverseDueDate" OnClick="_ButtonReverseDueDate_Click" />
-                        <asp:Button ID="_ButtonDueLocalBalance" runat="server" Text="FixDueLocalBalance" OnClick="_ButtonDueLocalBalance_Click"/>
-                    </li>
-                
+                    <li><asp:Button ID="_ButtonReverseDueDate" runat="server" Text="ReverseDueDate" OnClick="_ButtonReverseDueDate_Click" /></li>
                 <li>
                     FIX PRA PRA 
                     <asp:Button ID="_ButtonReverseTotalFIX" runat="server" Text="FIX TOTAL from  Ledger " OnClick="_ButtonReverseTotalFIX_Click" />
@@ -849,7 +842,8 @@ div#two {
                             <asp:Button ID="_ButtonJournalApproveQueue" runat="server" Text=".Queue" OnClick="_ButtonJournalApproveQueue_Click" /></li>
                         <li>
                             <asp:Button ID="_ButtonJournalApprove" runat="server" Text=".WorkWithoutQueue" OnClick="_ButtonJournalApprove_Click" /></li>
-                                                
+                                                <li>
+                            <asp:Button ID="Button3" runat="server" Text=".RE STREAM JournalWhileStreamingHadErrorWithStatus4" OnClick="_WorkWithoutQueueStatus4_Click" /></li>
 
                     </ul>
                 </li>
@@ -874,7 +868,7 @@ div#two {
                 <li><asp:Button ID="_ButtonAging" runat="server" Text="Aging" OnClick="_ButtonAging_Click" />
                     <asp:Button ID="_ButtonCurrBalanceByType" runat="server" Text="GetGLAccountsLocalBalanceGByChartOfAccountsTypeCode" OnClick="_ButtonCurrBalanceByType_Click" />
                     <asp:Button ID="_ButtonTreeMapCOA" runat="server" Text="TreeMapGLAccountsLocalBalanceGByChartOfAccountsTypeCode" OnClick="_ButtonTreeMapCOA_Click" />
-                    
+                    <asp:Button ID="_ButtonDueLocalBalance" runat="server" Text="DueLocalBalance" OnClick="_ButtonDueLocalBalance_Click"/>
                     
                 </li>
                 <li><asp:Button ID="_ButtonCheckBalance" runat="server" Text="Check Balance" OnClick="_ButtonCheckBalance_Click" />

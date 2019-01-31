@@ -48,9 +48,9 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
     </div>
 
     <div style="width:100%;height:22px;position: absolute; bottom:0;">
-        <!--<button  [style.float]="isRTL ? 'left' : 'right'"  style="width: 80px;position: relative; display: inline-block;top:0;bottom:0;right:0;margin: 0 5px;" class="RedButton" (click)="CustomerButtonClicked()">{{'Accounting.O.Customer' | TextCodeTranslationPipe }}</button>-->
-        <button  [style.float]="isRTL ? 'left' : 'right'"  style="width: 60px;position: relative; display: inline-block;top:0;bottom:0;right:0;margin: 0 5px;" class="RedButton" (click)="CashbookButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe }}</button>
-        <button  [style.float]="isRTL ? 'left' : 'right'"  style="width: 70px;position: relative; display: inline-block;top:0;bottom:0;right:0;margin: 0 5px;" class="Button" (click)="OkButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe }}</button>
+        <button  [style.float]="isRTL ? 'left' : 'right'"  style="width: 80px;position: relative; display: inline-block;top:0;bottom:0;right:0;margin: 0 5px;" class="RedButton" (click)="CustomerButtonClicked()">{{'Accounting.O.Customer' | TextCodeTranslationPipe }}</button>
+        <button  [style.float]="isRTL ? 'left' : 'right'"  style="width: 80px;position: relative; display: inline-block;top:0;bottom:0;right:0;margin: 0 5px;" class="RedButton" (click)="CashbookButtonClicked()">{{'Accounting.O.Cashbook' | TextCodeTranslationPipe }}</button>
+        <button  [style.float]="isRTL ? 'left' : 'right'"  style="width: 80px;position: relative; display: inline-block;top:0;bottom:0;right:0;margin: 0 5px;" class="Button" (click)="OkButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe }}</button>
     </div>
             `
 })

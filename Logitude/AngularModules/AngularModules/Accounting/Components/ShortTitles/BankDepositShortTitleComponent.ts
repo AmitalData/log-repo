@@ -13,11 +13,11 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 @Component({
     moduleId: module.id,
     templateUrl: "./BankDepositShortTitleComponent.html",
-})
+}) 
 
 export class BankDepositShortTitleComponent {
     public EntityPM: BankDepositPM;
-
+    
 
     public isRTL: boolean = false;
 
@@ -31,29 +31,5 @@ export class BankDepositShortTitleComponent {
 
         if (this.EntityPM != null) {
         }
-
-
-        this.Listen();
     }
-
-    private LoadCompletedEvent: any = null;
-    Listen() {
-
-
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-
-            if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                    if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                        console.log("Entity Reloaded");
-                    }
-                });
-            }
-
-        }
-    }
-
-
 }

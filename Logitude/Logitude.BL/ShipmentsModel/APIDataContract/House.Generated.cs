@@ -103,16 +103,5 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public List<Delivery> Deliveries { get; set; }
     
     public List<CustomField> CustomFields { get; set; }
-    
-    public double? ValueOfGoods { get; set; }
-    
-    public Currency ValueOfGoodsCurrency { get; set; }
-    
-    public List<Receivable> Receivables { get; set; }
-    
-    public List<Payable> Payables { get; set; }
-
-    public  string  ComputingPartnerCode { get; set; }
-
     }
 } 

@@ -10,7 +10,7 @@
 
 
 import {InsideShipmentPackagePM} from './InsideShipmentPackagePM';
-import {ShipmentPackageHarmonizePM} from './ShipmentPackageHarmonizePM';
+
 import {ShipmentPackageItemPM} from './ShipmentPackageItemPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -430,55 +430,6 @@ export class ShipmentPackagePM {
     public get ECRTransportModeCode() { return this.eCRTransportModeCode; }
     public set ECRTransportModeCode(newValue: string) { if (this.eCRTransportModeCode != newValue) { this.eCRTransportModeCode = newValue; this.MarkAsDirty("ECRTransportModeCode"); } }
 
-    private isMultiHarmonize: boolean;
-    public get IsMultiHarmonize() { return this.isMultiHarmonize; }
-    public set IsMultiHarmonize(newValue: boolean) { if (this.isMultiHarmonize != newValue) { this.isMultiHarmonize = newValue; this.MarkAsDirty("IsMultiHarmonize"); } }
-
-    private eTD: Date;
-    public get ETD() { return this.eTD; }
-    public set ETD(newValue: Date) {
-        if (this.eTD != newValue) {
-            this.eTD = newValue;
-            this.MarkAsDirty("ETD");
-        }
-    }
-
-    private eTA: Date;
-    public get ETA() { return this.eTA; }
-    public set ETA(newValue: Date) {
-        if (this.eTA != newValue) {
-            this.eTA = newValue;
-            this.MarkAsDirty("ETA");
-        }
-    }
-
-    private routing: string;
-    public get Routing() { return this.routing; }
-    public set Routing(newValue: string) {
-        if (this.routing != newValue) {
-            this.routing = newValue;
-            this.MarkAsDirty("Routing");
-        }
-    }
-
-    private voyageTripNumber: string;
-    public get VoyageTripNumber() { return this.voyageTripNumber; }
-    public set VoyageTripNumber(newValue: string) {
-        if (this.voyageTripNumber != newValue) {
-            this.voyageTripNumber = newValue;
-            this.MarkAsDirty("VoyageTripNumber");
-        }
-    }
-
-    private hasContainerException: boolean;
-    public get HasContainerException() { return this.hasContainerException; }
-    public set HasContainerException(newValue: boolean) {
-        if (this.hasContainerException != newValue) {
-            this.hasContainerException = newValue;
-            this.MarkAsDirty("HasContainerException");
-        }
-    }
-
 	private insideShipmentPackages: InsideShipmentPackagePM[];
     get  InsideShipmentPackages() {
         if (this.insideShipmentPackages == null) {
@@ -550,49 +501,15 @@ export class ShipmentPackagePM {
         }
     }
 	    //public ShipmentPackageItems: Array<ShipmentPackageItemPMPM>= [];
-
-    private shipmentPackageHarmonizes: ShipmentPackageHarmonizePM[];
-    get ShipmentPackageHarmonizes() {
-        if (this.shipmentPackageHarmonizes == null) {
-            this.shipmentPackageHarmonizes = [];
-        }
-
-        return this.shipmentPackageHarmonizes;
-    }
-    set ShipmentPackageHarmonizes(newValue: ShipmentPackageHarmonizePM[]) {
-        if (this.shipmentPackageHarmonizes != newValue) {
-            this.shipmentPackageHarmonizes = newValue;
-        }
-    }
-    public AddShipmentPackageHarmonizePM(item: ShipmentPackageHarmonizePM) {
-        if (item != null) {
-            var index = this.ShipmentPackageHarmonizes.indexOf(item);
-            if (index == -1) {
-
-                item.EntityParentPM = this;
-
-                this.ShipmentPackageHarmonizes.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveShipmentPackageHarmonizePM(item: ShipmentPackageHarmonizePM) {
-        if (item != null) {
-            var index = this.ShipmentPackageHarmonizes.indexOf(item);
-            if (index > -1) {
-                this.ShipmentPackageHarmonizes.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-
-    private changeSetOp: string;
+     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
-    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }        
+    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
+       
+	 
 
-    public InsideShipmentPackagesChangeSet: Array<InsideShipmentPackagePM>= [];	 
+    public InsideShipmentPackagesChangeSet: Array<InsideShipmentPackagePM>= [];
+		 
     public ShipmentPackageItemsChangeSet: Array<ShipmentPackageItemPM> = [];
-    public ShipmentPackageHarmonizesChangeSet: Array<ShipmentPackageHarmonizePM> = [];
 
 	private reference1: string;
     public get Reference1() { return this.reference1; }
@@ -667,4 +584,4 @@ export class ShipmentPackagePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

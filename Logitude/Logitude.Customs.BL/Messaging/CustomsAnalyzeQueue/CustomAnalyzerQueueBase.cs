@@ -109,7 +109,6 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
         private void UpdateAnlayzeQ()
         {
-            _AnalyzeQueue = _AnalyzeQueue ?? new AnalyzeQueue();
             if (_CommunicationLog != null)
             {
 
@@ -120,7 +119,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 myCommunicationLog.CommunicationStatusTypeCode = _AnalyzeResultModel.MyCommStatusEnum.ToString();
                 myCommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
                 myCommunicationLog.Logs = _AnalyzeResultModel.ErrorMessage ?? "" + Environment.NewLine + LogMessagingUtil.Instance.ToString().GetLast((8000 - 1));
-                myCommunicationLog.ExceptionMessage = _AnalyzeQueue.ErrorMessage;
+
                 myCommunicationLog.EntityReference = _AnalyzeResultModel.EntityReference;
                 if (!string.IsNullOrWhiteSpace(_AnalyzeResultModel.EntityID) &&
                     !string.IsNullOrWhiteSpace(_AnalyzeResultModel.ObjectTableID))

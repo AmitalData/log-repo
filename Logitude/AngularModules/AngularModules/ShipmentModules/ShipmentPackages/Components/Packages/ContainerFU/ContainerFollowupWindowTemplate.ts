@@ -1,11 +1,11 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
+import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 import {ShipmentPackagePM} from '../../../../../Shipment/EntityPMs/ShipmentPackagePM';
 import {PackagesTabComponent, ShipmentPackageItem} from './../PackagesTabComponent';
 import {ContainerFollowupWindowComponent} from './ContainerFollowupWindowComponent';
 import {AppTool, DateTool} from '../../../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
-import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
 import {ShipmentTool} from '../../../../../Shipment/Tools';
 import {ShipmentDeliveryPM} from '../../../../../Shipment/EntityPMs/ShipmentDeliveryPM';
 import {ShipmentPickUpDeliveryPackagePM} from '../../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
@@ -251,51 +251,44 @@ export class ContainerFollowupWindowTemplate {
     }
     DeleteRoutingLinkClicked() {
 
-        if (this.ATD || this.ATA) {
-            var iWindow = new MessageWindow();
-            iWindow.Show("Actual Dates filled, can't delete delivery");
+        var message = TextCodeTranslator.Translate("Shipment.M.DeleteThisDelivery");
+        if (this.Code == "R") {
+            message = TextCodeTranslator.Translate("Shipment.M.DeleteThisEmptyCR");
         }
 
-        else {
-            var message = TextCodeTranslator.Translate("Shipment.M.DeleteThisDelivery");
-            if (this.Code == "R") {
-                message = TextCodeTranslator.Translate("Shipment.M.DeleteThisEmptyCR");
-            }
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show(message);
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                var isValid: boolean = this.FatherComponent.Validate();
 
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Show(message);
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-                    var isValid: boolean = this.FatherComponent.Validate();
+                if (isValid) {
+                    var myDeliveryId: string = null;
 
-                    if (isValid) {
-                        var myDeliveryId: string = null;
-
-                        switch (this.Code) {
-                            case "D": {
-                                myDeliveryId = this.EntityPM.DeliveryId;
-                                this.DataContext.DeliveryId = null;
-                                break;
-                            }
-
-                            case "R": {
-                                myDeliveryId = this.EntityPM.EmptyContainerReturnId;
-                                this.DataContext.EmptyContainerReturnId = null;
-                                break;
-                            }
+                    switch (this.Code) {
+                        case "D": {
+                            myDeliveryId = this.EntityPM.DeliveryId;
+                            this.DataContext.DeliveryId = null;
+                            break;
                         }
 
-                        if (myDeliveryId) {
-                            var item = this.TabComponent.EntityPM.ShipmentDeliveries.filter(f => f.Id == myDeliveryId)[0];
-                            if (item) {
-                                this.TabComponent.EntityPM.RemoveDelivery(item);
-                                this.FatherComponent.Save("DeleteLink");
-                            }
+                        case "R": {
+                            myDeliveryId = this.EntityPM.EmptyContainerReturnId;
+                            this.DataContext.EmptyContainerReturnId = null;
+                            break;
+                        }
+                    }
+
+                    if (myDeliveryId) {
+                        var item = this.TabComponent.EntityPM.ShipmentDeliveries.filter(f => f.Id == myDeliveryId)[0];
+                        if (item) {
+                            this.TabComponent.EntityPM.RemoveDelivery(item);
+                            this.FatherComponent.Save("DeleteLink");
                         }
                     }
                 }
-            });
-        }
+            }
+        });
     }
     DisconnectDeliveryLinkClicked() {
         if (this.Code == "D") {

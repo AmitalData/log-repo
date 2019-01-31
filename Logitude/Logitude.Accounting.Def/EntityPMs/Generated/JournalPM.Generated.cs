@@ -847,7 +847,53 @@ namespace Logitude.Accounting.Def.EntityPMs
               }
              set {  deletedJournalReconciles = value; }
 	    }
-	     }
+	  	  private string taxReportId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TaxReportId  
+	   {
+	    
+	     get
+		{
+		   return taxReportId;
+		 }
+		 set
+		 {
+		   if(taxReportId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxReportId",OldValue=taxReportId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   taxReportId=value;
+		   }
+			
+		 }
+	   }
+	  private string taxReportStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TaxReportStatusCode  
+	   {
+	    
+	     get
+		{
+		   return taxReportStatusCode;
+		 }
+		 set
+		 {
+		   if(taxReportStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxReportStatusCode",OldValue=taxReportStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   taxReportStatusCode=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

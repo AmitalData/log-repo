@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class ChargeTypeAccountingUpdateClass
@@ -85,6 +82,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DefaultText =  "Charge Type Accounting",
 			      				    Name =  "ChargeTypeAccounting",
 			      				    IsNewWizard =  false,
+			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -110,6 +108,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsEditable =  true,
+			      				    AllowedForComputingPartners =  false,
+			      				    DisableSearchBox =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasMenuButtons =  false,
+			      				    HasFiltersMenu =  false,
+			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -124,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "ChargeTypeAccounting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "VatType",
-					  						DataTypeCode =  "LookUp",
+					  						Code =  "VatTypeId",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -148,9 +153,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "ChargeTypeAccounting",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ChargeTypeAccounting",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -158,11 +164,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						FullFieldLable =  "VatTypeId",
-					  						DefaultText =  @"VAT Type",
-					  						HelpTextCode =  "VatTypeId",
-					  						Code =  "VatTypeId",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
@@ -171,6 +172,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "VatTypeId",
+					  						DefaultText =  "VAT Type",
+					  						HelpTextCode =  "VatTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -182,7 +186,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "ChargeTypeAccounting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ChargesType",
-					  						DataTypeCode =  "LookUp",
+					  						Code =  "ChargeTypeId",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -206,9 +210,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "ChargeTypeAccounting",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ChargeTypeAccounting",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -216,11 +221,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						FullFieldLable =  "ChargeTypeId",
-					  						DefaultText =  @"Charge Type",
-					  						HelpTextCode =  "ChargeTypeId",
-					  						Code =  "ChargeTypeId",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
@@ -229,6 +229,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "ChargeTypeId",
+					  						DefaultText =  "Charge Type",
+					  						HelpTextCode =  "ChargeTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -239,7 +242,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "PayableDebitAccount",
 					  						ObjectTableName =  "ChargeTypeAccounting",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "PayableDebitAccount",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -263,9 +266,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "ChargeTypeAccounting",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ChargeTypeAccounting",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -273,11 +277,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						FullFieldLable =  "PayableDebitAccount",
-					  						DefaultText =  @"Payable Debit Account",
-					  						HelpTextCode =  "PayableDebitAccount",
-					  						Code =  "PayableDebitAccount",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
@@ -286,6 +285,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "PayableDebitAccount",
+					  						DefaultText =  "Payable Debit Account",
+					  						HelpTextCode =  "PayableDebitAccount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -296,7 +298,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "ReceivableCreditAccount",
 					  						ObjectTableName =  "ChargeTypeAccounting",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "ReceivableCreditAccount",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -320,9 +322,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "ChargeTypeAccounting",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ChargeTypeAccounting",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -330,11 +333,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						FullFieldLable =  "ReceivableCreditAccount",
-					  						DefaultText =  @"Receivable Credit Account",
-					  						HelpTextCode =  "ReceivableCreditAccount",
-					  						Code =  "ReceivableCreditAccount",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
@@ -343,6 +341,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "ReceivableCreditAccount",
+					  						DefaultText =  "Receivable Credit Account",
+					  						HelpTextCode =  "ReceivableCreditAccount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -373,14 +374,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

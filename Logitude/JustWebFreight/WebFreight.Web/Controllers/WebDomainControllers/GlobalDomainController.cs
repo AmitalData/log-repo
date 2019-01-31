@@ -17,7 +17,6 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -33,27 +32,32 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class GlobalDomainController : ApiController
     {
-        public HttpResponseMessage GetMessagingStockTenantsList(int tenant)
+        public HttpResponseMessage GetAWBMessagingStockTenantsList(int tenant)
         {
             try
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 IGlobalContext objectContext = GlobalContext.GetContext();
+                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository(objectContext);
+                GlobalTenantRepository globalTenantsRepository = new GlobalTenantRepository(objectContext);
 
-                List<TenantManagementList> myResult = (from d in objectContext.TenantManagements.Include("GlobalTenant")
-                                                        where
-                                                        (d.IsAWBStockPrepaid || d.IsINTTRAStockPrepaid)
-                                                        &&
-                                                        (d.GlobalTenant != null && d.GlobalTenant.IsActive)
-                                                        select new TenantManagementList()
-                                                        {
-                                                            Id = d.Id,
-                                                            Name = d.Name,
-                                                            PackageCode = d.PackageCode,
-                                                            IsAWBStockPrepaid = d.IsAWBStockPrepaid,
-                                                            IsINTTRAStockPrepaid = d.IsINTTRAStockPrepaid,
-                                                        }).ToList();
+                List<TenantManagementList> myResult = new List<TenantManagementList>();
+                IQueryable<TenantManagement> iQueryable1 = tenantManagementRepository.GetAWBStockPrepaidTenants();
+                IQueryable<GlobalTenant> iQueryable2 = globalTenantsRepository.GetAllGlobalTenant().Where(d => d.IsActive);
+
+                foreach (TenantManagement item in iQueryable1)
+                {
+                    if (iQueryable2.Where(d => d.Id == item.Id).Any())
+                    {
+                        myResult.Add(new TenantManagementList()
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            PackageCode = item.PackageCode,
+                        });
+                    }
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -465,75 +469,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetTenantManagementJS()
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                int id = authToken.Tenant;
-
-                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(id);
-                TenantManagementPM entityPM = tenantManagementQuery.GetSinglePM(id);
-
-                TenantManagementJS myResult = new TenantManagementJS();
-
-                if (entityPM != null)
-                {
-                    myResult = new TenantManagementJS()
-                    {
-                        Id = entityPM.Id,
-                        Name = entityPM.Name,
-                        PackageCode = entityPM.PackageCode,
-                        PackageName = entityPM.PackageName,
-                        AWBMessagesCCSTypeCode = entityPM.AWBMessagesCCSTypeCode,
-                        IsAWBStockPrepaid = entityPM.IsAWBStockPrepaid,
-                        PaidUntilDate = entityPM.PaidUntilDate,
-                        TTY = entityPM.TTY,
-                        PIMA = entityPM.PIMA,
-                        TrialEndDate = entityPM.TrialEndDate,
-                        TrialStartDate = entityPM.TrialStartDate,
-                        BluesnapAccount = entityPM.BluesnapAccount,
-                        BluesnapContractId = entityPM.BluesnapContractId,
-                        ChangeHeaderColor = entityPM.ChangeHeaderColor,
-                        IsCargonautEnabled = entityPM.IsCargonautEnabled,
-                        IsDEXXConnectionEnabled = entityPM.IsDEXXConnectionEnabled,
-                        IsEAWBOnlyDemo = entityPM.IsEAWBOnlyDemo,
-                        IsINTTRAOnlyDemo = entityPM.IsINTTRAOnlyDemo,
-                        IsMultiPackage = entityPM.IsMultiPackage,
-                        IsRecurring = entityPM.IsRecurring,
-                        IsRestrictedByAirline = entityPM.IsRestrictedByAirline,
-                        IsTrial = entityPM.IsTrial,
-                        ManageLicencesPerUser = entityPM.ManageLicencesPerUser,
-                        ManagesRegisteredAgent = entityPM.ManagesRegisteredAgent,
-                        NumberOfUsers = entityPM.NumberOfUsers,
-                        PaidDaysLeft = entityPM.PaidDaysLeft,
-                        PaymentFailure = entityPM.PaymentFailure,
-                        PrivateLabelId = entityPM.PrivateLabelId,
-                        SuspendDate = entityPM.SuspendDate,
-                        SuspendDaysLeft = entityPM.SuspendDaysLeft,
-                        TemporalPackageCode = entityPM.TemporalPackageCode,
-                        PackagesCodes_BS = entityPM.PackagesCodes_BS,
-                        PackagesCodes_PK = entityPM.PackagesCodes_PK,
-                        TrailDaysLeft = entityPM.TrailDaysLeft,
-                         TenantManagementLicenses = entityPM.TenantManagementLicenses,
-                    };
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
     }
 
     public class JSGlobalSettings
     {
-        [Key]
         public string Id { get; set; }
         public string LogitudeURL { get; set; }
         public string LogoCode { get; set; }
@@ -546,97 +485,5 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string DeploymentStage { get; set; }
     }
 
-    public class TenantManagementJS
-    {
-        [Key]
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string PackageCode { get; set; }
-        public DateTime? TrialStartDate { get; set; }
-        public DateTime? TrialEndDate { get; set; }
-        public DateTime? PaidUntilDate { get; set; }
-        public string TTY { get; set; }
-        public string PIMA { get; set; }
-        public string AWBMessagesCCSTypeCode { get; set; }
-        public bool IsAWBStockPrepaid { get; set; }
-        public string PrivateLabelId { get; set; }
-        public bool PaymentFailure { get; set; }
-        public DateTime? SuspendDate { get; set; }
-        public bool IsTrial { get; set; }
-        public bool IsRecurring { get; set; }
-        public bool IsEAWBOnlyDemo { get; set; }
-        public bool IsRestrictedByAirline { get; set; }
-        public bool IsCargonautEnabled { get; set; }
-        public bool IsDEXXConnectionEnabled { get; set; }
-        public bool ManageLicencesPerUser { get; set; }
-        public bool ChangeHeaderColor { get; set; }
-        public int TrailDaysLeft { get; set; }
-        public int PaidDaysLeft { get; set; }
-        public int SuspendDaysLeft { get; set; }
-        public int NumberOfUsers { get; set; }
-        public string BluesnapContractId { get; set; }
-        public string BluesnapAccount { get; set; }
-        public bool ManagesRegisteredAgent { get; set; }
-        public bool IsMultiPackage { get; set; }
-        public bool IsINTTRAOnlyDemo { get; set; }
-        public string PackageName { get; set; }
-        public string TemporalPackageCode { get; set; }
 
-        private List<string> packagesCodes_PK;
-        public List<string> PackagesCodes_PK
-        {
-            get
-            {
-                if (packagesCodes_PK == null)
-                {
-                    packagesCodes_PK = new List<string>();
-                }
-
-                return packagesCodes_PK;
-            }
-
-            set
-            {
-                packagesCodes_PK = value;
-            }
-        }
-
-        private List<string> packagesCodes_BS;
-        public List<string> PackagesCodes_BS
-        {
-            get
-            {
-                if (packagesCodes_BS == null)
-                {
-                    packagesCodes_BS = new List<string>();
-                }
-
-                return packagesCodes_BS;
-            }
-
-            set
-            {
-                packagesCodes_BS = value;
-            }
-        }
-
-        private List<TenantManagementLicensePM> tenantManagementLicenses;
-        public virtual List<TenantManagementLicensePM> TenantManagementLicenses
-        {
-            get
-            {
-                if (tenantManagementLicenses == null)
-                {
-                    tenantManagementLicenses = new List<TenantManagementLicensePM>();
-                }
-
-                return tenantManagementLicenses;
-            }
-
-            set
-            {
-                tenantManagementLicenses = value;
-            }
-        }
-    }
 }

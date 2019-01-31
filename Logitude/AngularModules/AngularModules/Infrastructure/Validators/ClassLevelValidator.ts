@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 declare var System: any;
 import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
 import {AppTool} from '../Tools';
@@ -31,11 +31,6 @@ export class ClassLevelValidator {
         }
 
         var objectFields = window.ObjectFields.filter(x => x.ObjectTableId === objectTable.Id);
-
-        if (objectTableName == "Shipment" && entityPM.ShipmentLevelCode == "C") {
-            var masterTable = window.ObjectTables.filter(x => x.Name === "Master")[0];
-            objectFields = objectFields.filter(x => x.IsCustom === false || (x.IsCustom === true && x.ObjectTableId === masterTable.Id));
-        }
 
         var isNewEntity = (entityPM.OldEntityPM === null || entityPM.OldEntityPM === undefined);
         if (this._RulesValidator.IsNewEntity != isNewEntity) {

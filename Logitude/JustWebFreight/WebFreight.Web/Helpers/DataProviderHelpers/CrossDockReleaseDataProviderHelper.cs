@@ -180,9 +180,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 item.Weight = package.Weight;
                 item.WeightUnit = warehouseReleasePM.GrossWeightUnitCode;
                 item.Seal = package.Seal;
-                item.VolumetricWeight = package.VolumetricWeight;
-                item.VolumetricWeightUnit = warehouseReleasePM.ChargeableWeightUnitCode;
-
                 result.Add(item);
             }
 

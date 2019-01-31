@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, OnInit, AfterViewInit, ViewEncapsulation} from '@angular/core'
+﻿import {Component, Output, EventEmitter, OnInit, AfterViewInit, ViewEncapsulation} from '@angular/core'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {DashBoardFilters} from '../../../Infrastructure/DataContracts/Dashboard/DashboardFilters';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -107,12 +107,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     set SelectedDirectionFilterShipment(newValue: string) {
         if (this.selectedDirectionFilterShipment != newValue) {
             this.selectedDirectionFilterShipment = newValue;
-            if (this.SelectedTimeRangeItem.Index == "-1") {
-                this.LoadActivityStatus();
-            }
-            else {
-                this.CommonFiltersShipment();
-            }
+            this.CommonFiltersShipment();
         }
     }
     
@@ -121,12 +116,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     set SelectedTransportFilterShipment(newValue: string) {
         if (this.selectedTransportFilterShipment != newValue) {
             this.selectedTransportFilterShipment = newValue;
-            if (this.SelectedTimeRangeItem.Index == "-1") {
-                this.LoadActivityStatus();
-            }
-            else {
-                this.CommonFiltersShipment();
-            }
+            this.CommonFiltersShipment();
         }
 
     }
@@ -157,7 +147,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     set SelectedDirectionFilterCustomers(newValue: string) {
         if (this.selectedDirectionFilterCustomers != newValue) {
             this.selectedDirectionFilterCustomers = newValue;
-            this.LoadCustomers();
+            this.FillCustomersPie();
         }
     }
 
@@ -166,7 +156,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     set SelectedTransportFilterCustomers(newValue: string) {
         if (this.selectedTransportFilterCustomers != newValue) {
             this.selectedTransportFilterCustomers = newValue;
-            this.LoadCustomers();
+            this.FillCustomersPie();
         }
 
     } private filterName_DateType: string = "DateType";
@@ -179,7 +169,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
 
         if (this.SelectedTimeRangeItem.Index == "-1") {
             if (this.ActivityFromDate != null && this.ActivityToDate != null) {
-                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "", this.SelectedDirectionFilterShipment, this.SelectedTransportFilterShipment).subscribe(myResult => {
+                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "").subscribe(myResult => {
                     this.FinalShipmentData = myResult;
                     this.CommonFiltersShipment();
                 });
@@ -237,7 +227,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
         if (this.SelectedTimeRangeItem.Index == "-1") {
             if (this.ActivityFromDate != null && this.ActivityToDate != null) {                              
                 var service = new DashboardDomainService();
-                service.GetTop10DashBoardCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCustomers, this.IncludeOthersCustomers, this.SelectedDirectionFilterCustomers, this.SelectedTransportFilterCustomers).subscribe(myResult => {
+                service.GetTop10DashBoardCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCustomers, this.IncludeOthersCustomers).subscribe(myResult => {
                     this.FinalCustomersData = myResult;
                     this.FillCustomersPie();
                 });
@@ -262,7 +252,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     CommonFiltersCustomers() {
         var service = new DashboardDomainService();
         var days = this.ComputeDays();
-        service.GetTop10DashBoard(this.SelectedDateTypeItem.Index, 0, days, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCustomers, this.IncludeOthersCustomers, this.SelectedDirectionFilterCustomers, this.SelectedTransportFilterCustomers).subscribe(myResult => {
+        service.GetTop10DashBoard(this.SelectedDateTypeItem.Index, 0, days, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCustomers, this.IncludeOthersCustomers).subscribe(myResult => {
             this.FinalCustomersData = myResult;
             this.FillCustomersPie();
         });
@@ -578,7 +568,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
         }
         else {            
                 var FilteredList: List<GroupByClass> = new List<GroupByClass>();
-            this.FinalShipmentData != null ? this.FinalShipmentData.items.forEach((item: DashBoardClass) => {
+                this.FinalShipmentData != null ? this.FinalShipmentData.items.forEach((item: DashBoardClass) => {
                     var obj: GroupByClass = new GroupByClass();
                     obj.XField = item.DateRange;
                     switch (parseInt(this.SelectedShowItem.Index)) {

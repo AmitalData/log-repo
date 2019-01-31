@@ -19,6 +19,5 @@ export class AgentSharedManifestList {
         AgentName: string;
         ShipmentLevelName: string;
         Routing: string;
-        CancelledBySenderAgent: boolean;
       
 }  

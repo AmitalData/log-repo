@@ -1,4 +1,4 @@
-<style>
+﻿<style>
     .Disabled{
         pointer-events:none;
         opacity:0.5;
@@ -12,7 +12,7 @@
     </tr>
     <tr *ngIf="WarningErrorsList != null && WarningErrorsList.length > 0" style="height:1px;">
         <td>
-            <ValidationSummary [ItemsSource]="WarningErrorsList" [SingleLine]="true"></ValidationSummary>
+            <WarningSummary [ItemsSource]="WarningErrorsList" [SingleLine]="true"></WarningSummary>
         </td>
     </tr>
     <tr>

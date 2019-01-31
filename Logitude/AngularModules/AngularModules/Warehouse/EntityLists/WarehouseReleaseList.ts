@@ -47,7 +47,6 @@ export class WarehouseReleaseList {
 	DirectionId: string;
 	ReleaseDate: Date;
 	TotalQuantity: number;
-	ChargeableWeightUnitCode: string;
 	
 }
  

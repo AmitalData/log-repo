@@ -154,17 +154,11 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nsoftware.IPWorksSSH, Version=16.0.6800.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
-      <HintPath>..\packages\SFTP3.4.1.0\lib\Net40\nsoftware.IPWorksSSH.dll</HintPath>
+    <Reference Include="nsoftware.IPWorksSSH, Version=16.0.6588.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
+      <HintPath>..\packages\SFTP2.1.0.0\lib\Net40\nsoftware.IPWorksSSH.dll</HintPath>
     </Reference>
     <Reference Include="nsoftware.IPWorksSSH.System, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
-      <HintPath>..\packages\SFTP3.4.1.0\lib\Net40\nsoftware.IPWorksSSH.System.dll</HintPath>
-    </Reference>
-    <Reference Include="nsoftware.IPWorksSSL, Version=9.0.5050.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
-      <HintPath>..\packages\SFTP3.4.1.0\lib\Net40\nsoftware.IPWorksSSL.dll</HintPath>
-    </Reference>
-    <Reference Include="nsoftware.IPWorksSSL.System, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
-      <HintPath>..\packages\SFTP3.4.1.0\lib\Net40\nsoftware.IPWorksSSL.System.dll</HintPath>
+      <HintPath>..\packages\SFTP2.1.0.0\lib\Net40\nsoftware.IPWorksSSH.System.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -252,7 +246,6 @@
     <Compile Include="Helpers\AmitalConvertUtil.cs" />
     <Compile Include="Helpers\AuthenticationUtil.cs" />
     <Compile Include="Helpers\DropBoxActionsHelper.cs" />
-    <Compile Include="Helpers\EmailLimitationHelper.cs" />
     <Compile Include="Helpers\EntityChangeHelper.cs" />
     <Compile Include="Helpers\ByteCompressor.cs" />
     <Compile Include="Helpers\ContactsUnseenEntitiesHelper.cs" />
@@ -264,7 +257,6 @@
     <Compile Include="Helpers\FieldDbVaildUtil.cs" />
     <Compile Include="Helpers\FieldValueResolver.cs" />
     <Compile Include="Helpers\General.cs" />
-    <Compile Include="Helpers\EncodedHtmlHelper.cs" />
     <Compile Include="Helpers\HttpContextUtil.cs" />
     <Compile Include="Helpers\InjectionUtil.cs" />
     <Compile Include="Helpers\IQueryableExtensions.cs" />
@@ -283,7 +275,6 @@
     <Compile Include="Helpers\TotangoActivityLogger.cs" />
     <Compile Include="Helpers\TranslateTextsClass.cs" />
     <Compile Include="Interfaces\IDomainServiceUpdateClass.cs" />
-    <Compile Include="EntityValidateService.cs" />
     <Compile Include="LogitudeExceptionExt.cs" />
     <Compile Include="LogitudeXmlSerializer.cs" />
     <Compile Include="Models\AmitalRestrictOwnerModel.cs" />
@@ -425,9 +416,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LICENSE.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

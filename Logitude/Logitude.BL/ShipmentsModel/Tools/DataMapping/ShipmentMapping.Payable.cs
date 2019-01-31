@@ -81,8 +81,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.CorrectionByUserId = itemPM.CorrectionByUserId;
             itemPoco.CorrectionDate = itemPM.CorrectionDate;
             itemPoco.IATACodeId = itemPM.IATACodeId;
-            itemPoco.QuoteCostMinAmount = itemPM.QuoteCostMinAmount;
-            itemPoco.QuoteCostMaxAmount = itemPM.QuoteCostMaxAmount;
+            itemPoco.QuoteCostMinPrice = itemPM.QuoteCostMinPrice;
             itemPoco.QuoteChargeId = itemPM.QuoteChargeId;
             itemPoco.IsChargeBySteps = itemPM.IsChargeBySteps;
             itemPoco.Notes = itemPM.Notes;

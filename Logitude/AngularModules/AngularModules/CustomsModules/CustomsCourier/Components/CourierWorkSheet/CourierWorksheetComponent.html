@@ -161,8 +161,7 @@
                                                     <div class="ToggleButtonMenu" style="width:115px; left: 0px; right: initial ;top:22px;text-align:center">
                                                         <button style="text-align:right" (click)="OpenCourierMaster('General')">{{'Customs.Declaration.TH.General' | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right" (click)="OpenCourierMaster('ConnectedDeclarations')">{{'General.O.ConnectedDeclarations' |TextCodeTranslationPipe }}</button>
-                                                        <button style="text-align:right" (click)="DeclarationsStatusRequestMethod()">{{'Customs.Declaration.O.DeclarationStatusRequest' | TextCodeTranslationPipe }}</button>
-                                                        <button style="text-align:right" (click)="GatepassRequestMethod()">{{'גייטפס העברות' }}</button>
+                                                        <button style="text-align:right" (click)="DeclarationsStatusRequestMethod()" >{{'Customs.Declaration.O.DeclarationStatusRequest' | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right" (click)="SendFTPMamanRequestMethod()" [disabled]="!IsMamanEnabled">{{'Customs.Declaration.O.DeclarationMamanRequest' | TextCodeTranslationPipe }}</button>
                                                     </div>
 
@@ -455,15 +454,14 @@
                                                                     <tr>
                                                                         <td style="width: 250px;">
                                                                             <ul class="FiltersMenu" style="float:right; padding-right: 5px;">
-                                                                                <li (click)="ACCFilterClicked('WS')" style="width:90px; height: 25px;" [class.SelectedFilter]="_SelectedACCValue === 'WS'">
-                                                                                    <!--{{'מיוחדות שגויים'}}-->
-                                                                                    {{'Customs.CourierMaster.ACC.WrongSpecial' | TextCodeTranslationPipe }}
-                                                                                    <span> {{' (' +this._ACC_WS_Total + ')' }} </span>
-                                                                                </li>
                                                                                 <li (click)="ACCFilterClicked('W')" style="width:90px; height: 25px;" [class.SelectedFilter]="_SelectedACCValue === 'W'">
-                                                                                    <!--{{'ש.מ.ב שגויים'}}-->
-                                                                                    {{'Customs.CourierMaster.ACC.Wrong' | TextCodeTranslationPipe }}
-                                                                                    <span> {{' (' +this._ACC_W_Total + ')' }} </span>
+                                                                                    {{'משובים שגויים'}}
+                                                                                    <!--{{'Customs.CourierMaster.ACC.Wrong' | TextCodeTranslationPipe }}-->
+                                                                                    <!--<span> {{' (' +this._ACC_W_Total + ')' }} </span>-->
+                                                                                </li>
+                                                                                <li (click)="ACCFilterClicked('A')" style="width:70px; height: 25px;" [class.SelectedFilter]="_SelectedACCValue === 'A'">
+                                                                                    {{'Customs.General.O.All' | TextCodeTranslationPipe }}
+                                                                                    <!--<span> {{' (' +this._DOCTotal + ')' }} </span>-->
                                                                                 </li>
                                                                             </ul>
                                                                         </td>

@@ -61,8 +61,5 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public int Tenant { get; set; }
     
     public string GLAccountId { get; set; }
-
-    public  string  ComputingPartnerCode { get; set; }
-
     }
 } 

@@ -40,9 +40,6 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
     VolumeLabel: string;
     GrossWeightLabel: string;
     DimensionsLabel: string;
-    VolumetricWeightLabel: string;
-
-
     IsEditMode: boolean = false;
     IsFromFullWarehouseEntryComponent: boolean = false;
 
@@ -224,11 +221,21 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
 
     ChargeableWeightLabel: string = null;
     SetAttachedLabels() {
+        //if (this.EntityPM.TransportModeId == "A") {
+        //    this.ChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeight").replace('%ChargWeightCode', this.ChargeableWeightUnitCode);
+        //}
+
+        //else {
+        //    this.ChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.WtMsr.Short").replace('%ChargWeightCode', this.ChargeableWeightUnitCode);
+        //}
+
+        //this.VolumeColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.Volume").replace("%UnitCode", this.EntityPM.VolumeUnitCode);
+        //this.WeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.GrossWeight").replace("%UnitCode", this.EntityPM.GrossWeightUnitCode);
+        //this.DimensionsColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.Dimensions").replace("%UnitCode", this.EntityPM.DimensionsUnitCode);
+        //this.VolumetricWeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.VolWeight").replace("%UnitCode", this.EntityPM.ChargeableWeightUnitCode);
         this.VolumeLabel = "Volume (" + this.warehouseEntryPM.VolumeUnitCode + ")";
         this.GrossWeightLabel = "Gross Weight (" + this.warehouseEntryPM.GrossWeightUnitCode + ")";
         this.DimensionsLabel = "Dim(L-W-H) (" + this.warehouseEntryPM.DimensionsUnitCode + ")";
-        this.VolumetricWeightLabel = "Volumetric Weight (" + this.warehouseEntryPM.ChargeableWeightUnitCode + ")";
-
     }
 
 
@@ -375,11 +382,6 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
             this.VolumeLabel = "Volume (" + this.warehouseEntryPM.VolumeUnitCode + ")";
             this.GrossWeightLabel = "Gross Weight (" + this.warehouseEntryPM.GrossWeightUnitCode + ")";
             this.DimensionsLabel = "Dim(L-W-H) (" + this.warehouseEntryPM.DimensionsUnitCode + ")";
-
-            this.SetAttachedLabels();
-
-
-
             this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId);
             //this.TotalPieces = this.warehouseEntryPM.TotalPieces ? this.warehouseEntryPM.TotalPieces : 0;
             //this.TotalGrossWeight = this.warehouseEntryPM.TotalGrossWeight ? this.warehouseEntryPM.TotalGrossWeight : 0;

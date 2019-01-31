@@ -46,19 +46,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return AutomationResultEmailRecipientes;
         }
 
-        public IQueryable<AutomationResultEmailRecipientList> GetAutomationResultEmailRecipientListsByAutomationId(string automationId, int tenant)
+        public List<AutomationResultEmailRecipientList> GetAutomationResultEmailRecipientListsByAutomationId(string automationId, int tenant)
         {
-            IQueryable<AutomationResultEmailRecipientList> automationResultEmailRecipientes = (from a in repository.context.AutomationResultEmailRecipients
-                                                                                               where a.Tenant == tenant && a.AutomationsId == automationId
-                                                                                               select new AutomationResultEmailRecipientList()
-                                                                                               {
-                                                                                                   Id = a.Id,
-                                                                                                   AutomationsId = a.AutomationsId,
-                                                                                                   RecipientValue = a.RecipientValue,
-                                                                                                   RecipientType = a.RecipientType,
-                                                                                                   Tenant = a.Tenant,
+            List<AutomationResultEmailRecipientList> automationResultEmailRecipientes = (from a in repository.context.AutomationResultEmailRecipients
+                                                                                       where a.Tenant == tenant && a.AutomationsId == automationId
+                                                                                       select new AutomationResultEmailRecipientList()
+                                                                                       {
+                                                                                           Id = a.Id,
+                                                                                           AutomationsId = a.AutomationsId,
+                                                                                           RecipientValue = a.RecipientValue,
+                                                                                           RecipientType = a.RecipientType,
+                                                                                           Tenant = a.Tenant,
 
-                                                                                               });
+                                                                                       }).ToList();
             return automationResultEmailRecipientes;
         }
 

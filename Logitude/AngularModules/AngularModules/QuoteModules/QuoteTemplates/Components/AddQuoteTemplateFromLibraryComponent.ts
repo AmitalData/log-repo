@@ -11,7 +11,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 declare var StringToBase64, Base64ToString: any;
 import {AppTool} from '../../../Infrastructure/Tools';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+
 @Component({
     selector: 'AddQuoteTemplateFromLibraryComponent',
     moduleId: module.id,
@@ -78,11 +78,7 @@ export class AddQuoteTemplateFromLibraryComponent extends BaseComponent implemen
         this.QuoteTemplateLists = [];
         this.FullQuoteTemplateLists = [];
 
-
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
-
-
-
+        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
         this.quoteTemplateExtendedPMService.GetQuoteTemplateListsFromLibrary(this.QuoteTypeCode).subscribe(res => {
             SessionLocator.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
@@ -116,11 +112,7 @@ export class AddQuoteTemplateFromLibraryComponent extends BaseComponent implemen
     AddFromLibraryButtonClicked(item: any) {
         this.QuoteTemplateViewModelSelected = item;
         this.QuoteTemplateViewModelSelected.IsEnabledAddDocumentTemplate = false;
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-
-
-
-
+        SessionLocator.CurrentSession.StartBusyIndicator("saving");
         this.quoteTemplateExtendedPMService.GetCopyQuoteTemplateFromLibrary(item.Id, SessionLocator.LoggedUserId).subscribe(res => {
             SessionLocator.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;

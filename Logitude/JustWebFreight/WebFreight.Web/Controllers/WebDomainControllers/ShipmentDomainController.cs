@@ -151,7 +151,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     bool hasFollowupsFeature = SecurityUtility.CheckTableContactFeature("Shipment", "MYFOLLOWUPS", tenant) || SecurityUtility.CheckTableContactFeature("Shipment", "ALLFOLLOWUPS", tenant);
                     bool hasExpDepNotTransmittedFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ExpectedDeparturesNotTransmitted", tenant);
                     bool hasShippingInstructionsLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ShippingInstructionsLast7Days", tenant);
-                    bool hasContainerStatusLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ContainerStatusLast7Days", tenant);
 
                     //ShipmentsSummary myResult= RunStoredProcedureClass.GetShipmentsCounts(tenant, myDirectionId, myTransportModeId, loggedUserEmail, hasETDFeature, hasFollowupsFeature);
 
@@ -165,7 +164,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
 
-                    myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, myDirectionId, myTransportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature);
+                    myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, myDirectionId, myTransportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -260,7 +259,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
         }
-        public HttpResponseMessage GetLoggedTenantMessagingStockLists()
+        public HttpResponseMessage GetLoggedTenantAWBMessagingStockLists()
         {
             try
             {
@@ -270,13 +269,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string loggedUserEmail = authToken.Email;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("MessagingStock", "READ", tenant);
+                SecurityUtility.CheckContactFeature("AWBMessagingStock", "READ", tenant);
 
-                MessagingStockRepository messagingStockRepository = new MessagingStockRepository(tenant);
-                MessagingStockQuery messagingStockQuery = new MessagingStockQuery(messagingStockRepository);
+                AWBMessagingStockRepository aWBMessagingStockRepository = new AWBMessagingStockRepository(tenant);
+                AWBMessagingStockQuery aWBMessagingStockQuery = new AWBMessagingStockQuery(aWBMessagingStockRepository);
 
-                IQueryable<MessagingStockDataView> iQueryable = messagingStockRepository.GetMessagingStockDataViewsByTenant(tenant);
-                IQueryable<MessagingStockList> myResult = messagingStockQuery.GetIQueryableEntityList(iQueryable, tenant);
+                IQueryable<AWBStocksDataView> iQueryable = aWBMessagingStockRepository.GetAWBStocksDataViewsByTenant(tenant);
+                IQueryable<AWBMessagingStockList> myResult = aWBMessagingStockQuery.GetIQueryableEntityList(iQueryable, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -286,7 +285,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetLoggedTenantMessagingStockUsageHistoryLists(string stockId)
+        public HttpResponseMessage GetLoggedTenantAWBStockUsageHistoryLists(string stockId)
         {
             try
             {
@@ -296,13 +295,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string loggedUserEmail = authToken.Email;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("MessagingStock", "READ", tenant);
+                SecurityUtility.CheckContactFeature("AWBMessagingStock", "READ", tenant);
 
-                MessagingStockUsageHistoryRepository messagingStockUsageHistoryRepository = new MessagingStockUsageHistoryRepository(tenant);
-                MessagingStockUsageHistoryQuery messagingStockUsageHistoryQuery = new MessagingStockUsageHistoryQuery(messagingStockUsageHistoryRepository);
+                AWBStockUsageHistoryRepository aWBStockUsageHistoryRepository = new AWBStockUsageHistoryRepository(tenant);
+                AWBStockUsageHistoryQuery aWBStockUsageHistoryQuery = new AWBStockUsageHistoryQuery(aWBStockUsageHistoryRepository);
 
-                IQueryable<MessagingStockUsageHistory> iQueryable = messagingStockUsageHistoryRepository.GetMessagingStockUsageHistories(stockId, tenant);
-                IQueryable<MessagingStockUsageHistoryList> myResult = messagingStockUsageHistoryQuery.GetIQueryableEntityList(iQueryable, tenant);
+                IQueryable<AWBStockUsageHistory> iQueryable = aWBStockUsageHistoryRepository.GetAWBStockUsageHistories(stockId, tenant);
+                IQueryable<AWBStockUsageHistoryList> myResult = aWBStockUsageHistoryQuery.GetIQueryableEntityList(iQueryable, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -695,7 +694,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
         }
-        public HttpResponseMessage GetActivityStatusByType(string type, string FromDate, string ToDate, int currentTenant, string customerid, string directionId, string transportmodeid)
+        public HttpResponseMessage GetActivityStatusByType(string type, string FromDate, string ToDate, int currentTenant, string customerid)
         {
             try
             {
@@ -732,7 +731,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
 
-                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByCreateOperationalDate(type, FromDateOBJ, ToDateOBJ, currentTenant, customerid, directionId, transportmodeid);
+                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByCreateOperationalDate(type, FromDateOBJ, ToDateOBJ, currentTenant, customerid);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -885,7 +884,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByTop10CountriesDashBoardCustom2(type, FromDateOBJ, ToDateOBJ, measurment, tenant, top, includeOthers, customerid, directionId, transmodeId).AsQueryable().ToList();
+                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByTop10CountriesDashBoardCustom(type, FromDateOBJ, ToDateOBJ, measurment, tenant, top, includeOthers, customerid, directionId, transmodeId).AsQueryable().ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
             }
@@ -897,7 +896,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         }
 
-        public HttpResponseMessage GetTop10DashBoardCustom(string type, string FromDate, string ToDate, int measurment, int currentTenant, int top, bool includeOthers, string directionId,string transportmodeid)
+        public HttpResponseMessage GetTop10DashBoard(string type, string FromDate, string ToDate, int measurment, int currentTenant, int top, bool includeOthers)
         {
             try
             {
@@ -926,7 +925,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(currentTenant);
-                List<DashBoardClass> myResult = shipmentQuery.GetTop10DashBoardCustom(type, FromDateOBJ, ToDateOBJ, measurment, currentTenant, top, includeOthers, directionId, transportmodeid).ToList();
+                List<DashBoardClass> myResult = shipmentQuery.GetTop10DashBoardCustom(type, FromDateOBJ, ToDateOBJ, measurment, currentTenant, top, includeOthers);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
             }
@@ -940,7 +939,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
 
-        public HttpResponseMessage GetTop10DashBoard(string type, int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers,string directionid,string transportmodeId)
+        public HttpResponseMessage GetTop10DashBoardCustom(string type, int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers)
         {
             try
             {
@@ -955,7 +954,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", currentTenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(currentTenant);
-                List<DashBoardClass> myResult = shipmentQuery.GetTop10DashBoard(type, lastMonths, lastDays, measurment, currentTenant, top, includeOthers, directionid,transportmodeId).AsQueryable().ToList();
+                List<DashBoardClass> myResult = shipmentQuery.GetTop10DashBoard(type, lastMonths, lastDays, measurment, currentTenant, top, includeOthers).AsQueryable().ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
             }
@@ -1402,7 +1401,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetMessagingStockListForTenantManagmentTab(int tenantManagementId)
+        public HttpResponseMessage GetAWBMessagingStockListForTenantManagmentTab(int tenantManagementId)
         {
             try
             {
@@ -1411,7 +1410,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
 
                 ShipmentsDomainService service = new ShipmentsDomainService();
-                IQueryable<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId);
+                IQueryable<AWBMessagingStockList> result = service.GetAWBMessagingStockListForTenantManagmentTab(tenantManagementId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -1609,8 +1608,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             item.IsFromQuote = false;
                             item.QuoteChargeId = null;
-                            item.QuoteSaleMinAmount = null;
-                            item.QuoteSaleMaxAmount = null;
+                            item.QuoteSaleMinPrice = null;
+
                             receivableRepository.Update(item);
                         }                        
                     }
@@ -1621,8 +1620,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             item.IsFromQuote = false;
                             item.QuoteChargeId = null;
-                            item.QuoteCostMinAmount = null;
-                            item.QuoteCostMaxAmount = null;
+                            item.QuoteCostMinPrice = null;
 
                             payableRepository.Update(item);
                         }

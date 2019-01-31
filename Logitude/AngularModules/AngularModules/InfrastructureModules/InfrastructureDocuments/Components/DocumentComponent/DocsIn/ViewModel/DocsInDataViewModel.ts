@@ -1,4 +1,4 @@
-declare var System: any;
+﻿declare var System: any;
 declare var window: any;
 import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
 import {LogitudeWindow} from '../../../../../../Controls/Windows/LogitudeWindow';
@@ -35,7 +35,7 @@ export class DocsInDataViewModel extends BaseComponent{
     public ShowFollowUp: boolean;
     FileName: string;
     Extention: string;
-    public DocumentHasFile: boolean;
+    DocumentHasFile: boolean;
     //DocumentId: string;
     ReceivedByUserId: string;
     ReceivedByUserName: string;
@@ -43,16 +43,18 @@ export class DocsInDataViewModel extends BaseComponent{
     private receivedDate: Date;
     public get ReceivedDate() {
         if (this.CurrentDocument) {
-           return this.CurrentDocument.ReceivedDate;
+            this.receivedDate = this.CurrentDocument.ReceivedDate;
         }
-        else return null;
+        return this.receivedDate;
     }
     public set ReceivedDate(newValue: Date) {
-
-        if (this.CurrentDocument && this.CurrentDocument.ReceivedDate != newValue) {
-            this.CurrentDocument.ReceivedDate = newValue;
+        if (this.receivedDate != newValue) {
+            this.receivedDate = newValue;
+            if (this.CurrentDocument != null) {
+                if (this.CurrentDocument.ReceivedDate != newValue)
+                this.CurrentDocument.ReceivedDate = newValue;
+            }
         }
-
     }
 
 
@@ -88,28 +90,79 @@ export class DocsInDataViewModel extends BaseComponent{
 
 
 
+
+
+    private note: string;
     public get Note() {
-
         if (this.CurrentDocument) {
-            return this.CurrentDocument.Notes;
-        } else return "";
+            this.note = this.CurrentDocument.Notes;
+        }
 
+        return this.note;
     }
     public set Note(newValue: string) {
 
-        if (this.CurrentDocument != null && this.CurrentDocument.Notes != newValue ) {
-            this.CurrentDocument.Notes = newValue;
+        if (this.note != newValue) {
+            this.note = newValue;
+            if (this.CurrentDocument != null) {
+                this.CurrentDocument.Notes = newValue;
+            }
+
         }
     }
 
 
 
 
+
+
+
+
+    //private fileName: string;
+    //public get FileName() {
+    //    if (this.CurrentDocument) {
+    //        this.fileName = this.CurrentDocument.FileExtension ? this.CurrentDocument.FileName + this.CurrentDocument.FileExtension : this.CurrentDocument.FileName;
+    //    }
+
+    //    return this.fileName;
+    //}
+    //public set FileName(newValue: string) {
+    //    if (this.CurrentDocument != null) {
+    //        this.CurrentDocument.FileName = newValue;
+    //    }
+
+    //}
+
+
+
+
+
+
+
+    //private documentHasFile: boolean;
+    //public get DocumentHasFile() {
+    //    if (this.CurrentDocument) {
+    //        this.documentHasFile = this.CurrentDocument.HasFile;
+    //    }
+
+    //    return this.documentHasFile;
+    //}
+    //public set DocumentHasFile(newValue: boolean) {
+    //    if (this.CurrentDocument != null) {
+    //        this.CurrentDocument.HasFile = newValue;
+    //    }
+
+    //}
+
+
+
+    private documentId: string;
     public get DocumentId() {
         if (this.CurrentDocument) {
-            return this.CurrentDocument.DocumentId;
-        } else return null;
+            this.documentId = this.CurrentDocument.DocumentId;
+        }
 
+        return this.documentId;
     }
     public set DocumentId(newValue: string) {
         if (this.CurrentDocument != null) {
@@ -119,12 +172,15 @@ export class DocsInDataViewModel extends BaseComponent{
     }
 
 
-    public get ExternalDocumentId() {
 
+
+    private externalDocumentId: string;
+    public get ExternalDocumentId() {
         if (this.CurrentDocument) {
-            return this.CurrentDocument.Id;
-        } else return null;
-        
+            this.externalDocumentId = this.CurrentDocument.Id;
+        }
+
+        return this.externalDocumentId;
     }
     public set ExternalDocumentId(newValue: string) {
         if (this.CurrentDocument != null) {
@@ -133,8 +189,64 @@ export class DocsInDataViewModel extends BaseComponent{
 
     }
 
+
+
+
+
+    //private receivedDate: Date;
+    //public get ReceivedDate() {
+    //    if (this.CurrentDocument) {
+    //        this.receivedDate = this.CurrentDocument.ReceivedDate;
+    //    }
+
+    //    return this.receivedDate;
+    //}
+    //public set ReceivedDate(newValue: Date) {
+    //    if (this.CurrentDocument != null) {
+    //        this.CurrentDocument.ReceivedDate = newValue;
+    //    }
+
+    //}
+
+
+    //private receivedByUserId: string;
+    //public get ReceivedByUserId() {
+    //    if (this.CurrentDocument) {
+    //        this.receivedByUserId = this.CurrentDocument.ReceivedByUserId;
+    //    }
+
+    //    return this.receivedByUserId;
+    //}
+    //public set ReceivedByUserId(newValue: string) {
+    //    if (this.CurrentDocument != null) {
+    //        this.CurrentDocument.ReceivedByUserId = newValue;
+    //    }
+
+    //}
+
+
+
+
+    //private receivedByUserName: string;
+    //public get ReceivedByUserName() {
+    //    if (this.CurrentDocument) {
+    //        this.receivedByUserName = this.CurrentDocument.ReceivedByUserName;
+    //    }
+
+    //    return this.receivedByUserName;
+    //}
+    //public set ReceivedByUserName(newValue: string) {
+    //    if (this.CurrentDocument != null) {
+    //        this.CurrentDocument.ReceivedByUserName = newValue;
+    //    }
+
+    //}
+
+
+
     private isRequested: boolean;
     public get IsRequested() {
+
 
         if (this.CurrentDocument) {
             this.isRequested = this.CurrentDocument.IsRequested;
@@ -318,11 +430,6 @@ export class DocsInDataViewModel extends BaseComponent{
             this.SetReceivedButtonVisibility = false;
             this.DownloadButtonVisibility = true;
             this.Received = this.CurrentDocument.Received;
-            if (this.DocsInComponent.ObjectTableName == "Shipment") {
-                this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentShipmentEvent(this.DocsInComponent.EntityId, "Shipment", this.FileName).subscribe(res => {
-
-                });
-            }
          
 
         }
@@ -652,23 +759,5 @@ export class DocsInDataViewModel extends BaseComponent{
         });
 
     }
-
-    RemoveDocument() {
-        this.CurrentDocument = null;
-        this.DocumentId = null;
-        this.ExternalDocumentId = null;
-        this.FileName = null;
-        this.Extention = null;
-        this.DocumentHasFile = false;
-        this.SetAttachedIconVisibility = false;
-        this.DownloadButtonVisibility = false;
-        this.SetReceivedButtonVisibility = false;
-        this.SetAttachedButtonVisibility = true;
-        
-        if (!this.Received) this.SetReceivedButtonVisibility = true;
-
-    }
-
-
 
 }

@@ -15,7 +15,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Email).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.Website).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.AddressId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.LocalAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Format).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.Language).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.Direction).HasMaxLength(40).IsUnicode(false);
@@ -67,6 +66,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.FMCNumber).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.DocumentShareAsDefault).IsRequired();
             this.Property(t => t.StorageEncryptionKey).HasMaxLength(40).IsUnicode(false);
+            //this.Property(t => t.DropBoxAccessToken).HasMaxLength(350).IsUnicode(false);
             this.Property(t => t.TemperatureUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.DefaultSLAId).HasMaxLength(15).IsUnicode(false);
 
@@ -77,7 +77,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Email).HasColumnName("Email");
             this.Property(t => t.Website).HasColumnName("Website");
             this.Property(t => t.AddressId).HasColumnName("AddressId");
-            this.Property(t => t.LocalAddressId).HasColumnName("LocalAddressId");
             this.Property(t => t.Format).HasColumnName("Format");
             this.Property(t => t.Language).HasColumnName("Language");
             this.Property(t => t.Direction).HasColumnName("Direction");
@@ -106,7 +105,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsDocumentsArchive).HasColumnName("IsDocumentsArchive");
             this.Property(t => t.CustomerId).HasColumnName("CustomerId");
             this.Property(t => t.IsCustomerTenantShare).HasColumnName("IsCustomerTenantShare");
-            this.Property(t => t.CustomerTenantShareImportFile).HasColumnName("CustomerTenantShareImportFile");
+            this.Property(t => t.CustomerTenantShareImportFile).HasColumnName("CustomerTenantShareImportFile");           
             this.Property(t => t.IsNotesRightToLeftEnabled).HasColumnName("IsNotesRightToLeftEnabled");
             this.Property(t => t.IsInternalTicketByDefault).HasColumnName("IsInternalTicketByDefault");
             this.Property(t => t.IsFullTextSearchEnabled).HasColumnName("IsFullTextSearchEnabled");
@@ -119,35 +118,39 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.TemperatureUnitCode).HasColumnName("TemperatureUnitCode");
             this.Property(t => t.DefaultSLAId).HasColumnName("DefaultSLAId");
             this.Property(t => t.StockTypeCode).HasColumnName("StockTypeCode");
-            
+
+            //this.Property(t => t.DropBoxAccessToken).HasColumnName("DropBoxAccessToken");
+
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-                this.Property(t => t.MasterExportFreightPrepaidCollectId).HasColumnName("MasterExportFreightPCId");
-                this.Property(t => t.MasterExportOtherPrepaidCollectId).HasColumnName("MasterExportOtherPCId");
-                this.Property(t => t.MasterImportFreightPrepaidCollectId).HasColumnName("MasterImportFreightPCId");
-                this.Property(t => t.MasterImportOtherPrepaidCollectId).HasColumnName("MasterImportOtherPCId");
-                this.Property(t => t.VatMandatoryForPotentialCustomers).HasColumnName("VaTMandatoryPotentialCustomers");
-                this.Property(t => t.AllowAgentInCustomersLOV).HasColumnName("AllowAgentInShipCustomersLOV");
-                this.Property(t => t.IsCorrespondenceRightToLeftEnabled).HasColumnName("IsCorrespondenceRTLEnabled");
-                this.Property(t => t.ExportQuotationsToIntegratedSystem).HasColumnName("ExportQuotationsToIntegrated");
-            }
-            //#else
+              if (dbms == "oracle")
+              {
 
-            else
-            {
-                this.Property(t => t.MasterExportFreightPrepaidCollectId).HasColumnName("MasterExportFreightPrepaidCollectId");
-                this.Property(t => t.MasterExportOtherPrepaidCollectId).HasColumnName("MasterExportOtherPrepaidCollectId");
-                this.Property(t => t.MasterImportFreightPrepaidCollectId).HasColumnName("MasterImportFreightPrepaidCollectId");
-                this.Property(t => t.MasterImportOtherPrepaidCollectId).HasColumnName("MasterImportOtherPrepaidCollectId");
-                this.Property(t => t.VatMandatoryForPotentialCustomers).HasColumnName("VatMandatoryForPotentialCustomers");
-                this.Property(t => t.AllowAgentInCustomersLOV).HasColumnName("AllowAgentInCustomersLOV");
-                this.Property(t => t.IsCorrespondenceRightToLeftEnabled).HasColumnName("IsCorrespondenceRightToLeftEnabled");
-                this.Property(t => t.ExportQuotationsToIntegratedSystem).HasColumnName("ExportQuotationsToIntegratedSystem");
+                  this.Property(t => t.MasterExportFreightPrepaidCollectId).HasColumnName("MasterExportFreightPCId");
+                  this.Property(t => t.MasterExportOtherPrepaidCollectId).HasColumnName("MasterExportOtherPCId");
+                  this.Property(t => t.MasterImportFreightPrepaidCollectId).HasColumnName("MasterImportFreightPCId");
+                  this.Property(t => t.MasterImportOtherPrepaidCollectId).HasColumnName("MasterImportOtherPCId");
+                  this.Property(t => t.VatMandatoryForPotentialCustomers).HasColumnName("VaTMandatoryPotentialCustomers");
+                  this.Property(t => t.AllowAgentInCustomersLOV).HasColumnName("AllowAgentInShipCustomersLOV");
+                  this.Property(t => t.IsCorrespondenceRightToLeftEnabled).HasColumnName("IsCorrespondenceRTLEnabled");
+                  this.Property(t => t.ExportQuotationsToIntegratedSystem).HasColumnName("ExportQuotationsToIntegrated");
+
+            }
+              //#else
+
+              else
+              {
+                  this.Property(t => t.MasterExportFreightPrepaidCollectId).HasColumnName("MasterExportFreightPrepaidCollectId");
+                  this.Property(t => t.MasterExportOtherPrepaidCollectId).HasColumnName("MasterExportOtherPrepaidCollectId");
+                  this.Property(t => t.MasterImportFreightPrepaidCollectId).HasColumnName("MasterImportFreightPrepaidCollectId");
+                  this.Property(t => t.MasterImportOtherPrepaidCollectId).HasColumnName("MasterImportOtherPrepaidCollectId");
+                  this.Property(t => t.VatMandatoryForPotentialCustomers).HasColumnName("VatMandatoryForPotentialCustomers");
+                  this.Property(t => t.AllowAgentInCustomersLOV).HasColumnName("AllowAgentInCustomersLOV");
+                  this.Property(t => t.IsCorrespondenceRightToLeftEnabled).HasColumnName("IsCorrespondenceRightToLeftEnabled");
+                  this.Property(t => t.ExportQuotationsToIntegratedSystem).HasColumnName("ExportQuotationsToIntegratedSystem");
             }
 
-            //#endif
+//#endif
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.IsDataBackupBuilt).HasColumnName("IsDataBackupBuilt");
@@ -161,7 +164,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsMobileActivated).HasColumnName("IsMobileActivated");
             this.Property(t => t.SharedLogisticsMessageLink).HasColumnName("SharedLogisticsMessageLink");
             this.Property(t => t.IsWebAccessActivated).HasColumnName("IsWebAccessActivated");
-
+           
+            
+            
             this.Property(t => t.LocalCustomsCode).HasColumnName("LocalCustomsCode");
             this.Property(t => t.IsHybrid).HasColumnName("IsHybrid");
             this.Property(t => t.VatUniqueTypeCode).HasColumnName("VatUniqueTypeCode");
@@ -176,7 +181,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsPotentialFaxRequired).HasColumnName("IsPotentialFaxRequired");
             this.Property(t => t.IsNumeric).HasColumnName("IsNumeric");
             this.Property(t => t.VatSize).HasColumnName("VatSize");
-            this.Property(t => t.IsPickDelAdrsRequired).HasColumnName("IsPickDelAdrsRequired");
+            this.Property(t => t.IsPickDelAdrsRequired).HasColumnName("IsPickDelAdrsRequired");           
             this.Property(t => t.IsCustomerAddress1Required).HasColumnName("IsCustomerAddress1Required");
             this.Property(t => t.HasPrimaryContact).HasColumnName("HasPrimaryContact");
             this.Property(t => t.DefaultQuestionnaireId).HasColumnName("DefaultQuestionnaireId");
@@ -185,10 +190,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.RegulatedAgentNumber).HasColumnName("RegulatedAgentNumber");
             this.Property(t => t.RegulatedAgentRegimeActivated).HasColumnName("RegulatedAgentRegimeActivated");
             this.Property(t => t.LogBoxAdminUserId).HasColumnName("LogBoxAdminUserId");
-            this.Property(t => t.TenantEmailSendingQuota).HasColumnName("TenantEmailSendingQuota");
-
+            
+            
             this.HasOptional(t => t.Address).WithMany().HasForeignKey(d => d.AddressId);
-            this.HasOptional(t => t.LocalAddress).WithMany().HasForeignKey(d => d.LocalAddressId);
             this.HasOptional(t => t.AgentCard).WithMany().HasForeignKey(d => d.AgentId);
             this.HasOptional(t => t.Currency).WithMany().HasForeignKey(d => d.CurrencyId);
             this.HasOptional(t => t.FreightCurrency).WithMany().HasForeignKey(d => d.FreightCurrencyId);

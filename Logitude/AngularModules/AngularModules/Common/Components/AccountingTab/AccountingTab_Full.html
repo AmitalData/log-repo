@@ -1,24 +1,15 @@
-﻿<style type="text/css">
-    .promptBox{
-        text-align: center;
-        /* padding: 10px;
-        padding-top: 15px; */
-        /* background: #fff4cd; */
-        font-size: 15px;
-        width: 400px;
-        height: 85px;
-        border-radius: 5px;
-    }
-</style>
-<div class="MediaFill">
+﻿<table>
+    <tr>
+        <td>
+            <div></div>
+        </td>
 
-    <div *ngIf="ShowMessage">
-        <div class="promptBox CenterCenter" style="text-align: center;">
-            {{'Accounting.O.ClientActivationMSG' | TextCodeTranslationPipe}}
-<br><br>
-        <a  style="width: 90px;margin-top: 20px;color: #0497f8; font-size: 16px;text-decoration: none;" (click)="FullAccountingClicked()">{{'Accounting.O.ClientActivationBTN' | TextCodeTranslationPipe}}</a>
-        </div>
-    </div>
+        <td style="width:110px; text-align: center;vertical-align:central;">
+            <button *ngIf="CardList" class="Button" (click)="FullAccountingClicked()">{{FullAccountingLabel}}</button>
+        </td>
 
-    <div #TabPlaceholder></div>
-</div>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+</table>

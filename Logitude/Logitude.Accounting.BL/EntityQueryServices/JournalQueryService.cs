@@ -258,21 +258,5 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             JournalPM pm = this.GetEntityPM(poco);
             return pm;
         }
-
-        public List<JournalPM> GetJournalsByIds(List<string> ids, int tenant)
-        {
-            IQueryable<Journal> journalQuery = repository.GetByJournalsAccountingIds(ids, tenant);
-
-            IQueryable<JournalPM> journals = from a in journalQuery
-                                             select new JournalPM()
-                                             {
-                                                 JournalNumber = a.JournalNumber,
-                                                 AccountingDate = a.AccountingDate,
-                                                 StatusName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
-                                                 Id = a.Id
-                                             };
-
-            return journals.ToList();
-        }
     }
 }

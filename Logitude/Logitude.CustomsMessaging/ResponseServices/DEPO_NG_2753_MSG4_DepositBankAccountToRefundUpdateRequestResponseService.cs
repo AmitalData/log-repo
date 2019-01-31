@@ -72,7 +72,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (!String.IsNullOrWhiteSpace(tapagId))
             {
-                notificationDescription = "בקשה להשלמת פרטי החזר פקדון תיק תפ\"ג: " + requestFileNumber.Replace("-"," מספר רץ ");
+                notificationDescription = "בקשה להשלמת פרטי החזר פקדון תיק תפ\"ג: " + requestFileNumber;
                 var depositId = depositQueryService.GetDepositIdByTapagNumber(tapagId, this._MyTenant);
                 if (depositId != null) this._MyDepositPM = depositQueryService.GetSingle(depositId, true, false);
 
@@ -151,7 +151,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             newNotificationPM.AssigneToNotificationTypeCode = typeCode;
             newNotificationPM.EntityId = _MyDepositPM.Id;
             newNotificationPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Deposit");
-            if(!String.IsNullOrWhiteSpace(_MyDepositPM.TapagID)) newNotificationPM.Reference2Number = _MyDepositPM.TapagID;
+            if(!String.IsNullOrWhiteSpace(_MyDepositPM.TapagNumber)) newNotificationPM.Reference2Number = _MyDepositPM.TapagNumber;
             string customerId = null;
             string referentUserId = null;
             if (connectedDeclarationPM != null)

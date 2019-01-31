@@ -20,10 +20,10 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             globalContext = GlobalContext.GetContext();
         }
 
-        //public IQueryable<TenantManagement> GetAWBStockPrepaidTenants()
-        //{
-        //    return this.context.TenantManagements.Where(d => d.IsAWBStockPrepaid == true);
-        //}
+        public IQueryable<TenantManagement> GetAWBStockPrepaidTenants()
+        {
+            return this.context.TenantManagements.Where(d => d.IsAWBStockPrepaid == true);
+        }
 
         public IQueryable<TenantManagement> GetTenants()
         {
@@ -33,7 +33,9 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         public IQueryable<TenantManagement> GetTenantManagements()
         {
             return this.context.TenantManagements.Include("GlobalTenant");
-        }                      
+        }
+               
+        
 
         public IQueryable<TenantManagement> GetAllTenants()
         {
@@ -42,7 +44,9 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public TenantManagement GetSingleTenantManagement(int id)
         {
-            return (from a in context.TenantManagements.Include("GlobalTenant") where a.Id == id select a).FirstOrDefault();
+            return (from a in context.TenantManagements.Include("GlobalTenant")
+                   where a.Id == id
+                   select a).FirstOrDefault();
         }
 
         public List<TenantManagement> GetTenantManagementsForPackage(string packageCode)

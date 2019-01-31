@@ -75,7 +75,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 myObjectTableId = objectTable.Id;
             }
         }
-        public  void ARPaymentQuickbooksValidating(ARPaymentPM entityPM, Boolean IsSetApproved, Boolean isNewEntity, ARPayment payment, IInvoiceContext invoiceContext, ICommonDataContext CommonContext, Boolean isSetVoided,bool setCancelApproved,bool SystemWorkerRole=false)
+        public  void ARPaymentQuickbooksValidating(ARPaymentPM entityPM, Boolean IsSetApproved, Boolean isNewEntity, ARPayment payment, IInvoiceContext invoiceContext, ICommonDataContext CommonContext, Boolean isSetVoided,bool setCancelApproved)
         {
             if (isSetVoided)
             {
@@ -97,15 +97,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                             documentRepository = new DocumentRepository(commonContext);
                             communicationLogRepository = new CommunicationLogRepository(commonContext);
                             ContactRepository contactRepository = new ContactRepository(commonContext);
-                            Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact;
-                            if (SystemWorkerRole)
-                            {
-                                loggedContact = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant, true);                                 
-                            }
-                            else
-                            {
-                                loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
-                            }
+                            Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
                             LoggedContactId = loggedContact.Id;
 
                             entityPM.TransferStatusCode = "IP";
@@ -145,15 +137,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                             communicationLogRepository = new CommunicationLogRepository(commonContext);
                             GetObjectTableData();
                             ContactRepository contactRepository = new ContactRepository(commonContext);
-                            Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact;
-                            if (SystemWorkerRole)
-                            {
-                                loggedContact = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant, true);
-                            }
-                            else
-                            {
-                                loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
-                            }
+                            Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
                             LoggedContactId = loggedContact.Id;
                             objectContext = invoiceContext;
                             this.invoicePaymentRepository = new ARInvoicePaymentRepository(this.objectContext);
@@ -315,7 +299,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 queueservice = new DbQueueService();
 
                 queueservice.InitializeQueue("QBO", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "ARPaymentVoid" }, { "OldTransferStatusCode", null } });
+                queueservice.Send(new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "ARPaymentVoid" } });
                 queueservice.Complete();
             }
 
@@ -521,15 +505,13 @@ namespace Logitude.BL.InvoiceModel.Tools
                 List<Line> lineList = new List<Line>();
                 var invoicesData = (from d in objectContext.ARInvoicePayments.Include("ARInvoice")
                                     where d.Tenant == tenant
-                                    && d.ARPaymentId == ARPayment.Id  && d.ARInvoice.TransferStatusCode=="TR"
+                                    && d.ARPaymentId == ARPayment.Id
                                     select new
                                     {
                                         InvoiceId = d.ARInvoiceId,
                                         ForeignAmount = d.ForeignAmount,
                                         ExternalAccountingEntityId = d.ARInvoice.ExternalAccountingEntityId,
                                     }).ToList();
-
-                
 
                 if (invoicesData.Count > 0)
                 {
@@ -606,7 +588,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 DbQueueService queueservice;
                 queueservice = new DbQueueService();
                 queueservice.InitializeQueue("QBO", 0);
-                Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "ARPayment" }, { "OldTransferStatusCode", null } };
+                Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "ARPayment" } };
                 queueservice.Send(param);
                 queueservice.Complete();
             }

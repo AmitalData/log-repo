@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class MAWBStackUpdateClass
@@ -79,49 +76,45 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             {
 			
 	             				    ObjectTableName =  "MAWBStack",
-			      				    IsNew =  false,
 			      				    DBTableName =  "MAWBStacks",
-			      				    OldDBTableName =  "MAWBStacks",
 			      				    ObjectTableSingular =  "MAWB Stack",
 			      				    ObjectTablePlural =  "MAWBStacks",
-			      				    HasCustomFilter =  false,
-			      				    HasCustomFields =  false,
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasFiltersMenu =  false,
-			      				    IsEditable =  true,
+			      				    DefaultText =  "MAWB Stack",
+			      				    Name =  "MAWBStack",
 			      				    IsNewWizard =  false,
+			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
+			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
-			      				    EnableEditFromLOV =  false,
+			      				    CustomFieldsCount =  0,
+			      				    HasCustomFields =  false,
 			      				    InActive =  false,
+			      				    SearchFields =  "MAWBStack,MAWBStacks,,Id,",
 			      				    IsSaveButtonVisible =  true,
-			      				    IsComposition =  false,
 			      				    EnableSecurity =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    IsComposition =  false,
+			      				    MaxNumberOfCustomFields =  0,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    ObjectTableTypeCode =  "MD",
-			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "MAWB Stack",
-			      				    Code =  "ffbb",
-			      				    Name =  "MAWBStack",
-			      				    GenerateDomainService =  false,
-			      				    NoTS =  false,
-			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  false,
-			      				    CustomFieldsCount =  0,
-			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
-			      				    SearchFields =  "MAWBStack,MAWBStacks,,Id,",
+			      				    IsEditable =  true,
+			      				    AllowedForComputingPartners =  false,
+			      				    DisableSearchBox =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasMenuButtons =  false,
+			      				    HasFiltersMenu =  false,
+			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -133,13 +126,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Number",
-					  						OldFieldName =  "Number",
 					  						ObjectTableName =  "MAWBStack",
 					  						FieldsDataType =  "Integer",
-					  						MinLength =  0,
+					  						Code =  "Number",
 					  						MaxLength =  0,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						IsCustom =  false,
+					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -151,38 +143,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Number",
 					  						ListPropertyPath =  "Number",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "Number",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Number",
-					  						DefaultText =  @"Number",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
-					  						IsCustom =  false,
+					  						IsRequired =  true,
+					  						FullFieldLable =  "Number",
+					  						DefaultText =  "Number",
 					  						HelpTextCode =  "Number",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -192,13 +181,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InsertionDate",
-					  						OldFieldName =  "InsertionDate",
 					  						ObjectTableName =  "MAWBStack",
 					  						FieldsDataType =  "DateTime",
-					  						MinLength =  0,
+					  						Code =  "InsertionDate",
 					  						MaxLength =  0,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						IsCustom =  false,
+					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -210,38 +198,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "InsertionDate",
 					  						ListPropertyPath =  "InsertionDate",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "InsertionDate",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "InsertionDate",
-					  						DefaultText =  @"Insertion Date/Time",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
-					  						IsCustom =  false,
+					  						IsRequired =  true,
+					  						FullFieldLable =  "InsertionDate",
+					  						DefaultText =  "Insertion Date/Time",
 					  						HelpTextCode =  "InsertionDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -251,14 +236,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AirlineId",
-					  						OldFieldName =  "AirlineId",
 					  						ObjectTableName =  "MAWBStack",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Airline",
-					  						MinLength =  0,
+					  						Code =  "AirlineId",
 					  						MaxLength =  15,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						IsCustom =  false,
+					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -270,38 +254,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "AirlineId",
 					  						ListPropertyPath =  "AirlineId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "AirlineId",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "AirlineId",
-					  						DefaultText =  @"Airline",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
-					  						IsCustom =  false,
+					  						IsRequired =  true,
+					  						FullFieldLable =  "AirlineId",
+					  						DefaultText =  "Airline",
 					  						HelpTextCode =  "AirlineId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -311,13 +292,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "MAWBStack",
 					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
+					  						Code =  "Notes",
 					  						MaxLength =  250,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						IsCustom =  false,
+					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -329,38 +309,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Notes",
 					  						ListPropertyPath =  "Notes",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "Notes",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Notes",
-					  						DefaultText =  @"Notes",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
-					  						IsCustom =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "Notes",
+					  						DefaultText =  "Notes",
 					  						HelpTextCode =  "Notes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -370,14 +347,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AssignedToId",
-					  						OldFieldName =  "AssignedToId",
 					  						ObjectTableName =  "MAWBStack",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
-					  						MinLength =  0,
+					  						Code =  "AssignedToId",
 					  						MaxLength =  15,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						IsCustom =  false,
+					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -389,38 +365,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "AssignedToId",
 					  						ListPropertyPath =  "AssignedToId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "AssignedToId",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "AssignedToId",
-					  						DefaultText =  @"Assigned To",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
-					  						IsCustom =  false,
+					  						IsRequired =  true,
+					  						FullFieldLable =  "AssignedToId",
+					  						DefaultText =  "Assigned To",
 					  						HelpTextCode =  "AssignedToId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -453,86 +426,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable MAWBStackObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MAWBStack" && d.Tenant == 0).FirstOrDefault(); 
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code =  "CREV",
-                EnglishName =  "Created",
-                LocalName =  "Created",
-                IsManualEntry =  false,
-                ShortView =  true,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
-                ObjectTableId = MAWBStackObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes);
-
-
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code =  "UPEV",
-                EnglishName =  "Updated",
-                LocalName =  "Updated",
-                IsManualEntry =  false,
-                ShortView =  false,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
-                ObjectTableId = MAWBStackObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes);
-
-
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable MAWBStackObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MAWBStack" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode MAWBStackTextCode_MAWBStackBRemoveSeries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.B.RemoveSeries", DefaultText = "Remove Series",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode MAWBStackTextCode_MAWBStackMDeleteStackNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.M.DeleteStackNumber", DefaultText = "Are you sure you want to delete the stack number",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode MAWBStackTextCode_MAWBStackMDeleteStackSeries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.M.DeleteStackSeries", DefaultText = "Are you sure you want to delete the series inserted on",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode MAWBStackTextCode_MAWBStackOAirWayBillNumbers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.AirWayBillNumbers", DefaultText = "Air Way Bill Numbers",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode MAWBStackTextCode_MAWBStackONewAirWayBillNumbers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.NewAirWayBillNumbers", DefaultText = "New Air Way Bill Numbers",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode MAWBStackTextCode_MAWBStackOAWBRemainingAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.AWBRemainingAmount", DefaultText = "AWB Remaining Amount",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode MAWBStackTextCode_MAWBStackONotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.Notes", DefaultText = "Notes",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
- 		   TextCode MAWBStackTextCode_MAWBStackOStartNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.StartNumber", DefaultText = "Start Number",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode MAWBStackTextCode_MAWBStackOEndNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.EndNumber", DefaultText = "End Number",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode MAWBStackTextCode_MAWBStackOByEndNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.ByEndNumber", DefaultText = "By End Number",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode MAWBStackTextCode_MAWBStackOByAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.ByAmount", DefaultText = "By Amount",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode MAWBStackTextCode_MAWBStackOAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.Amount", DefaultText = "Amount",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode MAWBStackTextCode_MAWBStackORemovingStack = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.RemovingStack", DefaultText = "Removing Stack",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
-	    
-}
-
-    
+	    }     
 
    }
     

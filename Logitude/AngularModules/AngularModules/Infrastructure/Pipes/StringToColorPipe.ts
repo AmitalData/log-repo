@@ -1,4 +1,4 @@
-import {Pipe} from '@angular/core';
+﻿import {Pipe} from '@angular/core';
 import {AppTool, FormatTool, FontTool, DateTool} from '../Tools';
 
 @Pipe({ name: 'StringToColorPipe' })
@@ -249,8 +249,8 @@ export class StringToColorPipe {
         else {
             
             switch (Parameter + ":" + value) {
-                case "MessagingStock:New":
-                case "MessagingStock:Active":
+                case "AWBMessagingStock:New":
+                case "AWBMessagingStock:Active":
                     {
                         myResult = "#009161";
                         break;

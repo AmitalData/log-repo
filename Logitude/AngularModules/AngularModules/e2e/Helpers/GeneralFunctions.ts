@@ -10,7 +10,7 @@ export class GeneralFunctions {
         this.Helper.WaitByIdAndClick('PAR');
         var selectMenu = this.Helper.WaitByIdAndClick(menuid);
     }
-    SelectMenuWorkSpaceTabs(id: string) {
+    SelectOperationsTab(id: string) {
         var selectTab = this.Helper.WaitByIdAndClick(id);
     }
     public RandomNum() {

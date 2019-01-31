@@ -60,9 +60,9 @@ export class TaxDeductionReportPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private reportNumber: string;
+    private reportNumber: number;
     public get ReportNumber() { return this.reportNumber; }
-    public set ReportNumber(newValue: string) { if (this.reportNumber != newValue) { this.reportNumber = newValue; this.MarkAsDirty("ReportNumber"); } }
+    public set ReportNumber(newValue: number) { if (this.reportNumber != newValue) { this.reportNumber = newValue; this.MarkAsDirty("ReportNumber"); } }
        
 	 
     private statusTypeCode: string;
@@ -98,11 +98,6 @@ export class TaxDeductionReportPM {
     private status: string;
     public get Status() { return this.status; }
     public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
-       
-	 
-    private statusLocalName: string;
-    public get StatusLocalName() { return this.statusLocalName; }
-    public set StatusLocalName(newValue: string) { if (this.statusLocalName != newValue) { this.statusLocalName = newValue; this.MarkAsDirty("StatusLocalName"); } }
        
 	 
 

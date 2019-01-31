@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OpportunityProductUpdateClass
@@ -149,9 +146,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpportunityId",
-					  						DefaultText =  @"Opportunity Id",
+					  						DefaultText =  "Opportunity Id",
 					  						ListFieldLable =  "OpportunityIdListLable",
-					  						ListLableDefaultText =  @"Opportunity Id",
+					  						ListLableDefaultText =  "Opportunity Id",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -198,9 +195,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpportunityProductTypeCode",
-					  						DefaultText =  @"Product Type",
+					  						DefaultText =  "Product Type",
 					  						ListFieldLable =  "OpportunityProductTypeCodeListLable",
-					  						ListLableDefaultText =  @"Product Type",
+					  						ListLableDefaultText =  "Product Type",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -247,9 +244,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Notes",
-					  						DefaultText =  @"Notes",
+					  						DefaultText =  "Notes",
 					  						ListFieldLable =  "NotesListLable",
-					  						ListLableDefaultText =  @"Notes",
+					  						ListLableDefaultText =  "Notes",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -298,9 +295,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChargeableWeight",
-					  						DefaultText =  @"Charg. Weight/W.M",
+					  						DefaultText =  "Charg. Weight/W.M",
 					  						ListFieldLable =  "ChargeableWeightListLable",
-					  						ListLableDefaultText =  @"Charg. Weight/W.M",
+					  						ListLableDefaultText =  "Charg. Weight/W.M",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -349,9 +346,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TEU",
-					  						DefaultText =  @"TEU",
+					  						DefaultText =  "TEU",
 					  						ListFieldLable =  "TEUListLable",
-					  						ListLableDefaultText =  @"TEU",
+					  						ListLableDefaultText =  "TEU",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -398,9 +395,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NumberOfShipments",
-					  						DefaultText =  @"No Of Shipments",
+					  						DefaultText =  "No Of Shipments",
 					  						ListFieldLable =  "NumberOfShipmentsListLable",
-					  						ListLableDefaultText =  @"No Of Shipments",
+					  						ListLableDefaultText =  "No Of Shipments",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -447,9 +444,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpportunityProductTypeName",
-					  						DefaultText =  @"Product Type",
+					  						DefaultText =  "Product Type",
 					  						ListFieldLable =  "OpportunityProductTypeNameListLable",
-					  						ListLableDefaultText =  @"Product Type",
+					  						ListLableDefaultText =  "Product Type",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -496,7 +493,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpportunityProductLocations",
-					  						DefaultText =  @"Locations",
+					  						DefaultText =  "Locations",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -545,9 +542,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Revenue",
-					  						DefaultText =  @"Revenue",
+					  						DefaultText =  "Revenue",
 					  						ListFieldLable =  "RevenueListLable",
-					  						ListLableDefaultText =  @"Revenue",
+					  						ListLableDefaultText =  "Revenue",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -594,9 +591,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PrepaidCollectId",
-					  						DefaultText =  @"Prepaid/Collect",
+					  						DefaultText =  "Prepaid/Collect",
 					  						ShortFieldLable =  "PrepaidCollectId",
-					  						ShortFieldLableDefaultText =  @"P/C",
+					  						ShortFieldLableDefaultText =  "P/C",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -642,7 +639,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PrepaidCollectName",
-					  						DefaultText =  @"Prepaid Collect",
+					  						DefaultText =  "Prepaid Collect",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -688,7 +685,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NotesRightToLeft",
-					  						DefaultText =  @"Notes Right To Left",
+					  						DefaultText =  "Notes Right To Left",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -766,14 +763,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

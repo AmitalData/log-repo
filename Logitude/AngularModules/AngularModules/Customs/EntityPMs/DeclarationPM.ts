@@ -939,11 +939,6 @@ export class DeclarationPM {
     public set CourierSuspentionName(newValue: string) { if (this.courierSuspentionName != newValue) { this.courierSuspentionName = newValue; this.MarkAsDirty("CourierSuspentionName"); } }
        
 	 
-    private depositionStatusCode: string;
-    public get DepositionStatusCode() { return this.depositionStatusCode; }
-    public set DepositionStatusCode(newValue: string) { if (this.depositionStatusCode != newValue) { this.depositionStatusCode = newValue; this.MarkAsDirty("DepositionStatusCode"); } }
-       
-	 
 
     public OldEntityPM: DeclarationPM;
 		

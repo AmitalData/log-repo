@@ -41,8 +41,6 @@ using Logitude.BL.GlobalModel.EntityLists;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.Tools.EntityService;
 using Simplog.Global.Data.GlobalModel.Repositories;
-using Logitude.BL.GlobalModel.CustomFilters;
-		  
 namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 { 
 
@@ -227,10 +225,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-				                
-				TenantManagementCustomFilter customfilters = new TenantManagementCustomFilter(tenant);
-                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-	
+				
                 entityPocos = genericFilter.GetFilteredQuery<TenantManagement>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<TenantManagementList> entityLists = tenantManagementQuery.GetIQueryableEntityList(entityPocos);

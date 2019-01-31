@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class APInvoicePaymentUpdateClass
@@ -111,11 +108,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsEditable =  true,
+			      				    AllowedForComputingPartners =  false,
+			      				    DisableSearchBox =  false,
 			      				    ClientModuleName =  "Invoice",
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
+			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -130,7 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ObjectTableName =  "APInvoicePayment",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "APInvoice",
-					  						DataTypeCode =  "LookUp",
+					  						Code =  "APInvoiceId",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -153,9 +153,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "APInvoicePayment",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "APInvoicePayment",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -166,18 +167,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "APInvoiceId",
-					  						DefaultText =  @"Invoice",
-					  						HelpTextCode =  "APInvoiceId",
-					  						Code =  "APInvoiceId",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullLocalDefaultText =  @"חשבונית",
+					  						FullFieldLable =  "APInvoiceId",
+					  						DefaultText =  "Invoice",
+					  						FullLocalDefaultText =  "חשבונית",
+					  						HelpTextCode =  "APInvoiceId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -189,7 +187,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ObjectTableName =  "APInvoicePayment",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "APPayment",
-					  						DataTypeCode =  "LookUp",
+					  						Code =  "APPaymentId",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -212,9 +210,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "APInvoicePayment",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "APInvoicePayment",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -225,18 +224,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "APPaymentId",
-					  						DefaultText =  @"Payment",
-					  						HelpTextCode =  "APPaymentId",
-					  						Code =  "APPaymentId",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullLocalDefaultText =  @"קבלה",
+					  						FullFieldLable =  "APPaymentId",
+					  						DefaultText =  "Payment",
+					  						FullLocalDefaultText =  "קבלה",
+					  						HelpTextCode =  "APPaymentId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -248,7 +244,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ObjectTableName =  "APInvoicePayment",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
-					  						DataTypeCode =  "LookUp",
+					  						Code =  "ForeignCurrencyId",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -271,9 +267,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "APInvoicePayment",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "APInvoicePayment",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -284,18 +281,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "ForeignCurrencyId",
-					  						DefaultText =  @"Foreign Currency",
-					  						HelpTextCode =  "ForeignCurrencyId",
-					  						Code =  "ForeignCurrencyId",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullLocalDefaultText =  @"מטבע זר",
+					  						FullFieldLable =  "ForeignCurrencyId",
+					  						DefaultText =  "Foreign Currency",
+					  						FullLocalDefaultText =  "מטבע זר",
+					  						HelpTextCode =  "ForeignCurrencyId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -306,7 +300,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "ForeignAmount",
 					  						ObjectTableName =  "APInvoicePayment",
 					  						FieldsDataType =  "Double",
-					  						DataTypeCode =  "Double",
+					  						Code =  "ForeignAmount",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -330,9 +324,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "APIncoicePayment",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "APIncoicePayment",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -343,21 +338,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "ForeignAmount",
-					  						DefaultText =  @"Foreign Amount",
-					  						ListFieldLable =  "ForeignAmountListLable",
-					  						ListLableDefaultText =  @"Foreign Amount",
-					  						HelpTextCode =  "ForeignAmount",
-					  						Code =  "ForeignAmount",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullLocalDefaultText =  @"סכום מטבע זר",
-					  						ListLocalDefaultText =  @"סכום מטבע זר",
+					  						FullFieldLable =  "ForeignAmount",
+					  						DefaultText =  "Foreign Amount",
+					  						FullLocalDefaultText =  "סכום מטבע זר",
+					  						ListFieldLable =  "ForeignAmountListLable",
+					  						ListLableDefaultText =  "Foreign Amount",
+					  						ListLocalDefaultText =  "סכום מטבע זר",
+					  						HelpTextCode =  "ForeignAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -368,7 +360,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "LocalAmount",
 					  						ObjectTableName =  "APInvoicePayment",
 					  						FieldsDataType =  "Double",
-					  						DataTypeCode =  "Double",
+					  						Code =  "LocalAmount",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -392,9 +384,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AInvoicePPayment",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AInvoicePPayment",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -405,21 +398,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "LocalAmount",
-					  						DefaultText =  @"Local Amount",
-					  						ListFieldLable =  "LocalAmountListLable",
-					  						ListLableDefaultText =  @"Local Amount",
-					  						HelpTextCode =  "LocalAmount",
-					  						Code =  "LocalAmount",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullLocalDefaultText =  @"סכום מקומי",
-					  						ListLocalDefaultText =  @"סכום מקומי",
+					  						FullFieldLable =  "LocalAmount",
+					  						DefaultText =  "Local Amount",
+					  						FullLocalDefaultText =  "סכום מקומי",
+					  						ListFieldLable =  "LocalAmountListLable",
+					  						ListLableDefaultText =  "Local Amount",
+					  						ListLocalDefaultText =  "סכום מקומי",
+					  						HelpTextCode =  "LocalAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -473,8 +463,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ExchangeRate",
-					  						DefaultText =  @"Exchange Rate",
-					  						FullLocalDefaultText =  @"שער",
+					  						DefaultText =  "Exchange Rate",
+					  						FullLocalDefaultText =  "שער",
 					  						HelpTextCode =  "ExchangeRate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -529,8 +519,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PaymentAmount",
-					  						DefaultText =  @"Payment Amount",
-					  						FullLocalDefaultText =  @"סכום לתשלום",
+					  						DefaultText =  "Payment Amount",
+					  						FullLocalDefaultText =  "סכום לתשלום",
 					  						HelpTextCode =  "PaymentAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -562,14 +552,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

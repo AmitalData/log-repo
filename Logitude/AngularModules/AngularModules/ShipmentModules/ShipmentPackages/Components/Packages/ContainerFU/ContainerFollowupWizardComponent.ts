@@ -1,4 +1,4 @@
-import {Component, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
+﻿import {Component, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ContainerFollowupWizardTemplate} from './ContainerFollowupWizardTemplate';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -363,32 +363,5 @@ export class ContainerFollowupWizardComponent extends BaseComponent {
 
             logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditDeliveryComponent');
         }
-    }
-    ViewShipmentClicked() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: this.ShipmentPM.Id, ObjectTableName: 'Shipment', BackButtonLabel: "Shipment: " + this.ShipmentPM.ShipmentNumber });
-
-                //let isEditComponentSaved = false;
-
-                //cmpRef.instance.BackCompleted.subscribe(bk => {
-                //    if (isEditComponentSaved) {
-                //        this.entityArgs.EditComponent.ReloadEntityPM();
-                //    }
-                //});
-
-                //cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                //    if (isSaveSuccess) {
-                //        isEditComponentSaved = true;
-                //    }
-                //});
-
-                //cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
-                //    if (isSaveSuccess) {
-                //        isEditComponentSaved = true;
-                //    }
-                //});
-            });
     }
 }

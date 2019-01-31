@@ -259,7 +259,7 @@ namespace <#= detailsnamespacestring.Replace(".CloseTable","").TrimEnd('s') #>
 		       {  
 			    if(Att.Value != null && Att.Value.GetType() == typeof(string) && Att.Value.Trim('"').Contains("\""))
 				{
-				  string strValue = Att.Value.Trim('"').Replace("\"",  "''");
+				  string strValue = Att.Value.Trim('"').Replace("\"",  "\\\"");
 				     #>
 
                 <#= Att.Name #> = "<#= strValue #>", <#+

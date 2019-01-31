@@ -70,19 +70,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    });
             return query;
 		}
-        public IQueryable<TaxReportLineList> GetReportLines(string taxreportid, int tenant)
-        {
-            IQueryable<TaxReportLine> TaxReportLineQuery = (from a in context.TaxReportLines
-                                                            where a.TaxReportId == taxreportid && a.Tenant == tenant
-                                                            select a);
 
-
-            IQueryable<TaxReportLineList> TaxReportLineListQuery = GetIqueryableList(TaxReportLineQuery);
-            return TaxReportLineListQuery;
-
-        }
-
-        private IQueryable<TaxReportLine> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<TaxReportLine> iQueryable, int tenant)
+		private IQueryable<TaxReportLine> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<TaxReportLine> iQueryable, int tenant)
         {
             return iQueryable;
         }

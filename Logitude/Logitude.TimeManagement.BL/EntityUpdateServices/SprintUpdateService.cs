@@ -1,7 +1,6 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.TimeManagement.BL.EntityPMs;
-using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data.Repositories;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -60,41 +59,5 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                 }
             }
         }
-
-        protected override void Trace(SprintPM entityPM, Sprint entityPOCO, string changesXml)
-        {
-            ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
-            ContactRepository contactRep = new ContactRepository(commonContext);
-            Contact contact = contactRep.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
-
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
-            {
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = entityPM.Tenant,
-                    EventTypeCode = "UPEV",
-                    UserId = contact.Id,
-                    EntityId = entityPM.Id,
-                    ObjectTableName = "Sprint",
-                    Notes = changesXml
-                });
-
-            }
-
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
-            {
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = entityPM.Tenant,
-                    EventTypeCode = "CREV",
-                    UserId = contact.Id,
-                    EntityId = entityPM.Id,
-                    ObjectTableName = "Sprint",
-                    Notes = changesXml
-                });
-            }
-
-        }
-
     }
 }

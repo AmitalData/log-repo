@@ -8,7 +8,6 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +22,10 @@ namespace WebFreight.Web.MetaDataUpdate
         private ObjectFieldQuery objectFieldsQuery;
         private ObjectTableQuery objectTabelQuery;
 
-        public void LoadUpdateTenantZero(IWebFreightContext context,bool updateMetadatafields = true)
+        public void LoadUpdateTenantZero(IWebFreightContext context)
         {
             isUpdate = true;
-            LoadObjectsTenantZero(context, updateMetadatafields);
+            LoadObjectsTenantZero(context);
         }
 
         public void CreateJustOT(IWebFreightContext context)
@@ -108,7 +107,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
         #region LoadObjectsTenantZero()
         bool isUpdate = false;
-        public void LoadObjectsTenantZero(IWebFreightContext context, bool updateMetadatafields = true)
+        public void LoadObjectsTenantZero(IWebFreightContext context)
         {
             CommonDataDomainService commonDomain = new CommonDataDomainService();
             ObjectContext = context;//WebFreightContext.GetContext(0);
@@ -150,425 +149,230 @@ namespace WebFreight.Web.MetaDataUpdate
             CreateDropDirectionCounterDefinitions();
             CreateAllTablesTips(tips, textCodes);
 
-            if (updateMetadatafields)
-            {
-                // Models
-                if (LogitudeSettings.WorkEnvironment == "customs") //these fields created in case customs "not all logitude things needed and causes crashes when there is a missing script"
-                {
-                    CreateVatTypeFields(objectFields, textCodes);
-                    CreateVatTypePercentageFields(objectFields, textCodes);
-                    CreateCardFields(objectFields, textCodes);
-                    CreateCarrierFields(objectFields, textCodes);
-                    CreateCustomerFields(objectFields, textCodes);
-                    CreateAgentFields(objectFields, textCodes);
-                    CreateCustomAgentFields(objectFields, textCodes);
-                    CreateShippingAgentFields(objectFields, textCodes);
-                    CreateAirlineFields(objectFields, textCodes);
-                    CreateShippingLineFields(objectFields, textCodes);
-                    CreateTruckerFields(objectFields, textCodes);
-                    CreateVendorFields(objectFields, textCodes);
-                    CreateAddressFields(objectFields, textCodes);
-                    CreateContactFields(objectFields, textCodes);
-                    CreateBranchFields(objectFields, textCodes);
-                    CreateChargeTypeFields(objectFields, textCodes);
-                    CreateChargeTypeAccountingFields(objectFields, textCodes);
-                    CreateCountryFields(objectFields, textCodes);
-                    CreateCurrencyFields(objectFields, textCodes);
-                    CreateDepartmentFields(objectFields, textCodes);
-                    CreateExternalDocumentFields();
-                    CreateInternalDocumentFields();
-                    CreateGlobalZoneFields(objectFields, textCodes);
-                    CreateIncotermFields(objectFields, textCodes);
-                    CreatePaymentTermsFields(objectFields, textCodes);
-                    CreatePortFields(objectFields, textCodes);
-                    CreateStatesFields(objectFields, textCodes);
-                    CreateCityFields(objectFields, textCodes);
-                    CreateUserFields(objectFields, textCodes);
-                    CreateVesselFields(objectFields, textCodes);
-                    CreateWareHouseFields(objectFields, textCodes);
-                    CreateTraceEventFields(objectFields, textCodes);
-                    CreateEventTypeFields(objectFields, textCodes);
-                    CreateDocumentTypeFields(objectFields, textCodes);
-                    CreateDocumentsFilingsFields(objectFields, textCodes);
+            // Models
+            CreateShipmentModelObjectFields(objectFields, textCodes);
+            CreateQuoteModelObjectFields(objectFields, textCodes);
+            CreateInvoiceModelObjectFields(objectFields, textCodes);
 
-                    CreateAccountingSystemFields(objectFields, textCodes);
-                    CreateAccountSettingFields(objectFields, textCodes);
-                    CreateRatesTableFields(objectFields, textCodes);
-                    CreateTransportModeFields(objectFields, textCodes);
-                    CreateObjectTableFields(objectFields, textCodes);
-                    CreateEntityStatusFields(objectFields, textCodes);
-                    CreatePartnerTypeFields(objectFields, textCodes);
-                    CreateChargeGroupFields(objectFields, textCodes);
-                    CreateTemplateFormatFields(objectFields, textCodes);
-                    CreateDocumentTypeTemplateFields(objectFields, textCodes);
-                    CreateDocumentTypeCustomFields(objectFields, textCodes);
-                    CreateSystemDataFields(objectFields, textCodes);
-                    CreateTenantFields(objectFields, textCodes);
-                    CreateCounterDefinitionFields(objectFields, textCodes);
-                    CreateTarrifTypesFields(objectFields, textCodes);
-                    CreateTarrifFromToTypesFields(objectFields, textCodes);
-                    CreateTarrifChargesFields(objectFields, textCodes);
-                    CreateTarrifFromTosFields(objectFields, textCodes);
-                    CreateTarrifHeadersFields(objectFields, textCodes);
-                    CreateTarrifStepsFields(objectFields, textCodes);
-                    CreateTextCodeFields(objectFields, textCodes);
-                    CreateRestrictionFields(objectFields, textCodes);
-                    CreateRoleFields(objectFields, textCodes);
-                    CreateAccountFields(objectFields, textCodes);
-                    CreateAccountTypesFields(objectFields, textCodes);
-                    CreateRankFields(objectFields, textCodes);
-                    CreateCommunicationLogsFields(objectFields, textCodes);
-                    CreateCommunicationLogTypesFields(objectFields, textCodes);
-                    CreateCommunicationStatusTypesFields(objectFields, textCodes);
-                    CreatePasswordPoliciesFields(objectFields, textCodes);
-                    CreatePackageFields(objectFields, textCodes);
-                    CreateTenantManagementFields(objectFields, textCodes);
-                    CreateRecurringPeriodFields(objectFields, textCodes);
-                    CreatePaymentChannelFields(objectFields, textCodes);
-                    CreateEventTypeCategoryFields(objectFields, textCodes);
-                    LoadCreateTestFields(objectFields, textCodes);
-                    CreateTermsofUseSignaturesFields(objectFields, textCodes);
-                    CreateAnalyzeQueueFields(objectFields, textCodes);
-                    CreateCreditCardTypeFields(objectFields, textCodes);
-                    CreateErrorLogFields(objectFields, textCodes);
-                    CreateSharedLogisticsInvitationStatusFields(objectFields, textCodes);
-                    CreateMoveTypeFields(objectFields, textCodes);
-                    CreateReportFields(objectFields, textCodes);
-                    CreateLeadSourceFields(objectFields, textCodes);
-                    CreateIndustryFields(objectFields, textCodes);
-                    CreateProductTypeFields(objectFields, textCodes);
-                    CreateProductPeriodFields(objectFields, textCodes);
-                    CreateCustomerProductFields(objectFields, textCodes);
-                    CreateCustomerProductActualDataFields(objectFields, textCodes);
-                    CreateCustomerProductLocationFields(objectFields, textCodes);
-                    CreateCustomerProductLocationActualDataFields(objectFields, textCodes);
-                    CreateCompetitorsFields(objectFields, textCodes);
-                    CreateCustomerAdditionalServiceFields(objectFields, textCodes);
-                    CreateContactDoneMethodFields(objectFields, textCodes);
-                    CreateAdditionalServiceFields(objectFields, textCodes);
-                    CreateLogitudeLeadFields(objectFields, textCodes);
-                    CreateBorderTypeFields(objectFields, textCodes);
-                    CreateExternalSystemsTablesCodeFields(objectFields, textCodes);
-                    CreateVatUniqueTypeFields(objectFields, textCodes);
-                    CreateVatMandatoryTypeFields(objectFields, textCodes);
-                    CreateVatFormatTypeFields(objectFields, textCodes);
-                    CreateCustomerSalesNoteFields(objectFields, textCodes);
-                    CreateAccountingSystemsSettingFields(objectFields, textCodes);
-                    CreateAccountingSystemsSyncStatusFields(objectFields, textCodes);
-                    CreateCustomerStatusFields(objectFields, textCodes);
-                    CreateBusinessUnitFields(objectFields, textCodes);
-                    CreateFeatureAccessLevelFields(objectFields, textCodes);
-                    CreateSpecialServicesTypeFields(objectFields, textCodes);
-                    CreateRegionFields(objectFields, textCodes);
-                    CreatePaymentCurrencyFields(objectFields, textCodes);
-                    CreateCustomerSizeFields(objectFields, textCodes);
-                    CreateDistributorFields(objectFields, textCodes);
-                    CreateAccountingInformationIdentifierFields(objectFields, textCodes);
-                    CreateComputingPartnerFields(objectFields, textCodes);
-                    CreateComputingPartnerCodeFields(objectFields, textCodes);
-                    CreateComputingPartnerTableFields(objectFields, textCodes);
-                    CreateComputingPartnerTranslationFields(objectFields, textCodes);
-                    CreateBluesnapContractFields(objectFields, textCodes);
-                    CreateAWBMessagesCCSTypeFields(objectFields, textCodes);
-                    CreateDocumentFolderFields(objectFields, textCodes);
-                    CreateManifestStatusFields(objectFields, textCodes);
-                    CreateCustomsTransmissionsStatusFields(objectFields, textCodes);
-                    CreateInboundEmailFields(objectFields, textCodes);
-                    CreateInboundEmailLineFields(objectFields, textCodes);
-                    CreateDocumentTypeCategoryFields(objectFields, textCodes);
-                    CreateCustomerTenantAccessFields(objectFields, textCodes);
-                    CreateCustomerTenantAccessStatusType(objectFields, textCodes);
-                    CreateCustomerTenantAccessCardFields(objectFields, textCodes);
-                    CreateCustomerTenantAccessRequestFields(objectFields, textCodes);
-                    CreateHybridPartnerFields(objectFields, textCodes);
-                    CreateBusinessHourFields(objectFields, textCodes);
-                    CreateBusinessHoursHolidayFields(objectFields, textCodes);
-                    CreateAPILogsFields(objectFields, textCodes);
-                    CreatePaymentMethodFields(objectFields, textCodes);
-                    CreateAPILogsDataFields(objectFields, textCodes);
-                    CreateBatchServicesLogFields(objectFields, textCodes);
-                    CreateTenantTypeFields(objectFields, textCodes);
-                    CreateQueueMessageMoreDetailsFields(objectFields, textCodes);
-                    CreateCustomerTenantAccessCardBatchFields(objectFields, textCodes);
-                    CreateParticipantFields(objectFields, textCodes);
-                    CreateApiCredintials(objectFields, textCodes);
-                    CreateAirlineStatisticsFields(objectFields, textCodes);
-                    CreateTransmissionLogFields(objectFields, textCodes);
-                    CreateFeaturePackageTypeFields(objectFields, textCodes);
-                    CreateTenantManagementLicenseFields(objectFields, textCodes);
-                    CreatePackageConnectedPackageFields(objectFields, textCodes);
-                    CreateUserLicenseFields(objectFields, textCodes);
-                    CreateTenantAddOnFields(objectFields, textCodes);
-                    CreateAirlineMessagingRuleFields(objectFields, textCodes);
-                    CreateAuomationFields(objectFields, textCodes);
-                    CreatePaymentTermDateTypeFields(objectFields, textCodes);
-                    CreateCustomerFieldsUpdateSettingFields(objectFields, textCodes);
-                    CreateTenantManagmentPrivateLabelsFields(objectFields, textCodes);
-                    CreateCreditLimitSettingFields(objectFields, textCodes);
-                    CreateAgentSharedManifestFields(objectFields, textCodes);
-                    CreateCustomerAccountManagerByProductFields(objectFields, textCodes);
-                    CreateCardExternalAccountsByProductFields(objectFields, textCodes);
-                    CreateCustomsInterfaceFields(objectFields, textCodes);
-                    CreateCustomsInterfaceSettingFields(objectFields, textCodes);
-                    CreateFTPDetailFields(objectFields, textCodes);
-                    CreateCardExternalCodeByCurrencyFields(objectFields, textCodes);
-                    CreateLoginPolicyFields(objectFields, textCodes);
-                    CreateTenantLoginPolicy(objectFields, textCodes);
-                    TwoFactorAuthenticationDeviceFields(objectFields, textCodes);
-                    CreateBatchServicesDefinitionsFields(objectFields, textCodes);
-                    CreateAgentSharedDocumentFields(objectFields, textCodes);
-                    CreateChargesExternalAccountsByProductFields(objectFields, textCodes);
-                    CreateRegistryDateTypeFields(objectFields, textCodes);
-                    CreateUsoCFDIFields(objectFields, textCodes);
-                    CreateReportsTemplateFields(objectFields, textCodes);
-                    CreateReportsTemplatesVersionFields(objectFields, textCodes);
-                    CreateObjectFieldFields(objectFields, textCodes);
-                    CreateFilingInboxFields(objectFields, textCodes);
-                    CreateFilingInboxAttachmentFields(objectFields, textCodes);
-                    CreateFilingInboxAttachmentLogFields(objectFields, textCodes);
-                    CreateTasksSchedulerObjectFields(objectFields, textCodes);
-                    CreateTemperatureUnitFields(objectFields, textCodes);
+            CreateFollowUpFields(objectFields, textCodes);
+            CreateVatTypeFields(objectFields, textCodes);
+            CreateVatTypePercentageFields(objectFields, textCodes);
+            CreateCardFields(objectFields, textCodes);
+            CreateCarrierFields(objectFields, textCodes);
+            CreateCustomerFields(objectFields, textCodes);
+            CreateAgentFields(objectFields, textCodes);
+            CreateCustomAgentFields(objectFields, textCodes);
+            CreateShippingAgentFields(objectFields, textCodes);
+            CreateAirlineFields(objectFields, textCodes);
+            CreateShippingLineFields(objectFields, textCodes);
+            CreateTruckerFields(objectFields, textCodes);
+            CreateVendorFields(objectFields, textCodes);
+            CreateAddressFields(objectFields, textCodes);
+            CreateContactFields(objectFields, textCodes);
+            CreateBranchFields(objectFields, textCodes);
+            CreateChargeTypeFields(objectFields, textCodes);
+            CreateChargeTypeAccountingFields(objectFields, textCodes);
+            CreateCountryFields(objectFields, textCodes);
+            CreateCurrencyFields(objectFields, textCodes);
+            CreateDepartmentFields(objectFields, textCodes);
+            CreateExternalDocumentFields();
+            CreateInternalDocumentFields();
+            CreateGlobalZoneFields(objectFields, textCodes);
+            CreateIncotermFields(objectFields, textCodes);
+            CreatePaymentTermsFields(objectFields, textCodes);
+            CreatePortFields(objectFields, textCodes);
+            CreateStatesFields(objectFields, textCodes);
+            CreateCityFields(objectFields, textCodes);
+            CreateUserFields(objectFields, textCodes);
+            CreateVesselFields(objectFields, textCodes);
+            CreateWareHouseFields(objectFields, textCodes);
+            CreateTraceEventFields(objectFields, textCodes);
+            CreateEventTypeFields(objectFields, textCodes);
+            CreateDocumentTypeFields(objectFields, textCodes);
+            CreateDocumentsFilingsFields(objectFields, textCodes);
+            CreatePackageTypeFields(objectFields, textCodes);
+            CreateWeightUnitFields(objectFields, textCodes);
+            CreateRateClassFields(objectFields, textCodes);
+            CreateDimensionsUnitFields(objectFields, textCodes);
+            CreateAccountingSystemFields(objectFields, textCodes);
+            CreateAccountSettingFields(objectFields, textCodes);
+            CreateAWBChargesCodeFields(objectFields, textCodes);
+            CreateAWBSpecialHandlingCodeFields(objectFields, textCodes);
+            CreateVolumeUnitFields(objectFields, textCodes);
+            CreateMesaurmentFields(objectFields, textCodes);
+            CreateDueTypeFields(objectFields, textCodes);
+            CreatePrepaidCollectFields(objectFields, textCodes);
+            CreateContainerTypeFields(objectFields, textCodes);
+            CreateFollowUpTypeFields(objectFields, textCodes);
+            CreateRatesTableFields(objectFields, textCodes);
+            CreateTransportModeFields(objectFields, textCodes);
+            CreateObjectTableFields(objectFields, textCodes);
+            CreateEntityStatusFields(objectFields, textCodes);
+            CreatePartnerTypeFields(objectFields, textCodes);
+            CreateChargeGroupFields(objectFields, textCodes);
+            CreateIATACodesFields(objectFields, textCodes);
+            CreateTemplateFormatFields(objectFields, textCodes);
+            CreateDocumentTypeTemplateFields(objectFields, textCodes);
+            CreateDocumentTypeCustomFields(objectFields, textCodes);
+            CreateDirectionFields(objectFields, textCodes);
+            CreateSystemDataFields(objectFields, textCodes);
+            CreateSharedLogisticsFields(objectFields, textCodes);
+            CreateTenantFields(objectFields, textCodes);
+            CreateDescriptionOfGoodsFields(objectFields, textCodes);
+            CreateCounterDefinitionFields(objectFields, textCodes);
+            CreateTarrifTypesFields(objectFields, textCodes);
+            CreateTarrifFromToTypesFields(objectFields, textCodes);
+            CreateTarrifChargesFields(objectFields, textCodes);
+            CreateTarrifFromTosFields(objectFields, textCodes);
+            CreateTarrifHeadersFields(objectFields, textCodes);
+            CreateTarrifStepsFields(objectFields, textCodes);
+            CreateTextCodeFields(objectFields, textCodes);
+            CreateMAWBStackFields(objectFields, textCodes);
+            CreateRestrictionFields(objectFields, textCodes);
+            CreateRoleFields(objectFields, textCodes);
+            CreateAccountFields(objectFields, textCodes);
+            CreateAccountTypesFields(objectFields, textCodes);
+            CreateRankFields(objectFields, textCodes);
+            CreateCommunicationLogsFields(objectFields, textCodes);
+            CreateCommunicationLogTypesFields(objectFields, textCodes);
+            CreateWarehouseTypesFields(objectFields, textCodes);
+            CreateCommunicationStatusTypesFields(objectFields, textCodes);
+            CreatePasswordPoliciesFields(objectFields, textCodes);
+            CreatePackageFields(objectFields, textCodes);
+            CreateTenantManagementFields(objectFields, textCodes);
+            CreateRecurringPeriodFields(objectFields, textCodes);
+            CreatePaymentChannelFields(objectFields, textCodes);
+            CreateEventTypeCategoryFields(objectFields, textCodes);
+            LoadCreateTestFields(objectFields, textCodes);
+            CreateTermsofUseSignaturesFields(objectFields, textCodes);
+            CreateAnalyzeQueueFields(objectFields, textCodes);
+            CreateCreditCardTypeFields(objectFields, textCodes);
+            CreateErrorLogFields(objectFields, textCodes);
+            CreateSharedLogisticsInvitationStatusFields(objectFields, textCodes);
+            CreateAccountingTransferHeaderFields(objectFields, textCodes);
+            CreateAccountingTransferLineFields(objectFields, textCodes);
+            CreateAccountingTransferTypeFields(objectFields, textCodes);
+            CreateMoveTypeFields(objectFields, textCodes);
+            CreateReportFields(objectFields, textCodes);
+            CreateCommodityFields(objectFields, textCodes);
+            CreateLeadSourceFields(objectFields, textCodes);
+            CreateIndustryFields(objectFields, textCodes);
+            CreateProductTypeFields(objectFields, textCodes);
+            CreateProductPeriodFields(objectFields, textCodes);
+            CreateCustomerProductFields(objectFields, textCodes);
+            CreateCustomerProductActualDataFields(objectFields, textCodes);
+            CreateCustomerProductLocationFields(objectFields, textCodes);
+            CreateCustomerProductLocationActualDataFields(objectFields, textCodes);
+            CreateCompetitorsFields(objectFields, textCodes);
+            CreateCustomerAdditionalServiceFields(objectFields, textCodes);
+            CreateContactDoneMethodFields(objectFields, textCodes);
+            CreateAdditionalServiceFields(objectFields, textCodes);
+            CreateLogitudeLeadFields(objectFields, textCodes);
+            CreateBorderTypeFields(objectFields, textCodes);
+            CreateExternalSystemsTablesCodeFields(objectFields, textCodes);
+            CreateVatUniqueTypeFields(objectFields, textCodes);
+            CreateVatMandatoryTypeFields(objectFields, textCodes);
+            CreateVatFormatTypeFields(objectFields, textCodes);
+            CreateCustomerSalesNoteFields(objectFields, textCodes);
+            CreateAccountingSystemsSettingFields(objectFields, textCodes);
+            CreateAccountingSystemsSyncStatusFields(objectFields, textCodes);
+            CreateCustomerStatusFields(objectFields, textCodes);
+            CreateBusinessUnitFields(objectFields, textCodes);
+            CreateFeatureAccessLevelFields(objectFields, textCodes);
+            CreateSpecialServicesTypeFields(objectFields, textCodes);
+            CreateRegionFields(objectFields, textCodes);
+            CreatePaymentCurrencyFields(objectFields, textCodes);
+            CreateCustomerSizeFields(objectFields, textCodes);
+            CreateDistributorFields(objectFields, textCodes);
+            CreateAccountingInformationIdentifierFields(objectFields, textCodes);
+            CreateComputingPartnerFields(objectFields, textCodes);
+            CreateComputingPartnerCodeFields(objectFields, textCodes);
+            CreateComputingPartnerTableFields(objectFields, textCodes);
+            CreateComputingPartnerTranslationFields(objectFields, textCodes);
+            CreateBluesnapContractFields(objectFields, textCodes);
+            CreateAWBMessagesCCSTypeFields(objectFields, textCodes);
+            CreateDocumentFolderFields(objectFields, textCodes);
+            CreateManifestStatusFields(objectFields, textCodes);
+            CreateCustomsTransmissionsStatusFields(objectFields, textCodes);
+            CreateInboundEmailFields(objectFields, textCodes);
+            CreateInboundEmailLineFields(objectFields, textCodes);
+            CreateDocumentTypeCategoryFields(objectFields, textCodes);
+            CreateCustomerTenantAccessFields(objectFields, textCodes);
+            CreateCustomerTenantAccessStatusType(objectFields, textCodes);
+            CreateCustomerTenantAccessCardFields(objectFields, textCodes);
+            CreateCustomerTenantAccessRequestFields(objectFields, textCodes);
+            CreateHybridPartnerFields(objectFields, textCodes);
+            CreateBusinessHourFields(objectFields, textCodes);
+            CreateBusinessHoursHolidayFields(objectFields, textCodes);
+            CreateAPILogsFields(objectFields, textCodes);
+            CreatePaymentMethodFields(objectFields, textCodes);
+            CreateAPILogsDataFields(objectFields, textCodes);
+            CreateBatchServicesLogFields(objectFields, textCodes);
+            CreateTenantTypeFields(objectFields, textCodes);
+            CreateQueueMessageMoreDetailsFields(objectFields, textCodes);
+            CreateCustomerTenantAccessCardBatchFields(objectFields, textCodes);
+            CreateParticipantFields(objectFields, textCodes);
+            CreateApiCredintials(objectFields, textCodes);
+            CreateAirlineStatisticsFields(objectFields, textCodes);
+            CreateAWBDescriptionOfGoodsFields(objectFields, textCodes);
+            CreateTransmissionLogFields(objectFields, textCodes);
+            CreateFeaturePackageTypeFields(objectFields, textCodes);
+            CreateTenantManagementLicenseFields(objectFields, textCodes);
+            CreatePackageConnectedPackageFields(objectFields, textCodes);
+            CreateUserLicenseFields(objectFields, textCodes);
+            CreateTenantAddOnFields(objectFields, textCodes);
+            CreateAirlineMessagingRuleFields(objectFields, textCodes);
+            CreateAuomationFields(objectFields, textCodes);
+            CreatePaymentTermDateTypeFields(objectFields, textCodes);
+            CreateCustomerFieldsUpdateSettingFields(objectFields, textCodes);
+            CreateTenantManagmentPrivateLabelsFields(objectFields, textCodes);
+            CreateCreditLimitSettingFields(objectFields, textCodes);
+            CreateAgentSharedManifestFields(objectFields, textCodes);
+            CreateCustomerAccountManagerByProductFields(objectFields, textCodes);
+            CreateCardExternalAccountsByProductFields(objectFields, textCodes);
+            CreateCustomsInterfaceFields(objectFields, textCodes);
+            CreateCustomsInterfaceSettingFields(objectFields, textCodes);
+            CreateFTPDetailFields(objectFields, textCodes);
+            CreateSATInterfaceFields(objectFields, textCodes);
+            CreateSATInterfaceSettingFields(objectFields, textCodes);
+            CreateFBLStockFields(objectFields, textCodes);
+            CreateSATPaymentMethodFields(objectFields, textCodes);
+            CreateCardExternalCodeByCurrencyFields(objectFields, textCodes);
+            CreateLoginPolicyFields(objectFields, textCodes);
+            CreateTenantLoginPolicy(objectFields, textCodes);
+            TwoFactorAuthenticationDeviceFields(objectFields, textCodes);
+            CreateMetodoPagoFields(objectFields, textCodes);
+            CreateBatchServicesDefinitionsFields(objectFields, textCodes);
+            CreateAgentSharedDocumentFields(objectFields, textCodes);
+            CreateChargesExternalAccountsByProductFields(objectFields, textCodes);
+            CreateRegistryDateTypeFields(objectFields, textCodes);
+            CreateUsoCFDIFields(objectFields, textCodes);
+            CreateReportsTemplateFields(objectFields, textCodes);
+            CreateReportsTemplatesVersionFields(objectFields, textCodes);
+            CreateObjectFieldFields(objectFields, textCodes);
+            CreateFilingInboxFields(objectFields, textCodes);
+            CreateFilingInboxAttachmentFields(objectFields, textCodes);
+            CreateFilingInboxAttachmentLogFields(objectFields, textCodes);
+            CreateTasksSchedulerObjectFields(objectFields, textCodes);
+            CreateINTTRASettingFields(objectFields, textCodes);
+            CreateINTTRASettingModeFields(objectFields, textCodes);
+            CreateINTTRABranchRegisteredCarrierFields(objectFields, textCodes);
+            CreateTemperatureUnitFields(objectFields, textCodes);
+            CreateINTTRADocumentTypeFields(objectFields, textCodes);
 
-                    CreateDocumentFilingBackupBatchFields(objectFields, textCodes);
-                    CreateDocumentFilingBackupSettingFields(objectFields, textCodes);
-                    CreateDWHSettingFields(objectFields, textCodes);
+            CreateDocumentFilingBackupBatchFields(objectFields, textCodes);
+            CreateDocumentFilingBackupSettingFields(objectFields, textCodes);
+            CreateDWHSettingFields(objectFields, textCodes);
 
-                    CreateDWObjectTableFields(objectFields, textCodes);
-                    CreateDWObjectFieldFields(objectFields, textCodes);
+            CreateDWObjectTableFields(objectFields, textCodes);
+            CreateDWObjectFieldFields(objectFields, textCodes);
 
-                    //if (!isUpdate)
-                    //{
-                    LoadRolesAndFeatures(0);
-                    CreateMenuButtonsForTenant(0);
-                    //}          
-                }
-                else //this is for logitude the code as it is
-                {
-                    CreateShipmentModelObjectFields(objectFields, textCodes);
-                    CreateQuoteModelObjectFields(objectFields, textCodes);
-                    CreateInvoiceModelObjectFields(objectFields, textCodes);
+            //if (!isUpdate)
+            //{
+            LoadRolesAndFeatures(0);
+            CreateMenuButtonsForTenant(0);
+            //}          
 
-                    CreateFollowUpFields(objectFields, textCodes);
-                    CreateVatTypeFields(objectFields, textCodes);
-                    CreateVatTypePercentageFields(objectFields, textCodes);
-                    CreateCardFields(objectFields, textCodes);
-                    CreateCarrierFields(objectFields, textCodes);
-                    CreateCustomerFields(objectFields, textCodes);
-                    CreateAgentFields(objectFields, textCodes);
-                    CreateCustomAgentFields(objectFields, textCodes);
-                    CreateShippingAgentFields(objectFields, textCodes);
-                    CreateAirlineFields(objectFields, textCodes);
-                    CreateShippingLineFields(objectFields, textCodes);
-                    CreateTruckerFields(objectFields, textCodes);
-                    CreateVendorFields(objectFields, textCodes);
-                    CreateAddressFields(objectFields, textCodes);
-                    CreateContactFields(objectFields, textCodes);
-                    CreateBranchFields(objectFields, textCodes);
-                    CreateChargeTypeFields(objectFields, textCodes);
-                    CreateChargeTypeAccountingFields(objectFields, textCodes);
-                    CreateCountryFields(objectFields, textCodes);
-                    CreateCurrencyFields(objectFields, textCodes);
-                    CreateDepartmentFields(objectFields, textCodes);
-                    CreateExternalDocumentFields();
-                    CreateInternalDocumentFields();
-                    CreateGlobalZoneFields(objectFields, textCodes);
-                    CreateIncotermFields(objectFields, textCodes);
-                    CreatePaymentTermsFields(objectFields, textCodes);
-                    CreatePortFields(objectFields, textCodes);
-                    CreateStatesFields(objectFields, textCodes);
-                    CreateCityFields(objectFields, textCodes);
-                    CreateUserFields(objectFields, textCodes);
-                    CreateVesselFields(objectFields, textCodes);
-                    CreateWareHouseFields(objectFields, textCodes);
-                    CreateTraceEventFields(objectFields, textCodes);
-                    CreateEventTypeFields(objectFields, textCodes);
-                    CreateDocumentTypeFields(objectFields, textCodes);
-                    CreateDocumentsFilingsFields(objectFields, textCodes);
-                    CreatePackageTypeFields(objectFields, textCodes);
-                    CreateWeightUnitFields(objectFields, textCodes);
-                    CreateRateClassFields(objectFields, textCodes);
-                    CreateDimensionsUnitFields(objectFields, textCodes);
-                    CreateAccountingSystemFields(objectFields, textCodes);
-                    CreateAccountSettingFields(objectFields, textCodes);
-                    CreateAWBChargesCodeFields(objectFields, textCodes);
-                    CreateAWBSpecialHandlingCodeFields(objectFields, textCodes);
-                    CreateVolumeUnitFields(objectFields, textCodes);
-                    CreateMesaurmentFields(objectFields, textCodes);
-                    CreateDueTypeFields(objectFields, textCodes);
-                    CreatePrepaidCollectFields(objectFields, textCodes);
-                    CreateContainerTypeFields(objectFields, textCodes);
-                    CreateFollowUpTypeFields(objectFields, textCodes);
-                    CreateRatesTableFields(objectFields, textCodes);
-                    CreateTransportModeFields(objectFields, textCodes);
-                    CreateObjectTableFields(objectFields, textCodes);
-                    CreateEntityStatusFields(objectFields, textCodes);
-                    CreatePartnerTypeFields(objectFields, textCodes);
-                    CreateChargeGroupFields(objectFields, textCodes);
-                    CreateIATACodesFields(objectFields, textCodes);
-                    CreateTemplateFormatFields(objectFields, textCodes);
-                    CreateDocumentTypeTemplateFields(objectFields, textCodes);
-                    CreateDocumentTypeCustomFields(objectFields, textCodes);
-                    CreateDirectionFields(objectFields, textCodes);
-                    CreateSystemDataFields(objectFields, textCodes);
-                    CreateSharedLogisticsFields(objectFields, textCodes);
-                    CreateTenantFields(objectFields, textCodes);
-                    CreateDescriptionOfGoodsFields(objectFields, textCodes);
-                    CreateCounterDefinitionFields(objectFields, textCodes);
-                    CreateTarrifTypesFields(objectFields, textCodes);
-                    CreateTarrifFromToTypesFields(objectFields, textCodes);
-                    CreateTarrifChargesFields(objectFields, textCodes);
-                    CreateTarrifFromTosFields(objectFields, textCodes);
-                    CreateTarrifHeadersFields(objectFields, textCodes);
-                    CreateTarrifStepsFields(objectFields, textCodes);
-                    CreateTextCodeFields(objectFields, textCodes);
-                    CreateMAWBStackFields(objectFields, textCodes);
-                    CreateRestrictionFields(objectFields, textCodes);
-                    CreateRoleFields(objectFields, textCodes);
-                    CreateAccountFields(objectFields, textCodes);
-                    CreateAccountTypesFields(objectFields, textCodes);
-                    CreateRankFields(objectFields, textCodes);
-                    CreateCommunicationLogsFields(objectFields, textCodes);
-                    CreateCommunicationLogTypesFields(objectFields, textCodes);
-                    CreateWarehouseTypesFields(objectFields, textCodes);
-                    CreateCommunicationStatusTypesFields(objectFields, textCodes);
-                    CreatePasswordPoliciesFields(objectFields, textCodes);
-                    CreatePackageFields(objectFields, textCodes);
-                    CreateTenantManagementFields(objectFields, textCodes);
-                    CreateRecurringPeriodFields(objectFields, textCodes);
-                    CreatePaymentChannelFields(objectFields, textCodes);
-                    CreateEventTypeCategoryFields(objectFields, textCodes);
-                    LoadCreateTestFields(objectFields, textCodes);
-                    CreateTermsofUseSignaturesFields(objectFields, textCodes);
-                    CreateAnalyzeQueueFields(objectFields, textCodes);
-                    CreateCreditCardTypeFields(objectFields, textCodes);
-                    CreateErrorLogFields(objectFields, textCodes);
-                    CreateSharedLogisticsInvitationStatusFields(objectFields, textCodes);
-                    CreateAccountingTransferHeaderFields(objectFields, textCodes);
-                    CreateAccountingTransferLineFields(objectFields, textCodes);
-                    CreateAccountingTransferTypeFields(objectFields, textCodes);
-                    CreateMoveTypeFields(objectFields, textCodes);
-                    CreateReportFields(objectFields, textCodes);
-                    CreateCommodityFields(objectFields, textCodes);
-                    CreateLeadSourceFields(objectFields, textCodes);
-                    CreateIndustryFields(objectFields, textCodes);
-                    CreateProductTypeFields(objectFields, textCodes);
-                    CreateProductPeriodFields(objectFields, textCodes);
-                    CreateCustomerProductFields(objectFields, textCodes);
-                    CreateCustomerProductActualDataFields(objectFields, textCodes);
-                    CreateCustomerProductLocationFields(objectFields, textCodes);
-                    CreateCustomerProductLocationActualDataFields(objectFields, textCodes);
-                    CreateCompetitorsFields(objectFields, textCodes);
-                    CreateCustomerAdditionalServiceFields(objectFields, textCodes);
-                    CreateContactDoneMethodFields(objectFields, textCodes);
-                    CreateAdditionalServiceFields(objectFields, textCodes);
-                    CreateLogitudeLeadFields(objectFields, textCodes);
-                    CreateBorderTypeFields(objectFields, textCodes);
-                    CreateExternalSystemsTablesCodeFields(objectFields, textCodes);
-                    CreateVatUniqueTypeFields(objectFields, textCodes);
-                    CreateVatMandatoryTypeFields(objectFields, textCodes);
-                    CreateVatFormatTypeFields(objectFields, textCodes);
-                    CreateCustomerSalesNoteFields(objectFields, textCodes);
-                    CreateAccountingSystemsSettingFields(objectFields, textCodes);
-                    CreateAccountingSystemsSyncStatusFields(objectFields, textCodes);
-                    CreateCustomerStatusFields(objectFields, textCodes);
-                    CreateBusinessUnitFields(objectFields, textCodes);
-                    CreateFeatureAccessLevelFields(objectFields, textCodes);
-                    CreateSpecialServicesTypeFields(objectFields, textCodes);
-                    CreateRegionFields(objectFields, textCodes);
-                    CreatePaymentCurrencyFields(objectFields, textCodes);
-                    CreateCustomerSizeFields(objectFields, textCodes);
-                    CreateDistributorFields(objectFields, textCodes);
-                    CreateAccountingInformationIdentifierFields(objectFields, textCodes);
-                    CreateComputingPartnerFields(objectFields, textCodes);
-                    CreateComputingPartnerCodeFields(objectFields, textCodes);
-                    CreateComputingPartnerTableFields(objectFields, textCodes);
-                    CreateComputingPartnerTranslationFields(objectFields, textCodes);
-                    CreateBluesnapContractFields(objectFields, textCodes);
-                    CreateAWBMessagesCCSTypeFields(objectFields, textCodes);
-                    CreateDocumentFolderFields(objectFields, textCodes);
-                    CreateManifestStatusFields(objectFields, textCodes);
-                    CreateCustomsTransmissionsStatusFields(objectFields, textCodes);
-                    CreateInboundEmailFields(objectFields, textCodes);
-                    CreateInboundEmailLineFields(objectFields, textCodes);
-                    CreateDocumentTypeCategoryFields(objectFields, textCodes);
-                    CreateCustomerTenantAccessFields(objectFields, textCodes);
-                    CreateCustomerTenantAccessStatusType(objectFields, textCodes);
-                    CreateCustomerTenantAccessCardFields(objectFields, textCodes);
-                    CreateCustomerTenantAccessRequestFields(objectFields, textCodes);
-                    CreateHybridPartnerFields(objectFields, textCodes);
-                    CreateBusinessHourFields(objectFields, textCodes);
-                    CreateBusinessHoursHolidayFields(objectFields, textCodes);
-                    CreateAPILogsFields(objectFields, textCodes);
-                    CreatePaymentMethodFields(objectFields, textCodes);
-                    CreateAPILogsDataFields(objectFields, textCodes);
-                    CreateBatchServicesLogFields(objectFields, textCodes);
-                    CreateTenantTypeFields(objectFields, textCodes);
-                    CreateQueueMessageMoreDetailsFields(objectFields, textCodes);
-                    CreateCustomerTenantAccessCardBatchFields(objectFields, textCodes);
-                    CreateParticipantFields(objectFields, textCodes);
-                    CreateApiCredintials(objectFields, textCodes);
-                    CreateAirlineStatisticsFields(objectFields, textCodes);
-                    CreateAWBDescriptionOfGoodsFields(objectFields, textCodes);
-                    CreateTransmissionLogFields(objectFields, textCodes);
-                    CreateFeaturePackageTypeFields(objectFields, textCodes);
-                    CreateTenantManagementLicenseFields(objectFields, textCodes);
-                    CreatePackageConnectedPackageFields(objectFields, textCodes);
-                    CreateUserLicenseFields(objectFields, textCodes);
-                    CreateTenantAddOnFields(objectFields, textCodes);
-                    CreateAirlineMessagingRuleFields(objectFields, textCodes);
-                    CreateAuomationFields(objectFields, textCodes);
-                    CreatePaymentTermDateTypeFields(objectFields, textCodes);
-                    CreateCustomerFieldsUpdateSettingFields(objectFields, textCodes);
-                    CreateTenantManagmentPrivateLabelsFields(objectFields, textCodes);
-                    CreateCreditLimitSettingFields(objectFields, textCodes);
-                    CreateAgentSharedManifestFields(objectFields, textCodes);
-                    CreateCustomerAccountManagerByProductFields(objectFields, textCodes);
-                    CreateCardExternalAccountsByProductFields(objectFields, textCodes);
-                    CreateCustomsInterfaceFields(objectFields, textCodes);
-                    CreateCustomsInterfaceSettingFields(objectFields, textCodes);
-                    CreateFTPDetailFields(objectFields, textCodes);
-                    CreateSATInterfaceFields(objectFields, textCodes);
-                    CreateSATInterfaceSettingFields(objectFields, textCodes);
-                    CreateFBLStockFields(objectFields, textCodes);
-                    CreateSATPaymentMethodFields(objectFields, textCodes);
-                    CreateCardExternalCodeByCurrencyFields(objectFields, textCodes);
-                    CreateLoginPolicyFields(objectFields, textCodes);
-                    CreateTenantLoginPolicy(objectFields, textCodes);
-                    TwoFactorAuthenticationDeviceFields(objectFields, textCodes);
-                    CreateMetodoPagoFields(objectFields, textCodes);
-                    CreateBatchServicesDefinitionsFields(objectFields, textCodes);
-                    CreateAgentSharedDocumentFields(objectFields, textCodes);
-                    CreateChargesExternalAccountsByProductFields(objectFields, textCodes);
-                    CreateRegistryDateTypeFields(objectFields, textCodes);
-                    CreateUsoCFDIFields(objectFields, textCodes);
-                    CreateReportsTemplateFields(objectFields, textCodes);
-                    CreateReportsTemplatesVersionFields(objectFields, textCodes);
-                    CreateObjectFieldFields(objectFields, textCodes);
-                    CreateFilingInboxFields(objectFields, textCodes);
-                    CreateFilingInboxAttachmentFields(objectFields, textCodes);
-                    CreateFilingInboxAttachmentLogFields(objectFields, textCodes);
-                    CreateTasksSchedulerObjectFields(objectFields, textCodes);
-                    CreateINTTRASettingFields(objectFields, textCodes);
-                    CreateINTTRASettingModeFields(objectFields, textCodes);
-                    CreateINTTRABranchRegisteredCarrierFields(objectFields, textCodes);
-                    CreateTemperatureUnitFields(objectFields, textCodes);
-                    CreateINTTRADocumentTypeFields(objectFields, textCodes);
-
-                    CreateDocumentFilingBackupBatchFields(objectFields, textCodes);
-                    CreateDocumentFilingBackupSettingFields(objectFields, textCodes);
-                    CreateDWHSettingFields(objectFields, textCodes);
-
-                    CreateDWObjectTableFields(objectFields, textCodes);
-                    CreateDWObjectFieldFields(objectFields, textCodes);
-
-                    //if (!isUpdate)
-                    //{
-                    LoadRolesAndFeatures(0);
-                    CreateMenuButtonsForTenant(0);
-                    //}          
-                }
-
-            }
             this.ObjectContext.SaveChanges();
         }
 
@@ -2234,7 +2038,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Private Label Short Name",
-                FullFieldLable = "PrivateLabelShortName",
+                FullFieldLable = "Private Label Short Name",
                 FieldName = "PrivateLabelShortName",
                 FieldsDataType = "Text",
                 IsRequired = true,
@@ -2262,7 +2066,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Private Label Name",
-                FullFieldLable = "PrivateLabelName",
+                FullFieldLable = "Private Label Name",
                 FieldName = "PrivateLabelName",
                 FieldsDataType = "Text",
                 IsRequired = true,
@@ -2290,7 +2094,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Private Label Url",
-                FullFieldLable = "PrivateLabelUrl",
+                FullFieldLable = "Private Label Url",
                 FieldName = "PrivateLabelUrl",
                 FieldsDataType = "Text",
                 IsRequired = true,
@@ -2312,7 +2116,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Contact Us Email",
-                FullFieldLable = "ContactUsEmail",
+                FullFieldLable = "Contact Us Email",
                 FieldName = "ContactUsEmail",
                 FieldsDataType = "Text",
                 IsRequired = true,
@@ -2334,7 +2138,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Receive All Statuses",
-                FullFieldLable = "ReceiveAllStatuses",
+                FullFieldLable = "Receive All Statuses",
                 FieldName = "ReceiveAllStatuses",
                 FieldsDataType = "Boolean",
                 IsRequired = true,
@@ -2355,7 +2159,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "In Active",
-                FullFieldLable = "InActive",
+                FullFieldLable = "In Active",
                 FieldName = "InActive",
                 FieldsDataType = "Boolean",
                 IsRequired = true,
@@ -3095,7 +2899,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "Boolean",
                 MaxLength = 1,
                 MinLength = 0,
-                ObjectTableId = BusinessUnitObject.Id,
+                ObjectTableId = ComputingPartnerObjectTable.Id,
                 ObjectTableName = BusinessUnitObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
@@ -4811,8 +4615,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DefaultText = "Session Timeout",
                 FullFieldLable = "SessionTimeout",
                 FieldName = "SessionTimeout",
-                FieldsDataType = "Decimal",
-                DigitsAfterPoint = 2,
+                FieldsDataType = "Integer",
                 Tenant = 0,
                 TextCodeType = "F",
                 DisplayInList = true,
@@ -8156,25 +7959,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Local Address",
-                FullFieldLable = "LocalAddressId",
-                FieldName = "LocalAddressId",
-                FieldsDataType = "LookUp",
-                LookUpTableId = AddressObject.Id,
-                MaxLength = 15,
-                MinLength = 0,
-                ObjectTableId = TenantObject.Id,
-                ObjectTableName = TenantObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                Operator = "Equals",
-                ValidForQuerySection1 = "Tenant",
-                ListPropertyPath = "LocalAddressId",
-                PMPropertyPath = "LocalAddressId",                
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
                 DefaultText = "Address",
                 FullFieldLable = "CompanyAddress",
                 FieldName = "CompanyAddress",
@@ -10531,7 +10315,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 1000,
                 MinLength = 0,
                 ObjectTableId = RatesTableObject.Id,
-                ObjectTableName = RatesTableObject.Name,
+                ObjectTableName = "RatesTableObject.Name",
                 ObjectTablePlural = "RatesTables",
                 ObjectTableSingular = "RatesTable",
                 Tenant = 0,
@@ -11641,9 +11425,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowVoidARI",
                 PMPropertyPath = "AllowVoidARI",
-                Operator = "Equals",
-                HelpTextCode = "AllowVoidARI",
-                HelpTextDefaultText = "To activate VOID action for AR Invoice",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11664,9 +11446,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowVoidARP",
                 PMPropertyPath = "AllowVoidARP",
-                Operator = "Equals",
-                HelpTextCode = "AllowVoidARP",
-                HelpTextDefaultText = "To activate VOID action for AR Payment",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11687,9 +11467,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowVoidAPI",
                 PMPropertyPath = "AllowVoidAPI",
-                Operator = "Equals",
-                HelpTextCode = "AllowVoidAPI",
-                HelpTextDefaultText = "To activate VOID option in AP invoices",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11710,9 +11488,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowVoidAPP",
                 PMPropertyPath = "AllowVoidAPP",
-                Operator = "Equals",
-                HelpTextCode = "AllowVoidAPP",
-                HelpTextDefaultText = "To activate VOID option in AP Payments",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11733,14 +11509,12 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowManualInvoiceNumber",
                 PMPropertyPath = "AllowManualInvoiceNumber",
-                Operator = "Equals",
-                HelpTextCode = "AllowManualInvoiceNumber",
-                HelpTextDefaultText = "To manage an external invoice number to be entered manually in the Invoice",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Bill To VAT is required",
+                DefaultText = "Bill to VAT is required",
                 FullFieldLable = "IsVatNumberMandatoryInAR",
                 FieldName = "IsVatNumberMandatoryInAR",
                 FieldsDataType = "Boolean",
@@ -11751,19 +11525,17 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 ListFieldLable = "IsVatNumberMandatoryInAR",
-                ListLableDefaultText = "Bill To VAT is required",
+                ListLableDefaultText = "Bill to VAT is required",
                 DisplayInList = true,
                 CanFilter = true,
                 ListPropertyPath = "IsVatNumberMandatoryInAR",
                 PMPropertyPath = "IsVatNumberMandatoryInAR",
-                Operator = "Equals",
-                HelpTextCode = "IsVatNumberMandatoryInAR",
-                HelpTextDefaultText = "Mandatory Bill to VAT number in AR Invoice & AR Payment",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Vendor VAT is required",
+                DefaultText = "Bill to VAT is required",
                 FullFieldLable = "IsVatNumberMandatoryInAP",
                 FieldName = "IsVatNumberMandatoryInAP",
                 FieldsDataType = "Boolean",
@@ -11774,14 +11546,12 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 ListFieldLable = "IsVatNumberMandatoryInAP",
-                ListLableDefaultText = "Vendor VAT is required",
+                ListLableDefaultText = "Bill to VAT is required",
                 DisplayInList = true,
                 CanFilter = true,
                 ListPropertyPath = "IsVatNumberMandatoryInAP",
                 PMPropertyPath = "IsVatNumberMandatoryInAP",
-                Operator = "Equals",
-                HelpTextCode = "IsVatNumberMandatoryInAP",
-                HelpTextDefaultText = "Mandatory Bill to VAT number in AP Invoices and AP Payments",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11802,9 +11572,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "IsChronologicalDates",
                 PMPropertyPath = "IsChronologicalDates",
-                Operator = "Equals",
-                HelpTextCode = "IsChronologicalDates",
-                HelpTextDefaultText = "Avoid issuing an invoice with date less than the date of the previous issued invoice",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11825,9 +11593,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowMinusInvoicelines",
                 PMPropertyPath = "AllowMinusInvoicelines",
-                Operator = "Equals",
-                HelpTextCode = "AllowMinusInvoicelines",
-                HelpTextDefaultText = "Allow invoices including negative charges amounts",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11845,9 +11611,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowPositiveAmountsInTheCreditNote",
                 PMPropertyPath = "AllowPositiveAmountsInTheCreditNote",
-                Operator = "Equals",
-                HelpTextCode = "AllowPositiveAmountsInTheCreditNote",
-                HelpTextDefaultText = "Allow credit notes including positive charges amounts",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11868,9 +11632,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowClosureWithoutPayables",
                 PMPropertyPath = "AllowClosureWithoutPayables",
-                Operator = "Equals",
-                HelpTextCode = "AllowClosureWithoutPayables",
-                HelpTextDefaultText = "Allows to accounting close shipments with open payables lines",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11957,9 +11719,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "IsSingleTaxPerInvoice",
                 PMPropertyPath = "IsSingleTaxPerInvoice",
-                Operator = "Equals",
-                HelpTextCode = "IsSingleTaxPerInvoice",
-                HelpTextDefaultText = "You are limited to use one VAT type per invoice",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -12124,9 +11884,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableMultiPercentageVATTypes",
                 PMPropertyPath = "EnableMultiPercentageVATTypes",
-                Operator = "Equals",
-                HelpTextCode = "EnableMultiPercentageVATTypes",
-                HelpTextDefaultText = "Allows creating combined VAT types from two or more VAT Types with different percentages",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -12144,9 +11902,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "NotifyPastDateOnInvoiceEdit",
                 PMPropertyPath = "NotifyPastDateOnInvoiceEdit",
-                Operator = "Equals",
-                HelpTextCode = "NotifyPastDateOnInvoiceEdit",
-                HelpTextDefaultText = "Alert in draft or open constituent invoice if the date should be updated to the current day",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -12164,9 +11920,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableMultiRateAPInvoices",
                 PMPropertyPath = "EnableMultiRateAPInvoices",
-                Operator = "Equals",
-                HelpTextCode = "EnableMultiRateAPInvoices",
-                HelpTextDefaultText = "Allows recording AP invoice with different exchange rates",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -12202,9 +11956,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableMultiCurrencyARPayments",
                 PMPropertyPath = "EnableMultiCurrencyARPayments",
-                Operator = "Equals",
-                HelpTextCode = "EnableMultiCurrencyARPayments",
-                HelpTextDefaultText = "Allows closing AR invoices in foreign currency with AR Payment in local currency or vice versa",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -12222,9 +11974,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableMultiCurrencyAPPayments",
                 PMPropertyPath = "EnableMultiCurrencyAPPayments",
-                Operator = "Equals",
-                HelpTextCode = "EnableMultiCurrencyAPPayments",
-                HelpTextDefaultText = "Allows closing AP invoices in foreign currencies with payment in local currency or vice versa",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -12242,9 +11992,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableNegativeOffsetARPayments",
                 PMPropertyPath = "EnableNegativeOffsetARPayments",
-                Operator = "Equals",
-                HelpTextCode = "EnableNegativeOffsetARPayments",
-                HelpTextDefaultText = "Allows recording AR Payments in negative amounts using payment method \"Offset\"",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -12262,9 +12010,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableNegativeOffsetAPPayments",
                 PMPropertyPath = "EnableNegativeOffsetAPPayments",
-                Operator = "Equals",
-                HelpTextCode = "EnableNegativeOffsetAPPayments",
-                HelpTextDefaultText = "Allows recording payables payments in negative amounts using payment method is Offset",
+                Operator = "Equals"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             this.ObjectContext.SaveChanges();
@@ -15097,7 +14843,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Support e-mail",
-                FullFieldLable = "Supportemail",
+                FullFieldLable = "Support e-mail",
                 FieldName = "Supportemail",
                 FieldsDataType = "Text",
                 IsCustom = false,
@@ -15521,7 +15267,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "ContactPosition",
                 PMPropertyPath = "ContactPosition",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-            
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Signature",
@@ -17941,7 +17688,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInLookUpIndex = 1,
                 DisplayInSearchWindowFiltersIndex = 1,
                 DisplayInSearchWindowListIndex = 1,
-                FullFieldLable = "EnglishName",
+                FullFieldLable = "English Name",
                 FieldName = "EnglishName",
                 FieldsDataType = "Text",
                 IsRequired = true,
@@ -18801,135 +18548,6 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Activation Date",
-                FullFieldLable = "ActivationDate",
-                FieldName = "ActivationDate",
-                FieldsDataType = "DateTime",
-                MaxLength = 1,
-                MinLength = 0,
-                DisplayInList = true,
-                ObjectTableId = CustomersObject.Id,
-                ObjectTableName = CustomersObject.Name,
-                ValidForQuerySection1 = CustomersObject.Name,
-                ListFieldLable = "ActivationDateLabel",
-                ListLableDefaultText = "Activation Date",
-                Tenant = 0,
-                TextCodeType = "F",
-                Operator = "StartsWith",
-                ListPropertyPath = "ActivationDate",
-                PMPropertyPath = "ActivationDate"
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Inactive Date",
-                FullFieldLable = "InactiveDate",
-                FieldName = "InactiveDate",
-                FieldsDataType = "DateTime",
-                MaxLength = 1,
-                MinLength = 0,
-                DisplayInList = true,
-                ObjectTableId = CustomersObject.Id,
-                ObjectTableName = CustomersObject.Name,
-                ValidForQuerySection1 = CustomersObject.Name,
-                ListFieldLable = "InactiveDateLabel",
-                ListLableDefaultText = "Inactive Date",
-                Tenant = 0,
-                TextCodeType = "F",
-                Operator = "StartsWith",
-                ListPropertyPath = "InactiveDate",
-                PMPropertyPath = "InactiveDate"
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Activation Request Date",
-                FullFieldLable = "ActivationRequestDate",
-                FieldName = "ActivationRequestDate",
-                FieldsDataType = "DateTime",
-                MaxLength = 1,
-                MinLength = 0,
-                DisplayInList = true,
-                ObjectTableId = CustomersObject.Id,
-                ObjectTableName = CustomersObject.Name,
-                ValidForQuerySection1 = CustomersObject.Name,
-                ListFieldLable = "ActivationRequestDateLabel",
-                ListLableDefaultText = "Activation Request Date",
-                Tenant = 0,
-                TextCodeType = "F",
-                Operator = "StartsWith",
-                ListPropertyPath = "ActivationRequestDate",
-                PMPropertyPath = "ActivationRequestDate"
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Activated by",
-                FullFieldLable = "ActivatedByUserName",
-                FieldName = "ActivatedByUserName",
-                FieldsDataType = "Text",
-                MaxLength = 60,
-                MinLength = 0,
-                ObjectTableId = CustomersObject.Id,
-                ObjectTableName = CustomersObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                DisplayInList = true,
-                ListFieldLable = "ActivatedByUserNameLabel",
-                ListLableDefaultText = "Activated by",
-                ValidForQuerySection1 = CustomersObject.Name,
-                Operator = "Equals",
-                ListPropertyPath = "ActivatedByUserName",
-                PMPropertyPath = "ActivatedByUserName",
-                DisplayInEntityVariables = false,
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Set as Inactive by",
-                FullFieldLable = "SetAsInactiveByName",
-                FieldName = "SetAsInactiveByName",
-                FieldsDataType = "Text",
-                MaxLength = 60,
-                MinLength = 0,
-                ObjectTableId = CustomersObject.Id,
-                ObjectTableName = CustomersObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                DisplayInList = true,
-                ListFieldLable = "SetAsInactiveByNameLabel",
-                ListLableDefaultText = "Set as Inactive by",
-                ValidForQuerySection1 = CustomersObject.Name,
-                Operator = "Equals",
-                ListPropertyPath = "SetAsInactiveByName",
-                PMPropertyPath = "SetAsInactiveByName",
-                DisplayInEntityVariables = false,
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Activation Requested by",
-                FullFieldLable = "ActivationRequestedByUserName",
-                FieldName = "ActivationRequestedByUserName",
-                FieldsDataType = "Text",
-                MaxLength = 60,
-                MinLength = 0,
-                ObjectTableId = CustomersObject.Id,
-                ObjectTableName = CustomersObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                DisplayInList = true,
-                ListFieldLable = "ActivationRequestedByUserNameLabel",
-                ListLableDefaultText = "Activation Requested by",
-                ValidForQuerySection1 = CustomersObject.Name,
-                Operator = "Equals",
-                ListPropertyPath = "ActivationRequestedByUserName",
-                PMPropertyPath = "ActivationRequestedByUserName",
-                DisplayInEntityVariables = false,
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
                 DefaultText = "Metodo Pago",
                 DisplayOnLookUp = false,
                 FullFieldLable = "MetodoPagoCode",
@@ -18951,6 +18569,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "MetodoPagoCode",
                 PMPropertyPath = "MetodoPagoCode",
                 HelpTextDefaultText = "Way to Pay:\n-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice\n-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice",
+
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -18977,6 +18596,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "UsoCFDICode",
                 HelpTextDefaultText = "Use of Digital Fiscal Receipt through Internet"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
@@ -20117,7 +19737,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "State",
-                FullFieldLable = "StateId_Potential",
+                FullFieldLable = "State_Potential",
                 FieldName = "StateId_Potential",
                 FieldsDataType = "LookUp",
                 IsCustom = false,
@@ -20654,7 +20274,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowListIndex = 2,
                 DisplayInSearchWindowFilters = true,
                 DisplayInSearchWindowFiltersIndex = 0,
-                FullFieldLable = "EnglishName",
+                FullFieldLable = "Name",
                 FullLocalDefaultText = "שם אנגלית",
                 FieldName = "EnglishName",
                 FieldsDataType = "Text",
@@ -20688,6 +20308,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowListIndex = 1,
                 DisplayInSearchWindowFilters = true,
                 DisplayInSearchWindowFiltersIndex = 0,
+
                 FullFieldLable = "LocalName",
                 FullLocalDefaultText = "שם מקומי",
                 FieldName = "LocalName",
@@ -20702,6 +20323,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 ListFieldLable = "LocalNameListLable",
+
                 ListLableDefaultText = "Local Name",
                 DisplayInList = true,
                 ValidForQuerySection1 = "Customer",
@@ -20841,7 +20463,58 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "Website",
                 PMPropertyPath = "Website"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-            
+
+            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            //{
+            //    DefaultText = "Bill To",
+            //    DisplayOnLookUp = false,
+            //    FullFieldLable = "BillToId",
+            //    FieldName = "BillToId",
+            //    FieldsDataType = "LookUp",
+            //    IsCustom = false,
+            //    Isoveridden = false,
+            //    IsRequired = false,
+            //    MaxLength = 15,
+            //    MinLength = 0,
+            //    ObjectTableId = CustomersObject.Id,
+            //    ObjectTableName = CustomersObject.Name,
+            //    Tenant = 0,
+            //    TextCodeType = "F",
+            //    LookUpTableId = CardsObject.Id,
+            //    ListFieldLable = "BillToIdListLable",
+            //    ListLableDefaultText = "Bill To",
+            //    DisplayInList = false,
+            //    CanFilter = false,
+            //    ValidForQuerySection1 = CustomersObject.Name,
+            //    Operator = "Equals",
+            //    ListPropertyPath = "BillToId",
+            //    PMPropertyPath = "BillToId",
+            //}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            //{
+            //    DefaultText = "Bill To",
+            //    FullFieldLable = "BillToName",
+            //    FieldName = "BillToName",
+            //    FieldsDataType = "Text",
+            //    IsCustom = false,
+            //    Isoveridden = false,
+            //    IsRequired = false,
+            //    MaxLength = 100,
+            //    MinLength = 0,
+            //    ObjectTableId = CustomersObject.Id,
+            //    ObjectTableName = CustomersObject.Name,
+            //    Tenant = 0,
+            //    TextCodeType = "F",
+            //    ListFieldLable = "BillToNameListLable",
+            //    ListLableDefaultText = "Bill To",
+            //    DisplayInList = false,
+            //    ValidForQuerySection1 = CustomersObject.Name,
+            //    Operator = "StartsWith",
+            //    ListPropertyPath = "BillToName",
+            //    PMPropertyPath = "BillToName",
+            //}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "VAT No.",
@@ -20956,7 +20629,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 DefaultText = "Payment Term Name",
                 DisplayOnLookUp = false,
-                FullFieldLable = "PaymentTermEnglishName",
+                FullFieldLable = "PaymentTermName",
                 FieldName = "PaymentTermEnglishName",
                 FieldsDataType = "Text",
                 IsCustom = false,
@@ -20990,7 +20663,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 IsCustom = false,
                 Isoveridden = false,
                 IsRequired = false,
-                MaxLength = 60,
+                MaxLength = 40,
                 MinLength = 0,
                 ObjectTableId = CustomersObject.Id,
                 ObjectTableName = CustomersObject.Name,
@@ -21222,9 +20895,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListFieldLable = "CityNameListLable",
                 ListLableDefaultText = "City",
                 DisplayInList = true,
-                CanFilter = true,
+                CanFilter = false,
+                ValidForQuerySection1 = CustomersObject.Name,
                 Operator = "StartsWith",
-                ValidForQuerySection1 = CustomersObject.Name,                
                 ListPropertyPath = "CityName",
                 PMPropertyPath = "CityName"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
@@ -21559,7 +21232,57 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "IBANNumber",
                 PMPropertyPath = "IBANNumber",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-            
+
+            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            //{
+            //    DefaultText = "Country",
+            //    FullFieldLable = "MainAddressCountryId",
+            //    FieldName = "MainAddressCountryId",
+            //    FieldsDataType = "LookUp",
+            //    IsRequired = false,
+            //    MaxLength = 15,
+            //    MinLength = 0,
+            //    ObjectTableId = CustomersObject.Id,
+            //    ObjectTableName = CustomersObject.Name,
+            //    Tenant = 0,
+            //    TextCodeType = "F",
+            //    ListFieldLable = "MainAddressCountryIdListLable",
+            //    ListLableDefaultText = "Country",
+            //    DisplayInList = false,
+            //    ValidForQuerySection1 = "Customer",
+            //    LookUpTableId = CountriesObject.Id,
+            //    CanFilter = true,
+            //    IsCustomFilter = true,
+            //    Operator = "StartsWith",
+            //    ListPropertyPath = "DummyMainAddressCountryId",
+            //    PMPropertyPath = "DummyMainAddressCountryId",
+            //    DisplayInEntityVariables = false,
+            //}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            //{
+            //    DefaultText = "Country",
+            //    FullFieldLable = "MainAddressCountryName",
+            //    FieldName = "MainAddressCountryName",
+            //    FieldsDataType = "Text",
+            //    IsRequired = false,
+            //    MaxLength = 120,
+            //    MinLength = 0,
+            //    ObjectTableId = CustomersObject.Id,
+            //    ObjectTableName = CustomersObject.Name,
+            //    Tenant = 0,
+            //    TextCodeType = "F",
+            //    ListFieldLable = "MainAddressCountryNameListLable",
+            //    ListLableDefaultText = "Country",
+            //    DisplayInList = true,
+            //    ValidForQuerySection1 = "Customer",
+            //    CanFilter = false,
+            //    Operator = "StartsWith",
+            //    ListPropertyPath = "DummyMainAddressCountryName",
+            //    PMPropertyPath = "DummyMainAddressCountryName",
+            //    DisplayInEntityVariables = false,
+            //}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Is Credit Limit Enabled",
@@ -21650,7 +21373,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "PaymentMethodCode",
                 HelpTextDefaultText = "Payment Method"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-            
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "SAT Foreign RFC",
@@ -21672,7 +21396,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SATForeignRFC",
                 PMPropertyPath = "SATForeignRFC"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-                       
+
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Zip Code",
@@ -21720,7 +21446,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "Address1",
                 ValidForQuerySection1 = "Customer",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-            
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Address2",
@@ -21744,7 +21471,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "Address2",
                 ValidForQuerySection1 = "Customer",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-                       
+
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Phone",
@@ -21768,7 +21497,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "Phone",
                 ValidForQuerySection1 = "Customer",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-            
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Country",
@@ -21792,7 +21522,32 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "CountryName",
                 ValidForQuerySection1 = "Customer",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-            
+
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                IsCustom = false,
+                Isoveridden = false,
+                IsRequired = false,
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = CustomersObject.Id,
+                ObjectTableName = CustomersObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityName",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                ListPropertyPath = "CityName",
+                ValidForQuerySection1 = "Customer",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Competitor",
@@ -21818,6 +21573,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "CompetitorFields",
                 DisplayInEntityVariables = false,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
 
             this.ObjectContext.SaveChanges();
         }
@@ -22790,7 +22547,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "Address2",
                 ValidForQuerySection1 = "Agent",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-                       
+
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Phone",
@@ -22815,27 +22574,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ValidForQuerySection1 = "Agent",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Country",
-                FullFieldLable = "CountryId",
-                FieldName = "CountryId",
-                FieldsDataType = "LookUp",
-                LookUpTableId = CountriesObject.Id,
-                MaxLength = 15,
-                MinLength = 0,
-                ObjectTableId = AgentObject.Id,
-                ObjectTableName = AgentObject.Name,
-                ValidForQuerySection1 = AgentObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                CanFilter = true,
-                IsCustomFilter = true,
-                Operator = "Equals",
-                ListPropertyPath = "CountryId",
-                PMPropertyPath = "CountryId",
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-            
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Country",
@@ -22843,7 +22582,10 @@ namespace WebFreight.Web.MetaDataUpdate
                 FullFieldLable = "CountryName",
                 FieldName = "CountryName",
                 FieldsDataType = "Text",
-                MaxLength = 120,
+                IsCustom = false,
+                Isoveridden = false,
+                IsRequired = false,
+                MaxLength = 25,
                 MinLength = 0,
                 ObjectTableId = AgentObject.Id,
                 ObjectTableName = AgentObject.Name,
@@ -22852,6 +22594,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListFieldLable = "CountryName",
                 ListLableDefaultText = "Country",
                 DisplayInList = true,
+                CanFilter = true,
                 ListPropertyPath = "CountryName",
                 ValidForQuerySection1 = "Agent",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
@@ -22863,6 +22606,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 FullFieldLable = "CityName",
                 FieldName = "CityName",
                 FieldsDataType = "Text",
+                IsCustom = false,
+                Isoveridden = false,
+                IsRequired = false,
                 MaxLength = 25,
                 MinLength = 0,
                 ObjectTableId = AgentObject.Id,
@@ -22873,7 +22619,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListLableDefaultText = "City",
                 DisplayInList = true,
                 CanFilter = true,
-                Operator = "StartsWith",
                 ListPropertyPath = "CityName",
                 ValidForQuerySection1 = "Agent",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
@@ -22885,71 +22630,6 @@ namespace WebFreight.Web.MetaDataUpdate
         #region CreateCustomAgentFields()
         private void CreateCustomAgentFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Country",
-                FullFieldLable = "CountryId",
-                FieldName = "CountryId",
-                FieldsDataType = "LookUp",
-                LookUpTableId = CountriesObject.Id,
-                MaxLength = 15,
-                MinLength = 0,
-                ObjectTableId = CustomAgentsObject.Id,
-                ObjectTableName = CustomAgentsObject.Name,
-                ValidForQuerySection1 = CustomAgentsObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                CanFilter = true,
-                IsCustomFilter = true,
-                Operator = "Equals",
-                ListPropertyPath = "CountryId",
-                PMPropertyPath = "CountryId",
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Country",
-                FullFieldLable = "CountryName",
-                FieldName = "CountryName",
-                FieldsDataType = "Text",
-                ObjectTableId = CustomAgentsObject.Id,
-                ObjectTableName = CustomAgentsObject.Name,
-                Tenant = 0,
-                MaxLength = 120,
-                MinLength = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CountryNameListLabel",
-                ListLableDefaultText = "Country",
-                DisplayInList = true,
-                ValidForQuerySection1 = CustomAgentsObject.Name,
-                ListPropertyPath = "CountryName",
-                PMPropertyPath = "CountryName",
-                DisplayInEntityVariables = false,
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "City",
-                DisplayOnLookUp = false,
-                FullFieldLable = "CityName",
-                FieldName = "CityName",
-                FieldsDataType = "Text",
-                MaxLength = 25,
-                MinLength = 0,
-                ObjectTableId = CustomAgentsObject.Id,
-                ObjectTableName = CustomAgentsObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CityNameListLable",
-                ListLableDefaultText = "City",
-                DisplayInList = true,
-                CanFilter = true,
-                Operator = "StartsWith",
-                ValidForQuerySection1 = CustomAgentsObject.Name,
-                ListPropertyPath = "CityName",
-                PMPropertyPath = "CityName"
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Primary Contact Name",
@@ -23680,71 +23360,6 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Country",
-                FullFieldLable = "CountryId",
-                FieldName = "CountryId",
-                FieldsDataType = "LookUp",
-                LookUpTableId = CountriesObject.Id,
-                MaxLength = 15,
-                MinLength = 0,
-                ObjectTableId = ShippingAgentsObject.Id,
-                ObjectTableName = ShippingAgentsObject.Name,
-                ValidForQuerySection1 = ShippingAgentsObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                CanFilter = true,
-                IsCustomFilter = true,
-                Operator = "Equals",
-                ListPropertyPath = "CountryId",
-                PMPropertyPath = "CountryId",
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Country",
-                FullFieldLable = "CountryName",
-                FieldName = "CountryName",
-                FieldsDataType = "Text",
-                ObjectTableId = ShippingAgentsObject.Id,
-                ObjectTableName = ShippingAgentsObject.Name,
-                Tenant = 0,
-                MaxLength = 120,
-                MinLength = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CountryNameListLabel",
-                ListLableDefaultText = "Country",
-                DisplayInList = true,
-                ValidForQuerySection1 = ShippingAgentsObject.Name,
-                ListPropertyPath = "CountryName",
-                PMPropertyPath = "CountryName",
-                DisplayInEntityVariables = false,
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "City",
-                DisplayOnLookUp = false,
-                FullFieldLable = "CityName",
-                FieldName = "CityName",
-                FieldsDataType = "Text",
-                MaxLength = 25,
-                MinLength = 0,
-                ObjectTableId = ShippingAgentsObject.Id,
-                ObjectTableName = ShippingAgentsObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CityNameListLable",
-                ListLableDefaultText = "City",
-                DisplayInList = true,
-                CanFilter = true,
-                Operator = "StartsWith",
-                ValidForQuerySection1 = ShippingAgentsObject.Name,
-                ListPropertyPath = "CityName",
-                PMPropertyPath = "CityName"
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -23898,7 +23513,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "PaymentMethodCode",
                 HelpTextDefaultText = "Payment Method"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-            
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Business Area",
@@ -24541,71 +24157,6 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Country",
-                FullFieldLable = "CountryId",
-                FieldName = "CountryId",
-                FieldsDataType = "LookUp",
-                LookUpTableId = CountriesObject.Id,
-                MaxLength = 15,
-                MinLength = 0,
-                ObjectTableId = AirlinesObject.Id,
-                ObjectTableName = AirlinesObject.Name,
-                ValidForQuerySection1 = AirlinesObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                CanFilter = true,
-                IsCustomFilter = true,
-                Operator = "Equals",
-                ListPropertyPath = "CountryId",
-                PMPropertyPath = "CountryId",
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Country",
-                FullFieldLable = "CountryName",
-                FieldName = "CountryName",
-                FieldsDataType = "Text",
-                ObjectTableId = AirlinesObject.Id,
-                ObjectTableName = AirlinesObject.Name,
-                Tenant = 0,
-                MaxLength = 120,
-                MinLength = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CountryNameListLabel",
-                ListLableDefaultText = "Country",
-                DisplayInList = true,
-                ValidForQuerySection1 = AirlinesObject.Name,
-                ListPropertyPath = "CountryName",
-                PMPropertyPath = "CountryName",
-                DisplayInEntityVariables = false,
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "City",
-                DisplayOnLookUp = false,
-                FullFieldLable = "CityName",
-                FieldName = "CityName",
-                FieldsDataType = "Text",
-                MaxLength = 25,
-                MinLength = 0,
-                ObjectTableId = AirlinesObject.Id,
-                ObjectTableName = AirlinesObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CityNameListLable",
-                ListLableDefaultText = "City",
-                DisplayInList = true,
-                CanFilter = true,
-                Operator = "StartsWith",
-                ValidForQuerySection1 = AirlinesObject.Name,
-                ListPropertyPath = "CityName",
-                PMPropertyPath = "CityName"
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -24759,7 +24310,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SATForeignRFC",
                 PMPropertyPath = "SATForeignRFC"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-            
+
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Business Area",
@@ -26112,71 +25665,6 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Country",
-                FullFieldLable = "CountryId",
-                FieldName = "CountryId",
-                FieldsDataType = "LookUp",
-                LookUpTableId = CountriesObject.Id,
-                MaxLength = 15,
-                MinLength = 0,
-                ObjectTableId = ShippingLinesObject.Id,
-                ObjectTableName = ShippingLinesObject.Name,
-                ValidForQuerySection1 = ShippingLinesObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                CanFilter = true,
-                IsCustomFilter = true,
-                Operator = "Equals",
-                ListPropertyPath = "CountryId",
-                PMPropertyPath = "CountryId",
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Country",
-                FullFieldLable = "CountryName",
-                FieldName = "CountryName",
-                FieldsDataType = "Text",
-                ObjectTableId = ShippingLinesObject.Id,
-                ObjectTableName = ShippingLinesObject.Name,
-                Tenant = 0,
-                MaxLength = 120,
-                MinLength = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CountryNameListLabel",
-                ListLableDefaultText = "Country",
-                DisplayInList = true,
-                ValidForQuerySection1 = ShippingLinesObject.Name,
-                ListPropertyPath = "CountryName",
-                PMPropertyPath = "CountryName",
-                DisplayInEntityVariables = false,
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "City",
-                DisplayOnLookUp = false,
-                FullFieldLable = "CityName",
-                FieldName = "CityName",
-                FieldsDataType = "Text",
-                MaxLength = 25,
-                MinLength = 0,
-                ObjectTableId = ShippingLinesObject.Id,
-                ObjectTableName = ShippingLinesObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CityNameListLable",
-                ListLableDefaultText = "City",
-                DisplayInList = true,
-                CanFilter = true,
-                Operator = "StartsWith",
-                ValidForQuerySection1 = ShippingLinesObject.Name,
-                ListPropertyPath = "CityName",
-                PMPropertyPath = "CityName"
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -27093,71 +26581,6 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Country",
-                FullFieldLable = "CountryId",
-                FieldName = "CountryId",
-                FieldsDataType = "LookUp",
-                LookUpTableId = CountriesObject.Id,
-                MaxLength = 15,
-                MinLength = 0,
-                ObjectTableId = TruckersObject.Id,
-                ObjectTableName = TruckersObject.Name,
-                ValidForQuerySection1 = TruckersObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                CanFilter = true,
-                IsCustomFilter = true,
-                Operator = "Equals",
-                ListPropertyPath = "CountryId",
-                PMPropertyPath = "CountryId",
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Country",
-                FullFieldLable = "CountryName",
-                FieldName = "CountryName",
-                FieldsDataType = "Text",
-                ObjectTableId = TruckersObject.Id,
-                ObjectTableName = TruckersObject.Name,
-                Tenant = 0,
-                MaxLength = 120,
-                MinLength = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CountryNameListLabel",
-                ListLableDefaultText = "Country",
-                DisplayInList = true,
-                ValidForQuerySection1 = TruckersObject.Name,
-                ListPropertyPath = "CountryName",
-                PMPropertyPath = "CountryName",
-                DisplayInEntityVariables = false,
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "City",
-                DisplayOnLookUp = false,
-                FullFieldLable = "CityName",
-                FieldName = "CityName",
-                FieldsDataType = "Text",
-                MaxLength = 25,
-                MinLength = 0,
-                ObjectTableId = TruckersObject.Id,
-                ObjectTableName = TruckersObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CityNameListLable",
-                ListLableDefaultText = "City",
-                DisplayInList = true,
-                CanFilter = true,
-                Operator = "StartsWith",
-                ValidForQuerySection1 = TruckersObject.Name,
-                ListPropertyPath = "CityName",
-                PMPropertyPath = "CityName"
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -27269,7 +26692,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "UsoCFDICode",
                 HelpTextDefaultText = "Use of Digital Fiscal Receipt through Internet"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-            
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Forma Pago",
@@ -27288,7 +26712,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "PaymentMethodCode",
                 HelpTextDefaultText = "Payment Method"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-                       
+
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "SAT Foreign RFC",
@@ -27310,7 +26736,10 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SATForeignRFC",
                 PMPropertyPath = "SATForeignRFC"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-                                 
+
+
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Business Area",
@@ -27634,7 +27063,30 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "InActive",
                 PMPropertyPath = "InActive"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-            
+
+            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            //{
+            //    DefaultText = "Inactive Trucker",
+            //    DisplayOnLookUp = false,
+            //    FieldLable = "InActive",
+            //    FieldName = "InActive",
+            //    FieldsDataType = "Boolean",
+            //    IsCustom = false,
+            //    Isoveridden = false,
+            //    IsRequired = false,
+            //    MaxLength = 15,
+            //    MinLength = 0,
+            //    ObjectTableId = TruckersObject.Id,
+            //    ObjectTableName = TruckersObject.Name,
+            //    Tenant = 0,
+            //    TextCodeType = "F",
+            //    ListFieldLable = "InActiveListLable",
+            //    ListLableDefaultText = "Inactive",
+            //    DisplayInList = true,
+            //    CanFilter = true,
+            //    Operator = "StartsWith"
+            //}, TextCodeRepository, ObjectFieldsRepository,objectFields,textCodes);
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "VAT No.",
@@ -27935,7 +27387,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "IBANNumber",
                 PMPropertyPath = "IBANNumber",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-            
+
+
             this.ObjectContext.SaveChanges();
         }
         #endregion
@@ -27943,71 +27396,6 @@ namespace WebFreight.Web.MetaDataUpdate
         #region CreateVendorFields()
         private void CreateVendorFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Country",
-                FullFieldLable = "CountryId",
-                FieldName = "CountryId",
-                FieldsDataType = "LookUp",
-                LookUpTableId = CountriesObject.Id,
-                MaxLength = 15,
-                MinLength = 0,
-                ObjectTableId = VendorObject.Id,
-                ObjectTableName = VendorObject.Name,
-                ValidForQuerySection1 = VendorObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                CanFilter = true,
-                IsCustomFilter = true,
-                Operator = "Equals",
-                ListPropertyPath = "CountryId",
-                PMPropertyPath = "CountryId",
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Country",
-                FullFieldLable = "CountryName",
-                FieldName = "CountryName",
-                FieldsDataType = "Text",
-                ObjectTableId = VendorObject.Id,
-                ObjectTableName = VendorObject.Name,
-                Tenant = 0,
-                MaxLength = 120,
-                MinLength = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CountryNameListLabel",
-                ListLableDefaultText = "Country",
-                DisplayInList = true,
-                ValidForQuerySection1 = VendorObject.Name,
-                ListPropertyPath = "CountryName",
-                PMPropertyPath = "CountryName",
-                DisplayInEntityVariables = false,
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "City",
-                DisplayOnLookUp = false,
-                FullFieldLable = "CityName",
-                FieldName = "CityName",
-                FieldsDataType = "Text",
-                MaxLength = 25,
-                MinLength = 0,
-                ObjectTableId = VendorObject.Id,
-                ObjectTableName = VendorObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CityNameListLable",
-                ListLableDefaultText = "City",
-                DisplayInList = true,
-                CanFilter = true,
-                Operator = "StartsWith",
-                ValidForQuerySection1 = VendorObject.Name,
-                ListPropertyPath = "CityName",
-                PMPropertyPath = "CityName"
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Primary Contact Name",
@@ -28161,7 +27549,10 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SATForeignRFC",
                 PMPropertyPath = "SATForeignRFC"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-            
+
+
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Business Area",
@@ -28736,71 +28127,6 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Country",
-                FullFieldLable = "CountryId",
-                FieldName = "CountryId",
-                FieldsDataType = "LookUp",
-                LookUpTableId = CountriesObject.Id,
-                MaxLength = 15,
-                MinLength = 0,
-                ObjectTableId = WareHouseObject.Id,
-                ObjectTableName = WareHouseObject.Name,
-                ValidForQuerySection1 = WareHouseObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                CanFilter = true,
-                IsCustomFilter = true,
-                Operator = "Equals",
-                ListPropertyPath = "CountryId",
-                PMPropertyPath = "CountryId",
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Country",
-                FullFieldLable = "CountryName",
-                FieldName = "CountryName",
-                FieldsDataType = "Text",
-                ObjectTableId = WareHouseObject.Id,
-                ObjectTableName = WareHouseObject.Name,
-                Tenant = 0,
-                MaxLength = 120,
-                MinLength = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CountryNameListLabel",
-                ListLableDefaultText = "Country",
-                DisplayInList = true,
-                ValidForQuerySection1 = WareHouseObject.Name,
-                ListPropertyPath = "CountryName",
-                PMPropertyPath = "CountryName",
-                DisplayInEntityVariables = false,
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "City",
-                DisplayOnLookUp = false,
-                FullFieldLable = "CityName",
-                FieldName = "CityName",
-                FieldsDataType = "Text",
-                MaxLength = 25,
-                MinLength = 0,
-                ObjectTableId = WareHouseObject.Id,
-                ObjectTableName = WareHouseObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CityNameListLable",
-                ListLableDefaultText = "City",
-                DisplayInList = true,
-                CanFilter = true,
-                Operator = "StartsWith",
-                ValidForQuerySection1 = WareHouseObject.Name,
-                ListPropertyPath = "CityName",
-                PMPropertyPath = "CityName"
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -28909,7 +28235,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "MetodoPagoCode",
                 HelpTextDefaultText = "Way to Pay:\n-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice\n-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "UsoCFDI",
@@ -28953,7 +28278,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "PaymentMethodCode",
                 HelpTextDefaultText = "Payment Method"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-                       
+
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Business Area",
@@ -29134,6 +28461,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 LookUpTableId = null,
+
                 ValidForQuerySection1 = "Warehouse",
                 Operator = "StartsWith",
                 ListPropertyPath = "ComputedLocalName",
@@ -29228,17 +28556,17 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 1000,
                 MinLength = 0,
                 ObjectTableId = WareHouseObject.Id,
-                ObjectTableName = "Warehouse",
-                ObjectTablePlural = "Warehouses",
-                ObjectTableSingular = "Warehouse",
+                ObjectTableName = "WareHouse",
+                ObjectTablePlural = "WareHouses",
+                ObjectTableSingular = "WareHouse",
                 Tenant = 0,
                 TextCodeType = "F",
                 DisplayOnly = false,
                 SystemMaxLength = 40,
                 SystemRequired = false,
                 CanFilter = true,
-                ValidForQuerySection1 = "Warehouse",
-                ValidForQuerySection2 = "WarehouseFollowUp",
+                ValidForQuerySection1 = "WareHouse",
+                ValidForQuerySection2 = "WareHouseFollowUp",
                 DisplayInList = true,
                 IsCustomFilter = false,
                 Operator = "Contains",
@@ -33517,7 +32845,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "State",
-                FullFieldLable = "StateId",
+                FullFieldLable = "State",
                 FieldName = "StateId",
                 FieldsDataType = "LookUp",
                 MaxLength = 15,
@@ -33676,7 +33004,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",
-                LookUpTableId = null,
+                LookUpTableId = UsersObject.Id,
                 CanFilter = true,
                 DisplayInList = true,
                 ListFieldLable = "TechnologyListLable",
@@ -34513,7 +33841,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowListIndex = 1,
                 DisplayInSearchWindowFilters = true,
                 DisplayInSearchWindowFiltersIndex = 1,
-                FullFieldLable = "EnglishName",
+                FullFieldLable = "Name",
                 FieldName = "EnglishName",
                 FieldsDataType = "Text",
                 IsCustom = false,
@@ -36023,7 +35351,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "EntityStatusId",
                 PMPropertyPath = "EntityStatusId",
-                //DisplayOnly = true,
+                DisplayOnly = true,
                 HelpTextCode = "EntityStatusId",
                 HelpTextDefaultText = "The status to which the entity should switch when this event occurs for that entity.",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
@@ -36501,7 +35829,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowFilters = false,
                 DisplayInSearchWindowList = true,
                 DisplayInLookUpIndex = 1,
-                FullFieldLable = "ContactName",
+                FullFieldLable = "Contact",
                 FieldName = "ContactName",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36519,7 +35847,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListLocalDefaultText = "Contact",
                 ValidForQuerySection1 = "CustomerTenantAccess",
-                HelpTextCode = "Contact",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
 
@@ -36530,7 +35857,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowFilters = false,
                 DisplayInSearchWindowList = true,
                 DisplayInLookUpIndex = 1,
-                FullFieldLable = "CompanyVat",
+                FullFieldLable = "Company VAT",
                 FieldName = "CompanyVat",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36540,7 +35867,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableName = CustomerTenantAccessObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
-                ListFieldLable = "CompanyVatListLable",
+                ListFieldLable = "CompanyVATListLable",
                 ListLableDefaultText = "VAT #",
                 DisplayInList = true,
                 ListPropertyPath = "CompanyVat",
@@ -36548,7 +35875,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListLocalDefaultText = "CompanyVAT",
                 ValidForQuerySection1 = "CustomerTenantAccess",
-                HelpTextCode = "Company VAT",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
 
@@ -36556,7 +35882,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 DefaultText = "Company Name",
                 DisplayOnLookUp = false,
-                FullFieldLable = "CompanyName",
+                FullFieldLable = "Company",
                 FieldName = "CompanyName",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36574,14 +35900,13 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "CompanyName",
                 ValidForQuerySection1 = "CustomerTenantAccess",
                 Operator = "StartsWith",
-                HelpTextCode = "Company",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Company Email",
                 DisplayOnLookUp = false,
-                FullFieldLable = "CompanyEmail",
+                FullFieldLable = "Company Email",
                 FieldName = "CompanyEmail",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36598,14 +35923,13 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "CompanyEmail",
                 PMPropertyPath = "CompanyEmail",
-                HelpTextCode = "Company Email",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Contact Mobile",
                 DisplayOnLookUp = false,
-                FullFieldLable = "ContactMobile",
+                FullFieldLable = "Contact Mobile",
                 FieldName = "ContactMobile",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36621,16 +35945,14 @@ namespace WebFreight.Web.MetaDataUpdate
                 ValidForQuerySection1 = "CustomerTenantAccess",
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactMobile",
-                PMPropertyPath = "ContactMobile",
-                HelpTextCode = "Contact Mobile",
-
+                PMPropertyPath = "ContactMobile"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Contact Phone",
                 DisplayOnLookUp = false,
-                FullFieldLable = "ContactPhone",
+                FullFieldLable = "Contact Phone",
                 FieldName = "ContactPhone",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36646,15 +35968,14 @@ namespace WebFreight.Web.MetaDataUpdate
                 ValidForQuerySection1 = "CustomerTenantAccess",
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactPhone",
-                PMPropertyPath = "ContactPhone",
-                HelpTextCode = "Contact Phone",
+                PMPropertyPath = "ContactPhone"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "RequestDateTime",
                 DisplayOnLookUp = false,
-                FullFieldLable = "RequestDateTime",
+                FullFieldLable = "Request Date",
                 FieldName = "RequestDateTime",
                 FieldsDataType = "DateTime",
                 IsRequired = false,
@@ -36669,7 +35990,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "RequestDateTime",
                 PMPropertyPath = "RequestDateTime",
-                HelpTextCode = "Request Date",
                 //ConverterName = "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
@@ -36722,7 +36042,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Stock Type",
-                FullFieldLable = "StockTypeCode",
+                FullFieldLable = "Stock Type",
                 FieldName = "StockTypeCode",
                 FieldsDataType = "Text",
                 MaxLength = 15,
@@ -36747,7 +36067,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DefaultText = "UpdatedBy UserId",
                 DisplayOnLookUp = false,
                 IsRequired = false,
-                FullFieldLable = "UpdatedByUserId",
+                FullFieldLable = "Updated By User",
                 FieldName = "UpdatedByUserId",
                 FieldsDataType = "LookUp",
                 LookUpTableId = UsersObject.Id,
@@ -36764,7 +36084,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 ValidForQuerySection1 = "CustomerTenantAccess",
                 ListPropertyPath = "UpdatedByUserId",
                 PMPropertyPath = "UpdatedByUserId",
-                HelpTextCode = "Updated By User",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -36772,7 +36091,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DefaultText = "Updated By",
                 DisplayOnLookUp = false,
                 IsRequired = false,
-                FullFieldLable = "UpdatedByUserName",
+                FullFieldLable = "UpdatedByUser",
                 FieldName = "UpdatedByUserName",
                 FieldsDataType = "Text",
                 MaxLength = 60,
@@ -36793,7 +36112,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Last Update Date",
-                FullFieldLable = "LastUpdateDate",
+                FullFieldLable = "Last Update Date",
                 FieldName = "LastUpdateDate",
                 FieldsDataType = "DateTime",
                 ObjectTableId = CustomerTenantAccessObject.Id,
@@ -36837,7 +36156,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Last Shipment Date",
-                FullFieldLable = "LastShipmentDate",
+                FullFieldLable = "Last Shipment Date",
                 FieldName = "LastShipmentDate",
                 FieldsDataType = "DateTime",
                 ObjectTableId = CustomerTenantAccessObject.Id,
@@ -51454,71 +50773,6 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Country",
-                FullFieldLable = "CountryId",
-                FieldName = "CountryId",
-                FieldsDataType = "LookUp",
-                LookUpTableId = CountriesObject.Id,
-                MaxLength = 15,
-                MinLength = 0,
-                ObjectTableId = ParticipantObject.Id,
-                ObjectTableName = ParticipantObject.Name,
-                ValidForQuerySection1 = ParticipantObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                CanFilter = true,
-                IsCustomFilter = true,
-                Operator = "Equals",
-                ListPropertyPath = "CountryId",
-                PMPropertyPath = "CountryId",
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Country",
-                FullFieldLable = "CountryName",
-                FieldName = "CountryName",
-                FieldsDataType = "Text",
-                ObjectTableId = ParticipantObject.Id,
-                ObjectTableName = ParticipantObject.Name,
-                Tenant = 0,
-                MaxLength = 120,
-                MinLength = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CountryNameListLabel",
-                ListLableDefaultText = "Country",
-                DisplayInList = true,
-                ValidForQuerySection1 = ParticipantObject.Name,
-                ListPropertyPath = "CountryName",
-                PMPropertyPath = "CountryName",
-                DisplayInEntityVariables = false,
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "City",
-                DisplayOnLookUp = false,
-                FullFieldLable = "CityName",
-                FieldName = "CityName",
-                FieldsDataType = "Text",
-                MaxLength = 25,
-                MinLength = 0,
-                ObjectTableId = ParticipantObject.Id,
-                ObjectTableName = ParticipantObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CityNameListLable",
-                ListLableDefaultText = "City",
-                DisplayInList = true,
-                CanFilter = true,
-                Operator = "StartsWith",
-                ValidForQuerySection1 = ParticipantObject.Name,
-                ListPropertyPath = "CityName",
-                PMPropertyPath = "CityName"
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -51821,7 +51075,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowListIndex = 1,
                 DisplayInSearchWindowFilters = true,
                 DisplayInSearchWindowFiltersIndex = 0,
-                FullFieldLable = "EnglishName",
+                FullFieldLable = "English Name",
                 FieldName = "EnglishName",
                 FieldsDataType = "Text",
                 IsCustom = false,
@@ -55422,7 +54676,7 @@ namespace WebFreight.Web.MetaDataUpdate
             List<ObjectField> specialServicesTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "SpecialServicesType").ToList();
             List<ObjectField> regionObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Region").ToList();
             List<ObjectField> LogitudeLeadObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "LogitudeLead").ToList();
-            List<ObjectField> MessagingStockObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "MessagingStock").ToList();
+            List<ObjectField> AWBMessagingStockObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AWBMessagingStock").ToList();
             List<ObjectField> CustomerSizeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerSize").ToList();
             List<ObjectField> QuoteStageObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "QuoteStage").ToList();
             List<ObjectField> CountryCityObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CountryCity").ToList();
@@ -55509,7 +54763,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTable specialServicesTypeObject = ObjectContext.ObjectTables.Where(d => d.Name == "SpecialServicesType" && d.Tenant == 0).FirstOrDefault();
             ObjectTable regionObject = ObjectContext.ObjectTables.Where(d => d.Name == "Region" && d.Tenant == 0).FirstOrDefault();
             ObjectTable LogitudeLeadObject = ObjectContext.ObjectTables.Where(d => d.Name == "LogitudeLead" && d.Tenant == 0).FirstOrDefault();
-            ObjectTable MessagingStockObject = ObjectContext.ObjectTables.Where(d => d.Name == "MessagingStock" && d.Tenant == 0).FirstOrDefault();
+            ObjectTable AWBMessagingStockObject = ObjectContext.ObjectTables.Where(d => d.Name == "AWBMessagingStock" && d.Tenant == 0).FirstOrDefault();
             ObjectTable CustomerSizeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerSize" && d.Tenant == 0).FirstOrDefault();
             ObjectTable QuoteStageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteStage" && d.Tenant == 0).FirstOrDefault();
             ObjectTable CountryCityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CountryCity" && d.Tenant == 0).FirstOrDefault();
@@ -55599,7 +54853,7 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryGroup specialServicesTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "STQG", Name = "Special Services Type" }, QueryGroupRepository);
             QueryGroup regionQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "RGQG", Name = "Region" }, QueryGroupRepository);
             QueryGroup LogitudeLeadQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "LLQG", Name = "Logitude Leads" }, QueryGroupRepository);
-            QueryGroup MessagingStockQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "AWMS", Name = "Messaging Stocks" }, QueryGroupRepository);
+            QueryGroup AWBMessagingStockQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "AWMS", Name = "AWB Messaging Stocks" }, QueryGroupRepository);
             QueryGroup CustomerSizeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CUSS", Name = "Customer Size" }, QueryGroupRepository);
             QueryGroup QuoteStageQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "QSQG", Name = "Quote Stage" }, QueryGroupRepository);
             QueryGroup CountryCityQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CCQG", Name = "Country City" }, QueryGroupRepository);
@@ -55654,7 +54908,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature shipmentFeature_CreditLimitBlockedShipments = tenantFeatures.Where(d => d.Code == "CreditLimitBlockedShipments" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature shipmentFeature_ExpectedDeparturesNotTransmitted = tenantFeatures.Where(d => d.Code == "ExpectedDeparturesNotTransmitted" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature shipmentFeature_ShippingInstructionsLast7Days = tenantFeatures.Where(d => d.Code == "ShippingInstructionsLast7Days" && d.FeatureTypeCode == "QUER").FirstOrDefault();
-            Feature shipmentFeature_ContainerStatusLast7Days = tenantFeatures.Where(d => d.Code == "ContainerStatusLast7Days" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             #endregion
 
             #region Master features
@@ -56008,11 +55261,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Query sentFSRQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Shipment.Q.SentFSR" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, IndexOrder = 12, Code = "SentFSR", QueryGroupCode = shipmentsGroup.Code, DisplayCount = true, Tenant = 0, ObjectTableId = ShipmentObject.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "LastFSRStatusRequestDate", EditWizardName = "Simplog.ShipmentLib.Views.AWBWizardEditControl", FeatureId = shipmentsFeature11.Id }, QueriesRepository, tenantQueries);
             Query shipmentQuery_CustomerActualData = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Shipment.Q.CustomerActualData" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, IndexOrder = 13, Code = "CustomerShipmentActualData", QueryGroupCode = shipmentsGroup.Code, DisplayCount = true, Tenant = 0, ObjectTableId = ShipmentObject.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, SpotlightDataTemplate = "ShipmentSpotlightDataTemplate", FeatureId = shipmentFeature_CustomerActualData.Id, IsHiddenFromView = true, }, QueriesRepository, tenantQueries);
             Query shipmentQuery_CreditLimitBlockedShipments = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Shipment.Q.CreditLimitBlockedShipments" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, IndexOrder = 14, Code = "CreditLimitBlockedShipments", QueryGroupCode = shipmentsGroup.Code, DisplayCount = true, Tenant = 0, ObjectTableId = ShipmentObject.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, SpotlightDataTemplate = "ShipmentSpotlightDataTemplate", FeatureId = shipmentFeature_CreditLimitBlockedShipments.Id }, QueriesRepository, tenantQueries);
-
-            // INTTRA
             Query shipmentQuery_ExpectedDeparturesNotTransmitted = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Shipment.Q.ExpectedDeparturesNotTransmitted" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, IndexOrder = 15, Code = "ExpDepNotTransmitted", QueryGroupCode = shipmentsGroup.Code, DisplayCount = true, Tenant = 0, ObjectTableId = ShipmentObject.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, SpotlightDataTemplate = "ShipmentSpotlightDataTemplate", FeatureId = shipmentFeature_ExpectedDeparturesNotTransmitted.Id }, QueriesRepository, tenantQueries);
             Query shipmentQuery_ShippingInstructionsLast7Days = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Shipment.Q.ShippingInstructionsLast7Days" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, IndexOrder = 16, Code = "ShippingInstructionsLast7Days", QueryGroupCode = shipmentsGroup.Code, DisplayCount = true, Tenant = 0, ObjectTableId = ShipmentObject.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, SpotlightDataTemplate = "ShipmentSpotlightDataTemplate", FeatureId = shipmentFeature_ShippingInstructionsLast7Days.Id }, QueriesRepository, tenantQueries);
-            Query shipmentQuery_ContainerStatusLast7Days = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Shipment.Q.ContainerStatusLast7Days" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, IndexOrder = 17, Code = "ContainerStatusLast7Days", QueryGroupCode = shipmentsGroup.Code, DisplayCount = true, Tenant = 0, ObjectTableId = ShipmentObject.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, SpotlightDataTemplate = "ShipmentSpotlightDataTemplate", FeatureId = shipmentFeature_ContainerStatusLast7Days.Id }, QueriesRepository, tenantQueries);
             #endregion
 
             #region Master
@@ -56687,21 +55937,6 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn ShippingInstructionsLast7Days_Column10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ShippingInstructionsLast7Days.Id, IndexOrder = 10, ObjectFieldId = objectFields.Where(d => d.FieldName == "INTTRASIError" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 500 }, QueryColumnsRepository, tenantQueryColumns);
             AdvancedQueryFilter ShippingInstructionsLast7Days_AdvancedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = objectFields.Where(d => d.FieldName == "ShippingInstructionsLast7Days" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, PredefinedValue = "True", QueryId = shipmentQuery_ShippingInstructionsLast7Days.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
-
-            #region ContainerStatusLast7Days
-            QueryColumn ContainerStatusLast7Days_Column01 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 1, ObjectFieldId = objectFields.Where(d => d.FieldName == "INTTRALastStatusDate" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ContainerStatusLast7Days_Column02 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 2, ObjectFieldId = objectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ContainerStatusLast7Days_Column03 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 3, ObjectFieldId = objectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ContainerStatusLast7Days_Column04 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 4, ObjectFieldId = objectFields.Where(d => d.FieldName == "MainCarriageETD" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ContainerStatusLast7Days_Column05 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 5, ObjectFieldId = objectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ContainerStatusLast7Days_Column06 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 6, ObjectFieldId = objectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ContainerStatusLast7Days_Column07 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 7, ObjectFieldId = objectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 140 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ContainerStatusLast7Days_Column08 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 8, ObjectFieldId = objectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ContainerStatusLast7Days_Column09 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 9, ObjectFieldId = objectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ContainerStatusLast7Days_Column10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 10, ObjectFieldId = objectFields.Where(d => d.FieldName == "INTTRASIError" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 500 }, QueryColumnsRepository, tenantQueryColumns);
-            AdvancedQueryFilter ContainerStatusLast7Days_AdvancedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = objectFields.Where(d => d.FieldName == "ContainerStatusLast7Days" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, PredefinedValue = "True", QueryId = shipmentQuery_ContainerStatusLast7Days.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
-            #endregion
-
             #endregion
 
             #region MasterQueriesDetails
@@ -57606,7 +56841,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature aRGeneralInvoiceFeature_Approval = tenantFeatures.Where(d => d.ObjectTableId == InvoiceObject.Id && d.Code == "APPROVALGENERALINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature aRGeneralInvoiceFeature_All = tenantFeatures.Where(d => d.ObjectTableId == InvoiceObject.Id && d.Code == "ALLGENERALINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature aRInvoiceFeature_SATFailed = tenantFeatures.Where(d => d.ObjectTableId == InvoiceObject.Id && d.Code == "SATFAILEDINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
-            Feature aRInvoiceFeature_QBOFailedTransmission = tenantFeatures.Where(d => d.ObjectTableId == InvoiceObject.Id && d.Code == "ErrorInTransfer" && d.FeatureTypeCode == "QUER").FirstOrDefault();
 
 
             Query aRInvoiceQuery_All = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.AllInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "All Invoices", QueryGroupCode = invoicesGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRInvoiceFeature_All.Id }, QueriesRepository, tenantQueries);
@@ -57617,7 +56851,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Query aRInvoiceQuery_ErrorInTransfer = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.ErrorInTransferInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "Error In Transfer Invoices", QueryGroupCode = invoicesGroup.Code, IndexOrder = 5, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Ascending", DefaultSortName = "InvoiceDate", FeatureId = aRInvoiceFeature_ErrorInTransfer.Id, EditWizardName = "Simplog.InvoiceLib.Views.Tabs.ARInvoiceTabs.ARTransferEditControl", EditWizardComponentPath = "./InvoiceModules/ARInvoice/Components/NewEntity/ARInvoiceTransferTemplate" }, QueriesRepository, tenantQueries);
             Query aRInvoiceQuery_OpenConstituent = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.OpenConstituentInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "OpenConstituent", QueryGroupCode = invoicesGroup.Code, IndexOrder = 6, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRInvoiceFeature_OpenConstituent.Id }, QueriesRepository, tenantQueries);
             Query aRInvoiceQuery_FailedSAT = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.FailedSAT" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "Invoices Failed to Open in SAT", QueryGroupCode = invoicesGroup.Code, IndexOrder = 7, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRInvoiceFeature_SATFailed.Id }, QueriesRepository, tenantQueries);
-            Query aRInvoiceQuery_QBOFailedTransmission = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.ErrorInTransfer" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "ErrorInTransfer", QueryGroupCode = invoicesGroup.Code, IndexOrder = 8, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRInvoiceFeature_QBOFailedTransmission.Id }, QueriesRepository, tenantQueries);
 
             // Genaral Invoices 
             Query aRGeneralInvoiceQuery_Draft = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.DraftGeneralInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "Draft General Invoices", QueryGroupCode = invoicesGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRGeneralInvoiceFeature_Draft.Id }, QueriesRepository, tenantQueries);
@@ -57637,6 +56870,7 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn AllGeneralInvoicecol10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_All.Id, IndexOrder = 9, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn AllGeneralInvoicecol11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_All.Id, IndexOrder = 10, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn AllGeneralInvoicecol12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_All.Id, IndexOrder = 11, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            AdvancedQueryFilter AllGeneralInvoicePredefinedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "IsGeneralInvoice" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aRGeneralInvoiceQuery_All.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion 
 
             #region Draft General Invoices
@@ -57652,6 +56886,7 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn DraftGeneralInvoicecol10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_Draft.Id, IndexOrder = 9, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn DraftGeneralInvoicecol11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_Draft.Id, IndexOrder = 10, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn DraftGeneralInvoicecol12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_Draft.Id, IndexOrder = 11, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            AdvancedQueryFilter draftGeneralInvoice_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "DraftGeneralInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aRGeneralInvoiceQuery_Draft.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
 
             #endregion 
 
@@ -57668,7 +56903,7 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn ApprovalGeneralInvoicecol10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_Approval.Id, IndexOrder = 9, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn ApprovalGeneralInvoicecol11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_Approval.Id, IndexOrder = 10, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn ApprovalGeneralInvoicecol12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_Approval.Id, IndexOrder = 11, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-
+            AdvancedQueryFilter approvalGeneralInvoice_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "ApprovalGeneralInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aRGeneralInvoiceQuery_Approval.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
 
             #region All
@@ -57736,7 +56971,7 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn errorInTransferARInvoices_QueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_ErrorInTransfer.Id, IndexOrder = 4, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn errorInTransferARInvoices_QueryColumn5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_ErrorInTransfer.Id, IndexOrder = 5, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "ReadyForTransfer" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 50 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn errorInTransferARInvoices_QueryColumn6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_ErrorInTransfer.Id, IndexOrder = 6, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 500 }, QueryColumnsRepository, tenantQueryColumns);
-            AdvancedQueryFilter errorInTransferARInvoices_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "TransferStatusCode" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "ET", QueryId = aRInvoiceQuery_ErrorInTransfer.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+            AdvancedQueryFilter errorInTransferARInvoices_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "ErrorInTransferInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aRInvoiceQuery_ErrorInTransfer.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
 
             #region Marked As Blocked
@@ -57780,33 +57015,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AdvancedQueryFilter invoiceSATFailed_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "TE", QueryId = aRInvoiceQuery_FailedSAT.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
 
-            #region QBO failed transmission
-
-            QueryColumn ErrorInTransferInvoicecol0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 0, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorInTransferInvoicecol1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 1, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 30 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorInTransferInvoicecol2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 2, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 30 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorInTransferInvoicecol3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 3, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorInTransferInvoicecol4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 4, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorInTransferInvoicecol5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 5, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorInTransferInvoicecol6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 6, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorInTransferInvoicecol7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 7, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorInTransferInvoicecol8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 8, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorInTransferInvoicecol9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 9, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorInTransferInvoicecol10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 10, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorInTransferInvoicecol11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 11, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorInTransferInvoicecol12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 12, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-
-          AdvancedQueryFilter QBOFailedTransmition_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "TransferStatusCode" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "ET", QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
-
-            #endregion
-
-
-
-
-
-
-
 
             #region (A/P) Invoice
             Feature aPInvoiceFeature_All = tenantFeatures.Where(d => d.ObjectTableId == APInvoiceObject.Id && d.Code == "ALLINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
@@ -57815,7 +57024,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature aPInvoiceFeature_NotReady = tenantFeatures.Where(d => d.ObjectTableId == APInvoiceObject.Id && d.Code == "NOTREADYINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature aPInvoiceFeature_MarkedAsBlocked = tenantFeatures.Where(d => d.ObjectTableId == APInvoiceObject.Id && d.Code == "MARKEDASBLOCKEDFORTRANSFER" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature aPInvoiceFeature_ErrorInTransfer = tenantFeatures.Where(d => d.ObjectTableId == APInvoiceObject.Id && d.Code == "ERRORINTRANSFERINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
-            Feature aPInvoiceFeature_QBOFailedTransmission = tenantFeatures.Where(d => d.ObjectTableId == APInvoiceObject.Id && d.Code == "ErrorInTransfer" && d.FeatureTypeCode == "QUER").FirstOrDefault();
+
+            Feature aPGeneralInvoiceFeature_All = tenantFeatures.Where(d => d.ObjectTableId == APInvoiceObject.Id && d.Code == "ALLGENERALAPINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
 
             Query aPInvoiceQuery_All = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APInvoice.Q.AllAPInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, Code = "All Invoices", FullLocalDefaultText = "כל החשבוניות",  QueryGroupCode = APInvoiceGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = APInvoiceObject.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", FeatureId = aPInvoiceFeature_All.Id }, QueriesRepository, tenantQueries);
             Query aPInvoiceQuery_Waiting = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APInvoice.Q.WaitingApprovalAPInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, Code = "Waiting for Approval", FullLocalDefaultText = "ממתין לאישור", QueryGroupCode = APInvoiceGroup.Code, IndexOrder = 1, Tenant = 0, ObjectTableId = APInvoiceObject.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", FeatureId = aPInvoiceFeature_Waiting.Id }, QueriesRepository, tenantQueries);
@@ -57823,8 +57033,24 @@ namespace WebFreight.Web.MetaDataUpdate
             Query aPInvoiceQuery_NotReady = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APInvoice.Q.NotReadyInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, Code = "Not Ready Invoices", FullLocalDefaultText = "חשבוניות לא מוכנות", QueryGroupCode = APInvoiceGroup.Code, IndexOrder = 3, Tenant = 0, ObjectTableId = APInvoiceObject.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Ascending", DefaultSortName = "InvoiceDate", FeatureId = aPInvoiceFeature_NotReady.Id, EditWizardName = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APTransferEditControl", EditWizardComponentPath = "./InvoiceModules/APInvoice/Components/NewEntity/APInvoiceTransferTemplate" }, QueriesRepository, tenantQueries);
             Query aPInvoiceQuery_MarkedAsBlocked = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APInvoice.Q.MarkedAsBlockedForTransfer" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, Code = "Marked as blocked for transfer", FullLocalDefaultText = "סמן כחסום להעברה", QueryGroupCode = APInvoiceGroup.Code, IndexOrder = 4, Tenant = 0, ObjectTableId = APInvoiceObject.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Ascending", DefaultSortName = "InvoiceDate", FeatureId = aPInvoiceFeature_MarkedAsBlocked.Id, EditWizardName = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APTransferEditControl", EditWizardComponentPath = "./InvoiceModules/APInvoice/Components/NewEntity/APInvoiceTransferTemplate" }, QueriesRepository, tenantQueries);
             Query aPInvoiceQuery_ErrorInTransfer = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APInvoice.Q.ErrorInTransferInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, Code = "Error In Transfer Invoices", FullLocalDefaultText = "שגיאה בהעברת חשבוניות", QueryGroupCode = APInvoiceGroup.Code, IndexOrder = 5, Tenant = 0, ObjectTableId = APInvoiceObject.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Ascending", DefaultSortName = "InvoiceDate", FeatureId = aPInvoiceFeature_ErrorInTransfer.Id, EditWizardName = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APTransferEditControl", EditWizardComponentPath = "./InvoiceModules/APInvoice/Components/NewEntity/APInvoiceTransferTemplate" }, QueriesRepository, tenantQueries);
-            Query aPInvoiceQuery_QBOFailedTransmission = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APInvoice.Q.ErrorInTransfer" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, Code = "ErrorInTransfer", QueryGroupCode = APInvoiceGroup.Code, IndexOrder = 6, Tenant = 0, ObjectTableId = APInvoiceObject.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aPInvoiceFeature_ErrorInTransfer.Id }, QueriesRepository, tenantQueries);
+            // General AP Invoice
+            Query aPGeneralInvoiceQuery_All = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APInvoice.Q.AllGeneralInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, Code = "All General APInvoices", FullLocalDefaultText = "", QueryGroupCode = APInvoiceGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = APInvoiceObject.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aPGeneralInvoiceFeature_All.Id }, QueriesRepository, tenantQueries);
 
+            #region All General Invoices 
+            QueryColumn AllGeneralAPInvoices0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_All.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn AllGeneralAPInvoices1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_All.Id, IndexOrder = 1, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn AllGeneralAPInvoices2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_All.Id, IndexOrder = 2, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn AllGeneralAPInvoices3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_All.Id, IndexOrder = 3, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn AllGeneralAPInvoices4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_All.Id, IndexOrder = 4, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn AllGeneralAPInvoices5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_All.Id, IndexOrder = 5, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn AllGeneralAPInvoices6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_All.Id, IndexOrder = 6, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn AllGeneralAPInvoices7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_All.Id, IndexOrder = 7, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn AllGeneralAPInvoices8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_All.Id, IndexOrder = 8, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn AllGeneralAPInvoices9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_All.Id, IndexOrder = 9, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn AllGeneralAPInvoices10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_All.Id, IndexOrder = 10, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn AllGeneralAPInvoices11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_All.Id, IndexOrder = 11, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            AdvancedQueryFilter AllGeneralAPInvoicePredefinedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "IsGeneralInvoice" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aPGeneralInvoiceQuery_All.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+            #endregion 
 
             #region All
             QueryColumn AllAPInvoices0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_All.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
@@ -57887,7 +57113,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AdvancedQueryFilter aPInvoiceQuery_MarkedAsBlocked_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "MarkedAsBlockedForTransfer" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aPInvoiceQuery_MarkedAsBlocked.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
 
-            #region Error In Transfer Invoice
+            #region Error In Transfer
             QueryColumn aPInvoiceQuery_ErrorInTransfer_Column00 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_ErrorInTransfer.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn aPInvoiceQuery_ErrorInTransfer_Column01 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_ErrorInTransfer.Id, IndexOrder = 1, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn aPInvoiceQuery_ErrorInTransfer_Column02 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_ErrorInTransfer.Id, IndexOrder = 2, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 190 }, QueryColumnsRepository, tenantQueryColumns);
@@ -57896,28 +57122,6 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn aPInvoiceQuery_ErrorInTransfer_Column05 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_ErrorInTransfer.Id, IndexOrder = 5, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "ReadyForTransfer" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 50 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn aPInvoiceQuery_ErrorInTransfer_Column06 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_ErrorInTransfer.Id, IndexOrder = 6, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 500 }, QueryColumnsRepository, tenantQueryColumns);
             AdvancedQueryFilter aPInvoiceQuery_ErrorInTransfer_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "ErrorInTransferInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aPInvoiceQuery_ErrorInTransfer.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
-            #endregion
-
-
-            #region Error In Transfer 
-            QueryColumn APErrorInTransferInvoicecol00 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn APErrorInTransferInvoicecol0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 1, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn APErrorInTransferInvoicecol1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 2, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn APErrorInTransferInvoicecol2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 3, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn APErrorInTransferInvoicecol3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 4, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn APErrorInTransferInvoicecol4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 5, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn APErrorInTransferInvoicecol5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 6, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn APErrorInTransferInvoicecol6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 7, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn APErrorInTransferInvoicecol7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 8, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn APErrorInTransferInvoicecol8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 9, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn APErrorInTransferInvoicecol9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 10, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn APErrorInTransferInvoicecol10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 11, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            AdvancedQueryFilter QBOAPFailedTransmition_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "ErrorInTransferInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
-
-
-          
-
-
             #endregion
 
             #endregion
@@ -57962,7 +57166,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ARPaymentFeature_NotReady = tenantFeatures.Where(d => d.ObjectTableId == ARPaymentObject.Id && d.Code == "NOTREADYPAYMENTS" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature ARPaymentFeature_MarkedAsBlocked = tenantFeatures.Where(d => d.ObjectTableId == ARPaymentObject.Id && d.Code == "MARKEDASBLOCKEDFORTRANSFER" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature ARPaymentFeature_SATFailedPayments = tenantFeatures.Where(d => d.ObjectTableId == ARPaymentObject.Id && d.Code == "SATFAILEDPAYMENTS" && d.FeatureTypeCode == "QUER").FirstOrDefault();
-            Feature ARPaymentFeature_QBOFailedTransmission = tenantFeatures.Where(d => d.ObjectTableId == ARPaymentObject.Id && d.Code == "ErrorInTransfer" && d.FeatureTypeCode == "QUER").FirstOrDefault();
 
             Query ARPaymentQuery_All = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARPayment.Q.AllPayments" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, Code = "All Payments", QueryGroupCode = ARPaymentGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = ARPaymentObject.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_All.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo" }, QueriesRepository, tenantQueries);
             Query ARPaymentQuery_Open = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARPayment.Q.OpenPayments" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, Code = "Open Payments", QueryGroupCode = ARPaymentGroup.Code, IndexOrder = 1, Tenant = 0, ObjectTableId = ARPaymentObject.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_Open.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo" }, QueriesRepository, tenantQueries);
@@ -57970,7 +57173,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Query ARPaymentQuery_NotReady = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARPayment.Q.NotReadyPayments" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, Code = "Not Ready Payments", QueryGroupCode = ARPaymentGroup.Code, IndexOrder = 3, Tenant = 0, ObjectTableId = ARPaymentObject.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_NotReady.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo", EditWizardComponentPath = "./InvoiceModules/ARPayment/Components/NewEntity/ARPaymentTransferTemplate" }, QueriesRepository, tenantQueries);
             Query ARPaymentQuery_MarkedAsBlocked = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARPayment.Q.MarkedAsBlockedForTransfer" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, Code = "Marked as blocked for transfer", QueryGroupCode = ARPaymentGroup.Code, IndexOrder = 4, Tenant = 0, ObjectTableId = ARPaymentObject.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_MarkedAsBlocked.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo", EditWizardComponentPath = "./InvoiceModules/ARPayment/Components/NewEntity/ARPaymentTransferTemplate" }, QueriesRepository, tenantQueries);
             Query ARPaymentQuery_SATFailed = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARPayment.Q.FailedSAT" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, Code = "Payments Failed to Open in SAT", QueryGroupCode = ARPaymentGroup.Code, IndexOrder = 5, Tenant = 0, ObjectTableId = ARPaymentObject.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_SATFailedPayments.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo"}, QueriesRepository, tenantQueries);
-            Query ARPaymentQuery_QBOFailedTransmission = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARPayment.Q.ErrorInTransfer" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, Code = "ErrorInTransfer", QueryGroupCode = ARPaymentGroup.Code, IndexOrder = 6, Tenant = 0, ObjectTableId = ARPaymentObject.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = ARPaymentFeature_QBOFailedTransmission.Id }, QueriesRepository, tenantQueries);
 
             #region All
             QueryColumn ARPaymentQuery_All01 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_All.Id, IndexOrder = 0, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentNo" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
@@ -58054,29 +57256,6 @@ namespace WebFreight.Web.MetaDataUpdate
 			AdvancedQueryFilter ARPaymentQuery_SATFailedPredefinedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, PredefinedValue = "TE", QueryId = ARPaymentQuery_SATFailed.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
 
-
-            #region QBO Error in Transfer 
-
-            #region All
-            QueryColumn ARPaymentQuery_Error00 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 1, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ARPaymentQuery_Error01 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 1, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentNo" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ARPaymentQuery_Error02 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 2, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ARPaymentQuery_Error03 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 3, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "RegisterDate" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ARPaymentQuery_Error04 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 4, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentCurrencyCode" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ARPaymentQuery_Error05 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 5, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ARPaymentQuery_Error06 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 6, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ARPaymentQuery_Error07 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 7, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ARPaymentQuery_Error08 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 8, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentMethodName" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ARPaymentQuery_Error09 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 9, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "AmountInPaymentCurrency" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ARPaymentQuery_Error010 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 10, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "OpenAmount" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ARPaymentQuery_Error011 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 11, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            AdvancedQueryFilter ARPaymentQBOFailedTransmition_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "TransferStatusCode" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, PredefinedValue = "ET", QueryId = ARPaymentQuery_QBOFailedTransmission.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
-
-            #endregion
-
-            #endregion
-
-
             #endregion
 
             #region (A/P) Payment
@@ -58085,14 +57264,12 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature APPaymentFeature03 = tenantFeatures.Where(d => d.ObjectTableId == APPaymentObject.Id && d.Code == "DRAFTPAYMENTS" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature APPaymentFeature_NotReady = tenantFeatures.Where(d => d.ObjectTableId == APPaymentObject.Id && d.Code == "NOTREADYPAYMENTS" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature APPaymentFeature_MarkedAsBlocked = tenantFeatures.Where(d => d.ObjectTableId == APPaymentObject.Id && d.Code == "MARKEDASBLOCKEDFORTRANSFER" && d.FeatureTypeCode == "QUER").FirstOrDefault();
-            Feature APPaymentFeature_QBOFailedTransmission = tenantFeatures.Where(d => d.ObjectTableId == APPaymentObject.Id && d.Code == "ErrorInTransfer" && d.FeatureTypeCode == "QUER").FirstOrDefault();
 
             Query allAPPayments = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APPayment.Q.AllAPPayments" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, Code = "All Payments", QueryGroupCode = APPaymentGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = APPaymentObject.Id, QuerySection = "APPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = APPaymentFeature01.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo" }, QueriesRepository, tenantQueries);
             Query openAPPayments = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APPayment.Q.OpenAPPayments" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, Code = "Open Payments", QueryGroupCode = APPaymentGroup.Code, IndexOrder = 1, Tenant = 0, ObjectTableId = APPaymentObject.Id, QuerySection = "APPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = APPaymentFeature02.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo" }, QueriesRepository, tenantQueries);
             Query DraftAPPayments = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APPayment.Q.DraftAPPayments" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, Code = "Draft Payments", QueryGroupCode = APPaymentGroup.Code, IndexOrder = 1, Tenant = 0, ObjectTableId = APPaymentObject.Id, QuerySection = "APPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = APPaymentFeature03.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo" }, QueriesRepository, tenantQueries);
             Query APPaymentQuery_NotReady = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APPayment.Q.NotReadyPayments" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, Code = "Not Ready Payments", QueryGroupCode = APPaymentGroup.Code, IndexOrder = 3, Tenant = 0, ObjectTableId = APPaymentObject.Id, QuerySection = "APPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = APPaymentFeature_NotReady.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo", EditWizardComponentPath = "./InvoiceModules/APPayment/Components/NewEntity/APPaymentTransferTemplate" }, QueriesRepository, tenantQueries);
             Query APPaymentQuery_MarkedAsBlocked = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APPayment.Q.MarkedAsBlockedForTransfer" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, Code = "Marked as blocked for transfer", QueryGroupCode = APPaymentGroup.Code, IndexOrder = 4, Tenant = 0, ObjectTableId = APPaymentObject.Id, QuerySection = "APPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = APPaymentFeature_MarkedAsBlocked.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo", EditWizardComponentPath = "./InvoiceModules/APPayment/Components/NewEntity/APPaymentTransferTemplate" }, QueriesRepository, tenantQueries);
-            Query APPaymentQuery_QBOFailedTransmission = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APPayment.Q.ErrorInTransfer" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, Code = "ErrorInTransfer", QueryGroupCode = APPaymentGroup.Code, IndexOrder = 6, Tenant = 0, ObjectTableId = APPaymentObject.Id, QuerySection = "APPayment", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = APPaymentFeature_QBOFailedTransmission.Id }, QueriesRepository, tenantQueries);
 
             #region All AP Payments            
             QueryColumn AllAPPayments0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAPPayments.Id, IndexOrder = 0, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "PaymentNo" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
@@ -58161,25 +57338,6 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn APPaymentQuery_MarkedAsBlocked07 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_MarkedAsBlocked.Id, IndexOrder = 6, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 500 }, QueryColumnsRepository, tenantQueryColumns);
             AdvancedQueryFilter APPaymentQuery_MarkedAsBlockedPredefinedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "MarkedAsBlockedForTransfer" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = APPaymentQuery_MarkedAsBlocked.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
-
-
-            #region APPayment Error in transfer
-
-            #endregion
-            QueryColumn ErrorAPPayments00 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 0, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorAPPayments0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 1, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "PaymentNo" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorAPPayments1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 2, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorAPPayments2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 3, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "RegisterDate" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorAPPayments3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 4, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "PaymentCurrencyCode" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorAPPayments4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 5, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorAPPayments5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 6, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorAPPayments6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 7, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorAPPayments7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 8, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "PaymentMethodName" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorAPPayments8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 9, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "AmountInPaymentCurrency" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorAPPayments9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 10, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "OpenAmount" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn ErrorAPPayments10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 11, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            AdvancedQueryFilter APPaymentQBOFailedTransmition_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "TransferStatusCode" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, PredefinedValue = "ET", QueryId = APPaymentQuery_QBOFailedTransmission.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
-
 
             #endregion
 
@@ -58543,18 +57701,18 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn AllLogitudeLeadsColumn14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 14, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "Country" && d.ObjectTableId == LogitudeLeadObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
             #endregion
 
-            #region MessagingStock
-            Feature messagingStockFeature01 = tenantFeatures.Where(d => d.Code == "MessagingStock.Q.AllQuery" && d.FeatureTypeCode == "QUER").FirstOrDefault();
+            #region AWBMessagingStock
+            Feature aWBMessagingStockFeature01 = tenantFeatures.Where(d => d.Code == "AWBMessagingStock.Q.AllQuery" && d.FeatureTypeCode == "QUER").FirstOrDefault();
 
-            Query messagingStocksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "MessagingStock.Q.AllMessagingStocks" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, Code = "All Messaging Stocks", QueryGroupCode = MessagingStockQueryGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = MessagingStockObject.Id, QuerySection = "MessagingStock", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = messagingStockFeature01.Id }, QueriesRepository, tenantQueries);
-            QueryColumn allMessagingStocksColumn00 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = messagingStocksQuery.Id, IndexOrder = 0, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "TenantNumber" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 110 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn allMessagingStocksColumn01 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = messagingStocksQuery.Id, IndexOrder = 1, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "StartDate" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn allMessagingStocksColumn02 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = messagingStocksQuery.Id, IndexOrder = 2, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "EndDate" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn allMessagingStocksColumn03 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = messagingStocksQuery.Id, IndexOrder = 3, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Amount" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn allMessagingStocksColumn04 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = messagingStocksQuery.Id, IndexOrder = 4, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Remaining" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn allMessagingStocksColumn05 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = messagingStocksQuery.Id, IndexOrder = 5, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn allMessagingStocksColumn06 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = messagingStocksQuery.Id, IndexOrder = 6, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 350 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn allMessagingStocksColumn07 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = messagingStocksQuery.Id, IndexOrder = 7, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "TotalPrice" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
+            Query allAWBMessagingStocksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "AWBMessagingStock.Q.AllAWBMessagingStocks" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, Code = "All AWB Messaging Stocks", QueryGroupCode = AWBMessagingStockQueryGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = AWBMessagingStockObject.Id, QuerySection = "AWBMessagingStock", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = aWBMessagingStockFeature01.Id }, QueriesRepository, tenantQueries);
+            QueryColumn allAWBMessagingStocksColumn00 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAWBMessagingStocksQuery.Id, IndexOrder = 0, ObjectFieldId = AWBMessagingStockObjectFields.Where(d => d.FieldName == "TenantNumber" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 110 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn allAWBMessagingStocksColumn01 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAWBMessagingStocksQuery.Id, IndexOrder = 1, ObjectFieldId = AWBMessagingStockObjectFields.Where(d => d.FieldName == "StartDate" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn allAWBMessagingStocksColumn02 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAWBMessagingStocksQuery.Id, IndexOrder = 2, ObjectFieldId = AWBMessagingStockObjectFields.Where(d => d.FieldName == "EndDate" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn allAWBMessagingStocksColumn03 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAWBMessagingStocksQuery.Id, IndexOrder = 3, ObjectFieldId = AWBMessagingStockObjectFields.Where(d => d.FieldName == "Amount" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn allAWBMessagingStocksColumn04 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAWBMessagingStocksQuery.Id, IndexOrder = 4, ObjectFieldId = AWBMessagingStockObjectFields.Where(d => d.FieldName == "Remaining" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn allAWBMessagingStocksColumn05 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAWBMessagingStocksQuery.Id, IndexOrder = 5, ObjectFieldId = AWBMessagingStockObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn allAWBMessagingStocksColumn06 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAWBMessagingStocksQuery.Id, IndexOrder = 6, ObjectFieldId = AWBMessagingStockObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 350 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn allAWBMessagingStocksColumn07 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAWBMessagingStocksQuery.Id, IndexOrder = 7, ObjectFieldId = AWBMessagingStockObjectFields.Where(d => d.FieldName == "TotalPrice" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
 
             #endregion
 
@@ -59017,7 +58175,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTable ProductTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ProductType" && d.Tenant == 0).FirstOrDefault();
             ObjectTable SpecialServicsTypeTable = ObjectContext.ObjectTables.Where(d => d.Name == "SpecialServicesType" && d.Tenant == 0).FirstOrDefault();
             ObjectTable RegionTable = ObjectContext.ObjectTables.Where(d => d.Name == "Region" && d.Tenant == 0).FirstOrDefault();
-            ObjectTable MessagingStockTable = ObjectContext.ObjectTables.Where(d => d.Name == "MessagingStock" && d.Tenant == 0).FirstOrDefault();
+            ObjectTable AWBMessagingStockTable = ObjectContext.ObjectTables.Where(d => d.Name == "AWBMessagingStock" && d.Tenant == 0).FirstOrDefault();
             ObjectTable CustomerSizeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerSize" && d.Tenant == 0).FirstOrDefault();
             ObjectTable QuoteStageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteStage" && d.Tenant == 0).FirstOrDefault();
             ObjectTable CityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CountryCity" && d.Tenant == 0).FirstOrDefault();
@@ -59259,15 +58417,16 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature customeAgentADDRESSESFeature = tenantFeatures.Where(d => d.Code == "ADDRESSES" && d.ObjectTableId == CustomAgentsObject.Id).FirstOrDefault();
             Feature customeAgentCONTACTSFeature = tenantFeatures.Where(d => d.Code == "CONTACTS" && d.ObjectTableId == CustomAgentsObject.Id).FirstOrDefault();
             Feature customeAgentEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == CustomAgentsObject.Id).FirstOrDefault();
-            Feature customAgentDOCSINFeature = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == CustomAgentsObject.Id).FirstOrDefault();
 
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = customeAgentGENERALFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CustomAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "CustomAgent.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "CUGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = customeAgentBILLINGFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = CustomAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "CustomAgent.TH.Billing" && d.Tenant == 0).FirstOrDefault().Id, Code = "CUBL", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = generalAccountingTransfer.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.CustomAgentAccountingTabControl", ObjectTableId = CustomAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "CustomAgent.TH.Accounting" && d.Tenant == 0).FirstOrDefault().Id, Code = "CUAC", Tenant = 0, IndexOrder = 2, HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = customeAgentADDRESSESFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = CustomAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "CustomAgent.TH.Addresses" && d.Tenant == 0).FirstOrDefault().Id, Code = "CUAD", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = customeAgentCONTACTSFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = CustomAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "CustomAgent.TH.Contacts" && d.Tenant == 0).FirstOrDefault().Id, Code = "CUCO", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = customAgentDOCSINFeature.Id, ControlPath = "", ObjectTableId = CustomAgentsObject.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "CustomAgent.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Code = "CGDI", Tenant = 0, IndexOrder = 5, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/CustomAgent/CustomAgentDocsInTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = customeAgentEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "CustomAgent.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "CUEV", Tenant = 0, IndexOrder = 6 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = customeAgentEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "CustomAgent.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "CUEV", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+
+
+
             #endregion
 
             #region ShippingAgent
@@ -59276,15 +58435,12 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature shippingAgentADDRESSESFeature = tenantFeatures.Where(d => d.Code == "ADDRESSES" && d.ObjectTableId == ShippingAgentsObject.Id).FirstOrDefault();
             Feature shippingAgentCONTACTSFeature = tenantFeatures.Where(d => d.Code == "CONTACTS" && d.ObjectTableId == ShippingAgentsObject.Id).FirstOrDefault();
             Feature shippingAgentEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == ShippingAgentsObject.Id).FirstOrDefault();
-            Feature shippingAgentDOCSINFeature = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == ShippingAgentsObject.Id).FirstOrDefault();
-
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingAgentGENERALFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShippingAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingAgent.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "SAGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingAgentBILLINGFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = ShippingAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingAgent.TH.Billing" && d.Tenant == 0).FirstOrDefault().Id, Code = "SABL", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = generalAccountingTransfer.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.ShippingAgentAccountingTabControl", ObjectTableId = ShippingAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingAgent.TH.Accounting" && d.Tenant == 0).FirstOrDefault().Id, Code = "SAAC", Tenant = 0, IndexOrder = 2, HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingAgentADDRESSESFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = ShippingAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingAgent.TH.Addresses" && d.Tenant == 0).FirstOrDefault().Id, Code = "SAAD", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingAgentCONTACTSFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = ShippingAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingAgent.TH.Contacts" && d.Tenant == 0).FirstOrDefault().Id, Code = "SACO", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingAgentDOCSINFeature.Id, ControlPath = "", ObjectTableId = ShippingAgentsObject.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingAgent.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Code = "SGDI", Tenant = 0, IndexOrder = 5, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/ShippingAgent/ShippingAgentDocsInTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingAgentEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ShippingAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingAgent.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "SAEV", Tenant = 0, IndexOrder = 6 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingAgentEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ShippingAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingAgent.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "SAEV", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #region Airlines
@@ -59297,7 +58453,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature airlineEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == AirlinesObject.Id).FirstOrDefault();
             Feature airlineCCSFeature = tenantFeatures.Where(d => d.Code == "CCSSettings" && d.ObjectTableId == AirlinesObject.Id).FirstOrDefault();
             Feature airlineAdaptationsFeature = tenantFeatures.Where(d => d.Code == "Adaptations" && d.ObjectTableId == AirlinesObject.Id).FirstOrDefault();
-            Feature airlineDOCSINFeature = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == AirlinesObject.Id).FirstOrDefault();
 
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = airlineGENERALFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AirlineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Airline.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "ALGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = airlineBILLINGFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = AirlineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Airline.TH.Billing" && d.Tenant == 0).FirstOrDefault().Id, Code = "ALBL", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
@@ -59308,8 +58463,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = airlineSURCHARGETARRIFFeature.Id, ControlPath = "Simplog.FreightLib.Views.TariffTabs.SurchargeTariff", ObjectTableId = AirlineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Airline.TH.SurchargeTariff" && d.Tenant == 0).FirstOrDefault().Id, Code = "ALSU", Tenant = 0, IndexOrder = 6, HtmlComponentUrl = "./CommonModules/CommonAirline/Components/EditTabs/AirlineSurchargeTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = airlineCCSFeature.Id, ControlPath = "Simplog.FreightLib.Views.Tabs.AirlineCCSSettingsTabControl", ObjectTableId = AirlineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Airline.TH.CCSSettings" && d.Tenant == 0).FirstOrDefault().Id, Code = "ALCH", Tenant = 0, IndexOrder = 7, HtmlComponentUrl = "./CommonModules/CommonAirline/Components/EditTabs/AirlineCCSSettingsTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = airlineAdaptationsFeature.Id, ControlPath = "Simplog.FreightLib.Views.Tabs.AirlineAdaptationsTabControl", ObjectTableId = AirlineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Airline.TH.Adaptations" && d.Tenant == 0).FirstOrDefault().Id, Code = "ALDP", Tenant = 0, IndexOrder = 8, HtmlComponentUrl = "./CommonModules/CommonAirline/Components/EditTabs/AirlineAdaptationsTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = airlineDOCSINFeature.Id, ControlPath = "", ObjectTableId = AirlinesObject.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Airline.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Code = "ALDI", Tenant = 0, IndexOrder = 9, HtmlComponentUrl = "./CommonModules/CommonAirline/Components/EditTabs/AirlineDocsInTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = airlineEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AirlineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Airline.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "ALEV", Tenant = 0, IndexOrder = 10 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = airlineEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AirlineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Airline.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "ALEV", Tenant = 0, IndexOrder = 9 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #region ShippingLine
@@ -59319,7 +58473,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature shippingLineCONTACTSFeature = tenantFeatures.Where(d => d.Code == "CONTACTS" && d.ObjectTableId == ShippingLinesObject.Id).FirstOrDefault();
             Feature shippingLineEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == ShippingLinesObject.Id).FirstOrDefault();
             Feature shippingLineFeature_INTTRA = tenantFeatures.Where(d => d.Code == "INTTRA" && d.ObjectTableId == ShippingLinesObject.Id).FirstOrDefault();
-            Feature shippingLineDOCSINFeature = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == ShippingLinesObject.Id).FirstOrDefault();
 
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingLineGENERALFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShippingLineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingLine.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "SLGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingLineBILLINGFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = ShippingLineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingLine.TH.Billing" && d.Tenant == 0).FirstOrDefault().Id, Code = "SLBL", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
@@ -59327,8 +58480,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingLineFeature_INTTRA.Id, ControlPath = "NoTab", ObjectTableId = ShippingLineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingLine.TH.INTTRA" && d.Tenant == 0).FirstOrDefault().Id, Code = "INTT", Tenant = 0, IndexOrder = 3, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/ShippingLine/ShippingLineInttraTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingLineADDRESSESFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = ShippingLineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingLine.TH.Addresses" && d.Tenant == 0).FirstOrDefault().Id, Code = "SLAD", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingLineCONTACTSFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = ShippingLineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingLine.TH.Contacts" && d.Tenant == 0).FirstOrDefault().Id, Code = "SLCO", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingLineDOCSINFeature.Id, ControlPath = "", ObjectTableId = ShippingLinesObject.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingLine.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Code = "SLDI", Tenant = 0, IndexOrder = 6, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/ShippingLine/ShippingLineDocsInTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingLineEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ShippingLineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingLine.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "SLEV", Tenant = 0, IndexOrder = 7 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingLineEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ShippingLineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingLine.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "SLEV", Tenant = 0, IndexOrder = 6 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #region Trucker
@@ -59337,15 +58489,13 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature truckerADDRESSESFeature = tenantFeatures.Where(d => d.Code == "ADDRESSES" && d.ObjectTableId == TruckersObject.Id).FirstOrDefault();
             Feature truckerCONTACTSFeature = tenantFeatures.Where(d => d.Code == "CONTACTS" && d.ObjectTableId == TruckersObject.Id).FirstOrDefault();
             Feature truckerEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == TruckersObject.Id).FirstOrDefault();
-            Feature truckerDOCSINFeature = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == TruckersObject.Id).FirstOrDefault();
 
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = truckerGENERALFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TruckerTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Trucker.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "TRGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = truckerBILLINGFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = TruckerTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Trucker.TH.Billing" && d.Tenant == 0).FirstOrDefault().Id, Code = "TRBL", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = generalAccountingTransfer.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.TruckerAccountingTabControl", ObjectTableId = TruckerTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Trucker.TH.Accounting" && d.Tenant == 0).FirstOrDefault().Id, Code = "TRAC", Tenant = 0, IndexOrder = 2, HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = truckerADDRESSESFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = TruckerTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Trucker.TH.Addresses" && d.Tenant == 0).FirstOrDefault().Id, Code = "TRAD", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = truckerCONTACTSFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = TruckerTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Trucker.TH.Contacts" && d.Tenant == 0).FirstOrDefault().Id, Code = "TRCO", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = truckerDOCSINFeature.Id, ControlPath = "", ObjectTableId = TruckersObject.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Trucker.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Code = "TRDI", Tenant = 0, IndexOrder = 5, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Trucker/TruckerDocsInTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = truckerEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TruckerTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Trucker.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "TREV", Tenant = 0, IndexOrder = 6 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = truckerEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TruckerTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Trucker.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "TREV", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #region Vendor
@@ -59354,15 +58504,13 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature vendorADDRESSESFeature = tenantFeatures.Where(d => d.Code == "ADDRESSES" && d.ObjectTableId == VendorObject.Id).FirstOrDefault();
             Feature vendorCONTACTSFeature = tenantFeatures.Where(d => d.Code == "CONTACTS" && d.ObjectTableId == VendorObject.Id).FirstOrDefault();
             Feature vendorEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == VendorObject.Id).FirstOrDefault();
-            Feature vendorDOCSINFeature = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == VendorObject.Id).FirstOrDefault();
 
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vendorGENERALFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = VendorTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Vendor.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "VDGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vendorBILLINGFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = VendorTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Vendor.TH.Billing" && d.Tenant == 0).FirstOrDefault().Id, Code = "VDBL", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = generalAccountingTransfer.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.VendorAccountingTabControl", ObjectTableId = VendorTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Vendor.TH.Accounting" && d.Tenant == 0).FirstOrDefault().Id, Code = "VDAC", Tenant = 0, IndexOrder = 2, HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vendorADDRESSESFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = VendorTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Vendor.TH.Addresses" && d.Tenant == 0).FirstOrDefault().Id, Code = "VDAD", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vendorCONTACTSFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = VendorTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Vendor.TH.Contacts" && d.Tenant == 0).FirstOrDefault().Id, Code = "VDCO", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vendorDOCSINFeature.Id, ControlPath = "", ObjectTableId = VendorObject.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Vendor.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Code = "VDDI", Tenant = 0, IndexOrder = 5, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Vendor/VendorDocsInTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vendorEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = VendorTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Vendor.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "VDEV", Tenant = 0, IndexOrder = 6 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vendorEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = VendorTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Vendor.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "VDEV", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #region warehouse
@@ -59371,15 +58519,13 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature warehouseADDRESSESFeature = tenantFeatures.Where(d => d.Code == "ADDRESSES" && d.ObjectTableId == WareHouseObject.Id).FirstOrDefault();
             Feature warehouseCONTACTSFeature = tenantFeatures.Where(d => d.Code == "CONTACTS" && d.ObjectTableId == WareHouseObject.Id).FirstOrDefault();
             Feature warehouseEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == WareHouseObject.Id).FirstOrDefault();
-            Feature warehouseDOCSINFeature = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == WareHouseObject.Id).FirstOrDefault();
 
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = warehouseGENERALFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = WareHouseTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Warehouse.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "WHGC", Tenant = 0, IndexOrder = 0, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Warehouse/WarehouseGeneralTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = warehouseBILLINGFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = WareHouseTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Warehouse.TH.Billing" && d.Tenant == 0).FirstOrDefault().Id, Code = "WHBL", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = generalAccountingTransfer.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.WarehouseAccountingTabControl", ObjectTableId = WareHouseTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Warehouse.TH.Accounting" && d.Tenant == 0).FirstOrDefault().Id, Code = "WHAC", Tenant = 0, IndexOrder = 2, HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = warehouseADDRESSESFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = WareHouseTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Warehouse.TH.Address" && d.Tenant == 0).FirstOrDefault().Id, Code = "WHAD", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = warehouseCONTACTSFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = WareHouseTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Warehouse.TH.Contacts" && d.Tenant == 0).FirstOrDefault().Id, Code = "WHCO", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = warehouseDOCSINFeature.Id, ControlPath = "", ObjectTableId = WareHouseObject.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "WareHouse.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Code = "WHDI", Tenant = 0, IndexOrder = 5, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Warehouse/WarehouseDocsInTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = warehouseEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WareHouseTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Warehouse.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "WHEV", Tenant = 0, IndexOrder = 6 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = warehouseEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WareHouseTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Warehouse.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "WHEV", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #region Participant
@@ -59389,16 +58535,14 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ParticipantCONTACTSFeature = tenantFeatures.Where(d => d.Code == "CONTACTS" && d.ObjectTableId == ParticipantObject.Id).FirstOrDefault();
             Feature ParticipantEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == ParticipantObject.Id).FirstOrDefault();
             Feature ParticipantNOTIFYFeature = tenantFeatures.Where(d => d.Code == "NOTIFY" && d.ObjectTableId == ParticipantObject.Id).FirstOrDefault();
-            Feature ParticipantDOCSINFeature = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == ParticipantObject.Id).FirstOrDefault();
 
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantGENERALFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.ParticipantGeneralTabControl", HtmlComponentUrl = "./CommonPartners/Components/EditTabs/Participant//ParticipantGeneralTabComponent", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantGENERALFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.ParticipantGeneralTabControl", HtmlComponentUrl = "./Common/Components/Maintenance/Participant/ParticipantGeneralTabComponent", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantBILLINGFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.Billing" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCBL", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = generalAccountingTransfer.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.ParticipantAccountingTabControl", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.Accounting" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCAC", Tenant = 0, IndexOrder = 2 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantADDRESSESFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.Addresses" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCAD", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantCONTACTSFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.Contacts" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCCO", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantDOCSINFeature.Id, ControlPath = "", ObjectTableId = ParticipantObject.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Code = "PTDI", Tenant = 0, IndexOrder = 6, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Participant/ParticipantDocsInTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCEV", Tenant = 0, IndexOrder = 7 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantNOTIFYFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.ParticipantNotifyTabControl", HtmlComponentUrl = "./CommonPartners/Components/EditTabs/Participant/ParticipantNotifyTabComponent", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.Notify" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCNO", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCEV", Tenant = 0, IndexOrder = 6 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantNOTIFYFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.ParticipantNotifyTabControl", HtmlComponentUrl = "./Common/Components/Maintenance/Participant/ParticipantNotifyTabComponent", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.Notify" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCNO", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #endregion
@@ -59495,12 +58639,12 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AccountTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Account.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "ACEV", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
-            #region MessagingStockTable
-            Feature MessagingStockGeneralTabFeature = tenantFeatures.Where(d => d.Code == "MessagingStock.Tab.General" && d.ObjectTableId == MessagingStockTable.Id).FirstOrDefault();
-            Feature MessagingStockEventsTabFeature = tenantFeatures.Where(d => d.Code == "MessagingStock.Tab.Events" && d.ObjectTableId == MessagingStockTable.Id).FirstOrDefault();
+            #region AWBMessagingStockTable
+            Feature MessagingStockGeneralTabFeature = tenantFeatures.Where(d => d.Code == "AWBMessagingStock.Tab.General" && d.ObjectTableId == AWBMessagingStockTable.Id).FirstOrDefault();
+            Feature MessagingStockEventsTabFeature = tenantFeatures.Where(d => d.Code == "AWBMessagingStock.Tab.Events" && d.ObjectTableId == AWBMessagingStockTable.Id).FirstOrDefault();
 
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = MessagingStockGeneralTabFeature.Id, ControlPath = "Simplog.ShipmentLib.Views.AWBMessagingStock.MessagingStockGeneralTabControl", ObjectTableId = MessagingStockTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "MessagingStock.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "MSGN", Tenant = 0, IndexOrder = 0, HtmlComponentUrl = "./ShipmentModules/ShipmentStock/Components/MessagingStock/StockGeneralTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = MessagingStockEventsTabFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MessagingStockTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "MessagingStock.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "MSEV", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = MessagingStockGeneralTabFeature.Id, ControlPath = "Simplog.ShipmentLib.Views.AWBMessagingStock.MessagingStockGeneralTabControl", ObjectTableId = AWBMessagingStockTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "AWBMessagingStock.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "MSGN", Tenant = 0, IndexOrder = 0, HtmlComponentUrl = "./ShipmentModules/ShipmentStock/Components/AWBMessagingStock/StockGeneralTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = MessagingStockEventsTabFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AWBMessagingStockTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "AWBMessagingStock.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "MSEV", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #endregion
@@ -60142,1874 +59286,981 @@ namespace WebFreight.Web.MetaDataUpdate
             TextCodeRepository = new TextCodeRepository(ObjectContext);
 
             Dictionary<string, TextCode> textcodes = TextCodeRepository.GetTextCodesByTenant(0).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a);
+            LoadTextCodes_General(textcodes);
+            LoadTextCodes_Master(textcodes);
+            LoadTextCodes_Shipment(textcodes);
+            LoadTextCodes_ShipmentPackage(textcodes);
+            LoadTextCodes_InsideShipmentPackage(textcodes);
+            LoadTextCodes_ShipmentPickUpDelivery(textcodes);
+            LoadTextCodes_ShipmentPickUpDeliveryPackage(textcodes);
+            LoadTextCodes_ShipmentReceivable(textcodes);
+            LoadTextCodes_Quote(textcodes);
+            LoadTextCodes_QuoteCharge(textcodes);
+            LoadTextCodes_ARInvoice(textcodes);
+            LoadTextCodes_ARInvoiceLine(textcodes);
+            LoadTextCodes_DocsOut(textcodes);
+            LoadTextCodes_DocsIn(textcodes);
+            LoadTextCodes_Address(textcodes);
+            LoadTextCodes_Contact(textcodes);
+            LoadTextCodes_Customer(textcodes);
+            LoadTextCodes_Agent(textcodes);
+            LoadTextCodes_CustomAgent(textcodes);
+            LoadTextCodes_ShippingAgent(textcodes);
+            LoadTextCodes_Airline(textcodes);
+            LoadTextCodes_ShippingLine(textcodes);
+            LoadTextCodes_Trucker(textcodes);
+            LoadTextCodes_Vendor(textcodes);
+            LoadTextCodes_FollowUp(textcodes);
+            LoadTextCodes_VatTypePercentage(textcodes);
+            LoadTextCodes_RatesTable(textcodes);
+            LoadTextCodes_Port(textcodes);
+            LoadTextCodes_PackageType(textcodes);
+            LoadTextCodes_DocumentType(textcodes);
+            LoadTextCodes_DocumentTypeTemplate(textcodes);
+            LoadTextCodes_DocumentTypeCustomField(textcodes);
+            LoadTextCodes_DocumentTypeCopy(textcodes);
+            LoadTextCodes_Warehouse(textcodes);
+            LoadTextCodes_MAWBStack(textcodes);
+            LoadTextCodes_TarrifHeader(textcodes);
+            LoadTextCodes_TarrifCharge(textcodes);
+            LoadTextCodes_User(textcodes);
+            LoadTextCodes_Account(textcodes);
+            LoadTextCodes_Role(textcodes);
+            LoadTextCodes_Restriction(textcodes);
+            LoadTextCodes_APInvoice(textcodes);
+            LoadTextCodes_APInvoiceLine(textcodes);
+            LoadTextCodes_Events(textcodes);
+            LoadTextCodes_ARPayments(textcodes);
+            LoadTextCodes_APPayments(textcodes);
+            LoadTextCodes_ChargesType(textcodes);
+            LoadTextCodes_Tenant(textcodes);
+            LoadTextCodes_CommLog(textcodes);
+            LoadTextCodes_AnalyzeQueue(textcodes);
+            LoadTextCodes_AccountingTransfer(textcodes);
+            LoadTextCodes_ErrorLog(textcodes);
+            LoadTextCodes_Report(textcodes);
+            LoadTextCodes_QuoteTemplate(textcodes);
+            LoadTextCodes_InboundEmail(textcodes);
+            LoadTextCodes_CustomerTenantAccess(textcodes);
+            LoadTextCodes_FBLStock(textcodes);
+            LoadTextCodes_BankAccountLites(textcodes);
 
-            if (LogitudeSettings.WorkEnvironment == "customs")
+            #region ObjectTable
+            ObjectTable ShipmentTable = ObjectContext.ObjectTables.Where(f => f.Name == "Shipment" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable MasterTable = ObjectContext.ObjectTables.Where(f => f.Name == "Master" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable PortTable = ObjectContext.ObjectTables.Where(f => f.Name == "Port" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable CountryTable = ObjectContext.ObjectTables.Where(f => f.Name == "Country" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable AgentTable = ObjectContext.ObjectTables.Where(f => f.Name == "Agent" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable IncotermTable = ObjectContext.ObjectTables.Where(f => f.Name == "Incoterm" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable PaymentTermTable = ObjectContext.ObjectTables.Where(f => f.Name == "PaymentTerm" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable VatTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "VatType" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable CustomerTable = ObjectContext.ObjectTables.Where(f => f.Name == "Customer" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable CustomAgentTable = ObjectContext.ObjectTables.Where(f => f.Name == "CustomAgent" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable ShippingAgentTable = ObjectContext.ObjectTables.Where(f => f.Name == "ShippingAgent" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable AirlineTable = ObjectContext.ObjectTables.Where(f => f.Name == "Airline" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable ShippingLineTable = ObjectContext.ObjectTables.Where(f => f.Name == "ShippingLine" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable TruckerTable = ObjectContext.ObjectTables.Where(f => f.Name == "Trucker" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable CurrencyTable = ObjectContext.ObjectTables.Where(f => f.Name == "Currency" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable ChargesTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "ChargesType" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable GlobalZoneTable = ObjectContext.ObjectTables.Where(f => f.Name == "GlobalZone" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable ContactTable = ObjectContext.ObjectTables.Where(f => f.Name == "Contact" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable UserTable = ObjectContext.ObjectTables.Where(f => f.Name == "User" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable BranchTable = ObjectContext.ObjectTables.Where(f => f.Name == "Branch" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable DepartmentTable = ObjectContext.ObjectTables.Where(f => f.Name == "Department" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable QuoteTemplateTable = ObjectContext.ObjectTables.Where(f => f.Name == "QuoteTemplate" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable StateTable = ObjectContext.ObjectTables.Where(f => f.Name == "State" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable PackageTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "PackageType" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable DocumentTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "DocumentType" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable RatesTableTable = ObjectContext.ObjectTables.Where(f => f.Name == "RatesTable" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable EventTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "EventType" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable VesselTable = ObjectContext.ObjectTables.Where(f => f.Name == "Vessel" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable WareHouseTable = ObjectContext.ObjectTables.Where(f => f.Name == "Warehouse" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable GenaralTable = ObjectContext.ObjectTables.Where(f => f.Name == "General" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable QuoteTable = ObjectContext.ObjectTables.Where(f => f.Name == "Quote" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable InvoiceTable = ObjectContext.ObjectTables.Where(f => f.Name == "ARInvoice" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable masterTable = ObjectContext.ObjectTables.Where(f => f.Name == "Master" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable accountTable = ObjectContext.ObjectTables.Where(f => f.Name == "Account" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable paymentTable = ObjectContext.ObjectTables.Where(f => f.Name == "ARPayment" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable APInvoiceTable = ObjectContext.ObjectTables.Where(f => f.Name == "APInvoice" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable APPaymentTable = ObjectContext.ObjectTables.Where(f => f.Name == "APPayment" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable VendorTable = ObjectContext.ObjectTables.Where(f => f.Name == "Vendor" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable TenantManagementsTable = ObjectContext.ObjectTables.Where(f => f.Name == "TenantManagement" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable CommLogsTable = ObjectContext.ObjectTables.Where(f => f.Name == "CommunicationLog" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable AnalyzeQueuesTable = ObjectContext.ObjectTables.Where(f => f.Name == "AnalyzeQueue" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable CreditCardTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "CreditCardType" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable AccountingTransferHeaderTable = ObjectContext.ObjectTables.Where(f => f.Name == "AccountingTransferHeader" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable MoveTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "MoveType" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable ErrorLogTable = ObjectContext.ObjectTables.Where(f => f.Name == "ErrorLog" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable ReportTable = ObjectContext.ObjectTables.Where(f => f.Name == "Report" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable LeadSourceTable = ObjectContext.ObjectTables.Where(f => f.Name == "LeadSource" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable CompetitorObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Competitor" && d.Tenant == 0).FirstOrDefault();
+            ObjectTable CommodityTable = ObjectContext.ObjectTables.Where(f => f.Name == "Commodity" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable AdditionalServiceTable = ObjectContext.ObjectTables.Where(f => f.Name == "AdditionalService" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable ExternalSystemsTablesCodeTable = ObjectContext.ObjectTables.Where(f => f.Name == "ExternalSystemsTablesCode" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable IndustryTable = ObjectContext.ObjectTables.Where(f => f.Name == "Industry" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable ProductTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "ProductType" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable BusinessUnitTable = ObjectContext.ObjectTables.Where(f => f.Name == "BusinessUnit" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable SpecialServicesTypesTables = ObjectContext.ObjectTables.Where(f => f.Name == "SpecialServicesType" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable RegionTable = ObjectContext.ObjectTables.Where(f => f.Name == "Region" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable LogitudeLeadTable = ObjectContext.ObjectTables.Where(f => f.Name == "LogitudeLead" && f.Tenant == 0).FirstOrDefault();
+
+            ObjectTable AWBMessagingStockTable = ObjectContext.ObjectTables.Where(f => f.Name == "AWBMessagingStock" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable CustomerSizeTable = ObjectContext.ObjectTables.Where(f => f.Name == "CustomerSize" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable QuoteStageTable = ObjectContext.ObjectTables.Where(f => f.Name == "QuoteStage" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable CountryCityTable = ObjectContext.ObjectTables.Where(f => f.Name == "CountryCity" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable MeasurementTable = ObjectContext.ObjectTables.Where(f => f.Name == "Measurement" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable distributorTable = ObjectContext.ObjectTables.Where(f => f.Name == "Distributor" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable ComputingPartnerObjectTable = ObjectContext.ObjectTables.Where(f => f.Name == "ComputingPartner" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable BluesnapContractTable = ObjectContext.ObjectTables.Where(f => f.Name == "BluesnapContract" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable DocumentTypeTemplateTable = ObjectContext.ObjectTables.Where(f => f.Name == "DocumentTypeTemplate" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable DocumentFolderTable = ObjectContext.ObjectTables.Where(f => f.Name == "DocumentFolder" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable EmailAlertSettingTable = ObjectContext.ObjectTables.Where(f => f.Name == "EmailAlertSetting" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable AccountingSystemTable = ObjectContext.ObjectTables.Where(f => f.Name == "AccountingSystem" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable AWBAdditionalHandlingInfoTable = ObjectContext.ObjectTables.Where(f => f.Name == "AWBAdditionalHandlingInfo" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable InboundEmailTable = ObjectContext.ObjectTables.Where(f => f.Name == "InboundEmail" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable CustomerTenantAccessTable = ObjectContext.ObjectTables.Where(f => f.Name == "CustomerTenantAccess" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable CustomerTenantAccessRequestTable = ObjectContext.ObjectTables.Where(f => f.Name == "CustomerTenantAccessRequest" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable HybridPartnerTable = ObjectContext.ObjectTables.Where(f => f.Name == "HybridPartner" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable ParticipantTable = ObjectContext.ObjectTables.Where(f => f.Name == "Participant" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable AirlineStatisticsTable = ObjectContext.ObjectTables.Where(f => f.Name == "AirlineStatistics" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable TransmissionLogTable = ObjectContext.ObjectTables.Where(f => f.Name == "LogitudeMessagesTransmissionLog" && f.Tenant == 0).FirstOrDefault();
+
+            ObjectTable CustomerFieldsUpdateSettingTable = ObjectContext.ObjectTables.Where(f => f.Name == "CustomerFieldsUpdateSetting" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable ChargesGroupTable = ObjectContext.ObjectTables.Where(f => f.Name == "ChargesGroup" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable DocumentsFilingTable = ObjectContext.ObjectTables.Where(f => f.Name == "DocumentsFiling" && f.Tenant == 0).FirstOrDefault();
+
+            ObjectTable BankAccountLiteTable = ObjectContext.ObjectTables.Where(f => f.Name == "BankAccountLite" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable AccountingPaymentMethodTable = ObjectContext.ObjectTables.Where(f => f.Name == "AccountingPaymentMethod" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable APPaymentMethodTable = ObjectContext.ObjectTables.Where(f => f.Name == "APPaymentMethod" && f.Tenant == 0).FirstOrDefault();
+
+            #endregion
+
+            string _ID = ShipmentTable.Id;
+
+            #region TableDescription
+            TextCode Incotermtc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.O.TableDescription", DefaultText = "Define delivery terms specifying the default method – collect or prepaid – for freight and other charges.", ObjectTableId = IncotermTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            IncotermTable.DescriptionTextCodeId = Incotermtc.Id;
+
+            TextCode PaymentTermtc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.O.TableDescription", DefaultText = "Define payment terms, specifying the number of days for calculating payment due date for invoices.", ObjectTableId = PaymentTermTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            PaymentTermTable.DescriptionTextCodeId = PaymentTermtc.Id;
+
+            TextCode Currencytc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Currency.O.TableDescription", DefaultText = "Maintain currency information.", ObjectTableId = CurrencyTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            CurrencyTable.DescriptionTextCodeId = Currencytc.Id;
+
+            TextCode VatTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.O.TableDescription", DefaultText = "Maintain the types of VAT applied in your country. Update the VAT percents according to dates.", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            VatTypeTable.DescriptionTextCodeId = VatTypetc.Id;
+
+            TextCode ChargesTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.O.TableDescription", DefaultText = "Add and maintain the services you use or provide, both for receivable and payable transactions. Define properties for billing and printing on AWB.", ObjectTableId = ChargesTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            ChargesTypeTable.DescriptionTextCodeId = ChargesTypetc.Id;
+
+            TextCode RatesTabletc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.O.TableDescription", DefaultText = "Insert the daily exchange rates of currencies to your base currency.", ObjectTableId = RatesTableTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            RatesTableTable.DescriptionTextCodeId = RatesTabletc.Id;
+
+            TextCode Porttc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.O.TableDescription", DefaultText = "Logitude supplies and maintains the ports for you. You can modify port names and add local names.", ObjectTableId = PortTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            PortTable.DescriptionTextCodeId = Porttc.Id;
+
+            TextCode Countrytc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.O.TableDescription", DefaultText = "Logitude supplies and maintains the countries for you. You can maintain the country information, and connect countries to global zones and the EC.", ObjectTableId = CountryTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            CountryTable.DescriptionTextCodeId = Countrytc.Id;
+
+            TextCode GlobalZonetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GlobalZone.O.TableDescription", DefaultText = "Logitude supplies the global zones for you. You can modify the names and add local names.", ObjectTableId = GlobalZoneTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            GlobalZoneTable.DescriptionTextCodeId = GlobalZonetc.Id;
+
+            TextCode Branchtc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.O.TableDescription", DefaultText = "Define your company’s branches and specify default data, such as ports, that applies at each branch.", ObjectTableId = BranchTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            BranchTable.DescriptionTextCodeId = Branchtc.Id;
+
+            TextCode Departmenttc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Department.O.TableDescription", DefaultText = "Define your organization’s departments.", ObjectTableId = DepartmentTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            DepartmentTable.DescriptionTextCodeId = Departmenttc.Id;
+
+            TextCode Contacttc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.TableDescription", DefaultText = "Manage your company contacts, which includes contact information from partners and Logitude users.", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            ContactTable.DescriptionTextCodeId = Contacttc.Id;
+
+            TextCode Usertc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.O.TableDescription", DefaultText = "Manage your Logitude users, associate users to roles and define restrictions.", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            UserTable.DescriptionTextCodeId = Usertc.Id;
+
+            TextCode Statetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.O.TableDescription", DefaultText = "Logitude supplies the states for you. You can modify the names and add local names.", ObjectTableId = StateTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            StateTable.DescriptionTextCodeId = Statetc.Id;
+
+            TextCode DocumentTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.O.TableDescription", DefaultText = "Create document types, use the layout designer to build document templates and customize documents.", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            DocumentTypeTable.DescriptionTextCodeId = DocumentTypetc.Id;
+
+            TextCode EventTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.O.TableDescription", DefaultText = "Maintain event types for the activities you want Logitude to log, specify event types for follow-up and those that can be entered manually.", ObjectTableId = EventTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            EventTypeTable.DescriptionTextCodeId = EventTypetc.Id;
+
+            TextCode PackageTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.O.TableDescription", DefaultText = "Maintain the details of the types of packages you service – cartons, pallets, containers, etc.", ObjectTableId = PackageTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            PackageTypeTable.DescriptionTextCodeId = PackageTypetc.Id;
+
+            TextCode Vesseltc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vessel.O.TableDescription", DefaultText = "Add and manage information about the vessels you work with.", ObjectTableId = VesselTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            VesselTable.DescriptionTextCodeId = Vesseltc.Id;
+
+            TextCode CreditCardTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.O.TableDescription", DefaultText = "Maintain Credit Cards information.", ObjectTableId = CreditCardTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            CreditCardTypeTable.DescriptionTextCodeId = CreditCardTc.Id;
+
+            TextCode MeasurementTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.O.TableDescription", DefaultText = "Manage the unit of measurement names to be printed in documents.", ObjectTableId = MeasurementTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            MeasurementTable.DescriptionTextCodeId = MeasurementTc.Id;
+
+            TextCode RegionTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.O.TableDescription", DefaultText = "Define the geographic regions to be used for specifying customers' regional location.", ObjectTableId = RegionTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            RegionTable.DescriptionTextCodeId = RegionTc.Id;
+
+            TextCode CountryCityTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CountryCity.O.TableDescription", DefaultText = "Manage the cities to be used in addresses.", ObjectTableId = CountryCityTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            CountryCityTable.DescriptionTextCodeId = CountryCityTc.Id;
+
+            TextCode MoveTypeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.O.TableDescription", DefaultText = "Define the move types for shipments by Air, Ocean or Land transportation.", ObjectTableId = MoveTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            MoveTypeTable.DescriptionTextCodeId = MoveTypeTc.Id;
+
+            TextCode ReportTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.O.TableDescription", DefaultText = "Maintain all the reports you can use in the system.", ObjectTableId = ReportTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            ReportTable.DescriptionTextCodeId = ReportTc.Id;
+
+            TextCode QuoteTemplateTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.O.TableDescription", DefaultText = "Create new quote templates and maintain existing ones.", ObjectTableId = QuoteTemplateTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            QuoteTemplateTable.DescriptionTextCodeId = QuoteTemplateTc.Id;
+
+            TextCode CommodityTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.O.TableDescription", DefaultText = "Manage the commodities to be used in shipments and printed and sent in FWB and FHL messages.", ObjectTableId = CommodityTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            CommodityTable.DescriptionTextCodeId = CommodityTc.Id;
+
+            TextCode SpecialServiceTypeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialServicesType.O.TableDescription", DefaultText = "Define the special services you want to use in your shipments.", ObjectTableId = SpecialServicesTypesTables.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            SpecialServicesTypesTables.DescriptionTextCodeId = SpecialServiceTypeTc.Id;
+
+            TextCode BusinessUnitTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.O.TableDescription", DefaultText = "Define the business units you want to work with for controlling access to information and sharing of information.", ObjectTableId = BusinessUnitTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            BusinessUnitTable.DescriptionTextCodeId = BusinessUnitTc.Id;
+
+            TextCode CustomerSizeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.O.TableDescription", DefaultText = "Define sizes for evaluating the volume of customer business.", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            CustomerSizeTable.DescriptionTextCodeId = CustomerSizeTc.Id;
+
+            TextCode QuoteStageTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.O.TableDescription", DefaultText = "Define the stages for handling quotes.", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            QuoteStageTable.DescriptionTextCodeId = QuoteStageTc.Id;
+
+            TextCode LeadSourceTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.O.TableDescription", DefaultText = "Define the sources that supply you with information about  new customers.", ObjectTableId = LeadSourceTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            LeadSourceTable.DescriptionTextCodeId = LeadSourceTc.Id;
+
+            TextCode CompetitorTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Competitor.O.TableDescription", DefaultText = "Define your competitors.", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            CompetitorObjectTable.DescriptionTextCodeId = CompetitorTc.Id;
+
+            TextCode AdditionalServiceTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalService.O.TableDescription", DefaultText = "Define the services that you want to supply to your customers in addition to the regular products.", ObjectTableId = AdditionalServiceTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AdditionalServiceTable.DescriptionTextCodeId = AdditionalServiceTc.Id;
+
+            TextCode IndustryTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.O.TableDescription", DefaultText = "Define industries for use in queries and reports.", ObjectTableId = IndustryTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            IndustryTable.DescriptionTextCodeId = IndustryTc.Id;
+
+            TextCode ProductTypeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.O.TableDescription", DefaultText = "Define the types of products offered to customers.", ObjectTableId = ProductTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            ProductTypeTable.DescriptionTextCodeId = ProductTypeTc.Id;
+
+            TextCode EmailAlertSettingTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EmailAlertSetting.O.TableDescription", DefaultText = "Define the e-mail notifications that will be sent automatically based on different triggers.", ObjectTableId = EmailAlertSettingTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            EmailAlertSettingTable.DescriptionTextCodeId = EmailAlertSettingTc.Id;
+            #endregion
+
+            #region Tabs Headers
+
+            #region partners
+
+            #region customer
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Overview", DefaultText = "Overview", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.General", DefaultText = "General", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Billing", DefaultText = "Billing", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Accounting", DefaultText = "Accounting", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Addresses", DefaultText = "Addresses", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Contacts", DefaultText = "Contacts", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Events", DefaultText = "Events", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Statistics", DefaultText = "Statistics", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Accounting_2", DefaultText = "Accounting", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.DocsOut", DefaultText = "Docs Out", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.CRMDetails", DefaultText = "CRM Details", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Commitments", DefaultText = "Commitment", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Products", DefaultText = "Products", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.AWBStock", DefaultText = "AWB Stock", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Sales", DefaultText = "Sales", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region agent
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.General", DefaultText = "General", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Billing", DefaultText = "Billing", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Accounting", DefaultText = "Accounting", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Addresses", DefaultText = "Addresses", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Contacts", DefaultText = "Contacts", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Events", DefaultText = "Events", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.SharedLogistics", DefaultText = "Shared Logistics", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.DocsOut", DefaultText = "Docs Out", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region vendor
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.General", DefaultText = "General", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Billing", DefaultText = "Billing", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Accounting", DefaultText = "Accounting", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Addresses", DefaultText = "Addresses", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Contacts", DefaultText = "Contacts", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Events", DefaultText = "Events", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region customeAgent
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.General", DefaultText = "General", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Billing", DefaultText = "Billing", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Accounting", DefaultText = "Accounting", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Addresses", DefaultText = "Addresses", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Contacts", DefaultText = "Contacts", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Events", DefaultText = "Events", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region shippingAgent
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.General", DefaultText = "General", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Billing", DefaultText = "Billing", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Accounting", DefaultText = "Accounting", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Addresses", DefaultText = "Addresses", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Contacts", DefaultText = "Contacts", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Events", DefaultText = "Events", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region airlines
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.General", DefaultText = "General", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Billing", DefaultText = "Billing", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Accounting", DefaultText = "Accounting", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Addresses", DefaultText = "Addresses", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Contacts", DefaultText = "Contacts", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.FrieghtTariff", DefaultText = "Frieght Tariff", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.SurchargeTariff", DefaultText = "Surcharge Tariff", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Stack", DefaultText = "Stock", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Events", DefaultText = "Events", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.CCSSettings", DefaultText = "CCS Settings", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Adaptations", DefaultText = "Adaptations", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region shippingLine
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.General", DefaultText = "General", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Billing", DefaultText = "Billing", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Accounting", DefaultText = "Accounting", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Addresses", DefaultText = "Addresses", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Contacts", DefaultText = "Contacts", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Events", DefaultText = "Events", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.INTTRA", DefaultText = "INTTRA", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region trucker
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.General", DefaultText = "General", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Billing", DefaultText = "Billing", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Accounting", DefaultText = "Accounting", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Addresses", DefaultText = "Addresses", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Contacts", DefaultText = "Contacts", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Events", DefaultText = "Events", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region warehouse
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.General", DefaultText = "General", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Billing", DefaultText = "Billing", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Accounting", DefaultText = "Accounting", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Address", DefaultText = "Address", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Contacts", DefaultText = "Contacts", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Events", DefaultText = "Events", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Participant
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.General", DefaultText = "General", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Billing", DefaultText = "Billing", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Accounting", DefaultText = "Accounting", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Addresses", DefaultText = "Addresses", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Contacts", DefaultText = "Contacts", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Events", DefaultText = "Events", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Notify", DefaultText = "Notify", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            #endregion
+            #endregion
+
+            #region billing
+            #region incoterm
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.TH.General", DefaultText = "General", ObjectTableId = IncotermTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.TH.Events", DefaultText = "Events", ObjectTableId = IncotermTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region paymentTerm
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.TH.General", DefaultText = "General", ObjectTableId = PaymentTermTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.TH.Events", DefaultText = "Events", ObjectTableId = PaymentTermTable.Id, Tenant = 0, TextCodeTypeCode = "TH" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.TH.Accounting", DefaultText = "Accounting", ObjectTableId = PaymentTermTable.Id, Tenant = 0, TextCodeTypeCode = "TH" }, TextCodeRepository, textcodes);
+
+            #endregion
+
+            #region currency
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Currency.TH.General", DefaultText = "General", ObjectTableId = CurrencyTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Currency.TH.Accounting", DefaultText = "Accounting", ObjectTableId = CurrencyTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Currency.TH.Events", DefaultText = "Events", ObjectTableId = CurrencyTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+
+            #endregion
+
+            #region vatType
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.TH.General", DefaultText = "General", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.TH.Percentages", DefaultText = "Percentages", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.TH.Accounting", DefaultText = "Accounting", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.TH.Events", DefaultText = "Events", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region chargesType
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.TH.EditChargesType", DefaultText = "General", ObjectTableId = ChargesTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.TH.Accounting", DefaultText = "Accounting", ObjectTableId = ChargesTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.TH.Events", DefaultText = "Events", ObjectTableId = ChargesTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region ratesTable
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.TH.Main", DefaultText = "General", ObjectTableId = RatesTableTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.TH.Events", DefaultText = "Events", ObjectTableId = RatesTableTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Accounts
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Account.TH.General", DefaultText = "General", ObjectTableId = accountTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Account.TH.Events", DefaultText = "Events", ObjectTableId = accountTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            #endregion
+            #endregion
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Competitor.TH.General", DefaultText = "General", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Competitor.TH.Events", DefaultText = "Events", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.TH.General", DefaultText = "General", ObjectTableId = PortTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.TH.Events", DefaultText = "Events", ObjectTableId = PortTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.TH.General", DefaultText = "General", ObjectTableId = CountryTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.TH.Events", DefaultText = "Events", ObjectTableId = CountryTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GlobalZone.TH.General", DefaultText = "General", ObjectTableId = GlobalZoneTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GlobalZone.TH.Events", DefaultText = "Events", ObjectTableId = GlobalZoneTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.TH.General", DefaultText = "General", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.TH.Events", DefaultText = "Events", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.TH.Partners", DefaultText = "Partners", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.General", DefaultText = "General", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Roles", DefaultText = "Roles", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Permissions", DefaultText = "Permissions", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Distributor", DefaultText = "Distributor", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Events", DefaultText = "Events", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Devices", DefaultText = "Devices", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.DocumentFilingInbox", DefaultText = "Filing Inbox", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+
+
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.Details", DefaultText = "Details", LocalDefaultText = "פרטים", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.DocsIn", DefaultText = "Docs In", LocalDefaultText = "מסמכים", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.Docs", DefaultText = "Docs Out", LocalDefaultText = "מסמכים שיצאו", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.TransferDetails", DefaultText = "Transfer Details", LocalDefaultText = "נתוני העברה", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.Events", DefaultText = "Events", LocalDefaultText = "אירועים", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.Communications", DefaultText = "Communication", LocalDefaultText = "תקשורת", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.General", DefaultText = "General", LocalDefaultText = "כללי", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.TransferDetails", DefaultText = "Transfer Details", LocalDefaultText = "נתוני העברה", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.Details", DefaultText = "Details", LocalDefaultText = "פרטים", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.DocsIn", DefaultText = "Docs In", LocalDefaultText = "מסמכים", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.Docs", DefaultText = "Docs Out", LocalDefaultText = "מסמכים שיצאו", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.Events", DefaultText = "Events", LocalDefaultText = "אירועים", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Department.TH.General", DefaultText = "General", ObjectTableId = DepartmentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Department.TH.Events", DefaultText = "Events", ObjectTableId = DepartmentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.TH.General", DefaultText = "General", ObjectTableId = BranchTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.TH.Events", DefaultText = "Events", ObjectTableId = BranchTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.TH.Accounting", DefaultText = "Accounting", ObjectTableId = BranchTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.TH.General", DefaultText = "General", ObjectTableId = StateTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.TH.Events", DefaultText = "Events", ObjectTableId = StateTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.TH.General", DefaultText = "General", ObjectTableId = PackageTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.TH.Events", DefaultText = "Events", ObjectTableId = PackageTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.General", DefaultText = "General", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Templates", DefaultText = "Document Templates", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.SharedLogistics", DefaultText = "Shared Logistics", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.LogBoxTab", DefaultText = "Digital Sign", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.HTMLTemplates", DefaultText = "Email Message Templates", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.CustomFields", DefaultText = "Custom Fields", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Events", DefaultText = "Events", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.PrintingOptions", DefaultText = "Printing Options", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Copies", DefaultText = "Copies", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.TH.General", DefaultText = "General", ObjectTableId = EventTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.TH.Events", DefaultText = "Events", ObjectTableId = EventTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vessel.TH.General", DefaultText = "General", ObjectTableId = VesselTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vessel.TH.Events", DefaultText = "Events", ObjectTableId = VesselTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.TH.General", DefaultText = "General", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.TH.Events", DefaultText = "Events", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.TH.MessageBody", DefaultText = "Message Body", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerFieldsUpdateSetting.TH.General", DefaultText = "General", ObjectTableId = CustomerFieldsUpdateSettingTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesGroup.TH.General", DefaultText = "General", ObjectTableId = ChargesGroupTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.TH.Error", DefaultText = "Error", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.General", DefaultText = "General", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.CCSSettings", DefaultText = "CCS Settings", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Statistics", DefaultText = "Statistics", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.AWBMessagingStock", DefaultText = "AWB Messaging Stock", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Events", DefaultText = "Events", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.TH.General", DefaultText = "General", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.TH.Events", DefaultText = "Events", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.TH.AnalyzeQueueErrors", DefaultText = "Errors", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.TH.MessageBody", DefaultText = "Message Body", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.TH.General", DefaultText = "General", ObjectTableId = CreditCardTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.TH.Events", DefaultText = "Events", ObjectTableId = CreditCardTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ErrorLog.TH.General", DefaultText = "General", ObjectTableId = ErrorLogTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ErrorLog.TH.Events", DefaultText = "Events", ObjectTableId = ErrorLogTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.TH.General", DefaultText = "General", ObjectTableId = ReportTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.TH.Events", DefaultText = "Events", ObjectTableId = ReportTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.TH.Template", DefaultText = "Report Template", ObjectTableId = ReportTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.TH.General", DefaultText = "General", ObjectTableId = LeadSourceTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.TH.Events", DefaultText = "Events", ObjectTableId = LeadSourceTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.TH.General", DefaultText = "General", ObjectTableId = IndustryTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.TH.Events", DefaultText = "Events", ObjectTableId = IndustryTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.TH.General", DefaultText = "General", ObjectTableId = MoveTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.TH.Events", DefaultText = "Events", ObjectTableId = MoveTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeLead.TH.General", DefaultText = "General", ObjectTableId = LogitudeLeadTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ErrorLog.TH.Exception", DefaultText = "Exception", ObjectTableId = ErrorLogTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.TH.General", DefaultText = "General", ObjectTableId = CommodityTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.TH.Events", DefaultText = "Events", ObjectTableId = CommodityTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalService.TH.General", DefaultText = "General", ObjectTableId = AdditionalServiceTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalService.TH.Events", DefaultText = "Events", ObjectTableId = AdditionalServiceTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.TH.General", DefaultText = "General", ObjectTableId = ProductTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.TH.Events", DefaultText = "Events", ObjectTableId = ProductTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.TH.General", DefaultText = "General", ObjectTableId = BusinessUnitTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.TH.Events", DefaultText = "Events", ObjectTableId = BusinessUnitTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialServicesType.TH.General", DefaultText = "General", ObjectTableId = SpecialServicesTypesTables.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialServicesType.TH.Events", DefaultText = "Events", ObjectTableId = SpecialServicesTypesTables.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.TH.General", DefaultText = "General", ObjectTableId = RegionTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.TH.Events", DefaultText = "Events", ObjectTableId = RegionTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AWBMessagingStock.TH.General", DefaultText = "General", ObjectTableId = AWBMessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AWBMessagingStock.TH.Events", DefaultText = "Events", ObjectTableId = AWBMessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.TH.General", DefaultText = "General", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.TH.Events", DefaultText = "Events", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.TH.General", DefaultText = "General", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.TH.Events", DefaultText = "Events", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CountryCity.TH.General", DefaultText = "General", ObjectTableId = CountryCityTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CountryCity.TH.Events", DefaultText = "Events", ObjectTableId = CountryCityTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.TH.General", DefaultText = "General", ObjectTableId = MeasurementTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.TH.Events", DefaultText = "Events", ObjectTableId = MeasurementTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.TH.General", DefaultText = "General", ObjectTableId = distributorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.TH.Tenants", DefaultText = "Tenants", ObjectTableId = distributorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.TH.Events", DefaultText = "Events", ObjectTableId = distributorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.TH.Steps", DefaultText = "Steps", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartner.TH.General", DefaultText = "General", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartner.TH.Events", DefaultText = "Events", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BluesnapContract.TH.General", DefaultText = "General", ObjectTableId = BluesnapContractTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BluesnapContract.TH.Events", DefaultText = "Events", ObjectTableId = BluesnapContractTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSystem.TH.General", DefaultText = "General", ObjectTableId = AccountingSystemTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.DocumentType", DefaultText = "Document Type", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.FromFile", DefaultText = "From File", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.TH.Inactive", DefaultText = "Inactive", ObjectTableId = DocumentTypeTemplateTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AWBAdditionalHandlingInfo.TH.General", DefaultText = "General", ObjectTableId = AWBAdditionalHandlingInfoTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InboundEmail.TH.General", DefaultText = "General", ObjectTableId = InboundEmailTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccessRequest.TH.General", DefaultText = "General", ObjectTableId = CustomerTenantAccessRequestTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccessRequest.TH.Events", DefaultText = "Events", ObjectTableId = CustomerTenantAccessRequestTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.TH.General", DefaultText = "General", ObjectTableId = HybridPartnerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.General", DefaultText = "General", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.RequestBody", DefaultText = "Request Body", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.ResponceBody", DefaultText = "Responce Body", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.Errors", DefaultText = "Errors", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.DiagnosticLog", DefaultText = "Diagnostic Log", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.ResponseBody", DefaultText = "Response Body", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.Exceptions", DefaultText = "Exceptions", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AirlineStatistics.TH.General", DefaultText = "General", ObjectTableId = AirlineStatisticsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Support", DefaultText = "Support", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.TH.General", DefaultText = "General", ObjectTableId = TransmissionLogTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.TH.Audit", DefaultText = "Audit", ObjectTableId = TransmissionLogTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Branding", DefaultText = "Branding", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.TH.General", DefaultText = "General", ObjectTableId = DocumentsFilingTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.TH.Events", DefaultText = "Events", ObjectTableId = DocumentsFilingTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPaymentMethod.TH.General", DefaultText = "General", ObjectTableId = AccountingPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPaymentMethod.TH.Events", DefaultText = "Events", ObjectTableId = AccountingPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPaymentMethod.TH.Accounting", DefaultText = "Accounting", ObjectTableId = AccountingPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPaymentMethod.TH.General", DefaultText = "General", ObjectTableId = APPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPaymentMethod.TH.Events", DefaultText = "Events", ObjectTableId = APPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPaymentMethod.TH.Accounting", DefaultText = "Accounting", ObjectTableId = APPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.TH.Permissions", DefaultText = "Permissions", ObjectTableId = HybridPartnerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            #endregion
+
+            //============= Just For Testing ============= 
+            if (Testing.General.IsTesting)
             {
-                LoadTextCodes_General(textcodes);
-                LoadTextCodes_DocsOut(textcodes);
-                LoadTextCodes_DocsIn(textcodes);
-                LoadTextCodes_Address(textcodes);
-                LoadTextCodes_Contact(textcodes);
-                LoadTextCodes_Customer(textcodes);
-                LoadTextCodes_Agent(textcodes);
-                LoadTextCodes_CustomAgent(textcodes);
-                LoadTextCodes_ShippingAgent(textcodes);
-                LoadTextCodes_Airline(textcodes);
-                LoadTextCodes_ShippingLine(textcodes);
-                LoadTextCodes_Trucker(textcodes);
-                LoadTextCodes_Vendor(textcodes);
-                LoadTextCodes_VatTypePercentage(textcodes);
-                LoadTextCodes_RatesTable(textcodes);
-                LoadTextCodes_Port(textcodes);
-                LoadTextCodes_DocumentType(textcodes);
-                LoadTextCodes_DocumentTypeTemplate(textcodes);
-                LoadTextCodes_DocumentTypeCustomField(textcodes);
-                LoadTextCodes_DocumentTypeCopy(textcodes);
-                LoadTextCodes_Warehouse(textcodes);
-                LoadTextCodes_MAWBStack(textcodes);
-                LoadTextCodes_TarrifHeader(textcodes);
-                LoadTextCodes_TarrifCharge(textcodes);
-                LoadTextCodes_User(textcodes);
-                LoadTextCodes_Account(textcodes);
-                LoadTextCodes_Role(textcodes);
-                LoadTextCodes_Restriction(textcodes);
-                LoadTextCodes_Events(textcodes);
-                LoadTextCodes_ChargesType(textcodes);
-                LoadTextCodes_Tenant(textcodes);
-                LoadTextCodes_CommLog(textcodes);
-                LoadTextCodes_AnalyzeQueue(textcodes);
-                LoadTextCodes_ErrorLog(textcodes);
-                LoadTextCodes_Report(textcodes);
-                LoadTextCodes_InboundEmail(textcodes);
-                LoadTextCodes_CustomerTenantAccess(textcodes);
-                LoadTextCodes_BankAccountLites(textcodes);
-
-                #region ObjectTable
-               
-                
-                ObjectTable PortTable = ObjectContext.ObjectTables.Where(f => f.Name == "Port" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CountryTable = ObjectContext.ObjectTables.Where(f => f.Name == "Country" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AgentTable = ObjectContext.ObjectTables.Where(f => f.Name == "Agent" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable IncotermTable = ObjectContext.ObjectTables.Where(f => f.Name == "Incoterm" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable PaymentTermTable = ObjectContext.ObjectTables.Where(f => f.Name == "PaymentTerm" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable VatTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "VatType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CustomerTable = ObjectContext.ObjectTables.Where(f => f.Name == "Customer" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CustomAgentTable = ObjectContext.ObjectTables.Where(f => f.Name == "CustomAgent" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ShippingAgentTable = ObjectContext.ObjectTables.Where(f => f.Name == "ShippingAgent" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AirlineTable = ObjectContext.ObjectTables.Where(f => f.Name == "Airline" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ShippingLineTable = ObjectContext.ObjectTables.Where(f => f.Name == "ShippingLine" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable TruckerTable = ObjectContext.ObjectTables.Where(f => f.Name == "Trucker" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CurrencyTable = ObjectContext.ObjectTables.Where(f => f.Name == "Currency" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ChargesTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "ChargesType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable GlobalZoneTable = ObjectContext.ObjectTables.Where(f => f.Name == "GlobalZone" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ContactTable = ObjectContext.ObjectTables.Where(f => f.Name == "Contact" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable UserTable = ObjectContext.ObjectTables.Where(f => f.Name == "User" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable BranchTable = ObjectContext.ObjectTables.Where(f => f.Name == "Branch" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable DepartmentTable = ObjectContext.ObjectTables.Where(f => f.Name == "Department" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable StateTable = ObjectContext.ObjectTables.Where(f => f.Name == "State" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable PackageTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "PackageType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable DocumentTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "DocumentType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable RatesTableTable = ObjectContext.ObjectTables.Where(f => f.Name == "RatesTable" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable EventTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "EventType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable VesselTable = ObjectContext.ObjectTables.Where(f => f.Name == "Vessel" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable WareHouseTable = ObjectContext.ObjectTables.Where(f => f.Name == "Warehouse" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable GenaralTable = ObjectContext.ObjectTables.Where(f => f.Name == "General" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable accountTable = ObjectContext.ObjectTables.Where(f => f.Name == "Account" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable VendorTable = ObjectContext.ObjectTables.Where(f => f.Name == "Vendor" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable TenantManagementsTable = ObjectContext.ObjectTables.Where(f => f.Name == "TenantManagement" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CommLogsTable = ObjectContext.ObjectTables.Where(f => f.Name == "CommunicationLog" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AnalyzeQueuesTable = ObjectContext.ObjectTables.Where(f => f.Name == "AnalyzeQueue" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CreditCardTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "CreditCardType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AccountingTransferHeaderTable = ObjectContext.ObjectTables.Where(f => f.Name == "AccountingTransferHeader" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable MoveTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "MoveType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ErrorLogTable = ObjectContext.ObjectTables.Where(f => f.Name == "ErrorLog" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ReportTable = ObjectContext.ObjectTables.Where(f => f.Name == "Report" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable LeadSourceTable = ObjectContext.ObjectTables.Where(f => f.Name == "LeadSource" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CompetitorObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Competitor" && d.Tenant == 0).FirstOrDefault();
-                ObjectTable CommodityTable = ObjectContext.ObjectTables.Where(f => f.Name == "Commodity" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AdditionalServiceTable = ObjectContext.ObjectTables.Where(f => f.Name == "AdditionalService" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ExternalSystemsTablesCodeTable = ObjectContext.ObjectTables.Where(f => f.Name == "ExternalSystemsTablesCode" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable IndustryTable = ObjectContext.ObjectTables.Where(f => f.Name == "Industry" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ProductTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "ProductType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable BusinessUnitTable = ObjectContext.ObjectTables.Where(f => f.Name == "BusinessUnit" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable SpecialServicesTypesTables = ObjectContext.ObjectTables.Where(f => f.Name == "SpecialServicesType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable RegionTable = ObjectContext.ObjectTables.Where(f => f.Name == "Region" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable LogitudeLeadTable = ObjectContext.ObjectTables.Where(f => f.Name == "LogitudeLead" && f.Tenant == 0).FirstOrDefault();
-
-                ObjectTable MessagingStockTable = ObjectContext.ObjectTables.Where(f => f.Name == "MessagingStock" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CustomerSizeTable = ObjectContext.ObjectTables.Where(f => f.Name == "CustomerSize" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable QuoteStageTable = ObjectContext.ObjectTables.Where(f => f.Name == "QuoteStage" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CountryCityTable = ObjectContext.ObjectTables.Where(f => f.Name == "CountryCity" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable MeasurementTable = ObjectContext.ObjectTables.Where(f => f.Name == "Measurement" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable distributorTable = ObjectContext.ObjectTables.Where(f => f.Name == "Distributor" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ComputingPartnerObjectTable = ObjectContext.ObjectTables.Where(f => f.Name == "ComputingPartner" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable BluesnapContractTable = ObjectContext.ObjectTables.Where(f => f.Name == "BluesnapContract" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable DocumentTypeTemplateTable = ObjectContext.ObjectTables.Where(f => f.Name == "DocumentTypeTemplate" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable DocumentFolderTable = ObjectContext.ObjectTables.Where(f => f.Name == "DocumentFolder" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable EmailAlertSettingTable = ObjectContext.ObjectTables.Where(f => f.Name == "EmailAlertSetting" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AccountingSystemTable = ObjectContext.ObjectTables.Where(f => f.Name == "AccountingSystem" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AWBAdditionalHandlingInfoTable = ObjectContext.ObjectTables.Where(f => f.Name == "AWBAdditionalHandlingInfo" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable InboundEmailTable = ObjectContext.ObjectTables.Where(f => f.Name == "InboundEmail" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CustomerTenantAccessTable = ObjectContext.ObjectTables.Where(f => f.Name == "CustomerTenantAccess" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CustomerTenantAccessRequestTable = ObjectContext.ObjectTables.Where(f => f.Name == "CustomerTenantAccessRequest" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable HybridPartnerTable = ObjectContext.ObjectTables.Where(f => f.Name == "HybridPartner" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ParticipantTable = ObjectContext.ObjectTables.Where(f => f.Name == "Participant" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AirlineStatisticsTable = ObjectContext.ObjectTables.Where(f => f.Name == "AirlineStatistics" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable TransmissionLogTable = ObjectContext.ObjectTables.Where(f => f.Name == "LogitudeMessagesTransmissionLog" && f.Tenant == 0).FirstOrDefault();
-
-                ObjectTable CustomerFieldsUpdateSettingTable = ObjectContext.ObjectTables.Where(f => f.Name == "CustomerFieldsUpdateSetting" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ChargesGroupTable = ObjectContext.ObjectTables.Where(f => f.Name == "ChargesGroup" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable DocumentsFilingTable = ObjectContext.ObjectTables.Where(f => f.Name == "DocumentsFiling" && f.Tenant == 0).FirstOrDefault();
-
-                ObjectTable BankAccountLiteTable = ObjectContext.ObjectTables.Where(f => f.Name == "BankAccountLite" && f.Tenant == 0).FirstOrDefault();
-
-                #endregion
-
-
-                #region TableDescription
-                TextCode Incotermtc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.O.TableDescription", DefaultText = "Define delivery terms specifying the default method – collect or prepaid – for freight and other charges.", ObjectTableId = IncotermTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                IncotermTable.DescriptionTextCodeId = Incotermtc.Id;
-
-                TextCode PaymentTermtc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.O.TableDescription", DefaultText = "Define payment terms, specifying the number of days for calculating payment due date for invoices.", ObjectTableId = PaymentTermTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                PaymentTermTable.DescriptionTextCodeId = PaymentTermtc.Id;
-
-                TextCode Currencytc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Currency.O.TableDescription", DefaultText = "Maintain currency information.", ObjectTableId = CurrencyTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                CurrencyTable.DescriptionTextCodeId = Currencytc.Id;
-
-                TextCode VatTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.O.TableDescription", DefaultText = "Maintain the types of VAT applied in your country. Update the VAT percents according to dates.", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                VatTypeTable.DescriptionTextCodeId = VatTypetc.Id;
-
-                TextCode ChargesTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.O.TableDescription", DefaultText = "Add and maintain the services you use or provide, both for receivable and payable transactions. Define properties for billing and printing on AWB.", ObjectTableId = ChargesTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                ChargesTypeTable.DescriptionTextCodeId = ChargesTypetc.Id;
-
-                TextCode RatesTabletc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.O.TableDescription", DefaultText = "Insert the daily exchange rates of currencies to your base currency.", ObjectTableId = RatesTableTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                RatesTableTable.DescriptionTextCodeId = RatesTabletc.Id;
-
-                TextCode Porttc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.O.TableDescription", DefaultText = "Logitude supplies and maintains the ports for you. You can modify port names and add local names.", ObjectTableId = PortTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                PortTable.DescriptionTextCodeId = Porttc.Id;
-
-                TextCode Countrytc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.O.TableDescription", DefaultText = "Logitude supplies and maintains the countries for you. You can maintain the country information, and connect countries to global zones and the EC.", ObjectTableId = CountryTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                CountryTable.DescriptionTextCodeId = Countrytc.Id;
-
-                TextCode GlobalZonetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GlobalZone.O.TableDescription", DefaultText = "Logitude supplies the global zones for you. You can modify the names and add local names.", ObjectTableId = GlobalZoneTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                GlobalZoneTable.DescriptionTextCodeId = GlobalZonetc.Id;
-
-                TextCode Branchtc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.O.TableDescription", DefaultText = "Define your company’s branches and specify default data, such as ports, that applies at each branch.", ObjectTableId = BranchTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                BranchTable.DescriptionTextCodeId = Branchtc.Id;
-
-                TextCode Departmenttc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Department.O.TableDescription", DefaultText = "Define your organization’s departments.", ObjectTableId = DepartmentTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                DepartmentTable.DescriptionTextCodeId = Departmenttc.Id;
-
-                TextCode Contacttc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.TableDescription", DefaultText = "Manage your company contacts, which includes contact information from partners and Logitude users.", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                ContactTable.DescriptionTextCodeId = Contacttc.Id;
-
-                TextCode Usertc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.O.TableDescription", DefaultText = "Manage your Logitude users, associate users to roles and define restrictions.", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                UserTable.DescriptionTextCodeId = Usertc.Id;
-
-                TextCode Statetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.O.TableDescription", DefaultText = "Logitude supplies the states for you. You can modify the names and add local names.", ObjectTableId = StateTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                StateTable.DescriptionTextCodeId = Statetc.Id;
-
-                TextCode DocumentTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.O.TableDescription", DefaultText = "Create document types, use the layout designer to build document templates and customize documents.", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                DocumentTypeTable.DescriptionTextCodeId = DocumentTypetc.Id;
-
-                TextCode EventTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.O.TableDescription", DefaultText = "Maintain event types for the activities you want Logitude to log, specify event types for follow-up and those that can be entered manually.", ObjectTableId = EventTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                EventTypeTable.DescriptionTextCodeId = EventTypetc.Id;
-
-                TextCode PackageTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.O.TableDescription", DefaultText = "Maintain the details of the types of packages you service – cartons, pallets, containers, etc.", ObjectTableId = PackageTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                PackageTypeTable.DescriptionTextCodeId = PackageTypetc.Id;
-
-                TextCode Vesseltc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vessel.O.TableDescription", DefaultText = "Add and manage information about the vessels you work with.", ObjectTableId = VesselTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                VesselTable.DescriptionTextCodeId = Vesseltc.Id;
-
-                TextCode CreditCardTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.O.TableDescription", DefaultText = "Maintain Credit Cards information.", ObjectTableId = CreditCardTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                CreditCardTypeTable.DescriptionTextCodeId = CreditCardTc.Id;
-
-                TextCode MeasurementTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.O.TableDescription", DefaultText = "Manage the unit of measurement names to be printed in documents.", ObjectTableId = MeasurementTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                MeasurementTable.DescriptionTextCodeId = MeasurementTc.Id;
-
-                TextCode RegionTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.O.TableDescription", DefaultText = "Define the geographic regions to be used for specifying customers' regional location.", ObjectTableId = RegionTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                RegionTable.DescriptionTextCodeId = RegionTc.Id;
-
-                TextCode CountryCityTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CountryCity.O.TableDescription", DefaultText = "Manage the cities to be used in addresses.", ObjectTableId = CountryCityTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                CountryCityTable.DescriptionTextCodeId = CountryCityTc.Id;
-
-                TextCode MoveTypeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.O.TableDescription", DefaultText = "Define the move types for shipments by Air, Ocean or Land transportation.", ObjectTableId = MoveTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                MoveTypeTable.DescriptionTextCodeId = MoveTypeTc.Id;
-
-                TextCode ReportTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.O.TableDescription", DefaultText = "Maintain all the reports you can use in the system.", ObjectTableId = ReportTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                ReportTable.DescriptionTextCodeId = ReportTc.Id;
-
-               
-
-                TextCode CommodityTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.O.TableDescription", DefaultText = "Manage the commodities to be used in shipments and printed and sent in FWB and FHL messages.", ObjectTableId = CommodityTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                CommodityTable.DescriptionTextCodeId = CommodityTc.Id;
-
-                TextCode SpecialServiceTypeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialServicesType.O.TableDescription", DefaultText = "Define the special services you want to use in your shipments.", ObjectTableId = SpecialServicesTypesTables.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                SpecialServicesTypesTables.DescriptionTextCodeId = SpecialServiceTypeTc.Id;
-
-                TextCode BusinessUnitTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.O.TableDescription", DefaultText = "Define the business units you want to work with for controlling access to information and sharing of information.", ObjectTableId = BusinessUnitTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                BusinessUnitTable.DescriptionTextCodeId = BusinessUnitTc.Id;
-
-                TextCode CustomerSizeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.O.TableDescription", DefaultText = "Define sizes for evaluating the volume of customer business.", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                CustomerSizeTable.DescriptionTextCodeId = CustomerSizeTc.Id;
-
-                TextCode QuoteStageTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.O.TableDescription", DefaultText = "Define the stages for handling quotes.", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                QuoteStageTable.DescriptionTextCodeId = QuoteStageTc.Id;
-
-                TextCode LeadSourceTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.O.TableDescription", DefaultText = "Define the sources that supply you with information about  new customers.", ObjectTableId = LeadSourceTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                LeadSourceTable.DescriptionTextCodeId = LeadSourceTc.Id;
-
-                TextCode CompetitorTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Competitor.O.TableDescription", DefaultText = "Define your competitors.", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                CompetitorObjectTable.DescriptionTextCodeId = CompetitorTc.Id;
-
-                TextCode AdditionalServiceTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalService.O.TableDescription", DefaultText = "Define the services that you want to supply to your customers in addition to the regular products.", ObjectTableId = AdditionalServiceTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                AdditionalServiceTable.DescriptionTextCodeId = AdditionalServiceTc.Id;
-
-                TextCode IndustryTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.O.TableDescription", DefaultText = "Define industries for use in queries and reports.", ObjectTableId = IndustryTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                IndustryTable.DescriptionTextCodeId = IndustryTc.Id;
-
-                TextCode ProductTypeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.O.TableDescription", DefaultText = "Define the types of products offered to customers.", ObjectTableId = ProductTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                ProductTypeTable.DescriptionTextCodeId = ProductTypeTc.Id;
-
-                TextCode EmailAlertSettingTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EmailAlertSetting.O.TableDescription", DefaultText = "Define the e-mail notifications that will be sent automatically based on different triggers.", ObjectTableId = EmailAlertSettingTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                EmailAlertSettingTable.DescriptionTextCodeId = EmailAlertSettingTc.Id;
-                #endregion
-
-                #region Tabs Headers
-
-                #region partners
-
-                #region customer
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Overview", DefaultText = "Overview", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.General", DefaultText = "General", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Billing", DefaultText = "Billing", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Accounting", DefaultText = "Accounting", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Addresses", DefaultText = "Addresses", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Contacts", DefaultText = "Contacts", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Events", DefaultText = "Events", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Statistics", DefaultText = "Statistics", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Accounting_2", DefaultText = "Accounting", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.DocsOut", DefaultText = "Docs Out", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.CRMDetails", DefaultText = "CRM Details", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Commitments", DefaultText = "Commitment", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Products", DefaultText = "Products", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.AWBStock", DefaultText = "AWB Stock", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Sales", DefaultText = "Sales", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region agent
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.General", DefaultText = "General", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Billing", DefaultText = "Billing", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Accounting", DefaultText = "Accounting", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Addresses", DefaultText = "Addresses", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Contacts", DefaultText = "Contacts", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Events", DefaultText = "Events", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.SharedLogistics", DefaultText = "Shared Logistics", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.DocsOut", DefaultText = "Docs Out", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region vendor
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.General", DefaultText = "General", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Billing", DefaultText = "Billing", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Accounting", DefaultText = "Accounting", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Addresses", DefaultText = "Addresses", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Contacts", DefaultText = "Contacts", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Events", DefaultText = "Events", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region customeAgent
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.General", DefaultText = "General", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Billing", DefaultText = "Billing", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Accounting", DefaultText = "Accounting", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Addresses", DefaultText = "Addresses", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Contacts", DefaultText = "Contacts", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Events", DefaultText = "Events", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region shippingAgent
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.General", DefaultText = "General", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Billing", DefaultText = "Billing", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Accounting", DefaultText = "Accounting", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Addresses", DefaultText = "Addresses", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Contacts", DefaultText = "Contacts", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Events", DefaultText = "Events", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region airlines
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.General", DefaultText = "General", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Billing", DefaultText = "Billing", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Accounting", DefaultText = "Accounting", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Addresses", DefaultText = "Addresses", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Contacts", DefaultText = "Contacts", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.FrieghtTariff", DefaultText = "Frieght Tariff", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.SurchargeTariff", DefaultText = "Surcharge Tariff", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Stack", DefaultText = "Stock", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Events", DefaultText = "Events", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.CCSSettings", DefaultText = "CCS Settings", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Adaptations", DefaultText = "Adaptations", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region shippingLine
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.General", DefaultText = "General", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Billing", DefaultText = "Billing", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Accounting", DefaultText = "Accounting", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Addresses", DefaultText = "Addresses", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Contacts", DefaultText = "Contacts", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Events", DefaultText = "Events", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.INTTRA", DefaultText = "INTTRA", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region trucker
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.General", DefaultText = "General", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Billing", DefaultText = "Billing", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Accounting", DefaultText = "Accounting", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Addresses", DefaultText = "Addresses", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Contacts", DefaultText = "Contacts", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Events", DefaultText = "Events", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region warehouse
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.General", DefaultText = "General", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Billing", DefaultText = "Billing", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Accounting", DefaultText = "Accounting", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Address", DefaultText = "Address", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Contacts", DefaultText = "Contacts", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Events", DefaultText = "Events", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region Participant
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.General", DefaultText = "General", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Billing", DefaultText = "Billing", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Accounting", DefaultText = "Accounting", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Addresses", DefaultText = "Addresses", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Contacts", DefaultText = "Contacts", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Events", DefaultText = "Events", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Notify", DefaultText = "Notify", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                #endregion
-                #endregion
-
-                #region billing
-                #region incoterm
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.TH.General", DefaultText = "General", ObjectTableId = IncotermTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.TH.Events", DefaultText = "Events", ObjectTableId = IncotermTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region paymentTerm
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.TH.General", DefaultText = "General", ObjectTableId = PaymentTermTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.TH.Events", DefaultText = "Events", ObjectTableId = PaymentTermTable.Id, Tenant = 0, TextCodeTypeCode = "TH" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.TH.Accounting", DefaultText = "Accounting", ObjectTableId = PaymentTermTable.Id, Tenant = 0, TextCodeTypeCode = "TH" }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region currency
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Currency.TH.General", DefaultText = "General", ObjectTableId = CurrencyTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Currency.TH.Accounting", DefaultText = "Accounting", ObjectTableId = CurrencyTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Currency.TH.Events", DefaultText = "Events", ObjectTableId = CurrencyTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region vatType
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.TH.General", DefaultText = "General", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.TH.Percentages", DefaultText = "Percentages", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.TH.Accounting", DefaultText = "Accounting", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.TH.Events", DefaultText = "Events", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region chargesType
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.TH.EditChargesType", DefaultText = "General", ObjectTableId = ChargesTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.TH.Accounting", DefaultText = "Accounting", ObjectTableId = ChargesTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.TH.Events", DefaultText = "Events", ObjectTableId = ChargesTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ratesTable
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.TH.Main", DefaultText = "General", ObjectTableId = RatesTableTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.TH.Events", DefaultText = "Events", ObjectTableId = RatesTableTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Accounts
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Account.TH.General", DefaultText = "General", ObjectTableId = accountTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Account.TH.Events", DefaultText = "Events", ObjectTableId = accountTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-                #endregion
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Competitor.TH.General", DefaultText = "General", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Competitor.TH.Events", DefaultText = "Events", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.TH.General", DefaultText = "General", ObjectTableId = PortTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.TH.Events", DefaultText = "Events", ObjectTableId = PortTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.TH.General", DefaultText = "General", ObjectTableId = CountryTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.TH.Events", DefaultText = "Events", ObjectTableId = CountryTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GlobalZone.TH.General", DefaultText = "General", ObjectTableId = GlobalZoneTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GlobalZone.TH.Events", DefaultText = "Events", ObjectTableId = GlobalZoneTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.TH.General", DefaultText = "General", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.TH.Events", DefaultText = "Events", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.TH.Partners", DefaultText = "Partners", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.General", DefaultText = "General", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Roles", DefaultText = "Roles", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Permissions", DefaultText = "Permissions", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Distributor", DefaultText = "Distributor", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Events", DefaultText = "Events", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Devices", DefaultText = "Devices", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.DocumentFilingInbox", DefaultText = "Filing Inbox", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-
-
-               
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Department.TH.General", DefaultText = "General", ObjectTableId = DepartmentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Department.TH.Events", DefaultText = "Events", ObjectTableId = DepartmentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.TH.General", DefaultText = "General", ObjectTableId = BranchTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.TH.Events", DefaultText = "Events", ObjectTableId = BranchTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.TH.Accounting", DefaultText = "Accounting", ObjectTableId = BranchTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.TH.General", DefaultText = "General", ObjectTableId = StateTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.TH.Events", DefaultText = "Events", ObjectTableId = StateTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.TH.General", DefaultText = "General", ObjectTableId = PackageTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.TH.Events", DefaultText = "Events", ObjectTableId = PackageTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.General", DefaultText = "General", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Templates", DefaultText = "Document Templates", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.SharedLogistics", DefaultText = "Shared Logistics", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.LogBoxTab", DefaultText = "Digital Sign", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.HTMLTemplates", DefaultText = "Email Message Templates", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.CustomFields", DefaultText = "Custom Fields", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Events", DefaultText = "Events", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.PrintingOptions", DefaultText = "Printing Options", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Copies", DefaultText = "Copies", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.TH.General", DefaultText = "General", ObjectTableId = EventTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.TH.Events", DefaultText = "Events", ObjectTableId = EventTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vessel.TH.General", DefaultText = "General", ObjectTableId = VesselTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vessel.TH.Events", DefaultText = "Events", ObjectTableId = VesselTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.TH.General", DefaultText = "General", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.TH.Events", DefaultText = "Events", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.TH.MessageBody", DefaultText = "Message Body", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerFieldsUpdateSetting.TH.General", DefaultText = "General", ObjectTableId = CustomerFieldsUpdateSettingTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesGroup.TH.General", DefaultText = "General", ObjectTableId = ChargesGroupTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.TH.Error", DefaultText = "Error", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.General", DefaultText = "General", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.CCSSettings", DefaultText = "CCS Settings", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Statistics", DefaultText = "Statistics", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.AWBMessagingStock", DefaultText = "AWB Messaging Stock", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Events", DefaultText = "Events", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.TH.General", DefaultText = "General", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.TH.Events", DefaultText = "Events", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.TH.AnalyzeQueueErrors", DefaultText = "Errors", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.TH.MessageBody", DefaultText = "Message Body", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.TH.General", DefaultText = "General", ObjectTableId = CreditCardTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.TH.Events", DefaultText = "Events", ObjectTableId = CreditCardTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ErrorLog.TH.General", DefaultText = "General", ObjectTableId = ErrorLogTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ErrorLog.TH.Events", DefaultText = "Events", ObjectTableId = ErrorLogTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.TH.General", DefaultText = "General", ObjectTableId = ReportTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.TH.Events", DefaultText = "Events", ObjectTableId = ReportTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.TH.Template", DefaultText = "Report Template", ObjectTableId = ReportTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.TH.General", DefaultText = "General", ObjectTableId = LeadSourceTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.TH.Events", DefaultText = "Events", ObjectTableId = LeadSourceTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.TH.General", DefaultText = "General", ObjectTableId = IndustryTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.TH.Events", DefaultText = "Events", ObjectTableId = IndustryTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.TH.General", DefaultText = "General", ObjectTableId = MoveTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.TH.Events", DefaultText = "Events", ObjectTableId = MoveTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeLead.TH.General", DefaultText = "General", ObjectTableId = LogitudeLeadTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ErrorLog.TH.Exception", DefaultText = "Exception", ObjectTableId = ErrorLogTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.TH.General", DefaultText = "General", ObjectTableId = CommodityTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.TH.Events", DefaultText = "Events", ObjectTableId = CommodityTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalService.TH.General", DefaultText = "General", ObjectTableId = AdditionalServiceTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalService.TH.Events", DefaultText = "Events", ObjectTableId = AdditionalServiceTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.TH.General", DefaultText = "General", ObjectTableId = ProductTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.TH.Events", DefaultText = "Events", ObjectTableId = ProductTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.TH.General", DefaultText = "General", ObjectTableId = BusinessUnitTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.TH.Events", DefaultText = "Events", ObjectTableId = BusinessUnitTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialServicesType.TH.General", DefaultText = "General", ObjectTableId = SpecialServicesTypesTables.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialServicesType.TH.Events", DefaultText = "Events", ObjectTableId = SpecialServicesTypesTables.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.TH.General", DefaultText = "General", ObjectTableId = RegionTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.TH.Events", DefaultText = "Events", ObjectTableId = RegionTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MessagingStock.TH.General", DefaultText = "General", ObjectTableId = MessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MessagingStock.TH.Events", DefaultText = "Events", ObjectTableId = MessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.TH.General", DefaultText = "General", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.TH.Events", DefaultText = "Events", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.TH.General", DefaultText = "General", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.TH.Events", DefaultText = "Events", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CountryCity.TH.General", DefaultText = "General", ObjectTableId = CountryCityTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CountryCity.TH.Events", DefaultText = "Events", ObjectTableId = CountryCityTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.TH.General", DefaultText = "General", ObjectTableId = MeasurementTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.TH.Events", DefaultText = "Events", ObjectTableId = MeasurementTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.TH.General", DefaultText = "General", ObjectTableId = distributorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.TH.Tenants", DefaultText = "Tenants", ObjectTableId = distributorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.TH.Events", DefaultText = "Events", ObjectTableId = distributorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.TH.Steps", DefaultText = "Steps", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartner.TH.General", DefaultText = "General", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartner.TH.Events", DefaultText = "Events", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BluesnapContract.TH.General", DefaultText = "General", ObjectTableId = BluesnapContractTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BluesnapContract.TH.Events", DefaultText = "Events", ObjectTableId = BluesnapContractTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSystem.TH.General", DefaultText = "General", ObjectTableId = AccountingSystemTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.DocumentType", DefaultText = "Document Type", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.FromFile", DefaultText = "From File", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.TH.Inactive", DefaultText = "Inactive", ObjectTableId = DocumentTypeTemplateTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AWBAdditionalHandlingInfo.TH.General", DefaultText = "General", ObjectTableId = AWBAdditionalHandlingInfoTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InboundEmail.TH.General", DefaultText = "General", ObjectTableId = InboundEmailTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccessRequest.TH.General", DefaultText = "General", ObjectTableId = CustomerTenantAccessRequestTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccessRequest.TH.Events", DefaultText = "Events", ObjectTableId = CustomerTenantAccessRequestTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.TH.General", DefaultText = "General", ObjectTableId = HybridPartnerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.General", DefaultText = "General", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.RequestBody", DefaultText = "Request Body", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.ResponceBody", DefaultText = "Responce Body", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.Errors", DefaultText = "Errors", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.DiagnosticLog", DefaultText = "Diagnostic Log", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.ResponseBody", DefaultText = "Response Body", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.Exceptions", DefaultText = "Exceptions", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AirlineStatistics.TH.General", DefaultText = "General", ObjectTableId = AirlineStatisticsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Support", DefaultText = "Support", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.TH.General", DefaultText = "General", ObjectTableId = TransmissionLogTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.TH.Audit", DefaultText = "Audit", ObjectTableId = TransmissionLogTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Branding", DefaultText = "Branding", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.TH.General", DefaultText = "General", ObjectTableId = DocumentsFilingTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.TH.Events", DefaultText = "Events", ObjectTableId = DocumentsFilingTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-               
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.TH.Permissions", DefaultText = "Permissions", ObjectTableId = HybridPartnerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-
-                //============= Just For Testing ============= 
-                if (Testing.General.IsTesting)
-                {
-                    AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Test.tt.test", DefaultText = "test", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                    AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Address", DefaultText = "Address123456789", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                }
-                //============================================
-
-                #region QueryTextCodes
-
-               
-
-                #region Port Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.Q.Ports", DefaultText = "Ports", ObjectTableId = PortTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Country Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.Q.Countries", DefaultText = "Countries", ObjectTableId = CountryTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Agent Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.Q.Agents", DefaultText = "Agents", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.Q.SharedLogisticsAgents", DefaultText = "Shared Logistics Agents", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Vendor Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.Q.Vendors", DefaultText = "Vendors", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region CustomAgent Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.Q.CustomAgents", DefaultText = "Custom Agents", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Customer Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.Customers", DefaultText = "Customers", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.CustomersByLastShipment", DefaultText = "By Last Shipment", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.SharedLogisticsCustomers", DefaultText = "Shared Logistics Customers", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.MyCustomers", DefaultText = "My Customers (as Salesman)", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.MyCustomersAccMngr", DefaultText = "My Customers (as Account Manager)", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.ReadyCustomers", DefaultText = "Waiting for Activation", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.PotentialCustomers", DefaultText = "Potential Customers", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.ActiveCustomers", DefaultText = "Active Customers", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.InactiveCustomers", DefaultText = "Inactive Customers", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Shippers And Consignees
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippersAndConsignees.Q.ShippersAndConsignees", DefaultText = "Shippers and Consignees", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Incoterm Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.Q.Incoterms", DefaultText = "Incoterms", ObjectTableId = IncotermTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ShippingAgent Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.Q.ShippingAgents", DefaultText = "Shipping Agents", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Airline Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.Q.Airlines", DefaultText = "Airlines", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ShippingLine Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.Q.ShippingLines", DefaultText = "Shipping Lines", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Truckers Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.Q.Truckers", DefaultText = "Truckers", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region PaymentTerm Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.Q.PaymentTerms", DefaultText = "Payment terms", ObjectTableId = PaymentTermTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region VatType Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.Q.VatTypes", DefaultText = "Vat Types", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Currency Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Currency.Q.Currencies", DefaultText = "Currencies", ObjectTableId = CurrencyTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region GlobalZone Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GlobalZone.Q.GlobalZones", DefaultText = "Global Zones", ObjectTableId = GlobalZoneTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ChargesType Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.Q.ChargesTypes", DefaultText = "Charges Types", ObjectTableId = ChargesTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Branch Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.Q.Branches", DefaultText = "Branches", ObjectTableId = BranchTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Department Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Department.Q.Departments", DefaultText = "Departments", ObjectTableId = DepartmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.Q.States", DefaultText = "States", ObjectTableId = StateTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CountryCity.Q.Cities", DefaultText = "Cities", ObjectTableId = CountryCityTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.Q.Measurements", DefaultText = "Measurements", ObjectTableId = MeasurementTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #region Contacts Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.Q.Contacts", DefaultText = "Contacts", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.Q.UpcomingBirthdays", DefaultText = "Upcoming Birthdays", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.Q.NoReminders", DefaultText = "Contacts Without Reminders", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Users Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.ActiveUsers", DefaultText = "Active Users", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.ActiveNotLicensed", DefaultText = "Active Not Licensed", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.InactiveUsers", DefaultText = "Inactive Users", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.AllUsers", DefaultText = "All Users", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Vessels Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vessel.Q.Vessels", DefaultText = "Vessels", ObjectTableId = VesselTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region CustomerTenantAccesses Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.Q.CustomerTenantAccesses", DefaultText = "Importers Tenants", ObjectTableId = CustomerTenantAccessTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region CustomerTenantAccessRequests Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccessRequest.Q.CustomerTenantAccessRequests", DefaultText = "Request data from Agents", ObjectTableId = CustomerTenantAccessRequestTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region HybridPartners Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.Q.HybridPartners", DefaultText = "Hybrid Partner", ObjectTableId = HybridPartnerTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Warehouses Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.Q.Warehouses", DefaultText = "Warehouses", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region DocumentTypes Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.Q.DocumentTypes", DefaultText = "Document Types", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region DocumentFolders Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentFolder.Q.DocumentFolders", DefaultText = "Document Folders", ObjectTableId = DocumentFolderTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region DocumentsFilings Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.Q.DocumentsFilings", DefaultText = "Documents Filings", ObjectTableId = DocumentsFilingObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.Q.AllDocumentsFilings", DefaultText = "All Documents", ObjectTableId = DocumentsFilingObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.Q.RequestedDocumentsFilings", DefaultText = "Requested Documents", ObjectTableId = DocumentsFilingObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region PackageTypes Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.Q.PackageTypes", DefaultText = "Package Types", ObjectTableId = PackageTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region RatesTables Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.Q.RatesTables", DefaultText = "Rates", ObjectTableId = RatesTableTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region EventTypes Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.Q.EventTypes", DefaultText = "Event Types", ObjectTableId = EventTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-               
-
-                #region AccountingTransferHeader Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.ARInvoiceTransferHistory", DefaultText = "Transfer history", ObjectTableId = AccountingTransferHeaderTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.APInvoiceTransferHistory", DefaultText = "Transfer history", ObjectTableId = AccountingTransferHeaderTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.ARPaymentTransferHistory", DefaultText = "Transfer history", ObjectTableId = AccountingTransferHeaderTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.APPaymentTransferHistory", DefaultText = "Transfer history", ObjectTableId = AccountingTransferHeaderTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-               
-
-                #region Accounts Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Account.Q.AllAccounts", DefaultText = "All Accounts", ObjectTableId = accountTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-               
-
-               
-
-                #region TenantQuery
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.AllTenants", DefaultText = "All Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.InactiveTenants", DefaultText = "Inactive Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.TrialTenantManagements", DefaultText = "Trial Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.PayingCustomers", DefaultText = "Paying Customers", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.NotRecuringTenants", DefaultText = "Not Recuring Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region CommunicationLog query
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.Q.AllCommunicationLogs", DefaultText = "All Communication Logs", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.Q.TodayCommunicationLogs", DefaultText = "Today", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region AnalyzeQueueQuery
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.Q.AllAnalyzeQueues", DefaultText = "All Analyze Queues", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.Q.TodayAnalyzeQueues", DefaultText = "Today", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region CustomerFieldsUpdateSettingQuery
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerFieldsUpdateSetting.Q.AllCustomerFieldsUpdateSettings", DefaultText = "All Customer Fields Update Settings", ObjectTableId = CustomerFieldsUpdateSettingTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-
-                #endregion
-
-                #region CreditCardType Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.Q.AllCreditCardTypes", DefaultText = "All Credit Card Types", ObjectTableId = CreditCardTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ErrorLog
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ErrorLog.Q.AllErrorLog", DefaultText = "All Error Log", ObjectTableId = ErrorLogTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ErrorLog.Q.TodayErrorLog", DefaultText = "Today", ObjectTableId = ErrorLogTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-
-
-                #endregion
-
-                #region MoveType Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.Q.AllMoveTypes", DefaultText = "All Move Types", ObjectTableId = MoveTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Report
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.Q.AllReports", DefaultText = "All Reports", ObjectTableId = ReportTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.Q.AllLeadSources", DefaultText = "Lead Sources", ObjectTableId = LeadSourceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.Q.AllCommodities", DefaultText = "All Commodities", ObjectTableId = CommodityTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.Q.AllIndustries", DefaultText = "All Industries", ObjectTableId = IndustryTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.Q.AllBusinessUnits", DefaultText = "All Business Units", ObjectTableId = BusinessUnitTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeLead.Q.AllLogitudeLeads", DefaultText = "All Logitude Leads ", ObjectTableId = LogitudeLeadTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MessagingStock.Q.AllMessagingStocks", DefaultText = "All AWB Messaging Stocks", ObjectTableId = MessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.Q.AllCustomerSizes", DefaultText = "Customer Sizes", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.Q.AllQuoteStages", DefaultText = "Quote Stages", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartner.Q.AllComputingPartners", DefaultText = "All Computing Partners", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BluesnapContract.Q.AllBluesnapContracts", DefaultText = "Bluesnap Contracts", ObjectTableId = BluesnapContractTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSystem.Q.AllAccountingSystems", DefaultText = "Accounting Systems", ObjectTableId = AccountingSystemTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalHandlingInfo.Q.AllHandlingInfos", DefaultText = "AWB Additional Handling Infos", ObjectTableId = AWBAdditionalHandlingInfoTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-               
-
-                #region competitor
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Competitor.Q.AllCompetitors", DefaultText = "Competitors", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region AdditionalService Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalService.Q.AllAdditionalServices", DefaultText = "All Additional Services", ObjectTableId = AdditionalServiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ExternalSystemTableCode
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalSystemsTablesCode.Q.AllExternalSystemsTablesCodes", DefaultText = "All External Systems Tables Codes", ObjectTableId = ExternalSystemsTablesCodeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region ProductType Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.Q.AllProductTypes", DefaultText = "All Active Product Types", ObjectTableId = ProductTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region SpecialServicesType Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialSericesType.Q.AllSpecialServices", DefaultText = "All Special Service Types", ObjectTableId = SpecialServicesTypesTables.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region SpecialServicesType Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.Q.AllRegions", DefaultText = "All Regions", ObjectTableId = RegionTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region Distributor Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.Q.AllDistributors", DefaultText = "All Distributors", ObjectTableId = distributorTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Inbound Email 
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InboundEmail.Q.InboundEmails", DefaultText = "All Inbound Emails", ObjectTableId = InboundEmailTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "INBOUNDEMAIL", DefaultText = "Inbound Emails", ObjectTableId = InboundEmailTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ApiCredintials
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ApiCredintials.Q.ApiCredintials", DefaultText = "All API Credentials", ObjectTableId = ApiCredintialsObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagmentPrivateLabels.Q.PrivateLabels", DefaultText = "Private Labels", ObjectTableId = TenantManagmentPrivateLabelsObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Participant Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.Q.Participants", DefaultText = "Participants", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region AirlineStatistics
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AirlineStatistics.Q.AllAirlineStatistics", DefaultText = "All Airline Statistics", ObjectTableId = AirlineStatisticsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region LogitudeMessagesTransmissionLog
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.Q.AllTransmissionLogs", DefaultText = "All Logitude Messages Transmission Logs", ObjectTableId = TransmissionLogTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ChargesGroups
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesGroup.Q.AllChargesGroups", DefaultText = "All Charges Groups", ObjectTableId = ChargesGroupTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-
-                #endregion
-
-                #region AgentSharedManifests
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.AgentSharedManifests", DefaultText = "All Agent Shared Manifests", ObjectTableId = AgentSharedManifestObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.AirAgentSharedManifests", DefaultText = "Air Agent Shared Manifests", ObjectTableId = AgentSharedManifestObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.OceanAgentSharedManifests", DefaultText = "Ocean Agent Shared Manifests", ObjectTableId = AgentSharedManifestObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.InlandAgentSharedManifests", DefaultText = "Inland Agent Shared Manifests", ObjectTableId = AgentSharedManifestObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.CancelledAgentSharedManifests", DefaultText = "Cancelled Agent Shared Manifests", ObjectTableId = AgentSharedManifestObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ContainerFollowUp
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.ArrivedNotDelivered", DefaultText = "Arrived Not Delivered", ObjectTableId = ContainerFollowUpObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.DeliveredNotReturned", DefaultText = "Delivered Not Returned", ObjectTableId = ContainerFollowUpObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.InTransit", DefaultText = "In Transit", ObjectTableId = ContainerFollowUpObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
+                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Test.tt.test", DefaultText = "test", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Address", DefaultText = "Address123456789", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             }
-            else
-            {
-                LoadTextCodes_General(textcodes);
-                LoadTextCodes_Master(textcodes);
-                LoadTextCodes_Shipment(textcodes);
-                LoadTextCodes_ShipmentPackage(textcodes);
-                LoadTextCodes_InsideShipmentPackage(textcodes);
-                LoadTextCodes_ShipmentPickUpDelivery(textcodes);
-                LoadTextCodes_ShipmentPickUpDeliveryPackage(textcodes);
-                LoadTextCodes_ShipmentReceivable(textcodes);
-                LoadTextCodes_Quote(textcodes);
-                LoadTextCodes_QuoteCharge(textcodes);
-                LoadTextCodes_ARInvoice(textcodes);
-                LoadTextCodes_ARInvoiceLine(textcodes);
-                LoadTextCodes_DocsOut(textcodes);
-                LoadTextCodes_DocsIn(textcodes);
-                LoadTextCodes_Address(textcodes);
-                LoadTextCodes_Contact(textcodes);
-                LoadTextCodes_Customer(textcodes);
-                LoadTextCodes_Agent(textcodes);
-                LoadTextCodes_CustomAgent(textcodes);
-                LoadTextCodes_ShippingAgent(textcodes);
-                LoadTextCodes_Airline(textcodes);
-                LoadTextCodes_ShippingLine(textcodes);
-                LoadTextCodes_Trucker(textcodes);
-                LoadTextCodes_Vendor(textcodes);
-                LoadTextCodes_FollowUp(textcodes);
-                LoadTextCodes_VatTypePercentage(textcodes);
-                LoadTextCodes_RatesTable(textcodes);
-                LoadTextCodes_Port(textcodes);
-                LoadTextCodes_PackageType(textcodes);
-                LoadTextCodes_DocumentType(textcodes);
-                LoadTextCodes_DocumentTypeTemplate(textcodes);
-                LoadTextCodes_DocumentTypeCustomField(textcodes);
-                LoadTextCodes_DocumentTypeCopy(textcodes);
-                LoadTextCodes_Warehouse(textcodes);
-                LoadTextCodes_MAWBStack(textcodes);
-                LoadTextCodes_TarrifHeader(textcodes);
-                LoadTextCodes_TarrifCharge(textcodes);
-                LoadTextCodes_User(textcodes);
-                LoadTextCodes_Account(textcodes);
-                LoadTextCodes_Role(textcodes);
-                LoadTextCodes_Restriction(textcodes);
-                LoadTextCodes_APInvoice(textcodes);
-                LoadTextCodes_APInvoiceLine(textcodes);
-                LoadTextCodes_Events(textcodes);
-                LoadTextCodes_ARPayments(textcodes);
-                LoadTextCodes_APPayments(textcodes);
-                LoadTextCodes_ChargesType(textcodes);
-                LoadTextCodes_Tenant(textcodes);
-                LoadTextCodes_CommLog(textcodes);
-                LoadTextCodes_AnalyzeQueue(textcodes);
-                LoadTextCodes_AccountingTransfer(textcodes);
-                LoadTextCodes_ErrorLog(textcodes);
-                LoadTextCodes_Report(textcodes);
-                LoadTextCodes_QuoteTemplate(textcodes);
-                LoadTextCodes_InboundEmail(textcodes);
-                LoadTextCodes_CustomerTenantAccess(textcodes);
-                LoadTextCodes_FBLStock(textcodes);
-                LoadTextCodes_BankAccountLites(textcodes);
-
-                #region ObjectTable
-                ObjectTable ShipmentTable = ObjectContext.ObjectTables.Where(f => f.Name == "Shipment" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable MasterTable = ObjectContext.ObjectTables.Where(f => f.Name == "Master" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable PortTable = ObjectContext.ObjectTables.Where(f => f.Name == "Port" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CountryTable = ObjectContext.ObjectTables.Where(f => f.Name == "Country" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AgentTable = ObjectContext.ObjectTables.Where(f => f.Name == "Agent" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable IncotermTable = ObjectContext.ObjectTables.Where(f => f.Name == "Incoterm" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable PaymentTermTable = ObjectContext.ObjectTables.Where(f => f.Name == "PaymentTerm" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable VatTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "VatType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CustomerTable = ObjectContext.ObjectTables.Where(f => f.Name == "Customer" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CustomAgentTable = ObjectContext.ObjectTables.Where(f => f.Name == "CustomAgent" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ShippingAgentTable = ObjectContext.ObjectTables.Where(f => f.Name == "ShippingAgent" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AirlineTable = ObjectContext.ObjectTables.Where(f => f.Name == "Airline" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ShippingLineTable = ObjectContext.ObjectTables.Where(f => f.Name == "ShippingLine" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable TruckerTable = ObjectContext.ObjectTables.Where(f => f.Name == "Trucker" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CurrencyTable = ObjectContext.ObjectTables.Where(f => f.Name == "Currency" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ChargesTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "ChargesType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable GlobalZoneTable = ObjectContext.ObjectTables.Where(f => f.Name == "GlobalZone" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ContactTable = ObjectContext.ObjectTables.Where(f => f.Name == "Contact" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable UserTable = ObjectContext.ObjectTables.Where(f => f.Name == "User" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable BranchTable = ObjectContext.ObjectTables.Where(f => f.Name == "Branch" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable DepartmentTable = ObjectContext.ObjectTables.Where(f => f.Name == "Department" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable QuoteTemplateTable = ObjectContext.ObjectTables.Where(f => f.Name == "QuoteTemplate" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable StateTable = ObjectContext.ObjectTables.Where(f => f.Name == "State" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable PackageTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "PackageType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable DocumentTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "DocumentType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable RatesTableTable = ObjectContext.ObjectTables.Where(f => f.Name == "RatesTable" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable EventTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "EventType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable VesselTable = ObjectContext.ObjectTables.Where(f => f.Name == "Vessel" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable WareHouseTable = ObjectContext.ObjectTables.Where(f => f.Name == "Warehouse" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable GenaralTable = ObjectContext.ObjectTables.Where(f => f.Name == "General" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable QuoteTable = ObjectContext.ObjectTables.Where(f => f.Name == "Quote" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable InvoiceTable = ObjectContext.ObjectTables.Where(f => f.Name == "ARInvoice" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable masterTable = ObjectContext.ObjectTables.Where(f => f.Name == "Master" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable accountTable = ObjectContext.ObjectTables.Where(f => f.Name == "Account" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable paymentTable = ObjectContext.ObjectTables.Where(f => f.Name == "ARPayment" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable APInvoiceTable = ObjectContext.ObjectTables.Where(f => f.Name == "APInvoice" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable APPaymentTable = ObjectContext.ObjectTables.Where(f => f.Name == "APPayment" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable VendorTable = ObjectContext.ObjectTables.Where(f => f.Name == "Vendor" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable TenantManagementsTable = ObjectContext.ObjectTables.Where(f => f.Name == "TenantManagement" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CommLogsTable = ObjectContext.ObjectTables.Where(f => f.Name == "CommunicationLog" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AnalyzeQueuesTable = ObjectContext.ObjectTables.Where(f => f.Name == "AnalyzeQueue" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CreditCardTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "CreditCardType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AccountingTransferHeaderTable = ObjectContext.ObjectTables.Where(f => f.Name == "AccountingTransferHeader" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable MoveTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "MoveType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ErrorLogTable = ObjectContext.ObjectTables.Where(f => f.Name == "ErrorLog" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ReportTable = ObjectContext.ObjectTables.Where(f => f.Name == "Report" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable LeadSourceTable = ObjectContext.ObjectTables.Where(f => f.Name == "LeadSource" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CompetitorObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Competitor" && d.Tenant == 0).FirstOrDefault();
-                ObjectTable CommodityTable = ObjectContext.ObjectTables.Where(f => f.Name == "Commodity" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AdditionalServiceTable = ObjectContext.ObjectTables.Where(f => f.Name == "AdditionalService" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ExternalSystemsTablesCodeTable = ObjectContext.ObjectTables.Where(f => f.Name == "ExternalSystemsTablesCode" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable IndustryTable = ObjectContext.ObjectTables.Where(f => f.Name == "Industry" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ProductTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "ProductType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable BusinessUnitTable = ObjectContext.ObjectTables.Where(f => f.Name == "BusinessUnit" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable SpecialServicesTypesTables = ObjectContext.ObjectTables.Where(f => f.Name == "SpecialServicesType" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable RegionTable = ObjectContext.ObjectTables.Where(f => f.Name == "Region" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable LogitudeLeadTable = ObjectContext.ObjectTables.Where(f => f.Name == "LogitudeLead" && f.Tenant == 0).FirstOrDefault();
-
-                ObjectTable MessagingStockTable = ObjectContext.ObjectTables.Where(f => f.Name == "MessagingStock" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CustomerSizeTable = ObjectContext.ObjectTables.Where(f => f.Name == "CustomerSize" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable QuoteStageTable = ObjectContext.ObjectTables.Where(f => f.Name == "QuoteStage" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CountryCityTable = ObjectContext.ObjectTables.Where(f => f.Name == "CountryCity" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable MeasurementTable = ObjectContext.ObjectTables.Where(f => f.Name == "Measurement" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable distributorTable = ObjectContext.ObjectTables.Where(f => f.Name == "Distributor" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ComputingPartnerObjectTable = ObjectContext.ObjectTables.Where(f => f.Name == "ComputingPartner" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable BluesnapContractTable = ObjectContext.ObjectTables.Where(f => f.Name == "BluesnapContract" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable DocumentTypeTemplateTable = ObjectContext.ObjectTables.Where(f => f.Name == "DocumentTypeTemplate" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable DocumentFolderTable = ObjectContext.ObjectTables.Where(f => f.Name == "DocumentFolder" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable EmailAlertSettingTable = ObjectContext.ObjectTables.Where(f => f.Name == "EmailAlertSetting" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AccountingSystemTable = ObjectContext.ObjectTables.Where(f => f.Name == "AccountingSystem" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AWBAdditionalHandlingInfoTable = ObjectContext.ObjectTables.Where(f => f.Name == "AWBAdditionalHandlingInfo" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable InboundEmailTable = ObjectContext.ObjectTables.Where(f => f.Name == "InboundEmail" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CustomerTenantAccessTable = ObjectContext.ObjectTables.Where(f => f.Name == "CustomerTenantAccess" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable CustomerTenantAccessRequestTable = ObjectContext.ObjectTables.Where(f => f.Name == "CustomerTenantAccessRequest" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable HybridPartnerTable = ObjectContext.ObjectTables.Where(f => f.Name == "HybridPartner" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ParticipantTable = ObjectContext.ObjectTables.Where(f => f.Name == "Participant" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AirlineStatisticsTable = ObjectContext.ObjectTables.Where(f => f.Name == "AirlineStatistics" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable TransmissionLogTable = ObjectContext.ObjectTables.Where(f => f.Name == "LogitudeMessagesTransmissionLog" && f.Tenant == 0).FirstOrDefault();
-
-                ObjectTable CustomerFieldsUpdateSettingTable = ObjectContext.ObjectTables.Where(f => f.Name == "CustomerFieldsUpdateSetting" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable ChargesGroupTable = ObjectContext.ObjectTables.Where(f => f.Name == "ChargesGroup" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable DocumentsFilingTable = ObjectContext.ObjectTables.Where(f => f.Name == "DocumentsFiling" && f.Tenant == 0).FirstOrDefault();
-
-                ObjectTable BankAccountLiteTable = ObjectContext.ObjectTables.Where(f => f.Name == "BankAccountLite" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable AccountingPaymentMethodTable = ObjectContext.ObjectTables.Where(f => f.Name == "AccountingPaymentMethod" && f.Tenant == 0).FirstOrDefault();
-                ObjectTable APPaymentMethodTable = ObjectContext.ObjectTables.Where(f => f.Name == "APPaymentMethod" && f.Tenant == 0).FirstOrDefault();
-
-                #endregion
-
-                string _ID = ShipmentTable.Id;
-
-                #region TableDescription
-                TextCode Incotermtc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.O.TableDescription", DefaultText = "Define delivery terms specifying the default method – collect or prepaid – for freight and other charges.", ObjectTableId = IncotermTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                IncotermTable.DescriptionTextCodeId = Incotermtc.Id;
-
-                TextCode PaymentTermtc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.O.TableDescription", DefaultText = "Define payment terms, specifying the number of days for calculating payment due date for invoices.", ObjectTableId = PaymentTermTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                PaymentTermTable.DescriptionTextCodeId = PaymentTermtc.Id;
-
-                TextCode Currencytc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Currency.O.TableDescription", DefaultText = "Maintain currency information.", ObjectTableId = CurrencyTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                CurrencyTable.DescriptionTextCodeId = Currencytc.Id;
-
-                TextCode VatTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.O.TableDescription", DefaultText = "Maintain the types of VAT applied in your country. Update the VAT percents according to dates.", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                VatTypeTable.DescriptionTextCodeId = VatTypetc.Id;
-
-                TextCode ChargesTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.O.TableDescription", DefaultText = "Add and maintain the services you use or provide, both for receivable and payable transactions. Define properties for billing and printing on AWB.", ObjectTableId = ChargesTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                ChargesTypeTable.DescriptionTextCodeId = ChargesTypetc.Id;
-
-                TextCode RatesTabletc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.O.TableDescription", DefaultText = "Insert the daily exchange rates of currencies to your base currency.", ObjectTableId = RatesTableTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                RatesTableTable.DescriptionTextCodeId = RatesTabletc.Id;
-
-                TextCode Porttc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.O.TableDescription", DefaultText = "Logitude supplies and maintains the ports for you. You can modify port names and add local names.", ObjectTableId = PortTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                PortTable.DescriptionTextCodeId = Porttc.Id;
-
-                TextCode Countrytc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.O.TableDescription", DefaultText = "Logitude supplies and maintains the countries for you. You can maintain the country information, and connect countries to global zones and the EC.", ObjectTableId = CountryTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                CountryTable.DescriptionTextCodeId = Countrytc.Id;
-
-                TextCode GlobalZonetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GlobalZone.O.TableDescription", DefaultText = "Logitude supplies the global zones for you. You can modify the names and add local names.", ObjectTableId = GlobalZoneTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                GlobalZoneTable.DescriptionTextCodeId = GlobalZonetc.Id;
-
-                TextCode Branchtc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.O.TableDescription", DefaultText = "Define your company’s branches and specify default data, such as ports, that applies at each branch.", ObjectTableId = BranchTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                BranchTable.DescriptionTextCodeId = Branchtc.Id;
-
-                TextCode Departmenttc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Department.O.TableDescription", DefaultText = "Define your organization’s departments.", ObjectTableId = DepartmentTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                DepartmentTable.DescriptionTextCodeId = Departmenttc.Id;
-
-                TextCode Contacttc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.TableDescription", DefaultText = "Manage your company contacts, which includes contact information from partners and Logitude users.", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                ContactTable.DescriptionTextCodeId = Contacttc.Id;
-
-                TextCode Usertc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.O.TableDescription", DefaultText = "Manage your Logitude users, associate users to roles and define restrictions.", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                UserTable.DescriptionTextCodeId = Usertc.Id;
-
-                TextCode Statetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.O.TableDescription", DefaultText = "Logitude supplies the states for you. You can modify the names and add local names.", ObjectTableId = StateTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                StateTable.DescriptionTextCodeId = Statetc.Id;
-
-                TextCode DocumentTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.O.TableDescription", DefaultText = "Create document types, use the layout designer to build document templates and customize documents.", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                DocumentTypeTable.DescriptionTextCodeId = DocumentTypetc.Id;
-
-                TextCode EventTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.O.TableDescription", DefaultText = "Maintain event types for the activities you want Logitude to log, specify event types for follow-up and those that can be entered manually.", ObjectTableId = EventTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                EventTypeTable.DescriptionTextCodeId = EventTypetc.Id;
-
-                TextCode PackageTypetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.O.TableDescription", DefaultText = "Maintain the details of the types of packages you service – cartons, pallets, containers, etc.", ObjectTableId = PackageTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                PackageTypeTable.DescriptionTextCodeId = PackageTypetc.Id;
-
-                TextCode Vesseltc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vessel.O.TableDescription", DefaultText = "Add and manage information about the vessels you work with.", ObjectTableId = VesselTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                VesselTable.DescriptionTextCodeId = Vesseltc.Id;
-
-                TextCode CreditCardTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.O.TableDescription", DefaultText = "Maintain Credit Cards information.", ObjectTableId = CreditCardTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-                CreditCardTypeTable.DescriptionTextCodeId = CreditCardTc.Id;
-
-                TextCode MeasurementTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.O.TableDescription", DefaultText = "Manage the unit of measurement names to be printed in documents.", ObjectTableId = MeasurementTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                MeasurementTable.DescriptionTextCodeId = MeasurementTc.Id;
-
-                TextCode RegionTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.O.TableDescription", DefaultText = "Define the geographic regions to be used for specifying customers' regional location.", ObjectTableId = RegionTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                RegionTable.DescriptionTextCodeId = RegionTc.Id;
-
-                TextCode CountryCityTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CountryCity.O.TableDescription", DefaultText = "Manage the cities to be used in addresses.", ObjectTableId = CountryCityTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                CountryCityTable.DescriptionTextCodeId = CountryCityTc.Id;
-
-                TextCode MoveTypeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.O.TableDescription", DefaultText = "Define the move types for shipments by Air, Ocean or Land transportation.", ObjectTableId = MoveTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                MoveTypeTable.DescriptionTextCodeId = MoveTypeTc.Id;
-
-                TextCode ReportTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.O.TableDescription", DefaultText = "Maintain all the reports you can use in the system.", ObjectTableId = ReportTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                ReportTable.DescriptionTextCodeId = ReportTc.Id;
-
-                TextCode QuoteTemplateTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.O.TableDescription", DefaultText = "Create new quote templates and maintain existing ones.", ObjectTableId = QuoteTemplateTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                QuoteTemplateTable.DescriptionTextCodeId = QuoteTemplateTc.Id;
-
-                TextCode CommodityTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.O.TableDescription", DefaultText = "Manage the commodities to be used in shipments and printed and sent in FWB and FHL messages.", ObjectTableId = CommodityTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                CommodityTable.DescriptionTextCodeId = CommodityTc.Id;
-
-                TextCode SpecialServiceTypeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialServicesType.O.TableDescription", DefaultText = "Define the special services you want to use in your shipments.", ObjectTableId = SpecialServicesTypesTables.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                SpecialServicesTypesTables.DescriptionTextCodeId = SpecialServiceTypeTc.Id;
-
-                TextCode BusinessUnitTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.O.TableDescription", DefaultText = "Define the business units you want to work with for controlling access to information and sharing of information.", ObjectTableId = BusinessUnitTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                BusinessUnitTable.DescriptionTextCodeId = BusinessUnitTc.Id;
-
-                TextCode CustomerSizeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.O.TableDescription", DefaultText = "Define sizes for evaluating the volume of customer business.", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                CustomerSizeTable.DescriptionTextCodeId = CustomerSizeTc.Id;
-
-                TextCode QuoteStageTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.O.TableDescription", DefaultText = "Define the stages for handling quotes.", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                QuoteStageTable.DescriptionTextCodeId = QuoteStageTc.Id;
-
-                TextCode LeadSourceTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.O.TableDescription", DefaultText = "Define the sources that supply you with information about  new customers.", ObjectTableId = LeadSourceTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                LeadSourceTable.DescriptionTextCodeId = LeadSourceTc.Id;
-
-                TextCode CompetitorTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Competitor.O.TableDescription", DefaultText = "Define your competitors.", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                CompetitorObjectTable.DescriptionTextCodeId = CompetitorTc.Id;
-
-                TextCode AdditionalServiceTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalService.O.TableDescription", DefaultText = "Define the services that you want to supply to your customers in addition to the regular products.", ObjectTableId = AdditionalServiceTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                AdditionalServiceTable.DescriptionTextCodeId = AdditionalServiceTc.Id;
-
-                TextCode IndustryTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.O.TableDescription", DefaultText = "Define industries for use in queries and reports.", ObjectTableId = IndustryTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                IndustryTable.DescriptionTextCodeId = IndustryTc.Id;
-
-                TextCode ProductTypeTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.O.TableDescription", DefaultText = "Define the types of products offered to customers.", ObjectTableId = ProductTypeTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                ProductTypeTable.DescriptionTextCodeId = ProductTypeTc.Id;
-
-                TextCode EmailAlertSettingTc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EmailAlertSetting.O.TableDescription", DefaultText = "Define the e-mail notifications that will be sent automatically based on different triggers.", ObjectTableId = EmailAlertSettingTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-                EmailAlertSettingTable.DescriptionTextCodeId = EmailAlertSettingTc.Id;
-                #endregion
-
-                #region Tabs Headers
-
-                #region partners
-
-                #region customer
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Overview", DefaultText = "Overview", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.General", DefaultText = "General", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Billing", DefaultText = "Billing", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Accounting", DefaultText = "Accounting", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Addresses", DefaultText = "Addresses", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Contacts", DefaultText = "Contacts", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Events", DefaultText = "Events", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Statistics", DefaultText = "Statistics", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Accounting_2", DefaultText = "Accounting", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.DocsOut", DefaultText = "Docs Out", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.CRMDetails", DefaultText = "CRM Details", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Commitments", DefaultText = "Commitment", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Products", DefaultText = "Products", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.AWBStock", DefaultText = "AWB Stock", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Sales", DefaultText = "Sales", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region agent
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.General", DefaultText = "General", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Billing", DefaultText = "Billing", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Accounting", DefaultText = "Accounting", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Addresses", DefaultText = "Addresses", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Contacts", DefaultText = "Contacts", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Events", DefaultText = "Events", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.SharedLogistics", DefaultText = "Shared Logistics", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.DocsOut", DefaultText = "Docs Out", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region vendor
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.General", DefaultText = "General", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Billing", DefaultText = "Billing", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Accounting", DefaultText = "Accounting", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Addresses", DefaultText = "Addresses", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Contacts", DefaultText = "Contacts", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Events", DefaultText = "Events", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region customeAgent
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.General", DefaultText = "General", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Billing", DefaultText = "Billing", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Accounting", DefaultText = "Accounting", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Addresses", DefaultText = "Addresses", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Contacts", DefaultText = "Contacts", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Events", DefaultText = "Events", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region shippingAgent
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.General", DefaultText = "General", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Billing", DefaultText = "Billing", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Accounting", DefaultText = "Accounting", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Addresses", DefaultText = "Addresses", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Contacts", DefaultText = "Contacts", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Events", DefaultText = "Events", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region airlines
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.General", DefaultText = "General", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Billing", DefaultText = "Billing", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Accounting", DefaultText = "Accounting", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Addresses", DefaultText = "Addresses", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Contacts", DefaultText = "Contacts", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.FrieghtTariff", DefaultText = "Frieght Tariff", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.SurchargeTariff", DefaultText = "Surcharge Tariff", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Stack", DefaultText = "Stock", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Events", DefaultText = "Events", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.CCSSettings", DefaultText = "CCS Settings", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Adaptations", DefaultText = "Adaptations", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region shippingLine
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.General", DefaultText = "General", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Billing", DefaultText = "Billing", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Accounting", DefaultText = "Accounting", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Addresses", DefaultText = "Addresses", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Contacts", DefaultText = "Contacts", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Events", DefaultText = "Events", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.INTTRA", DefaultText = "INTTRA", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region trucker
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.General", DefaultText = "General", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Billing", DefaultText = "Billing", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Accounting", DefaultText = "Accounting", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Addresses", DefaultText = "Addresses", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Contacts", DefaultText = "Contacts", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Events", DefaultText = "Events", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region warehouse
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.General", DefaultText = "General", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Billing", DefaultText = "Billing", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Accounting", DefaultText = "Accounting", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Address", DefaultText = "Address", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Contacts", DefaultText = "Contacts", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Events", DefaultText = "Events", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region Participant
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.General", DefaultText = "General", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Billing", DefaultText = "Billing", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Accounting", DefaultText = "Accounting", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Addresses", DefaultText = "Addresses", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Contacts", DefaultText = "Contacts", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Events", DefaultText = "Events", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Notify", DefaultText = "Notify", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                #endregion
-                #endregion
-
-                #region billing
-                #region incoterm
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.TH.General", DefaultText = "General", ObjectTableId = IncotermTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.TH.Events", DefaultText = "Events", ObjectTableId = IncotermTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region paymentTerm
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.TH.General", DefaultText = "General", ObjectTableId = PaymentTermTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.TH.Events", DefaultText = "Events", ObjectTableId = PaymentTermTable.Id, Tenant = 0, TextCodeTypeCode = "TH" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.TH.Accounting", DefaultText = "Accounting", ObjectTableId = PaymentTermTable.Id, Tenant = 0, TextCodeTypeCode = "TH" }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region currency
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Currency.TH.General", DefaultText = "General", ObjectTableId = CurrencyTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Currency.TH.Accounting", DefaultText = "Accounting", ObjectTableId = CurrencyTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Currency.TH.Events", DefaultText = "Events", ObjectTableId = CurrencyTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region vatType
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.TH.General", DefaultText = "General", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.TH.Percentages", DefaultText = "Percentages", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.TH.Accounting", DefaultText = "Accounting", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.TH.Events", DefaultText = "Events", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region chargesType
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.TH.EditChargesType", DefaultText = "General", ObjectTableId = ChargesTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.TH.Accounting", DefaultText = "Accounting", ObjectTableId = ChargesTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.TH.Events", DefaultText = "Events", ObjectTableId = ChargesTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ratesTable
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.TH.Main", DefaultText = "General", ObjectTableId = RatesTableTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.TH.Events", DefaultText = "Events", ObjectTableId = RatesTableTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Accounts
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Account.TH.General", DefaultText = "General", ObjectTableId = accountTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Account.TH.Events", DefaultText = "Events", ObjectTableId = accountTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-                #endregion
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Competitor.TH.General", DefaultText = "General", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Competitor.TH.Events", DefaultText = "Events", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.TH.General", DefaultText = "General", ObjectTableId = PortTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.TH.Events", DefaultText = "Events", ObjectTableId = PortTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.TH.General", DefaultText = "General", ObjectTableId = CountryTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.TH.Events", DefaultText = "Events", ObjectTableId = CountryTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GlobalZone.TH.General", DefaultText = "General", ObjectTableId = GlobalZoneTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GlobalZone.TH.Events", DefaultText = "Events", ObjectTableId = GlobalZoneTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.TH.General", DefaultText = "General", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.TH.Events", DefaultText = "Events", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.TH.Partners", DefaultText = "Partners", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.General", DefaultText = "General", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Roles", DefaultText = "Roles", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Permissions", DefaultText = "Permissions", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Distributor", DefaultText = "Distributor", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Events", DefaultText = "Events", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Devices", DefaultText = "Devices", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.DocumentFilingInbox", DefaultText = "Filing Inbox", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.Details", DefaultText = "Details", LocalDefaultText = "פרטים", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.DocsIn", DefaultText = "Docs In", LocalDefaultText = "מסמכים", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.Docs", DefaultText = "Docs Out", LocalDefaultText = "מסמכים שיצאו", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.TransferDetails", DefaultText = "Transfer Details", LocalDefaultText = "נתוני העברה", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.Events", DefaultText = "Events", LocalDefaultText = "אירועים", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.Communications", DefaultText = "Communication", LocalDefaultText = "תקשורת", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.TH.General", DefaultText = "General", LocalDefaultText = "כללי", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.TransferDetails", DefaultText = "Transfer Details", LocalDefaultText = "נתוני העברה", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.Details", DefaultText = "Details", LocalDefaultText = "פרטים", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.DocsIn", DefaultText = "Docs In", LocalDefaultText = "מסמכים", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.Docs", DefaultText = "Docs Out", LocalDefaultText = "מסמכים שיצאו", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.Events", DefaultText = "Events", LocalDefaultText = "אירועים", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Department.TH.General", DefaultText = "General", ObjectTableId = DepartmentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Department.TH.Events", DefaultText = "Events", ObjectTableId = DepartmentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.TH.General", DefaultText = "General", ObjectTableId = BranchTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.TH.Events", DefaultText = "Events", ObjectTableId = BranchTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.TH.Accounting", DefaultText = "Accounting", ObjectTableId = BranchTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.TH.General", DefaultText = "General", ObjectTableId = StateTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.TH.Events", DefaultText = "Events", ObjectTableId = StateTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.TH.General", DefaultText = "General", ObjectTableId = PackageTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.TH.Events", DefaultText = "Events", ObjectTableId = PackageTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.General", DefaultText = "General", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Templates", DefaultText = "Document Templates", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.SharedLogistics", DefaultText = "Shared Logistics", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.LogBoxTab", DefaultText = "Digital Sign", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.HTMLTemplates", DefaultText = "Email Message Templates", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.CustomFields", DefaultText = "Custom Fields", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Events", DefaultText = "Events", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.PrintingOptions", DefaultText = "Printing Options", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Copies", DefaultText = "Copies", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.TH.General", DefaultText = "General", ObjectTableId = EventTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.TH.Events", DefaultText = "Events", ObjectTableId = EventTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vessel.TH.General", DefaultText = "General", ObjectTableId = VesselTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vessel.TH.Events", DefaultText = "Events", ObjectTableId = VesselTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.TH.General", DefaultText = "General", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.TH.Events", DefaultText = "Events", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.TH.MessageBody", DefaultText = "Message Body", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerFieldsUpdateSetting.TH.General", DefaultText = "General", ObjectTableId = CustomerFieldsUpdateSettingTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesGroup.TH.General", DefaultText = "General", ObjectTableId = ChargesGroupTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.TH.Error", DefaultText = "Error", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.General", DefaultText = "General", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.CCSSettings", DefaultText = "CCS Settings", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Statistics", DefaultText = "Statistics", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.AWBMessagingStock", DefaultText = "AWB Messaging Stock", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Events", DefaultText = "Events", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.TH.General", DefaultText = "General", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.TH.Events", DefaultText = "Events", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.TH.AnalyzeQueueErrors", DefaultText = "Errors", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.TH.MessageBody", DefaultText = "Message Body", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.TH.General", DefaultText = "General", ObjectTableId = CreditCardTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.TH.Events", DefaultText = "Events", ObjectTableId = CreditCardTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ErrorLog.TH.General", DefaultText = "General", ObjectTableId = ErrorLogTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ErrorLog.TH.Events", DefaultText = "Events", ObjectTableId = ErrorLogTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.TH.General", DefaultText = "General", ObjectTableId = ReportTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.TH.Events", DefaultText = "Events", ObjectTableId = ReportTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.TH.Template", DefaultText = "Report Template", ObjectTableId = ReportTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.TH.General", DefaultText = "General", ObjectTableId = LeadSourceTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.TH.Events", DefaultText = "Events", ObjectTableId = LeadSourceTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.TH.General", DefaultText = "General", ObjectTableId = IndustryTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.TH.Events", DefaultText = "Events", ObjectTableId = IndustryTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.TH.General", DefaultText = "General", ObjectTableId = MoveTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.TH.Events", DefaultText = "Events", ObjectTableId = MoveTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeLead.TH.General", DefaultText = "General", ObjectTableId = LogitudeLeadTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ErrorLog.TH.Exception", DefaultText = "Exception", ObjectTableId = ErrorLogTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.TH.General", DefaultText = "General", ObjectTableId = CommodityTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.TH.Events", DefaultText = "Events", ObjectTableId = CommodityTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalService.TH.General", DefaultText = "General", ObjectTableId = AdditionalServiceTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalService.TH.Events", DefaultText = "Events", ObjectTableId = AdditionalServiceTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.TH.General", DefaultText = "General", ObjectTableId = ProductTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.TH.Events", DefaultText = "Events", ObjectTableId = ProductTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.TH.General", DefaultText = "General", ObjectTableId = BusinessUnitTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.TH.Events", DefaultText = "Events", ObjectTableId = BusinessUnitTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialServicesType.TH.General", DefaultText = "General", ObjectTableId = SpecialServicesTypesTables.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialServicesType.TH.Events", DefaultText = "Events", ObjectTableId = SpecialServicesTypesTables.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.TH.General", DefaultText = "General", ObjectTableId = RegionTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.TH.Events", DefaultText = "Events", ObjectTableId = RegionTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MessagingStock.TH.General", DefaultText = "General", ObjectTableId = MessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MessagingStock.TH.Events", DefaultText = "Events", ObjectTableId = MessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.TH.General", DefaultText = "General", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.TH.Events", DefaultText = "Events", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.TH.General", DefaultText = "General", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.TH.Events", DefaultText = "Events", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CountryCity.TH.General", DefaultText = "General", ObjectTableId = CountryCityTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CountryCity.TH.Events", DefaultText = "Events", ObjectTableId = CountryCityTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.TH.General", DefaultText = "General", ObjectTableId = MeasurementTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.TH.Events", DefaultText = "Events", ObjectTableId = MeasurementTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.TH.General", DefaultText = "General", ObjectTableId = distributorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.TH.Tenants", DefaultText = "Tenants", ObjectTableId = distributorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.TH.Events", DefaultText = "Events", ObjectTableId = distributorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.TH.Steps", DefaultText = "Steps", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartner.TH.General", DefaultText = "General", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartner.TH.Events", DefaultText = "Events", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BluesnapContract.TH.General", DefaultText = "General", ObjectTableId = BluesnapContractTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BluesnapContract.TH.Events", DefaultText = "Events", ObjectTableId = BluesnapContractTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSystem.TH.General", DefaultText = "General", ObjectTableId = AccountingSystemTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.DocumentType", DefaultText = "Document Type", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.FromFile", DefaultText = "From File", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.TH.Inactive", DefaultText = "Inactive", ObjectTableId = DocumentTypeTemplateTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AWBAdditionalHandlingInfo.TH.General", DefaultText = "General", ObjectTableId = AWBAdditionalHandlingInfoTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InboundEmail.TH.General", DefaultText = "General", ObjectTableId = InboundEmailTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccessRequest.TH.General", DefaultText = "General", ObjectTableId = CustomerTenantAccessRequestTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccessRequest.TH.Events", DefaultText = "Events", ObjectTableId = CustomerTenantAccessRequestTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.TH.General", DefaultText = "General", ObjectTableId = HybridPartnerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.General", DefaultText = "General", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.RequestBody", DefaultText = "Request Body", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.ResponceBody", DefaultText = "Responce Body", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.Errors", DefaultText = "Errors", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.DiagnosticLog", DefaultText = "Diagnostic Log", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.ResponseBody", DefaultText = "Response Body", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.Exceptions", DefaultText = "Exceptions", ObjectTableId = APILogsObject.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AirlineStatistics.TH.General", DefaultText = "General", ObjectTableId = AirlineStatisticsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Support", DefaultText = "Support", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.TH.General", DefaultText = "General", ObjectTableId = TransmissionLogTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.TH.Audit", DefaultText = "Audit", ObjectTableId = TransmissionLogTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Branding", DefaultText = "Branding", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.TH.General", DefaultText = "General", ObjectTableId = DocumentsFilingTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.TH.Events", DefaultText = "Events", ObjectTableId = DocumentsFilingTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPaymentMethod.TH.General", DefaultText = "General", ObjectTableId = AccountingPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPaymentMethod.TH.Events", DefaultText = "Events", ObjectTableId = AccountingPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPaymentMethod.TH.Accounting", DefaultText = "Accounting", ObjectTableId = AccountingPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPaymentMethod.TH.General", DefaultText = "General", ObjectTableId = APPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPaymentMethod.TH.Events", DefaultText = "Events", ObjectTableId = APPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPaymentMethod.TH.Accounting", DefaultText = "Accounting", ObjectTableId = APPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.TH.Permissions", DefaultText = "Permissions", ObjectTableId = HybridPartnerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                #endregion
-
-                //============= Just For Testing ============= 
-                if (Testing.General.IsTesting)
-                {
-                    AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Test.tt.test", DefaultText = "test", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                    AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Address", DefaultText = "Address123456789", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-                }
-                //============================================
-
-                #region QueryTextCodes
-
-                #region Shipment Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.Shipments", DefaultText = "Shipments", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.Masters", DefaultText = "Masters", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.OpenReceivablesShipments", DefaultText = "Open Receivables - Shipments", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.OpenPayablesMasters", DefaultText = "Open Payables - Masters", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.AllShipments", DefaultText = "All Shipments", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.AllMasters", DefaultText = "All Masters", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.CancelledShipments", DefaultText = "Cancelled Shipments", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.AllFollowUps", DefaultText = "All Follow Ups", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.MyFollowUps", DefaultText = "My Follow Ups", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.ExpectedDepartures", DefaultText = "Expected Departures", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.AirlinesUpdates", DefaultText = "Airlines Updates - Last 7 Days", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.SentFSR", DefaultText = "FSR Request - Last 7 Days", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.ImportShipments", DefaultText = "Import Shipments", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.CustomerActualData", DefaultText = "Customer Actual Data", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.CreditLimitBlockedShipments", DefaultText = "Credit Limit Blocked Shipments", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.ExpectedDeparturesNotTransmitted", DefaultText = "Expected Departures - Not Transmitted", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.ShippingInstructionsLast7Days", DefaultText = "Shipping Instructions - last 7 days", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.ContainerStatusLast7Days", DefaultText = "Container Status - last 7 days", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region Master Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Master.Q.OperationalOpen", DefaultText = "Operational Open", ObjectTableId = MasterTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Master.Q.AccountingOpen", DefaultText = "Accounting Open", ObjectTableId = MasterTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Master.Q.AllMaster", DefaultText = "All Masters", ObjectTableId = MasterTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Master.Q.CancelledMasters", DefaultText = "Cancelled Masters", ObjectTableId = MasterTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Master.Q.AllFollowUps", DefaultText = "Follow Ups", ObjectTableId = MasterTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Port Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.Q.Ports", DefaultText = "Ports", ObjectTableId = PortTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Country Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.Q.Countries", DefaultText = "Countries", ObjectTableId = CountryTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Agent Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.Q.Agents", DefaultText = "Agents", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.Q.SharedLogisticsAgents", DefaultText = "Shared Logistics Agents", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Vendor Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.Q.Vendors", DefaultText = "Vendors", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region CustomAgent Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.Q.CustomAgents", DefaultText = "Custom Agents", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Customer Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.Customers", DefaultText = "Customers", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.CustomersByLastShipment", DefaultText = "By Last Shipment", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.SharedLogisticsCustomers", DefaultText = "Shared Logistics Customers", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.MyCustomers", DefaultText = "My Customers (as Salesman)", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.MyCustomersAccMngr", DefaultText = "My Customers (as Account Manager)", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.ReadyCustomers", DefaultText = "Waiting for Activation", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.PotentialCustomers", DefaultText = "Potential Customers", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.ActiveCustomers", DefaultText = "Active Customers", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.InactiveCustomers", DefaultText = "Inactive Customers", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Shippers And Consignees
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippersAndConsignees.Q.ShippersAndConsignees", DefaultText = "Shippers and Consignees", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Incoterm Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.Q.Incoterms", DefaultText = "Incoterms", ObjectTableId = IncotermTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ShippingAgent Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.Q.ShippingAgents", DefaultText = "Shipping Agents", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Airline Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.Q.Airlines", DefaultText = "Airlines", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ShippingLine Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.Q.ShippingLines", DefaultText = "Shipping Lines", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Truckers Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.Q.Truckers", DefaultText = "Truckers", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region PaymentTerm Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.Q.PaymentTerms", DefaultText = "Payment terms", ObjectTableId = PaymentTermTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region VatType Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.Q.VatTypes", DefaultText = "Vat Types", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Currency Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Currency.Q.Currencies", DefaultText = "Currencies", ObjectTableId = CurrencyTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region GlobalZone Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GlobalZone.Q.GlobalZones", DefaultText = "Global Zones", ObjectTableId = GlobalZoneTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ChargesType Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.Q.ChargesTypes", DefaultText = "Charges Types", ObjectTableId = ChargesTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Branch Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.Q.Branches", DefaultText = "Branches", ObjectTableId = BranchTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Department Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Department.Q.Departments", DefaultText = "Departments", ObjectTableId = DepartmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region QuoteTemplate Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.Q.QuoteTemplates", DefaultText = "Quote Templates", ObjectTableId = QuoteTemplateTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.Q.States", DefaultText = "States", ObjectTableId = StateTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CountryCity.Q.Cities", DefaultText = "Cities", ObjectTableId = CountryCityTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.Q.Measurements", DefaultText = "Measurements", ObjectTableId = MeasurementTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #region Contacts Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.Q.Contacts", DefaultText = "Contacts", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.Q.UpcomingBirthdays", DefaultText = "Upcoming Birthdays", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.Q.NoReminders", DefaultText = "Contacts Without Reminders", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Users Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.ActiveUsers", DefaultText = "Active Users", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.ActiveNotLicensed", DefaultText = "Active Not Licensed", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.InactiveUsers", DefaultText = "Inactive Users", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.AllUsers", DefaultText = "All Users", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Vessels Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vessel.Q.Vessels", DefaultText = "Vessels", ObjectTableId = VesselTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region CustomerTenantAccesses Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.Q.CustomerTenantAccesses", DefaultText = "Importers Tenants", ObjectTableId = CustomerTenantAccessTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region CustomerTenantAccessRequests Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccessRequest.Q.CustomerTenantAccessRequests", DefaultText = "Request data from Agents", ObjectTableId = CustomerTenantAccessRequestTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region HybridPartners Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.Q.HybridPartners", DefaultText = "Hybrid Partner", ObjectTableId = HybridPartnerTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Warehouses Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.Q.Warehouses", DefaultText = "Warehouses", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region DocumentTypes Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.Q.DocumentTypes", DefaultText = "Document Types", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region DocumentFolders Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentFolder.Q.DocumentFolders", DefaultText = "Document Folders", ObjectTableId = DocumentFolderTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region DocumentsFilings Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.Q.DocumentsFilings", DefaultText = "Documents Filings", ObjectTableId = DocumentsFilingObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.Q.AllDocumentsFilings", DefaultText = "All Documents", ObjectTableId = DocumentsFilingObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.Q.RequestedDocumentsFilings", DefaultText = "Requested Documents", ObjectTableId = DocumentsFilingObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region PackageTypes Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.Q.PackageTypes", DefaultText = "Package Types", ObjectTableId = PackageTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region RatesTables Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.Q.RatesTables", DefaultText = "Rates", ObjectTableId = RatesTableTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region EventTypes Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.Q.EventTypes", DefaultText = "Event Types", ObjectTableId = EventTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Quote Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.AllQuotes", DefaultText = "All Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.CancelledQuotes", DefaultText = "Cancelled Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.AllFollowUps", DefaultText = "All Follow Ups", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.MyFollowUps", DefaultText = "My Follow Ups", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.ExpiredQuotes", DefaultText = "Expired Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.MyQuotes", DefaultText = "My Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.DraftQuotes", DefaultText = "Draft Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.SentQuotes", DefaultText = "Sent Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.AcceptedQuotes", DefaultText = "Accepted Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.AcceptedWithoutShipmentsQuotes", DefaultText = "Accepted Without Shipments", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.OpenQuotes", DefaultText = "Open Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.CreatedQuotes", DefaultText = "Created Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region AccountingTransferHeader Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.ARInvoiceTransferHistory", DefaultText = "Transfer history", ObjectTableId = AccountingTransferHeaderTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.APInvoiceTransferHistory", DefaultText = "Transfer history", ObjectTableId = AccountingTransferHeaderTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.ARPaymentTransferHistory", DefaultText = "Transfer history", ObjectTableId = AccountingTransferHeaderTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.APPaymentTransferHistory", DefaultText = "Transfer history", ObjectTableId = AccountingTransferHeaderTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region AR Invoices Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.AllInvoices", DefaultText = "All Invoices", LocalDefaultText = "כל החשבוניות", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.DraftInvoices", DefaultText = "Draft Invoices", LocalDefaultText = "חשבוניות בסטטוס טיוטה", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.UnpaidInvoices", DefaultText = "Unpaid Invoices", LocalDefaultText = "חשבוניות שלא שולמו", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.NotReadyInvoices", DefaultText = "Not Ready Invoices", LocalDefaultText = "לא מוכן חשבוניות", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.MarkedAsBlockedForTransfer", DefaultText = "Marked as blocked for transfer", LocalDefaultText = "מסומן כחסום לצורך העברה", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.ErrorInTransferInvoices", DefaultText = "Error In Transfer Invoices", LocalDefaultText = "שגיאה בהעברת חשבוניות", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.OpenConstituentInvoices", DefaultText = "Open Constituent", LocalDefaultText = "פתח מכונן", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.AllGeneralInvoices", DefaultText = "All Invoices", LocalDefaultText = "כל החשבוניות", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.DraftGeneralInvoices", DefaultText = "Draft Invoices", LocalDefaultText = "חשבוניות בסטטוס טיוטה", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.ApprovalGeneralInvoices", DefaultText = "Approval Invoices", LocalDefaultText = "חשבוניות מאושרות", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.FailedSAT", DefaultText = "SAT Failed Invoices", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.ErrorInTransfer", DefaultText = "Error In Transfer", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-
-                #endregion
-
-                #region Accounts Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Account.Q.AllAccounts", DefaultText = "All Accounts", ObjectTableId = accountTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region AR Payment Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.AllPayments", DefaultText = "All Payments", LocalDefaultText = "כל הקבלות", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.OpenPayments", DefaultText = "Open Payments", LocalDefaultText = "קבלות בסטטוס מאושר", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.DraftPayments", DefaultText = "Draft Payments", LocalDefaultText = "קבלות בסטטוס טיוטה", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.NotReadyPayments", DefaultText = "Not Ready Payments", LocalDefaultText = "לא מוכן תשלומים", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.MarkedAsBlockedForTransfer", DefaultText = "Marked as blocked for transfer", LocalDefaultText = "מסומן כחסום לצורך העברה", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.FailedSAT", DefaultText = "SAT Failed Payments", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.ErrorInTransfer", DefaultText = "Error In Transfer", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-
-                #endregion
-
-                #region APInvoice Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.AllAPInvoices", DefaultText = "All Invoices", LocalDefaultText = "כל החשבוניות", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.UnpaidAPInvoices", DefaultText = "Unpaid Invoices", LocalDefaultText = "חשבוניות שלא שולמו", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.WaitingApprovalAPInvoices", DefaultText = "Waiting for Approval", LocalDefaultText = "ממתין לאישור", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.NotReadyInvoices", DefaultText = "Not Ready Invoices", LocalDefaultText = "חשבוניות לא מוכנות", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.MarkedAsBlockedForTransfer", DefaultText = "Marked as blocked for transfer", LocalDefaultText = "סמן כחסום להעברה", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.ErrorInTransferInvoices", DefaultText = "Error In Transfer Invoices", LocalDefaultText = "שגיאה בהעברת חשבוניות", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.AllGeneralInvoices", DefaultText = "All General Invoices", LocalDefaultText = "כל החשבוניות", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.DraftGeneralInvoices", DefaultText = "Draft General APInvoices", LocalDefaultText = "חשבוניות בסטטוס טיוטה", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.ApprovalGeneralInvoices", DefaultText = "Approval General APInvoices", LocalDefaultText = "חשבוניות מאושרות", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.ErrorInTransfer", DefaultText = "Error In Transfer", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region AP Payment Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.AllAPPayments", DefaultText = "All Payments", LocalDefaultText = "כל התשלומים", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.OpenAPPayments", DefaultText = "Open Payments", LocalDefaultText = "תשלומים פתוחים", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.DraftAPPayments", DefaultText = "Draft Payments", LocalDefaultText = "תשלומים בסטטוס טיוטה", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.NotReadyPayments", DefaultText = "Not Ready Payments", LocalDefaultText = "לא מוכן תשלומים", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.MarkedAsBlockedForTransfer", DefaultText = "Marked as blocked for transfer", LocalDefaultText = "מסומן כחסום לצורך העברה", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.ErrorInTransfer", DefaultText = "Error In Transfer", LocalDefaultText = "Error In Transfer", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region TenantQuery
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.AllTenants", DefaultText = "All Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.InactiveTenants", DefaultText = "Inactive Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.TrialTenantManagements", DefaultText = "Trial Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.PayingCustomers", DefaultText = "Paying Customers", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.NotRecuringTenants", DefaultText = "Not Recuring Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region CommunicationLog query
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.Q.AllCommunicationLogs", DefaultText = "All Communication Logs", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.Q.TodayCommunicationLogs", DefaultText = "Today", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region AnalyzeQueueQuery
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.Q.AllAnalyzeQueues", DefaultText = "All Analyze Queues", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.Q.TodayAnalyzeQueues", DefaultText = "Today", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region CustomerFieldsUpdateSettingQuery
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerFieldsUpdateSetting.Q.AllCustomerFieldsUpdateSettings", DefaultText = "All Customer Fields Update Settings", ObjectTableId = CustomerFieldsUpdateSettingTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-
-                #endregion
-
-                #region CreditCardType Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.Q.AllCreditCardTypes", DefaultText = "All Credit Card Types", ObjectTableId = CreditCardTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ErrorLog
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ErrorLog.Q.AllErrorLog", DefaultText = "All Error Log", ObjectTableId = ErrorLogTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ErrorLog.Q.TodayErrorLog", DefaultText = "Today", ObjectTableId = ErrorLogTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-
-
-                #endregion
-
-                #region MoveType Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.Q.AllMoveTypes", DefaultText = "All Move Types", ObjectTableId = MoveTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Report
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.Q.AllReports", DefaultText = "All Reports", ObjectTableId = ReportTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.Q.AllLeadSources", DefaultText = "Lead Sources", ObjectTableId = LeadSourceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.Q.AllCommodities", DefaultText = "All Commodities", ObjectTableId = CommodityTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.Q.AllIndustries", DefaultText = "All Industries", ObjectTableId = IndustryTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.Q.AllBusinessUnits", DefaultText = "All Business Units", ObjectTableId = BusinessUnitTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeLead.Q.AllLogitudeLeads", DefaultText = "All Logitude Leads ", ObjectTableId = LogitudeLeadTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MessagingStock.Q.AllMessagingStocks", DefaultText = "All AWB Messaging Stocks", ObjectTableId = MessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.Q.AllCustomerSizes", DefaultText = "Customer Sizes", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.Q.AllQuoteStages", DefaultText = "Quote Stages", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartner.Q.AllComputingPartners", DefaultText = "All Computing Partners", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BluesnapContract.Q.AllBluesnapContracts", DefaultText = "Bluesnap Contracts", ObjectTableId = BluesnapContractTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSystem.Q.AllAccountingSystems", DefaultText = "Accounting Systems", ObjectTableId = AccountingSystemTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalHandlingInfo.Q.AllHandlingInfos", DefaultText = "AWB Additional Handling Infos", ObjectTableId = AWBAdditionalHandlingInfoTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPaymentMethod.Q.AllAccountingPaymentMethods", DefaultText = "Accounting Payment Methods", ObjectTableId = AccountingPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPaymentMethod.Q.AllAPPaymentMethods", DefaultText = "AP Payment Methods", ObjectTableId = APPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #region competitor
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Competitor.Q.AllCompetitors", DefaultText = "Competitors", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region AdditionalService Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalService.Q.AllAdditionalServices", DefaultText = "All Additional Services", ObjectTableId = AdditionalServiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ExternalSystemTableCode
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalSystemsTablesCode.Q.AllExternalSystemsTablesCodes", DefaultText = "All External Systems Tables Codes", ObjectTableId = ExternalSystemsTablesCodeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region ProductType Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.Q.AllProductTypes", DefaultText = "All Active Product Types", ObjectTableId = ProductTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region SpecialServicesType Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialSericesType.Q.AllSpecialServices", DefaultText = "All Special Service Types", ObjectTableId = SpecialServicesTypesTables.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region SpecialServicesType Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.Q.AllRegions", DefaultText = "All Regions", ObjectTableId = RegionTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-                #endregion
-
-                #region Distributor Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.Q.AllDistributors", DefaultText = "All Distributors", ObjectTableId = distributorTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Inbound Email 
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InboundEmail.Q.InboundEmails", DefaultText = "All Inbound Emails", ObjectTableId = InboundEmailTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "INBOUNDEMAIL", DefaultText = "Inbound Emails", ObjectTableId = InboundEmailTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ApiCredintials
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ApiCredintials.Q.ApiCredintials", DefaultText = "All API Credentials", ObjectTableId = ApiCredintialsObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagmentPrivateLabels.Q.PrivateLabels", DefaultText = "Private Labels", ObjectTableId = TenantManagmentPrivateLabelsObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region Participant Queries
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.Q.Participants", DefaultText = "Participants", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region AirlineStatistics
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AirlineStatistics.Q.AllAirlineStatistics", DefaultText = "All Airline Statistics", ObjectTableId = AirlineStatisticsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region LogitudeMessagesTransmissionLog
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.Q.AllTransmissionLogs", DefaultText = "All Logitude Messages Transmission Logs", ObjectTableId = TransmissionLogTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ChargesGroups
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesGroup.Q.AllChargesGroups", DefaultText = "All Charges Groups", ObjectTableId = ChargesGroupTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-
-
-                #endregion
-
-                #region AgentSharedManifests
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.AgentSharedManifests", DefaultText = "All Agent Shared Manifests", ObjectTableId = AgentSharedManifestObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.AirAgentSharedManifests", DefaultText = "Air Agent Shared Manifests", ObjectTableId = AgentSharedManifestObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.OceanAgentSharedManifests", DefaultText = "Ocean Agent Shared Manifests", ObjectTableId = AgentSharedManifestObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.InlandAgentSharedManifests", DefaultText = "Inland Agent Shared Manifests", ObjectTableId = AgentSharedManifestObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.CancelledAgentSharedManifests", DefaultText = "Cancelled Agent Shared Manifests", ObjectTableId = AgentSharedManifestObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-                #region ContainerFollowUp
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.ArrivedNotDelivered", DefaultText = "Arrived Not Delivered", ObjectTableId = ContainerFollowUpObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.DeliveredNotReturned", DefaultText = "Delivered Not Returned", ObjectTableId = ContainerFollowUpObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.InTransit", DefaultText = "In Transit", ObjectTableId = ContainerFollowUpObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-                #endregion
-
-            }
-
+            //============================================
+
+            #region QueryTextCodes
+
+            #region Shipment Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.Shipments", DefaultText = "Shipments", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.Masters", DefaultText = "Masters", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.OpenReceivablesShipments", DefaultText = "Open Receivables - Shipments", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.OpenPayablesMasters", DefaultText = "Open Payables - Masters", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.AllShipments", DefaultText = "All Shipments", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.AllMasters", DefaultText = "All Masters", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.CancelledShipments", DefaultText = "Cancelled Shipments", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.AllFollowUps", DefaultText = "All Follow Ups", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.MyFollowUps", DefaultText = "My Follow Ups", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.ExpectedDepartures", DefaultText = "Expected Departures", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.AirlinesUpdates", DefaultText = "Airlines Updates - Last 7 Days", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.SentFSR", DefaultText = "FSR Request - Last 7 Days", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.ImportShipments", DefaultText = "Import Shipments", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.CustomerActualData", DefaultText = "Customer Actual Data", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.CreditLimitBlockedShipments", DefaultText = "Credit Limit Blocked Shipments", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.ExpectedDeparturesNotTransmitted", DefaultText = "Expected Departures - Not Transmitted", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.ShippingInstructionsLast7Days", DefaultText = "Shipping Instructions - last 7 days", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Master Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Master.Q.OperationalOpen", DefaultText = "Operational Open", ObjectTableId = MasterTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Master.Q.AccountingOpen", DefaultText = "Accounting Open", ObjectTableId = MasterTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Master.Q.AllMaster", DefaultText = "All Masters", ObjectTableId = MasterTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Master.Q.CancelledMasters", DefaultText = "Cancelled Masters", ObjectTableId = MasterTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Master.Q.AllFollowUps", DefaultText = "Follow Ups", ObjectTableId = MasterTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Port Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.Q.Ports", DefaultText = "Ports", ObjectTableId = PortTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Country Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.Q.Countries", DefaultText = "Countries", ObjectTableId = CountryTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Agent Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.Q.Agents", DefaultText = "Agents", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.Q.SharedLogisticsAgents", DefaultText = "Shared Logistics Agents", ObjectTableId = AgentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Vendor Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.Q.Vendors", DefaultText = "Vendors", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region CustomAgent Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.Q.CustomAgents", DefaultText = "Custom Agents", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Customer Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.Customers", DefaultText = "Customers", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.CustomersByLastShipment", DefaultText = "By Last Shipment", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.SharedLogisticsCustomers", DefaultText = "Shared Logistics Customers", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.MyCustomers", DefaultText = "My Customers (as Salesman)", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.MyCustomersAccMngr", DefaultText = "My Customers (as Account Manager)", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.ReadyCustomers", DefaultText = "Waiting for Activation", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.PotentialCustomers", DefaultText = "Potential Customers", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.ActiveCustomers", DefaultText = "Active Customers", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.InactiveCustomers", DefaultText = "Inactive Customers", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Shippers And Consignees
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippersAndConsignees.Q.ShippersAndConsignees", DefaultText = "Shippers and Consignees", ObjectTableId = CustomerTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Incoterm Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.Q.Incoterms", DefaultText = "Incoterms", ObjectTableId = IncotermTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region ShippingAgent Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.Q.ShippingAgents", DefaultText = "Shipping Agents", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Airline Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.Q.Airlines", DefaultText = "Airlines", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region ShippingLine Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.Q.ShippingLines", DefaultText = "Shipping Lines", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Truckers Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.Q.Truckers", DefaultText = "Truckers", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region PaymentTerm Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.Q.PaymentTerms", DefaultText = "Payment terms", ObjectTableId = PaymentTermTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region VatType Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.Q.VatTypes", DefaultText = "Vat Types", ObjectTableId = VatTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Currency Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Currency.Q.Currencies", DefaultText = "Currencies", ObjectTableId = CurrencyTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region GlobalZone Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GlobalZone.Q.GlobalZones", DefaultText = "Global Zones", ObjectTableId = GlobalZoneTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region ChargesType Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.Q.ChargesTypes", DefaultText = "Charges Types", ObjectTableId = ChargesTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Branch Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.Q.Branches", DefaultText = "Branches", ObjectTableId = BranchTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Department Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Department.Q.Departments", DefaultText = "Departments", ObjectTableId = DepartmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region QuoteTemplate Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.Q.QuoteTemplates", DefaultText = "Quote Templates", ObjectTableId = QuoteTemplateTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.Q.States", DefaultText = "States", ObjectTableId = StateTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CountryCity.Q.Cities", DefaultText = "Cities", ObjectTableId = CountryCityTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.Q.Measurements", DefaultText = "Measurements", ObjectTableId = MeasurementTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+            #region Contacts Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.Q.Contacts", DefaultText = "Contacts", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.Q.UpcomingBirthdays", DefaultText = "Upcoming Birthdays", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.Q.NoReminders", DefaultText = "Contacts Without Reminders", ObjectTableId = ContactTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Users Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.ActiveUsers", DefaultText = "Active Users", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.ActiveNotLicensed", DefaultText = "Active Not Licensed", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.InactiveUsers", DefaultText = "Inactive Users", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.AllUsers", DefaultText = "All Users", ObjectTableId = UserTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Vessels Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vessel.Q.Vessels", DefaultText = "Vessels", ObjectTableId = VesselTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region CustomerTenantAccesses Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.Q.CustomerTenantAccesses", DefaultText = "Importers Tenants", ObjectTableId = CustomerTenantAccessTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region CustomerTenantAccessRequests Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccessRequest.Q.CustomerTenantAccessRequests", DefaultText = "Request data from Agents", ObjectTableId = CustomerTenantAccessRequestTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region HybridPartners Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.Q.HybridPartners", DefaultText = "Hybrid Partner", ObjectTableId = HybridPartnerTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Warehouses Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.Q.Warehouses", DefaultText = "Warehouses", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region DocumentTypes Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.Q.DocumentTypes", DefaultText = "Document Types", ObjectTableId = DocumentTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region DocumentFolders Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentFolder.Q.DocumentFolders", DefaultText = "Document Folders", ObjectTableId = DocumentFolderTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region DocumentsFilings Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.Q.DocumentsFilings", DefaultText = "Documents Filings", ObjectTableId = DocumentsFilingObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.Q.AllDocumentsFilings", DefaultText = "All Documents", ObjectTableId = DocumentsFilingObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.Q.RequestedDocumentsFilings", DefaultText = "Requested Documents", ObjectTableId = DocumentsFilingObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+            #endregion
+
+            #region PackageTypes Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.Q.PackageTypes", DefaultText = "Package Types", ObjectTableId = PackageTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region RatesTables Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.Q.RatesTables", DefaultText = "Rates", ObjectTableId = RatesTableTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region EventTypes Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.Q.EventTypes", DefaultText = "Event Types", ObjectTableId = EventTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Quote Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.AllQuotes", DefaultText = "All Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.CancelledQuotes", DefaultText = "Cancelled Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.AllFollowUps", DefaultText = "All Follow Ups", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.MyFollowUps", DefaultText = "My Follow Ups", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.ExpiredQuotes", DefaultText = "Expired Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.MyQuotes", DefaultText = "My Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.DraftQuotes", DefaultText = "Draft Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.SentQuotes", DefaultText = "Sent Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.AcceptedQuotes", DefaultText = "Accepted Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.AcceptedWithoutShipmentsQuotes", DefaultText = "Accepted Without Shipments", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.OpenQuotes", DefaultText = "Open Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.CreatedQuotes", DefaultText = "Created Quotes", ObjectTableId = QuoteTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+            #endregion
+
+            #region AccountingTransferHeader Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.ARInvoiceTransferHistory", DefaultText = "Transfer history", ObjectTableId = AccountingTransferHeaderTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.APInvoiceTransferHistory", DefaultText = "Transfer history", ObjectTableId = AccountingTransferHeaderTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.ARPaymentTransferHistory", DefaultText = "Transfer history", ObjectTableId = AccountingTransferHeaderTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.APPaymentTransferHistory", DefaultText = "Transfer history", ObjectTableId = AccountingTransferHeaderTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region AR Invoices Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.AllInvoices", DefaultText = "All Invoices", LocalDefaultText = "כל החשבוניות", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.DraftInvoices", DefaultText = "Draft Invoices", LocalDefaultText = "חשבוניות בסטטוס טיוטה", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.UnpaidInvoices", DefaultText = "Unpaid Invoices", LocalDefaultText = "חשבוניות שלא שולמו", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.NotReadyInvoices", DefaultText = "Not Ready Invoices", LocalDefaultText = "לא מוכן חשבוניות", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.MarkedAsBlockedForTransfer", DefaultText = "Marked as blocked for transfer", LocalDefaultText = "מסומן כחסום לצורך העברה", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.ErrorInTransferInvoices", DefaultText = "Error In Transfer Invoices", LocalDefaultText = "שגיאה בהעברת חשבוניות", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.OpenConstituentInvoices", DefaultText = "Open Constituent", LocalDefaultText = "פתח מכונן", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.AllGeneralInvoices", DefaultText = "All Invoices", LocalDefaultText = "כל החשבוניות", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.DraftGeneralInvoices", DefaultText = "Draft Invoices", LocalDefaultText = "חשבוניות בסטטוס טיוטה", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.ApprovalGeneralInvoices", DefaultText = "Approval Invoices", LocalDefaultText = "חשבוניות מאושרות", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.FailedSAT", DefaultText = "SAT Failed Invoices", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+            
+            #endregion
+
+            #region Accounts Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Account.Q.AllAccounts", DefaultText = "All Accounts", ObjectTableId = accountTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region AR Payment Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.AllPayments", DefaultText = "All Payments", LocalDefaultText = "כל הקבלות", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.OpenPayments", DefaultText = "Open Payments", LocalDefaultText = "קבלות בסטטוס מאושר", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.DraftPayments", DefaultText = "Draft Payments", LocalDefaultText = "קבלות בסטטוס טיוטה", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.NotReadyPayments", DefaultText = "Not Ready Payments", LocalDefaultText = "לא מוכן תשלומים", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.MarkedAsBlockedForTransfer", DefaultText = "Marked as blocked for transfer", LocalDefaultText = "מסומן כחסום לצורך העברה", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.FailedSAT", DefaultText = "SAT Failed Payments", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+            #endregion
+
+            #region APInvoice Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.AllAPInvoices", DefaultText = "All Invoices",LocalDefaultText = "כל החשבוניות", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.UnpaidAPInvoices", DefaultText = "Unpaid Invoices", LocalDefaultText = "חשבוניות שלא שולמו", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.WaitingApprovalAPInvoices", DefaultText = "Waiting for Approval", LocalDefaultText = "ממתין לאישור", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.NotReadyInvoices", DefaultText = "Not Ready Invoices", LocalDefaultText = "חשבוניות לא מוכנות", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.MarkedAsBlockedForTransfer", DefaultText = "Marked as blocked for transfer", LocalDefaultText = "סמן כחסום להעברה", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.ErrorInTransferInvoices", DefaultText = "Error In Transfer Invoices", LocalDefaultText = "שגיאה בהעברת חשבוניות", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.AllGeneralInvoices", DefaultText = "All General Invoices", LocalDefaultText = "כל החשבוניות", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region AP Payment Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.AllAPPayments", DefaultText = "All Payments", LocalDefaultText = "כל התשלומים", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.OpenAPPayments", DefaultText = "Open Payments", LocalDefaultText = "תשלומים פתוחים", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.DraftAPPayments", DefaultText = "Draft Payments", LocalDefaultText = "תשלומים בסטטוס טיוטה", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.NotReadyPayments", DefaultText = "Not Ready Payments", LocalDefaultText = "לא מוכן תשלומים", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.MarkedAsBlockedForTransfer", DefaultText = "Marked as blocked for transfer", LocalDefaultText = "מסומן כחסום לצורך העברה", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region TenantQuery
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.AllTenants", DefaultText = "All Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.InactiveTenants", DefaultText = "Inactive Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.TrialTenantManagements", DefaultText = "Trial Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.PayingCustomers", DefaultText = "Paying Customers", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.NotRecuringTenants", DefaultText = "Not Recuring Tenant Managements", ObjectTableId = TenantManagementsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region CommunicationLog query
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.Q.AllCommunicationLogs", DefaultText = "All Communication Logs", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.Q.TodayCommunicationLogs", DefaultText = "Today", ObjectTableId = CommLogsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+            #endregion
+
+            #region AnalyzeQueueQuery
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.Q.AllAnalyzeQueues", DefaultText = "All Analyze Queues", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.Q.TodayAnalyzeQueues", DefaultText = "Today", ObjectTableId = AnalyzeQueuesTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+            #endregion
+
+            #region CustomerFieldsUpdateSettingQuery
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerFieldsUpdateSetting.Q.AllCustomerFieldsUpdateSettings", DefaultText = "All Customer Fields Update Settings", ObjectTableId = CustomerFieldsUpdateSettingTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+
+            #endregion
+
+            #region CreditCardType Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.Q.AllCreditCardTypes", DefaultText = "All Credit Card Types", ObjectTableId = CreditCardTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region ErrorLog
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ErrorLog.Q.AllErrorLog", DefaultText = "All Error Log", ObjectTableId = ErrorLogTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ErrorLog.Q.TodayErrorLog", DefaultText = "Today", ObjectTableId = ErrorLogTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+
+
+            #endregion
+
+            #region MoveType Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.Q.AllMoveTypes", DefaultText = "All Move Types", ObjectTableId = MoveTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Report
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.Q.AllReports", DefaultText = "All Reports", ObjectTableId = ReportTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+            #endregion
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.Q.AllLeadSources", DefaultText = "Lead Sources", ObjectTableId = LeadSourceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.Q.AllCommodities", DefaultText = "All Commodities", ObjectTableId = CommodityTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.Q.AllIndustries", DefaultText = "All Industries", ObjectTableId = IndustryTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.Q.AllBusinessUnits", DefaultText = "All Business Units", ObjectTableId = BusinessUnitTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeLead.Q.AllLogitudeLeads", DefaultText = "All Logitude Leads ", ObjectTableId = LogitudeLeadTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AWBMessagingStock.Q.AllAWBMessagingStocks", DefaultText = "All AWB Messaging Stocks", ObjectTableId = AWBMessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.Q.AllCustomerSizes", DefaultText = "Customer Sizes", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.Q.AllQuoteStages", DefaultText = "Quote Stages", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartner.Q.AllComputingPartners", DefaultText = "All Computing Partners", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BluesnapContract.Q.AllBluesnapContracts", DefaultText = "Bluesnap Contracts", ObjectTableId = BluesnapContractTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSystem.Q.AllAccountingSystems", DefaultText = "Accounting Systems", ObjectTableId = AccountingSystemTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalHandlingInfo.Q.AllHandlingInfos", DefaultText = "AWB Additional Handling Infos", ObjectTableId = AWBAdditionalHandlingInfoTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPaymentMethod.Q.AllAccountingPaymentMethods", DefaultText = "Accounting Payment Methods", ObjectTableId = AccountingPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPaymentMethod.Q.AllAPPaymentMethods", DefaultText = "AP Payment Methods", ObjectTableId = APPaymentMethodTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+            #region competitor
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Competitor.Q.AllCompetitors", DefaultText = "Competitors", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+            #endregion
+
+            #region AdditionalService Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalService.Q.AllAdditionalServices", DefaultText = "All Additional Services", ObjectTableId = AdditionalServiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region ExternalSystemTableCode
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalSystemsTablesCode.Q.AllExternalSystemsTablesCodes", DefaultText = "All External Systems Tables Codes", ObjectTableId = ExternalSystemsTablesCodeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+            #endregion
+
+            #region ProductType Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.Q.AllProductTypes", DefaultText = "All Active Product Types", ObjectTableId = ProductTypeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region SpecialServicesType Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialSericesType.Q.AllSpecialServices", DefaultText = "All Special Service Types", ObjectTableId = SpecialServicesTypesTables.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+            #endregion
+
+            #region SpecialServicesType Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.Q.AllRegions", DefaultText = "All Regions", ObjectTableId = RegionTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+            #endregion
+
+            #region Distributor Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.Q.AllDistributors", DefaultText = "All Distributors", ObjectTableId = distributorTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Inbound Email 
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InboundEmail.Q.InboundEmails", DefaultText = "All Inbound Emails", ObjectTableId = InboundEmailTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "INBOUNDEMAIL", DefaultText = "Inbound Emails", ObjectTableId = InboundEmailTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion 
+
+            #region ApiCredintials
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ApiCredintials.Q.ApiCredintials", DefaultText = "All API Credentials", ObjectTableId = ApiCredintialsObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagmentPrivateLabels.Q.PrivateLabels", DefaultText = "Private Labels", ObjectTableId = TenantManagmentPrivateLabelsObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion 
+
+            #region Participant Queries
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.Q.Participants", DefaultText = "Participants", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region AirlineStatistics
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AirlineStatistics.Q.AllAirlineStatistics", DefaultText = "All Airline Statistics", ObjectTableId = AirlineStatisticsTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region LogitudeMessagesTransmissionLog
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.Q.AllTransmissionLogs", DefaultText = "All Logitude Messages Transmission Logs", ObjectTableId = TransmissionLogTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region ChargesGroups
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesGroup.Q.AllChargesGroups", DefaultText = "All Charges Groups", ObjectTableId = ChargesGroupTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+
+            #endregion
+
+            #region AgentSharedManifests
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.AgentSharedManifests", DefaultText = "All Agent Shared Manifests", ObjectTableId = AgentSharedManifestObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.AirAgentSharedManifests", DefaultText = "Air Agent Shared Manifests", ObjectTableId = AgentSharedManifestObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.OceanAgentSharedManifests", DefaultText = "Ocean Agent Shared Manifests", ObjectTableId = AgentSharedManifestObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.InlandAgentSharedManifests", DefaultText = "Inland Agent Shared Manifests", ObjectTableId = AgentSharedManifestObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.CancelledAgentSharedManifests", DefaultText = "Cancelled Agent Shared Manifests", ObjectTableId = AgentSharedManifestObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region ContainerFollowUp
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.ArrivedNotDelivered", DefaultText = "Arrived Not Delivered", ObjectTableId = ContainerFollowUpObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.DeliveredNotReturned", DefaultText = "Delivered Not Returned", ObjectTableId = ContainerFollowUpObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.InTransit", DefaultText = "In Transit", ObjectTableId = ContainerFollowUpObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            #endregion
 
             ObjectContext.SaveChanges();
         }
-        #endregion
+
         #region LoadTextCodes_Tenant()
         private void LoadTextCodes_Tenant(Dictionary<string, TextCode> textcodes)
         {
@@ -62040,7 +60291,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.Logs", LocalDefaultText = "לוג", DefaultText = "Logs", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.CorrelationID", LocalDefaultText = "מתאם", DefaultText = "Correlation ID", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.MoreDetails", LocalDefaultText = "פרטים נוספים", DefaultText = "More Details", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.B.Details", LocalDefaultText = "פרטים", DefaultText = "Details", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
 
             #region APILogs
 
@@ -62093,10 +60343,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.FilingInbox", DefaultText = "Filing Inbox", LocalDefaultText = "Filing Inbox", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.DeclarationCargoSplits", DefaultText = "Cargo Splits", LocalDefaultText = "בקשות פיצול מטען", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Tasks", DefaultText = "Tasks", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Shipments", DefaultText = "Shipments", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Invoices", DefaultText = "Invoices", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Depositions", DefaultText = "Depositions", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
-
 
             #endregion
 
@@ -62290,7 +60536,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeTypeCode = "O",
                 LocalDefaultText =
-                "חדשה %Entity"
+                "חדש %Entity"
                 //"%Entity חדש "
             }, TextCodeRepository, textcodes);
 
@@ -62346,7 +60592,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.FilterBy", DefaultText = "Filter By", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.FollowUps", DefaultText = "Follow Ups", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Notes", DefaultText = "Notes", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.DeletQuery", DefaultText = "Delete Query", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.DeletQuery", DefaultText = "Delet Query", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.RenameQuery", DefaultText = "Rename Query", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.SaveAsNewView", DefaultText = "Save as New View", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ViewName", LocalDefaultText = "הצג את השם", DefaultText = "View Name", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
@@ -63230,8 +61476,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.ShowProfitDetails", DefaultText = "Show Profit Details", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.PricedueQuoteCharge", DefaultText = "Price is due to Quote Charge Sale Price Steps", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.AmountdueQuoteMinimum", DefaultText = "Amount is due to Quote minimum amount", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.AmountdueQuoteMaximum", DefaultText = "Amount is due to Quote maximum amount", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.ForeignAmountsetasFixed", DefaultText = "Foreign Amount set as Fixed", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.GrossWeightNotSameAsQuote", DefaultText = "Gross Weight is not same as Quote", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.ChargeableWeightNotSameAsQuote", DefaultText = "Chargeable Weight is not same as Quote", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
@@ -63240,8 +61484,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.ShowProfitDetails", DefaultText = "Show Profit Details", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.PricedueQuoteCharge", DefaultText = "Price is due to Quote Charge Cost Price Steps", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.AmountdueQuoteMinimum", DefaultText = "Amount is due to Quote minimum amount", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.AmountdueQuoteMaximum", DefaultText = "Amount is due to Quote maximum amount", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.AmountdueTarrifChargeMax", DefaultText = "Amount is due to Tarrif Charge Max Amount", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.AmountdueTarrifChargeMin", DefaultText = "Amount is due to Tarrif Charge Min Amount", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.GrossWeightNotSameAsQuote", DefaultText = "Gross Weight is not same as Quote", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
@@ -63889,23 +62131,15 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.NewQuote.AddConsignee", DefaultText = "Add Consignee", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.NewQuote.AddPotentialShipper", DefaultText = "Add Potential Shipper", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.NewQuote.AddPotentialConsignee", DefaultText = "Add Potential Consignee", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.NewQuote.AddAgent", DefaultText = "Add Agent", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-
-
             #endregion
 
             #region Messages
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.DeleteThisPartner", DefaultText = "Delete This Partner?", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.DeleteThisCharge", DefaultText = "Delete This Charge?", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.YouCanTypeSalePrice", DefaultText = "You can type Sale Price ex:(1000)%nOr%nYou can type Sale Markup ex:(+100) Or (+10%)", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.YouCanTypeSalePrice", DefaultText = "You can type Sale Price ex:(1000)\nOr\nYou can type Sale Markup ex:(+100) Or (+10%)", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.UnableToDoAllIn", DefaultText = "Unable to do All In..", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.IfMatchesFrieghtCharge", DefaultText = "Only if matches the Frieght Charge UOM and Currency", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.DeleteThisPackage", DefaultText = "Delete this package?", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.BuildShipmentMessage", DefaultText = "Build Shipment is Available Only if Ad-hoc Quotes", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.QuoteCancelMessage", DefaultText = "Quote cannot be Cancelled, since it has connected Shipments", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.QuoteReturnMessage", DefaultText = "Quote can't be returned to draft since it is connected to a shipment", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-
             #endregion
 
             #region Overview
@@ -63981,7 +62215,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.FillDimensions", DefaultText = "Fill Dimensions", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Summary", DefaultText = "Summary", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.IsLocalLanguage", DefaultText = "Is Local Language", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Address", DefaultText = "Address", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region Workspace
@@ -64010,11 +62244,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.AddNotify", DefaultText = "Add Notify", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.EditNotify", DefaultText = "Edit Notify", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.MainAddress", DefaultText = "Main Address", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            #endregion
-
-            #region Packages
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Packages.AddPackage", DefaultText = "Add Package", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Packages.EditPackage", DefaultText = "Edit Package", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             #endregion
 
             #region Routings
@@ -64054,53 +62283,10 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.Fixed", DefaultText = "Fixed", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SameAsCost", DefaultText = "Same as Cost Currency", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.CostMinAmount", DefaultText = "Cost%nMin Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.CostMaxAmount", DefaultText = "Cost%nMax Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SaleMinAmount", DefaultText = "Sale%nMin Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SaleMaxAmount", DefaultText = "Sale%nMax Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.TotalSaleAmount", DefaultText = "Total Sale Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.VATDetails", DefaultText = "VAT Details", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SubTotal", DefaultText = "Sub-Total", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.TotalVAT", DefaultText = "Total VAT", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.TotalSale", DefaultText = "Total Sale", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.Details", DefaultText = "Details", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             #endregion
-
-
-
-            #region Quotation
-
-            #region Button
-
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Generate", DefaultText = "Generate", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Upload", DefaultText = "Upload", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.UploadQuote", DefaultText = "Upload Quote", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Print", DefaultText = "Print", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Send", DefaultText = "Send", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.SendtoCustomer", DefaultText = "Send to Customer", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.SendInternally", DefaultText = "Send Internally", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.View", DefaultText = "View", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Hide", DefaultText = "Hide", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.B.Expand", DefaultText = "Expand", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            #endregion
-
-            #region Others
-
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.S.Generated", DefaultText = "Generated", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.S.Upload", DefaultText = "Upload", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.S.Uploaded", DefaultText = "Uploaded", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.S.Templates", DefaultText = "Templates", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.S.Quotation", DefaultText = "Quotation", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.S.GenerateUpload", DefaultText = "Generate Upload", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.S.Versions", DefaultText = "Versions", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            #endregion
-
-            #endregion
-
-     
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Routings", DefaultText = "Routings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.DeclineReason", DefaultText = "Decline Reason", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+
 
             ObjectContext.SaveChanges();
         }
@@ -64192,7 +62378,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewConsolidationInvoiceErrorMsg6", DefaultText = "Credit limit setting is blocking invoice for bill to", LocalDefaultText = "הגדרת מסגרת האשראי חוסמת את הפקת החשבונית ללקוח זה", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewGeneralInvoiceErrorMsg1", DefaultText = "The chosen card doesn’t have GLAccount connected to it", LocalDefaultText = "לכרטיס הנבחר לא קושר כרטיס הנהלת חשבונות", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewGeneralInvoiceErrorMsg2", DefaultText = "The invoice currency does not match to the bill to GLAccount", LocalDefaultText = "מטבע החשבונית אינו תואם את מטבע הכרטיס לחיוב", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewGeneralInvoiceErrorMsg2", DefaultText = "The invoice currency does not match to the bill to GLAccount", LocalDefaultText = "מטבע החשבונית אינו תואם למטבע המוגדר בכרטיס", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewGeneralInvoiceErrorMsg3", DefaultText = "The chosen card doesn’t have GLAccount connected to it", LocalDefaultText = "לכרטיס הנבחר לא קושר כרטיס הנהלת חשבונות", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.DueDateLowerThanInvoiceDate", DefaultText = "The Due date shouldn't be lower than the Accounting date", LocalDefaultText = "לא ניתן להזין תאריך פירעון נמוך מהתאריך החשבונאי", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
 
@@ -64249,7 +62435,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { TextCodeTypeCode = "S", Code = "ARInvoice.S.ShortTitle.Consolidation", DefaultText = "Consolidation", LocalDefaultText = "חשבונית מרכזת", ObjectTableId = objectTableId, Tenant = 0, }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { TextCodeTypeCode = "S", Code = "ARInvoice.S.ShortTitle.AutoCredited", DefaultText = "Auto Credited", LocalDefaultText = "ביטול", ObjectTableId = objectTableId, Tenant = 0, }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { TextCodeTypeCode = "S", Code = "ARInvoice.S.ShortTitle.Cancelled", DefaultText = "Cancelled", LocalDefaultText = "מבוטלת", ObjectTableId = objectTableId, Tenant = 0, }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { TextCodeTypeCode = "S", Code = "ARInvoice.S.ShortTitle.ByInvoice", DefaultText = "By Invoice", LocalDefaultText = "של חשבונית", ObjectTableId = objectTableId, Tenant = 0, }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { TextCodeTypeCode = "S", Code = "ARInvoice.S.ShortTitle.ByInvoice", DefaultText = "By Invoice", LocalDefaultText = "ע''י חשבונית", ObjectTableId = objectTableId, Tenant = 0, }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { TextCodeTypeCode = "S", Code = "ARInvoice.S.ShortTitle.Constituent", DefaultText = "Constituent", LocalDefaultText = "תעודת אשראי", ObjectTableId = objectTableId, Tenant = 0, }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { TextCodeTypeCode = "S", Code = "ARInvoice.S.ShortTitle.ConnectedToConsolidation", DefaultText = "Connected to consolidation", LocalDefaultText = "מקושר לחשבונית מרכזת", ObjectTableId = objectTableId, Tenant = 0, }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { TextCodeTypeCode = "S", Code = "ARInvoice.S.ShortTitle.CreditNote", DefaultText = "Credit Note", LocalDefaultText = "זיכוי", ObjectTableId = objectTableId, Tenant = 0, }, TextCodeRepository, textcodes);
@@ -64507,7 +62693,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.O.GeneralData", DefaultText = "General Data", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.O.AddContact", DefaultText = "Add Contact", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.O.CompanyName", DefaultText = "Company Name", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.O.CompanyLocalName", DefaultText = "Local Name", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             TextCode tc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.O.TableDescription", DefaultText = "Add and manage information about your customers – shippers and consignees. Specify communication, address and billing details, and create list of contacts.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             objectTable.DescriptionTextCodeId = tc.Id;
             #endregion
@@ -64607,7 +62792,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
             #region Others
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.O.CompanyName", DefaultText = "Company Name", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.O.CompanyLocalName", DefaultText = "Local Name", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             TextCode tc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.O.TableDescription", DefaultText = "Add and manage information about inland carriers you work with. Specify communication, address and billing details, and create list of contacts.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             objectTable.DescriptionTextCodeId = tc.Id;
             #endregion
@@ -64878,7 +63062,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.GeneralData", DefaultText = "General Data", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.Address", DefaultText = "Addresses", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.CompanyName", DefaultText = "Company Name", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.CompanyLocalName", DefaultText = "Local Name", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             TextCode WareHousetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.TableDescription", DefaultText = "Add and manage information about the warehouses you work with and those of your partners.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             objectTable.DescriptionTextCodeId = WareHousetc.Id;
             #endregion
@@ -65182,10 +63365,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.ConfirmVoid", LocalDefaultText = "ברגע שמבטלים או מתעלמים מחשבונית, השינוי הוא בלתי הפיך. במידה וביטלת חשבונית או התעלמת ממנה וברצונך לשחזר אותה, עליך ליצור חשבונית חדשה", DefaultText = "Once you void or delete an invoice, the change is permanent. If you void or delete an invoice and want to restore it later, you'll have to create a new invoice.", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.ClosedInvoice", DefaultText = "This invoice is closed", LocalDefaultText = "חשבונית זאת סגורה", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.NoGLAccount", DefaultText = "The chosen charge type doesn't have GLAccount connected to it", LocalDefaultText = "סעיף החיוב הנבחר לא מקושר לכרטיס הנה''ח", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.VendorNoGLAccount", DefaultText = "The vendor does not have GLAccount", LocalDefaultText = "לספק לא קושר כרטיס הנהלת חשבונות", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.InvoiceCurrNotMatch", DefaultText = "The Invoice Currency does not match the vendor GLAccount Currency ", LocalDefaultText = "מטבע החשבונית לא תואם את מטבע הכרטיס של הספק", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
 
-            
             #endregion
 
             ObjectContext.SaveChanges();
@@ -65252,7 +63432,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.PaymentAmountPaidCantBeBigger", DefaultText = "Payment Amount Paid can't be bigger than Payment Amount", LocalDefaultText = "סכום התשלום ששולם לא יכול להיות גדול מסכום התשלום ", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.AccountingSettingsDontAllowVoid", DefaultText = "Accounting Settings doesn't allow void A/R Payment", LocalDefaultText = "ע''פ הגדרות מערכת הנהח''ש לא ניתן להתעלם מקבלה", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.DisconnectInvoices", DefaultText = "Please disconnect all invoices", LocalDefaultText = "אנא נתק את כל החשבוניות המקושרות", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.ConfirmVoid", DefaultText = "Once you void or delete a payment, the change is permanent. If you void or delete a payment and want to restore it later, you'll have to create a new payment.", LocalDefaultText = "האם אתה בטוח שברצונך לבטל את הקבלה ?", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.ConfirmVoid", DefaultText = "Once you void or delete a payment, the change is permanent. If you void or delete a payment and want to restore it later, you'll have to create a new payment.", LocalDefaultText = "כאשר אתה מבטל תשלום או מתעלם ממנו זהו צעד בלתי הפיך", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.NoTemplate", DefaultText = "A/R Payment document has no template!", LocalDefaultText = "אין תבנית הדפסה למסמך קבלה", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.OnlyMinusValue", DefaultText = "Only negative value allowed", LocalDefaultText = "מותר רק ערך שלילי", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.AmountPaidNotLess", DefaultText = "Amount Paid can't be less than", LocalDefaultText = "הסכום ששולם אינו יכול להיות נמוך מ", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
@@ -65269,7 +63449,8 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.SearchByMsg", DefaultText = "Search by Invoice #/ Bill To", LocalDefaultText = "חפש לפי חשבונית", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.ARpaymentValueHigherThanCashbookValue", DefaultText = "ARpayment Value is higher than Cashbook Value", LocalDefaultText = "לא ניתן לבטל קבלה - סכום הקבלה גדול מהיתרה בקופה", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.CANTCancelARPayment", DefaultText = "Can’t Cancel this ARPayment because at least one of the cheques is deposited or redeemed, return these cheques to the cashbook and cancel the external reconciliation ", LocalDefaultText = "לא ניתן לבטל את הקבלה, חלק מההמחאות הופקדו/נפרעו כבר, יש להחזיר את ההמחאות לקופה ולבטל את ההתאמה החיצונית ", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.CANTCancelARPayment", DefaultText = "Can't Cancel this ARPayment because at least one of the cheques is not in the cashbook: ", LocalDefaultText = "לא ניתן לבטל קבלה , חלק מהצ’יקים אינם בקופה: ", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region Column Header
@@ -65321,8 +63502,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.NoVendorTaxWithholdingPercentage", DefaultText = "There is no tax withholding definitions for this vendor, the default tax withholding percentage will be taken from system defaults", LocalDefaultText = "לא מוגדר ללקוח אחוז ניכוי מס במקור, אחוז ניכוי ברירת מחדל ילקח מהגדרות מערכת", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.FullAccountingCashBookCheck", DefaultText = "Cashbook amount is lower than payment amount", LocalDefaultText = "היתרה בקופה הינה קטנה מסכום הוראת התשלום", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.ValueDateCantBeFutureDate", LocalDefaultText = "תאריך ערך לא יכול להיות תאריך עתידי", DefaultText = "Value date can't be future date", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.CheckPaymentChequesBeforeCancel", LocalDefaultText = "לא ניתן לבטל את התשלום לספק, משום שהתשלום בוצע ע”י המחאה שנפרעה כבר, יש לבטל את ההתאמה החיצונית ע”מ לעדכן את הסטטוס של ההמחאה", DefaultText = "The payment cheque that connected to the APPayment is redeemed, you should cancel the external reconciliation in order to update the status of the payment cheque", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-
             #endregion
 
             #region 
@@ -65407,172 +63586,11 @@ namespace WebFreight.Web.MetaDataUpdate
             string objectTableId = ObjectContext.ObjectTables.Where(f => f.Name == "QuoteTemplate" && f.Tenant == 0).FirstOrDefault().Id;
 
 
-
-          
-
-       
-
-            #region Others
-
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowTotalPerChargeGroup", DefaultText = "ShowTotalPerChargeGroup", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Search", DefaultText = "Search", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PageHeader", DefaultText = "Page Header", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.QuoteHeader", DefaultText = "Quote Header", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.QuoteIntroduction", DefaultText = "Quote Introduction", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.QuoteDetails", DefaultText = "Quote Details", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PricingPackages", DefaultText = "Pricing Packages", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PricingContainers", DefaultText = "Pricing Containers", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PageFooter", DefaultText = "Page Footer", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.SampleText", DefaultText = "Sample Text", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Sections", DefaultText = "Sections", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Translation", DefaultText = "Translation", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Righttoleft", DefaultText = "Right-to-left", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowLocalLanguage", DefaultText = "Show Local Language", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PricingTableDesign", DefaultText = "Pricing Table Design", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PreviewTemplate", DefaultText = "Preview Template", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Total", DefaultText = "Total", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Rows", DefaultText = "Rows", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowPageBreakBeforeTable", DefaultText = "Show Page Break Before Table", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.BorderColor", DefaultText = "Border Color", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowFixedPrice", DefaultText = "Show Fixed Price", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowPriceByContainer", DefaultText = "Show Price By Container", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.General", DefaultText = "General", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TotalsDesign", DefaultText = "Totals  Design", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TitleDesign", DefaultText = "Title Design", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PageHeaderSettings", DefaultText = "Page Header Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.QuoteDetailsSettings", DefaultText = "Quote Details Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PricingPackagesSettings", DefaultText = "Pricing Packages Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.QuoteHeaderSettings", DefaultText = "Quote Header Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PageFooterSettings", DefaultText = "Page Footer Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PricingContainersSettings", DefaultText = "Pricing Containers Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.EditSection", DefaultText = "Edit Section", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.AddSection", DefaultText = "Add Section", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.BorderThickness", DefaultText = "Border Thickness", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Column1", DefaultText = "Column 1", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Column2", DefaultText = "Column 2", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Column3", DefaultText = "Column 3", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.None", DefaultText = "None", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Logo", DefaultText = "Logo", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Text", DefaultText = "Text", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ColumnsWidthOptions", DefaultText = "Columns Width Options", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Width", DefaultText = "Width", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.BorderType", DefaultText = "Border Type", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.All", DefaultText = "All", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.AvaiLabelFields", DefaultText = "AvaiLabel Fields", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Box", DefaultText = "Box", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.HorizontalOnly", DefaultText = "Horizontal Only", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.VerticalOnly", DefaultText = "Vertical Only", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Cm", DefaultText = "Cm", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Height", DefaultText = "Height", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TextColor", DefaultText = "Text Color", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.BackgroundColor", DefaultText = "Background Color", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.DesignTable", DefaultText = "Design Table", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.EditArea1", DefaultText = "Edit Area 1", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.EditArea2", DefaultText = "Edit Area 2", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.EditArea3", DefaultText = "Edit Area 3", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.px", DefaultText = "px", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Font", DefaultText = "Font", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Tablecolumns", DefaultText = "Table columns", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Labels", DefaultText = "Labels", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TableDesign", DefaultText = "Table Design", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ColumnwidthType", DefaultText = "Column width Type", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Fixed", DefaultText = "Fixed", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Auto", DefaultText = "Auto", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Column1Labels", DefaultText = "Column 1 Labels", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Column2Labels", DefaultText = "Column 2 Labels", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Percentage", DefaultText = "%", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Column1Values", DefaultText = "Column 1 Values", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Column2Values", DefaultText = "Column 2 Values", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.QuoteLabels", DefaultText = "Quote Labels", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.EnglishLabel", DefaultText = "English Label", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.LocalLabel", DefaultText = "Local Label", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Label", DefaultText = "Label", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Value", DefaultText = "Value", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Border", DefaultText = "Border", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowTitle(GeneralDetails)", DefaultText = "Show Title ( General Details )", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.NewQuoteTemplate", DefaultText = "New Quote Template", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Name", DefaultText = "Name", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.PricingTable", DefaultText = "Pricing Table", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Totals", DefaultText = "Totals", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowTitle", DefaultText = "Show Title", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowPricesTable", DefaultText = "Show Prices Table", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowChargeCode", DefaultText = "Show Charge Code", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowChargeName", DefaultText = "Show Charge Name", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowMeasurement", DefaultText = "Show Measurement", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowUnits", DefaultText = "Show Units", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowUnitPrice", DefaultText = "Show Unit Price", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowSaleCurrencyColumn", DefaultText = "Show Sale Currency Column", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowLocalCurrencyColumn", DefaultText = "Show Local Currency Column", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowChargeDescription", DefaultText = "Show Charge Description", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowChargeNote", DefaultText = "Show Charge Note", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowSaleMinMax", DefaultText = "Show Sale Min/Max", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Splitbychargegroup", DefaultText = "Split by charge group", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowTotalInLocalCurrency", DefaultText = "Show Total In Local Currency", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowTotalInSaleCurrency", DefaultText = "Show Total In Sale Currency", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Header", DefaultText = "Header", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Title", DefaultText = "Title", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.GroupbyDesign", DefaultText = "Group by Design", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TotalPerContainerSettings", DefaultText = "Total Per Container Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TotalPerContainerTable", DefaultText = "Total Per Container Table", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.TotalPerContainerDesign", DefaultText = "Total Per Container Design", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.Quote", DefaultText = "Quote", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            #region Tabs Headers
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.TH.General", DefaultText = "General", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.TH.Events", DefaultText = "Events", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.TH.Settings", DefaultText = "Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             #endregion
-
-            #region Fields
-
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.F.Template", DefaultText = "Template", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "F", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.F.LastUpdate", DefaultText = "LastUpdate", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "F", }, TextCodeRepository, textcodes);
-            #endregion
-
-            #region Button
-
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Section", DefaultText = "Section", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Add", DefaultText = "Add", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.PageBreak", DefaultText = "Page Break", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Edit", DefaultText = "Edit", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Settings", DefaultText = "Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.GeneralSettings", DefaultText = "General Settings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Preview", DefaultText = "Preview", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Cancel", DefaultText = "Cancel", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Save", DefaultText = "Save", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Close", DefaultText = "Close", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Up", DefaultText = "Up", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Down", DefaultText = "Down", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.New", DefaultText = "New", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Copy", DefaultText = "Copy", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Advanced", DefaultText = "Advanced", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.AddDataField", DefaultText = "Add Data Field", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Next", DefaultText = "Next", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.FromAllTenant", DefaultText = "From All Tenant", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.B.Addtemplatefromlibrary", DefaultText = "Add template from library", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
-            #endregion
-
-            #region Message
-
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.Clicktoaddthephoto", DefaultText = "Click to add the photo", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.DeleteSectionConfirmMessage", DefaultText = "Are you sure you want to delete this section?", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.PageHeaderDescriptionMessage", DefaultText = "the header of each page in the quote", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.QuoteHeaderDescriptionMessage", DefaultText = "the header of the quote, displayed in the first page only", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.QuoteDetailsDescriptionMessage", DefaultText = "general details of the quote", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.PricingTableDescriptionMessage", DefaultText = "the sales prices for the quote", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.PageFooterDescriptionMessage", DefaultText = "the footer of each page in the quote", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.Saving", DefaultText = "Saving...", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.Loading", DefaultText = "Loading...", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            #endregion
-
-    
-            #region Extra
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.NoActiveTemplatesFoundMessage", DefaultText = "No active templates found ", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.ValueEditedByUserMessage", DefaultText = "Value edited by user, double click to reset to", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.M.FileUploadedManuallyMessage", DefaultText = "File uploaded manually, no overview is available.", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.AddNewQuoteTemplateMessage", DefaultText = "Here you can add new Quote template  from Logitude's Quote template list", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.M.HaveAllTheQuoteTemplatesMessage", DefaultText = "You have all the Quote Templates", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-
-            #endregion
-
-
-
-
             ObjectContext.SaveChanges();
         }
 
@@ -66132,7 +64150,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTablePM BusinessUnitTable = objectTables.Where(d => d.Name == "BusinessUnit").FirstOrDefault();
             ObjectTablePM SpecialServicesTypeTable = objectTables.Where(d => d.Name == "SpecialServicesType").FirstOrDefault();
             ObjectTablePM RegionTable = objectTables.Where(d => d.Name == "Region").FirstOrDefault();
-            ObjectTablePM MessagingStockTable = objectTables.Where(d => d.Name == "MessagingStock").FirstOrDefault();
+            ObjectTablePM AWBMessagingStockTable = objectTables.Where(d => d.Name == "AWBMessagingStock").FirstOrDefault();
             ObjectTablePM customerSizeObjectTable = objectTables.Where(d => d.Name == "CustomerSize").FirstOrDefault();
             ObjectTablePM QuoteStageObjectTable = objectTables.Where(d => d.Name == "QuoteStage").FirstOrDefault();
             ObjectTablePM CityObjectTable = objectTables.Where(d => d.Name == "CountryCity").FirstOrDefault();
@@ -66174,7 +64192,6 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTablePM DWHSettingObjectTable = objectTables.Where(d => d.Name == "DWHSetting").FirstOrDefault();
             ObjectTablePM DWObjectTableObjectTable = objectTables.Where(d => d.Name == "DWObjectTable").FirstOrDefault();
             ObjectTablePM DWObjectFieldObjectTable = objectTables.Where(d => d.Name == "DWObjectField").FirstOrDefault();
-
             #endregion
 
             Dictionary<string, Feature> TenantFeatures = FeaturesRepository.GetFeaturesByTenant(tenant).ToDictionary(d => d.Code.Trim() + d.ObjectTableId, a => a);
@@ -66200,9 +64217,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature GeneralContactsfeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralLogBoxDSfeature0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LBDS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.LBDS", NameTextCodeDefaultText = "LB Digital signature", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralTasksfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TASKS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Tasks", NameTextCodeDefaultText = "Tasks", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature sharedShipmentsfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDSHIPMENTS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.SharedShipments", NameTextCodeDefaultText = "Shared Logistics Shipments", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature sharedInvoicesfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDINVOICES", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.SharedInvoices", NameTextCodeDefaultText = "Shared Logistics Invoices", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-        
+
             Feature GeneralShippersandConsignee = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPPERSANDCONSIGNEES", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ShippersAndConsignees", NameTextCodeDefaultText = "Shippers and Consignees", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralAgentsfeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AGENTS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Agents", NameTextCodeDefaultText = "Agents", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralCustomAgentsfeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMAGENTS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomAgents", NameTextCodeDefaultText = "CustomAgents", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -66251,7 +64266,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
             Feature GeneralFBLStockfeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FBLSTOCKS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.FBLStocks", NameTextCodeDefaultText = "FBL Stock", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
-            Feature tenantLocalAddressFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "OTH", Packagable = true, Code = "General.Features.CompanyLocalAddress", NameTextCodeCode = "General.Features.CompanyLocalAddress", NameTextCodeDefaultText = "Company Local Address" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             Feature GeneralCreditCardTypeFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CREDITCARDTYPES", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CreditCardTypes", NameTextCodeDefaultText = "Credit Card Types", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralErrorLogsFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ERRORLOG", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ErrorLogs", NameTextCodeDefaultText = "Error Logs", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -66302,7 +64316,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature menuFeature019 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "MENU", Packagable = true, Code = "General.Features.SystemUserPassword", NameTextCodeCode = "General.Features.SystemUserPassword", NameTextCodeDefaultText = "System User Password" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature menuFeature20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "MENU", Packagable = true, Code = "General.Features.Automations", NameTextCodeCode = "General.Features.Automations", NameTextCodeDefaultText = "Automations" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature menuFeature21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, Code = "General.Features.DocumentsBackup", NameTextCodeCode = "General.Features.DocumentsBackup", NameTextCodeDefaultText = "Documents Backup", FeatureTypeCode = "OTH", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature GeneralDepositionsfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEPOSITIONS", ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Deposition", NameTextCodeDefaultText = "Depositions", FeatureTypeCode = "MENU", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
 
 
             Feature menuFeature025 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, Code = "SIGNATURESETTING", NameTextCodeCode = "General.Features.Signature", NameTextCodeDefaultText = "Signature", FeatureTypeCode = "OTH", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -66368,10 +64382,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature GeneralApplicationSettingsButtonfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AppSettingsBtn", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.AppSettingsBtn", NameTextCodeDefaultText = "Application Settings Button", FeatureTypeCode = "OTH" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             Feature btexFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BatchTaskExecutionMNU", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.BatchTaskExecutions", NameTextCodeDefaultText = "Batch Task Executions", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-
-             
-            Feature ExternalAPIsEventFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXTERNALAPIS", ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ExternalAPIs", NameTextCodeDefaultText = "External API", FeatureTypeCode = "OTH", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -66465,8 +64475,14 @@ namespace WebFreight.Web.MetaDataUpdate
 
             Feature CustomerFeature_C12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OUTLOOKCONNETION", Packagable = true, ObjectTableId = CustomerObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customer.Features.OutlookConnection", NameTextCodeDefaultText = "Outlook Connection", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature CustomerFeature_C13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CREATEACTIVECUSTOMER", ObjectTableId = CustomerObjectTable.Id, Packagable = true, Tenant = tenant, NameTextCodeCode = "Customer.Features.CreateActiveCustomer", NameTextCodeDefaultText = "Allow creating active customers", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+
+
             Feature CustomerFeature_A23 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWCUSTOMER", ObjectTableId = CustomerObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customer.Features.NewCustomer", NameTextCodeDefaultText = "New Customer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            
+
+
+
+
             #endregion        
 
             #region Agent Features
@@ -66496,7 +64512,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature VendorFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = VendorObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Vendor.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature VendorFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = VendorObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Vendor.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature VendorFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VENDORS", Packagable = true, ObjectTableId = VendorObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Vendor.Features.Vendors", NameTextCodeDefaultText = "Vendors", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature VendorFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = VendorObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Vendor.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -66510,7 +64525,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature CustomAgentFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CustomAgent.Features.Events", NameTextCodeDefaultText = "Edit Custom Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature CustomAgentFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = CustomAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CustomAgent.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature CustomAgentFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMAGENT", Packagable = true, ObjectTableId = CustomAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CustomAgent.Features.CustomAgents", NameTextCodeDefaultText = "Custom Agents", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature CustomAgentFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = CustomAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CustomAgent.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -66531,8 +64545,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature AirlineFeature_A09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWAIRLINE", Packagable = true, ObjectTableId = AirlineObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Airline.Features.NewAirline", NameTextCodeDefaultText = "New Airline", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature AirlineFeature_A10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Adaptations", Packagable = true, ObjectTableId = AirlineObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Airline.Features.Adaptations", NameTextCodeDefaultText = "Adaptations", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature AirlineFeature_A11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RegistrationNotes", Packagable = true, ObjectTableId = AirlineObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Airline.Features.RegistrationNotes", NameTextCodeDefaultText = "Registration Notes", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AirlineFeature_A12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = AirlineObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Airline.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
             #endregion
 
             #region ShippingLine Features
@@ -66549,7 +64561,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
             Feature ShippingLineFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPPINGLINE", Packagable = true, ObjectTableId = ShippingLineObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingLine.Features.Shippinglines", NameTextCodeDefaultText = "Shipping lines", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ShippingLineFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWSHIPPINGLINE", Packagable = true, ObjectTableId = ShippingLineObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingLine.Features.NewShippingline", NameTextCodeDefaultText = "New Shipping line", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingLineFeature_11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = ShippingLineObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingLine.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -66563,51 +64574,19 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature TruckerFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = TruckerObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Trucker.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature TruckerFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = TruckerObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Trucker.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature TruckerFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRUCKERS", Packagable = true, ObjectTableId = TruckerObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Trucker.Features.Truckers", NameTextCodeDefaultText = "Truckers", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature TruckerFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = TruckerObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Trucker.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
-            #region Warehouse Features
-            Feature WarehouseFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.New", NameTextCodeDefaultText = "New Warehouse", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Edit", NameTextCodeDefaultText = "Edit Warehouse", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Address", NameTextCodeDefaultText = "Address", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WAREHOUSES", Packagable = true, ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Warehouses", NameTextCodeDefaultText = "Warehouses", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            #region OtherPartner Features
+            //TextCode OtherPartnerAddTextCode = new TextCode() { Code = "OtherPartner.Features.New", DefaultText = "New OtherPartner", Id = IdCounter.GetNumber().ToString(), ObjectTableId = OtherPartnerObjectTable.Id, Tenant = tenant, TextCodeTypeCode = "O" };
+            //TextCode OtherPartnerEditTextCode = new TextCode() { Code = "OtherPartner.Features.Edit", DefaultText = "Edit OtherPartner", Id = IdCounter.GetNumber().ToString(), ObjectTableId = OtherPartnerObjectTable.Id, Tenant = tenant, TextCodeTypeCode = "O" };
+            //textCodeRep.Add(OtherPartnerAddTextCode);
+            //textCodeRep.Add(OtherPartnerEditTextCode);
 
-            #endregion
-
-            #region ShippingAgent Features
-            Feature ShippingAgentFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.New", NameTextCodeDefaultText = "New ShippingAgent", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Edit", NameTextCodeDefaultText = "Edit ShippingAgent", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPPINGAGENT", Packagable = true, ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Shippingagents", NameTextCodeDefaultText = "Shipping agents", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-            #endregion
-
-            #region Participant Features
-            Feature ParticipantFeature01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.New", NameTextCodeDefaultText = "New Participant", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Edit", NameTextCodeDefaultText = "Edit Participant", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature04 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PARTICIPANTS", Packagable = true, ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Participants", NameTextCodeDefaultText = "Participants", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTIFY", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Notify", NameTextCodeDefaultText = "Notify", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
+            //Feature OtherPartnerNewfeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = OtherPartnerObjectTable.Id,  Tenant = tenant, NameTextCodeCode = "Trucker.Features.New", NameTextCodeDefaultText = "New Trucker" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            //Feature OtherPartnerEditfeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = OtherPartnerObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Trucker.Features.Edit", NameTextCodeDefaultText = "Edit Trucker" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            //FeaturesRepository.Add(OtherPartnerNewfeature1);
+            //FeaturesRepository.Add(OtherPartnerEditfeature1);
             #endregion
 
             #region Incoterm Features
@@ -66740,7 +64719,41 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature LogitudeLeadFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = tenant, NameTextCodeCode = "LogitudeLead.Features.PackageFeature", NameTextCodeDefaultText = "Logitude Leads Package Feature", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
-                        
+
+            //#region QuoteTemplateSectionFeatures
+            //Feature QuoteTemplateSectionFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = QuoteTemplateSectionObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateSection.Features.New", NameTextCodeDefaultText = "New Quote Template Section", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            //Feature QuoteTemplateSectionFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = QuoteTemplateSectionObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateSection.Features.Edit", NameTextCodeDefaultText = "Edit Quote Template Section", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            //Feature QuoteTemplateSectionFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = QuoteTemplateSectionObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateSection.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            //#endregion
+
+            //#region QuoteTemplateSettingFeatures
+            //Feature QuoteTemplateSettingFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = QuoteTemplateSettingObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateSetting.Features.New", NameTextCodeDefaultText = "New QuoteTemplateSetting", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            //Feature QuoteTemplateSettingFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = QuoteTemplateSettingObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateSetting.Features.Edit", NameTextCodeDefaultText = "Edit QuoteTemplateSetting", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            //Feature QuoteTemplateSettingFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = QuoteTemplateSettingObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateSetting.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            //#endregion
+
+            //#region QuoteTemplateTextCodeFeatures
+
+            //Feature QuoteTemplateTextCodeFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = QuoteTemplateTextCodeObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTextCode.Features.New", NameTextCodeDefaultText = "New QuoteTemplateTextCode", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            //Feature QuoteTemplateTextCodeFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = QuoteTemplateTextCodeObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTextCode.Features.Edit", NameTextCodeDefaultText = "Edit QuoteTemplateTextCode", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            //Feature QuoteTemplateTextCodeFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = QuoteTemplateTextCodeObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTextCode.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            //#endregion
+
+            //#region QuoteTemplateTableDesignFeatures
+            //Feature QuoteTemplateTableDesignFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = QuoteTemplateTableDesignObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTableDesign.Features.New", NameTextCodeDefaultText = "New QuoteTemplateTableDesign", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            //Feature QuoteTemplateTableDesignFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = QuoteTemplateTableDesignObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTableDesign.Features.Edit", NameTextCodeDefaultText = "Edit QuoteTemplateTableDesign", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            //Feature QuoteTemplateTableDesignFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = QuoteTemplateTableDesignObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTableDesign.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            //#endregion
+
+            //#region QuoteTemplateTextDesignFeatures
+            //Feature QuoteTemplateTextDesignFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = QuoteTemplateTextDesignObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTextDesign.Features.New", NameTextCodeDefaultText = "New QuoteTemplateTextDesign", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            //Feature QuoteTemplateTextDesignFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = QuoteTemplateTextDesignObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTextDesign.Features.Edit", NameTextCodeDefaultText = "Edit QuoteTemplateTextDesign", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            //Feature QuoteTemplateTextDesignFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = QuoteTemplateTextDesignObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTextDesign.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            //#endregion
+
             #region Contact Features
             Feature ContactFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = ContactObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Contact.Features.New", NameTextCodeDefaultText = "New Contact", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ContactFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = ContactObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Contact.Features.Edit", NameTextCodeDefaultText = "Edit Contact", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -66885,11 +64898,38 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature HybridPartnerFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PERMISSIONS", ObjectTableId = HybridPartnerObjectTable.Id, Tenant = tenant, NameTextCodeCode = "HybridPartner.Features.Permissions", NameTextCodeDefaultText = "Permissions", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
-                        
+
+            #region Warehouse Features
+            Feature WarehouseFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.New", NameTextCodeDefaultText = "New Warehouse", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Edit", NameTextCodeDefaultText = "Edit Warehouse", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Address", NameTextCodeDefaultText = "Address", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WAREHOUSES", Packagable = true, ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Warehouses", NameTextCodeDefaultText = "Warehouses", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            #endregion
+
             #region Account Features
             //Feature AccountNewfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = AccountObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Account.Features.New", NameTextCodeDefaultText = "New Account", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             //Feature AccountEditfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = AccountObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Account.Features.Edit", NameTextCodeDefaultText = "Edit Account", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature Accountfeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLACCOUNTS", Packagable = true, ObjectTableId = AccountObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Account.Features.AllAccounts", NameTextCodeDefaultText = "All Accounts", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            #endregion
+
+            #region ShippingAgent Features
+            Feature ShippingAgentFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.New", NameTextCodeDefaultText = "New ShippingAgent", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Edit", NameTextCodeDefaultText = "Edit ShippingAgent", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPPINGAGENT", Packagable = true, ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Shippingagents", NameTextCodeDefaultText = "Shipping agents", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
 
             #endregion
 
@@ -66914,7 +64954,9 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature CommLogFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MESSAGES", ObjectTableId = CommLogObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CommunicationLog.Features.Messages", NameTextCodeDefaultText = "Messages", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature CommLogFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCOMMLOGS", Packagable = true, ObjectTableId = CommLogObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CommunicationLog.Features.AllCommunicationLogs", NameTextCodeDefaultText = "All Communication Logs", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature CommLogFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STEPS", Packagable = true, ObjectTableId = CommLogObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CommunicationLog.Features.Steps", NameTextCodeDefaultText = "Steps", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-                       
+
+
+
             Feature CommLogFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MESSAGEBODY", Packagable = true, ObjectTableId = CommLogObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CommunicationLog.Features.MessageBody", NameTextCodeDefaultText = "Message Body", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature CommLogFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ERROR", Packagable = true, ObjectTableId = CommLogObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CommunicationLog.Features.Error", NameTextCodeDefaultText = "Error", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
@@ -67036,18 +65078,16 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             #region AnalyzeQueue Features
-            Feature AnalyzeQueueFeature_02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature_04 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.PackageFeature", NameTextCodeDefaultText = "Analyze Queue Package Feature", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            //Feature AnalyzeQueueFeature4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueue.Features.Edit", NameTextCodeDefaultText = "Edit Analyze Queue", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MESSAGEBODY", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.MessageBody", NameTextCodeDefaultText = "Message Body", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLANALYZEQUS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.AllAnalyzeQueues", NameTextCodeDefaultText = "All Analyze Queues", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ANALYZEQUEUEERRORS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.AnalyzeQueueErrors", NameTextCodeDefaultText = "Error", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.PackageFeature", NameTextCodeDefaultText = "Analyze Queue Package Feature", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TODAYANALYZEQUS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.TodayAnalyzeQueues", NameTextCodeDefaultText = "Today Analyze Queues", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
-            Feature AnalyzeQueueFeature_A01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature_A02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature_A03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MESSAGEBODY", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.MessageBody", NameTextCodeDefaultText = "Message Body", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature_A04 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ANALYZEQUEUEERRORS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.AnalyzeQueueErrors", NameTextCodeDefaultText = "Error", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-            Feature AnalyzeQueueFeature_Q01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLANALYZEQUS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.AllAnalyzeQueues", NameTextCodeDefaultText = "All Analyze Queues", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature_Q02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TODAYANALYZEQUS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.TodayAnalyzeQueues", NameTextCodeDefaultText = "Today Analyze Queues", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-            Feature AnalyzeQueueFeature_C01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RESEND", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueue.Features.Resend", NameTextCodeDefaultText = "Resend", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -67059,7 +65099,9 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ErrorLogFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXCEPTION", ObjectTableId = ErrorLogObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ErrorLogObjectTable.Features.Exception", NameTextCodeDefaultText = "Exception", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ErrorLogFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ErrorLogObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ErrorLogObjectTable.Features.PackageFeature", NameTextCodeDefaultText = "Error log Package Feature", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ErrorLogFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TODAYERRORLOG", ObjectTableId = ErrorLogObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ErrorLogObjectTable.Features.TodayErrorLog", NameTextCodeDefaultText = "Today Error Log", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-                       
+
+
+
             #endregion
 
             #region Report Features
@@ -67118,9 +65160,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ReportFeature53 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRAIL", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.TrailBalance", NameTextCodeDefaultText = "Trail Balance", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ReportFeature54 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "USERSBYTENANTREPORT", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.UsersbyTenantReport", NameTextCodeDefaultText = "Users by Tenant Report", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ReportFeature55 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LICENSEMANAGEMENTREPORT", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.LicenseManagement", NameTextCodeDefaultText = "License Management", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ReportFeature56= AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPMENTSSTOCKS", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.ShipmentsStocks", NameTextCodeDefaultText = "Shipments Stocks", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ReportFeature57 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TASKSWITHNORPROJECTSREPORT", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.TasksWithoutProjects", NameTextCodeDefaultText = "Tasks not Connected to Projects", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ReportFeature58 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPMENTDETAILS", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.ShipmentDetails", NameTextCodeDefaultText = "Shipment Details", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -67207,7 +65246,20 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature HybridTenantThresholdFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = HybridTenantThresholdObjectTable.Id, Tenant = tenant, NameTextCodeCode = "HybridTenantThreshold.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
-            
+
+            #region Participant Features
+            Feature ParticipantFeature01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.New", NameTextCodeDefaultText = "New Participant", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Edit", NameTextCodeDefaultText = "Edit Participant", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature04 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PARTICIPANTS", Packagable = true, ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Participants", NameTextCodeDefaultText = "Participants", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTIFY", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Notify", NameTextCodeDefaultText = "Notify", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            #endregion
+
             #region Airline Statistics Features
 
             Feature AirlineStatisticsFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AIRLINESTATISTICS", Packagable = true, ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AirlineStatistics.Features.AirlineStatistics", NameTextCodeDefaultText = "Airline Statistics", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -67500,8 +65552,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ShipmentFeature_Q15 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CreditLimitBlockedShipments", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.CreditLimitBlockedShipments", NameTextCodeDefaultText = "Credit Limit Blocked Shipments", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ShipmentFeature_Q16 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExpectedDeparturesNotTransmitted", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.ExpectedDeparturesNotTransmitted", NameTextCodeDefaultText = "Expected Departures - Not Transmitted", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ShipmentFeature_Q17 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShippingInstructionsLast7Days", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.ShippingInstructionsLast7Days", NameTextCodeDefaultText = "Shipping Instructions - last 7 days", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShipmentFeature_Q18 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContainerStatusLast7Days", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.ContainerStatusLast7Days", NameTextCodeDefaultText = "Container Status - last 7 days", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
             #endregion
 
             #region Master
@@ -67621,7 +65671,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ARInvoiceFeature_C08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRANSFER", FeatureTypeCode = "ACT", ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.Transfer", NameTextCodeDefaultText = "Transfer", FullLocalDefaultText = "העברה" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARInvoiceFeature_C09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableReTransfer", FeatureTypeCode = "ACT", ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.EnableReTransfer", NameTextCodeDefaultText = "Enable accounting re-transfer", FullLocalDefaultText = "אפשר העברה מחדש להנה''ח" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARInvoiceFeature_C10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARInvoiceEditExchangeRate", ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.EditExchangeRate", NameTextCodeDefaultText = "Edit Exchange Rate", FullLocalDefaultText = "ערוך שער חליפין", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ARInvoiceFeature_C12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToQBO", ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.SendToQBO", NameTextCodeDefaultText = "Send to QBO", FullLocalDefaultText = "Send to QBO", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             Feature ARInvoiceFeature_Q01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.AllInvoices", NameTextCodeDefaultText = "All Invoices", FullLocalDefaultText = "כל החשבוניות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARInvoiceFeature_Q02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DRAFTINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.DraftInvoices", NameTextCodeDefaultText = "Draft Invoices", FullLocalDefaultText = "חשבוניות טויטה" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -67635,8 +65684,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ARInvoiceFeature_Q09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPROVALGENERALINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.ApprovalGeneralInvoice", NameTextCodeDefaultText = "Aproval General Invoice", FullLocalDefaultText = "אישור חשבונית כללית" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARInvoiceFeature_Q010 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLGENERALINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.AllGeneralInvoice", NameTextCodeDefaultText = "All General Invoice", FullLocalDefaultText = "כל החשבוניות הכלליות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARInvoiceFeature_Q11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SATFAILEDINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.SATFailedInvoices", NameTextCodeDefaultText = "Invoices Failed to Open in SAT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ARInvoiceFeature_Q12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKSATSTATUS", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.CheckSATStatus", NameTextCodeDefaultText = "Check SAT Status", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ARInvoiceFeature_Q13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ErrorInTransfer", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.ErrorInTransfer", NameTextCodeDefaultText = "Error In Transfer", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -67662,8 +65709,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature APInvoiceFeature_C05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINT", FeatureTypeCode = "ACT", ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.Print", NameTextCodeDefaultText = "Print", FullLocalDefaultText = "הדפסה" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_C06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableMultiRate", FeatureTypeCode = "ACT", ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.EnableMultiRate", NameTextCodeDefaultText = "Enable multi-rate", FullLocalDefaultText = "אפשר ריבוי שערים" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_C07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APInvoiceEditExchangeRate", ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.EditExchangeRate", NameTextCodeDefaultText = "Edit Exchange Rate", FullLocalDefaultText = "ערוך שער חליפין", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature APInvoiceFeature_C08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToQBO", ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.SendToQBO", NameTextCodeDefaultText = "Send to QBO", FullLocalDefaultText = "Send to QBO", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
 
             Feature APInvoiceFeature_Q01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.AllInvoices", NameTextCodeDefaultText = "All Invoices", FullLocalDefaultText = "כל החשבוניות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_Q02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WAITAPPROVAL", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.WaitingForApproval", NameTextCodeDefaultText = "Waiting for Approval", FullLocalDefaultText = "ממתין לאישור" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -67672,15 +65717,10 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature APInvoiceFeature_Q05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MARKEDASBLOCKEDFORTRANSFER", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.MarkedAsBlockedForTransfer", NameTextCodeDefaultText = "Marked as blocked for transfer", FullLocalDefaultText = "סמן כחסום להעברה" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_Q06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ERRORINTRANSFERINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.ErrorInTransferInvoices", NameTextCodeDefaultText = "Error In Transfer Invoices", FullLocalDefaultText = "שגיאה בהעברת חשבוניות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_Q07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLGENERALAPINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.AllGeneralInvoice", NameTextCodeDefaultText = "All General Invoices", FullLocalDefaultText = "כל החשבוניות הכלליות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature APInvoiceFeature_Q08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DRAFTGENERALAPINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.DraftGeneralAPInvoice", NameTextCodeDefaultText = "Draft General APInvoices", FullLocalDefaultText = "חשבוניות בסטטוס טיוטה" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature APInvoiceFeature_Q09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPROVALGENERALAPINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.ApprovalGeneralAPInvoice", NameTextCodeDefaultText = "Approval General APInvoices", FullLocalDefaultText = "חשבוניות מאושרות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-            Feature APInvoiceFeature_Q10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ErrorInTransfer", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.ErrorInTransfer", NameTextCodeDefaultText = "Error In Transfer", FullLocalDefaultText = "Error In Transfer" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
             #endregion
 
-                #region (AR) Payment
-                Feature ARPaymentFeature_01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.New", NameTextCodeDefaultText = "New Payment", FullLocalDefaultText = "תשלום חדש", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            #region (AR) Payment
+            Feature ARPaymentFeature_01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.New", NameTextCodeDefaultText = "New Payment", FullLocalDefaultText = "תשלום חדש", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.Edit", NameTextCodeDefaultText = "Edit Payment", FullLocalDefaultText = "עריכת קבלה", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.Read", NameTextCodeDefaultText = "Read", FullLocalDefaultText = "קריאה", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
@@ -67700,12 +65740,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ARPaymentFeature_C06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDToSAT", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.SendToSAT", NameTextCodeDefaultText = "Send to SAT", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_C07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableMultiCurrency", Packagable = true, FeatureTypeCode = "ACT", ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.EnableMultiCurrency", NameTextCodeDefaultText = "Enable multi-currency", FullLocalDefaultText = "לאפשר ריבוי מטבעות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_C08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentEditExchangeRate", ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.EditExchangeRate", NameTextCodeDefaultText = "Edit Exchange Rate", FullLocalDefaultText = "ערוך שער חליפין", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ARPaymentFeature_C09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKSATSTATUS", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.CheckSATStatus", NameTextCodeDefaultText = "Check SAT Status", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ARPaymentFeature_C10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToQBO", ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.SendToQBO", NameTextCodeDefaultText = "Send To QBO", FullLocalDefaultText = "Send To QBO", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-
-
-
 
             Feature ARPaymentFeature_Q01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLPAYMENTS", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.AllPayments", NameTextCodeDefaultText = "All Payments", FullLocalDefaultText = "כל הקבלות", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_Q02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPENPAYMENTS", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.OpenPayments", NameTextCodeDefaultText = "Open Payments", FullLocalDefaultText = "קבלות פתוחות", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -67713,9 +65747,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ARPaymentFeature_Q04 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTREADYPAYMENTS", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.NotReadyPayments", NameTextCodeDefaultText = "Not Ready Payments", FullLocalDefaultText = "קבלות לא מוכנות", }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_Q05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MARKEDASBLOCKEDFORTRANSFER", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.MarkedAsBlockedForTransfer", NameTextCodeDefaultText = "Marked as blocked for transfer", FullLocalDefaultText = "סמן כחסום להעברה", }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_Q06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SATFAILEDPAYMENTS", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.SATFailedPayments", NameTextCodeDefaultText = "Payments Failed to Open in SAT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ARPaymentFeature_Q07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ErrorInTransfer", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.ErrorInTransfer", NameTextCodeDefaultText = "Error In Transfer" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-
 
             #endregion
 
@@ -67739,8 +65770,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature APPaymentFeature17 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MARKEDASBLOCKEDFORTRANSFER", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APPayment.Features.MarkedAsBlockedForTransfer", NameTextCodeDefaultText = "Marked as blocked for transfer", FullLocalDefaultText = "סמן כחסום להעברה", }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APPaymentFeature18 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RecalculateExternals", FeatureTypeCode = "AREA", Packagable = true, ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APPayment.Features.RecalculateExternals", NameTextCodeDefaultText = "Recalculate External IDs" , FullLocalDefaultText = "חישוב מזהים חיצונים מחדש", }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APPaymentFeature19 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableMultiCurrency", Packagable = true, FeatureTypeCode = "ACT", ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APPayment.Features.EnableMultiCurrency", NameTextCodeDefaultText = "Enable multi-currency", FullLocalDefaultText = "לאפשר ריבוי מטבעות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature APPaymentFeature20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToQBO", ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.SendToQBO", NameTextCodeDefaultText = "Send To QBO", FullLocalDefaultText = "Send To QBO", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature APPaymentFeature21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ErrorInTransfer", Packagable = true, ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.ErrorInTransfer", NameTextCodeDefaultText = "Error In Transfer", FullLocalDefaultText = "Error In Transfer", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -67836,16 +65865,16 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature GeneralRegionFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REGIONS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Region", NameTextCodeDefaultText = "Regions", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             #endregion
 
-            #region MessagingStock Features
-            Feature messagingStockFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.New", NameTextCodeDefaultText = "New Stock" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature messagingStockFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature messagingStockFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.Edit", NameTextCodeDefaultText = "Edit Stock" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature messagingStockFeature4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Q.AllQuery", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.AllMessagingStocks", NameTextCodeDefaultText = "All Messaging Stocks" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature messagingStockFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Tab.General", FeatureTypeCode = "AREA", Packagable = true, ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.General", NameTextCodeDefaultText = "General" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature messagingStockFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.M.MessagingStocks", FeatureTypeCode = "MENU", Packagable = true, ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.MessagingStocks", NameTextCodeDefaultText = "Messaging Stocks" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature messagingStockFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", Packagable = true, ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.PackageFeature", NameTextCodeDefaultText = "Messaging Stock Package Feature" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature messagingStockFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Action.Cancel", FeatureTypeCode = "ACT", Packagable = true, ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.Cancel", NameTextCodeDefaultText = "Cancel" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature messagingStockFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Tab.Events", FeatureTypeCode = "AREA", Packagable = true, ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.Events", NameTextCodeDefaultText = "Events" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            #region AWBMessagingStock Features
+            Feature aWBMessagingStockFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.New", NameTextCodeDefaultText = "New Stock" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature aWBMessagingStockFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature aWBMessagingStockFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.Edit", NameTextCodeDefaultText = "Edit Stock" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature aWBMessagingStockFeature4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AWBMessagingStock.Q.AllQuery", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.AllAWBMessagingStocks", NameTextCodeDefaultText = "All AWB Messaging Stocks" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature aWBMessagingStockFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AWBMessagingStock.Tab.General", FeatureTypeCode = "AREA", Packagable = true, ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.General", NameTextCodeDefaultText = "General" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature aWBMessagingStockFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AWBMessagingStock.M.AWBMessagingStocks", FeatureTypeCode = "MENU", Packagable = true, ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.AWBMessagingStocks", NameTextCodeDefaultText = "AWB Messaging Stocks" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature aWBMessagingStockFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", Packagable = true, ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.PackageFeature", NameTextCodeDefaultText = "AWB Messaging Stock Package Feature" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature aWBMessagingStockFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AWBMessagingStock.Action.Cancel", FeatureTypeCode = "ACT", Packagable = true, ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.Cancel", NameTextCodeDefaultText = "Cancel" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature aWBMessagingStockFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AWBMessagingStock.Tab.Events", FeatureTypeCode = "AREA", Packagable = true, ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.Events", NameTextCodeDefaultText = "Events" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             #endregion
 
             #region Quote Stage Features
@@ -67998,10 +66027,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature AgentSharedManifestFeature_07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OceanAgentSharedManifestsQ", Packagable = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AgentSharedManifest.Features.OceanAgentSharedManifests", NameTextCodeDefaultText = "Ocean Agent Shared Manifests", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature AgentSharedManifestFeature_08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InlandAgentSharedManifestsQ", Packagable = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AgentSharedManifest.Features.InlandAgentSharedManifests", NameTextCodeDefaultText = "Inland Agent Shared Manifests", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature AgentSharedManifestFeature_09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelledAgentSharedManifestsQ", Packagable = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AgentSharedManifest.Features.CancelledAgentSharedManifests", NameTextCodeDefaultText = "Cancelled Agent Shared Manifests", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AgentSharedManifestFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATESHAREDAGENT", Packagable = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AgentSharedManifest.Features.UpdateSharedAgent", NameTextCodeDefaultText = "Update Shared Agent", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-
-
             #endregion
 
             #region ContainerFollowUp
@@ -68125,8 +66150,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature menuFeature_BP1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "MENU", Packagable = true, Code = "General.Features.BusinessProcessQueue", NameTextCodeCode = "General.Features.BusinessProcessQueue", NameTextCodeDefaultText = "Business Process Queues" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature menuFeature_BP2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "MENU", Packagable = true, Code = "General.Features.BusinessProcessBusinessRole", NameTextCodeCode = "General.Features.BusinessProcessBusinessRole", NameTextCodeDefaultText = "Business Process Business Roles" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature menuFeature_BP3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "MENU", Packagable = true, Code = "General.Features.BusinessProcessTeam", NameTextCodeCode = "General.Features.BusinessProcessTeam", NameTextCodeDefaultText = "Business Process Teams" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            #endregion
-
+            #endregion 
 
             textCodeRep.SubmitChanges();
             FeaturesRepository.SubmitChanges();

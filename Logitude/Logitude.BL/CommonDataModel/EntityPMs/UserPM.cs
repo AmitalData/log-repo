@@ -255,8 +255,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public bool ShowInboxToolTip { get; set; }
-
-        [DataMember]
-        public bool ShowLocalNameInLOV { get; set; }
     }
 }

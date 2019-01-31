@@ -78,8 +78,8 @@
                                                              <td style="color:#0B3861;font-size:10px">{{item.EnglishName}}</td>
                                                              <td style="width:30px">
 
-                                                                 <span  [style.pointer-events]="item.IsEnableEditContact ? 'auto':'none'"  class="EditButton"  style="display:inline;width:18px;margin-left:0px;float: right">
-                                                                     <IconButton [Name]="'Edit'" [IsEnabled]="item.IsEnableEditContact" (click)="EditUserButtoClick(item)" [IsSmall]="true" style="display: inline; float: right;margin-top:0px;"></IconButton>
+                                                                 <span class="EditButton" (click)="EditUserButtoClick(item)" style="display:inline;width:18px;margin-left:0px;float: right">
+                                                                     <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: inline; float: right;margin-top:0px;"></IconButton>
                                                                  </span>
 
                                                              </td>

@@ -237,8 +237,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                   ShowTitleTotalPerContainersTable = a.ShowTitleTotalPerContainersTable,
                                                   ShowChargeNoteContainers = a.ShowChargeNoteContainers,
                                                   ShowChargeNotePackages = a.ShowChargeNotePackages,
-                                                  ShowSaleMaxMinAmountContainers = a.ShowSaleMaxMinAmountContainers,
-                                                  ShowSaleMaxMinAmountPackages =a.ShowSaleMaxMinAmountPackages,
 
                                               }).FirstOrDefault();
 
@@ -447,8 +445,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                        ShowTitleTotalPerContainersTable = a.ShowTitleTotalPerContainersTable,
                                                        ShowChargeNoteContainers = a.ShowChargeNoteContainers,
                                                        ShowChargeNotePackages = a.ShowChargeNotePackages,
-                                                       ShowSaleMaxMinAmountContainers = a.ShowSaleMaxMinAmountContainers,
-                                                       ShowSaleMaxMinAmountPackages = a.ShowSaleMaxMinAmountPackages,
 
 
                                                                       };
@@ -651,8 +647,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                     ShowTitleTotalPerContainersTable = quoteTemplateSetting.ShowTitleTotalPerContainersTable,
                                                     ShowChargeNoteContainers = quoteTemplateSetting.ShowChargeNoteContainers,
                                                     ShowChargeNotePackages = quoteTemplateSetting.ShowChargeNotePackages,
-                                                    ShowSaleMaxMinAmountContainers = quoteTemplateSetting.ShowSaleMaxMinAmountContainers,
-                                                    ShowSaleMaxMinAmountPackages = quoteTemplateSetting.ShowSaleMaxMinAmountPackages,
 
                                                           };
             return result;

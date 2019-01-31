@@ -293,7 +293,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             //     return;
             // }
-            if (_MyDeclarationPM.DepositionStatusCode == "R") _MyDeclarationPM.DepositionStatusCode = null;
+
             if (customResponse.ResponseContentHeader.Exception != null)
             {
                 string userMessage = "";
@@ -333,7 +333,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 UpdateUnifreightEvent("MID", requestParams.LoggingUserId);
                                 userMessage = userMessage + "חסר תצהיר יבואן";
-                                if (string.IsNullOrWhiteSpace(_MyDeclarationPM.DepositionStatusCode)) _MyDeclarationPM.DepositionStatusCode = "R";
                                 break;
                             }
                         case 2244:
@@ -507,7 +506,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AnalyzeErrorPionter(customResponse.Response.Error, _MyDeclarationPM, WCOTypeEnum.WCO, !_IsSubmitDeclarationResponse);
             this._MyDeclarationError = mydDclarationErrorPointerService._declarationErrorPointer;
             LogMessagingUtil.Instance.AppendLine("ErrosXml:Took:" + swErrosXml1.ElapsedMilliseconds);
-           
+
 
             var swTax = Stopwatch.StartNew();
             //Update Declaration Taxes
@@ -684,7 +683,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
-
             if (!String.IsNullOrWhiteSpace("itzik and yaron move to herer from DeclarationWebService.asmx"))
             {
                 if (requestParams.GetType() != typeof(DeclarationRestoreRequestParams))//Task 44715 (add condition to itzik and yaron...
@@ -759,7 +757,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 myDeclarationUpdateService.SendDelayedDeclarationStatusRequest(_MyDeclarationPM);
             }
         }
-
 
         public void SendDeclarationPrint(DeclarationPM declarationPM, SendRequestVIA RequestVIA, GenericRequestParams requestParams) // moran 28.1.15 - Task 10005
         {

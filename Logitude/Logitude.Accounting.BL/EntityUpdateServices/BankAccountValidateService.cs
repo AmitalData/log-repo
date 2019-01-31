@@ -7,7 +7,6 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
-using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
@@ -19,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
-    public class BankAccountValidateService: EntityValidateService<BankAccountPM>, IBankAccountValidateService
+    public class BankAccountValidateService: IBankAccountValidateService
     {
         private IAccountingContext _MainContext;
         public BankAccountValidateService(IAccountingContext mainContext)
@@ -27,7 +26,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             _MainContext = mainContext;
         }
 
-        public override void Validate(BankAccountPM entityPM)
+        public void Validate(BankAccountPM entityPM)
         {
             bool useLocal = true;
             ContactPM currenctUser = GetLoggedContact(entityPM.Tenant);
@@ -38,53 +37,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 CheckBankAccountExists(entityPM);
-                if (ErrorsList.Count == 0)
-                {
-                    CheckGLAccountAlreadyConnectedToBankAccountOnInsert(entityPM, useLocal);
-                }
-                else
-                {
-                    return;
-                }
-                if (ErrorsList.Count == 0)
-                {
-                    CheckDeferredGLAccountAlreadyConnectedToBankAccountOnInsert(entityPM);
-                }
-                else
-                {
-                    return;
-                }
+                CheckGLAccountAlreadyConnectedToBankAccountOnInsert(entityPM,useLocal);
+                CheckDeferredGLAccountAlreadyConnectedToBankAccountOnInsert(entityPM);
             }
 
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 BankAccount poco = GetSingleBankAccount(entityPM.Id, entityPM.Tenant);
-
                 CheckGLAccountAlreadyConnectedToBankAccountOnUpdate(entityPM, poco, useLocal);
-                if (ErrorsList.Count == 0)
-                {
-                    CheckDeferredGLAccountAlreadyConnectedToBankAccountOnUpdate(entityPM, poco);
-                }
-                else
-                {
-                    return;
-                }
-                if (ErrorsList.Count == 0)
-                {
-                    CheckGLAccountHasTransactionsOnUpdate(entityPM, poco, useLocal);
-                }
-                else
-                {
-                    return;
-                }
-                if (ErrorsList.Count == 0)
-                {
-                    CheckDefferedGLAccountTransactionsOnUpdate(entityPM, poco, useLocal);
-                }
-                else
-                {
-                    return;
-                }
+                CheckDeferredGLAccountAlreadyConnectedToBankAccountOnUpdate(entityPM, poco);
+                CheckGLAccountHasTransactionsOnUpdate(entityPM, poco, useLocal);
+                CheckDefferedGLAccountTransactionsOnUpdate(entityPM, poco, useLocal);
             }
            
         }
@@ -96,8 +59,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (account != null)
             {
                 result = new ValidationResult("Bank account exist");
-                AddValidationError(result.ErrorMessage);
-                //throw new ApplicationException(result.ErrorMessage);
+                throw new ApplicationException(result.ErrorMessage);
             }
         }
 
@@ -110,8 +72,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (res != null)
                 {
                     result = new ValidationResult(GetMessageTranslation("Accounting.General.O.GLAccountAlreadyConnectedToBankAccount", entityPM.Tenant, useLocal));
-                    AddValidationError(result.ErrorMessage);
-                    // throw new ApplicationException(result.ErrorMessage);
+                    throw new ApplicationException(result.ErrorMessage);
                 }
             }
         }
@@ -126,8 +87,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (res != null)
                 {
                     result = new ValidationResult("The Deferred GLAccount is already connected to a Bank Account");
-                    AddValidationError(result.ErrorMessage);
-                    //throw new ApplicationException(result.ErrorMessage);
+                    throw new ApplicationException(result.ErrorMessage);
                 }
             }
         }
@@ -141,8 +101,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (res != null)
                 {
                     result = new ValidationResult(GetMessageTranslation("Accounting.General.O.GLAccountAlreadyConnectedToBankAccount", entityPM.Tenant, useLocal));
-                    AddValidationError(result.ErrorMessage);
-                    //throw new ApplicationException(result.ErrorMessage);
+                    throw new ApplicationException(result.ErrorMessage);
                 }
             }
         }
@@ -157,8 +116,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (res != null)
                 {
                     result = new ValidationResult("The Deferred GLAccount is already connected to a Bank Account");
-                    AddValidationError(result.ErrorMessage);
-                    //throw new ApplicationException(result.ErrorMessage);
+                    throw new ApplicationException(result.ErrorMessage);
                 }
             }
         }
@@ -173,8 +131,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (transactions.Count > 0)
                 {
                     string message = GetMessageTranslation("Accounting.O.ThereRTransactions4GLAccountCantUpdated", entityPM.Tenant, useLocal);
-                    AddValidationError(message);
-                    //throw new ApplicationException(message);
+                    throw new ApplicationException(message);
                 }
             }
         }
@@ -189,8 +146,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (transactions.Count > 0)
                 {
                     string message = GetMessageTranslation("Accounting.O.ThereRTransactions4GLAccountCantUpdated", entityPM.Tenant, useLocal);
-                    AddValidationError(message);
-                    //throw new ApplicationException(message);
+                    throw new ApplicationException(message);
                 }
             }
         }

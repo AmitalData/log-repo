@@ -1,3 +1,5 @@
+﻿/// <reference path="services/standardlists/accountingpaymentmethodlistservice.ts" />
+/// <reference path="services/standardpms/accountingpaymentmethodpmservice.ts" />
 import {AccountingSystemsSettingListService} from './Services/StandardLists/AccountingSystemsSettingListService';
 import {AccountingSystemsSyncStatusListService} from './Services/StandardLists/AccountingSystemsSyncStatusListService';
 import {AccountingTransferHeaderListService} from './Services/StandardLists/AccountingTransferHeaderListService';
@@ -20,8 +22,7 @@ import {ARPaymentListService} from './Services/StandardLists/ARPaymentListServic
 import {ARPaymentStatusListService} from './Services/StandardLists/ARPaymentStatusListService';
 import {CreditCardTypeListService} from './Services/StandardLists/CreditCardTypeListService';
 import {ExternalSystemsTablesCodeListService} from './Services/StandardLists/ExternalSystemsTablesCodeListService';
-import { ARPaymentTransferStatusListService } from './Services/StandardLists/ARPaymentTransferStatusListService';
-import { APPaymentTransferStatusListService } from './Services/StandardLists/APPaymentTransferStatusListService';
+import {ARPaymentTransferStatusListService} from './Services/StandardLists/ARPaymentTransferStatusListService';
 import {SATInterfaceListService} from './Services/StandardLists/SATInterfaceListService';
 import {SATPaymentMethodListService} from './Services/StandardLists/SATPaymentMethodListService';
 import {SATTransferStatusListService} from './Services/StandardLists/SATTransferStatusListService';
@@ -115,7 +116,6 @@ export class ModuleProviders {
             case "ARPaymentMenuButtonsHandler": { myResult = new ARPaymentMenuButtonsHandler(); break; }
             case "AccountingPaymentMethodPMService": { myResult = new AccountingPaymentMethodPMService(); break; }
             case "AccountingPaymentMethodListService": { myResult = new AccountingPaymentMethodListService(); break; }
-            case "APPaymentTransferStatusListService": { myResult = new APPaymentTransferStatusListService(); break; }
 
                 
                 

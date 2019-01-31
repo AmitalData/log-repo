@@ -81,10 +81,10 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
             this.IsProrateReceivablesVisible = true;
         }
 
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
+        if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentEditExchangeRate")) {
             this.IsEditExchangeRateVisible = true;
         }
-        
+
         if (this.ShipmentLevelCode == "D" || this.ShipmentLevelCode == "H") {
             if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
                 if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments) {
@@ -1373,6 +1373,7 @@ export class ShipmentReceivableItem extends BaseComponent {
     SetUIProperties() {
         this.IsEditExchangeRateVisible = this.fatherComponent.IsEditExchangeRateVisible;
         
+
         var isLineAttachted = false;
         var isEditingEnabled = this.fatherComponent.IsEditingEnabled;
 
@@ -1400,11 +1401,9 @@ export class ShipmentReceivableItem extends BaseComponent {
                 isChargeEnabled = true;
             }
 
-            if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentEditExchangeRate")) {
-                if (this.CurrencyId != null) {
-                    if (this.CurrencyId != SessionLocator.LocalCurrencyId) {
-                        isRateEnabled = true;
-                    }
+            if (this.CurrencyId != null) {
+                if (this.CurrencyId != SessionLocator.LocalCurrencyId) {
+                    isRateEnabled = true;
                 }
             }
 
@@ -1414,9 +1413,17 @@ export class ShipmentReceivableItem extends BaseComponent {
                 isTotalAmountEnabled = true;
             }
         }
-        
-        //this.IsRateEnabled = isRateEnabled;
-        this.IsRateEnabled = true;
+
+        //if (this.EntityPM.IsBackToBack) {
+        //    isEditingEnabled = false;
+        //    isRateEnabled = false;
+        //    isChargeEnabled = false;
+        //    isQuantityEnabled = false;
+        //    isUnitPriceEnabled = false;
+        //    isTotalAmountEnabled = false;
+        //}
+
+        this.IsRateEnabled = isRateEnabled;
         this.IsQuantityEnabled = isQuantityEnabled;
         this.IsUnitPriceEnabled = isUnitPriceEnabled;
         this.IsTotalAmountEnabled = isTotalAmountEnabled;
@@ -1453,12 +1460,11 @@ export class ShipmentReceivableItem extends BaseComponent {
 
     // Line Cells
     public SatusTypeToolTip: string = null;
-    public MinMaxFromQuoteToolTip: string = "";
-    public IsMinMaxFromQuoteIconVisible: boolean = false;
+    public IsMinFromQuoteIconVisible: boolean = false;
     public IsFixedAmountIconVisible: boolean = false;
     SetLineCells() {
         this.SetSatusTypeToolTip();
-        this.SetMinMaxFromQuoteIconVisibility();
+        this.SetMinFromQuoteIconVisibility();
         this.SetFixedAmountIconVisibility();
     }
     SetSatusTypeToolTip() {
@@ -1474,35 +1480,21 @@ export class ShipmentReceivableItem extends BaseComponent {
 
         this.SatusTypeToolTip = myResult;
     }
-    SetMinMaxFromQuoteIconVisibility() {
+    SetMinFromQuoteIconVisibility() {
         var isVisible = false;
-        var iTitle: string = null;
 
-        var iAmount: number = null;
+        var culculatedAmount: number = null;
         if (this.EntityPM.Quantity != null && this.EntityPM.UnitPrice != null) {
-            iAmount = AppTool.Round(this.EntityPM.Quantity * this.EntityPM.UnitPrice, 2);
+            culculatedAmount = AppTool.Round(this.EntityPM.Quantity * this.EntityPM.UnitPrice, 2);
         }
 
-        if (iAmount != null) {
-            if (this.QuoteSaleMinAmount != null) {
-                if (iAmount < this.QuoteSaleMinAmount) {
-                    iAmount = this.QuoteSaleMinAmount;
-                    isVisible = true;
-                    iTitle = TextCodeTranslator.Translate("Shipment.M.Receivables.AmountdueQuoteMinimum");
-                }
-            }
-
-            if (this.QuoteSaleMaxAmount != null) {
-                if (iAmount > this.QuoteSaleMaxAmount) {
-                    iAmount = this.QuoteSaleMaxAmount;
-                    isVisible = true;
-                    iTitle = TextCodeTranslator.Translate("Shipment.M.Receivables.AmountdueQuoteMaximum");
-                }
+        if (this.EntityPM.QuoteSaleMinPrice != null) {
+            if (culculatedAmount == null || culculatedAmount < this.EntityPM.QuoteSaleMinPrice) {
+                isVisible = true;
             }
         }
 
-        this.MinMaxFromQuoteToolTip = iTitle;
-        this.IsMinMaxFromQuoteIconVisible = isVisible;
+        this.IsMinFromQuoteIconVisible = isVisible;
     }
     SetFixedAmountIconVisibility() {
         this.IsFixedAmountIconVisible = this.EntityPM.IsFixedPrice && this.EntityPM.IsFromQuote ? true : false;
@@ -1895,47 +1887,31 @@ export class ShipmentReceivableItem extends BaseComponent {
         }
     }
 
-    get QuoteSaleMinAmount() { return this.EntityPM.QuoteSaleMinAmount; }
-    set QuoteSaleMinAmount(value: number) {
-        if (this.EntityPM.QuoteSaleMinAmount != value) {
-            this.EntityPM.QuoteSaleMinAmount = AppTool.Round(value, 2);            
-        }
-    }
-
-    get QuoteSaleMaxAmount() { return this.EntityPM.QuoteSaleMaxAmount; }
-    set QuoteSaleMaxAmount(value: number) {
-        if (this.EntityPM.QuoteSaleMaxAmount != value) {
-            this.EntityPM.QuoteSaleMaxAmount = AppTool.Round(value, 2);
-        }
-    }
-
     get TotalAmount() { return this.EntityPM.TotalAmount; }
-    set TotalAmount(ivalue: number) {
-
-        var value = ivalue;
-
-        if (value) {
-            if (this.QuoteSaleMinAmount != null) {
-                if (value < this.QuoteSaleMinAmount) {
-                    value = this.QuoteSaleMinAmount;
-                }
-            }
-
-            if (this.QuoteSaleMaxAmount != null) {
-                if (value > this.QuoteSaleMaxAmount) {
-                    value = this.QuoteSaleMaxAmount;
-                }
-            }
-        }
-
+    set TotalAmount(value: number) {
         if (this.EntityPM.TotalAmount != value) {
+
+            var inputValue: number = value;
+
+            /* Minimum */
+            if (this.EntityPM.QuoteSaleMinPrice != null) {
+                if (value == null) {
+                    value = this.EntityPM.QuoteSaleMinPrice;
+                }
+
+                else {
+                    if (value < this.EntityPM.QuoteSaleMinPrice) {
+                        value = this.EntityPM.QuoteSaleMinPrice;
+                    }
+                }
+            }
 
             this.EntityPM.TotalAmount = AppTool.Round(value, 2);
 
             this.SetLineStatus();
-            this.ComputeUnitPrice(value);
+            this.ComputeUnitPrice(inputValue);
             this.ComputeTotalAmountLocal();
-            this.SetMinMaxFromQuoteIconVisibility();
+            this.SetMinFromQuoteIconVisibility();
             this.OnLineAmountChanged();
         }
     }
@@ -2002,37 +1978,35 @@ export class ShipmentReceivableItem extends BaseComponent {
 
         if (!this.EntityPM.IsFixedPrice) {
 
-            var iAmount: number = null;
+            var totalAmount: number = null;
 
             if (this.EntityPM.Quantity != null && this.EntityPM.UnitPrice != null) {
                 if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
                     var price = this.EntityPM.UnitPrice / 100;
-                    iAmount = this.EntityPM.Quantity * price;
+                    totalAmount = this.EntityPM.Quantity * price;
                 }
 
                 else {
-                    iAmount = this.EntityPM.Quantity * this.EntityPM.UnitPrice;
+                    totalAmount = this.EntityPM.Quantity * this.EntityPM.UnitPrice;
                 }
             }
 
-            /* MinMax */
-            if (iAmount != null) {
-                if (this.QuoteSaleMinAmount != null) {
-                    if (iAmount < this.QuoteSaleMinAmount) {
-                        iAmount = this.QuoteSaleMinAmount;
-                    }
+            /* Minimum */
+            if (this.EntityPM.QuoteSaleMinPrice != null) {
+                if (totalAmount == null) {
+                    totalAmount = this.EntityPM.QuoteSaleMinPrice;
                 }
 
-                if (this.QuoteSaleMaxAmount != null) {
-                    if (iAmount > this.QuoteSaleMaxAmount) {
-                        iAmount = this.QuoteSaleMaxAmount;
+                else {
+                    if (totalAmount < this.EntityPM.QuoteSaleMinPrice) {
+                        totalAmount = this.EntityPM.QuoteSaleMinPrice;
                     }
                 }
             }
 
-            this.EntityPM.TotalAmount = AppTool.Round(iAmount, 2);
+            this.EntityPM.TotalAmount = AppTool.Round(totalAmount, 2);
             this.ComputeTotalAmountLocal();
-            this.SetMinMaxFromQuoteIconVisibility();
+            this.SetMinFromQuoteIconVisibility();
             this.OnLineAmountChanged();
         }
     }

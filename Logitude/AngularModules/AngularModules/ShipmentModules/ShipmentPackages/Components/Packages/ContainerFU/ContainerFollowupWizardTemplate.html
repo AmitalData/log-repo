@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr style="height: 284px;">
         <td>
@@ -197,21 +197,12 @@
                                                                 <td colspan="3">
                                                                     <table>
                                                                         <tr>
-                                                                            <td style="width:70px;">
+                                                                            <td>
                                                                                 <RadioButton [IsEnabled]="IsEditingEnabled_D" [Name]="'ModeRadio_D'" [IsChecked]="DeliveryTransportModeCode == 'BYTR'" (Checked)="DeliveryTransportModeCode = 'BYTR'" [Text]="'By Truck'"></RadioButton>
                                                                             </td>
-                                                                            <td style="width: 30px;"><img class="LeftCenter" src="./Images/truck.png" style="width:23px;height:30px;vertical-align:middle;" /></td>
 
-                                                                            <td style="width: 10px">
-                                                                                <div></div>
-                                                                            </td>
-
-                                                                            <td style="width:60px;">
-                                                                                <RadioButton [IsEnabled]="IsEditingEnabled_D" [Name]="'ModeRadio_D'" [IsChecked]="DeliveryTransportModeCode == 'BYRA'" (Checked)="DeliveryTransportModeCode = 'BYRA'" [Text]="'By Rail'"></RadioButton>
-                                                                            </td>
-                                                                            <td style="width: 30px;"><img class="LeftCenter" src="./Images/train.png" style="width:23px;height:20px;vertical-align:middle;" /></td>
                                                                             <td>
-                                                                                <div></div>
+                                                                                <RadioButton [IsEnabled]="IsEditingEnabled_D" [Name]="'ModeRadio_D'" [IsChecked]="DeliveryTransportModeCode == 'BYRA'" (Checked)="DeliveryTransportModeCode = 'BYRA'" [Text]="'By Rail'"></RadioButton>
                                                                             </td>
                                                                         </tr>
                                                                     </table>
@@ -434,21 +425,12 @@
                                                                 <td colspan="3">
                                                                     <table>
                                                                         <tr>
-                                                                            <td style="width:70px;">
+                                                                            <td>
                                                                                 <RadioButton [IsEnabled]="IsEmptyContainerReturnFU && IsEditingEnabled" [Name]="'ModeRadio_R'" [IsChecked]="ECRTransportModeCode == 'BYTR'" (Checked)="ECRTransportModeCode = 'BYTR'" [Text]="'By Truck'"></RadioButton>
                                                                             </td>
-                                                                            <td style="width: 30px;text-align:left;"><img class="LeftCenter" src="./Images/truck.png" style="width:23px;height:30px;vertical-align:middle;" /></td>
 
-                                                                            <td style="width: 10px">
-                                                                                <div></div>
-                                                                            </td>
-
-                                                                            <td style="width: 60px">
-                                                                                <RadioButton [IsEnabled]="IsEmptyContainerReturnFU && IsEditingEnabled" [Name]="'ModeRadio_R'" [IsChecked]="ECRTransportModeCode == 'BYRA'" (Checked)="ECRTransportModeCode = 'BYRA'" [Text]="'By Rail'"></RadioButton>
-                                                                            </td>
-                                                                            <td style="width: 30px;text-align:left;"><img class="LeftCenter" src="./Images/train.png" style="width:23px;height:20px;vertical-align:middle;" /></td>
                                                                             <td>
-                                                                                <div></div>
+                                                                                <RadioButton [IsEnabled]="IsEmptyContainerReturnFU && IsEditingEnabled" [Name]="'ModeRadio_R'" [IsChecked]="ECRTransportModeCode == 'BYRA'" (Checked)="ECRTransportModeCode = 'BYRA'" [Text]="'By Rail'"></RadioButton>
                                                                             </td>
                                                                         </tr>
                                                                     </table>

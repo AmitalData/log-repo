@@ -1,4 +1,4 @@
-import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
+﻿import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {Validator} from '../../Infrastructure/Validators/Validator';
 import {APPaymentPM} from '../EntityPMs/APPaymentPM';
@@ -56,18 +56,9 @@ export class APPaymentValidator {
         }
 
         var result = 0;
-        var isNoPaidAmount: boolean;
         entityPm.PaymentInvoices.forEach(item => {
             result += item.PaymentAmount;
-
-            if (AppTool.IsNullOrZero(item.ForeignAmount)) {
-                isNoPaidAmount = true;
-            }
         });
-
-        if (isNoPaidAmount == true) {
-            validationResults.push("Can't connect lines with zero Amount to Pay");
-        }
 
         var paymentAmountPaid = AppTool.Round(result, 2);
 

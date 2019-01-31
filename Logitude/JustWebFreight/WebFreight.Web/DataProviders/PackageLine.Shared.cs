@@ -109,7 +109,6 @@ namespace WebFreight.Web.DataProviders
         public string Reference1 { get; set; }
         public string Reference2 { get; set; }
         public string Reference3 { get; set; }
-        public string Reference4 { get; set; }
         public string CommodityNumber { get; set; }
         public string PackageTypeCode { get; set; }
 
@@ -129,8 +128,6 @@ namespace WebFreight.Web.DataProviders
         public string DangerousDescription { get; set; }
         public string Description { get; set; }
         public string InsidePackagesDetails { get; set; }
-        public string Notes { get; set; }
-
     }
 
     public class InsidePackageLine

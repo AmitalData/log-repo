@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SLAEscalationUpdateClass
@@ -149,7 +146,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SLAHeaderId",
-					  						DefaultText =  @"SLAHeaderId",
+					  						DefaultText =  "SLAHeaderId",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -194,7 +191,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LineNumber",
-					  						DefaultText =  @"line Number ",
+					  						DefaultText =  "line Number ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -239,9 +236,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EscalationFor",
-					  						DefaultText =  @"For ",
+					  						DefaultText =  "For ",
 					  						ListFieldLable =  "EscalationForListLable",
-					  						ListLableDefaultText =  @"For",
+					  						ListLableDefaultText =  "For",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -287,9 +284,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EscalationActionTimeIndicator",
-					  						DefaultText =  @"Time Indicator",
+					  						DefaultText =  "Time Indicator",
 					  						ListFieldLable =  "EscalationActionTimeIndicatorListLable",
-					  						ListLableDefaultText =  @"Time Indicator",
+					  						ListLableDefaultText =  "Time Indicator",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -334,9 +331,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EscalationTime",
-					  						DefaultText =  @"Time",
+					  						DefaultText =  "Time",
 					  						ListFieldLable =  "EscalationTimeListLable",
-					  						ListLableDefaultText =  @"Time",
+					  						ListLableDefaultText =  "Time",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -382,9 +379,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EscalationTimeUnit",
-					  						DefaultText =  @"Time Unit",
+					  						DefaultText =  "Time Unit",
 					  						ListFieldLable =  "EscalationTimeUnitListLable",
-					  						ListLableDefaultText =  @"Time Unit",
+					  						ListLableDefaultText =  "Time Unit",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -429,7 +426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EscalaitonTimeInMinutes",
-					  						DefaultText =  @"Escalaiton Time Minutes",
+					  						DefaultText =  "Escalaiton Time Minutes",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -474,7 +471,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SLAEscalationRecepients",
-					  						DefaultText =  @"SLAEscalation Recepients",
+					  						DefaultText =  "SLAEscalation Recepients",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -519,9 +516,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TimeIndicator",
-					  						DefaultText =  @"Time Indicator",
+					  						DefaultText =  "Time Indicator",
 					  						ListFieldLable =  "TimeIndicatorListLable",
-					  						ListLableDefaultText =  @"Time Indicator",
+					  						ListLableDefaultText =  "Time Indicator",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -566,9 +563,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TimeUnitName",
-					  						DefaultText =  @"Time Name",
+					  						DefaultText =  "Time Name",
 					  						ListFieldLable =  "TimeUnitNameListLable",
-					  						ListLableDefaultText =  @"Time Name",
+					  						ListLableDefaultText =  "Time Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -645,7 +642,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable SLAEscalationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SLAEscalation" && d.Tenant == 0).FirstOrDefault();  
 
 		   TextCodeRepository.SubmitChanges();
@@ -657,14 +654,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					ObjectTableId = SLAEscalationObjectTable.Id,
 					Tenant = 0
 				}, menuButtonGroupRepository, tenantMenuButtonGroups); 
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

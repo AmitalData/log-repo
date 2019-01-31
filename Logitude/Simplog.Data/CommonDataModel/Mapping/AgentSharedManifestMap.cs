@@ -84,9 +84,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.StatusCode).HasColumnName("StatusCode");
             this.Property(t => t.ShipmentLevelCode).HasColumnName("ShipmentLevelCode");
             this.Property(t => t.ShipmentTypeId).HasColumnName("ShipmentTypeId");
-            this.Property(t => t.CancelledBySenderAgent).HasColumnName("CancelledBySenderAgent");
-
-            
             // Relationships
 
             this.HasRequired(t => t.UpdatedByUser)

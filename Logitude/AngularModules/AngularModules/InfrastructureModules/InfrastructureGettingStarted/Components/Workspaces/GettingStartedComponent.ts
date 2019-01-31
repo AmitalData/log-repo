@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {Component} from '@angular/core';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
@@ -509,8 +509,8 @@ export class GettingStartedComponent extends BaseComponent {
     }
     ChangePasswordClick() {
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 600;
-        logitudeWindow.Height = 400;
+        logitudeWindow.Width = 800;
+        logitudeWindow.Height = 550;
         logitudeWindow.Title = "Change User Password";
         this._entityResourceService.getEntityResourceByTableName("User").subscribe(response => {
             logitudeWindow.DataContext = this;

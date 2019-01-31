@@ -1,1 +1,0 @@
-﻿update ObjectTables set CodeField='Code',NameField='Name',AllowedForComputingPartners=1 where Name='HybridPartner'

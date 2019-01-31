@@ -16,8 +16,7 @@ import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityAr
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';;
 import { TapagList } from '../../../../../Customs/EntityLists/TapagList';
-import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
-import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
+import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 
 @Component({
@@ -54,7 +53,7 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
                                                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                                                 this.LoadTapagsList();
                                                 this.Listen();
-                                                this.TapagIdEdit();
+
                                                 this.IsLoaded = true;
                                             });
                                         });
@@ -117,7 +116,6 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
             .subscribe((myResponse: ServiceResponse) => {
                 SessionLocator.CurrentSession.StopBusyIndicator();
                 this.GetDeclarationTapagsListsOp_Completed(myResponse, false);
-                this.TapagIdEdit();
             });
     }
 
@@ -131,25 +129,6 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
 
     RefreshEntity() {
         SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-    }
-
-    //ngAfterViewInit() {
-      //  this.TapagIdEdit();
-    //}
-
-    TapagIdEdit() {
-        var myDeclarationEditComponentController = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
-        if (!AppTool.IsNullOrEmpty(myDeclarationEditComponentController.TapagId)) {
-            if (this.tapagObslist != null && this.tapagObslist.Collection != null) {
-                var item = this.tapagObslist.Collection.find(r => r.Id == myDeclarationEditComponentController.TapagId);
-                if (item != null) {
-                    this.EditButtonClicked(item);
-                    console.log("TapagId " + myDeclarationEditComponentController.TapagId);
-                    myDeclarationEditComponentController.TapagId = null;
-                }
-            }
-        }
-        
     }
 
     EditButtonClicked(item: TapagList) {

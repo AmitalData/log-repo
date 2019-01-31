@@ -128,13 +128,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     myMainAddressId = myMainAddresss.Id;
                 }
 
-                AddressPM myBillingAddress = addressQuery.GetAddressPMByTypeAndCard(id, "B", tenant);
-                string myBillingAddressId = null;
-                if (myBillingAddress != null)
-                {
-                    myBillingAddressId = myBillingAddress.Id;
-                }
-
                 if (HttpContext.Current != null)
                 {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
@@ -160,7 +153,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       VatNumber = a.VatNumber,
                                       Code = a.Code,
                                       MainAddressId = myMainAddressId,
-                                      BillingAddressId = myBillingAddressId,
                                       CountryId = a.CountryId,
                                       CountryCode = a.CountryCode,
                                       CountryName = a.CountryName,
@@ -253,7 +245,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   VatNumber = a.VatNumber,
                                   Code = a.Code,
                                   MainAddressId = myMainAddressId,
-                                  BillingAddressId = myBillingAddressId,
                                   CountryId = a.CountryId,
                                   CountryCode = a.CountryCode,
                                   CountryName = a.CountryName,
@@ -340,30 +331,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             IQueryable<CardList> cards = from a in repository.context.Cards
                                        where a.Tenant == tenant
                                        select new CardList()
-                                       {    
-                                           Id = a.Id,
+                                       {                           
                                            Code = a.Code ,
-                                           EnglishName=a.EnglishName,
-                                           VatNumber = a.VatNumber,
-                                           CountryCode = a.CountryCode,
-                                           CountryName = a.CountryName,
-                                           CityName = a.CityName,
-                                           GLAccountId = a.GLAccountId
+                                           EnglishName=a.EnglishName                              
                                        };
             
             return cards;
         }
-
-        public List<string> GetCardIdsByTenant(int tenant)
-        {
-
-            List<string> cards = (from a in repository.context.Cards
-                                          where a.Tenant == tenant
-                                          select a.Id).ToList();
-
-            return cards;
-        }
-
 
         public IQueryable<CardList> GetCustomerCardPMsByTenant(int tenant)
         {
@@ -1086,111 +1060,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return cards;
         }
 
-
-        public CardList GetCarrierUpdate(string entityId, int tenant, string ccsTypeCode, string newAirlineActionCode, bool newAirlineActionValue, string notes)
-        {
-
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
-                CardRepository CardRepository = new CardRepository(objectContext);
-                AirlineRepository airlineRepository = new AirlineRepository(objectContext);
-                ShippingLineRepository shippingLineRepository = new ShippingLineRepository(objectContext);
-                AddressRepository AddressRepository = new AddressRepository(objectContext);
-
-
-                Card oldTenantCard = CardRepository.GetSingleCard(entityId, 0, true);
-            Card newTenantCard = CardRepository.GetSingleCardByCodeAndType(oldTenantCard.Code, oldTenantCard.PartnerTypeId, tenant, false);
-                if (oldTenantCard.UpdateDate == null)
-                    oldTenantCard.UpdateDate = oldTenantCard.CreateDate;
-            if (newTenantCard.CreateDate != oldTenantCard.UpdateDate)
-            {
-                DateTime? todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                newTenantCard.UpdateDate = todayDateTime;
-                    newTenantCard.CreateDate = oldTenantCard.UpdateDate ;
-                    newTenantCard.EnglishName = oldTenantCard.EnglishName;
-                newTenantCard.LocalName = oldTenantCard.LocalName;
-                    CardRepository.Update(newTenantCard);
-                    CardRepository.SubmitChanges();
-                     switch (newTenantCard.PartnerTypeId)
-                            {
-                                case "AL":
-                                    {
-                                        Airline NewAirline = airlineRepository.GetSingleAirline(newTenantCard.Id, newTenantCard.Tenant);
-                                        Airline oldAirline = airlineRepository.GetSingleAirline(oldTenantCard.Id, oldTenantCard.Tenant);
-                                        newTenantCard.Website = oldTenantCard.Website;
-                                        NewAirline.Prefix = oldAirline.Prefix;
-                                        NewAirline.ICAO = oldAirline.ICAO;
-                                        NewAirline.CheckDigit = oldAirline.CheckDigit;
-                                        NewAirline.LimitedLength = oldAirline.LimitedLength;
-                                        airlineRepository.Update(NewAirline);
-                                airlineRepository.SubmitChanges();
-                                        break;
-                                    }
-
-                                case "SL":
-                                    {
-                                        ShippingLine NewShippingLine = shippingLineRepository.GetSingleShippingLine(newTenantCard.Id, newTenantCard.Tenant);
-                                        ShippingLine oldShippingLine = shippingLineRepository.GetSingleShippingLine(oldTenantCard.Id, oldTenantCard.Tenant);
-                                        newTenantCard.Website = oldTenantCard.Website;
-                                        NewShippingLine.SCACCode = oldShippingLine.SCACCode;
-                                        shippingLineRepository.Update(NewShippingLine);
-                                shippingLineRepository.SubmitChanges();
-                                        break;
-                                    }
-                             
-                            }
-                
-            }
-
-                CardList myCardList = new CardList()
-                {
-                    Code = newTenantCard.Code,
-                    EnglishName = newTenantCard.EnglishName,
-                    LocalName = newTenantCard.LocalName,
-                    ReceivablesAccountingCard = newTenantCard.ReceivablesAccountingCard,
-                    PayablesAccountingCard = newTenantCard.PayablesAccountingCard,
-                    InActive = newTenantCard.InActive,
-                    Notes = newTenantCard.Notes,
-                    SupportNotes = newTenantCard.SupportNotes,
-                    Id = newTenantCard.Id,
-                    Tenant = newTenantCard.Tenant,
-                    VatNumber = newTenantCard.VatNumber,
-                    CreateDate = newTenantCard.CreateDate,
-                    PartnerTypeName = newTenantCard.PartnerType != null ? newTenantCard.PartnerType.Name : null,
-                    PaymentTermName = newTenantCard.PaymentTerm != null ? newTenantCard.PaymentTerm.EnglishName : null,
-                    PaymentTermId = newTenantCard.PaymentTermId,
-                    SalesmanUserId = newTenantCard.Customer != null ? newTenantCard.Customer.SalesmanUserId : "",
-                    SearchFields = newTenantCard.SearchFields,
-                    PartnerTypeId = newTenantCard.PartnerTypeId,
-                    EnableConsolidationInvoices = newTenantCard.EnableConsolidationInvoices,
-                    GLAccountId = newTenantCard.GLAccountId,
-                    CityName = newTenantCard.CityName,
-                    CountryName = newTenantCard.CountryName,
-                    StateName = newTenantCard.StateName,
-                };
-
-                if (myCardList.CityName == null || myCardList.CountryName == null || myCardList.StateName == null)
-                {
-                    Address myMainAddress = AddressRepository.GetMainAddressByCardId(myCardList.Id, myCardList.Tenant);
-                    if (myMainAddress != null)
-                    {
-                        myCardList.CityName = myMainAddress.City;
-                        if (myMainAddress.Country != null)
-                        {
-                            myCardList.CountryName = myMainAddress.Country.EnglishName;
-                            myCardList.StateName = myMainAddress.State == null ? null : myMainAddress.State.EnglishName;
-                        }
-                    }
-                }                
-                scope.Complete();
-
-                return myCardList;
-            }
-
-        }
-
-
         public CardList GetCarrierCopyToCurrentTenant(string entityId, int tenant, string ccsTypeCode, string newAirlineActionCode, bool newAirlineActionValue, string notes)
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
@@ -1891,10 +1760,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return Cards;
         }
 
-        public List<CardList> GetCardListsByCardIds(List<string> CardIds, int tenant)
+        public List<CardList> GetCardListForInventoryReportsByCardIds(List<string> CardIds, int tenant)
         {
-            List<CardList> Cards = (from a in repository.context.Cards.Include("PartnerType")
-                                    where CardIds.Contains(a.Id) && a.Tenant == tenant 
+            List<CardList> Cards = (from a in repository.context.Cards
+                                    where CardIds.Contains(a.Id) && a.Tenant == tenant
                                     select new CardList()
                                     {
 
@@ -1902,8 +1771,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         Tenant = a.Tenant,
                                         EnglishName = a.EnglishName,
                                         Code = a.Code,
-                                        PartnerTypeName = a.PartnerType!=null ? a.PartnerType.Name: "",
-                                        
                                     }).ToList();
             return Cards;
         }
@@ -1922,30 +1789,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return cardList;
         }
-
-        public CardList GetCardListForCustomsShipperById(string cardId, int tenant)
-        {
-            CardList cardList = (from a in repository.context.Cards
-                                 where a.Id == cardId && a.Tenant == tenant
-                                 select new CardList()
-                                 {
-                                     Id = a.Id,
-                                     Tenant = a.Tenant,
-                                     EnglishName = a.EnglishName,
-                                     Code = a.Code,
-                                     VatNumber = a.VatNumber,
-                                     CountryId = a.CountryId,
-                                     CountryCode = a.CountryCode,
-                                     CountryName = a.CountryName,
-                                     CreatedByUserId = a.CreatedByUserId,
-                                     UpdatedByUserId = a.UpdatedByUserId,
-                                     CreateDate = a.CreateDate,
-                                     UpdateDate = a.UpdateDate,
-                                 }).FirstOrDefault();
-
-            return cardList;
-        }
-
 
     }
 }

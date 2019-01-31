@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .ProfitLink:hover {
         text-decoration: underline;
@@ -351,9 +351,9 @@
                                                 <table>
                                                     <tr>
 
-                                                        <!-- MinMax From Quote Charge -->
-                                                        <td style="width: 18px; padding-right: 2px;" *ngIf="item.IsMinMaxFromQuoteIconVisible">
-                                                            <img src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [title]="item.MinMaxFromQuoteToolTip" />
+                                                        <!-- Minimum From Quote Charge -->
+                                                        <td style="width: 18px; padding-right: 2px;" *ngIf="item.IsMinFromQuoteIconVisible">
+                                                            <img src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Shipment.M.Payables.AmountdueQuoteMinimum' | TextCodeTranslationPipe" />
                                                         </td>
 
                                                         <!-- Minimum From Tarrif Charge -->

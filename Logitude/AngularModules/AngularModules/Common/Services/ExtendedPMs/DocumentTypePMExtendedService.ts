@@ -114,7 +114,7 @@ export class DocumentTypePMExtendedService {
         }).catch(ServiceHelper.HandleServiceError);
     }
 
-
+    
 
 
 
@@ -145,7 +145,7 @@ export class DocumentTypePMExtendedService {
     }
 
 
-
+    
     GetDocumentTypesByObjectTableAndTenant(objecttableId: string, tenant: number) {
 
         var authHeader = new Headers();
@@ -178,7 +178,7 @@ export class DocumentTypePMExtendedService {
 
         return this._http.get(this._apiUrl + '/getdoesdocumenttypecodeexist/?' + 'code=' + code + '&tenant=' + tenant + '&x=' + 1 , { headers: authHeader }).map(response => {
 
-
+     
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
@@ -196,7 +196,7 @@ export class DocumentTypePMExtendedService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
 
         return this._http.get(this._apiUrl + '/getsingledocumenttype/?' +  'id=' + id + '&documentOutId=' + documentOutId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
-
+            
             var result = response.json();
                 var entity: DocumentTypePM;
                 entity = this.MapJsonToEntityPM(result);
@@ -263,10 +263,8 @@ export class DocumentTypePMExtendedService {
         return this._http.get(this._apiUrl + '/getdocumenttypebycode/?'+  'code=' + code + '&tenant=' + tenant , { headers: authHeader }).map(response => {
 
             var result = response.json();
-
             var entity: DocumentTypePM;
-            if(result)
-                entity = this.MapJsonToEntityPM(result);
+            entity = this.MapJsonToEntityPM(result);
 
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();

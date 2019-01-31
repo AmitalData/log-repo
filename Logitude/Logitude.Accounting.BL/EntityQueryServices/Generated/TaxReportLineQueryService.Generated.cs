@@ -17,7 +17,7 @@ using Logitude.Accounting.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Accounting.BL.EntityQueryServices
 { 
-   public partial class TaxReportLineQueryService: EntityQueryService<TaxReportLine,TaxReportLineKeys,TaxReportLinePM,object,TaxReportLineKeys>
+   public partial class TaxReportLineQueryService: EntityQueryService<TaxReportLine,TaxReportLineKeys,TaxReportLinePM,TaxReportPM,TaxReportKeys>
    {
    
         TaxReportLineRepository repository;

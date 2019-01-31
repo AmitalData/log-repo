@@ -376,20 +376,7 @@
                                                 
                                             </div> 
                                             </td>
-
                                             </tr>
-                                              <%--Start Areacaptcha--%>
-                                                 <tr id="Areacaptcha" style ="height:30px;margin-top:5px;display:none;">
-                                                 <td>
-                                               <img id="CaptchaImage" style="height:auto;width:auto;float:left"  /> 
-                                                <input oninput="onCaptchaInPutChanged()" style="height:19px;width:260px;margin-bottom:5px;margin-top:5px;float:left;" type="text" placeholder="type the text you see" id="captchaTextBox"/>
-                                                
-
-
-                                            </td>
-                                            </tr>
-
-                                             <%--End Areacaptcha--%>
                                                 
                                               <tr>
                                             <td  class="column1"> 
@@ -407,7 +394,7 @@
                                                 </td>
                                             </tr>
                                             
-                                         <tr id="BusyindicatorArea" style="height:50px;width:50px">
+                                              <tr style="height:50px;width:50px">
                                                   <td>
                                                          <div id="loginBusyindicator" style="display:none"><img width="50" height="50" src="images/LoginScreen/indicator.gif" alt='loading' /></div>
                                                   </td>
@@ -898,8 +885,6 @@
 
 
     <script type="text/javascript">
-
-        
         function getTwoFactorKeys() {
             var allKeys = [];
             for (var key in window.localStorage) {
@@ -1087,7 +1072,6 @@
 
         var companyList;
         var password;
-       var captchaKey
         var email;
         var currentTenant;
         var Technology = null;//"Angular";
@@ -1145,26 +1129,10 @@
             document.getElementById(id).selectionStart = cursorPosition;
             document.getElementById(id).selectionEnd = cursorPosition;
         }
-
-
-
-        onCaptchaInPutChanged = function () {
-
-            if ( document.getElementById("errorsList").innerHTML == "Please re-enter the characters you see in the image above") {
-                if ($("#captchaTextBox").val())
-                    $("#errorsList").hide();
-            }
-        }
-   
-
         //data-bind="event: {blur: getContacts}"
-
         onPasswordChanged = function () {
-    
-            if (document.getElementById("errorsList").innerHTML !="Please re-enter the characters you see in the image above") {
-                  $("#errorsList").hide();
-            }
- 
+
+            $("#errorsList").hide();
             var emailstring = $("#Password").val();
             if (emailstring) {
 
@@ -1189,20 +1157,14 @@
             $("#errorsList").hide();
             var emailstring = $("#Email").val();
             if (emailstring) {
-                  $("#Email").val($.trim(emailstring));
 
-                if (email != $("#Email").val()) {
+                // var cursorPosition = document.getElementById("Email").selectionStart;
+                $("#Email").val($.trim(emailstring));
 
-                    var areacaptcha = document.getElementById("Areacaptcha");
-                    if (areacaptcha && areacaptcha.style.display == "block") {
-                        document.getElementById("captchaTextBox").value = "";
-                        areacaptcha.style.display = "none";
-                        captchaKey = "";
-                    }
+                //setCaretToPos("Email", cursorPosition);
+                //$("#Email").sele
+                //setCaretToPos($("#Email"), cursorPosition);
 
-       
-                }
-              
 
             }
             //$("#cmbTenants").hide();
@@ -1290,23 +1252,19 @@
                 //$("#busyIndicator").hide();
             }
 
-      
+
+
             this.validateMethod = function () {
 
                 password = $("#Password").val();
                 email = $("#Email").val();
-                $("#errorsList").hide();
-
-
-                var areacaptcha = document.getElementById("Areacaptcha");
-                if (areacaptcha.style.display == "block") {
-                    document.getElementById("BusyindicatorArea").style.width = "0px";
-                    document.getElementById("BusyindicatorArea").style.height = "0px";
-                }
-
-                
                 var persist = false;
-                
+                //var tenant = $("#cmdTenant").val();
+                // get the dataItem corresponding to the selectedIndex.
+                //var dataItem = combobox.dataItem();
+                //var combobox = $("#cmbTenants").data("kendoComboBox");
+                //$("#cmdTenant").val(tenant);
+                // currentTenant, string email, string password, bool persistCookie
 
                 var validatable = $("#myform").kendoValidator().data("kendoValidator");
 
@@ -1321,23 +1279,6 @@
                 }
 
 
-          
-
-                var BusyindicatorAreawidthHeight = "50px";
-
-                if (areacaptcha.style.display == "block") {
-                    if (!document.getElementById("captchaTextBox").value) {
-                        document.getElementById("errorsList").innerHTML = "Please re-enter the characters you see in the image above";
-                        $("#errorsList").show();
-                        return;
-                    }
-                    BusyindicatorAreawidthHeight = "40px";
-                    document.getElementById("loginBusyindicator").style.marginTop = "-7px";
-                }
-
-
-                document.getElementById("BusyindicatorArea").style.width = BusyindicatorAreawidthHeight;
-                document.getElementById("BusyindicatorArea").style.height = BusyindicatorAreawidthHeight;
 
                 save_data_to_cookie();
                 disableForm(true);
@@ -1351,8 +1292,6 @@
                     this.Password = password;
                     this.GetToken = true;
                     this.ClientType = "Web";
-                    this.CaptchaKey = captchaKey;
-                    this.CaptchaCode = document.getElementById("captchaTextBox").value;
                 };
 
                 
@@ -1373,27 +1312,22 @@
                         UserDataPrompt = userdata;
 
                         if (!userdata.HasError) {
-                            areacaptcha.style.display = "none";
                             ComplateProcessLogin(userdata);
                         }
                         else {
 
                             $("#loginBusyindicator").hide();
+
                             if (userdata.ExceptionMessage) {
 
                                 alert(userdata.ExceptionMessage);
                             }
                             else {
 
-                                captchaKey = userdata.CaptchaKey;
-                           
-                           
                                 if (userdata.MustChangePassword) {
 
                                     document.location.href = "PasswordChangePage.aspx?email=" + email
-                                }
-
-                                else if (userdata.PasswordExpirationDateMessage) {
+                                } else if (userdata.PasswordExpirationDateMessage) {
                                     document.getElementById("myform").style.display = "none";
                                     document.getElementById("verificationForm").style.display = "none";
                                     document.getElementById("PromptView").style.display = "none";
@@ -1403,34 +1337,28 @@
 
 
                                 else {
+                                    var errorMessage = "Login failed! invalid user name or password." + "<br/>";
 
-                                  
 
-                                    if (userdata.InValidCaptcha) {
-                                        if (areacaptcha.style.display == "block") {
-                                            document.getElementById("captchaTextBox").value = "";
-                                        }
-                                    
-                                        areacaptcha.style.display = "block";
-                                        $("#CaptchaImage").attr("src", userdata.CaptchaImage);
-                                        document.getElementById("divMayus").style.display = "none";
-                                        document.getElementById("BusyindicatorArea").style.width = "0px";
-                                        document.getElementById("BusyindicatorArea").style.height = "0px";
+                                    if (userdata.IpRestricted) {
+
+                                        errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
+
+                                    }
+
+                                    if (userdata.IsLocked) {
+
+                                        errorMessage = "Your account has been locked out!" + "<br/>" + "please try again after 30 minutes.";
+                                    }
+                                    if (userdata.InActive) {
+                                        errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+                                    }
+                                    if (userdata.Unlicensed) {
+
+                                        errorMessage = "Your account is unlicensed!" + "<br/>" + "please contact your administrator.";
                                     }
 
 
-                                    var errorMessage = "";
-
-                                        if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
-                                        if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                                        if (userdata.Unlicensed)  errorMessage = "Your account is unlicensed!" + "<br/>" + "please contact your administrator.";
-                                        if (userdata.InValidMailOrPassword)  errorMessage = "Login failed! invalid user name or password." + "<br/>";
-
-                                    if (!errorMessage) errorMessage = "Please re-enter the characters you see in the image above";
-                              
-                                
-
-                                   
                                     document.getElementById("errorsList").innerHTML = errorMessage;
                                     // $("#errorsList").text(errorMessage);
                                     $("#errorsList").show();
@@ -1583,24 +1511,22 @@
                 return;
             }
 
- 
-                if (navigator.userAgent != null) {
-                    if (navigator.userAgent.toString().toLowerCase().indexOf("iphone") > -1) {
-                        alert("IOS is currently not supported in HTML5 version");
-                        return;
-                    }
-
-                    else if (navigator.userAgent.toString().toLowerCase().indexOf("ipad") > -1) {
-                        alert("IOS is currently not supported in HTML5 version");
-                        return;
-                    }
-
-                    else if (navigator.userAgent.toString().toLowerCase().indexOf("ipod") > -1) {
-                        alert("IOS is currently not supported in HTML5 version");
-                        return;
-                    }
+            if (navigator.userAgent != null) {
+                if (navigator.userAgent.toString().toLowerCase().indexOf("iphone") > -1) {
+                    alert("IOS is currently not supported in HTML5 version");
+                    return;
                 }
-            
+
+                else if (navigator.userAgent.toString().toLowerCase().indexOf("ipad") > -1) {
+                    alert("IOS is currently not supported in HTML5 version");
+                    return;
+                }
+
+                else if (navigator.userAgent.toString().toLowerCase().indexOf("ipod") > -1) {
+                    alert("IOS is currently not supported in HTML5 version");
+                    return;
+                }
+            }
 
             //if (navigator.sayswho && navigator.sayswho.toString().indexOf("Safari") > -1) {
             //    var issafari = true;
@@ -1667,7 +1593,16 @@
         }
 
 
-        
+
+       
+
+
+
+
+
+
+
+
         function RunLogin(userdata) {
 
             if (!Technology) Technology = userdata.Technology;
@@ -1714,9 +1649,6 @@
                 this.CardType = companyLogin.CardType;
                 this.GetToken = true;
                 this.ClientType = "Web";
-                this.CaptchaKey = captchaKey;
-                this.CaptchaCode = document.getElementById("captchaTextBox").value;
-
             };
 
 
@@ -1779,19 +1711,24 @@
 
                             alert(userdata.ExceptionMessage);
                         }
+
                         else if (userdata.MustChangePassword) {
 
                             document.location.href = "PasswordChangePage.aspx?email=" + email
                         }
                         else {
                             var errorMessage = "Login failed! invalid user name or password." + "<br/>";
-                            if (userdata.InValidCaptcha) {
 
-                                errorMessage = "Please re-enter the characters you see in the image above";
+
+                            if (userdata.IpRestricted) {
+
+                                errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
+
                             }
-                            else {
-                                if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
-                                if (userdata.IsLocked) errorMessage = "Your account has been locked out!" + "<br/>" + "please try again after 30 minutes.";
+
+                            if (userdata.IsLocked) {
+
+                                errorMessage = "Your account has been locked out!" + "<br/>" + "please try again after 30 minutes.";
                             }
 
                             document.getElementById("comboFormErrorsList").innerHTML = errorMessage;

@@ -1,4 +1,4 @@
-import {Component, ViewChildren, QueryList} from '@angular/core';
+﻿import {Component, ViewChildren, QueryList} from '@angular/core';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
@@ -93,7 +93,7 @@ export class TimeManagementWorkspaceComponent {
                                 SessionLocator.DynamicLoader.Load('./TimeManagement/Components/Workspaces/SettingsWorkspaceComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.Page_SETTINGS = cmpRef.instance;
-
+                                        this.Page_SETTINGS.InitComponent();
                                     });
                             }
                             break;

@@ -56,35 +56,5 @@ export class BankDepositExtendedPMService {
 
     }
 
-    cancelDeposit(bankDepositId: string) {
-
-        return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.post(this._apiUrl + "/PostCancelDeposit?"
-                + "&bankDepositId=" + bankDepositId
-                , "",
-                { headers: authHeader }).map((res) => {
-                    var pm = res.json();
-                    if (pm) {
-                        var mappedResult: JournalPM;
-                        serviceResponse.Result = pm;
-                    }
-                    return serviceResponse;
-
-                }).catch(ServiceHelper.HandleServiceError);
-
-        }
-
-        );
-
-    }
-
 
 }

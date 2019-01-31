@@ -30,8 +30,5 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
 	[XmlAttribute]
     public string PartnerCode { get; set; }
-
-    public  string  ComputingPartnerCode { get; set; }
-
     }
 } 

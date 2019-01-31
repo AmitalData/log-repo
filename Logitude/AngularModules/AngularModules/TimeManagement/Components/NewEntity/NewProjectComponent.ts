@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TMProjectPM} from '../../EntityPMs/TMProjectPM';
 import {TMProjectPMService} from '../../Services/StandardPMs/TMProjectPMService';
@@ -83,15 +83,6 @@ export class NewProjectComponent extends BaseComponent {
     set OwnerId(value: string) {
         if (this.EntityPM.OwnerId != value) {
             this.EntityPM.OwnerId = value;
-        }
-    }
-
-    get ExternalProjectNumber() {
-        return this.EntityPM.ExternalProjectNumber;
-    }
-    set ExternalProjectNumber(value: string) {
-        if (this.EntityPM.ExternalProjectNumber != value) {
-            this.EntityPM.ExternalProjectNumber = value;
         }
     }
 

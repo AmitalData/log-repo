@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .SquareIcon {
         width: 10px;
@@ -151,13 +151,13 @@
                                         <div class="QueriesSection" *ngIf="IsQueryVisible_OpenGroup">
                                             <div>Open Activities</div>
                                             <div style="height:22px; width: 57px; position: absolute; top:0px; right:0px;">
-                                                <div id="{{'NEWACTIVITY' | IdGeneratorPipe}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
+                                                <div tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
                                                     <label>New</label>
                                                     <img src="./Images/ToggleIcon.png" />
                                                     <div class="ToggleButtonMenu" style="width: 80px;">
-                                                        <button id="{{'NEWTASK' | IdGeneratorPipe}}" (click)="NewActivityClicked('TS')">Task</button>
-                                                        <button id="{{'NEWPHONECALL' | IdGeneratorPipe}}" (click)="NewActivityClicked('CL')">Phone Call</button>
-                                                        <button id="{{'NEWAPPOINTMENT' | IdGeneratorPipe}}" (click)="NewActivityClicked('AP')">Appointment</button>
+                                                        <button (click)="NewActivityClicked('TS')">Task</button>
+                                                        <button (click)="NewActivityClicked('CL')">Phone Call</button>
+                                                        <button (click)="NewActivityClicked('AP')">Appointment</button>
                                                     </div>
                                                 </div>
                                             </div>

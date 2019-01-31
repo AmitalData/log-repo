@@ -1,11 +1,11 @@
-
+﻿
 
 
 export class DWQueryList {
 
     Id: string;
     Tenant: number;
-    //DWObjectTableCode: string;
+    DWObjectTableCode: string;
     SQLString: string;
     CreatedByUserId: string;
     UpdateByUserId: string;

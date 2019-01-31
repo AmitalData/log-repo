@@ -26,8 +26,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool IsPaymentRequired { get; set; }
         public string PaymentRequestXML { get; set; }
         public DateTime? PaymentDateTime { get; set; }
-        public string DeclarationWCOXml { get; set; }
-
 
     }
 }

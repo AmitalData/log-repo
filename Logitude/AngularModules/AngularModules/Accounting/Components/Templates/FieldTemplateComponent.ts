@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
-import { AppTool } from '../../../Infrastructure/Tools';
-import { JournalPM } from '../../EntityPMs/JournalPM';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { JournalExtendedListService } from '../../Services/ExtendedLists/JournalExtendedListService';
-import { ARPaymentExtendedListService } from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { JournalList } from '../../EntityLists/JournalList';
-import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
-import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+﻿import {Component} from '@angular/core';
+import {AppTool} from '../../../Infrastructure/Tools';
+import {JournalPM} from '../../EntityPMs/JournalPM';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {JournalExtendedListService} from '../../Services/ExtendedLists/JournalExtendedListService';
+import {ARPaymentExtendedListService} from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {JournalList} from '../../EntityLists/JournalList';
+import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     moduleId: module.id,
@@ -46,12 +46,13 @@ export class FieldTemplateComponent {
         this.ObjectTableName = args['ObjectTableName'];
         this.IsHeaderScreenTemplate = args['IsHeaderScreenTemplate'];
         this.IsSpotLightTemplate = args['IsSpotLightTemplate'];
-        this.SpotlightDataTemplate = args['SpotlightDataTemplate'];
+        this.SpotlightDataTemplate = args['SpotlightDataTemplate']; 
 
         if (this.Entity != null && this.FieldName != null) {
             this.FieldValue = this.Entity[this.FieldName];
         }
-        if (this.ObjectTableName == "Revaluation" && this.FieldName == "Status") {
+        if (this.ObjectTableName == "Revaluation" && this.FieldName == "Status")
+        {
             if (this.FieldValue == "Done") { this.fontColor = "green"; }
             else if (this.FieldValue == "In Progress") { this.fontColor = "orange"; }
             else this.fontColor = "black";
@@ -89,26 +90,16 @@ export class FieldTemplateComponent {
                 this.FieldValue = this.Entity.PaymentChequeStatusName;
             }
         }
-
-        if (this.ObjectTableName == "TaxDeductionReport" && this.FieldName == "Status") {
-
-            if (SessionLocator.LoggedUserPM.DontShowLocal) {
-                this.FieldValue = this.Entity.Status;
-            }
-            else {
-                this.FieldValue = this.Entity.StatusLocalName;
-            }
-        }
     }
 
     Abs(num: number) {
         if (!AppTool.IsNullOrEmpty(num)) {
-            return num > 0 ? num : num * -1;
+            return num > 0 ? num : num * -1;  
         }
     }
 
     OpenCashBook(id) {
-        if (!AppTool.IsNullOrEmpty(id)) {
+        if (!AppTool.IsNullOrEmpty(id)){
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -120,7 +111,7 @@ export class FieldTemplateComponent {
     }
 
     OpenJournal(id) {
-        if (!AppTool.IsNullOrEmpty(id)) {
+        if (!AppTool.IsNullOrEmpty(id)){
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -153,42 +144,42 @@ export class FieldTemplateComponent {
             }
 
             // 3-ARPayment
-            case '3': {
+            case '3': { 
                 tableName = "ARPayment";
 
                 break;
-            }
+    }
 
             // 4-APInvoice
-            case '4': {
+            case '4': { 
                 tableName = "APInvoice";
 
                 break;
             }
 
             // 5-APPayment
-            case '5': {
+            case '5': { 
                 tableName = "APPayment";
 
                 break;
             }
 
             // 6-Cheque Deposit
-            case '6': {
+            case '6': { 
                 tableName = "BankDeposit";
 
                 break;
             }
 
             // 7-Cash Deposit
-            case '7': {
+            case '7': { 
                 tableName = "BankDeposit";
 
                 break;
             }
 
             // 8-Revaluation
-            case '8': {
+            case '8': { 
                 tableName = "Revaluation";
 
                 break;
@@ -201,7 +192,7 @@ export class FieldTemplateComponent {
                 break;
             }
         }
-
+        
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
@@ -221,7 +212,7 @@ export class FieldTemplateComponent {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'GLAccount' });
                     cmpRef.instance.BackCompleted.subscribe(bk => {
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM(); 
                     });
                 });
         }
@@ -241,31 +232,5 @@ export class FieldTemplateComponent {
 
     VatNumberClicked() {
 
-    }
-
-    GetAccountingIntegrityCheckStatus() {
-        var color = "black";
-        switch (this.Entity['StatusCode']) {
-            case '2': // 2- in progress
-                color = '#0043ff';
-                break;
-
-            case '3':
-                color = '#d69f03';
-                break;
-
-            case '4':
-                color = 'green';
-                break;
-
-            case '5':
-                color = 'red';
-                break;
-
-            default:
-                break;
-        }
-
-        return color;
     }
 }

@@ -23,7 +23,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.UpdateByUserId = entityPM.UpdateByUserId;
             entityPOCO.UpdatedDate = entityPM.UpdatedDate;
             entityPOCO.SQLString = entityPM.SQLString;
-            //entityPOCO.DWObjectTableCode = entityPM.DWObjectTableCode;
+            entityPOCO.DWObjectTableCode = entityPM.DWObjectTableCode;
 
 
         }

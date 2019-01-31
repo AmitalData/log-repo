@@ -135,7 +135,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DependencyFilter3Type = a.DependencyFilter3Type,
                                              DependencyFilter3IsList = a.DependencyFilter3IsList,
                                              CopyToDW = a.CopyToDW,
-                                             DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                          }).FirstOrDefault();
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
@@ -214,7 +213,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   DependencyFilter3Type = a.DependencyFilter3Type,
                                                   DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                   CopyToDW = a.CopyToDW,
-                                                  DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                               };
             return result;
         }
@@ -311,7 +309,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3Type = a.DependencyFilter3Type,
                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                     CopyToDW = a.CopyToDW,
-                                                    DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -420,7 +417,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DependencyFilter3Type = a.DependencyFilter3Type,
                                              DependencyFilter3IsList = a.DependencyFilter3IsList,
                                              CopyToDW = a.CopyToDW,
-                                             DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                          }).FirstOrDefault();
                         
            ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
@@ -530,7 +526,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3Type = a.DependencyFilter3Type,
                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                     CopyToDW = a.CopyToDW,
-                                                    DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                 }).OrderBy(o => o.FieldName).ToList();
             
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -641,7 +636,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DependencyFilter3Type = a.DependencyFilter3Type,
                                              DependencyFilter3IsList = a.DependencyFilter3IsList,
                                              CopyToDW = a.CopyToDW,
-                                             DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                          }).FirstOrDefault();
             if (mod != null)
             {
@@ -757,7 +751,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3Type = a.DependencyFilter3Type,
                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                     CopyToDW = a.CopyToDW,
-                                                    DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -865,7 +858,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3Type = a.DependencyFilter3Type,
                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                     CopyToDW = a.CopyToDW,
-                                                    DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                 }).ToList();
             return objectfields;
         }
@@ -971,7 +963,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DependencyFilter3Type = a.DependencyFilter3Type,
                                              DependencyFilter3IsList = a.DependencyFilter3IsList,
                                              CopyToDW = a.CopyToDW,
-                                             DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                          }).ToList();
         }
 
@@ -1077,7 +1068,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3Type = a.DependencyFilter3Type,
                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                     CopyToDW = a.CopyToDW,
-                                                    DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                 }).ToList();
             return objectfields;
         }
@@ -1181,7 +1171,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3Type = a.ObjectField.DependencyFilter3Type,
                                                     DependencyFilter3IsList = a.ObjectField.DependencyFilter3IsList,
                                                     CopyToDW = a.ObjectField.CopyToDW,
-                                                    DisplayOnLookUpLocal = a.ObjectField.DisplayOnLookUpLocal,
                                                 }).ToList();
 
 
@@ -1289,7 +1278,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3Type = a.DependencyFilter3Type,
                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                     CopyToDW = a.CopyToDW,
-                                                    DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                 });
             return result;
         }      
@@ -1395,7 +1383,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3Type = a.DependencyFilter3Type,
                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                     CopyToDW = a.CopyToDW,
-                                                    DisplayOnLookUpLocal=a.DisplayOnLookUpLocal,
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);//.Take(800).ToList();
@@ -1600,7 +1587,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3Type = a.DependencyFilter3Type,
                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                     CopyToDW = a.CopyToDW,
-                                                    DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                 }).ToList();          
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -1725,7 +1711,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                              DependencyFilter3Type = a.DependencyFilter3Type,
                                                              DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                              CopyToDW = a.CopyToDW,
-                                                             DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                          }).ToList();
 
                             currentTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(currentTenantObjectFields, tenant);
@@ -1831,7 +1816,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                          DependencyFilter3Type = a.DependencyFilter3Type,
                                                          DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                          CopyToDW = a.CopyToDW,
-                                                         DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                      }).ToList();
 
                         currentTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(currentTenantObjectFields, tenant);
@@ -1936,7 +1920,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       DependencyFilter3Type = a.DependencyFilter3Type,
                                                       DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                       CopyToDW = a.CopyToDW,
-                                                      DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                   }).ToList();
 
                         zeroTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(zeroTenantObjectFields, 0);
@@ -2043,7 +2026,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   DependencyFilter3Type = a.DependencyFilter3Type,
                                                   DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                   CopyToDW = a.CopyToDW,
-                                                  DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                               }).ToList();
 
                     zeroTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(zeroTenantObjectFields, 0);
@@ -2132,8 +2114,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              NumberOfDigits = a.NumberOfDigits,
                                              DependencyFilter1IsList = a.DependencyFilter1IsList,
                                              DependencyFilter2IsList = a.DependencyFilter2IsList,
-                                             FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
-                                             DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                             FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,                                             
                                          }).FirstOrDefault();
             
             return objectField;

@@ -10,12 +10,9 @@ namespace Logitude.Server.Tools
 {
     public abstract partial class EntityUpdateService<TEntityPOCO, TEntityPM, TEntityParentPM>
     {
-
-
-
-
-        //private void AddContext(TEntityPM myTEntityPM)
-        protected virtual void AddContext(TEntityPM myTEntityPM)
+        
+        
+        private void AddContext(TEntityPM myTEntityPM)
         {
             if (EntityUpdateServiceContext.Current == null)
             {

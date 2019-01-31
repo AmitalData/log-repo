@@ -18,6 +18,5 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? PaymentAmount { get; set; }
         public double? ExchangeRate { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
-        public string APInvoiceTransferStatusCode { get; set; }
     }
 }

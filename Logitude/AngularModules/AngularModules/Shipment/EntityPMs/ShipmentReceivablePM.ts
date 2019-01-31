@@ -218,14 +218,9 @@ export class ShipmentReceivablePM {
     public set IATACodeId(newValue: string) { if (this.iATACodeId != newValue) { this.iATACodeId = newValue; this.MarkAsDirty("IATACodeId"); } }
        
 	 
-    private quoteSaleMinAmount: number;
-    public get QuoteSaleMinAmount() { return this.quoteSaleMinAmount; }
-    public set QuoteSaleMinAmount(newValue: number) { if (this.quoteSaleMinAmount != newValue) { this.quoteSaleMinAmount = newValue; this.MarkAsDirty("QuoteSaleMinAmount"); } }
-       
-	 
-    private quoteSaleMaxAmount: number;
-    public get QuoteSaleMaxAmount() { return this.quoteSaleMaxAmount; }
-    public set QuoteSaleMaxAmount(newValue: number) { if (this.quoteSaleMaxAmount != newValue) { this.quoteSaleMaxAmount = newValue; this.MarkAsDirty("QuoteSaleMaxAmount"); } }
+    private quoteSaleMinPrice: number;
+    public get QuoteSaleMinPrice() { return this.quoteSaleMinPrice; }
+    public set QuoteSaleMinPrice(newValue: number) { if (this.quoteSaleMinPrice != newValue) { this.quoteSaleMinPrice = newValue; this.MarkAsDirty("QuoteSaleMinPrice"); } }
        
 	 
     private quoteChargeId: string;

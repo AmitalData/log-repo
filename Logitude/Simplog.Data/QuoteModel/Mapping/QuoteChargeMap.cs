@@ -80,7 +80,6 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.CostMaxAmount).HasColumnName("CostMaxAmount");
             this.Property(t => t.CostMinAmount).HasColumnName("CostMinAmount");
             this.Property(t => t.SaleMinAmount).HasColumnName("SaleMinAmount");
-            this.Property(t => t.SaleMaxAmount).HasColumnName("SaleMaxAmount");
             this.Property(t => t.IsChargeBySteps).HasColumnName("IsChargeBySteps");
             this.Property(t => t.VatTypeId).HasColumnName("VatTypeId");
             this.Property(t => t.VatPercentage).HasColumnName("VatPercentage");

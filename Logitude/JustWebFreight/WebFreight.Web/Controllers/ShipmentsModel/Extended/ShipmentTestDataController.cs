@@ -33,9 +33,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
                 IGlobalContext globalContext = GlobalContext.GetContext();
 
-                //GlobalTenant otherGlobalTenant = (from a in globalContext.GlobalTenants where a.Id != tenant && a.Id != 0 && a.IsActive == true select a).FirstOrDefault();
-                //Tenant otherTenant = (from a in commonContext.Tenants where a.Id == otherGlobalTenant.Id select a).FirstOrDefault();
-                IShipmentsContext otherTenantShipmentsContext = ShipmentsContext.GetContext(tenant);
+                GlobalTenant otherGlobalTenant = (from a in globalContext.GlobalTenants where a.Id != tenant && a.Id != 0 && a.IsActive == true select a).FirstOrDefault();
+                Tenant otherTenant = (from a in commonContext.Tenants where a.Id == otherGlobalTenant.Id select a).FirstOrDefault();
+                IShipmentsContext otherTenantShipmentsContext = ShipmentsContext.GetContext(otherTenant.Id);
 
                 ShipmentTestData shipmentTenantFields = new ShipmentTestData();
                 shipmentTenantFields.CountryId = (from a in commonContext.Countries where a.Tenant == tenant && a.InActive == false select a.Id).FirstOrDefault();
@@ -65,7 +65,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                                       where a.Tenant == tenant && a.PartnerTypeId == "CS" && a.Id != ShipperCard.Id && a.InActive == false
         && (from b in commonContext.Addresses where b.Tenant == tenant && b.CardId == a.Id && b.AddressTypeId.ToUpper() == "M" select b).FirstOrDefault() != null
                                       select a).FirstOrDefault();
-                Address ConsigneerCardAddress = (from a in commonContext.Addresses where a.Tenant == tenant && a.CardId == ConsigneeCard.Id && a.AddressTypeId.ToUpper() == "M" select a).FirstOrDefault();
+                Address ConsigneerCardAddress = (from a in commonContext.Addresses where a.Tenant == tenant && a.CardId == ShipperCard.Id && a.AddressTypeId.ToUpper() == "M" select a).FirstOrDefault();
 
                 shipmentTenantFields.ConsigneeId = ConsigneeCard.Id;
                 shipmentTenantFields.ConsigneeAddressId = ConsigneerCardAddress.Id;
@@ -74,21 +74,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                                   where a.Tenant == tenant && a.PartnerTypeId == "AG" && a.InActive == false
     && (from b in commonContext.Addresses where b.Tenant == tenant && b.CardId == a.Id && b.AddressTypeId.ToUpper() == "M" select b).FirstOrDefault() != null
                                   select a).FirstOrDefault();
-                Address AgentCardAddress = (from a in commonContext.Addresses where a.Tenant == tenant && a.CardId == AgentCard.Id && a.AddressTypeId.ToUpper() == "M" select a).FirstOrDefault();
+                Address AgentCardAddress = (from a in commonContext.Addresses where a.Tenant == tenant && a.CardId == ShipperCard.Id && a.AddressTypeId.ToUpper() == "M" select a).FirstOrDefault();
 
                 shipmentTenantFields.AgentId = AgentCard.Id;
                 shipmentTenantFields.AgentAddressId = AgentCardAddress.Id;
-
-
-
-                Card Notify1Card = (from a in commonContext.Cards
-                                    where a.Tenant == tenant && a.PartnerTypeId == "CS" && a.InActive == false
-      && (from b in commonContext.Addresses where b.Tenant == tenant && b.CardId == a.Id && b.AddressTypeId.ToUpper() == "M" select b).FirstOrDefault() != null
-                                    select a).OrderBy(r => Guid.NewGuid()).FirstOrDefault();
-                Address Notify1CardAddress = (from a in commonContext.Addresses where a.Tenant == tenant && a.CardId == Notify1Card.Id && a.AddressTypeId.ToUpper() == "M" select a).FirstOrDefault();
-
-                shipmentTenantFields.Notify1Id = Notify1Card.Id;
-                shipmentTenantFields.Notify1AddressId = Notify1CardAddress.Id;
 
 
                 Card AirlineCard = (from a in commonContext.Cards where a.Tenant == tenant && a.PartnerTypeId == "AL" && a.InActive == false select a).FirstOrDefault();
@@ -104,7 +93,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 shipmentTenantFields.OceanChargesTypeId = (from a in commonContext.ChargesTypes where a.Tenant == tenant && a.IsOcean == true && a.InActive == false select a.Id).FirstOrDefault();
                 shipmentTenantFields.InlandChargesTypeId = (from a in commonContext.ChargesTypes where a.Tenant == tenant && a.IsInland == true && a.InActive == false select a.Id).FirstOrDefault();
 
-                shipmentTenantFields.OtherTenantShipmentId = (from a in otherTenantShipmentsContext.Shipments where a.Tenant != tenant && a.Tenant != 0 select a.Id).FirstOrDefault();
+                shipmentTenantFields.OtherTenantShipmentId = (from a in otherTenantShipmentsContext.Shipments where a.Tenant == otherTenant.Id select a.Id).FirstOrDefault();
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, shipmentTenantFields);

@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr>
         <td style="width:205px;min-width:205px;">
@@ -50,7 +50,6 @@
                                         <div>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Waiting for Approval')">{{'APInvoice.Q.WaitingApprovalAPInvoices'|TextCodeTranslationPipe}} ({{APInvoicesDraftsCount}})</p>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Unpaid Invoices')">{{'APInvoice.Q.UnpaidAPInvoices'|TextCodeTranslationPipe}} ({{APInvoicesUnpaidCount}})</p>
-                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:ErrorInTransfer')" *ngIf="APInvoiceErrorInTransferVisibility">{{'APInvoice.Q.ErrorInTransfer'|TextCodeTranslationPipe}} ({{APInvoiceErrorInTransferCount}})</p>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:All Invoices')">{{'APInvoice.Q.AllAPInvoices'|TextCodeTranslationPipe}}</p>
                                         </div>
                                     </div>
@@ -85,7 +84,6 @@
                                         <div>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Draft Payments')">{{'APPayment.Q.DraftAPPayments'|TextCodeTranslationPipe}} ({{APPaymentsDraftsCount}})</p>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Open Payments')">{{'APPayment.Q.OpenAPPayments'|TextCodeTranslationPipe}} ({{APPaymentsOpenedCount}})</p>
-                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:ErrorInTransfer')" *ngIf="APPaymentErrorInTransferVisibility">{{'APPayment.Q.ErrorInTransfer'|TextCodeTranslationPipe}} ({{APPaymentErrorInTransferCount}})</p>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:All Payments')">{{'APPayment.Q.AllAPPayments'|TextCodeTranslationPipe}}</p>
                                             <p class="QueryLink" (click)="NewEntityClicked('APPayment')">{{'General.O.NewPayment'|TextCodeTranslationPipe}}</p>
                                         </div>

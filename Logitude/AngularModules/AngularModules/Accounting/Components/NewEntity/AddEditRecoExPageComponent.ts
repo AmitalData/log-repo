@@ -77,7 +77,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
                 if (this.ReconcileExternalPagePM.StatusCode == "2" || this.ReconcileExternalPagePM.StatusCode == "3")
                     this.IsDisplayOnly = true;
                 this.SetUIProperties();
-
+                
             }
             else
             {
@@ -126,9 +126,9 @@ export class AddEditRecoExPageComponent extends BaseComponent{
             this.FillGridsData();
 
 
+            
 
-
-
+     
         }
     }
 
@@ -403,7 +403,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
         this.OpenBankPageWindow(this.PrevBankPagePM);
     }
     OpenBankPageWindow(entity: any = null) {
-
+        
         var windowTitle = entity ? (TextCodeTranslator.Translate("ReconcileExternalPage.F.PageNo") + " " + entity.PageNo) : TextCodeTranslator.Translate("Accounting.General.O.NewPage");
 
         var windowArgs: any = {};
@@ -472,10 +472,10 @@ export class AddEditRecoExPageComponent extends BaseComponent{
         //this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, true);
     }
 
-    //#region Lines Grid
+    //#region Lines Grid 
 
     FillGridsData() {
-
+        
         this.PageLinesList = new ObservableCollection([]);
         if (!AppTool.IsNullOrEmpty(this.ReconcileExternalPagePM)) {
             for (let item of this.ReconcileExternalPagePM.ReconcileExternalPageLines.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 })) {
@@ -485,7 +485,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
 
         }
     }
-
+    
     AddButtonClicked() {
         if (this.IsDisplayOnly) return;
 
@@ -499,7 +499,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
 
         var pageLine: ReconcileExternalPageLinePM = new ReconcileExternalPageLinePM(this.ReconcileExternalPagePM);
         //pageLine.Id = "new";
-        //pageLine.ChangeSetOp = "insert";
+        //pageLine.ChangeSetOp = "insert"; 
         pageLine.Tenant = SessionLocator.Tenant;
         pageLine.ReconcileExternalPageId = this.isNewEntity ? "new" : this.ReconcileExternalPagePM.Id;
         pageLine.LineNumber = line;
@@ -523,8 +523,6 @@ export class AddEditRecoExPageComponent extends BaseComponent{
             var line = this.ReconcileExternalPagePM.ReconcileExternalPageLines[i];
             line.LineNumber = i + 1;
         }
-
-        this.CalculateTotals();
     }
 
     OnRowEnded($event) {
@@ -568,7 +566,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
 
         if (this.PageLinesList.Length > 0) {
             for (var line of this.PageLinesList.Collection) {
-                sum += (line.Amount == null || line.Amount == undefined) ? 0 : line.Amount;
+                sum += line.Amount;
             }
         }
 
@@ -580,7 +578,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
         }
     }
 
-
+     
 }
 
 

@@ -37,7 +37,6 @@ using Logitude.Server.Tools.QueueService;
 using System.Xml;
 using System.Net.Http;
 using Newtonsoft.Json;
-using Logitude.Server.Tools.Helpers;
 
 namespace CommunicationWorkerRole
 {
@@ -129,20 +128,11 @@ namespace CommunicationWorkerRole
                                     }
                                     else
                                     {
-                                        var sendingEmailQuotaResult = EmailLimitationHelper.CheckEmailSendingQuotaForTenant(tenant);
-                                        if (sendingEmailQuotaResult.IsQuotaExceeded)
-                                        {
-                                            cl.CommunicationStatusTypeCode = "F";
-                                            cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
-                                            cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
-                                            communicationLogRep.Update(cl);
-                                            communicationLogRep.SubmitChanges();
-                                        }
-                                        else SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
-
+                                        SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
                                         queueservice.Complete();
-                                        LogDoneItemInMemory();
 
+                                        LogDoneItemInMemory();
+                                        
                                     }
                                 }
                                 else
@@ -426,29 +416,7 @@ namespace CommunicationWorkerRole
                                         case "GLSHK":
                                         case "CHAMP":
                                             {
-                                                bool isUsingRestAPI = false;
-
-                                                var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
-                                                if (iAppSettings != null)
-                                                {
-                                                    if (iAppSettings["ChampRestAPITenants"] != null)
-                                                    {
-                                                        string iTenantsText = iAppSettings["ChampRestAPITenants"].ToString();
-                                                        if (!string.IsNullOrEmpty(iTenantsText))
-                                                        {
-                                                            string[] iTenantsList = iTenantsText.Split(',');
-
-                                                            foreach (string iTenantString in iTenantsList)
-                                                            {
-                                                                if (waitingCommLog.Tenant.ToString() == iTenantString.Trim()){
-                                                                    isUsingRestAPI = true;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                                if (isUsingRestAPI)
+                                                if (waitingCommLog.Tenant == 42)
                                                 {
                                                     SendCommunicationLogToChampAPI(waitingCommLog, xmlfile);
                                                 }
@@ -915,44 +883,36 @@ namespace CommunicationWorkerRole
         {
             GateWay gateWay = GateWay.Amazon;
 
-            if (LogitudeSettings.ChampEnv == "TEST")
+            int intId;
+            string[] commLogIdSplitted = waitingCommLog.Id.Split('-');
+            
+            if (int.TryParse(commLogIdSplitted[1], out intId))
             {
-                gateWay = GateWay.Amazon;
-            }
+                int modl = intId % 10;
 
-            else
-            {
-                int intId;
-                string[] commLogIdSplitted = waitingCommLog.Id.Split('-');
-
-                if (int.TryParse(commLogIdSplitted[1], out intId))
-                {
-                    int modl = intId % 10;
-
-                    if (waitingCommLog.Retries < 3)
+                if (waitingCommLog.Retries < 3)
+                {                    
+                    if (modl <= 7)
                     {
-                        if (modl <= 7)
-                        {
-                            gateWay = GateWay.Amazon;
-                        }
-
-                        else
-                        {
-                            gateWay = GateWay.Amital;
-                        }
+                        gateWay = GateWay.Amazon;
                     }
 
                     else
                     {
-                        if (modl <= 7)
-                        {
-                            gateWay = GateWay.Amital;
-                        }
+                        gateWay = GateWay.Amital;
+                    }
+                }
 
-                        else
-                        {
-                            gateWay = GateWay.Amazon;
-                        }
+                else
+                {
+                    if (modl <= 7)
+                    {
+                        gateWay = GateWay.Amital;
+                    }
+
+                    else
+                    {
+                        gateWay = GateWay.Amazon;
                     }
                 }
             }
@@ -960,103 +920,39 @@ namespace CommunicationWorkerRole
             return gateWay;
         }
 
-        private async void SendCommunicationLogToChampAPI(CommunicationLog waitingCommLog, string xmlfileText)
+        private void SendCommunicationLogToChampAPI(CommunicationLog waitingCommLog, string xmlfile)
         {
-            bool isTestingCode = false;
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xmlfile);
+            string jsonText = JsonConvert.SerializeXmlNode(doc);
 
-            if (waitingCommLog.CreatedByUserId == "1-77675")
-            {
-                if (waitingCommLog.To != null)
-                {
-                    if (waitingCommLog.To.ToUpper() == "CHAMP")
-                    {
-                        isTestingCode = true;
-                    }
-                }
-            }
+            string url = "https://community.champ.aero:8443/logitude/test/NO_WAIT";
 
-            if (isTestingCode)
-            {
-                string iSearchFields = waitingCommLog.SearchFields;
+            var POSTURI = url;
 
-                if (string.IsNullOrEmpty(iSearchFields))
-                {
-                    iSearchFields = "inside SendCommunicationLogToChampAPI";
-                }
-
-                else
-                {
-                    if (!iSearchFields.Contains("inside SendCommunicationLogToChampAPI"))
-                    {
-                        iSearchFields += ",inside SendCommunicationLogToChampAPI";
-                    }
-                }
-
-                if (waitingCommLog.SearchFields != iSearchFields)
-                {
-                    waitingCommLog.SearchFields = iSearchFields;
-
-                    CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
-                    commLogrepository.Update(waitingCommLog);
-                    commLogrepository.SubmitChanges();
-                }
-            }
-
-            // https://stackoverflow.com/questions/25352462/how-to-send-xml-content-with-httpclient-postasync
-
-            string iSendingURL = "https://community.champ.aero:8444/logitude/test/NO_WAIT";
-
-            StringContent content = new StringContent(xmlfileText, Encoding.UTF8, "application/xml");
+            var content = new StringContent(jsonText, Encoding.UTF8, "application/json");
 
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Add("password", "logitudett");
 
-                //var iResponse = client.PostAsync(iSendingURL, content);
-                //System.Threading.Tasks.Task iResponse = client.PostAsync(iSendingURL, content);
-                //System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> iResponse = client.PostAsync(iSendingURL, content);
+                client.DefaultRequestHeaders.Add("Password", "logitudett");
 
-                System.Net.Http.HttpResponseMessage iResponse = await client.PostAsync(iSendingURL, content);
+                var result = client.PutAsync(POSTURI, content);
+            }
 
-                if (iResponse != null)
-                {
-                    if (iResponse.StatusCode == HttpStatusCode.OK)
-                    {
-                        waitingCommLog.CommunicationStatusTypeCode = "D";
-                        waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-                        waitingCommLog.DoneDateUTC = DateTime.UtcNow;
-                        waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-                        waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+            bool succeeded = true;
 
-                        CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
-                        commLogrepository.Update(waitingCommLog);
-                        commLogrepository.SubmitChanges();
-                    }
-
-                    else
-                    {
-                        waitingCommLog.CommunicationStatusTypeCode = "F";
-                        waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-                        waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-                        waitingCommLog.ExceptionMessage = iResponse.StatusCode.ToString();
-
-                        CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
-                        commLogrepository.Update(waitingCommLog);
-                        commLogrepository.SubmitChanges();
-                    }
-                }
-
-                else
-                {
-                    waitingCommLog.CommunicationStatusTypeCode = "F";
-                    waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-                    waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-                    waitingCommLog.ExceptionMessage = "No Response";
-
-                    CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
-                    commLogrepository.Update(waitingCommLog);
-                    commLogrepository.SubmitChanges();
-                }
+            if (succeeded)
+            {                
+                CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
+             
+                waitingCommLog.CommunicationStatusTypeCode = "D";
+                waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                waitingCommLog.DoneDateUTC = DateTime.UtcNow;
+                waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+                commLogrepository.Update(waitingCommLog);
+                commLogrepository.SubmitChanges();
             }
         }
     }

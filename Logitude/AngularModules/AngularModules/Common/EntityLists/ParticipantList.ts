@@ -42,8 +42,5 @@ export class ParticipantList {
 		ForwarderTenantName: string;
 		IsDirect: boolean;
 		RegistrationDate: Date;
-		PrimaryContactName: string;
-		PrimaryContactEmail: string;
-		PrimaryContactPhone: string;
 	
 }

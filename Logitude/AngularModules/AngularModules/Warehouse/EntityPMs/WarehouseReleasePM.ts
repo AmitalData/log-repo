@@ -254,11 +254,6 @@ export class WarehouseReleasePM {
     public set TotalQuantity(newValue: number) { if (this.totalQuantity != newValue) { this.totalQuantity = newValue; this.MarkAsDirty("TotalQuantity"); } }
        
 	 
-    private chargeableWeightUnitCode: string;
-    public get ChargeableWeightUnitCode() { return this.chargeableWeightUnitCode; }
-    public set ChargeableWeightUnitCode(newValue: string) { if (this.chargeableWeightUnitCode != newValue) { this.chargeableWeightUnitCode = newValue; this.MarkAsDirty("ChargeableWeightUnitCode"); } }
-       
-	 
 
     public OldEntityPM: WarehouseReleasePM;
 		

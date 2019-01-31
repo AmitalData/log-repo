@@ -1,4 +1,4 @@
-import {Component, ChangeDetectorRef} from '@angular/core';
+﻿import {Component, ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
@@ -11,12 +11,11 @@ import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
 
-    template: `<table>
+    template: `<table *ngIf="ShowButtons == true">
                 <tr style="height:1px;"> 
                     <td>
                         <div style="height:30px;">
-                            <button *ngIf="ShowButtons == true" class="Button" (click)="ApproveButtonClicked()" style="width:122px;;float: left;margin:4px;">Declaration Approval</button>
-                            <button *ngIf="ShowRemoveButton == true" class="Button" (click)="RemoveTasksButtonClicked()" style="width:85px;float: right;margin:4px;">Remove Tasks</button>
+                            <button class="Button" (click)="ApproveButtonClicked()" style="width:122px;margin:4px;">Declaration Approval</button>
                         </div>
                     </td>
                 </tr>
@@ -37,7 +36,6 @@ export class ApprovePaymentButtonListTemplate {
     public ConnectBtn: string = "Connect";
     public Width: number = 57;
     public ShowButtons: boolean = true;
-    public ShowRemoveButton: boolean = true;
     public HasSharedDocs: boolean = true;
     public _ShipmentPMService: ShipmentPMService;
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
@@ -56,7 +54,6 @@ export class ApprovePaymentButtonListTemplate {
         this.rowData = rowData; 
         if (SessionLocator.PrivateLableSettings) {
             this.ShowButtons = (this.rowData['IsImporterApprovalRequried'] == true);// && AppTool.IsNullOrEmpty(this.rowData['ApprovedByUserName'])
-            this.ShowRemoveButton = (this.rowData['IsDigitalSignRequired'] == true || this.rowData['IsRequestedDocuments'] == true);
             //if (SessionLocator.PrivateLableSettings) {
             //    this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe(res => {
             //        if (res.Result == false) {
@@ -105,31 +102,6 @@ export class ApprovePaymentButtonListTemplate {
                 
             }
         });
-    }
-
-    RemoveTasksButtonClicked() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Title = "Confirm Deletion";
-        confirmWindow.Show("Are you sure you want to cancel tasks for this shipment ?");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                SessionLocator.CurrentSession.StartBusyIndicator("Loading ..")
-                this._ShipmentPMService.RemoveShipmentTasks(this.rowData.Id).subscribe(myResult => {
-                    if (!myResult.HasError) {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
-                        SessionLocator.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
-
-                    }
-                });
-            }
-
-            else {
-
-            }
-        });
-
     }
 
 }

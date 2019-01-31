@@ -45,7 +45,6 @@
         -moz-box-shadow: inset 0 0 3px #AAAAAA;
         -webkit-box-shadow: inset 0 0 3px #AAAAAA;
         box-shadow: inset 0 0 3px #AAAAAA;
-        display: block;
     }
 
     .CalendarButton {
@@ -138,7 +137,7 @@
         -ms-filter: "FlipH";
     }
 </style>
-
+        
 <div class="DatePicker" (mouseover)="OnMouseOver()" (mouseout)="OnMouseOut()">
     <div [id]="ErrorPopUpId"
          FixedPosition
@@ -148,7 +147,7 @@
          [LeftDisplacement]="0"
          [ComponentType]="'popup'"
          [class.FlipImgHoriz]="LayoutDirection == 'rtl'"
-         [PopupWidth]="180"
+         [PopupWidth]="180" 
          class="ErrorPopUp"
          *ngIf="ShowErrorPopup">
         <div class="ErrorPopUpMessage" [class.FlipImgHoriz]="LayoutDirection == 'rtl'">
@@ -161,35 +160,11 @@
         <tr>
             <td>
                 <div [id]="InputDivId" class="DatePickerInputDiv" [ngStyle]="DatePickerInputDivStyle">
-
-                    <!-- Input -->
-                    <div style="height: 100%;width: calc(100% - 24px);"  [style.float]="isRTL ? 'right' : 'left'" >
-                        <input [id]="DatePickerInputId"
-                            style="background: transparent;padding-top: 2px;box-shadow:none;border:1px solid transparent; border-radius:3px; text-indent:5px;height:18px;min-height:18px;max-height:20px;opacity:1 !important;line-height: 1.0;display: block;"
-                            [disabled]="IsDisabled"
-                            [(ngModel)]="InputValue"
-                            (focus)="onFocus()"
-                            (blur)="onBlur()"
-                            (keydown)="onkeydown($event)"
-                            (keyup)="onkeyup($event)"
-                            class="DatePickerInput"
-                            autocomplete="off" [placeholder]="DatePickerPlaceHolder" ondrop="return false"/>
-                    </div>
-
-                    <!-- Toggle Button -->
-                    <div style="height: 100%;width: 20px;" [style.float]="isRTL ? 'left' : 'right'">
-                        <button [id]="CalendarButtonId" tabindex="-1"
-                            class="Button CalendarButton RightCenter CustomButton"
-                            (click)="ToggleCalendar()"
-                            (focus)="OnBtnFocus()"
-                            [disabled]="IsDisabled"></button>
-                    </div>
-
-                    <!-- <table>
+                    <table>
                         <tr>
                             <td>
-                                <input [id]="DatePickerInputId"
-                                       style="box-shadow:none;border:1px solid transparent; border-radius:3px; text-indent:5px;height:18px;min-height:18px;max-height:20px;opacity:1 !important;line-height: 1.0;display: block;"
+                                <input [id]="DatePickerInputId" 
+                                       style="box-shadow:none;border:1px solid transparent; border-radius:3px; text-indent:5px;height:18px;min-height:18px;max-height:20px;opacity:1 !important;"
                                        [disabled]="IsDisabled"
                                        [(ngModel)]="InputValue"
                                        (focus)="onFocus()"
@@ -205,9 +180,7 @@
                                 </button>
                             </td>
                         </tr>
-                    </table> -->
-
-
+                    </table>
                 </div>
             </td>
 
@@ -221,7 +194,7 @@
         </tr>
     </table>
 
-
+    
 
     <div FixedPosition [ElementId]="DropDownId" [RelativeElementId]="DatePickerInputId" [VertDisplacement]="22" [HorizDisplacement]="2"
          [PopupWidth]="184" [ComponentHight]="183"

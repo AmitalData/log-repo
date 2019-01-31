@@ -1,5 +1,4 @@
-﻿using Logitude.Accounting.BL.CloseTables;
-using Logitude.Accounting.BL.EntityQueryServices;
+﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Repositories;
@@ -84,7 +83,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 ///journal.JournalNumber = "1";
                 CreateDate = @now,
                 AccountingDate = endOfYearUserInput.AddDays(1),//1.1.(yyyy+1)
-                TypeCode = "0",
+                TypeCode = "1",
                 StatusCode = "2",
                 //journal.CreatedByUserId = theEntityPm.CreatedByUserId;
 
@@ -95,14 +94,14 @@ namespace Logitude.Accounting.BL.CoreBL
                 ApproveDate = @now,
                 //journal.ApprovedByUserId = theEntityPm.ApprovedByUserId;
                 AccountingEntityCode = "1",
-            //    AccountingEntityId = null,
+                AccountingEntityId = null,
                 CreatedByUserId= usrid,
                 ApprovedByUserId = usrid,
                  
                 ExternalNo = null,
                 ExternalSystem = null,
                 OriginalJournalId = null,
-             //   AccountingEntityReference= "Year Transfer"
+                AccountingEntityReference= "YearTransfer"
 
             };
 
@@ -123,7 +122,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                           join glAcc in allRevenueExpenseCards.OrderBy(r => r.RevenueExpenseType)
                                           on myCurrencySum.AccountId equals glAcc.Id
                                           //select GetJournalLine(GetMyEnum( glAcc.RevenueExpenseType), myCurrencySum, journal));
-                                          select GetJournalLine(MyJournalActionTypeEnum.Credit, myCurrencySum, journal, RevenueExpenseGLAccountId));
+                                          select GetJournalLine(MyJournalActionTypeEnum.Credit, myCurrencySum, journal));
 
             journal.JournalLines.AddRange(journalLinesOfChildAcc);
             
@@ -166,23 +165,16 @@ namespace Logitude.Accounting.BL.CoreBL
                      LocalAmountDebit = g.Sum(r => r.LocalAmountDebit),
 
                  }
-                 select GetJournalLine(journalActionTypeEnum, myCurrencySumGroup1, journal, "")
+                 select GetJournalLine(journalActionTypeEnum, myCurrencySumGroup1, journal)
                  );
             //
             journal.JournalLines.AddRange(TypeJL);
         }
 
-
-        public virtual string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
-        {
-            return TranslateTextsClass.Translate(textCodeCode, tenant, getLocalDefaultText);
-        }
-
-
-        private JournalLinePM GetJournalLine(MyJournalActionTypeEnum journalActionTypeEnum, CurrencySum myCurrencySum, JournalPM journal, string RevenueExpenseGLAccountId)
+        
+        private JournalLinePM GetJournalLine(MyJournalActionTypeEnum journalActionTypeEnum, CurrencySum myCurrencySum, JournalPM journal)
         {
             int tenant = journal.Tenant;
-            bool useLocal = true;
             var journalLine = new JournalLinePM()
             {
                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -195,7 +187,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 ForeignAmount = (myCurrencySum.ForeignAmountDebit - myCurrencySum.ForeignAmountCredit),
                 DocumentDate = journal.CreateDate,
                 DueDate = journal.CreateDate,
-                Notes = TranslateTextsClassTranslate("General.MC.ACC.YearTransfer", 0, useLocal),
+
 
             };
             switch (journalActionTypeEnum)
@@ -204,12 +196,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 case MyJournalActionTypeEnum.Credit:
                     journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit;
                     journalLine.CreditAccountId = myCurrencySum.AccountId; //
-                    journalLine.DebitAccountId= RevenueExpenseGLAccountId; //
                     break;
                 case MyJournalActionTypeEnum.Debit:
                     journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
                     journalLine.DebitAccountId = myCurrencySum.AccountId; //
-                    journalLine.CreditAccountId = RevenueExpenseGLAccountId; //
                     break;
                 
             }
@@ -227,12 +217,12 @@ namespace Logitude.Accounting.BL.CoreBL
         /// <returns></returns>
         private List<CurrencySum> GetBalance(IAccountingContext accountingContext, DateTime endOfYearUserInput, int tenant, IQueryable<string> listOfAccountId)
         {
-            var endAccountBalanceService = new AccountBalanceByDateCodeService(accountingContext, tenant, listOfAccountId.First(),
+            var endAccountBalanceService = new AccountBalanceService(accountingContext, tenant, listOfAccountId.First(),
                  listOfAccountId
                 );
 
             var CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1 = endOfYearUserInput.AddDays(1);
-            endAccountBalanceService.CalculateBalance(GLAccountTotalDateTypeValues.Accountingdate,CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1, false, true);
+            endAccountBalanceService.CalculateBalance(CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1, false, true);
 
             var totals = (from rec in endAccountBalanceService.AccountBalance.verbose.CurrencySumUntillMounth.Union(endAccountBalanceService.AccountBalance.verbose.TheMounthCurrencySum)
                           group rec by new
@@ -275,8 +265,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private FullAccountingSettingPM GetRevenueExpenseGLAccountFromAccSetting(IAccountingContext accountingContext,int tenant)
         {
-            bool useLocal = true;
-            string text;
+            
             var myFullAccountingSettingQueryService = new FullAccountingSettingQueryService(accountingContext);
             var myFullAccountingSettingPM =myFullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
             if (myFullAccountingSettingPM == null)
@@ -285,21 +274,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             if (string.IsNullOrWhiteSpace(myFullAccountingSettingPM.RevenueExpenseGLAccountId))
             {
-                //   throw new Exception("No myFullAccountingSettingPM.RevenueExpenseGLAccountId  for tenant ");
-                text = TranslateTextsClassTranslate("YearTransfer.O.RevenueExpenseType", 0, useLocal);
-                // A year transfer account is undefined or not configured correctly
-                throw new Exception(text);
-            }
-            else
-            {
-                GLAccountQueryService myGLAccountQueryService = new GLAccountQueryService(accountingContext);
-                GLAccountPM revenueExpenseGLAccount = myGLAccountQueryService.GetSingle(myFullAccountingSettingPM.RevenueExpenseGLAccountId, false, true);
-                if (revenueExpenseGLAccount == null || revenueExpenseGLAccount.RevenueExpenseType != "3")
-                {
-                    text = TranslateTextsClassTranslate("YearTransfer.O.RevenueExpenseType", 0, useLocal);
-                    // A year transfer account is undefined or not configured correctly
-                    throw new Exception(text);
-                }
+                throw new Exception("No myFullAccountingSettingPM.RevenueExpenseGLAccountId  for tenant ");
             }
             return myFullAccountingSettingPM;
 

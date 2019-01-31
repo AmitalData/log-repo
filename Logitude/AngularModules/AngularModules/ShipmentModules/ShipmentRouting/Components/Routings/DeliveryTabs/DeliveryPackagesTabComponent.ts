@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {AppTool, FormatTool} from '../../../../../Infrastructure/Tools';
 import {ShipmentTool} from '../../../../../Shipment/Tools';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -31,8 +31,7 @@ export class DeliveryPackagesTabComponent {
     public TransportModeId: string;
     public ObjectTableName: string = "ShipmentPickUpDelivery";
     public ItemsSource: DeliveryPackageItem[] = [];
-    public DataContext = this;
-    public TypeCode: string = null;
+    public DataContext = this;  
     constructor() {
 
     }
@@ -45,7 +44,6 @@ export class DeliveryPackagesTabComponent {
         this.FatherComponent = father;
         this.DirectionId = this.ShipmentPM.DirectionId;
         this.TransportModeId = this.ShipmentPM.TransportModeId;
-        this.TypeCode = this.EntityPM.PickUpDeliveryTypeCode;
         this.IsLCLEntity = AppTool.IsLCLEntity(this.ShipmentPM.TransportModeId, this.ShipmentPM.ShipmentTypeId);
         this.IsFCLEntity = AppTool.IsFCLEntity(this.ShipmentPM.TransportModeId, this.ShipmentPM.ShipmentTypeId);
 
@@ -61,17 +59,11 @@ export class DeliveryPackagesTabComponent {
             }
         }
 
-        if (this.FatherComponent.IsCreatingContainerDelivery) {
-            this.IsConnectedToContainer = true;
-        }
-
         if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
 
         }
 
         else {
-
-
             if (this.ShipmentPM.ShipmentPackages.filter(f => f.DeliveryId == this.EntityPM.Id).length > 0) {
                 this.IsConnectedToContainer = true;
             }
@@ -261,7 +253,6 @@ export class DeliveryPackageItem extends BaseComponent {
         this.UIProperties.SetVisibility("Width", this.ObjectTableName, this.IsLCLEntity);
         this.UIProperties.SetVisibility("Height", this.ObjectTableName, this.IsLCLEntity);
         this.SetUIProperties_IsContainer();
-        this.SetUIProperties_Harmonize();
 
         if (!AppTool.IsNullOrEmpty(this.PackageTypeId)) {
             var myService: PackageTypeListService = new PackageTypeListService();
@@ -279,7 +270,8 @@ export class DeliveryPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("PackageTypeId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ContainerNumber", this.ObjectTableName, this.IsEditingEnabled);        
         this.UIProperties.SetEnabled("Weight", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("ShipperSeal", this.ObjectTableName, this.IsEditingEnabled); 
+        this.UIProperties.SetEnabled("ShipperSeal", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, this.IsEditingEnabled);  
         this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);              
     }
     SetUIProperties_IsContainer() {
@@ -318,16 +310,6 @@ export class DeliveryPackageItem extends BaseComponent {
         else {
             this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isVolumeEnabled);
         }
-    }
-    SetUIProperties_Harmonize() {
-        var isFieldEnabled: boolean = false;
-        if (this.IsEditingEnabled) {
-            isFieldEnabled = true;
-            if (this.IsMultiHarmonize == true) {
-                isFieldEnabled = false;
-            }
-        }
-        this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, isFieldEnabled);
     }
 
     get PackageTypeId() { return this.EntityPM.PackageTypeId; }
@@ -392,13 +374,6 @@ export class DeliveryPackageItem extends BaseComponent {
         if (this.EntityPM.ContainerNumber != value) {
             this.EntityPM.ContainerNumber = value;
             this.ValidateContainerNumber(value);
-        }
-    }
-
-    get IsMultiHarmonize() { return this.EntityPM.IsMultiHarmonize }
-    set IsMultiHarmonize(newValue: boolean) {
-        if (this.EntityPM.IsMultiHarmonize != newValue) {
-            this.EntityPM.IsMultiHarmonize = newValue;
         }
     }
 

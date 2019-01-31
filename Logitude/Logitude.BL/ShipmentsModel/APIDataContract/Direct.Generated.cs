@@ -83,6 +83,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public string Master { get; set; }
     
+    public string MainCarriageCarrier { get; set; }
+    
     public string ShipmentNumber { get; set; }
     
     public User CreatedByUser { get; set; }
@@ -92,30 +94,5 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public List<PickUp> PickUps { get; set; }
     
     public List<CustomField> CustomFields { get; set; }
-    
-    public bool IsOperationalClosed { get; set; }
-    
-    public Vessel Vessel { get; set; }
-    
-    public DateTime? MainCarriageATA { get; set; }
-    
-    public DateTime? MainCarriageATD { get; set; }
-    
-    public bool IsAccountingClosed { get; set; }
-    
-    public double? ValueOfGoods { get; set; }
-    
-    public Currency ValueOfGoodsCurrency { get; set; }
-    
-    public string MainCarriageCarrierNumber { get; set; }
-    
-    public Card MainCarriageCarrier { get; set; }
-    
-    public List<Receivable> Receivables { get; set; }
-    
-    public List<Payable> Payables { get; set; }
-
-    public  string  ComputingPartnerCode { get; set; }
-
     }
 } 

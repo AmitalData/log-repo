@@ -31,8 +31,5 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     public string Code { get; set; }
     
     public string Email { get; set; }
-
-    public  string  ComputingPartnerCode { get; set; }
-
     }
 } 

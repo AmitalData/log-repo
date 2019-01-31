@@ -248,33 +248,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string CustomerStatusTemplateCode { get; set; }
 
         [DataMember]
-        public DateTime? ActivationDate { get; set; }
-
-        [DataMember]
-        public DateTime? InactiveDate { get; set; }
-
-        [DataMember]
-        public DateTime? ActivationRequestDate { get; set; }
-
-        [DataMember]
-        public string ActivatedByUserId { get; set; }
-
-        [DataMember]
-        public string SetAsInactiveByUserId { get; set; }
-
-        [DataMember]
-        public string ActivationRequestedByUserId { get; set; }
-
-        [DataMember]
-        public string ActivatedByUserName { get; set; }
-
-        [DataMember]
-        public string SetAsInactiveByName { get; set; }
-
-        [DataMember]
-        public string ActivationRequestedByUserName { get; set; }
-
-        [DataMember]
         public string BeforeDeactiveStatusCode { get; set; }
 
         [DataMember]

@@ -27,7 +27,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    //testing 
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 

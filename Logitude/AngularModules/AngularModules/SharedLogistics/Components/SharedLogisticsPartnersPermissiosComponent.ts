@@ -73,14 +73,16 @@ export class SharedLogisticsPartnersPermissiosComponent implements OnInit {
         var item1: PartnerItem = new PartnerItem(this);
         item1.Code = "SH";
         item1.PartnerName = "Shipper";
-        item1.SuggestedIsChecked = this.TenantZeroEntity.IsShipperShared;
-        item1.ChooseIsChecked = this.EntityPM.IsShipperShared;
+        item1.SuggestedIsChecked = true;
+        item1.ChooseIsChecked = true;
+        item1.IsEnabled = false;
 
         var item2: PartnerItem = new PartnerItem(this);
         item2.Code = "CO";
         item2.PartnerName = "Consignee";
-        item2.SuggestedIsChecked = this.TenantZeroEntity.IsConsigneeShared;
-        item2.ChooseIsChecked = this.EntityPM.IsConsigneeShared;
+        item2.SuggestedIsChecked = true;
+        item2.ChooseIsChecked = true;
+        item2.IsEnabled = false;
 
         var item3: PartnerItem = new PartnerItem(this);
         item3.Code = "AG";
@@ -123,54 +125,18 @@ export class SharedLogisticsPartnersPermissiosComponent implements OnInit {
         item9.PartnerName = "Coloader";
         item9.SuggestedIsChecked = this.TenantZeroEntity.IsColoaderShared;
         item9.ChooseIsChecked = this.EntityPM.IsColoaderShared;
-        
+
         var item10: PartnerItem = new PartnerItem(this);
-        item10.Code = "CE";
-        item10.PartnerName = "Custom Agent Export";
-        item10.SuggestedIsChecked = this.TenantZeroEntity.IsCustomsAgentExportShared;
-        item10.ChooseIsChecked = this.EntityPM.IsCustomsAgentExportShared;
+        item10.Code = "PI";
+        item10.PartnerName = "Pickup and Deliveries Carriers";
+        item10.SuggestedIsChecked = this.TenantZeroEntity.IsPickDelivCarriesShared;
+        item10.ChooseIsChecked = this.EntityPM.IsPickDelivCarriesShared;
 
         var item11: PartnerItem = new PartnerItem(this);
-        item11.Code = "CI";
-        item11.PartnerName = "Custom Agent Import";
-        item11.SuggestedIsChecked = this.TenantZeroEntity.IsCustomsAgentImportShared;
-        item11.ChooseIsChecked = this.EntityPM.IsCustomsAgentImportShared;
-
-        var item12: PartnerItem = new PartnerItem(this);
-        item12.Code = "CC";
-        item12.PartnerName = "Custom Clearance Point";
-        item12.SuggestedIsChecked = this.TenantZeroEntity.IsCustomClearancePoinShared;
-        item12.ChooseIsChecked = this.EntityPM.IsCustomClearancePoinShared;
-
-        var item13: PartnerItem = new PartnerItem(this);
-        item13.Code = "CD";
-        item13.PartnerName = "Consolidator";
-        item13.SuggestedIsChecked = this.TenantZeroEntity.IsConsolidatorShared;
-        item13.ChooseIsChecked = this.EntityPM.IsConsolidatorShared;
-
-        var item14: PartnerItem = new PartnerItem(this);
-        item14.Code = "RL";
-        item14.PartnerName = "Releasing Agent";
-        item14.SuggestedIsChecked = this.TenantZeroEntity.IsReleasingAgentShared;
-        item14.ChooseIsChecked = this.EntityPM.IsReleasingAgentShared;
-
-        var item15: PartnerItem = new PartnerItem(this);
-        item15.Code = "IS";
-        item15.PartnerName = "Issuing Carrier Agent";
-        item15.SuggestedIsChecked = this.TenantZeroEntity.IsIssuingCarrierAgentShared;
-        item15.ChooseIsChecked = this.EntityPM.IsIssuingCarrierAgentShared;
-        
-        var item16: PartnerItem = new PartnerItem(this);
-        item16.Code = "PI";
-        item16.PartnerName = "Pickup and Deliveries Carriers";
-        item16.SuggestedIsChecked = this.TenantZeroEntity.IsPickDelivCarriesShared;
-        item16.ChooseIsChecked = this.EntityPM.IsPickDelivCarriesShared;
-
-        var item17: PartnerItem = new PartnerItem(this);
-        item17.Code = "MC";
-        item17.PartnerName = "Main Carriage Carrier";
-        item17.SuggestedIsChecked = this.TenantZeroEntity.IsMainCarrierShared;
-        item17.ChooseIsChecked = this.EntityPM.IsMainCarrierShared;
+        item11.Code = "MC";
+        item11.PartnerName = "Main Carriage Carrier";
+        item11.SuggestedIsChecked = this.TenantZeroEntity.IsMainCarrierShared;
+        item11.ChooseIsChecked = this.EntityPM.IsMainCarrierShared;
 
         this.PartnersList.push(item1);
         this.PartnersList.push(item2);
@@ -181,15 +147,9 @@ export class SharedLogisticsPartnersPermissiosComponent implements OnInit {
         this.PartnersList.push(item7);
         this.PartnersList.push(item8);
         this.PartnersList.push(item9);
-        this.PartnersList.push(item10);
-        this.PartnersList.push(item11);
-        this.PartnersList.push(item12);
-        this.PartnersList.push(item13);
-        this.PartnersList.push(item14);
-        this.PartnersList.push(item15);
 
-        this.CarriersList.push(item16);
-        this.CarriersList.push(item17);
+        this.CarriersList.push(item10);
+        this.CarriersList.push(item11);
     }
 
     private mySearchText: string;
@@ -275,12 +235,12 @@ export class PartnerItem {
     private SetIsChecked() {
         switch (this.Code) {
             case "SH": {
-                this.father.EntityPM.IsShipperShared = this.ChooseIsChecked;
+                
                 break;
             }
 
             case "CO": {
-                this.father.EntityPM.IsConsigneeShared = this.ChooseIsChecked;
+
                 break;
             }
 
@@ -316,36 +276,6 @@ export class PartnerItem {
 
             case "CL": {
                 this.father.EntityPM.IsColoaderShared = this.ChooseIsChecked;
-                break;
-            }
-
-            case "CE": {
-                this.father.EntityPM.IsCustomsAgentExportShared = this.ChooseIsChecked;
-                break;
-            }
-
-            case "CI": {
-                this.father.EntityPM.IsCustomsAgentImportShared = this.ChooseIsChecked;
-                break;
-            }
-
-            case "CC": {
-                this.father.EntityPM.IsCustomClearancePoinShared = this.ChooseIsChecked;
-                break;
-            }
-
-            case "CD": {
-                this.father.EntityPM.IsConsolidatorShared = this.ChooseIsChecked;
-                break;
-            }
-
-            case "RL": {
-                this.father.EntityPM.IsReleasingAgentShared = this.ChooseIsChecked;
-                break;
-            }
-
-            case "IS": {
-                this.father.EntityPM.IsIssuingCarrierAgentShared = this.ChooseIsChecked;
                 break;
             }
 

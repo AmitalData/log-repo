@@ -585,15 +585,6 @@ namespace Logitude.BL.Helpers
 
             IsShowlanguage = setting.ShowLocalLanguage;
 
-            bool isHaveMaxMinValue = quotePM.QuoteSaleCharges.Where(d=>d.SaleMaxAmount!=null || d.SaleMinAmount!=null).Any();
-            if (!isHaveMaxMinValue)
-            {
-                if(pricingSectionType == "PP") setting.ShowSaleMaxMinAmountPackages = false;
-               else if (pricingSectionType == "PC") setting.ShowSaleMaxMinAmountContainers = false;
-            }
-
-
-
             GetCountHeader(setting, quotePM, pricingSectionType);
 
             QuoteTemplateTextCodeQuery quoteTemplateTextCodeQuery = new QuoteTemplateTextCodeQuery(tenant);
@@ -1704,10 +1695,12 @@ namespace Logitude.BL.Helpers
                 
             };
 
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "AFT",Notes = "test" ,ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description", SaleMaxAmount=50,SaleMinAmount=20 });
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "AFT", Notes = "test2" ,ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description1", SaleMaxAmount = 40, SaleMinAmount = 25 });
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "DEMU", Notes = "test3",ChargesGroupCode = "HNDCH", ChargesTypeName = "Demmurage", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description2", SaleMaxAmount = 45, SaleMinAmount = 33 });
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "DU", Notes = "test4", ChargesGroupCode = "FRT", ChargesTypeName = "Duties", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description3", SaleMaxAmount = 22, SaleMinAmount = 15 });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "AFT",Notes = "test" ,ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description" });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "AFT", Notes = "test2" ,ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description1" });
+            //quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeLocalName = "عبد", ChargesTypeCode = "DEMU", ChargesGroupCode = "HNDCH", ChargesTypeName = "Demmurage", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 5000000, SaleTotalAmountLocal = 6000000, CurrencyCode = "USD" });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "DEMU", Notes = "test3",ChargesGroupCode = "HNDCH", ChargesTypeName = "Demmurage", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description2" });
+            //quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeLocalName = "هههههه", ChargesTypeCode = "DU", ChargesGroupCode = "CUSCH", ChargesTypeName = "Duties", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 50000, SaleTotalAmountLocal = 6000, CurrencyCode = "USD" });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "DU", Notes = "test4", ChargesGroupCode = "FRT", ChargesTypeName = "Duties", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description3" });
 
             return quotePM;
         }
@@ -2214,58 +2207,57 @@ namespace Logitude.BL.Helpers
 
                 if (setting.ShowChargeCodePackages)
                 {
-                    AppendHeaderColumn("CHARGECODEPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                    string Name = GetNameColum("CHARGECODEPACKAGES", textcodes, pricingSectionType);
+                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                 }
 
                 if (setting.ShowChargeNamePackages)
                 {
-                    AppendHeaderColumn("CHARGEPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                    string Name = GetNameColum("CHARGEPACKAGES", textcodes, pricingSectionType);
+                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                 }
 
                 if (setting.ShowUnitsPackages)
                 {
-                    AppendHeaderColumn("UNITSPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                    string Name = GetNameColum("UNITSPACKAGES", textcodes, pricingSectionType);
+                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                 }
 
                 if (setting.ShowUnitPricePackages)
                 {
-                    AppendHeaderColumn("UNITPRICEPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
-
+                    string Name = GetNameColum("UNITPRICEPACKAGES", textcodes, pricingSectionType);
+                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                 }
 
                 if (setting.ShowMeasurementPackages)
                 {
-                    AppendHeaderColumn("MEASUREMENTPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                    string Name = GetNameColum("MEASUREMENTPACKAGES", textcodes, pricingSectionType);
+                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                 }
 
                 if (setting.ShowSaleCurrencyColumnPackages)
                 {
-                    AppendHeaderColumn("TOTALPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                    string Name = GetNameColum("TOTALPACKAGES", textcodes, pricingSectionType);
+                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                 }
 
                 if (setting.ShowLocalCurrencyColumnPackages)
                 {
-                    AppendHeaderColumn("LOCALAMOUNTPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                    string Name = GetNameColum("LOCALAMOUNTPACKAGES", textcodes, pricingSectionType);
+                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                 }
 
                 if (setting.ShowChargeDescriptionPackages)
                 {
-                    AppendHeaderColumn("CHARGEDESCRIPTIONPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
-
+                    string Name = GetNameColum("CHARGEDESCRIPTIONPACKAGES", textcodes, pricingSectionType);
+                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                 }
 
                 if (setting.ShowChargeNotePackages)
                 {
-                    AppendHeaderColumn("CHARGENOTEPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                    string Name = GetNameColum("CHARGENOTEPACKAGES", textcodes, pricingSectionType);
+                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                 }
-
-
-                if (setting.ShowSaleMaxMinAmountPackages)
-                {
-                    AppendHeaderColumn("SALEMINMAXPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
-                }
-
-
 
                 HtmlTemplate.Append("</tr>");
             }
@@ -2274,26 +2266,28 @@ namespace Logitude.BL.Helpers
                 GetCountHeader(setting, quotePM, "PC");
                 if (setting.ShowChargeCodeContainers)
                 {
-                    AppendHeaderColumn("CHARGECODECONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
-
+                    string Name = GetNameColum("CHARGECODECONTAINERS", textcodes, pricingSectionType);
+                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                 }
 
                 if (setting.ShowChargeNameContainers)
                 {
-                    AppendHeaderColumn("CHARGECONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
-
+                    string Name = GetNameColum("CHARGECONTAINERS", textcodes, pricingSectionType);
+                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                 }
 
                 if (setting.ShowMeasurementContainers)
                 {
-                    AppendHeaderColumn("MEASUREMENTCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                    string Name = GetNameColum("MEASUREMENTCONTAINERS", textcodes, pricingSectionType);
+                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                 }
 
                 if (setting.ShowFixedPriceContainers)
                 {
                     if (ViewFixedPrice)
                     {
-                        AppendHeaderColumn("FIXEDPRICECONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                        string Name = GetNameColum("FIXEDPRICECONTAINERS", textcodes, pricingSectionType);
+                        HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                     }
                 }
 
@@ -2344,41 +2338,34 @@ namespace Logitude.BL.Helpers
 
                 if (setting.ShowSaleCurrencyColumnContainers)
                 {
-                    AppendHeaderColumn("TOTALCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                    string Name = GetNameColum("TOTALCONTAINERS", textcodes, pricingSectionType);
+                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                 }
 
                 if (setting.ShowLocalCurrencyColumnContainers)
                 {
-                    AppendHeaderColumn("LOCALAMOUNTCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                    string Name = GetNameColum("LOCALAMOUNTCONTAINERS", textcodes, pricingSectionType);
+                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                 }
 
                 if (setting.ShowChargeDescriptionContainers)
                 {
-                    AppendHeaderColumn("CHARGEDESCRIPTIONCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                    string Name = GetNameColum("CHARGEDESCRIPTIONCONTAINERS", textcodes, pricingSectionType);
+                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                 }
 
                 if (setting.ShowChargeNoteContainers)
                 {
-                    AppendHeaderColumn("CHARGENOTECONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
-
+                    string Name = GetNameColum("CHARGENOTECONTAINERS", textcodes, pricingSectionType);
+                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
                 }
 
-                if (setting.ShowSaleMaxMinAmountContainers)
-                {
-                    AppendHeaderColumn("SALEMINMAXCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
-                }
                 //===========================================================================
 
                 HtmlTemplate.Append("</tr>");
             }
 
 
-        }
-
-        private void AppendHeaderColumn(string textCode,StringBuilder HtmlTemplate, QuoteTemplateSettingPM setting, QuoteTemplateTextDesignPM quotetemplateTextDesignPMHeader, QuoteTemplateTableDesignPM quoteTemplateTableDesignPM, string pricingSectionType, List<QuoteTemplateTextCodePM> textcodes)
-        {
-            string Name = GetNameColum(textCode, textcodes, pricingSectionType);
-            HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
         }
 
         public void BuildPricingTitle(StringBuilder HtmlTemplate, QuoteTemplateTextDesignPM quotetemplateTextDesignPMPricingTitle, string typepricing, List<QuoteTemplateTextCodePM> textcodes, bool RightToLeft)
@@ -2484,7 +2471,6 @@ namespace Logitude.BL.Helpers
                 if (setting.ShowSaleCurrencyColumnPackages) ++TdCount;
                 if (setting.ShowChargeDescriptionPackages) ++TdCount;
                 if (setting.ShowChargeNotePackages) ++TdCount;
-                if (setting.ShowSaleMaxMinAmountPackages)++TdCount;
             }
             else
             {
@@ -2516,8 +2502,6 @@ namespace Logitude.BL.Helpers
                 if (setting.ShowSaleCurrencyColumnContainers) ++TdCount;
                 if (setting.ShowChargeDescriptionContainers) ++TdCount;
                 if (setting.ShowChargeNoteContainers) ++TdCount;
-                if (setting.ShowSaleMaxMinAmountContainers) ++TdCount;
-                
 
             }
         }
@@ -2719,7 +2703,8 @@ namespace Logitude.BL.Helpers
                     }
 
                     if (setting.ShowChargeNamePackages)
-                    {
+                    {//ChargesTypeLocalName = a.ChargesType == null ? "" : a.ChargesType.LocalName,
+
                         if (setting.ShowLocalLanguage && chargePM.ChargesTypeLocalName != null)
                         {
                             HtmlTemplate.Append(BuildTableColumn(chargePM.ChargesTypeLocalName, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
@@ -2741,6 +2726,8 @@ namespace Logitude.BL.Helpers
                             double value = (double)chargePM.SaleQuantity;
                             AA = value.ToString("N"); // 1,234.512
                         }
+
+
 
                         HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
 
@@ -2815,14 +2802,6 @@ namespace Logitude.BL.Helpers
                         HtmlTemplate.Append(BuildTableColumn(chargePM.Notes, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
 
                     }
-                    if (setting.ShowSaleMaxMinAmountPackages)
-                    {
-                        string saleMaxMinAmount = GetSaleMaxMinAmountValue(chargePM);
-                        HtmlTemplate.Append(BuildTableColumn(saleMaxMinAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
-                    }
-
-          
-
 
                 }
                 else if (pricingSectionType == "PC")
@@ -3005,42 +2984,10 @@ namespace Logitude.BL.Helpers
 
                     }
 
-                    if (setting.ShowSaleMaxMinAmountContainers)
-                    {
-                        string saleMaxMinAmount = GetSaleMaxMinAmountValue(chargePM);
-                        HtmlTemplate.Append(BuildTableColumn(saleMaxMinAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
-                    }
                 }
 
                 HtmlTemplate.Append("</tr>");
             }
-        }
-
-        private  string  GetSaleMaxMinAmountValue(QuoteSaleChargePM chargePM)
-        {
-            var saleMinAmount = string.Empty;
-            var saleMaxAmount = string.Empty;
-            string saleMaxMinAmount = string.Empty;
-
-            if (chargePM.SaleMinAmount != null && chargePM.SaleMinAmount > 0)
-            {
-                string AA = " ";
-                double value = (double)chargePM.SaleMinAmount;
-                AA = value.ToString("N");
-                saleMinAmount = "min " + AA;
-                saleMaxMinAmount = saleMinAmount;
-            }
-
-            if (chargePM.SaleMaxAmount != null && chargePM.SaleMaxAmount > 0)
-            {
-                string AA = " ";
-                double value = (double)chargePM.SaleMaxAmount;
-                AA = value.ToString("N");
-                saleMaxAmount = "max " + AA;
-                if (!string.IsNullOrEmpty(saleMaxMinAmount)) saleMaxMinAmount += " , ";
-                saleMaxMinAmount += saleMaxAmount;
-            }
-            return saleMaxMinAmount;
         }
 
 

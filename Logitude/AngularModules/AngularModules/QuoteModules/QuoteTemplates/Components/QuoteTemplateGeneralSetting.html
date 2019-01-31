@@ -50,14 +50,14 @@
                     <td style="width:5px"><div></div></td>
                     <td style="width:150px;">  <LogLabel [Text]="'Margin Left:'" [DataContext]="DataContext"></LogLabel></td>
                     <td style="width:180px"><LogTextBox style="width:180px"  [HideColumns]="true" [ObjectFieldName]="'QuoteTemplatePDFMarginLeft'" [ObjectTableName]="'QuoteTemplateSetting'" [DataContext]="DataContext"></LogTextBox></td>
-                    <td><div style="text-align:left"><span style="text-align:left;margin-left:5px">{{'QuoteTemplate.S.px' | TextCodeTranslationPipe}}</span></div></td>
+                    <td><div style="text-align:left"><span style="text-align:left;margin-left:5px">PX</span></div></td>
                 </tr>
 
                 <tr style="vertical-align:top;height:30px">
                     <td style="width:5px"><div></div></td>
                     <td style="width:150px;">  <LogLabel [Text]="'Margin Right:'" [DataContext]="DataContext"></LogLabel></td>
                     <td style="width:180px;"><LogTextBox  [HideColumns]="true" style="width:180px" [ObjectFieldName]="'QuoteTemplatePDFMarginRight'" [ObjectTableName]="'QuoteTemplateSetting'" [DataContext]="DataContext"></LogTextBox></td>
-                    <td><div style="text-align:left"><span style="text-align:left;margin-left:5px" >{{'QuoteTemplate.S.px' | TextCodeTranslationPipe}} </span></div></td>
+                    <td><div style="text-align:left"><span style="text-align:left;margin-left:5px" >PX</span></div></td>
                 </tr>
 
 
@@ -95,7 +95,7 @@
 
                     <td style="width: 57px;">
                         <div>
-                            <button class="Button" (click)="CancelButtonClicked()">{{'QuoteTemplate.B.Cancel' | TextCodeTranslationPipe}}</button>
+                            <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
                         </div>
                     </td>
 
@@ -104,7 +104,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="SaveButtonClicked()">Save</button>
                     </td>
                 </tr>
             </table>

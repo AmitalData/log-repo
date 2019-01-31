@@ -29,7 +29,6 @@ export class CreateTenantPackageSelectionComponent extends BaseComponent impleme
     CustomerName: string;
     CountryName: string;
     CountryCode: string;
-    ObjecttableName: string;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     signUpService: SignUpService;
 
@@ -60,7 +59,7 @@ export class CreateTenantPackageSelectionComponent extends BaseComponent impleme
         this.CustomerName = args.CustomerName;
         this.CountryName = args.CountryName;
         this.CountryCode = args.CountryCode;
-        this.ObjecttableName = args.ObjecttableName;
+        
         
 
     }
@@ -101,7 +100,6 @@ export class CreateTenantPackageSelectionComponent extends BaseComponent impleme
         SignUpInfo.PackageCode = this.packageCode;
         SignUpInfo.CountryName = this.CountryName;
         SignUpInfo.CountryCode = this.CountryCode;
-        SignUpInfo.ObjecttableName = this.ObjecttableName;
         this.signUpService.SendMessageToQueue(SignUpInfo).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
               
@@ -127,6 +125,5 @@ class SignUpInfoClass {
     public PackageCode: string;
     public CountryName: string;
     public CountryCode: string;
-    public ObjecttableName: string;
     
 }

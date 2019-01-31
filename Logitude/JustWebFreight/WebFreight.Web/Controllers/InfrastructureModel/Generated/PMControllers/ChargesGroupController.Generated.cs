@@ -56,8 +56,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                SecurityUtility.CheckContactFeature("ChargesGroup", "READ", authToken.Tenant);
                 ChargesGroupQuery chargesGroupQuery = new ChargesGroupQuery(authToken.Tenant);
                 ChargesGroupPM chargesGroupPM = chargesGroupQuery.GetSinglePM(id, authToken.Tenant);
                 
@@ -88,7 +86,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("ChargesGroup", "NEW", authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         ChargesGroupService service = new ChargesGroupService(MyContext, entityPM.Tenant);
@@ -136,7 +133,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("ChargesGroup", "UPDATE", authToken.Tenant);
 
                         string entityName = "ChargesGroup" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "ChargesGroupPM" + entityPM.Id + entityPM.Tenant;

@@ -271,29 +271,5 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
 
         }
-
-        public CurrencyPM GetSinglePMByCode(string code, int tenant)
-        {
-            CurrencyPM entity = (from a in repository.context.Currencies
-                                 where a.Tenant == tenant && a.Code == code
-                                 select new CurrencyPM()
-                                 {
-                                     AddedManually = a.AddedManually,
-                                     Code = a.Code,
-                                     EnglishName = a.EnglishName,
-                                     Id = a.Id,
-                                     InActive = a.InActive,
-                                     LocalName = a.LocalName,
-                                     Notes = a.Notes,
-                                     Tenant = a.Tenant,
-                                     SearchFields = a.SearchFields,
-                                     ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                                     AccountingExternalCode = a.AccountingExternalCode,
-                                     Sign = a.Sign,
-                                 }).FirstOrDefault();
-
-
-            return entity;
-        }
     }
 }

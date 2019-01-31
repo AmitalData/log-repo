@@ -134,7 +134,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     onSearchTextChangeEvent(searchtext) {
         console.log("Search");
-        if ((this.searchFields != searchtext) && !(searchtext == null && this.searchFields == "")) {
+        if (this.searchFields != searchtext) {
             this.searchFields = searchtext;
             if (this.timerToken) {
                 clearTimeout(this.timerToken);
@@ -485,17 +485,10 @@ export class ListComponent implements OnInit, AfterViewInit {
         else if (!AppTool.IsNullOrEmpty(filters.MyName)) {
             var TommorowDate = DateTool.AddDays((new Date()), 1);
             TommorowDate.setUTCHours(0, 0, 0, 0);
-            //TommorowDate.setHours(0, 0, 0, 0);
             var TodayDate = new Date();
             TodayDate.setUTCHours(0, 0, 0, 0);
-            var TodayCustomDate = new Date();
-            TodayCustomDate.setHours(0, 0, 0, 0);
-            var TodayEndDate = new Date();
-            TodayEndDate.setHours(23, 59, 59, 0); 
-            //TodayDate.setHours(0, 0, 0, 0);
             var YesterdayDate = DateTool.AddDays((new Date()), -1);
             YesterdayDate.setUTCHours(0, 0, 0, 0);
-            //YesterdayDate.setHours(0, 0, 0, 0);
             var LastSevenDaysDate = DateTool.AddDays((new Date()), -7)
             LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
             var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
@@ -510,8 +503,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             LastYearToDate.setUTCHours(0, 0, 0, 0);
 
             if (filters.TextValue == "Today") {
-                filters.TextValue = TodayCustomDate;
-                filters.TextValue1 = TodayEndDate;
+                filters.TextValue = TodayDate;
+                filters.TextValue1 = TommorowDate;
                 filters.MyName = "Today";
             }
             else if (filters.TextValue == "Yesterday") {
@@ -584,7 +577,7 @@ export class ListComponent implements OnInit, AfterViewInit {
       //SessionLocator.CurrentSession.pubSubAdvanceQueryFiltersService.emit(this.pubSubAdvanceQueryFiltersService)
       //this.ObjectTableName == "Customs.Declaration" || this.ObjectTableName == "Customs.PhysicalCheck" ||
       if (this.ObjectTableName.startsWith("Customs.")) {
-          this.IsNavigateButtonVisible = false;
+        this.IsNavigateButtonVisible = true;
       }
         this.Listen();
     }
@@ -620,7 +613,6 @@ export class ListComponent implements OnInit, AfterViewInit {
 
 
     }
-
 
 
     IsShowAddFromLibraryLink: boolean;
@@ -663,7 +655,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 800;
         logWindow.Height = 550;
-        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.NewQuoteTemplate"); 
+        logWindow.Title = "New Quote Template";
         logWindow.WindowArgs = windowArgs;
         logWindow.IsShowCloseButton = true;
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/AddQuoteTemplateFromLibraryComponent");
@@ -883,21 +875,16 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.UserQueries = allQueries.filter(x => x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
 
         if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == false) {
-            //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective)[0];
-            this.SelectedQuery = allQueries.filter(f => f.Perspective == this.listArgs.Perspective)[0];
-
+            this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective)[0];
             this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGranted(f.FeatureId) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
         else if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == true) {
-            //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
-            this.SelectedQuery = allQueries.filter(f => f.Code == this.QueryCode)[0];
-
+            this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
             this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGranted(f.FeatureId) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
 
         else if (this.QueryCode) {
-            //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
-            this.SelectedQuery = allQueries.filter(f => f.Code == this.QueryCode)[0];
+            this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
         }
 
         else {
@@ -1147,7 +1134,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
 
             this.GetQueryColumns(this.SelectedQuery.Id, this.UserId);
-        }   
+        }
         //if (!AppTool.IsNullOrEmpty(this.SelectedQuery.SpotlightDataTemplate)) {
         //    this.EnableSpotLight = true;
         //    //this.CD.detectChanges();
@@ -2239,6 +2226,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                             isVisible = false;
                             break;
                         }
+
                 }
             }
         }
@@ -2252,7 +2240,6 @@ export class ListComponent implements OnInit, AfterViewInit {
                 return;
             }
 
-        
             if (this.TenantPM.Id != 0 && this.ObjectTableName == "Port") {
 
 
@@ -2417,18 +2404,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                   }
 
                 case "TaxDeductionReport":
-               
                     {
 
                         logWindow.Width = 400;
                         logWindow.Height = 240;
-                        break;
-                    }
-                case "OpenFormatReport":
-                    {
-
-                        logWindow.Width = 400;
-                        logWindow.Height = 180;
                         break;
                     }
             }
@@ -2501,20 +2480,10 @@ export class ListComponent implements OnInit, AfterViewInit {
             logWindow.Height = 570;
 
 
-            //var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
-            //var ChangedText = GeneralText.split('%')[0];
-            //var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
-            //var FinalText = NewText + " " + ChangedText;
-            var FinalText = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.TranslateTable(this.ObjectTableName));
-            var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
-            if (useLocal == true) {
-                var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
-                var ChangedText = GeneralText.split('%')[0];
-                var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
-                FinalText = NewText + " " + ChangedText;
-                
-            }
-           
+            var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
+            var ChangedText = GeneralText.split('%')[0];
+            var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
+            var FinalText = NewText + " " + ChangedText;
 
             var windowTitle = FinalText; //TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName));
             logWindow.WindowArgs = args;
@@ -2863,7 +2832,6 @@ export class ListComponent implements OnInit, AfterViewInit {
               ObjectTableName: this.ObjectTableName,
               BackButtonLabel: label,
               NavigationIds: ids,
-              
             });
             cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
               this.isEditControlOpened = false;

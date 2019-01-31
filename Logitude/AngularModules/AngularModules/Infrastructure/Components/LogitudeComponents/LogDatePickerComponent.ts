@@ -1,61 +1,31 @@
 ﻿declare var window: any;
 declare var SelectingElement: any;
-import {
-    Directive,
-    ElementRef,
-    Renderer,
-    Input,
-    Output,
-    Component,
-    OnInit,
-    OnChanges,
-    EventEmitter,
-    AfterViewInit,
-    ChangeDetectorRef,
-    OnDestroy
-} from "@angular/core";
-import { BaseComponent } from "./BaseComponent";
-import { UIProperty, UIProperties, UIPropertyArgs } from "./UIProperties";
-import { ObjectFieldPM } from "../../EntityPMs/ObjectFieldPM";
-import { SessionLocator } from "../../Utilities/SessionLocator";
-import { AppTool, DateTool } from "../../Tools";
-import { TextCodeTranslator } from "../../Utilities/TextCodeTranslator";
-import { LogCalendarComponent, DayOfMonth } from "./LogCalendarComponent";
-import { ControlsIdCounter } from "../../Utilities/ControlsIdCounter";
-import { TimeSelectComponent } from "./TimeSelectComponent";
-import { FixedPositionDirective } from "../../Utilities/FixedPositionDirective";
-import { FieldValidator } from "../../Validators/FieldValidator";
-import {
-    FormControl,
-    FormBuilder,
-    FormGroup,
-    Validators
-} from "@angular/forms";
-import { CustomFieldClass } from "../../DataContracts/CustomFieldClass";
-import { ObjectsLocator } from "../../Locators/ObjectsLocator";
+import {Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit, ChangeDetectorRef, OnDestroy} from '@angular/core';
+import {BaseComponent} from './BaseComponent';
+import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
+import {ObjectFieldPM} from '../../EntityPMs/ObjectFieldPM';
+import {SessionLocator} from '../../Utilities/SessionLocator';
+import {AppTool, DateTool} from '../../Tools';
+import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
+import {LogCalendarComponent, DayOfMonth} from './LogCalendarComponent'
+import {ControlsIdCounter} from '../../Utilities/ControlsIdCounter';
+import {TimeSelectComponent} from './TimeSelectComponent'
+import {FixedPositionDirective} from '../../Utilities/FixedPositionDirective';
+import {FieldValidator} from '../../Validators/FieldValidator';
+import {FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms'
+import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
+import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 
 @Component({
-    selector: "LogDatePicker",
+    selector: 'LogDatePicker',
     moduleId: module.id,
-    templateUrl: "./LogDatePickerComponent.html",
+    templateUrl: './LogDatePickerComponent.html',
     //directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, HelpIcon, LogCalendarComponent, TimeSelectComponent, FixedPositionDirective],
-    inputs: [
-        "ObjectFieldName",
-        "ObjectTableName",
-        "DataContext",
-        "HideColumns",
-        "HideLastColumn",
-        "InputType",
-        "TimeMode",
-        "FocusOnMe",
-        "IsFreeValue",
-        "ForceSubscribe",
-        "RefreshMe"
-    ]
+    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', "HideColumns", "HideLastColumn", "InputType", "TimeMode", "FocusOnMe", "IsFreeValue", "ForceSubscribe", "RefreshMe"],
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LogDatePickerComponent
-    implements OnInit, AfterViewInit, OnDestroy {
+
+export class LogDatePickerComponent implements OnInit, AfterViewInit, OnDestroy {
     private refreshMe: boolean;
     public get RefreshMe() {
         return this.refreshMe;
@@ -68,6 +38,7 @@ export class LogDatePickerComponent
             }
             this.refreshMe = false;
         }
+
     }
     CopyValueSubs: any;
     public ShowHelp: boolean = false;
@@ -92,6 +63,7 @@ export class LogDatePickerComponent
     }
     public set IsDisabled(newValue: boolean) {
         this.isDisabled = newValue;
+
     }
     public TimeMode: string;
     InputValue: string;
@@ -113,6 +85,7 @@ export class LogDatePickerComponent
         }
         this.forceFocus = false;
     }
+
 
     @Input() LogitudeForm: FormGroup;
     @Output() ValueChanged = new EventEmitter();
@@ -136,20 +109,22 @@ export class LogDatePickerComponent
     }
 
     private selectedDateValue: Date;
-    @Input()
-    public get SelectedDateValue() {
+    @Input() public get SelectedDateValue() {
         return this.selectedDateValue;
     }
     public set SelectedDateValue(newValue: Date) {
+
         var isOk = true;
         if (newValue) {
             isOk = false;
             if (newValue instanceof Date) {
                 isOk = true;
             }
+
         }
 
         if (isOk) {
+
             if (newValue === undefined) {
                 newValue = null;
             }
@@ -160,11 +135,7 @@ export class LogDatePickerComponent
 
             if (this.selectedDateValue != newValue) {
                 this.selectedDateValue = newValue;
-                if (
-                    (this.isKeyDown == false &&
-                        this.isSelectedFromPicker == false) ||
-                    this.IsFreeValue
-                ) {
+                if ((this.isKeyDown == false && this.isSelectedFromPicker == false) || this.IsFreeValue) {
                     this.SetDateValue(this.selectedDateValue, null, false);
                 }
             }
@@ -190,18 +161,13 @@ export class LogDatePickerComponent
     isCtrlKeyDown: boolean = false;
     isTextChanged: boolean = false;
 
-    LayoutDirection: string = "ltr";
-    isRTL: boolean = false;
+    LayoutDirection: string = 'ltr';
 
     constructor(private cd: ChangeDetectorRef) {
         this.show = false;
 
-        this.LayoutDirection =
-            ObjectsLocator.GlobalSetting == undefined
-                ? "ltr"
-                : ObjectsLocator.GlobalSetting.LayoutDirection;
-        if (ObjectsLocator.GlobalSetting)
-            this.isRTL = ObjectsLocator.GlobalSetting.LayoutDirection == "rtl";
+        this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+
     }
 
     counterId: number;
@@ -215,25 +181,30 @@ export class LogDatePickerComponent
 
     SetControlIds(baseIdCombination: string) {
         this.DatePickerInputId = baseIdCombination;
-        this.DropDownId = "dropdown_" + baseIdCombination;
-        this.InputDivId = "datepickerinputdiv_" + baseIdCombination;
-        this.ErrorPopUpId = "datepickererrorpop_" + baseIdCombination;
-        if (this.InputType == "date") {
-            this.CalendarButtonId = "calendarbutton_" + baseIdCombination;
-        } else {
-            this.CalendarButtonId = "timebutton_" + baseIdCombination;
+        this.DropDownId = 'dropdown_' + baseIdCombination;
+        this.InputDivId = 'datepickerinputdiv_' + baseIdCombination;
+        this.ErrorPopUpId = 'datepickererrorpop_' + baseIdCombination;
+        if (this.InputType == 'date') {
+            this.CalendarButtonId = 'calendarbutton_' + baseIdCombination;
+        }
+        else {
+            this.CalendarButtonId = 'timebutton_' + baseIdCombination;
         }
     }
 
     InitializeEnability() {
+
         if (this.timerToken) {
             clearTimeout(this.timerToken);
         }
         if (this.uiProperty != null && this.uiProperty != undefined) {
+
             if (this.uiProperty.IsVisible) {
+
                 if (this.IsDisabled) {
                     this.SetDisabled();
-                } else {
+                }
+                else {
                     this.SetEnabled();
                 }
             }
@@ -242,64 +213,50 @@ export class LogDatePickerComponent
 
     ngAfterViewInit() {
         this.timerToken = setTimeout(() => this.InitializeEnability(), 1);
-
+      
         if (this.FocusOnMe) {
             var element = document.getElementById(this.DatePickerInputId);
             element.focus();
-            SessionLocator.CurrentSession.SessionEvent.emit({
-                IsCell: true,
-                Id: element.id,
-                OnBlurEvent: this.OnBlurEvent
-            });
+            SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, OnBlurEvent: this.OnBlurEvent });
             this.timerToken = setTimeout(() => {
                 SelectingElement(element);
             }, 1);
             //SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id });
         }
+
     }
     initialized: boolean = false;
     ngOnInit() {
         if (!this.InputType) {
-            this.InputType = "date";
+            this.InputType = 'date';
         }
 
         this.counterId = null;
         var baseIdCombination = null;
         if (this.ObjectTableName) {
-            baseIdCombination =
-                this.InputType +
-                "_" +
-                this.ObjectTableName +
-                "_" +
-                this.ObjectFieldName;
-        } else {
+            baseIdCombination = this.InputType + '_' + this.ObjectTableName + "_" + this.ObjectFieldName;
+        }
+        else {
             baseIdCombination = this.ObjectFieldName;
         }
         if (this.CheckIfExists(baseIdCombination)) {
-            this.counterId = ControlsIdCounter.GetNextControlIdCounter(
-                baseIdCombination
-            );
+            this.counterId = ControlsIdCounter.GetNextControlIdCounter(baseIdCombination);
         }
 
         if (this.counterId != null) {
-            baseIdCombination =
-                baseIdCombination + "_" + this.counterId.toString();
+            baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
         }
 
         this.SetControlIds(baseIdCombination);
 
-        if (this.FocusOnMe) {
-            // it means it is inside a grid.
-            this.CopyValueSubs = SessionLocator.CurrentSession.CopyCellIntoMemory.subscribe(
-                id => {
-                    if (id == this.DatePickerInputId) {
-                        //SessionLocator.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
-                        this.DataContext[this.ObjectFieldName] =
-                            SessionLocator.CurrentSession.CopiedCell;
-                        SessionLocator.CurrentSession.CopiedCell = null;
-                    }
+        if (this.FocusOnMe) {// it means it is inside a grid.
+            this.CopyValueSubs = SessionLocator.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
+                if (id == this.DatePickerInputId) {
+                    //SessionLocator.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
+                    this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
+                    SessionLocator.CurrentSession.CopiedCell = null;
                 }
-            );
+            });
 
             if (SessionLocator.CurrentSession.CopiedCell) {
                 //this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
@@ -307,24 +264,18 @@ export class LogDatePickerComponent
             }
         }
 
-        this.CalendarButtonStyle = { border: "1px solid transparent" };
+        this.CalendarButtonStyle = { 'border': '1px solid transparent' }
         var objectFieldAvailable: boolean = true;
-        var table = window.ObjectTables.filter(
-            d => d.Name === this.ObjectTableName
-        )[0];
+        var table = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
 
         if (table) {
-            this.ObjectField = window.ObjectFields.filter(
-                d =>
-                    d.ObjectTableId === table.Id &&
-                    d.FieldName === this.ObjectFieldName
-            )[0];
+            this.ObjectField = window.ObjectFields.filter(d => d.ObjectTableId === table.Id && d.FieldName === this.ObjectFieldName)[0];
             if (!this.ObjectField) {
                 objectFieldAvailable = false;
-            } else if (this.ObjectField.HelpTextCodeId != null) {
-                this.ObjectFieldHelp = TextCodeTranslator.Translate(
-                    this.ObjectField.HelpTextTextCodeCode
-                );
+            }
+
+            else if (this.ObjectField.HelpTextCodeId != null) {
+                this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextTextCodeCode);
 
                 if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {
                     if (this.ObjectFieldHelp.length > 1) {
@@ -332,39 +283,27 @@ export class LogDatePickerComponent
                     }
                 }
             }
-        } else {
+        }
+        else {
             objectFieldAvailable = false;
         }
 
         if (!this.TimeMode) {
-            this.TimeMode = "12";
+            this.TimeMode = '12';
         }
-        if (this.InputType == "date") {
-            this.uiProperty = this.DataContext.UIProperties.GetUIProperty(
-                this.ObjectFieldName,
-                this.ObjectTableName,
-                this.DataContext
-            );
-            this.DatePickerPlaceHolder = TextCodeTranslator.Translate(
-                "General.O.EnterDate"
-            );
-        } else {
-            var dateUiProp: UIProperty = this.DataContext.UIProperties.GetUIProperty(
-                this.ObjectFieldName,
-                this.ObjectTableName,
-                this.DataContext
-            );
-            this.uiProperty = this.DataContext.UIProperties.GetUIProperty(
-                this.ObjectFieldName + "_timepicker",
-                this.ObjectTableName
-            );
+        if (this.InputType == 'date') {
+            this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
+            this.DatePickerPlaceHolder = TextCodeTranslator.Translate('General.O.EnterDate');
+        }
+        else {
+            var dateUiProp: UIProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
+            this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName + '_timepicker', this.ObjectTableName);
             this.uiProperty.IsEnabled = dateUiProp.IsEnabled;
             this.uiProperty.IsVisible = dateUiProp.IsVisible;
-            this.DatePickerPlaceHolder = TextCodeTranslator.Translate(
-                "General.O.EnterTime"
-            );
+            this.DatePickerPlaceHolder = TextCodeTranslator.Translate('General.O.EnterTime');
         }
         this.IsDisabled = !this.uiProperty.IsEnabled;
+
 
         //this.ctrl = new FormControl(this.DataContext[this.ObjectFieldName]);
         //this.LogitudeForm.addControl(this.ObjectFieldName, this.ctrl);
@@ -375,91 +314,71 @@ export class LogDatePickerComponent
             //    this.ValueChanged.emit(res);
 
             this.uiProperty.UIPropertyChanged.subscribe(value => {
+
                 if (value == "datevaluechanges") {
                     if (this.ObjectField && this.ObjectField.IsCustom) {
-                        var customFieldClass: CustomFieldClass = this
-                            .DataContext[this.ObjectFieldName];
-                        if (
-                            customFieldClass != null &&
-                            customFieldClass != undefined
-                        ) {
-                            var valueDate = customFieldClass.GetFieldDataTypeValue(
-                                this.ObjectField,
-                                customFieldClass.Value
-                            );
-                        } else {
-                            console.warn(
-                                "Custom Fields are not implemented in: " +
-                                this.ObjectTableName
-                            );
+                        var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
+                        if (customFieldClass != null && customFieldClass != undefined) {
+                            var valueDate = customFieldClass.GetFieldDataTypeValue(this.ObjectField, customFieldClass.Value);
+                        }
+                        else {
+                            console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
                         }
 
                         this.GetParsedDate(valueDate);
-                    } else {
-                        this.GetParsedDate(
-                            this.DataContext[this.ObjectFieldName]
-                        );
+                    }
+                    else {
+                        this.GetParsedDate(this.DataContext[this.ObjectFieldName]);
                     }
                     return;
                 }
                 if (value instanceof UIPropertyArgs) {
                     var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
                     var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
-                    if (
-                        uiProperty.FieldName == this.ObjectFieldName &&
-                        uiProperty.ObjectTableName == this.ObjectTableName
-                    ) {
+                    if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
                         if (uiPropertyArgs.property == "IsEnabled") {
                             var isEnabled = uiPropertyArgs.newValue;
                             this.IsDisabled = !isEnabled;
                             this.uiProperty.IsEnabled = isEnabled;
                             if (this.IsDisabled) {
                                 this.SetDisabled();
-                            } else {
+                            }
+                            else {
                                 this.SetEnabled();
                             }
-                        } else if (
-                            uiPropertyArgs.property == "IsRequired" ||
-                            uiPropertyArgs.property == "IsValid"
-                        ) {
+                        }
+                        else if (uiPropertyArgs.property == "IsRequired" || uiPropertyArgs.property == "IsValid") {
                             if (!this.isFirstTime) {
                                 this.ValidateField(false);
-                            } else {
+                            }
+                            else {
                                 this.isFirstTime = false;
                             }
                         }
-                        if (this.InputType == "date") {
-                            var timeUIProperty: UIProperty = this.DataContext.UIProperties.GetUIProperty(
-                                this.ObjectFieldName + "_timepicker",
-                                this.ObjectTableName,
-                                this.DataContext
-                            );
-                            if (
-                                timeUIProperty != null &&
-                                timeUIProperty != undefined
-                            ) {
+                        if (this.InputType == 'date') {
+                            var timeUIProperty: UIProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName + '_timepicker', this.ObjectTableName, this.DataContext);
+                            if (timeUIProperty != null && timeUIProperty != undefined) {
                                 timeUIProperty.UIPropertyChanged.emit(value);
                             }
                         }
-                    } else if (
-                        uiProperty.FieldName.indexOf("_timepicker") > -1
-                    ) {
+                    }
+                    else if (uiProperty.FieldName.indexOf("_timepicker") > -1) {
                         if (uiPropertyArgs.property == "IsEnabled") {
                             var isEnabled = uiPropertyArgs.newValue;
                             this.IsDisabled = !isEnabled;
                             this.uiProperty.IsEnabled = isEnabled;
                             if (this.IsDisabled) {
                                 this.SetDisabled();
-                            } else {
+                            }
+                            else {
                                 this.SetEnabled();
                             }
-                        } else if (
-                            uiPropertyArgs.property == "IsRequired" ||
-                            uiPropertyArgs.property == "IsValid"
-                        ) {
+                        }
+                        else if (uiPropertyArgs.property == "IsRequired" || uiPropertyArgs.property == "IsValid") {
                             if (!this.isFirstTime) {
                                 this.ValidateField(false);
-                            } else {
+                            }
+                            else {
                                 this.isFirstTime = false;
                             }
                         }
@@ -468,125 +387,105 @@ export class LogDatePickerComponent
             });
         }
 
+
         if (!objectFieldAvailable && !this.NoObjectField) {
-            console.warn(
-                this.ObjectFieldName + " DATEPICKER has no object field!"
-            );
+            console.warn(this.ObjectFieldName + " DATEPICKER has no object field!");
         }
 
         var valueDate = this.DataContext[this.ObjectFieldName];
         if (this.ObjectField && this.ObjectField.IsCustom) {
-            var customFieldClass: CustomFieldClass = this.DataContext[
-                this.ObjectFieldName
-            ];
+            var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
             if (customFieldClass != null && customFieldClass != undefined) {
-                valueDate = customFieldClass.GetFieldDataTypeValue(
-                    this.ObjectField,
-                    customFieldClass.Value
-                );
-            } else {
-                console.warn(
-                    "Custom Fields are not implemented in: " +
-                    this.ObjectTableName
-                );
+                valueDate = customFieldClass.GetFieldDataTypeValue(this.ObjectField, customFieldClass.Value);
             }
+            else {
+                console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
+            }
+
         }
-        this.selectedDateValue = valueDate; //this.DataContext[this.ObjectFieldName];
-        this.GetParsedDate(valueDate); //(this.DataContext[this.ObjectFieldName]);
+        this.selectedDateValue = valueDate;//this.DataContext[this.ObjectFieldName];
+        this.GetParsedDate(valueDate)//(this.DataContext[this.ObjectFieldName]);
         this.initialized = true;
     }
 
-    SetControlPropertiesAndValidations(
-        uiProperty: UIProperty,
-        ctrl: FormControl
-    ) {
+    SetControlPropertiesAndValidations(uiProperty: UIProperty, ctrl: FormControl) {
+
         this.uiProperty.IsRequired = uiProperty.IsRequired;
 
-        var table = window.ObjectTables.filter(
-            d => d.Name === this.ObjectTableName
-        )[0];
-        var field = window.ObjectFields.filter(
-            d =>
-                d.ObjectTableId === table.Id &&
-                d.FieldName === this.ObjectFieldName
-        )[0];
+        var table = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
+        var field = window.ObjectFields.filter(d => d.ObjectTableId === table.Id && d.FieldName === this.ObjectFieldName)[0];
 
         var minlength = field.MinLength;
         var maxlenght = field.MaxLength;
         var hasminmax: boolean;
         hasminmax = false;
 
-        if (
-            field.DataTypeCode.toLowerCase() == "text" ||
-            field.DataTypeCode.toLowerCase() == "ntext"
-        ) {
+        if (field.DataTypeCode.toLowerCase() == "text" || field.DataTypeCode.toLowerCase() == "ntext") {
             if (maxlenght != 0) {
                 hasminmax = true;
             }
         }
 
         if (this.uiProperty.IsRequired) {
+
             var valueDate = this.DataContext[this.ObjectFieldName];
             if (this.ObjectField && this.ObjectField.IsCustom) {
-                var customFieldClass: CustomFieldClass = this.DataContext[
-                    this.ObjectFieldName
-                ];
+                var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
                 if (customFieldClass != null && customFieldClass != undefined) {
-                    valueDate = customFieldClass.GetFieldDataTypeValue(
-                        this.ObjectField,
-                        customFieldClass.Value
-                    );
-                } else {
-                    console.warn(
-                        "Custom Fields are not implemented in: " +
-                        this.ObjectTableName
-                    );
+                    valueDate = customFieldClass.GetFieldDataTypeValue(this.ObjectField, customFieldClass.Value);
                 }
+                else {
+                    console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
+                }
+
             }
 
             if (valueDate == null || valueDate == "") {
-                this.ctrl.setErrors({ required: true });
+                this.ctrl.setErrors({ "required": true });
             }
 
             if (hasminmax) {
-                this.ctrl.validator = Validators.compose([
-                    Validators.required,
-                    Validators.minLength(minlength),
-                    Validators.maxLength(maxlenght)
-                ]);
-            } else {
+                this.ctrl.validator = Validators.compose([Validators.required, Validators.minLength(minlength), Validators.maxLength(maxlenght)]);
+            }
+            else {
                 this.ctrl.validator = Validators.required;
             }
-        } else if (!this.uiProperty.ValidValue) {
-            this.ctrl.setErrors({ error: this.uiProperty.ValidationError });
-            this.DatePickerInputDivStyle = { border: "1px solid #ff0000" };
-        } else {
+        }
+        else if (!this.uiProperty.ValidValue) {
+            this.ctrl.setErrors({ "error": this.uiProperty.ValidationError });
+            this.DatePickerInputDivStyle = { 'border': '1px solid #ff0000' };
+        }
+        else {
             if (this.show) {
-                this.DatePickerInputDivStyle = { border: "1px solid #3BB3E2" };
-            } else {
+                this.DatePickerInputDivStyle = { 'border': '1px solid #3BB3E2' };
+            }
+            else {
                 this.DatePickerInputDivStyle = null;
             }
             this.ctrl.setErrors(null);
 
             if (hasminmax) {
-                this.ctrl.validator = Validators.compose([
-                    Validators.minLength(minlength),
-                    Validators.maxLength(maxlenght)
-                ]);
-            } else {
+
+                this.ctrl.validator = Validators.compose([Validators.minLength(minlength), Validators.maxLength(maxlenght)]);
+            }
+            else {
                 this.ctrl.validator = null;
             }
         }
+
+
     }
 
     onFocus() {
         this.show = true;
         if (this.uiProperty.ValidValue) {
-            this.DatePickerInputDivStyle = { border: "1px solid #3BB3E2" };
+            this.DatePickerInputDivStyle = { 'border': '1px solid #3BB3E2' };
             this.ShowErrorPopup = false;
-        } else {
-            this.DatePickerInputDivStyle = { border: "1px solid #ff0000" };
+        }
+        else {
+            this.DatePickerInputDivStyle = { 'border': '1px solid #ff0000' };
             this.ShowErrorPopup = true;
+
         }
         this.Click.emit("");
         if (!this.IsDateDropDownOpen) {
@@ -594,6 +493,7 @@ export class LogDatePickerComponent
             //input.select();
             SelectingElement(input);
         }
+
     }
 
     OnBtnFocus() {
@@ -615,9 +515,10 @@ export class LogDatePickerComponent
                 this.ToggleCalendar();
             }
 
-            if (this.InputType == "date" && this.isTextChanged) {
+            if (this.InputType == 'date' && this.isTextChanged) {
                 this.GetDateValue();
-            } else if (this.isTextChanged) {
+            }
+            else if (this.isTextChanged) {
                 this.GetTimeValue();
             }
 
@@ -639,7 +540,7 @@ export class LogDatePickerComponent
             var month: number;
             var year: number;
 
-            if (typeof value == "string") {
+            if (typeof (value) == 'string') {
                 var stringValue: string = value;
 
                 datev = this.GetDateFromString(stringValue);
@@ -651,13 +552,9 @@ export class LogDatePickerComponent
                 minute = dateparts[4];
                 second = dateparts[5];
                 this.SelectedDate = datev;
-                this.TimeValue =
-                    this.ApplyPadding(hour.toString()) +
-                    ":" +
-                    this.ApplyPadding(minute.toString()) +
-                    ":" +
-                    this.ApplyPadding(second.toString());
-            } else {
+                this.TimeValue = this.ApplyPadding(hour.toString()) + ':' + this.ApplyPadding(minute.toString()) + ':' + this.ApplyPadding(second.toString());
+            }
+            else {
                 datev = value;
                 this.SelectedDate = value;
                 var dateparts = this.GetDateParts(datev);
@@ -667,113 +564,80 @@ export class LogDatePickerComponent
                 hour = dateparts[3];
                 minute = dateparts[4];
                 second = dateparts[5];
-                this.TimeValue =
-                    this.ApplyPadding(hour.toString()) +
-                    ":" +
-                    this.ApplyPadding(minute.toString()) +
-                    ":" +
-                    this.ApplyPadding(second.toString());
+                this.TimeValue = this.ApplyPadding(hour.toString()) + ':' + this.ApplyPadding(minute.toString()) + ':' + this.ApplyPadding(second.toString());
             }
 
-            this.DateValue =
-                year +
-                "/" +
-                this.ApplyPadding(month.toString()) +
-                "/" +
-                this.ApplyPadding(day.toString());
 
-            if (this.InputType == "date") {
+
+            this.DateValue = year + '/' + this.ApplyPadding(month.toString()) + '/' + this.ApplyPadding(day.toString());
+
+            if (this.InputType == 'date') {
                 // ShortDateString
-                if (
-                    !AppTool.IsNullOrEmpty(
-                        SessionLocator.TenantPM.DateTimeFormat
-                    )
-                ) {
-                    var myDateTimeFormatPrefix = SessionLocator.TenantPM.DateTimeFormat.toLowerCase().substring(
-                        0,
-                        2
-                    );
+                if (!AppTool.IsNullOrEmpty(SessionLocator.TenantPM.DateTimeFormat)) {
+
+                    var myDateTimeFormatPrefix = SessionLocator.TenantPM.DateTimeFormat.toLowerCase().substring(0, 2);
 
                     if (myDateTimeFormatPrefix == "mm") {
-                        this.InputValue =
-                            this.ApplyPadding(month.toString()) +
-                            "/" +
-                            this.ApplyPadding(day.toString()) +
-                            "/" +
-                            year;
-                    } else {
-                        this.InputValue =
-                            this.ApplyPadding(day.toString()) +
-                            "/" +
-                            this.ApplyPadding(month.toString()) +
-                            "/" +
-                            year;
+                        this.InputValue = this.ApplyPadding(month.toString()) + '/' + this.ApplyPadding(day.toString()) + '/' + year;
                     }
-                } else {
-                    this.InputValue =
-                        this.ApplyPadding(day.toString()) +
-                        "/" +
-                        this.ApplyPadding(month.toString()) +
-                        "/" +
-                        year;
+
+                    else {
+                        this.InputValue = this.ApplyPadding(day.toString()) + '/' + this.ApplyPadding(month.toString()) + '/' + year;
+                    }
                 }
-            } else {
-                if (
-                    this.TimeMode == "12" &&
-                    (this.TimeValue.indexOf("A") <= -1 &&
-                        this.TimeValue.indexOf("P") <= -1)
-                ) {
-                    var timearr = this.TimeValue.split(":");
+
+                else {
+                    this.InputValue = this.ApplyPadding(day.toString()) + '/' + this.ApplyPadding(month.toString()) + '/' + year;
+                }
+
+            }
+            else {
+                if (this.TimeMode == '12' && (this.TimeValue.indexOf('A') <= -1 && this.TimeValue.indexOf('P') <= -1)) {
+                    var timearr = this.TimeValue.split(':');
                     var hourRes = this.GetTimeModeHours(Number(timearr[0]));
-                    var hourResArr = hourRes.split(",");
-                    this.TimeValue =
-                        hourResArr[0] +
-                        ":" +
-                        timearr[1] +
-                        ":" +
-                        timearr[2] +
-                        " " +
-                        hourResArr[1];
+                    var hourResArr = hourRes.split(',');
+                    this.TimeValue = hourResArr[0] + ':' + timearr[1] + ':' + timearr[2] + " " + hourResArr[1];
                 }
-                var timeArray = this.TimeValue.split(":");
-                if (
-                    this.TimeValue.indexOf("AM") > -1 ||
-                    this.TimeValue.indexOf("PM") > -1
-                ) {
+                var timeArray = this.TimeValue.split(':');
+                if (this.TimeValue.indexOf("AM") > -1 || this.TimeValue.indexOf("PM") > -1) {
                     var secondsWithsuffix = timeArray[2].split(" ");
                     var suffix = secondsWithsuffix[1];
 
-                    this.InputValue =
-                        this.ApplyPadding(timeArray[0]) +
-                        ":" +
-                        timeArray[1] +
-                        " " +
-                        suffix;
-                } else {
-                    this.InputValue =
-                        this.ApplyPadding(timeArray[0]) + ":" + timeArray[1]; //this.TimeValue;
+                    this.InputValue = this.ApplyPadding(timeArray[0]) + ':' + timeArray[1] + ' ' + suffix;
+                }
+                else {
+                    this.InputValue = this.ApplyPadding(timeArray[0]) + ':' + timeArray[1];//this.TimeValue;
                 }
                 // this.InputValue = this.TimeValue;
             }
-        } else {
-            if (this.InputType == "time") {
+
+
+
+        }
+        else {
+            if (this.InputType == 'time') {
                 this.DateValue = null;
                 this.InputValue = null;
                 this.SelectedDate = null;
                 this.TimeValue = null;
-            } else if (this.InputType == "date") {
+
+            }
+            else if (this.InputType == 'date') {
                 if (this.SelectedDate) {
                     var dateparts = this.GetDateParts(this.SelectedDate);
-                    var y = dateparts[0]; //this.SelectedDate.getFullYear();
+                    var y = dateparts[0];//this.SelectedDate.getFullYear();
                     var m = dateparts[1]; //this.SelectedDate.getMonth();
                     var d = dateparts[2]; //this.SelectedDate.getDate();
                     this.SelectedDate = this.GetDate(y, m, d, 0, 0, 0);
                 }
             }
         }
+
+
     }
 
     onkeydown(event) {
+
         this.isKeyDown = true;
         var key = event.keyCode;
         var keyChar = event.key;
@@ -795,84 +659,39 @@ export class LogDatePickerComponent
             this.MouseInArea = false;
         }
         switch (this.InputType) {
-            case "date": {
-                if (
-                    (key >= 48 && key <= 57) ||
-                    (key >= 96 && key <= 105) ||
-                    key == 8 ||
-                    key == 45 ||
-                    key == 47 ||
-                    key == 46 ||
-                    key == 43 ||
-                    key == 9 ||
-                    key == 190 ||
-                    key == 110 ||
-                    key == 107 ||
-                    key == 109 ||
-                    key == 189 ||
-                    key == 16 ||
-                    key == 111 ||
-                    key == 35 ||
-                    key == 36 ||
-                    key == 16 ||
-                    key == 187 ||
-                    key == 37 ||
-                    key == 38 ||
-                    key == 39 ||
-                    key == 40 ||
-                    key == 190 ||
-                    key == 191 ||
-                    key == 17
-                ) {
-                    success = true;
-                } else {
-                    success = false;
+            case 'date':
+                {
+                    if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key == 8 ||
+                        key == 45 || key == 47 || key == 46 || key == 43 || key == 9 || key == 190 ||
+                        key == 110 || key == 107 || key == 109 || key == 189 || key == 16 || key == 111 || key == 35 || key == 36 || key == 16 || key == 187
+                        || key == 37 || key == 38 || key == 39 || key == 40 || key == 190 || key == 191 || key == 17) {
+                        success = true;
+                    }
+                    else {
+                        success = false;
+                    }
+                    break;
                 }
-                break;
-            }
-            case "time": {
-                if (
-                    (key >= 48 && key <= 57) ||
-                    (key >= 96 && key <= 105) ||
-                    key == 190 ||
-                    key == 110 ||
-                    key == 8 ||
-                    key == 58 ||
-                    key == 45 ||
-                    key == 47 ||
-                    key == 46 ||
-                    key == 43 ||
-                    key == 112 ||
-                    key == 109 ||
-                    key == 97 ||
-                    key == 9 ||
-                    key == 189 ||
-                    key == 35 ||
-                    key == 36 ||
-                    key == 16 ||
-                    key == 187 ||
-                    key == 37 ||
-                    key == 38 ||
-                    key == 39 ||
-                    key == 40 ||
-                    key == 190 ||
-                    key == 191 ||
-                    key == 111 ||
-                    key == 17 ||
-                    keyChar == ":"
-                ) {
-                    success = true;
-                } else {
-                    success = false;
+            case 'time':
+                {
+                    if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key == 190 || key == 110
+                        || key == 8 || key == 58 || key == 45 || key == 47 || key == 46 || key == 43 || key == 112
+                        || key == 109 || key == 97 || key == 9 || key == 189 || key == 35 || key == 36 || key == 16 || key == 187 || key == 37 ||
+                        key == 38 || key == 39 || key == 40 || key == 190 || key == 191 || key == 111 || key == 17 || keyChar == ":") {
+                        success = true;
+                    }
+                    else {
+                        success = false;
+                    }
+                    break;
                 }
-                break;
-            }
         }
 
         if (key == 13 || key == 9) {
-            if (this.InputType == "date" && this.isTextChanged) {
+            if (this.InputType == 'date' && this.isTextChanged) {
                 this.GetDateValue();
-            } else if (this.isTextChanged) {
+            }
+            else if (this.isTextChanged) {
                 this.GetTimeValue();
             }
             //if (this.IsCalendarOpen)
@@ -889,9 +708,11 @@ export class LogDatePickerComponent
 
         if (success) {
             return key;
-        } else {
+        }
+        else {
             return false;
         }
+
     }
 
     onkeyup(event) {
@@ -899,47 +720,33 @@ export class LogDatePickerComponent
             this.isCtrlKeyDown = false;
         }
         if (event.keyCode == 8) {
-            if (
-                this.InputValue == "" ||
-                this.InputValue == undefined ||
-                this.InputValue == null
-            ) {
-                if (this.InputType == "date") {
+            if (this.InputValue == "" || this.InputValue == undefined || this.InputValue == null) {
+                if (this.InputType == 'date') {
                     this.SetDateValue(null);
-                } else {
-                    if (
-                        this.SelectedDate != null &&
-                        this.SelectedDate != undefined
-                    ) {
-                        var dateCombination =
-                            "date" +
-                            "_" +
-                            this.ObjectTableName +
-                            "_" +
-                            this.ObjectFieldName;
-                        var dateelement = document.getElementById(
-                            dateCombination
-                        );
+                }
+                else {
+                    if (this.SelectedDate != null && this.SelectedDate != undefined) {
+                        var dateCombination = 'date' + '_' + this.ObjectTableName + "_" + this.ObjectFieldName;
+                        var dateelement = document.getElementById(dateCombination);
                         if (dateelement) {
                             this.SelectedDate.setUTCHours(0);
                             this.SelectedDate.setUTCMinutes(0);
                             this.SelectedDate.setUTCSeconds(0);
                             this.SelectedDate.setUTCMilliseconds(0);
                             this.SetDateValue(this.SelectedDate);
-                        } else {
+                        }
+                        else {
                             this.SetDateValue(null);
                         }
                     }
                 }
             }
         }
+
     }
 
-    SetDateValue(
-        date: Date,
-        timeSuffix: string = null,
-        setDataContext: boolean = true
-    ) {
+    SetDateValue(date: Date, timeSuffix: string = null, setDataContext: boolean = true) {
+
         if (this.initialized || this.IsFreeValue) {
             var invalidDate: boolean;
 
@@ -951,204 +758,117 @@ export class LogDatePickerComponent
                 var minute: number;
                 var second: number;
                 var dateparts = this.GetDateParts(date);
-                day = dateparts[2]; //date.getDate();
+                day = dateparts[2];//date.getDate();
                 month = dateparts[1] + 1; //date.getMonth() + 1;
-                year = dateparts[0]; //date.getFullYear();
+                year = dateparts[0];//date.getFullYear();
 
-                hour = dateparts[3]; //date.getHours();
-                minute = dateparts[4]; //date.getMinutes();
-                second = dateparts[5]; //date.getSeconds();
+                hour = dateparts[3];//date.getHours();
+                minute = dateparts[4];//date.getMinutes();
+                second = dateparts[5];//date.getSeconds();
 
-                this.DateValue =
-                    year +
-                    "/" +
-                    this.ApplyPadding(month.toString()) +
-                    "/" +
-                    this.ApplyPadding(day.toString());
-                this.TimeValue =
-                    this.ApplyPadding(hour.toString()) +
-                    ":" +
-                    this.ApplyPadding(minute.toString()) +
-                    ":" +
-                    this.ApplyPadding(second.toString());
 
-                var timearr = this.TimeValue.split(":");
-                var hourRes = this.GetTimeModeHours(
-                    Number(timearr[0]),
-                    timeSuffix
-                );
-                var hourResArr = hourRes.split(",");
-                if (this.TimeMode == "12") {
+                this.DateValue = year + '/' + this.ApplyPadding(month.toString()) + '/' + this.ApplyPadding(day.toString());
+                this.TimeValue = this.ApplyPadding(hour.toString()) + ':' + this.ApplyPadding(minute.toString()) + ':' + this.ApplyPadding(second.toString());
+
+
+                var timearr = this.TimeValue.split(':');
+                var hourRes = this.GetTimeModeHours(Number(timearr[0]), timeSuffix);
+                var hourResArr = hourRes.split(',');
+                if (this.TimeMode == '12') {
                     var tSuffix = hourResArr[1];
                     if (timeSuffix) {
                         tSuffix = timeSuffix;
                     }
-                    this.TimeValue =
-                        this.ApplyPadding(hourResArr[0]) +
-                        ":" +
-                        timearr[1] +
-                        ":" +
-                        timearr[2] +
-                        " " +
-                        tSuffix;
-                } else {
-                    this.TimeValue =
-                        this.ApplyPadding(hourResArr[0]) +
-                        ":" +
-                        timearr[1] +
-                        ":" +
-                        timearr[2];
+                    this.TimeValue = this.ApplyPadding(hourResArr[0]) + ':' + timearr[1] + ':' + timearr[2] + " " + tSuffix;
+                }
+                else {
+                    this.TimeValue = this.ApplyPadding(hourResArr[0]) + ':' + timearr[1] + ':' + timearr[2];
                 }
 
                 var datestring = this.DateValue + " " + this.TimeValue;
 
-                if (this.InputType == "date") {
-                    if (
-                        !AppTool.IsNullOrEmpty(
-                            SessionLocator.TenantPM.DateTimeFormat
-                        )
-                    ) {
-                        var myDateTimeFormatPrefix = SessionLocator.TenantPM.DateTimeFormat.toLowerCase().substring(
-                            0,
-                            2
-                        );
+                if (this.InputType == 'date') {
+                    if (!AppTool.IsNullOrEmpty(SessionLocator.TenantPM.DateTimeFormat)) {
+
+                        var myDateTimeFormatPrefix = SessionLocator.TenantPM.DateTimeFormat.toLowerCase().substring(0, 2);
 
                         if (myDateTimeFormatPrefix == "mm") {
-                            this.InputValue =
-                                this.ApplyPadding(month.toString()) +
-                                "/" +
-                                this.ApplyPadding(day.toString()) +
-                                "/" +
-                                year;
-                        } else {
-                            this.InputValue =
-                                this.ApplyPadding(day.toString()) +
-                                "/" +
-                                this.ApplyPadding(month.toString()) +
-                                "/" +
-                                year;
+                            this.InputValue = this.ApplyPadding(month.toString()) + '/' + this.ApplyPadding(day.toString()) + '/' + year;
                         }
-                    } else {
-                        this.InputValue =
-                            this.ApplyPadding(day.toString()) +
-                            "/" +
-                            this.ApplyPadding(month.toString()) +
-                            "/" +
-                            year;
+
+                        else {
+                            this.InputValue = this.ApplyPadding(day.toString()) + '/' + this.ApplyPadding(month.toString()) + '/' + year;
+                        }
                     }
-                } else {
-                    var timeArray = this.TimeValue.split(":");
-                    if (
-                        this.TimeValue.indexOf("AM") > -1 ||
-                        this.TimeValue.indexOf("PM") > -1
-                    ) {
+
+                    else {
+                        this.InputValue = this.ApplyPadding(day.toString()) + '/' + this.ApplyPadding(month.toString()) + '/' + year;
+                    }
+                }
+                else {
+                    var timeArray = this.TimeValue.split(':');
+                    if (this.TimeValue.indexOf("AM") > -1 || this.TimeValue.indexOf("PM") > -1) {
                         var secondsWithsuffix = timeArray[2].split(" ");
                         var suffix = secondsWithsuffix[1];
 
-                        this.InputValue =
-                            this.ApplyPadding(timeArray[0]) +
-                            ":" +
-                            timeArray[1] +
-                            " " +
-                            suffix;
-                    } else {
-                        this.InputValue =
-                            this.ApplyPadding(timeArray[0]) +
-                            ":" +
-                            timeArray[1]; //this.TimeValue;
+                        this.InputValue = this.ApplyPadding(timeArray[0]) + ':' + timeArray[1] + ' ' + suffix;
+                    }
+                    else {
+                        this.InputValue = this.ApplyPadding(timeArray[0]) + ':' + timeArray[1];//this.TimeValue;
                     }
                 }
                 var dateval: Date = this.GetDateFromString(datestring);
 
+
                 var dateparts = this.GetDateParts(dateval);
-                this.SelectedDate = this.GetDate(
-                    dateparts[0],
-                    dateparts[1],
-                    dateparts[2],
-                    dateparts[3],
-                    dateparts[4],
-                    dateparts[5]
-                );
+                this.SelectedDate = this.GetDate(dateparts[0], dateparts[1], dateparts[2], dateparts[3], dateparts[4], dateparts[5]);
                 if (setDataContext == true) {
                     if (this.ObjectField && this.ObjectField.IsCustom) {
-                        var customFieldClass: CustomFieldClass = this
-                            .DataContext[this.ObjectFieldName];
-                        if (
-                            customFieldClass != null &&
-                            customFieldClass != undefined
-                        ) {
-                            customFieldClass.Value = customFieldClass.SetFieldDataType(
-                                this.ObjectField,
-                                this.SelectedDate
-                            );
-                        } else {
-                            console.warn(
-                                "Custom Fields are not implemented in: " +
-                                this.ObjectTableName
-                            );
+                        var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
+                        if (customFieldClass != null && customFieldClass != undefined) {
+                            customFieldClass.Value = customFieldClass.SetFieldDataType(this.ObjectField, this.SelectedDate);
+                        }
+                        else {
+                            console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
                         }
 
-                        this.DataContext[
-                            this.ObjectFieldName
-                        ] = customFieldClass;
-                    } else {
-                        this.DataContext[
-                            this.ObjectFieldName
-                        ] = this.SelectedDate;
+                        this.DataContext[this.ObjectFieldName] = customFieldClass;
                     }
+                    else {
+                        this.DataContext[this.ObjectFieldName] = this.SelectedDate;
+                    }
+
                 }
 
-                var dateUiProp = this.DataContext.UIProperties.GetUIProperty(
-                    this.ObjectFieldName,
-                    this.ObjectTableName,
-                    this.DataContext
-                );
-                var timeUiProp = this.DataContext.UIProperties.GetUIProperty(
-                    this.ObjectFieldName + "_timepicker",
-                    this.ObjectTableName,
-                    this.DataContext
-                );
+                var dateUiProp = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
+                var timeUiProp = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName + '_timepicker', this.ObjectTableName, this.DataContext);
                 timeUiProp.UIPropertyChanged.emit("datevaluechanges");
                 dateUiProp.UIPropertyChanged.emit("datevaluechanges");
                 this.SetValidity(true, null);
                 this.ValidateField();
-            } else {
+            }
+            else {
                 this.SelectedDate = null;
                 this.InputValue = null;
                 this.TimeValue = null;
                 if (this.ObjectField && this.ObjectField.IsCustom) {
-                    var customFieldClass: CustomFieldClass = this.DataContext[
-                        this.ObjectFieldName
-                    ];
-                    if (
-                        customFieldClass != null &&
-                        customFieldClass != undefined
-                    ) {
+                    var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
+                    if (customFieldClass != null && customFieldClass != undefined) {
                         customFieldClass.Value = null;
-                        this.DataContext[
-                            this.ObjectFieldName
-                        ] = customFieldClass;
-                    } else {
-                        console.warn(
-                            "Custom Fields are not implemented in: " +
-                            this.ObjectTableName
-                        );
+                        this.DataContext[this.ObjectFieldName] = customFieldClass;
                     }
-                } else {
+                    else {
+                        console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
+                    }
+
+                }
+                else {
                     this.DataContext[this.ObjectFieldName] = null;
                 }
 
                 this.ValidateField();
-                var dateUiProp = this.DataContext.UIProperties.GetUIProperty(
-                    this.ObjectFieldName,
-                    this.ObjectTableName,
-                    this.DataContext
-                );
-                var timeUiProp = this.DataContext.UIProperties.GetUIProperty(
-                    this.ObjectFieldName + "_timepicker",
-                    this.ObjectTableName,
-                    this.DataContext
-                );
+                var dateUiProp = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
+                var timeUiProp = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName + '_timepicker', this.ObjectTableName, this.DataContext);
                 if (timeUiProp != null && timeUiProp != undefined) {
                     timeUiProp.UIPropertyChanged.emit("datevaluechanges");
                 }
@@ -1177,138 +897,84 @@ export class LogDatePickerComponent
                 minute = date.getMinutes();
                 second = 0;
 
-                //this.DateValue = year + '/' + this.ApplyPadding(month.toString()) + '/' + this.ApplyPadding(day.toString());
-                this.TimeValue =
-                    this.ApplyPadding(hour.toString()) +
-                    ":" +
-                    this.ApplyPadding(minute.toString()) +
-                    ":" +
-                    this.ApplyPadding(second.toString());
 
-                var timearr = this.TimeValue.split(":");
-                var hourRes = this.GetTimeModeHours(
-                    Number(timearr[0]),
-                    timeSuffix
-                );
-                var hourResArr = hourRes.split(",");
-                if (this.TimeMode == "12") {
+                //this.DateValue = year + '/' + this.ApplyPadding(month.toString()) + '/' + this.ApplyPadding(day.toString());
+                this.TimeValue = this.ApplyPadding(hour.toString()) + ':' + this.ApplyPadding(minute.toString()) + ':' + this.ApplyPadding(second.toString());
+
+
+                var timearr = this.TimeValue.split(':');
+                var hourRes = this.GetTimeModeHours(Number(timearr[0]), timeSuffix);
+                var hourResArr = hourRes.split(',');
+                if (this.TimeMode == '12') {
                     var tSuffix = hourResArr[1];
                     if (timeSuffix) {
                         tSuffix = timeSuffix;
                     }
-                    this.TimeValue =
-                        this.ApplyPadding(hourResArr[0]) +
-                        ":" +
-                        timearr[1] +
-                        ":" +
-                        timearr[2] +
-                        " " +
-                        tSuffix;
-                } else {
-                    this.TimeValue =
-                        this.ApplyPadding(hourResArr[0]) +
-                        ":" +
-                        timearr[1] +
-                        ":" +
-                        timearr[2];
+                    this.TimeValue = this.ApplyPadding(hourResArr[0]) + ':' + timearr[1] + ':' + timearr[2] + " " + tSuffix;
+                }
+                else {
+                    this.TimeValue = this.ApplyPadding(hourResArr[0]) + ':' + timearr[1] + ':' + timearr[2];
                 }
 
                 var datestring = this.DateValue + " " + this.TimeValue;
                 //console.log("DATETIME: ", datestring);
 
-                var timeArray = this.TimeValue.split(":");
-                if (
-                    this.TimeValue.indexOf("AM") > -1 ||
-                    this.TimeValue.indexOf("PM") > -1
-                ) {
+                var timeArray = this.TimeValue.split(':');
+                if (this.TimeValue.indexOf("AM") > -1 || this.TimeValue.indexOf("PM") > -1) {
                     var secondsWithsuffix = timeArray[2].split(" ");
                     var suffix = secondsWithsuffix[1];
 
-                    this.InputValue =
-                        this.ApplyPadding(timeArray[0]) +
-                        ":" +
-                        timeArray[1] +
-                        " " +
-                        suffix;
-                } else {
-                    this.InputValue =
-                        this.ApplyPadding(timeArray[0]) + ":" + timeArray[1]; //this.TimeValue;
+                    this.InputValue = this.ApplyPadding(timeArray[0]) + ':' + timeArray[1] + ' ' + suffix;
+                }
+                else {
+                    this.InputValue = this.ApplyPadding(timeArray[0]) + ':' + timeArray[1];//this.TimeValue;
                 }
 
                 // this.InputValue = this.TimeValue;
 
                 var dateval: Date = this.GetDateFromString(datestring);
 
+
                 var dateparts = this.GetDateParts(dateval);
-                this.SelectedDate = this.GetDate(
-                    dateparts[0],
-                    dateparts[1],
-                    dateparts[2],
-                    dateparts[3],
-                    dateparts[4],
-                    dateparts[5]
-                );
+                this.SelectedDate = this.GetDate(dateparts[0], dateparts[1], dateparts[2], dateparts[3], dateparts[4], dateparts[5]);
                 if (this.ObjectField && this.ObjectField.IsCustom) {
-                    var customFieldClass: CustomFieldClass = this.DataContext[
-                        this.ObjectFieldName
-                    ];
-                    if (
-                        customFieldClass != null &&
-                        customFieldClass != undefined
-                    ) {
-                        customFieldClass.Value = customFieldClass.SetFieldDataType(
-                            this.ObjectField,
-                            this.SelectedDate
-                        );
-                    } else {
-                        console.warn(
-                            "Custom Fields are not implemented in: " +
-                            this.ObjectTableName
-                        );
+                    var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
+                    if (customFieldClass != null && customFieldClass != undefined) {
+                        customFieldClass.Value = customFieldClass.SetFieldDataType(this.ObjectField, this.SelectedDate);
+                    }
+                    else {
+                        console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
                     }
 
                     this.DataContext[this.ObjectFieldName] = customFieldClass;
-                } else {
+                }
+                else {
                     this.DataContext[this.ObjectFieldName] = this.SelectedDate;
                 }
                 this.SetValidity(true, null);
                 this.ValidateField();
-                var timeUiProp = this.DataContext.UIProperties.GetUIProperty(
-                    this.ObjectFieldName + "_timepicker",
-                    this.ObjectTableName,
-                    this.DataContext
-                );
+                var timeUiProp = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName + '_timepicker', this.ObjectTableName, this.DataContext);
                 timeUiProp.UIPropertyChanged.emit("datevaluechanges");
                 this.uiProperty.UIPropertyChanged.emit("datevaluechanges");
-            } else {
+            }
+            else {
                 this.SelectedDate = null;
                 if (this.ObjectField && this.ObjectField.IsCustom) {
-                    var customFieldClass: CustomFieldClass = this.DataContext[
-                        this.ObjectFieldName
-                    ];
-                    if (
-                        customFieldClass != null &&
-                        customFieldClass != undefined
-                    ) {
+                    var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
+                    if (customFieldClass != null && customFieldClass != undefined) {
                         customFieldClass.Value = null;
-                        this.DataContext[
-                            this.ObjectFieldName
-                        ] = customFieldClass;
-                    } else {
-                        console.warn(
-                            "Custom Fields are not implemented in: " +
-                            this.ObjectTableName
-                        );
+                        this.DataContext[this.ObjectFieldName] = customFieldClass;
                     }
-                } else {
+                    else {
+                        console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
+                    }
+
+                }
+                else {
                     this.DataContext[this.ObjectFieldName] = null;
                 }
                 this.ValidateField();
-                var timeUiProp = this.DataContext.UIProperties.GetUIProperty(
-                    this.ObjectFieldName + "_timepicker",
-                    this.ObjectTableName,
-                    this.DataContext
-                );
+                var timeUiProp = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName + '_timepicker', this.ObjectTableName, this.DataContext);
                 timeUiProp.UIPropertyChanged.emit("datevaluechanges");
                 this.uiProperty.UIPropertyChanged.emit("datevaluechanges");
             }
@@ -1321,119 +987,102 @@ export class LogDatePickerComponent
                 this.TimeValue = "00:00:00";
             }
             var suffix = null;
-            if (
-                this.TimeValue.indexOf("AM") > -1 ||
-                this.TimeValue.indexOf("PM") > -1
-            ) {
-                suffix = this.TimeValue.split(" ")[1];
-                this.TimeValue = this.TimeValue.split(" ")[0];
+            if (this.TimeValue.indexOf('AM') > -1 || this.TimeValue.indexOf('PM') > -1) {
+                suffix = this.TimeValue.split(' ')[1];
+                this.TimeValue = this.TimeValue.split(' ')[0];
             }
-            var timearr = this.TimeValue.split(":");
-            var hour = 0; // Number(timearr[0]);
+            var timearr = this.TimeValue.split(':');
+            var hour = 0;// Number(timearr[0]);
             if (suffix != null) {
                 hour = this.GetTimeFor24Mode(Number(timearr[0]), suffix);
-            } else {
+            }
+            else {
                 hour = Number(timearr[0]);
             }
             var minute = Number(timearr[1]);
             var second = Number(timearr[2]);
             var todayDateTime: Date = this.GetTodaysDate();
             var dateparts = this.GetDateParts(todayDateTime);
-            var date: Date = this.GetDate(
-                dateparts[0],
-                dateparts[1],
-                dateparts[2],
-                hour,
-                minute,
-                second
-            );
+            var date: Date = this.GetDate(dateparts[0], dateparts[1], dateparts[2], hour, minute, second);
             var invalidText: boolean = false;
             var invalidDate: boolean = false;
-            var errorMessage: string = "";
+            var errorMessage: string = '';
             var val = this.InputValue.trim();
             if (val.length > 10) {
                 invalidText = true;
+
             }
 
             if (!invalidText) {
                 if (this.InputValue.trim() == ".") {
                     this.SetDateValue(date);
-                } else if (
-                    this.InputValue.indexOf("+") == 0 ||
-                    this.InputValue.indexOf("-") == 0
-                ) {
+                }
+                else if ((this.InputValue.indexOf("+") == 0 || this.InputValue.indexOf("-") == 0)) {
                     if (this.InputValue.length > 1) {
                         var days = 0;
                         var sign = this.InputValue.substring(0, 1);
-                        var daysString = this.InputValue.substring(
-                            1,
-                            this.InputValue.length
-                        );
+                        var daysString = this.InputValue.substring(1, this.InputValue.length);
 
                         if (sign == "+") {
                             days = Number(daysString);
                             if (days) {
                                 date.setDate(date.getDate() + days);
-                            } else {
-                                invalidText = true;
                             }
-                        } else if (sign == "-") {
-                            days = Number(daysString);
-                            if (days) {
-                                date.setDate(date.getDate() - days);
-                            } else {
+                            else {
                                 invalidText = true;
                             }
                         }
+                        else if (sign == "-") {
+                            days = Number(daysString);
+                            if (days) {
+                                date.setDate(date.getDate() - days);
+                            }
+                            else {
+                                invalidText = true;
+                            }
+                        }
+
                     }
                     if (!invalidText) {
+
                         this.SetDateValue(date);
                     }
-                } else if (
-                    (this.InputValue != "." &&
-                        this.InputValue.indexOf(".") > -1) ||
-                    (this.InputValue != "/" &&
-                        this.InputValue.indexOf("/") > -1) ||
-                    (this.InputValue != "-" &&
-                        this.InputValue.indexOf("-") > -1)
-                ) {
+                }
+                else if ((this.InputValue != "." && this.InputValue.indexOf(".") > -1) || (this.InputValue != "/" && this.InputValue.indexOf("/") > -1) || (this.InputValue != "-" && this.InputValue.indexOf("-") > -1)) {
                     var nowDate: Date = this.GetTodaysDate();
                     var dateStrings: string[];
                     if (this.InputValue.indexOf(".") > -1) {
-                        dateStrings = this.InputValue.split(".");
-                    } else if (this.InputValue.indexOf("-") > -1) {
-                        dateStrings = this.InputValue.split("-");
-                    } else {
-                        dateStrings = this.InputValue.split("/");
+                        dateStrings = this.InputValue.split('.');
+                    }
+                    else if (this.InputValue.indexOf("-") > -1) {
+                        dateStrings = this.InputValue.split('-');
+                    }
+                    else {
+                        dateStrings = this.InputValue.split('/');
                     }
                     var nowdateparts = this.GetDateParts(nowDate);
                     var day;
                     var month;
                     var year;
-                    var currentYear = nowdateparts[0]; //nowDate.getFullYear();
-                    var currentMonth = nowdateparts[1] + 1; //nowDate.getMonth() + 1;
-                    var currentYearMillinium = currentYear
-                        .toString()
-                        .substring(0, 1);
+                    var currentYear = nowdateparts[0];//nowDate.getFullYear();
+                    var currentMonth = nowdateparts[1] + 1;//nowDate.getMonth() + 1;
+                    var currentYearMillinium = currentYear.toString().substring(0, 1);
                     currentYearMillinium = currentYearMillinium + "000";
                     var currentMillinium = Number(currentYearMillinium);
 
                     if (dateStrings.length == 3) {
-                        if (
-                            dateStrings[0].length > 2 &&
-                            dateStrings[2].length <= 2
-                        ) {
+                        if (dateStrings[0].length > 2 && dateStrings[2].length <= 2) {
                             year = Number(dateStrings[0]);
                             month = Number(dateStrings[1]);
                             day = Number(dateStrings[2]);
-                        } else if (
-                            dateStrings[2].length >= 2 &&
-                            dateStrings[0].length <= 2
-                        ) {
+                        }
+                        else if (dateStrings[2].length >= 2 && dateStrings[0].length <= 2) {
                             day = Number(dateStrings[0]);
                             month = Number(dateStrings[1]);
                             year = Number(dateStrings[2]);
-                        } else {
+                        }
+
+                        else {
                             invalidText = true;
                         }
 
@@ -1448,17 +1097,11 @@ export class LogDatePickerComponent
                             invalidText = true;
                         }
                         if (!invalidText) {
-                            var datetime: Date = this.GetDate(
-                                year,
-                                month - 1,
-                                day,
-                                hour,
-                                minute,
-                                second
-                            );
+                            var datetime: Date = this.GetDate(year, month - 1, day, hour, minute, second);
                             this.SetDateValue(datetime);
                         }
-                    } else if (dateStrings.length == 2) {
+                    }
+                    else if (dateStrings.length == 2) {
                         day = Number(dateStrings[0]);
                         month = Number(dateStrings[1]);
 
@@ -1469,34 +1112,24 @@ export class LogDatePickerComponent
                             invalidText = true;
                         }
                         if (!invalidText) {
-                            var datetime: Date = this.GetDate(
-                                currentYear,
-                                month - 1,
-                                day,
-                                hour,
-                                minute,
-                                second
-                            );
+                            var datetime: Date = this.GetDate(currentYear, month - 1, day, hour, minute, second);
                             this.SetDateValue(datetime);
                         }
-                    } else if (dateStrings.length == 1) {
+                    }
+                    else if (dateStrings.length == 1) {
                         day = Number(dateStrings[0]);
                         if (day > 31) {
                             invalidText = true;
                         }
                         if (!invalidText) {
-                            var datetime: Date = this.GetDate(
-                                currentYear,
-                                currentMonth,
-                                day,
-                                hour,
-                                minute,
-                                second
-                            );
+                            var datetime: Date = this.GetDate(currentYear, currentMonth, day, hour, minute, second);
                             this.SetDateValue(datetime);
                         }
+
                     }
-                } else {
+
+                }
+                else {
                     var valid = Number(this.InputValue);
                     if (valid) {
                         var nowdateparts = this.GetDateParts(date);
@@ -1506,13 +1139,12 @@ export class LogDatePickerComponent
                         var dayString;
                         var monthString;
                         var yearString;
-                        var currentYear = nowdateparts[0]; //date.getFullYear();
-                        var currentMonth = nowdateparts[1] + 1; //date.getMonth() + 1;
-                        var currentYearMillinium = currentYear
-                            .toString()
-                            .substring(0, 1);
+                        var currentYear = nowdateparts[0];//date.getFullYear();
+                        var currentMonth = nowdateparts[1] + 1;//date.getMonth() + 1;
+                        var currentYearMillinium = currentYear.toString().substring(0, 1);
                         currentYearMillinium = currentYearMillinium + "000";
                         var currentMillinium = Number(currentYearMillinium);
+
 
                         if (this.InputValue.length == 8) {
                             //01082016
@@ -1525,13 +1157,12 @@ export class LogDatePickerComponent
 
                             if (day > 31) {
                                 invalidText = true;
-                                errorMessage =
-                                    "Invalid day, day must be between 01 and 31";
+                                errorMessage = "Invalid day, day must be between 01 and 31";
+
                             }
                             if (month > 12) {
                                 invalidText = true;
-                                errorMessage =
-                                    "Invalid month, month must be between 01 and 12";
+                                errorMessage = "Invalid month, month must be between 01 and 12";
                             }
 
                             //calculating year
@@ -1542,27 +1173,19 @@ export class LogDatePickerComponent
                                 year = year + currentMillinium;
                             }
 
-                            if (
-                                year < currentYear - 100 ||
-                                year > currentYear + 100
-                            ) {
+                            if (year < currentYear - 100 || year > currentYear + 100) {
                                 invalidText = true;
-                                errorMessage =
-                                    "Please Enter More Suitable Year";
+                                errorMessage = "Please Enter More Suitable Year";
                             }
 
+
                             if (!invalidText) {
-                                var datetime: Date = this.GetDate(
-                                    year,
-                                    month - 1,
-                                    day,
-                                    hour,
-                                    minute,
-                                    second
-                                );
+                                var datetime: Date = this.GetDate(year, month - 1, day, hour, minute, second);
                                 this.SetDateValue(datetime);
                             }
-                        } else if (this.InputValue.length == 6) {
+                        }
+
+                        else if (this.InputValue.length == 6) {
                             //010816
 
                             dayString = this.InputValue.substring(0, 2);
@@ -1583,34 +1206,24 @@ export class LogDatePickerComponent
                             if (day > 31) {
                                 invalidText = true;
                                 errorMessage = "Invalid day, day must be between 01 and 31";
+
                             }
                             if (month > 12) {
                                 invalidText = true;
-                                errorMessage =
-                                    "Invalid month, month must be between 01 and 12";
+                                errorMessage = "Invalid month, month must be between 01 and 12";
                             }
 
-                            if (
-                                year < currentYear - 100 ||
-                                year > currentYear + 100
-                            ) {
+                            if (year < currentYear - 100 || year > currentYear + 100) {
                                 invalidText = true;
-                                errorMessage =
-                                    "Please Enter More Suitable Year";
+                                errorMessage = "Please Enter More Suitable Year";
                             }
 
                             if (!invalidText) {
-                                var datetime: Date = this.GetDate(
-                                    year,
-                                    month - 1,
-                                    day,
-                                    hour,
-                                    minute,
-                                    second
-                                );
+                                var datetime: Date = this.GetDate(year, month - 1, day, hour, minute, second);
                                 this.SetDateValue(datetime);
                             }
-                        } else if (this.InputValue.length == 4) {
+                        }
+                        else if (this.InputValue.length == 4) {
                             //0206
                             dayString = this.InputValue.substring(0, 2);
                             monthString = this.InputValue.substring(2, 4);
@@ -1619,96 +1232,82 @@ export class LogDatePickerComponent
 
                             if (day > 31) {
                                 invalidText = true;
-                                errorMessage =
-                                    "Invalid day, day must be between 01 and 31";
+                                errorMessage = "Invalid day, day must be between 01 and 31";
+
                             }
                             if (month > 12) {
                                 invalidText = true;
-                                errorMessage =
-                                    "Invalid month, month must be between 01 and 12";
+                                errorMessage = "Invalid month, month must be between 01 and 12";
                             }
 
                             if (!invalidText) {
-                                var datetime: Date = this.GetDate(
-                                    currentYear,
-                                    month - 1,
-                                    day,
-                                    hour,
-                                    minute,
-                                    second
-                                );
+                                var datetime: Date = this.GetDate(currentYear, month - 1, day, hour, minute, second);
                                 this.SetDateValue(datetime);
                             }
-                        } else if (this.InputValue.length == 2) {
+                        }
+                        else if (this.InputValue.length == 2) {
+
                             var dayDigits = 2;
                             dayString = this.InputValue.substring(0, 2);
                             day = Number(dayString);
 
                             if (day > 31) {
                                 invalidText = true;
-                                errorMessage =
-                                    "Invalid day, day must be between 01 and 31";
+                                errorMessage = "Invalid day, day must be between 01 and 31";
                             }
 
                             if (!invalidText) {
-                                var datetime: Date = this.GetDate(
-                                    currentYear,
-                                    currentMonth - 1,
-                                    day,
-                                    hour,
-                                    minute,
-                                    second
-                                );
+                                var datetime: Date = this.GetDate(currentYear, currentMonth - 1, day, hour, minute, second);
                                 this.SetDateValue(datetime);
                             }
-                        } else if (this.InputValue.length == 1) {
+                        }
+                        else if (this.InputValue.length == 1) {
                             dayString = this.InputValue;
                             day = Number(dayString);
                             if (day != 0) {
                                 if (!invalidText) {
-                                    var datetime: Date = this.GetDate(
-                                        currentYear,
-                                        currentMonth - 1,
-                                        day,
-                                        hour,
-                                        minute,
-                                        second
-                                    );
+                                    var datetime: Date = this.GetDate(currentYear, currentMonth - 1, day, hour, minute, second);
                                     this.SetDateValue(datetime);
                                 }
                             }
-                        } else {
+                        }
+                        else {
                             invalidText = true;
                         }
-                    } else {
+
+
+
+                    }
+                    else {
                         invalidText = true;
                     }
                 }
+
+
             }
-        } else {
+
+
+        }
+        else {
             this.SetDateValue(null);
         }
         if (!invalidText) {
             if (this.SelectedDate) {
-                if (
-                    this.SelectedDate.getFullYear() <
-                    new Date().getFullYear() - 100
-                ) {
+                if (this.SelectedDate.getFullYear() < new Date().getFullYear() - 100) {
                     invalidDate = true;
-                    errorMessage = "Date time is too way in the past!"; //yet to be translated.
+                    errorMessage = "Date time is too way in the past!";;//yet to be translated.
                 }
             }
         }
 
         if (invalidText || invalidDate) {
-            if (errorMessage == "") {
+            if (errorMessage == '') {
                 //errorMessage = 'Invalid Input';//yet to be translated.
-                errorMessage = TextCodeTranslator.Translate(
-                    "General.O.InvalidInput"
-                );
+                errorMessage = TextCodeTranslator.Translate("General.O.InvalidInput");
             }
             this.SetValidity(false, errorMessage);
-        } else {
+        }
+        else {
             this.SetValidity(true, null);
         }
         this.isTextChanged = false;
@@ -1722,7 +1321,8 @@ export class LogDatePickerComponent
             var date: Date;
             if (this.DateValue) {
                 date = this.GetDateFromString(this.DateValue);
-            } else {
+            }
+            else {
                 date = this.GetTodaysDate();
             }
 
@@ -1731,73 +1331,68 @@ export class LogDatePickerComponent
             var month: number;
             var year: number;
 
-            day = dateparts[2]; //date.getDate();
-            month = dateparts[1] + 1; //date.getMonth() + 1;
-            year = dateparts[0]; // date.getFullYear();
+            day = dateparts[2];//date.getDate();
+            month = dateparts[1] + 1;//date.getMonth() + 1;
+            year = dateparts[0];// date.getFullYear();
 
             var invalidText: boolean = false;
             var suffix: string;
-            if (this.InputValue.toLowerCase().indexOf("m") > -1) {
-                if (this.InputValue.toLowerCase().indexOf("p") > -1) {
-                    suffix = "PM";
-                } else {
-                    suffix = "AM";
+            if (this.InputValue.toLowerCase().indexOf('m') > -1) {
+                if (this.InputValue.toLowerCase().indexOf('p') > -1) {
+                    suffix = 'PM';
                 }
-                this.InputValue = this.InputValue.substring(
-                    0,
-                    this.InputValue.toLowerCase().indexOf("m") - 1
-                );
+                else {
+                    suffix = 'AM';
+                }
+                this.InputValue = this.InputValue.substring(0, this.InputValue.toLowerCase().indexOf('m') - 1);
+
             }
-            if (
-                this.InputValue.indexOf("+") == 0 ||
-                this.InputValue.indexOf("-") == 0
-            ) {
+            if ((this.InputValue.indexOf("+") == 0 || this.InputValue.indexOf("-") == 0)) {
                 if (this.InputValue.length > 1) {
                     var hours = 0;
                     var sign = this.InputValue.substring(0, 1);
-                    var hoursString = this.InputValue.substring(
-                        1,
-                        this.InputValue.length
-                    );
+                    var hoursString = this.InputValue.substring(1, this.InputValue.length);
 
                     if (sign == "+") {
                         hours = Number(hoursString);
                         if (hours) {
                             var haha = date.getTime();
-                            date.setTime(
-                                date.getTime() + hours * 60 * 60 * 1000
-                            );
-                        } else {
-                            invalidText = true;
+                            date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
                         }
-                    } else if (sign == "-") {
-                        hours = Number(hoursString);
-                        if (hours) {
-                            date.setTime(
-                                date.getTime() - hours * 60 * 60 * 1000
-                            );
-                        } else {
+                        else {
                             invalidText = true;
                         }
                     }
+                    else if (sign == "-") {
+                        hours = Number(hoursString);
+                        if (hours) {
+                            date.setTime(date.getTime() - (hours * 60 * 60 * 1000));
+                        }
+                        else {
+                            invalidText = true;
+                        }
+                    }
+
                 }
                 this.SetDateValue(date, suffix);
-            } else if (
-                (this.InputValue != "." && this.InputValue.indexOf(".") > -1) ||
-                (this.InputValue != "/" && this.InputValue.indexOf("/") > -1) ||
-                (this.InputValue != "-" && this.InputValue.indexOf("-") > -1) ||
-                (this.InputValue != ":" && this.InputValue.indexOf(":") > -1)
-            ) {
+            }
+
+            else if ((this.InputValue != "." && this.InputValue.indexOf(".") > -1) || (this.InputValue != "/" && this.InputValue.indexOf("/") > -1)
+                || (this.InputValue != "-" && this.InputValue.indexOf("-") > -1) || (this.InputValue != ":" && this.InputValue.indexOf(":") > -1)) {
+
                 var dateStrings: string[];
 
                 if (this.InputValue.indexOf(".") > -1) {
-                    dateStrings = this.InputValue.split(".");
-                } else if (this.InputValue.indexOf("-") > -1) {
-                    dateStrings = this.InputValue.split("-");
-                } else if (this.InputValue.indexOf(":") > -1) {
-                    dateStrings = this.InputValue.split(":");
-                } else {
-                    dateStrings = this.InputValue.split("/");
+                    dateStrings = this.InputValue.split('.');
+                }
+                else if (this.InputValue.indexOf("-") > -1) {
+                    dateStrings = this.InputValue.split('-');
+                }
+                else if (this.InputValue.indexOf(":") > -1) {
+                    dateStrings = this.InputValue.split(':');
+                }
+                else {
+                    dateStrings = this.InputValue.split('/');
                 }
 
                 var hour;
@@ -1812,10 +1407,14 @@ export class LogDatePickerComponent
                     hour = Number(dateStrings[0]);
                     minute = Number(dateStrings[1]);
                     second = Number(dateStrings[2]);
-                } else if (dateStrings.length == 2) {
+                }
+
+                else if (dateStrings.length == 2) {
                     hour = Number(dateStrings[0]);
                     minute = Number(dateStrings[1]);
-                } else if (dateStrings.length == 1) {
+                }
+
+                else if (dateStrings.length == 1) {
                     hour = Number(dateStrings[0]);
                 }
 
@@ -1825,21 +1424,13 @@ export class LogDatePickerComponent
 
                 if (!invalidText) {
                     var dateparts = this.GetDateParts(date);
-                    var datetime: Date = this.GetDate(
-                        dateparts[0],
-                        dateparts[1],
-                        dateparts[2],
-                        hour,
-                        minute,
-                        second
-                    );
-                    if (datetime.toString() == "Invalid Date") {
-                        invalidText = true;
-                    } else {
-                        this.SetDateValue(datetime, suffix);
-                    }
+                    var datetime: Date = this.GetDate(dateparts[0], dateparts[1], dateparts[2], hour, minute, second);
+                    this.SetDateValue(datetime, suffix);
                 }
-            } else {
+
+            }
+
+            else {
                 var valid = Number(this.InputValue);
                 if (valid) {
                     var hour;
@@ -1862,22 +1453,14 @@ export class LogDatePickerComponent
                         }
 
                         if (!invalidText) {
-                            var datetime: Date = this.GetDate(
-                                year,
-                                month - 1,
-                                day,
-                                hour,
-                                minute,
-                                second
-                            );
-                            if (datetime.toString() == "Invalid Date") {
-                                invalidText = true;
-                            } else {
-                                this.SetDateValue(datetime, suffix);
-                            }
-                            //this.SetDateValue(datetime, suffix);
+                            var datetime: Date = this.GetDate(year, month - 1, day, hour, minute, second);
+                            this.SetDateValue(datetime, suffix);
                         }
-                    } else if (this.InputValue.length == 5) {
+
+                    }
+
+                    else if (this.InputValue.length == 5) {
+
                         hourString = this.InputValue.substring(0, 2);
                         minuteString = this.InputValue.substring(2, 4);
                         secondString = this.InputValue.substring(4, 5);
@@ -1899,25 +1482,14 @@ export class LogDatePickerComponent
                         }
 
                         if (!invalidText) {
-                            var datetime: Date = this.GetDate(
-                                year,
-                                month - 1,
-                                day,
-                                hour,
-                                minute,
-                                second
-                            );
-                            if (datetime.toString() == "Invalid Date") {
-                                invalidText = true;
-                            } else {
-                                this.SetDateValue(datetime, suffix);
-                            }
-                            //this.SetDateValue(datetime, suffix);
+                            var datetime: Date = this.GetDate(year, month - 1, day, hour, minute, second);
+                            this.SetDateValue(datetime, suffix);
                         }
-                    } else if (this.InputValue.length == 4) {
+                    }
+                    else if (this.InputValue.length == 4) {
                         hourString = this.InputValue.substring(0, 2);
                         minuteString = this.InputValue.substring(2, 4);
-                        secondString = "0";
+                        secondString = '0';
                         hour = Number(hourString);
                         minute = Number(minuteString);
                         second = Number(secondString);
@@ -1937,7 +1509,8 @@ export class LogDatePickerComponent
                             if (hourDigitCount == 1) {
                                 minuteString = this.InputValue.substring(1, 2);
                                 secondString = this.InputValue.substring(2, 4);
-                            } else {
+                            }
+                            else {
                                 minuteString = this.InputValue.substring(2, 3);
                                 secondString = this.InputValue.substring(3, 4);
                             }
@@ -1952,25 +1525,14 @@ export class LogDatePickerComponent
                         }
 
                         if (!invalidText) {
-                            var datetime: Date = this.GetDate(
-                                year,
-                                month - 1,
-                                day,
-                                hour,
-                                minute,
-                                second
-                            );
-                            if (datetime.toString() == "Invalid Date") {
-                                invalidText = true;
-                            } else {
-                                this.SetDateValue(datetime, suffix);
-                            }
-                            //this.SetDateValue(datetime, suffix);
+                            var datetime: Date = this.GetDate(year, month - 1, day, hour, minute, second);
+                            this.SetDateValue(datetime, suffix);
                         }
-                    } else if (this.InputValue.length == 3) {
+                    }
+                    else if (this.InputValue.length == 3) {
                         hourString = this.InputValue.substring(0, 2);
                         minuteString = this.InputValue.substring(2, 3);
-                        secondString = "0"; //this.InputValue.substring(4, 5);
+                        secondString = '0';//this.InputValue.substring(4, 5);
 
                         hour = Number(hourString);
                         minute = Number(minuteString);
@@ -1993,24 +1555,14 @@ export class LogDatePickerComponent
                         second = Number(secondString);
 
                         if (!invalidText) {
-                            var datetime: Date = this.GetDate(
-                                year,
-                                month - 1,
-                                day,
-                                hour,
-                                minute,
-                                second
-                            );
-                            if (datetime.toString() == "Invalid Date") {
-                                invalidText = true;
-                            } else {
-                                this.SetDateValue(datetime, suffix);
-                            }
-                            //this.SetDateValue(datetime, suffix);
+                            var datetime: Date = this.GetDate(year, month - 1, day, hour, minute, second);
+                            this.SetDateValue(datetime, suffix);
                         }
-                    } else if (this.InputValue.length == 2) {
+                    }
+                    else if (this.InputValue.length == 2) {
+
                         hourString = this.InputValue.substring(0, 2);
-                        minuteString = "0";
+                        minuteString = '0';
                         hour = Number(hourString);
                         minute = Number(minuteString);
                         var hourDigitCount = 2;
@@ -2022,62 +1574,42 @@ export class LogDatePickerComponent
                         hour = Number(hourString);
                         minute = Number(minuteString);
                         if (!invalidText) {
-                            var datetime: Date = this.GetDate(
-                                year,
-                                month - 1,
-                                day,
-                                hour,
-                                minute,
-                                0
-                            );
-                            if (datetime.toString() == "Invalid Date") {
-                                invalidText = true;
-                            } else {
-                                this.SetDateValue(datetime, suffix);
-                            }
-                            //this.SetDateValue(datetime, suffix);
+                            var datetime: Date = this.GetDate(year, month - 1, day, hour, minute, 0);
+                            this.SetDateValue(datetime, suffix);
                         }
-                    } else if (this.InputValue.length == 1) {
+                    }
+                    else if (this.InputValue.length == 1) {
+
                         hourString = this.InputValue;
                         hour = Number(hourString);
 
                         if (!invalidText) {
-                            var datetime: Date = this.GetDate(
-                                year,
-                                month - 1,
-                                day,
-                                hour,
-                                0,
-                                0
-                            );
-                            if (datetime.toString() == "Invalid Date") {
-                                invalidText = true;
-                            } else {
-                                this.SetDateValue(datetime, suffix);
-                            }
-                            //this.SetDateValue(datetime, suffix);
+                            var datetime: Date = this.GetDate(year, month - 1, day, hour, 0, 0);
+                            this.SetDateValue(datetime, suffix);
                         }
-                    } else {
+                    }
+                    else {
                         invalidText = true;
                     }
-                } else {
+                }
+                else {
                     invalidText = true;
                 }
+
             }
         }
         if (invalidText) {
-            errorMessage = TextCodeTranslator.Translate(
-                "General.O.InvalidInput"
-            ); //'Invalid Input';
+            errorMessage = TextCodeTranslator.Translate("General.O.InvalidInput");//'Invalid Input';
             this.SetValidity(false, errorMessage);
-        } else {
+        }
+        else {
             this.SetValidity(true, null);
         }
     }
 
     ApplyPadding(str: string) {
-        var pad = "00";
-        var ans = pad.substring(0, pad.length - str.length) + str;
+        var pad = "00"
+        var ans = pad.substring(0, pad.length - str.length) + str
         return ans;
     }
 
@@ -2085,13 +1617,14 @@ export class LogDatePickerComponent
         if (isNaN(hours)) {
             hours = 0;
         }
-        if (this.TimeMode == "12") {
+        if (this.TimeMode == '12') {
             if (hours <= 11) {
                 if (hours == 0) {
                     hours = 12;
                 }
-                return hours.toString() + "," + "AM";
-            } else {
+                return hours.toString() + ',' + 'AM';
+            }
+            else {
                 var convHour;
                 switch (hours) {
                     case 12: {
@@ -2142,10 +1675,12 @@ export class LogDatePickerComponent
                         convHour = 11;
                         break;
                     }
+
                 }
-                return convHour.toString() + "," + "PM";
+                return convHour.toString() + ',' + 'PM';
             }
-        } else {
+        }
+        else {
             hours = this.GetTimeFor24Mode(hours, suffix);
         }
 
@@ -2155,7 +1690,7 @@ export class LogDatePickerComponent
     GetTimeFor24Mode(hours: number, suffix: string) {
         if (suffix) {
             var convHour;
-            if (suffix.toLowerCase() == "am") {
+            if (suffix.toLowerCase() == 'am') {
                 if (hours >= 12) {
                     switch (hours) {
                         case 12: {
@@ -2208,10 +1743,11 @@ export class LogDatePickerComponent
                         }
                     }
                     return convHour.toString();
+
                 }
                 return hours.toString();
             }
-            if (suffix.toLowerCase() == "pm") {
+            if (suffix.toLowerCase() == 'pm') {
                 if (hours < 12) {
                     switch (hours) {
                         case 0: {
@@ -2264,6 +1800,7 @@ export class LogDatePickerComponent
                         }
                     }
                     return convHour.toString();
+
                 }
                 return hours.toString();
             }
@@ -2273,21 +1810,23 @@ export class LogDatePickerComponent
 
     ToggleCalendar() {
         if (!this.IsCalendarOpen) {
-            if (this.InputType == "date") {
+            if (this.InputType == 'date') {
                 this.IsDateDropDownOpen = false;
                 this.IsDateDropDownOpen = true;
-            } else if (this.InputType == "time") {
-                this.IsTimeDropDownOpen = true;
+            }
+            else if (this.InputType == 'time') {
+                this.IsTimeDropDownOpen = true;;
             }
             this.IsCalendarOpen = true;
             //this.DatePickerCalendarStyle = {
             //    'visibility': 'visible'
             //};
-            this.CalendarButtonStyle = { background: "#808080" };
+            this.CalendarButtonStyle = { 'background': '#808080' };
 
             var inputElement = document.getElementById(this.DatePickerInputId);
             inputElement.focus();
-        } else {
+        }
+        else {
             this.IsDateDropDownOpen = false;
             this.IsTimeDropDownOpen = false;
             this.IsCalendarOpen = false;
@@ -2302,6 +1841,7 @@ export class LogDatePickerComponent
 
     OnMouseOver() {
         this.MouseInArea = true;
+
     }
 
     OnMouseOut() {
@@ -2329,11 +1869,12 @@ export class LogDatePickerComponent
         this.isSelectedFromPicker = true;
         var selectedDate = selectedDateObj.SelectedTime;
         this.SetDateValue(selectedDate, selectedDateObj.Suffix);
-        this.ToggleCalendar();
+        this.ToggleCalendar()
     }
 
     OnMouseWeel() {
-        if (this.IsCalendarOpen) this.ToggleCalendar();
+        if (this.IsCalendarOpen)
+            this.ToggleCalendar();
     }
 
     OnChange(event) {
@@ -2341,27 +1882,21 @@ export class LogDatePickerComponent
     }
 
     SetDisabled() {
-        var inputDiv = document.getElementById(this.InputDivId); //("DatePickerInputDiv");
+        var inputDiv = document.getElementById(this.InputDivId);//("DatePickerInputDiv");
         if (inputDiv != null && inputDiv != undefined) {
             inputDiv.classList.add("DatePickerInputDivDisabled");
         }
     }
 
+
     SetEnabled() {
-        var inputDiv = document.getElementById(this.InputDivId); //("DatePickerInputDiv");
+        var inputDiv = document.getElementById(this.InputDivId);//("DatePickerInputDiv");
         if (inputDiv != null && inputDiv != undefined) {
             inputDiv.classList.remove("DatePickerInputDivDisabled");
         }
     }
 
-    GetDate(
-        year: number,
-        month: number,
-        day: number,
-        hour: number,
-        minute: number,
-        second: number
-    ) {
+    GetDate(year: number, month: number, day: number, hour: number, minute: number, second: number) {
         var date: Date = new Date();
         date.setUTCDate(1);
         date.setUTCFullYear(year);
@@ -2381,18 +1916,21 @@ export class LogDatePickerComponent
         //console.log("this is the date string that arrived " + datestring);
         var dateAndTime: string[];
         var suffix: string;
-        if (datestring.indexOf("T") > -1) {
-            dateAndTime = datestring.split("T");
-        } else {
-            dateAndTime = datestring.split(" ");
+        if (datestring.indexOf('T') > -1) {
+            dateAndTime = datestring.split('T');
+        }
+        else {
+            dateAndTime = datestring.split(' ');
         }
         var dateArray: string[];
-        if (dateAndTime[0].indexOf("/") > -1) {
-            dateArray = dateAndTime[0].split("/");
-        } else if (dateAndTime[0].indexOf("-") > -1) {
-            dateArray = dateAndTime[0].split("-");
-        } else if (dateAndTime[0].indexOf(".") > -1) {
-            dateArray = dateAndTime[0].split(".");
+        if (dateAndTime[0].indexOf('/') > -1) {
+            dateArray = dateAndTime[0].split('/');
+        }
+        else if (dateAndTime[0].indexOf('-') > -1) {
+            dateArray = dateAndTime[0].split('-');
+        }
+        else if (dateAndTime[0].indexOf('.') > -1) {
+            dateArray = dateAndTime[0].split('.');
         }
 
         if (dateAndTime.length > 2) {
@@ -2404,15 +1942,13 @@ export class LogDatePickerComponent
         var minute: number = 0;
         var second: number = 0;
         if (dateAndTime.length >= 2) {
-            if (dateAndTime[1].indexOf(".") > -1) {
-                timeArray = dateAndTime[1].split(".")[0].split(":");
-            } else {
-                timeArray = dateAndTime[1].split(":");
+            if (dateAndTime[1].indexOf('.') > -1) {
+                timeArray = dateAndTime[1].split('.')[0].split(':');
             }
-            var hour: number = this.GetTimeFor24Mode(
-                Number(timeArray[0]),
-                suffix
-            );
+            else {
+                timeArray = dateAndTime[1].split(':');
+            }
+            var hour: number = this.GetTimeFor24Mode(Number(timeArray[0]), suffix);
             var minute: number = Number(timeArray[1]);
             var second: number = Number(timeArray[2].substring(0, 2));
         }
@@ -2468,28 +2004,29 @@ export class LogDatePickerComponent
         dateParts.push(minute);
         dateParts.push(second);
         return dateParts;
+
     }
 
     SetValidity(validValue: boolean, errorMessage) {
+
         if (!this.IsFreeValue) {
             var siblingUIProperty: UIProperty = null;
             if (this.uiProperty) {
                 this.uiProperty.ValidValue = validValue;
                 this.uiProperty.ValidationError = errorMessage;
                 if (!validValue) {
-                    this.DatePickerInputDivStyle = {
-                        border: "1px solid #ff0000"
-                    };
+                    this.DatePickerInputDivStyle = { 'border': '1px solid #ff0000' };
                     if (this.show) {
                         this.ShowErrorPopup = true;
                     }
-                } else {
+                }
+
+                else {
                     this.ShowErrorPopup = false;
                     if (this.show) {
-                        this.DatePickerInputDivStyle = {
-                            border: "1px solid #3BB3E2"
-                        };
-                    } else {
+                        this.DatePickerInputDivStyle = { 'border': '1px solid #3BB3E2' };
+                    }
+                    else {
                         this.DatePickerInputDivStyle = null;
                     }
                 }
@@ -2502,27 +2039,19 @@ export class LogDatePickerComponent
     }
 
     ValidateField(emitPropertyChanged: boolean = true) {
+
         if (!this.NoValidation) {
             var errors = null;
-            var table = window.ObjectTables.filter(
-                d => d.Name === this.uiProperty.ObjectTableName
-            )[0];
+            var table = window.ObjectTables.filter(d => d.Name === this.uiProperty.ObjectTableName)[0];
             if (table) {
-                var field: ObjectFieldPM = window.ObjectFields.filter(
-                    d =>
-                        d.ObjectTableId === table.Id &&
-                        d.FieldName === this.uiProperty.FieldName
-                )[0];
+                var field: ObjectFieldPM = window.ObjectFields.filter(d => d.ObjectTableId === table.Id && d.FieldName === this.uiProperty.FieldName)[0];
                 var fieldValidator: FieldValidator = new FieldValidator();
-                errors = fieldValidator.Validate(
-                    this.ObjectFieldName,
-                    this.ObjectTableName,
-                    this.DataContext
-                );
+                errors = fieldValidator.Validate(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
             }
             if (this.uiProperty.IsValidManually == false) {
                 this.SetValidity(false, this.uiProperty.ManualValidationError);
-            } else if (errors) {
+            }
+            else if (errors) {
                 if (errors.length > 0) {
                     this.SetValidity(false, errors[0]);
                 }
@@ -2532,6 +2061,7 @@ export class LogDatePickerComponent
                 else {
                     this.SetValidity(true, null);
                 }
+
             }
             //else if (this.uiProperty.IsValidManually == false) {
             //    this.SetValidity(false, this.uiProperty.ManualValidationError);
@@ -2548,7 +2078,7 @@ export class LogDatePickerComponent
     ngOnDestroy() {
         console.log("datepicker:ngOnDestroy");
         this.cd = null;
-
+      
         if (this.CopyValueSubs) {
             this.CopyValueSubs.unsubscribe();
             this.CopyValueSubs = null;

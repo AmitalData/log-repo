@@ -105,7 +105,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.SetApproved = false;
             entityPM.SetCancelApproval = false;
             entityPM.SetReTransfer = false;
-            entityPM.SetReSendQBO = false;
 
         }
 

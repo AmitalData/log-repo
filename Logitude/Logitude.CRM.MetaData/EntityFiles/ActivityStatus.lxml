@@ -15,5 +15,4 @@
     <Record Code="&quot;W&quot;" SearchFields="&quot;W,Waiting on Someone else&quot;" Name="&quot;Waiting on Someone else&quot;" />
     <Record Code="&quot;X&quot;" SearchFields="&quot;X,Canceled&quot;" Name="&quot;Canceled&quot;" />
   </Records>
-  <AdditionalFeatures />
 </entity>

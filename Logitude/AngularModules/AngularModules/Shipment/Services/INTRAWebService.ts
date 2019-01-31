@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+﻿import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -158,9 +158,6 @@ export class INTRAResult {
     public Errors: string[] = [];
     public IsCarrierRegisteredToINTTRA: boolean;
     public IsCarrierRegisteredToBranch: boolean;
-    public IsDemoTenant: boolean;
-    public HasStockError: boolean;
-    public IsStockPrepaid: boolean;
 }
 export class INTTRASimulator {
     public XmlString: string;

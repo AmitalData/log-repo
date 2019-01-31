@@ -33,12 +33,11 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string TransportModeId { get; set; }
         public string TransportModeName { get; set; }
         public string ShipmentType { get; set; }
-        public string ShipmentTypeId { get; set; }
         public string ShipmentLevelCode { get; set; }
         public string ShipmentLevelName { get; set; }
         public string StatusId { get; set; }
         public string SearchFields { get; set; }
-        public bool IsCancelled { get; set; }
+
         public string ContainerTypeName { get; set; }
         public string ContainerNumber { get; set; }
         public string ShipperSeal { get; set; }

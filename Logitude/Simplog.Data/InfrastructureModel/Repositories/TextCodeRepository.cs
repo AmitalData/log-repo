@@ -251,7 +251,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
      
         public void Add(TextCode entity)
         {
-            context.TextCodes.Add(entity);
+           context.TextCodes.Add(entity);
         }
 
         public void Remove(TextCode entity)

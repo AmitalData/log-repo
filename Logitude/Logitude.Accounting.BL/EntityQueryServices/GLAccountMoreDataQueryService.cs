@@ -1,12 +1,7 @@
-﻿using Logitude.Accounting.BL.DataContract;
-using Logitude.Accounting.Data.EntityKeys;
+﻿using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,60 +22,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                        .Select(a => GetEntityPM(a))
                        .ToList();
             return pms;
-        }
-
-
-        public List<ARPaymentChequeFutureData> GetARPaymentChequeFutureData(int tenant)
-        {
-            IInvoiceContext invoicecontext = InvoiceContext.GetContext(tenant);
-            Simplog.Data.CommonDataModel.ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
-            List<ARPayment> payments = (from a in invoicecontext.ARPayments
-                                      
-                                        where  a.Tenant == tenant && a.StatusCode != "VD"
-
-                                        select a).ToList();
-
-            List<ARPaymentCheque> paymentCheques = (from a in context.ARPaymentCheques
-
-                                        where a.Tenant == tenant && a.StatusCode != "5" && a.StatusCode != "6" 
-
-                                        select a).ToList();
-
-            List<string> cardIds = (from a in payments 
-                                      join c in paymentCheques on a.Id equals c.PaymentId
-                                      select a.BillToId).ToList();
-
-            List<Card> cards= (from a in commoncontext.Cards
-                              where cardIds.Contains(a.Id) && a.Tenant== tenant
-                              select a).ToList();
-
-            List<string> glAccountIds = (from a in commoncontext.Cards
-                                   where a.Tenant == tenant && cardIds.Contains(a.Id)
-                                   select a.GLAccountId).ToList();
-
-
-            List<GLAccountMoreData> gLAccountMoreDataList = (from a in context.GLAccountMoreDatas
-                                                            where a.Tenant == tenant && glAccountIds.Contains(a.AccountId)
-                                                            select a).ToList();
-
-            List<ARPaymentChequeFutureData> data = (from a in gLAccountMoreDataList
-                                                    join c in cards on a.AccountId equals c.GLAccountId
-                                                    join p in payments on c.Id equals p.BillToId
-                                                    join pc in paymentCheques on p.Id equals pc.PaymentId
-                                                  
-                                                    select new ARPaymentChequeFutureData()
-                                                    {
-                                                        GLAccountId = c.GLAccountId,
-                                                        PaymentId = p.Id
-                                                    }).ToList();
-
-        
-            return data;
-
-
-
-
-
         }
     }
 }

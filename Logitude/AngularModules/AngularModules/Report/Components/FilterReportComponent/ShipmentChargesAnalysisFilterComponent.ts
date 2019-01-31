@@ -1,4 +1,4 @@
-declare var System: any;
+﻿declare var System: any;
 declare var window: any;
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
@@ -225,20 +225,6 @@ export class ShipmentChargesAnalysisFilterComponent extends BaseComponent implem
     queryFilterItem: QueryFilterItem;    
     RunReport(isloading: boolean) {
         this.ValidationErrorsList = [];
-
-        if (!this.SelectedDateFilter) {
-            this.ValidationErrorsList.push("Date field is required");
-        }
-
-        if (!this.ReceivablesFilterSelectedItem) {
-            this.ValidationErrorsList.push("Receivables field is required");
-        }
-
-        if (!this.PayablesFilterSelectedItem) {
-            this.ValidationErrorsList.push("Payables field is required");
-        }
-
-
         if (this.FromDate != null && this.ToDate != null) {
             if (this.ToDate < this.FromDate) {
                 this.ValidationErrorsList.push("From date must be less than to date");

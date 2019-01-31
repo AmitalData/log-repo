@@ -7,7 +7,6 @@ using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using Simplog.Data.Helpers;
 using System.Data.Entity.Core.Objects;
-using Simplog.Data.InvoiceModel;
 
 namespace Logitude.BL.InvoiceModel.CustomFilters
 {
@@ -68,18 +67,6 @@ namespace Logitude.BL.InvoiceModel.CustomFilters
                                  ||
                                  r.BillTo != null && r.BillTo.EnglishName.ToUpper().Contains(searchText.ToUpper())
                                  select r);
-                        }
-                    }
-
-                    else if (item.FieldName == "ARPaymentInvoicesConnected")
-                    {
-                        string iPaymentId = item.FieldValue as string;
-
-                        if (!string.IsNullOrEmpty(iPaymentId))
-                        {
-                            IInvoiceContext iContext = InvoiceContext.GetContext(Tenant);
-                            List<string> ids = (from d in iContext.ARInvoicePayments where d.Tenant == Tenant && d.ARPaymentId == iPaymentId select d.ARInvoiceId).ToList();
-                            queryableData = (from d in queryableData where ids.Contains(d.Id) select d);
                         }
                     }
 

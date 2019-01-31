@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -213,21 +213,19 @@ export class INTTRASettingsComponent extends BaseComponent {
     }
 }
 class RegistrationItem {
-    public CompinedId: string;
+    public Id: string;
     public Code: string;
     public Name: string;
     public Notes: string;
-    public ShippingLineId: string;
     public Carriers: RegistrationItemCarrier[] = [];
     constructor(line: INTTRASettingsHelperItem, private father: INTTRASettingsComponent) {
-        this.CompinedId = line.CompinedId;
+        this.Id = line.Id;
         this.Code = line.Code;
         this.Name = line.Name;
         this.Notes = line.Notes;
-        this.ShippingLineId = line.ShippingLineId;
 
         father.Branches.forEach(branch => {
-            var itemCarrier: INTTRASettingsHelperItem = this.father.Helper.Items.filter(f => f.ShippingLineId == this.ShippingLineId && f.BranchId == branch.Id && f.IsLineItem == false)[0];
+            var itemCarrier: INTTRASettingsHelperItem = this.father.Helper.Items.filter(f => f.Id == this.Id && f.BranchId == branch.Id && f.IsLineItem == false)[0];
             if (!itemCarrier) {
 
             }

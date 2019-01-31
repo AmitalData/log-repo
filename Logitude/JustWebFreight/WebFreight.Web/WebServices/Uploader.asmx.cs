@@ -461,17 +461,6 @@ namespace WebFreight.Web.WebServices
                     DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                     DocumentsFilingPM extDocPM = documentsFilingQuery.GetDocumentsFilingByDocumentId(documentId, tenant);
 
-                   
-                    // 
-                    if (extDocPM != null)
-                    {
-                        DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(tenant);
-                        DocumentsFiling extDocPoco = documentsFilingRepository.GetSingleDocumentsFilingByDocumentId(documentId, tenant);
-                        extDocPoco.IsDeleted = true;
-                        documentsFilingRepository.Update(extDocPoco);
-                        documentsFilingRepository.SubmitChanges();
-                    }
-
                     tenantQuery = new TenantQuery(extDocPM.Tenant);
                     TenantPM tenantPM = tenantQuery.GetSinglePM(extDocPM.Tenant);
                     if (tenantPM.IsDocumentsArchive)
@@ -494,7 +483,6 @@ namespace WebFreight.Web.WebServices
                         Extension = document.Extension,
                         Tenant = document.Tenant,
                         FileSize = document.FileSize,
-                       
                     };
                     Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
                     storageservice.Delete(fileInfo);
@@ -1259,7 +1247,6 @@ namespace WebFreight.Web.WebServices
                     Subject = "Document Backup",
                     FolderName = "DocumentFillingBackupQueue",
                     ByteData = logXML,
-                    LoggingEntityReference = entityPM.Code,
                 };
 
                 //logParams.QueueParameters = new Dictionary<string, string>() { { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } };

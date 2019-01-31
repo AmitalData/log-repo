@@ -103,7 +103,6 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         paymentDataProvider.DepositBankName = !string.IsNullOrEmpty(bankAccount.LocalName) ? bankAccount.LocalName : bankAccount.EnglishName;
                         paymentDataProvider.DepositBankAccountNumber = bankAccount.AccountNumber;
-                        paymentDataProvider.VATNumber = bankAccount.VatNumber;
                     }
 
                 }
@@ -247,12 +246,6 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             paymentDataProvider.PaymentMethodName = paymentMethod.Name;
                         }
-                    }
-
-                    // Local Name
-                    if (paymentMethod != null)
-                    {
-                        paymentDataProvider.PaymentMethodLocalName = GetPaymentMethodLocalName(paymentMethod.Code);
                     }
 
                     // payment status
@@ -450,32 +443,6 @@ namespace WebFreight.Web.ReportsWebServices
             return paymentDataProvider;
         }
 
-        private string GetPaymentMethodLocalName(string code)
-        {
-            string translation = ""; 
-            if(code == "CH")
-            {
-                translation = "המחאה"; 
-            }
-            else if (code == "CA")
-            {
-                translation = "מזומן";
-            }
-            else if (code == "BT")
-            {
-                translation = "העברה בנקאית";
-            }
-            else if (code == "CC")
-            {
-                translation = "כרטיס אשראי";
-            }
-            else if (code == "FS")
-            {
-                translation = "קיזוז";
-            }
-            return translation;
-        }
-
         private void MapPaymentProfact33Fields(ARPayment currentPayment, PaymentDataProvider paymentDataProvider, Tenant tenantSettings, IInvoiceContext invoiceCotnext, Card billToCard)
         {
 			if (billToCard != null)
@@ -583,15 +550,14 @@ namespace WebFreight.Web.ReportsWebServices
                                 paymentDataProvider.SAT.TipoCadenaPago = pagoItem.TipoCadPago;
                                 paymentDataProvider.SAT.CadPago = pagoItem.CadPago;
 
-                                //Encoding encoding = Encoding.UTF8;
-                               // if (pagoItem.CertPago != null)
-                                    paymentDataProvider.SAT.CertPago = pagoItem.CertPago;//encoding.GetString(pagoItem.CertPago);
+                                Encoding encoding = Encoding.UTF8;
+                                if(pagoItem.CertPago != null)
+                                    paymentDataProvider.SAT.CertPago = encoding.GetString(pagoItem.CertPago);
 
-                               // if (pagoItem.SelloPago != null)
-                                    paymentDataProvider.SAT.SelloPago = pagoItem.SelloPago;//encoding.GetString(pagoItem.SelloPago);
+                                if (pagoItem.SelloPago != null)
+                                    paymentDataProvider.SAT.SelloPago = encoding.GetString(pagoItem.SelloPago);
 
-
-
+                                
                                 foreach (Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado doctoItem in pagoItem.DoctoRelacionado.ToList())
                                 {
 

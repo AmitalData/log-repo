@@ -35,95 +35,32 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using CHAMP;
 using Logitude.XSD.Analyzers.CHAMPAnalyzer;
-using Logitude.Server.Tools.QueueService;
 
 namespace CommunicationWorkerRole
 {
     class MessageAnalyzeWR : WorkerEntryPoint
     {
-        DbQueueService queueservice;
-        private string queueName;
-
         public override void Run()
         {
             while (IsRunning)
             {
                 if (!General.IsUpdating())
                 {
-                    //try
-                    //{
-                    //    AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
-                    //    AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueue("Champ");
-                    //    LastActivity = DateTime.UtcNow;
-                    //    if (analyzeQueue != null)
-                    //    {
-                    //        CHAMPAnalyzer analyzer = new CHAMPAnalyzer(analyzeQueue, analyzeQueueRepository);
-                    //        analyzer.Run();
-                    //        LogDoneItemInMemory();
-                    //    }
-
-                    //    else
-                    //    {
-                    //        Thread.Sleep(500);
-                    //    }
-                    //}
-
                     try
                     {
-                        bool isUsingDbQueueService = false;
-
-                        var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
-                        if (iAppSettings != null)
+                        AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+                        AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueue("Champ");
+                        LastActivity = DateTime.UtcNow;
+                        if (analyzeQueue != null)
                         {
-                            if (iAppSettings["ChampDbQueueService"] != null)
-                            {
-                                string iValueText = iAppSettings["ChampDbQueueService"].ToString();
-                                if (!string.IsNullOrEmpty(iValueText))
-                                {
-                                    if(iValueText.ToLower() == "true")
-                                    {
-                                        isUsingDbQueueService = true;
-                                    }
-                                }
-                            }
-                        }
-
-                        if (isUsingDbQueueService)
-                        {
-                            queueservice = queueservice = new DbQueueService(queueName, 0);
-                            QueueResponse iQueueResponse = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
-
-                            string AnalyzeQueueId = iQueueResponse.MessageValues["AnalyzeQueueId"].ToString();
-                            if (!string.IsNullOrEmpty(AnalyzeQueueId))
-                            {
-                                queueservice.Complete();
-
-                                AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
-                                AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetSingleAnalyzeQueue(AnalyzeQueueId);
-                                if (analyzeQueue != null)
-                                {
-                                    CHAMPAnalyzer analyzer = new CHAMPAnalyzer(analyzeQueue, analyzeQueueRepository);
-                                    analyzer.Run();
-                                }
-                            }
+                            CHAMPAnalyzer analyzer = new CHAMPAnalyzer(analyzeQueue, analyzeQueueRepository);
+                            analyzer.Run();
+                            LogDoneItemInMemory();
                         }
 
                         else
                         {
-                            AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
-                            AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueue("Champ");
-                            LastActivity = DateTime.UtcNow;
-                            if (analyzeQueue != null)
-                            {
-                                CHAMPAnalyzer analyzer = new CHAMPAnalyzer(analyzeQueue, analyzeQueueRepository);
-                                analyzer.Run();
-                                LogDoneItemInMemory();
-                            }
-
-                            else
-                            {
-                                Thread.Sleep(500);
-                            }
+                            Thread.Sleep(500);
                         }
                     }
 
@@ -149,10 +86,6 @@ namespace CommunicationWorkerRole
             ThreadId = Guid.NewGuid().ToString();
             BatchServiceCode = "MessageAnalyze";
             DoneItemsInRange = new Dictionary<DateTime, int>();
-
-            queueName = "ChampAnalyzer";
-            ConnectClient();
-
             //DiagnosticMonitor.Start("DiagnosticsConnectionString");
 
             // For information on handling configuration changes
@@ -160,19 +93,6 @@ namespace CommunicationWorkerRole
             RoleEnvironment.Changing += RoleEnvironmentChanging;
 
             return base.OnStart();
-        }
-
-        public void ConnectClient()
-        {
-            try
-            {
-                queueservice = new DbQueueService(queueName, 0);
-            }
-
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "MessageAnalyzeWR Connect client", null, null);
-            }
         }
 
         private void RoleEnvironmentChanging(object sender, RoleEnvironmentChangingEventArgs e)

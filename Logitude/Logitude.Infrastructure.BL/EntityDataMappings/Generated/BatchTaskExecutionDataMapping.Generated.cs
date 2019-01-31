@@ -35,8 +35,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         DoneDateTime, 
 	         ProgressMessage, 
 	         ProgressPercentage, 
-	         Subject, 
-	         CallStack,
+	         Subject,
 	      }
 
 
@@ -58,8 +57,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         ProgressPercentage, 
 	         StatusName, 
 	         CreatedByUserName, 
-	         Subject, 
-	         CallStack,
+	         Subject,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -131,11 +129,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Subject))
             {
 				entityPOCO.Subject = entityPM.Subject;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CallStack))
-            {
-				entityPOCO.CallStack = entityPM.CallStack;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -214,11 +207,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.Subject = entityPOCO.Subject;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CallStack))
-            {
-					entityPM.CallStack = entityPOCO.CallStack;
-            }
-
 		}
 
 		public void PMToOldPM(BatchTaskExecutionPM entityPM, BatchTaskExecutionPM oldEntityPM)
@@ -290,11 +278,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
                 oldEntityPM.Subject = entityPM.Subject;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CallStack))
-            {
-                oldEntityPM.CallStack = entityPM.CallStack;
-            }
-			
 		}
 
 	    public void EncodeBase64NVARCHARFields(BatchTaskExecutionPM entityPM)
@@ -323,10 +306,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.Subject)) //T4 find type == nText 
             {
                 entityPM.Subject = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Subject));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.CallStack)) //T4 find type == nText 
-            {
-                entityPM.CallStack = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CallStack));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

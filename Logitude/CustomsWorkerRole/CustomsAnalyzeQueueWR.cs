@@ -190,7 +190,13 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                                 {
                                     break;
                                 }
-                                Exec(customsPartnerFtpDetails, @interface, analyzeQueueRepository, analyzeQueue);
+                                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                                {
+                                    var serviceAnalyzer = customsPartnerFtpDetails.GetCustomAnalyzerQueueService(@interface);
+                                    //ArtemusAnalyzer analyzer = new Artemus(analyzeQueue, analyzeQueueRepository);
+                                    serviceAnalyzer.Run(analyzeQueue, analyzeQueueRepository);
+                                    scope.Complete();
+                                }
                                 LogDoneItemInMemory();
                             }
 
@@ -216,49 +222,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
             }
         }
-        public void DebugStep(string analyzeQueueID, string analyzeQueueFrom, int tenant)
-        {
 
-            analyzeQueueFrom = analyzeQueueFrom.Trim();
-            if (string.IsNullOrEmpty(analyzeQueueFrom))
-            {
-                throw new Exception("analyzeQueueFrom is must");
-            }
-            var parts = analyzeQueueFrom.Split(',').ToList();
-            if (parts.Count != 2)
-            {
-                throw new Exception("analyzeQueueFrom.Split('-').ToList() != 2");
-            }
-
-            AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
-            var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
-            var _CustomsAnalyzeQueueServices = customsPartnerFtpDetails.GetAllInterfaceDetails();
-            InterfaceDetails @interface = customsPartnerFtpDetails.GetAllInterfaceDetails()
-            .Where(r => r.Code == parts[1] && r.Partner == parts[0]).FirstOrDefault();
-            if (@interface == null)
-            {
-                throw new Exception($"analyzeQueueFrom {analyzeQueueFrom} is not in customsPartnerFtpDetails.GetAllInterfaceDetails()");
-            }
-
-
-            AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetSingleAnalyzeQueue(analyzeQueueID);
-            if (analyzeQueue == null)
-            {
-                throw new Exception($"analyzeQueueID {analyzeQueueID} not in DB");
-            }
-            Exec(customsPartnerFtpDetails, @interface, analyzeQueueRepository, analyzeQueue);
-        }
-
-        private void Exec(CustomsPartnerFtpDetails customsPartnerFtpDetails, InterfaceDetails @interface, AnalyzeQueueRepository analyzeQueueRepository, AnalyzeQueue analyzeQueue)
-        {
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                var serviceAnalyzer = customsPartnerFtpDetails.GetCustomAnalyzerQueueService(@interface);
-                //ArtemusAnalyzer analyzer = new Artemus(analyzeQueue, analyzeQueueRepository);
-                serviceAnalyzer.Run(analyzeQueue, analyzeQueueRepository);
-                scope.Complete();
-            }
-        }
     }
 
 }

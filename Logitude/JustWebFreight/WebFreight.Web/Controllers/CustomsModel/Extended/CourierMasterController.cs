@@ -346,32 +346,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 }
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 CourierMasterQueryService queryService = new CourierMasterQueryService(customContext);
-                IQueryable<DeclarationPM> querydeclarations = queryService.GetNotConnectedDeclaratins(queryOperations, tenant);
-                querydeclarations = querydeclarations.OrderBy(r => r.Id);
-                if (!queryOperations.GetAll)
-                {
-                    int skippedPorts = queryOperations.PageIndex;
-                    querydeclarations = querydeclarations.Skip(skippedPorts);
-                    querydeclarations = querydeclarations.Take(queryOperations.PageSize);
-                }
+                IQueryable<DeclarationPM> declarations = queryService.GetNotConnectedDeclaratins(queryOperations, tenant);
+
                 ServiceResponse response = new ServiceResponse();
-                if (filters.GetCount)
-                {
-                    string CourierSearchField = "";
-                    QueryFilterItem CourierSearchFieldFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CourierSearchFields").FirstOrDefault();
-                    if (CourierSearchFieldFilter != null)
-                    {
-                        CourierSearchField = CourierSearchFieldFilter.FieldValue.ToString();
-                    }
-                    DeclarationRepository declarationRep = new DeclarationRepository(tenant);
-                    var  declarationsAll = declarationRep.GetNotConnectedDeclaratins(tenant);
-                    if (!string.IsNullOrWhiteSpace(CourierSearchField))
-                    {
-                        declarationsAll = declarationsAll.Where(r => r.CourierSearchFields.Contains(CourierSearchField));
-                    }
-                    response.Count = declarationsAll.Count();
-                }
-                response.Result = querydeclarations.ToList();
+                response.Count = declarations.Count();
+                response.Result = declarations;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
 

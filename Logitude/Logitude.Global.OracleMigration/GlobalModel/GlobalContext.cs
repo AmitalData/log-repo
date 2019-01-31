@@ -94,9 +94,7 @@ namespace Logitude.Global.OracleMigration.GlobalModel
             modelBuilder.Configurations.Add(new BatchServicesDefinitionModsMap());
             modelBuilder.Configurations.Add(new OneTimePasswordMap());
             modelBuilder.Configurations.Add(new TenantManagmentPrivateLabelsMap());
-            modelBuilder.Configurations.Add(new CaptchaKeyMap());
-            modelBuilder.Configurations.Add(new InvalidEmailResetPasswordMap());
-            modelBuilder.Configurations.Add(new WebhookKeysMap());
+         
             base.OnModelCreating(modelBuilder);
         }
 
@@ -155,12 +153,15 @@ namespace Logitude.Global.OracleMigration.GlobalModel
         public IDbSet<BatchServicesDefinitionMods> BatchServicesDefinitionMods { get; set; }
         public IDbSet<OneTimePassword> OneTimePasswords { get; set; }
         public IDbSet<TenantManagmentPrivateLabels> TenantManagmentPrivateLabels { get; set; }
+
         public IDbSet<AgentSharedLogisticsKey> AgentSharedLogisticsKeys { get; set; }
-        public IDbSet<SessionPolicy> SessionPolicies { get; set; }
-        public IDbSet<CaptchaKey> CaptchaKeys { get; set; }
-        public IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; set; }
-        public IDbSet<WebhookKeys> WebhookKeys { get; set; }
 
-
+        public IDbSet<SessionPolicy> SessionPolicies
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

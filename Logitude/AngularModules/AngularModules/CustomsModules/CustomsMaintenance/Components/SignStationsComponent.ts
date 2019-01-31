@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {Observable}     from 'rxjs/Rx';
 import { Component, Output, EventEmitter, OnInit, ComponentRef } from '@angular/core';
 import { BaseComponent } from       '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -215,7 +215,7 @@ export class SignStationsComponent
             ServerSideSortable: true,
             SortByName: 'IsPersonalSignOn',
             HtmlListComponentName: 'SignStationListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
+            HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
 
         });
 
@@ -228,7 +228,7 @@ export class SignStationsComponent
             ServerSideSortable: true,
             SortByName: 'IsCompanySignOn',
             HtmlListComponentName: 'SignStationListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
+            HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
 
         });
         this.columns.push({
@@ -252,7 +252,7 @@ export class SignStationsComponent
             SortByName: 'LastSignAt'
             ,
             HtmlListComponentName: 'SignStationListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
+            HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
         });
 
         this.columns.push({
@@ -264,7 +264,7 @@ export class SignStationsComponent
             ServerSideSortable: true,
             SortByName: 'Status',
             HtmlListComponentName: 'SignStationListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
+            HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
 
 
         });
@@ -281,7 +281,7 @@ export class SignStationsComponent
         //    Styles: { width: '100px' },
         //    IsCustomTemplate: true,
         //    HtmlListComponentName: 'SignStationListTemplate',
-        //    HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
+        //    HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
         //});
 
 

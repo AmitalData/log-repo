@@ -16,7 +16,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 {
    
     [TestClass]
-    public partial class LedgerTransactionBalanceServiceUnderTest
+    public class LedgerTransactionBalanceServiceUnderTest
     {
         private int _MyTenant;
         private int _OtherTenant;

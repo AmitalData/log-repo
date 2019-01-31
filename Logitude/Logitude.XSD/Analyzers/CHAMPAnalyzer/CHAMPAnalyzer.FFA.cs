@@ -58,6 +58,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
             entityPM.FFRStatusDate = TenantServerConfigration.GetCurrentDateTime(myTenant);
 
             BookingAnswerRepository bookingAnswerRepository = new BookingAnswerRepository(myContext);
+            CommunicationLogRepository commLogRep = new CommunicationLogRepository(myTenant);
             AirlineRepository airlineRepository = new AirlineRepository(myTenant);
 
             List<BookingAnswer> bookingAnswers = bookingAnswerRepository.GetBookingAnswersForBookingTenant(entityPM.Id, myTenant).ToList();
@@ -70,6 +71,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
             {
                 foreach (CHAMP17.FlightDetails_FFA item in myFFA.FlightDetails)
                 {
+                    CommunicationLog log = commLogRep.GetSingleCommunicationLog(analyzeQueue.CommunicationLogId, myTenant);
                     Airline airline = airlineRepository.GetSingleAirlineByCode(item.FlightIdentification.CarrierCode, myTenant);
 
                     BookingAnswer answer = new BookingAnswer()
@@ -82,7 +84,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                         StatusCode = "WAT",
                         Origin = item.AirportsOfDepartureAndArrival.AirportCityCodeOfOrigin,
                         Destination = item.AirportsOfDepartureAndArrival.AirportCityCodeOfDestination,
-                        CommunicationLogId = analyzeQueue.CommunicationLogId,
+                        CommunicationLogId = log == null ? null : log.Id,
                         FlightNumber = item.FlightIdentification.CarrierCode + item.FlightIdentification.FlightNumber,
                         BookingSpaceAllocationCode = item.SpaceAllocationCode,
                         CarrierId = airline == null ? null : airline.Id,
@@ -124,16 +126,16 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                     entityPM.HasErrors = false;
 
                     IShipmentsContext shipmentContext = ShipmentsContext.GetContext(myTenant);
-                    MessagingStockRepository stockRepository = new MessagingStockRepository(shipmentContext);
-                    MessagingStockUsageHistoryRepository usageHistoryRepository = new MessagingStockUsageHistoryRepository(shipmentContext);
-                    IQueryable<MessagingStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantMessagingStockUsageHistory(myTenant);
-                    MessagingStockUsageHistory usageHistory = myUsageHistoryData.Where(d => d.EntityId == entityPM.Id && d.MessageType == "FFR").FirstOrDefault();
+                    AWBMessagingStockRepository stockRepository = new AWBMessagingStockRepository(shipmentContext);
+                    AWBStockUsageHistoryRepository usageHistoryRepository = new AWBStockUsageHistoryRepository(shipmentContext);
+                    IQueryable<AWBStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantAWBStockUsageHistory(myTenant);
+                    AWBStockUsageHistory usageHistory = myUsageHistoryData.Where(d => d.EntityId == entityPM.Id && d.MessageType == "FFR").FirstOrDefault();
                     if (usageHistory != null)
                     {
                         usageHistoryRepository.Remove(usageHistory);
                         usageHistoryRepository.SubmitChanges();
 
-                        MessagingStock myStock = stockRepository.GetSingleMessagingStock(usageHistory.StockId);
+                        AWBMessagingStock myStock = stockRepository.GetSingleAWBMessagingStock(usageHistory.StockId);
                         if (myStock != null)
                         {
                             int myStockUsageCount = usageHistoryRepository.GetStockUsageCount(myStock.Id, myStock.TenantNumber);

@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class AWBOCIUpdateClass
@@ -85,6 +82,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    DefaultText =  "AWB OCI",
 			      				    Name =  "AWBOCI",
 			      				    IsNewWizard =  false,
+			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -110,6 +108,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsEditable =  true,
+			      				    AllowedForComputingPartners =  false,
+			      				    DisableSearchBox =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasMenuButtons =  false,
+			      				    HasFiltersMenu =  false,
+			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -123,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "SupplementaryCustomsInfo",
 					  						ObjectTableName =  "AWBOCI",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "SupplementaryCustomsInfo",
 					  						MaxLength =  35,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -149,6 +154,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -159,19 +165,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						FullFieldLable =  "SupplementaryCustomsInfo",
-					  						DefaultText =  @"Supplementary value",
-					  						ListFieldLable =  "SupplementaryCustomsInfo",
-					  						ListLableDefaultText =  @"Supplementary value",
-					  						HelpTextCode =  "SupplementaryCustomsInfo",
-					  						Code =  "SupplementaryCustomsInfo",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
+					  						FullFieldLable =  "SupplementaryCustomsInfo",
+					  						DefaultText =  "Supplementary value",
+					  						ListFieldLable =  "SupplementaryCustomsInfo",
+					  						ListLableDefaultText =  "Supplementary value",
+					  						HelpTextCode =  "SupplementaryCustomsInfo",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -183,7 +186,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "AWBOCI",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Country",
-					  						DataTypeCode =  "LookUp",
+					  						Code =  "CountryId",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -209,6 +212,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -219,19 +223,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						FullFieldLable =  "CountryId",
-					  						DefaultText =  @"Country",
-					  						ListFieldLable =  "CountryId",
-					  						ListLableDefaultText =  @"Country",
-					  						HelpTextCode =  "CountryId",
-					  						Code =  "CountryId",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "CountryId",
+					  						DefaultText =  "Country",
+					  						ListFieldLable =  "CountryId",
+					  						ListLableDefaultText =  "Country",
+					  						HelpTextCode =  "CountryId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -243,7 +244,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "AWBOCI",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AWBCustomsInformation",
-					  						DataTypeCode =  "LookUp",
+					  						Code =  "AWBCustomsInformationCode",
 					  						MaxLength =  2,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -269,6 +270,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -279,19 +281,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						FullFieldLable =  "AWBCustomsInformationCode",
-					  						DefaultText =  @"Customs Info. ID",
-					  						ListFieldLable =  "AWBCustomsInformationCode",
-					  						ListLableDefaultText =  @"Customs Info. ID",
-					  						HelpTextCode =  "AWBCustomsInformationCode",
-					  						Code =  "AWBCustomsInformationCode",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "AWBCustomsInformationCode",
+					  						DefaultText =  "Customs Info. ID",
+					  						ListFieldLable =  "AWBCustomsInformationCode",
+					  						ListLableDefaultText =  "Customs Info. ID",
+					  						HelpTextCode =  "AWBCustomsInformationCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -303,7 +302,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "AWBOCI",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AWBInformation",
-					  						DataTypeCode =  "LookUp",
+					  						Code =  "AWBInformationCode",
 					  						MaxLength =  3,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -329,6 +328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -339,19 +339,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						FullFieldLable =  "AWBInformationCode",
-					  						DefaultText =  @"Information ID",
-					  						ListFieldLable =  "AWBInformationCode",
-					  						ListLableDefaultText =  @"Information ID",
-					  						HelpTextCode =  "AWBInformationCode",
-					  						Code =  "AWBInformationCode",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "AWBInformationCode",
+					  						DefaultText =  "Information ID",
+					  						ListFieldLable =  "AWBInformationCode",
+					  						ListLableDefaultText =  "Information ID",
+					  						HelpTextCode =  "AWBInformationCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -382,14 +379,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

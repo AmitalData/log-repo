@@ -50,11 +50,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          Email = a.Email,
 					
 					                          ErrorMessage = a.ErrorMessage,
-                                              Status = a.TaxDeductionReportStatus != null? a.TaxDeductionReportStatus.EnglishName: null, 
-                                              CreatedByUser= a.CreatedByUser != null? a.CreatedByUser.Contact.LocalName : null,
-                                             StatusLocalName = a.TaxDeductionReportStatus != null ? a.TaxDeductionReportStatus.LocalName : null,
+                                              Status = a.TaxDeductionReportStatus != null? a.TaxDeductionReportStatus.LocalName: null, 
+                                              CreatedByUser= a.CreatedByUser != null? a.CreatedByUser.Contact.LocalName : null
 
-                                            });
+					
+		                    	            });
             return query;
 		}
 

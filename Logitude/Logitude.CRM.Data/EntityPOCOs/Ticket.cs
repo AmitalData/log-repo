@@ -196,11 +196,6 @@ namespace Logitude.CRM.Data.EntityPOCOs
 	    public string QuoteNumber { get; set; }
         [Column("SLAId")]
 	    public string SLAId { get; set; }
-        [ForeignKey("ObjectTable")]
-        [Column("EntityType")]
-	    public string EntityType { get; set; }
-	      
-        public virtual ObjectTable ObjectTable { get; set; }
     }
 }
 	 

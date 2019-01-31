@@ -114,7 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "ARPayment Cheque Status",
-			      				    Code =  "7aa8",
+			      				    Code =  "643d",
 			      				    Name =  "ARPaymentChequeStatus Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "EnglishName",
@@ -174,11 +174,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  @"Code",
-					  						FullLocalDefaultText =  @"קוד",
+					  						DefaultText =  "Code",
+					  						FullLocalDefaultText =  "קוד",
 					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  @"Code",
-					  						ListLocalDefaultText =  @"קוד",
+					  						ListLableDefaultText =  "Code",
+					  						ListLocalDefaultText =  "קוד",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -232,9 +232,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search ...",
+					  						DefaultText =  "Search ...",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  @"Search ...",
+					  						ListLableDefaultText =  "Search ...",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -289,11 +289,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
-					  						DefaultText =  @"LocalName",
-					  						FullLocalDefaultText =  @"שם",
+					  						DefaultText =  "LocalName",
+					  						FullLocalDefaultText =  "שם",
 					  						ListFieldLable =  "LocalNameListLable",
-					  						ListLableDefaultText =  @"LocalName",
-					  						ListLocalDefaultText =  @"שם",
+					  						ListLableDefaultText =  "LocalName",
+					  						ListLocalDefaultText =  "שם",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -348,11 +348,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
-					  						DefaultText =  @"EnglishName",
-					  						FullLocalDefaultText =  @"שם באנגלית",
+					  						DefaultText =  "EnglishName",
+					  						FullLocalDefaultText =  "שם באנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
-					  						ListLableDefaultText =  @"EnglishName",
-					  						ListLocalDefaultText =  @"שם באנגלית",
+					  						ListLableDefaultText =  "EnglishName",
+					  						ListLocalDefaultText =  "שם באנגלית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -407,11 +407,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
-					  						DefaultText =  @"Inactive",
-					  						FullLocalDefaultText =  @"חסום",
+					  						DefaultText =  "Inactive",
+					  						FullLocalDefaultText =  "חסום",
 					  						ListFieldLable =  "InactiveListLable",
-					  						ListLableDefaultText =  @"Inactive",
-					  						ListLocalDefaultText =  @"חסום",
+					  						ListLableDefaultText =  "Inactive",
+					  						ListLocalDefaultText =  "חסום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -489,14 +489,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-
+	    } 
 	    public void FillARPaymentChequeStatus()
         { 
             var repo = new ARPaymentChequeStatusRepository(0);

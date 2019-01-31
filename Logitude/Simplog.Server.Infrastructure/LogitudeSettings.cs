@@ -62,8 +62,7 @@ namespace Simplog.Server.Infrastructure
         public static string DropboxAppKey { get; set; }
         public static string DropboxAppSecret { get; set; }
         public static string OceanInsightsToken { get; set; }
-        public static int EmailSendingQuota { get; set; }
-
+        
         public static bool IsCostomsDeploy
         {
             get

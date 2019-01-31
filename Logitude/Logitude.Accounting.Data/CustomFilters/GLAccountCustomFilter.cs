@@ -66,15 +66,6 @@ namespace Logitude.Accounting.Data.CustomFilters
                                        
                         }
                     }
-                    if (item.FieldName == "SingleAndMultiCurrencyAccount")
-                    {
-                        string value = item.FieldValue as string;
-
-                        if (!string.IsNullOrEmpty(value))
-                        {
-                            queryableData = queryableData.Where(d => d.CurrencyId == value || d.IsMultiCurrency == true);
-                        }
-                    }
                 }
             }
 

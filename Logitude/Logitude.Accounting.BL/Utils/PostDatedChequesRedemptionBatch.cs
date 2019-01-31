@@ -6,7 +6,6 @@ using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -48,7 +47,7 @@ namespace Logitude.Accounting.BL.Utils
         public void RunAllPayablePostDatedARPaymentCheques(int tenant)
         {
             List<ARPaymentChequeList> aRPaymentCheques = null;
-            using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(3)))
+            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
             {
                 IAccountingContext context = AccountingContext.GetContext(tenant);
                 ARPaymentChequeListQueryService aRPaymentChequeListQueryService = new ARPaymentChequeListQueryService(context);
@@ -74,7 +73,7 @@ namespace Logitude.Accounting.BL.Utils
             IAccountingContext context = AccountingContext.GetContext(tenant);
             try
             {
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(3)))
+                using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
                 {
                     if (!String.IsNullOrEmpty(id))
                     {
@@ -90,15 +89,15 @@ namespace Logitude.Accounting.BL.Utils
                             string errorMessage = "E1: " + TranslateTextsClass.Translate("Cheques.Q.ChequeNotDeposited", tenant);
                             throw new Exception(errorMessage);
                         }
-                        //BankDepositLineList bankDepositLineList = bankDepositLines.FirstOrDefault();
-                        //if (bankDepositLineList == null || String.IsNullOrEmpty(bankDepositLineList.DepositId))
-                        //{
-                        //    string errorMessage = "E2: " + TranslateTextsClass.Translate("Cheques.Q.ChequeNotDeposited", tenant);
-                        //    throw new Exception(errorMessage);
-                        //}
-                        List<string> depositIdList = bankDepositLines.Select(c => c.DepositId).Distinct().ToList();
+                        BankDepositLineList bankDepositLineList = bankDepositLines.FirstOrDefault();
+                        if (bankDepositLineList == null || String.IsNullOrEmpty(bankDepositLineList.DepositId))
+                        {
+                            string errorMessage = "E2: " + TranslateTextsClass.Translate("Cheques.Q.ChequeNotDeposited", tenant);
+                            throw new Exception(errorMessage);
+                        }
+
                         BankDepositListQueryService bankDepositListQueryService = new BankDepositListQueryService(context);
-                        BankDepositList bankDeposit = bankDepositListQueryService.GetLastBankDepositByIdList(tenant, depositIdList);
+                        BankDepositList bankDeposit = bankDepositListQueryService.GetSingle(bankDepositLineList.DepositId);
                         if (bankDeposit == null)
                         {
                             string errorMessage = "E3: " + TranslateTextsClass.Translate("Cheques.Q.ChequeNotDeposited", tenant);
@@ -106,16 +105,14 @@ namespace Logitude.Accounting.BL.Utils
                         }
 
                         BankAccountListQueryService bankAccountListQueryService = new BankAccountListQueryService(context);
-                        BankAccountList bankAccount = bankAccountListQueryService.GetSingle(bankDeposit.DepositBankAccountId);
+                        BankAccountList bankAccount = bankAccountListQueryService.GetByDeferedGLAccount(bankDeposit.DepositBankAccountId);
                         if (bankAccount == null)
                         {
                             string errorMessage = "E4: " + TranslateTextsClass.Translate("Cheques.Q.ChequeNotDeposited", tenant);
                             throw new Exception(errorMessage);
                         }
 
-                        bool useLocal = true;
-                    //    var user = GetLoggedContact(tenant);
-                    //    if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
+
 
                         JournalUpdateService journalUpdateService = new JournalUpdateService(context, new Dictionary<string, IContext>(), tenant);
                         List<JournalLineList> lineList = new List<JournalLineList>();
@@ -128,17 +125,12 @@ namespace Logitude.Accounting.BL.Utils
                             DocumentDate = aRPaymentCheque.ValueDate.Date,
                             DueDate = aRPaymentCheque.ValueDate.Date,
                             LocalAmount = aRPaymentCheque.LocalAmount,
-                            // CurrencyId = aRPaymentCheque.CurrencyId,
-                            CurrencyCode = aRPaymentCheque.CurrencyCode,
+                            CurrencyId = aRPaymentCheque.CurrencyId, 
                             ForeignAmount = aRPaymentCheque.ForeignAmount, 
                             Reference1 = aRPaymentCheque.ChequeNumber,
-                            Reference2 = bankDeposit.DepositNumber.ToString(),
-                            Reference3 = aRPaymentCheque.PaymentNumber,
-                            Notes = TranslateTextsClassTranslate("Accounting.General.O.PostdatedChequeRedemption", 0, useLocal),
-                    };
+                        };
                         AccountingLogger.LogMe("Credit Cheque = " + aRPaymentCheque.ChequeNumber, false, "CHQ");
                         lineList.Add(journalLine_credit);
-
                         JournalLineList journalLine_debit = new JournalLineList
                         {
                             ActionCode = "2", // Debit
@@ -149,14 +141,10 @@ namespace Logitude.Accounting.BL.Utils
                             DocumentDate = aRPaymentCheque.ValueDate.Date,
                             DueDate = aRPaymentCheque.ValueDate.Date,
                             LocalAmount = aRPaymentCheque.LocalAmount,
-                            // CurrencyId = aRPaymentCheque.CurrencyId,
-                            CurrencyCode = aRPaymentCheque.CurrencyCode,
+                            CurrencyId = aRPaymentCheque.CurrencyId,
                             ForeignAmount = aRPaymentCheque.ForeignAmount,
                             Reference1 = aRPaymentCheque.ChequeNumber,
-                            Reference2 = bankDeposit.DepositNumber.ToString(),
-                            Reference3 = aRPaymentCheque.PaymentNumber,
-                            Notes = TranslateTextsClassTranslate("Accounting.General.O.PostdatedChequeRedemption", 0, useLocal),
-                };
+                        };
                         AccountingLogger.LogMe("Debit Cheque = " + aRPaymentCheque.ChequeNumber, false, "CHQ");
                         lineList.Add(journalLine_debit);
 
@@ -198,18 +186,12 @@ namespace Logitude.Accounting.BL.Utils
             if (aRPaymentChequePM != null)
             {
                 aRPaymentChequePM.StatusCode = status;
-                aRPaymentChequePM.ChangeSetOp = ChangeSetOperation.Update;
                 ARPaymentChequeUpdateService myARPaymentChequeUpdateService = new ARPaymentChequeUpdateService(context, new Dictionary<string, IContext>(), tenant);
                 myARPaymentChequeUpdateService.Update(aRPaymentChequePM, true);
             }
         }
 
 
-
-        public virtual string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
-        {
-            return TranslateTextsClass.Translate(textCodeCode, tenant,getLocalDefaultText); //, getLocalDefaultText);
-        }
 
 
         private static void WriteJournal(JournalUpdateService journalUpdateService, List<JournalLineList> lineList, ARPaymentChequeList aRPaymentCheque)
@@ -233,8 +215,8 @@ namespace Logitude.Accounting.BL.Utils
                     newJournal.CreatedByUserId = aRPayment.CreatedByUserId;
                 }
             }
-            newJournal.AccountingEntityCode = "1"; //Journal
-            // newJournal.AccountingEntityId = "";
+            newJournal.AccountingEntityCode = "9"; //PaymentCheque
+            newJournal.AccountingEntityId = aRPaymentCheque.Id;
             newJournal.ExternalNo = null;
             newJournal.UpdateDate = DateTime.Now;
             newJournal.UpdatedByUserId = newJournal.CreatedByUserId;
@@ -254,8 +236,7 @@ namespace Logitude.Accounting.BL.Utils
                     ActionCode = line.ActionCode,
                     CreditAccountId = line.CreditAccountId,
                     CreditControlAccountId = line.CreditControlAccountId,
-                    // CurrencyId = line.CurrencyId,
-                    CurrencyCode = line.CurrencyCode,
+                    CurrencyId = line.CurrencyId,
                     DebitAccountId = line.DebitAccountId,
                     DebitControlAccountId = line.DebitControlAccountId,
                     DocumentDate = line.DocumentDate,

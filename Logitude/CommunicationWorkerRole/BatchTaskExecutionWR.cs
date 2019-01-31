@@ -78,9 +78,9 @@ namespace CommunicationWorkerRole
                                         errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
 
                                     }
-                                    
+
+                                    errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
                                     batchTaskExecutionPM.ErrorLog = errorMessage;
-                                    batchTaskExecutionPM.CallStack = ex.StackTrace;
                                 }
                                 batchTaskExecutionPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                                 Logitude.Infrastructure.Data.IInfrastructureContext context = Logitude.Infrastructure.Data.InfrastructureContext.GetContext(batchTaskExecutionPM.Tenant);

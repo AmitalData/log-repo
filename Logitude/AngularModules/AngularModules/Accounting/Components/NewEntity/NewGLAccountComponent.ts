@@ -50,7 +50,7 @@ export class NewGLAccountComponent extends BaseComponent {
 
         this.InitLOVFilters();
 
-        this.SetUIProperties();
+        this.SetUIProperties(); 
         this.SelectDefaultValues();
     }
 
@@ -100,7 +100,6 @@ export class NewGLAccountComponent extends BaseComponent {
                 this.InitLOVFilters();
             }
         }
-        this.UIProperties.SetEnabled("EnglishName",this.ObjectTableName,false);
     }
 
     //#region Properties
@@ -131,7 +130,7 @@ export class NewGLAccountComponent extends BaseComponent {
     set RevaluationEnabled(value: boolean) {
         if (this.EntityPM.RevaluationEnabled != value) {
             this.EntityPM.RevaluationEnabled = value;
-
+           
         }}
 
 
@@ -353,7 +352,7 @@ export class NewGLAccountComponent extends BaseComponent {
                 }
             })
         });
-
+        
     }
-
+     
 }

@@ -218,31 +218,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return result;
         }
 
-        public CountryPM GetSinglePMByCode(string code, int tenant)
-        {
-            CountryPM country = (from a in repository.context.Countries
-                                 where a.Tenant == tenant && a.Code == code
-                                 select new CountryPM()
-                                 {
-                                     AddedManually = a.AddedManually,
-                                     Code = a.Code,
-                                     EnglishName = a.EnglishName,
-                                     GlobalZoneId = a.GlobalZoneId,
-                                     Id = a.Id,
-                                     InActive = a.InActive,
-                                     LocalName = a.LocalName,
-                                     Notes = a.Notes,
-                                     Tenant = a.Tenant,
-                                     EC = a.EC,
-                                     HasStates = a.HasStates,
-                                     IsStateRequired = a.IsStateRequired,
-                                     SearchFields = a.SearchFields,
-                                     ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                                     HasCitiesList = a.HasCitiesList,
-                                 }).FirstOrDefault();
 
-            return country;
-        }
 
         public IQueryable<CountryList> GetCountryListsByCounryCodeLists( List<string>counryCodes ,int tenant)
         {
@@ -257,5 +233,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           };
             return query;
         }
+        
+
+
     }
 }

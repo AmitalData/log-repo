@@ -222,7 +222,7 @@ export class GeneralEmailSender {
         var logWindow = new LogitudeWindow();
         logWindow.Width = sendWindowWidth;
         logWindow.Height = SelectedInternalDocument.WindowHeight = sendWindowHeight;
-        logWindow.Title = "Send Message";
+        logWindow.Title = "Send Control";
         logWindow.DataContext = SelectedInternalDocument;
         logWindow.NotifyOnClose = true;
         logWindow.IsShowCloseButton = true;

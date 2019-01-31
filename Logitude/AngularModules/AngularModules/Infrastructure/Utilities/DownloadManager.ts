@@ -1,5 +1,4 @@
-﻿
-import {AppTool} from '../Tools';
+﻿import {AppTool} from '../Tools';
 import {SessionLocator} from './SessionLocator';
 import {CommunicationLogList} from '../../Common/EntityLists/CommunicationLogList';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';

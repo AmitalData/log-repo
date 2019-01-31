@@ -72,8 +72,6 @@ namespace WebFreight.Web.ShipmentPackageModel
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
 
             IQueryable<ShipmentJoinPackageList> shipments = shipmentQuery.GetShipmentsJoinPackagesByTenant(tenant);
-            List<string> packageIds = shipments.Select(s => s.PackageId).ToList();
-            List<ShipmentPackageItem> packageItems = shipmentCotnext.ShipmentPackageItems.Where(d => packageIds.Contains(d.PackageId)).ToList();
 
             QueryFilterItem fromDateItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDateTime" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
             QueryFilterItem toDateItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDateTime" && d.Operator == "LessThanOrEqual").FirstOrDefault();
@@ -152,8 +150,6 @@ namespace WebFreight.Web.ShipmentPackageModel
                                                                        .Where(d => d.BillToId == shipment.CustomerId && d.StatusCode != "LL")
                                                                        .ToList();
 
-                List<ShipmentPackageItem> myPackageItems = packageItems.Where(d => d.PackageId == shipment.PackageId).ToList();
-
                 WebFreight.Web.ShipmentPackageModel.RegisterShipmentPackageDataProvider.RegisterShipmentPackageRecord provider = new RegisterShipmentPackageDataProvider.RegisterShipmentPackageRecord();
 
                 provider.ShipmentNumber = shipment.ShipmentNumber != null ? shipment.ShipmentNumber : "";
@@ -190,55 +186,8 @@ namespace WebFreight.Web.ShipmentPackageModel
                 provider.Flagged = shipment.ContainerFollowUp;
                 provider.GrossWeightAsDouble = shipment.PackagesGrossWeight;
                 provider.Ramp = shipment.OnCarriageToPortCode;
-                provider.BookingConfirmationNumber = shipment.BookingConfirmationNumber;
 
-                if (myPackageItems.Count > 0)
-                {
-                    string desc = null;
-                    string value = null;
-                    string quantity = null;
-                    foreach (ShipmentPackageItem item in myPackageItems)
-                    {
-                        if (!string.IsNullOrEmpty(item.Description))
-                        {
-                            if (string.IsNullOrEmpty(desc))
-                            {
-                                desc = item.Description;
-                            }
-                            else
-                            {
-                                desc = desc + Environment.NewLine + item.Description;
-                            }
-                        }
-                        if (item.GoodsValue != null)
-                        {
-                            if (string.IsNullOrEmpty(value))
-                            {
-                                value = item.GoodsValue.Value.ToString();
-                            }
-                            else
-                            {
-                                value = value + Environment.NewLine + item.GoodsValue.Value.ToString();
-                            }
-                        }
-                        if (item.Quantity != null)
-                        {
-                            if (string.IsNullOrEmpty(quantity))
-                            {
-                                quantity = item.Quantity.Value.ToString();
-                            }
-                            else
-                            {
-                                quantity = quantity + Environment.NewLine + item.Quantity.Value.ToString();
-                            }
-                        }
-                    }
-                    provider.ContainerPackageItemsDescription = desc;
-                    provider.ContainerPackageItemsQuantity = quantity;
-                    provider.ContainerPackageItemsValue = value;
-                }
-
-                if (!string.IsNullOrEmpty(shipment.Transshipment3FromPortId))
+                if(!string.IsNullOrEmpty(shipment.Transshipment3FromPortId))
                 {
                     provider.LastATA = shipment.Transshipment3ATA;
                     provider.LastETA = shipment.Transshipment3ETA;

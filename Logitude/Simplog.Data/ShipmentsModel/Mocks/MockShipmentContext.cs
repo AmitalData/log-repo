@@ -581,14 +581,14 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         {
             get { throw new NotImplementedException(); }
         }
-        public IDbSet<MessagingStock> MessagingStocks
+        public IDbSet<AWBMessagingStock> AWBMessagingStocks
         {
             get
             {
                 throw new NotImplementedException();
             }
         }
-        public IDbSet<MessagingStockUsageHistory> MessagingStockUsageHistories
+        public IDbSet<AWBStockUsageHistory> AWBStockUsageHistories
         {
             get
             {
@@ -801,31 +801,5 @@ namespace Simplog.Data.ShipmentsModel.Mocks
                 throw new NotImplementedException();
             }
         }
-        public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public IDbSet<PickUpDeliveryPackageHarmonize> PickUpDeliveryPackageHarmonizes
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
     }
 }

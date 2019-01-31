@@ -86,7 +86,7 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
         });
 
         var screenCode = "Shipment.CustomsAdditionalFields";
-        //cmpRef.instance.LabelWidth = 110;
+        cmpRef.instance.LabelWidth = 110;
         cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
       });
   }

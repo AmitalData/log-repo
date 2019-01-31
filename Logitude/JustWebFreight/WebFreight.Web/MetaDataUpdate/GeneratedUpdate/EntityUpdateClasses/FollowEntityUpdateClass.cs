@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class FollowEntityUpdateClass
@@ -143,9 +140,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ObjectTableId",
-					  						DefaultText =  @"Object Table",
+					  						DefaultText =  "Object Table",
 					  						ListFieldLable =  "ObjectTableIdListLable",
-					  						ListLableDefaultText =  @"Object Table",
+					  						ListLableDefaultText =  "Object Table",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -181,9 +178,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntityId",
-					  						DefaultText =  @"Entity",
+					  						DefaultText =  "Entity",
 					  						ListFieldLable =  "EntityIdListLable",
-					  						ListLableDefaultText =  @"Entity",
+					  						ListLableDefaultText =  "Entity",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -220,9 +217,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowerUserId",
-					  						DefaultText =  @"Follower User",
+					  						DefaultText =  "Follower User",
 					  						ListFieldLable =  "FollowerUserIdListLable",
-					  						ListLableDefaultText =  @"Follower User",
+					  						ListLableDefaultText =  "Follower User",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -258,9 +255,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  @"Create Date",
+					  						DefaultText =  "Create Date",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  @"Create Date",
+					  						ListLableDefaultText =  "Create Date",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -296,9 +293,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCancelled",
-					  						DefaultText =  @"Is Cancelled",
+					  						DefaultText =  "Is Cancelled",
 					  						ListFieldLable =  "IsCancelledListLable",
-					  						ListLableDefaultText =  @"Is Cancelled",
+					  						ListLableDefaultText =  "Is Cancelled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -334,9 +331,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CancelledDate",
-					  						DefaultText =  @"Cancelled Date",
+					  						DefaultText =  "Cancelled Date",
 					  						ListFieldLable =  "CancelledDateListLable",
-					  						ListLableDefaultText =  @"Cancelled Date",
+					  						ListLableDefaultText =  "Cancelled Date",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -372,9 +369,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowerName",
-					  						DefaultText =  @"Follower Name",
+					  						DefaultText =  "Follower Name",
 					  						ListFieldLable =  "FollowerNameListLable",
-					  						ListLableDefaultText =  @"Follower Name",
+					  						ListLableDefaultText =  "Follower Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -410,14 +407,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

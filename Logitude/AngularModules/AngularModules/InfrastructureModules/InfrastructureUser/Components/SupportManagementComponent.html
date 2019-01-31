@@ -1,32 +1,34 @@
+﻿
 
 
 
 
 
 
+    <table>
 
-<table>
-    <tr style="height:100%;vertical-align:top">
+   
+        <tr style="height:100%;vertical-align:top">
+
+
         <td>
-            <table *ngIf="IsResourcesReady">
+            <table style="vertical-align:top">
                 <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
                     <td colspan="4">
-                        <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+                        <ValidationSummary  [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
                     </td>
                 </tr>
-
+        
                 <tr style="height:30px">
-                    <td style="width:8px">
-                        <div></div>
-                    </td>
-                    <td style="width:170px">System Support:</td>
-                    <td style="width:30px">
-                        <div></div>
-                    </td>
+                    <td style="width:8px"><div></div></td>
+                   <td style="width:170px">System Support:</td>
+                    <td style="width:30px"><div></div></td>
                     <td>
                         <table>
                             <tr style="height:5px">
-                                <td></td>
+                                <td>
+
+                                </td>
                             </tr>
                             <tr>
                                 <td>
@@ -37,77 +39,75 @@
                                 </td>
                             </tr>
                         </table>
-
+                       
 
                     </td>
                 </tr>
 
 
                 <tr style="height:30px">
-                    <td style="width:8px">
-                        <div></div>
-                    </td>
-
+                    <td style="width:8px"><div></div></td>
+                   
                     <td style="width:170px">Distributor Support:</td>
-                    <td style="width:30px">
-                        <div></div>
-                    </td>
+                    <td style="width:30px"><div></div></td>
                     <td>
-                        <table>
-                            <tr style="height:5px">
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div style="display:inline" class="CheckBox">
-                                        <input style="text-align:left" (change)="DistributorSupportEnabledChecked()" [attr.id]="DistributorSupportEnabledKey" type="checkbox" [(ngModel)]="IsDistributorSupportEnabledCheck" />
-                                        <label [attr.for]="DistributorSupportEnabledKey"></label>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-
+                    <table>
+                        <tr style="height:5px">
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display:inline" class="CheckBox">
+                                    <input style="text-align:left" (change)="DistributorSupportEnabledChecked()" [attr.id]="DistributorSupportEnabledKey" type="checkbox" [(ngModel)]="IsDistributorSupportEnabledCheck" />
+                                    <label [attr.for]="DistributorSupportEnabledKey"></label>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                       
                     </td>
                 </tr>
 
                 <tr>
-                    <td>
-                        <div></div>
-                    </td>
+              <td><div></div></td>
                 </tr>
 
             </table>
         </td>
-    </tr>
-
-    <tr style="height: 32px;">
-        <td style="vertical-align: bottom">
-            <table style="height: 22px;">
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
-
-                    <td style="width: 57px;">
-                        <div>
-
-                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
 
 
-                        </div>
-                    </td>
 
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
 
-                    <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
+        </tr>
 
-</table>
+        <tr style="height: 32px;">
+            <td style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <div>
+
+                                <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+
+                               
+                            </div>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
 

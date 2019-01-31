@@ -51,14 +51,13 @@ export class NewCashBookComponent extends BaseComponent implements OnInit {
 
         this.InitLOVFilters();
 
-    }
+    } 
 
     InitLOVFilters() {
         // initialize query filters for Accounts
         this.GLAccountsFilterItems = new ApiQueryFilters();
-        // this.GLAccountsFilterItems.addAdditionalFilter("IsMultiCurrency", true, null, null, "Equals", false, false, false, "boolean");
-        // this.GLAccountsFilterItems.addAdditionalFilter("CurrencyId", this.CurrencyId, "OOORRR", null, "Equals", false, false, false, "string");
-        this.GLAccountsFilterItems.addAdditionalFilter("SingleAndMultiCurrencyAccount", this.CurrencyId, null, null, "Equals", true, false, false, "string");
+        this.GLAccountsFilterItems.addAdditionalFilter("IsMultiCurrency", true, null, null, "Equals", false, false, false, "boolean");
+        this.GLAccountsFilterItems.addAdditionalFilter("CurrencyId", this.CurrencyId, "OOORRR", null, "Equals", false, false, false, "string");
     }
 
     ngOnInit() {
@@ -101,8 +100,7 @@ export class NewCashBookComponent extends BaseComponent implements OnInit {
             this.CheckCurrency();
         }
 
-        // var filter = this.GLAccountsFilterItems.AdditionalFilters.find(d => d.FieldName == "CurrencyId");
-        var filter = this.GLAccountsFilterItems.AdditionalFilters.find(d => d.FieldName == "SingleAndMultiCurrencyAccount");
+        var filter = this.GLAccountsFilterItems.AdditionalFilters.find(d => d.FieldName == "CurrencyId");
         filter.FieldValue = this.CurrencyId;
 
     }
@@ -188,7 +186,7 @@ export class NewCashBookComponent extends BaseComponent implements OnInit {
         //this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, true);
         //this.UIProperties.SetRequired("BranchId", this.ObjectTableName, true);
     }
-
+    
     SelectDefaultValues() {
         this.EntityPM.CreateDate = new Date();
         this.EntityPM.UpdateDate = new Date();
@@ -214,5 +212,5 @@ export class NewCashBookComponent extends BaseComponent implements OnInit {
     }
 
 
-
+     
 }

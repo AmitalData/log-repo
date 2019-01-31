@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateClasses
 {
    public class QuoteSettingUpdateClass
@@ -81,6 +78,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	             				    ObjectTableName =  "QuoteSetting",
 			      				    DBTableName =  "QuoteSettings",
 			      				    ObjectTableSingular =  "Quote Setting",
+			      				    ObjectTablePlural =  "Quote Settings",
 			      				    DefaultText =  "Quote Setting",
 			      				    Name =  "QuoteSetting",
 			      				    IsNewWizard =  false,
@@ -173,7 +171,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CopyShipper",
-					  						DefaultText =  @"Shipper",
+					  						DefaultText =  "Shipper",
 					  						HelpTextCode =  "CopyShipper",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -227,7 +225,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CopyConsignee",
-					  						DefaultText =  @"Consignee",
+					  						DefaultText =  "Consignee",
 					  						HelpTextCode =  "CopyConsignee",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -281,7 +279,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CopyMainCarriage",
-					  						DefaultText =  @"Main Carriage",
+					  						DefaultText =  "Main Carriage",
 					  						HelpTextCode =  "CopyMainCarriage",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -335,7 +333,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CopyPickup",
-					  						DefaultText =  @"Include Pickup",
+					  						DefaultText =  "Include Pickup",
 					  						HelpTextCode =  "CopyPickup",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -389,7 +387,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CopyDelivery",
-					  						DefaultText =  @"Include Delivery",
+					  						DefaultText =  "Include Delivery",
 					  						HelpTextCode =  "CopyDelivery",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -443,7 +441,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CopyChargesTypes",
-					  						DefaultText =  @"Charges Types",
+					  						DefaultText =  "Charges Types",
 					  						HelpTextCode =  "CopyChargesTypes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -497,7 +495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CopyChargesCost",
-					  						DefaultText =  @"Cost",
+					  						DefaultText =  "Cost",
 					  						HelpTextCode =  "CopyChargesCost",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -551,7 +549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CopyChargesSale",
-					  						DefaultText =  @"Sale",
+					  						DefaultText =  "Sale",
 					  						HelpTextCode =  "CopyChargesSale",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -605,7 +603,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EditMainCarriage",
-					  						DefaultText =  @"Edit Main Carriage",
+					  						DefaultText =  "Edit Main Carriage",
 					  						HelpTextCode =  "EditMainCarriage",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -659,7 +657,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CopyAgent",
-					  						DefaultText =  @"Agent",
+					  						DefaultText =  "Agent",
 					  						HelpTextCode =  "CopyAgent",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -713,62 +711,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CopyNotify",
-					  						DefaultText =  @"Notify",
+					  						DefaultText =  "Notify",
 					  						HelpTextCode =  "CopyNotify",
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "IsSaleAsCostCurrency",
-					  						ObjectTableName =  "QuoteSetting",
-					  						FieldsDataType =  "Boolean",
-					  						Code =  "IsSaleAsCostCurrency",
-					  						MaxLength =  1,
-					  						IsCustom =  false,
-					  						MinLength =  0,
-					  						DisplayOnLookUp =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						PMPropertyPath =  "IsSaleAsCostCurrency",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "IsSaleAsCostCurrency",
-					  						DefaultText =  @"Quote Sale Currency Default",
-					  						HelpTextCode =  "IsSaleAsCostCurrency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -804,22 +748,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable QuoteSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteSetting" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode QuoteSettingTextCode_QuoteSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteSetting", DefaultText = "Quote Setting",LocalDefaultText = null, ObjectTableId = QuoteSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
-	    
-}
-
-    
+	    }     
 
    }
     

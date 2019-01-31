@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class ShipmentAssemblyUpdateClass
@@ -112,11 +109,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsLookUp =  false,
 			      				    IsEditable =  false,
 			      				    AllowedForComputingPartners =  false,
+			      				    DisableSearchBox =  false,
 			      				    ClientModuleName =  "Shipment",
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
+			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -131,7 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "ShipmentAssembly",
 					  						FieldsDataType =  "Text",
 					  						LookUpTableName =  "Shipment",
-					  						DataTypeCode =  "Text",
+					  						Code =  "ShipmentId",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -157,6 +156,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -168,16 +168,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "ShipmentId",
-					  						DefaultText =  @"Shipment",
-					  						HelpTextCode =  "ShipmentId",
-					  						Code =  "ShipmentId",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "ShipmentId",
+					  						DefaultText =  "Shipment",
+					  						HelpTextCode =  "ShipmentId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -189,7 +186,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "ShipmentAssembly",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
-					  						DataTypeCode =  "LookUp",
+					  						Code =  "ShipperId",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -215,6 +212,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -226,16 +224,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "ShipperId",
-					  						DefaultText =  @"Shipper",
-					  						HelpTextCode =  "ShipperId",
-					  						Code =  "ShipperId",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "ShipperId",
+					  						DefaultText =  "Shipper",
+					  						HelpTextCode =  "ShipperId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -246,7 +241,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "ShipperName",
 					  						ObjectTableName =  "ShipmentAssembly",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "ShipperName",
 					  						MaxLength =  70,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -272,6 +267,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -283,17 +279,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
+					  						IsRequired =  false,
 					  						FullFieldLable =  "ShipperName",
-					  						DefaultText =  @"Shipper",
+					  						DefaultText =  "Shipper",
 					  						HelpTextCode =  "ShipperName",
 					  						ShortFieldLable =  "ShipperName",
-					  						Code =  "ShipperName",
-					  						DependencyFilter3IsList =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -304,7 +297,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "House",
 					  						ObjectTableName =  "ShipmentAssembly",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "House",
 					  						MaxLength =  20,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -330,6 +323,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -341,17 +335,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
+					  						IsRequired =  false,
 					  						FullFieldLable =  "House",
-					  						DefaultText =  @"House",
+					  						DefaultText =  "House",
 					  						HelpTextCode =  "House",
 					  						ShortFieldLable =  "House",
-					  						Code =  "House",
-					  						DependencyFilter3IsList =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -363,7 +354,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "ShipmentAssembly",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
-					  						DataTypeCode =  "LookUp",
+					  						Code =  "CreatedByUserId",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -389,6 +380,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -400,16 +392,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  @"Created By",
-					  						HelpTextCode =  "CreatedByUserId",
-					  						Code =  "CreatedByUserId",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "CreatedByUserId",
+					  						DefaultText =  "Created By",
+					  						HelpTextCode =  "CreatedByUserId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -420,7 +409,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "CreatedByUserName",
 					  						ObjectTableName =  "ShipmentAssembly",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "CreatedByUserName",
 					  						MaxLength =  40,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -446,6 +435,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -457,16 +447,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "CreatedByUserName",
-					  						DefaultText =  @"Created By",
-					  						HelpTextCode =  "CreatedByUserName",
-					  						Code =  "CreatedByUserName",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "CreatedByUserName",
+					  						DefaultText =  "Created By",
+					  						HelpTextCode =  "CreatedByUserName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -478,7 +465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "ShipmentAssembly",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
-					  						DataTypeCode =  "LookUp",
+					  						Code =  "UpdatedByUserId",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -504,6 +491,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -515,16 +503,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "UpdatedByUserId",
-					  						DefaultText =  @"Updated By",
-					  						HelpTextCode =  "UpdatedByUserId",
-					  						Code =  "UpdatedByUserId",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "UpdatedByUserId",
+					  						DefaultText =  "Updated By",
+					  						HelpTextCode =  "UpdatedByUserId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -535,7 +520,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "UpdatedByUserName",
 					  						ObjectTableName =  "ShipmentAssembly",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "UpdatedByUserName",
 					  						MaxLength =  40,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -561,6 +546,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -572,16 +558,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "UpdatedByUserName",
-					  						DefaultText =  @"Updated By",
-					  						HelpTextCode =  "UpdatedByUserName",
-					  						Code =  "UpdatedByUserName",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "UpdatedByUserName",
+					  						DefaultText =  "Updated By",
+					  						HelpTextCode =  "UpdatedByUserName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -592,7 +575,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "CreateDate",
 					  						ObjectTableName =  "ShipmentAssembly",
 					  						FieldsDataType =  "DateTime",
-					  						DataTypeCode =  "DateTime",
+					  						Code =  "CreateDate",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -618,6 +601,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -629,16 +613,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  @"Create Date",
-					  						HelpTextCode =  "CreateDate",
-					  						Code =  "CreateDate",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "CreateDate",
+					  						DefaultText =  "Create Date",
+					  						HelpTextCode =  "CreateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -649,7 +630,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "UpdateDate",
 					  						ObjectTableName =  "ShipmentAssembly",
 					  						FieldsDataType =  "DateTime",
-					  						DataTypeCode =  "DateTime",
+					  						Code =  "UpdateDate",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -675,6 +656,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -686,16 +668,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  @"Update Date",
-					  						HelpTextCode =  "UpdateDate",
-					  						Code =  "UpdateDate",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "UpdateDate",
+					  						DefaultText =  "Update Date",
+					  						HelpTextCode =  "UpdateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -726,14 +705,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

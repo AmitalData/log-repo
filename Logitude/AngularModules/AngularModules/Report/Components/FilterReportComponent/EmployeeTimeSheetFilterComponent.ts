@@ -1,4 +1,4 @@
-import {Component}  from '@angular/core';
+﻿import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
@@ -20,7 +20,6 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
     ToDate: Date;
     FromDate: Date;
     EmployeeUserId: string;
-    TimeRequired: number;
     queryFilterItems: QueryFilterItem[];
     public AgentId = null;
     queryFilterItem: QueryFilterItem;
@@ -34,7 +33,7 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.EmployeeUserId = SessionLocator.LoggedUserId;
-        this.TimeRequired = 9;
+
         var month = new Date().getMonth();
         var Year = new Date().getFullYear();
         var daysofmonth = this.daysInMonth(new Date());
@@ -96,12 +95,6 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "TimeRequired";
-            this.queryFilterItem.FieldValue = this.TimeRequired;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
 
             this.reportFliter = new ReportFliter();
             //this.reportFliter.DateType = "CreateDate";

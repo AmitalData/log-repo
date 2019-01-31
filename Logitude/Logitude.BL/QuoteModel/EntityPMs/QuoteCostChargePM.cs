@@ -49,9 +49,5 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? VatPercentage { get; set; }
         public string VatTypeName { get; set; }
         public string UOMPercentage { get; set; }
-        public double? CostMaxAmount { get; set; }
-        public double? CostMinAmount { get; set; }
-        public double? SaleMinAmount { get; set; }
-        public double? SaleMaxAmount { get; set; }
     }
 }

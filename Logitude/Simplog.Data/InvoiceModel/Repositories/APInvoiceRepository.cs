@@ -37,11 +37,6 @@ namespace Simplog.Data.InvoiceModel.Repositories
             return context.APInvoices.Where(d => d.Tenant == tenant && d.StatusCode == "WA");
         }
 
-        public IQueryable<APInvoice> GetErrorInTransferAPInvoices(int tenant)
-        {
-            return context.APInvoices.Where(d => d.Tenant == tenant && d.TransferStatusCode == "ET");
-        }
-
         public IQueryable<APInvoice> GetAPInvoicesWithWA(int tenant)
         {
             return context.APInvoices.Where(d => d.Tenant == tenant && d.StatusCode != "VD");

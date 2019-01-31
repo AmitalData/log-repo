@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+﻿import {Component, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 
 @Component({
@@ -9,9 +9,6 @@ import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
     template:
     `
     <ul class="FiltersMenu">
-        <li style=" width: 40px;" (click)="itemClicked('A')" (mouseover)="itemMouseOver('A')" (mouseleave)="itemMouseLeave('A')" [class.SelectedFilter]="SelectedValue === 'A'" title="All">
-            All
-        </li>
         <li style=" width: 40px;" (click)="itemClicked('O')" (mouseover)="itemMouseOver('O')" (mouseleave)="itemMouseLeave('O')" [class.SelectedFilter]="SelectedValue === 'O'" title="Office">
             Office
         </li>
@@ -27,23 +24,20 @@ import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 
 export class LocationsFilter {
     public FilterId_A: string;
-    public FilterId_H: string;
     public FilterId_O: string;
     public FilterId_I: string;
     @Output() SelectedValueChanged = new EventEmitter();
     constructor() {
         if (SessionLocator.CurrentSession == null) {
-            this.FilterId_A = "LocationFilter_A_-1_-1";
-            this.FilterId_O = "LocationFilter_O_-1_-1";
-            this.FilterId_H = "LocationFilter_H_-1_-1";
+            this.FilterId_A = "LocationFilter_O_-1_-1";
+            this.FilterId_O = "LocationFilter_H_-1_-1";
             this.FilterId_I = "LocationFilter_C_-1_-1";
         }
 
         else {
             var idIndex = SessionLocator.CurrentSession.GetNewId("LocationsFilter");
-            this.FilterId_A = "LocationFilter_A_" + idIndex;
-            this.FilterId_O = "LocationFilter_O_" + idIndex;
-            this.FilterId_H = "LocationFilter_H_" + idIndex;
+            this.FilterId_A = "LocationFilter_O_" + idIndex;
+            this.FilterId_O = "LocationFilter_H_" + idIndex;
             this.FilterId_I = "LocationFilter_C_" + idIndex;
         }
     }

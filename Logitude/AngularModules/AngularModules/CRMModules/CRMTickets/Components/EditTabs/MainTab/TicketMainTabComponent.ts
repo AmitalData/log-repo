@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChildren, QueryList, AfterViewInit} from '@angular/core';
+﻿import {Component, OnInit, ViewChildren, QueryList, AfterViewInit} from '@angular/core';
 import {TicketPM} from '../../../../../CRM/EntityPMs/TicketPM';
 import {TicketPMService} from '../../../../../CRM/Services/StandardPMs/TicketPMService';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
@@ -37,7 +37,6 @@ import {CommunicationLogPMService} from '../../../../../Common/Services/Standard
 import {ApiQueryFilters} from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ContactList} from '../../../../../Common/EntityLists/ContactList';
 import {ContactListService} from '../../../../../Common/Services/StandardLists/ContactListService';
-declare var window: any;
 
 
 @Component({
@@ -59,6 +58,7 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
     constructor(public entityArgs: EntityArgs, public  _entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
+
         if (this.EntityPM) {
             this.EntityId = this.EntityPM.Id;
         }
@@ -103,11 +103,11 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
                 if (tabCode == "TIMN") {
                     if (this.PageChild_DS != null) {
+                        this.PageChild_DS.CreateEntities();
                         this.PageChild_DS.GetEntityLinkNumberVisibility();
-                        this.PageChild_DS.SetUIProperties();
+                        this.PageChild_DS.UpdateEntityDetails();
                     }
                 }
-
             });
         }
     }
@@ -166,7 +166,6 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
         this.IsTicketReplyEnabled = FeatureLocator.HasFeaturePermession("Ticket", "TicketReply") && CRMTool.IsTicketEditEnabled(this.EntityPM);
         this.IsTicketActivityEnabled = FeatureLocator.HasFeaturePermession("Ticket", "TicketActivities") && CRMTool.IsTicketEditEnabled(this.EntityPM);
         this.UIProperties.SetEnabled("ShipmentNumber", this.ObjectTableName, this.IsTicketEditEnabled);
-        this.UIProperties.SetEnabled("EntityType", this.ObjectTableName, this.IsTicketEditEnabled);
         this.UIProperties.SetEnabled("CompanyId", this.ObjectTableName, this.IsTicketEditEnabled);
         this.UIProperties.SetEnabled("ContactId", this.ObjectTableName, this.IsTicketEditEnabled);
         this.UIProperties.SetEnabled("CustomerContactId", this.ObjectTableName, this.IsTicketEditEnabled);
@@ -181,7 +180,7 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
             this.PageChild_DS.SetUIProperties();
         }
     }
-    public SetUIRequiredProperties() {
+    SetUIRequiredProperties() {
         this.UIProperties.SetRequired("EmployeeGroupId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.EmployeeGroupId));
         this.UIProperties.SetRequired("OwnerId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OwnerId));
         this.UIProperties.SetRequired("CompanyId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.CompanyId));

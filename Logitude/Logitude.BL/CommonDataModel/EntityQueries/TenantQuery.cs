@@ -42,7 +42,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             {
                                                 Id = a.Id,
                                                 AddressId = a.AddressId,
-                                                LocalAddressId = a.LocalAddressId,
                                                 CompanyAddress = a.Address != null ? a.Address.Name : null,
                                                 Company = a.Company,
                                                 Signature = a.Signature,
@@ -190,7 +189,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     {
                         Id = tt.Id,
                         AddressId = tt.AddressId,
-                        LocalAddressId = tt.LocalAddressId,
                         CompanyAddress = tt.Address != null ? tt.Address.Name : null,
                         Company = tt.Company,
                         Signature = tt.Signature,
@@ -320,11 +318,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     {
                         AddressQuery addressQuery = new AddressQuery(id);
                         AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id);
-                        if (add != null)
-                        {
-                            tenant.CountryCode = add.CountryCode;
-                            tenant.CountryName = add.CountryEnglishName;
-                        }
+                        tenant.CountryCode = add.CountryCode;
+                        tenant.CountryName = add.CountryEnglishName;
                     }
 
                     entity = tenant;
@@ -350,7 +345,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     Id = tt.Id,
                     AddressId = tt.AddressId,
-                    LocalAddressId = tt.LocalAddressId,
                     CompanyAddress = tt.Address != null ? tt.Address.Name : null,
                     Company = tt.Company,
                     Signature = tt.Signature,
@@ -476,11 +470,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     AddressQuery addressQuery = new AddressQuery(id);
                     AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id);
-                    if (add != null)
-                    {
-                        tenant.CountryCode = add.CountryCode;
-                        tenant.CountryName = add.CountryEnglishName;
-                    }
+                    tenant.CountryCode = add.CountryCode;
+                    tenant.CountryName = add.CountryEnglishName;
                 }
 
                 entity = tenant;
@@ -503,7 +494,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        select new TenantPM()
                                        {
                                            AddressId = a.AddressId,
-                                           LocalAddressId = a.LocalAddressId,
                                            Company = a.Company,
                                            CurrencyId = a.CurrencyId,
                                            Direction = a.Direction,
@@ -617,7 +607,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     if (tenant.AddressId != null)
                     {
                         AddressQuery addressQuery = new AddressQuery(id);
-                        AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id)?? new AddressPM();
+                        AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id);
                         tenant.CountryCode = add.CountryCode;
                         tenant.CountryName = add.CountryEnglishName;
                     }
@@ -641,7 +631,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    select new TenantPM()
                                    {
                                        AddressId = a.AddressId,
-                                       LocalAddressId = a.LocalAddressId,
                                        Company = a.Company,
                                        CurrencyId = a.CurrencyId,
                                        Direction = a.Direction,
@@ -754,7 +743,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 if (tenant.AddressId != null)
                 {
                     AddressQuery addressQuery = new AddressQuery(id);
-                    AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id)?? new AddressPM();
+                    AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id);
                     tenant.CountryCode = add.CountryCode;
                     tenant.CountryName = add.CountryEnglishName;
                 }
@@ -781,7 +770,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            select new TenantPM()
                                            {
                                                AddressId = a.AddressId,
-                                               LocalAddressId = a.LocalAddressId,
                                                Company = a.Company,
                                                CurrencyId = a.CurrencyId,
                                                Direction = a.Direction,
@@ -898,7 +886,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         if (tenant.AddressId != null)
                         {
                             AddressQuery addressQuery = new AddressQuery(id);
-                            AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id) ?? new AddressPM();
+                            AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id);
                             tenant.CountryCode = add.CountryCode;
                             tenant.CountryName = add.CountryEnglishName;
                         }
@@ -922,7 +910,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        select new TenantPM()
                                        {
                                            AddressId = a.AddressId,
-                                           LocalAddressId = a.LocalAddressId,
                                            Company = a.Company,
                                            CurrencyId = a.CurrencyId,
                                            Direction = a.Direction,
@@ -1039,7 +1026,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     if (tenant.AddressId != null)
                     {
                         AddressQuery addressQuery = new AddressQuery(id);
-                        AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id)?? new AddressPM();
+                        AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id);
                         tenant.CountryCode = add.CountryCode;
                         tenant.CountryName = add.CountryEnglishName;
                     }
@@ -1055,7 +1042,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    select new TenantPM()
                                    {
                                        AddressId = a.AddressId,
-                                       LocalAddressId = a.LocalAddressId,
                                        Company = a.Company,
                                        CurrencyId = a.CurrencyId,
                                        Direction = a.Direction,
@@ -1187,7 +1173,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 if (tenant.AddressId != null)
                 {
                     AddressQuery addressQuery = new AddressQuery(id);
-                    AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id)?? new AddressPM();
+                    AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id);
                     tenant.CountryCode = add.CountryCode;
                     tenant.CountryName = add.CountryEnglishName;
                 }
@@ -1211,7 +1197,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     Id = myPOCO.Id,
                     AddressId = myPOCO.AddressId,
-                    LocalAddressId = myPOCO.LocalAddressId,
                     CompanyAddress = myPOCO.Address != null ? myPOCO.Address.Name : null,
                     Company = myPOCO.Company,
                     Signature = myPOCO.Signature,

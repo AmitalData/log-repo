@@ -75,13 +75,6 @@ namespace Logitude.Accounting.Data.Repositories
             }
         }
 
-        public ChartOfAccount GetSingleByCode(string code, int tenant)
-        {
-            return (from a in context.ChartOfAccounts
-                    where a.Code == code && a.Tenant == tenant
-                    select a).FirstOrDefault();
-        }
-
         public IQueryable<ChartOfAccount> GetByTypeParentID(string COATypeCode, string ParentCOAId)
         {
             var q = (from a in context.ChartOfAccounts

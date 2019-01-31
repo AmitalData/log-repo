@@ -19,5 +19,6 @@ export class ApiCredintialsList {
 		UpdatedBy: string;
 		maskedPrimaryAccessKey: string;
 		maskedSeconderyAccessKey: string;
+		ComputingPartnerId: string;
 	
 }

@@ -673,7 +673,7 @@
 
                     <div style="height:25px; vertical-align:central;">
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:25px; text-align:center;"><img style="height:20px; width:20px;" src="#= DirectionSRC #" title="#= DirectionName #" /></div>
-                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:60px;">Ref No:</div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:40px;">Ref No:</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:90px; color:\\#1B90CB;">${ShipmentNumber}</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;">${MyPartnerName}</div>
 
@@ -689,14 +689,11 @@
                         
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:7px;"></div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px; font-size:11px; color: #= StatusColor #;">${StatusName}</div>                       
-
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; visibility: #= DeliveryDateVisibility #; width:7px;"></div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; visibility: #= DeliveryDateVisibility #; width:130px; font-size:11px; color: #= StatusColor #;">Delivery Date</div>  
                     </div>
 
                     <div style="height:25px; vertical-align:central;">
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:25px; text-align:center;"><img style="height:20px; width:20px;" src="#= TransportSRC #" title="#= TransportName #"/></div>
-                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:60px;">${MyReferenceLabel}:</div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:40px;">My Ref:</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:90px; font-size:10px;" title="#= MyReference #">${MyReference}</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;">${IncotermCode}</div>
 
@@ -708,17 +705,13 @@
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:80px; color: #= ToDateColor #;">${ToDate}</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:50px; font-size:10px; color: #= ToDateTypeColor #;">${ToDateType}</div>
 
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:4px;"></div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:5px;"></div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px; font-size:11px; color: #= StatusColor #; margin-top:-10px;">${StatusDate}</div> 
-
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; visibility: #= DeliveryDateVisibility #; width:7px;"></div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; visibility: #= DeliveryDateVisibility #; width:130px; font-size:11px; color: #= StatusColor #; margin-top:-10px;">${DeliveryDate}</div> 
-
                     </div>
 
                     <div style="height:25px; vertical-align:central; position: relative;">
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:25px; font-size:10px; color:Green;"></div>
-                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:60px;">${ReferenceLabel}</div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:40px;">${ReferenceLabel}</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:90px; font-size:11px;">${Reference}</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;">${ShipmentType}</div>
 
@@ -730,7 +723,7 @@
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:60px;"></div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px; font-size:11px; color: Orange;" title="#= LastLogDateLong #"></div>
 
-                        <div class="ValueTextStyle TemplateItem" style="position: absolute; left: 300px; bottom: 5px; height: 15px; width: 380px; line-height: 15px; font-size:10px;" title="#= DescriptionOfGoods #">${DescriptionOfGoods}</div> 
+                        <div class="ValueTextStyle TemplateItem" style="position: absolute; left: 300px; bottom: 5px; height: 15px; width: 380px; line-height: 15px; font-size:10px;" title="#= DescriptionOfGoods #">${DescriptionOfGoods}</div>
                     </div>
 
                 </div>

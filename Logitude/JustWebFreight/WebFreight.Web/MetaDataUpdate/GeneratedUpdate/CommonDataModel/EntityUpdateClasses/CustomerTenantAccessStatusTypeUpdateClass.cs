@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CustomerTenantAccessStatusTypeUpdateClass
@@ -114,10 +111,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsLookUp =  true,
 			      				    IsEditable =  false,
 			      				    AllowedForComputingPartners =  false,
+			      				    DisableSearchBox =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
+			      				    AllowedInQueues =  false,
 			      				    CloseTableCode =  "Code",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -132,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Code",
 					  						ObjectTableName =  "CustomerTenantAccessStatusType",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "Code",
 					  						MaxLength =  2,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -158,6 +157,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -169,18 +169,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "Code",
-					  						DefaultText =  @"Code",
-					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  @"Code",
-					  						HelpTextCode =  "Code",
-					  						Code =  "Code",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  true,
+					  						FullFieldLable =  "Code",
+					  						DefaultText =  "Code",
+					  						ListFieldLable =  "CodeListLable",
+					  						ListLableDefaultText =  "Code",
+					  						HelpTextCode =  "Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -191,7 +188,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "EnglishName",
 					  						ObjectTableName =  "CustomerTenantAccessStatusType",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "EnglishName",
 					  						MaxLength =  25,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -217,6 +214,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -228,18 +226,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "English Name",
-					  						DefaultText =  @"English Name",
-					  						ListFieldLable =  "EnglishNameListLable",
-					  						ListLableDefaultText =  @"English Name",
-					  						HelpTextCode =  "English Name",
-					  						Code =  "EnglishName",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  true,
+					  						FullFieldLable =  "English Name",
+					  						DefaultText =  "English Name",
+					  						ListFieldLable =  "EnglishNameListLable",
+					  						ListLableDefaultText =  "English Name",
+					  						HelpTextCode =  "English Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -250,7 +245,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "LocalName",
 					  						ObjectTableName =  "CustomerTenantAccessStatusType",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "LocalName",
 					  						MaxLength =  25,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -276,6 +271,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -287,18 +283,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "Local Name",
-					  						DefaultText =  @"Local Name",
-					  						ListFieldLable =  "LocalNameListLable",
-					  						ListLableDefaultText =  @"LocalName",
-					  						HelpTextCode =  "Local Name",
-					  						Code =  "LocalName",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  true,
+					  						FullFieldLable =  "Local Name",
+					  						DefaultText =  "Local Name",
+					  						ListFieldLable =  "LocalNameListLable",
+					  						ListLableDefaultText =  "LocalName",
+					  						HelpTextCode =  "Local Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -309,7 +302,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "CustomerTenantAccessStatusType",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "SearchFields",
 					  						MaxLength =  52,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -331,10 +324,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "CustomerTenantAccessStatusType",
-					  						ValidForQuerySection2 =  "CustomerTenantAccessStatusTypeFollowUp",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomerTenantAccessStatusType",
+					  						ValidForQuerySection2 =  "CustomerTenantAccessStatusTypeFollowUp",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -346,17 +340,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search..",
-					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  @"Searching by :\n1: Code\n2: EnglishName\n2: LocalName",
-					  						Code =  "SearchFields",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "Search..",
+					  						HelpTextCode =  "SearchFields",
+					  						HelpTextDefaultText =  "Searching by :\n1: Code\n2: EnglishName\n2: LocalName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -387,14 +378,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

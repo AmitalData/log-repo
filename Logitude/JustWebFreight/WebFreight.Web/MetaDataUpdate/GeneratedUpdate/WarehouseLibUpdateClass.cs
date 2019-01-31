@@ -137,7 +137,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		    this.ObjectContext.SaveChanges();
 
 			CreateAllFeatures();
-			CreateAdditionalTextCodes();
 		    this.ObjectContext.SaveChanges();
 		    this.CommonContext.SaveChanges();
 
@@ -280,24 +279,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   WarehouseReleaseStatusUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
         }
-		public void CreateAdditionalTextCodes()
-        {
-   
-	   	   WarehouseEntryUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
-	
-	   	   WarehouseEntryPackageUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
-	
-	   	   WarehouseEntryPackagesReleaseUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
-	
-	   	   WarehouseEntryStatusUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
-	
-	   	   WarehouseReleaseUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
-	
-	   	   WarehouseReleasePackageUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
-	
-	   	   WarehouseReleaseStatusUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
-	
-        }
+
 		public void CreateAllMenuButtons()
         {
    

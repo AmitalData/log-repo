@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ARInvoiceLinePM} from '../../../../Invoice/EntityPMs/ARInvoiceLinePM';
 import {ARInvoiceLineItem} from './ARInvoiceDetailsTabGeneral';
@@ -87,7 +87,6 @@ export class AddEditARGeneralInvoiceLineComponent {
         if (errors.length == 0) {
             if (this.DataContext.AddNewLineMode) {
                 this.DataContext.AddNewLineMode = false;
-
                 this.DataContext.fatherComponent.EntityPM.AddARInvoiceLinePM(this.EntityPM);
                 //this.DataContext.Exists = true;
                 this.DataContext.fatherComponent.SetUIProperties();

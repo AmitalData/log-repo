@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, Output, EventEmitter, ViewContainerRef} from '@angular/core';
+﻿import {Component, OnInit, ViewChild, Output, EventEmitter, ViewContainerRef} from '@angular/core';
 import {TicketPM} from '../../../../CRM/EntityPMs/TicketPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -29,8 +29,6 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
 import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
 import {NewTicketArgs} from '../../../../CRM/Args';
-declare var window: any;
-
 
 @Component({
     selector: 'NewTicketComponent',
@@ -68,10 +66,52 @@ export class NewTicketComponent extends BaseComponent implements OnInit {
 
     ngOnInit() {
         //this.SetFieldsEnabled();
+        this.CreateEntities();
         this.CreateTicket();
         this.SetUIProperties();
         this.SetUIRequiredProperties();
         this.SetCustomerContactValue();
+    }
+
+    private selectedFilter: EntityClass = null;
+    get SelectedFilter() {
+        return this.selectedFilter;
+    }
+    set SelectedFilter(value: EntityClass) {
+        if (this.selectedFilter != value) {
+            this.selectedFilter = value;
+            this.UpdateEntityDetails();
+
+        }
+    }
+    UpdateEntityDetails() {
+        if (this.SelectedFilter != null && this.SelectedFilter.Code == "1") {
+            this.EntityObjectTableName = "Shipment";
+            this.EntityNumberTitle = "Shipment Number";
+
+        }
+        else {
+            this.EntityObjectTableName = "Quote";
+            this.EntityNumberTitle = "Quote Number";
+        }
+        this.ShipmentId = null;
+        this.ShipmentNumber = null;
+        this.QuoteId = null;
+        this.QuoteNumber = null;
+    }
+    CreateEntities() {
+        this.EntityList = [];
+        var entity = new EntityClass();
+        entity.Code = "1";
+        entity.Name = "Shipment";
+        this.EntityNumberTitle = "Shipment Number";
+        this.SelectedFilter = entity;
+        this.EntityList.push(entity);
+
+        entity = new EntityClass();
+        entity.Code = "2";
+        entity.Name = "Quote";
+        this.EntityList.push(entity);
     }
 
     RunComponent() {
@@ -134,8 +174,6 @@ export class NewTicketComponent extends BaseComponent implements OnInit {
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.IsCancelled = false;
         this.EntityPM.IsClosed = false;
-       this.EntityPM.EntityType = window.ObjectTables.filter(d => d.Name === "Shipment")[0].Id;
-
         if (this.WindowArgs != null) {
             this.CompanyId = this.WindowArgs.CompanyId;
         }
@@ -352,13 +390,6 @@ export class NewTicketComponent extends BaseComponent implements OnInit {
     set ShipmentNumber(newValue: string) {
         if (this.EntityPM.ShipmentNumber != newValue) {
             this.EntityPM.ShipmentNumber = newValue;
-        }
-    }
-
-    get EntityType() { return this.EntityPM.EntityType; }
-    set EntityType(newValue: string) {
-        if (this.EntityPM.EntityType != newValue) {
-            this.EntityPM.EntityType = newValue;
         }
     }
 
@@ -680,22 +711,9 @@ export class NewTicketComponent extends BaseComponent implements OnInit {
         }
     }
 
-    private entityObjectTableName: string;
-    get EntityObjectTableName() { return this.entityObjectTableName; }
-    set EntityObjectTableName(value: string) {
-        if (this.entityObjectTableName != value) {
-            this.entityObjectTableName = value;
-            if (this.EntityObjectTableName == "Shipment") {
-                this.EntityNumberTitle = "Shipment Number";
-            }
-            else {
-
-                this.EntityNumberTitle = "Quote Number";
-            }
-        }
-    }
+    EntityObjectTableName: string;
     ChooseEntity() {
-        if (!this.IsShipmentIdDisabled && this.EntityType != null) {
+        if (!this.IsShipmentIdDisabled) {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 800;
             logWindow.Height = 570;

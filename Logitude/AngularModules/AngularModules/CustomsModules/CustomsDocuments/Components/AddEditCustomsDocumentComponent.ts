@@ -428,12 +428,6 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         this.ViewDisableMessageVisibility = false;
         this.DisplayOnlyMessage = null;
         this.IsActionButtonsEnabled = false;
-
-        var isSendWithCustomsDocId: boolean = false;
-        if (this.ParentEntityCode == "CustomsCollateral") {
-            isSendWithCustomsDocId = true;
-        }
-
         // document varification 
         if (this.CustomsDocumentsTicket) {
             if (this.CustomsDocumentsTicket.VerificationStatusTypeCode == '4' || this.CustomsDocumentsTicket.VerificationStatusTypeCode == '5') {
@@ -483,7 +477,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 this.IsDocumentTypeEnabled = false;
                 this.IsSendDocumentEnabled = false;
             }
-            if (AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId) && !AppTool.IsNullOrEmpty(this.CustomsDocument.CustomsDocId) && !isSendWithCustomsDocId) {//(Regular doc that was already sent to customs)
+            if (AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId) && !AppTool.IsNullOrEmpty(this.CustomsDocument.CustomsDocId)) {//(Regular doc that was already sent to customs)
                 this.IsEditEnabled = false;
                 this.IsPointerChangeEnabled = false;
                 this.IsMetaDataEditEnabled = false;
@@ -527,7 +521,8 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         //*********************** task 32398 new version button********************//
 
         if (this.CustomsDocument) {
-            if (this.CustomsDocument.CustomsDocId && !isSendWithCustomsDocId) {
+
+            if (this.CustomsDocument.CustomsDocId) {
                 this.IsMetaDataEditEnabled = false;
                 this.IsSendDocumentEnabled = false;
             }

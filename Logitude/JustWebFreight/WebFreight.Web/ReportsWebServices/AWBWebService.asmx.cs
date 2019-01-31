@@ -2445,87 +2445,8 @@ namespace WebFreight.Web.ReportsWebServices
 					{
 						awbDp.ShipmentField20 = value.ToString();
 					}
-                    else if (field.FieldName == "Field21")
-                    {
-                        awbDp.ShipmentField21 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field22")
-                    {
-                        awbDp.ShipmentField22 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field23")
-                    {
-                        awbDp.ShipmentField23 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field24")
-                    {
-                        awbDp.ShipmentField24 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field25")
-                    {
-                        awbDp.ShipmentField25 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field26")
-                    {
-                        awbDp.ShipmentField26 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field27")
-                    {
-                        awbDp.ShipmentField27 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field28")
-                    {
-                        awbDp.ShipmentField28 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field29")
-                    {
-                        awbDp.ShipmentField29 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field30")
-                    {
-                        awbDp.ShipmentField30 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field31")
-                    {
-                        awbDp.ShipmentField31 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field32")
-                    {
-                        awbDp.ShipmentField32 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field33")
-                    {
-                        awbDp.ShipmentField33 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field34")
-                    {
-                        awbDp.ShipmentField34 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field35")
-                    {
-                        awbDp.ShipmentField35 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field36")
-                    {
-                        awbDp.ShipmentField36 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field37")
-                    {
-                        awbDp.ShipmentField37 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field38")
-                    {
-                        awbDp.ShipmentField38 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field39")
-                    {
-                        awbDp.ShipmentField39 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field40")
-                    {
-                        awbDp.ShipmentField40 = value.ToString();
-                    }
-                }
+
+				}
             }
         }
 

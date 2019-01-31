@@ -224,14 +224,14 @@
         left: 0;
     }
     .LovColHeaderCell{
-        height:100%;
-        width:120px;
-        overflow:hidden;
-        text-overflow:ellipsis;
-        white-space:nowrap;
+        height:100%; 
+        width:120px; 
+        overflow:hidden; 
+        text-overflow:ellipsis; 
+        white-space:nowrap; 
         position: relative;
-        display: inline-block;
-        border-right: 1px solid #8f8f8f;
+        display: inline-block; 
+        border-right: 1px solid #8f8f8f; 
         border-left: 1px solid #bcbcbc;
         text-indent: 4px;
         font-size: 11px;
@@ -308,10 +308,10 @@
     }
 
     @keyframes sk-bouncedelay {
-      0%, 80%, 100% {
+      0%, 80%, 100% { 
         -webkit-transform: scale(0);
         transform: scale(0);
-      } 40% {
+      } 40% { 
         -webkit-transform: scale(1.0);
         transform: scale(1.0);
       }
@@ -422,8 +422,8 @@
     padding-right: 3px;
 }
 
-
-
+      
+      
     .FlipImgHoriz{
         -moz-transform: scaleX(-1);
         -o-transform: scaleX(-1);
@@ -436,66 +436,6 @@
         text-align: left !important;
     }
 
-    .LogLOVFooter {
-        padding: 0;
-        margin: 0;
-        height: 26px;
-    }
-        .LogLOVFooter ul {
-            height: 100%;
-            /* float: left; */
-
-        }
-            .LogLOVFooter ul li {
-                float: right;
-                color: #4a4a4a;
-                background: white;
-                line-height: 25px;
-                font-size: 10px;
-                height: 100% ;
-                text-align: center;
-            }
-            .LogLOVFooter ul li:hover {
-                background: rgb(196, 196, 196);
-            }
-            .LogLOVFooter ul li.SelectedFilter {
-                background: rgb(226, 226, 226);
-                /* box-shadow: inset 0 0 5px 0px #ababab; */
-            }
-            .LogLOVFooter ul li:active {
-                box-shadow: inset 0 0 5px 1px #969696;
-            }
-
-        .LogLOVFooter a {
-            color: #6d6d6d;
-            padding: 0 10px;
-            display: block;
-            /* float: right; */
-            background: white;
-            height: 100%;
-            line-height: 25px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .LogLOVFooter a:hover {
-            background: rgb(218, 218, 218);
-        }
-        .LogLOVFooter a:active {
-            background: rgb(218, 218, 218);
-            box-shadow: inset 0 0 5px 1px #969696;
-        }
-
-
-        .noselect {
-        -webkit-touch-callout: none; /* iOS Safari */
-        -webkit-user-select: none; /* Chrome/Safari/Opera */
-        -khtml-user-select: none; /* Konqueror */
-        -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-        user-select: none; /* Non-prefixed version, currently
-                                  not supported by any browser */
-    }
-
 </style>
 <div style="width:100%;height:100%" *ngIf="DataContext">
 
@@ -506,12 +446,12 @@
          [TopDisplacement]="-95"
          [LeftDisplacement]="30"
          [ComponentType]="'popup'"
-         [PopupWidth]="250"
+         [PopupWidth]="250" 
          [class.FlipImgHoriz]="LayoutDirection == 'rtl'"
          [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'"
          [style.text-indent]="LayoutDirection=='rtl' ? '8px' : ''"
          class="ErrorPopUp"
-
+         
          *ngIf="ShowErrorPopup">
 
         <div class="ErrorPopUpMessage" [class.FlipImgHoriz]="LayoutDirection == 'rtl'">
@@ -551,8 +491,7 @@
                                                       max-height:20px;
                                                       -moz-box-shadow: none;
                                                       -webkit-box-shadow: none;
-                                                      box-shadow: none; opacity:1 !important;
-                                                      line-height: 1.0"
+                                                      box-shadow: none; opacity:1 !important;"
                                                autocomplete="off"  draggable="false" ondrop="return false" />
                                     </td>
                                     <td style="width: 2px;">
@@ -591,7 +530,7 @@
                                                 {{ 'General.B.Clear' | TextCodeTranslationPipe }}
                                             </li>
                                         </ul>
-                                        <div class="PartnersTypeMenu"
+                                        <div class="PartnersTypeMenu" 
                                              [id]="'PartnersPopup'"
                                              style="position:fixed;"
                                              [style.top]="PartnersPopupTop"
@@ -605,7 +544,7 @@
                                         </div>
 
                                     </td>
-
+                                    
                                     <!--<td class="DeleteButton" [ngStyle]="DeleteButtonNgStyle" style="width: 10px; cursor:pointer" (click)="OnDeleteValue()">
                                         <img class="DeleteButton" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" src="Images/RedX.png" [ngStyle]="DeleteButtonNgStyle"/>
                                     </td>-->
@@ -625,7 +564,7 @@
                                 </tr>
                             </table>
                         </div>
-
+                      
                         <!-- BEGIN: Dropdown panel -->
                         <div (mouseover)="OnDropDownMouseOver()" (mouseout)="OnDropDownMouseOut()"
                              FixedPosition
@@ -641,7 +580,7 @@
                              [style.height.px]="DropDownHeight"
                              >
                             <!-- Header Columns -->
-                            <div class="LogLovGridHeader"
+                            <div class="LogLovGridHeader" 
                                  style=""
                                   *ngIf="DisplayHeader">
                                 <div *ngFor="let col of headerColumns; let colIndex = index"
@@ -670,7 +609,7 @@
                                     (mouseleave)="OnLiMouseLeave($event)" [attr.name]="item[DisplayMemberPath]"
                                     [class.InActive]="item.InActive">
 
-                                    <div style="height:20px; font-size:10px; width:100%; position:relative; display: table; " (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
+                                    <div style="height:20px; font-size:10px; width:100%; position:relative; " (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
                                         <div *ngFor="let col of headerColumns; let colIndex = index"
                                              [style.width.px]="Widths[colIndex]"
                                              [style.min-width.px]="MinWidths[colIndex]"
@@ -706,7 +645,7 @@
                                     (mouseover)="OnLiMouseOver($event)"
                                     (mouseleave)="OnLiMouseLeave($event)"
                                    >
-                                    <div style="height:20px; font-size:10px; width:100%; position:relative;display: table;" (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
+                                    <div style="height:20px; font-size:10px; width:100%; position:relative;" (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
                                         <div *ngFor="let col of headerColumns; let colIndex = index"
 
                                              [style.width.px]="Widths[colIndex]"
@@ -731,24 +670,12 @@
 
                             <!-- Footer -->
                             <div class="LogLOVFooter" [style.text-align]="LayoutDirection=='rtl' ? 'left' : 'right'" *ngIf="ShowAddLink || ShowSearchButton">
-                                <ul *ngIf="ShowLanguageFilter"  [style.float]="isRTL ? 'right' : 'left'" >
-                                    <li style="width: 50px;" [class.SelectedFilter]="LanguageFilterValue == 'L'" (click)="SwitchBetweenLocalAndEng('L')" class="noselect">
-                                        Local
-                                    </li>
-                                    <li style="width: 50px;" [class.SelectedFilter]="LanguageFilterValue == 'E'" (click)="SwitchBetweenLocalAndEng('E')" class="noselect">
-                                        English
-                                    </li>
-                                </ul>
-
-                                <a href="javascript:;" *ngIf="ShowAddLink" (click)="OnAddValue()" [style.float]="isRTL ? 'left' : 'right'">
-                                    <img src="./Images/Icons/plus.png">
-                                    {{'General.B.Add' | TextCodeTranslationPipe}}</a>
-                                <a href="javascript:;" *ngIf="ShowSearchButton"  [style.float]="isRTL ? 'left' : 'right'" (click)="SearchButtonClicked()" style="margin-left: 8px;">{{'General.O.ViewAll'| TextCodeTranslationPipe}}</a>
-
-
+                                <a href="javascript:;" *ngIf="ShowAddLink" (click)="OnAddValue()">{{'General.B.Add' | TextCodeTranslationPipe}}</a>
+                                <a href="javascript:;" *ngIf="ShowSearchButton" (click)="SearchButtonClicked()"
+                                   style="margin-left: 8px;">{{'General.O.ViewAll' | TextCodeTranslationPipe}}</a>
                             </div>
 
-
+                          
                         </div>
                         <!-- END: Dropdown panel -->
 

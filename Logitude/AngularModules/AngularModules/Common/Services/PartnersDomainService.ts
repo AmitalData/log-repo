@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+﻿import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {AppTool} from '../../Infrastructure/Tools';
@@ -344,21 +344,6 @@ export class PartnersDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-    
-    GetCarrierUpdate(entityId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-        var url = this._apiUrl + '/GetCarrierUpdate?entityId=' + entityId;
-
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                return response.json();
-            }).catch(ServiceHelper.HandleServiceError);
-        });
-    }
-
     GetCarrierCopyToCurrentTenant(entityId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());

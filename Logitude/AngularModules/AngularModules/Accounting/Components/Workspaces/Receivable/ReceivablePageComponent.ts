@@ -62,7 +62,7 @@ export class ReceivablePageComponent {
     public isRTL: boolean = false;
 
 
-    chartId: string = "";
+    chartId: string = ""; 
 
   constructor() {
     this.chartId = "Receivable_" + SessionLocator.CurrentSession.GetChartId();
@@ -143,7 +143,7 @@ export class ReceivablePageComponent {
 
                         break;
                     }
-
+                    
 
 
                 default: { break; }
@@ -172,16 +172,11 @@ export class ReceivablePageComponent {
 
     //#region ARPayments
     NewARPaymentMethod() {
-        var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
-        var ChangedText = GeneralText.split('%')[0];
-        var NewText = TextCodeTranslator.TranslateTable("ARPayment");
-
-        var showlocal = !SessionLocator.LoggedUserPM.DontShowLocal;
-        var FinalText = showlocal ? (NewText + " " + ChangedText) : (ChangedText + " " + NewText);
-
+        var str = TextCodeTranslator.Translate("General.O.NewEntity");
+        str = str.replace("%Entity", TextCodeTranslator.TranslateTable("ARPayment"));
 
         var logWindow = new LogitudeWindow();
-        logWindow.Title = FinalText;
+        logWindow.Title = str;
         logWindow.Width = 900;
         logWindow.Height = 570;
         logWindow.Show("./InvoiceModules/ARPayment/Components/NewEntity/NewARPaymentComponent");
@@ -246,7 +241,7 @@ export class ReceivablePageComponent {
         //str = str.replace("%Entity", "General Invoice");
         var str = TextCodeTranslator.Translate("Accounting.General.O.NewGeneralInvoice");
 
-        var logWindow = new LogitudeWindow();
+        var logWindow = new LogitudeWindow();        
         logWindow.WindowArgs = { InvoiceTypeCode: type };
         logWindow.Title = str;
 
@@ -365,9 +360,9 @@ export class ReceivablePageComponent {
         });
 
     }
-
+    
     //#region Chart Code
-
+    
     GLAccounts: GLAccountList[];
 
     public barChartLabels: string[] = [];
@@ -513,7 +508,7 @@ export class ReceivablePageComponent {
         makeAmBarChart(this.chartId, Graphs, DataProvider, max);
 
     }
-
+    
     //#endregion
 
     //#region Filters Code

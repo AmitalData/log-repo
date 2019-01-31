@@ -28,7 +28,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-                // test 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;

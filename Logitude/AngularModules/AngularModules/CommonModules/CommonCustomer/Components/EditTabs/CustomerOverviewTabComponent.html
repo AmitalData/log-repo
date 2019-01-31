@@ -1,4 +1,4 @@
-
+﻿
 <style>
     #chartdiv {
         width: 100%;
@@ -317,15 +317,14 @@
 
                                                 <td style="width:150px">
                                                     <label style="margin-left:7px">Start Working Date: </label>
+
                                                 </td>
 
                                                 <td style="width:100px">
                                                     <LogDatePicker [ObjectFieldName]="'StartWorkingDate'" [ObjectTableName]="'Customer'" [InputType]="'date'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                                </td>
 
-                                                <td>
-                                                    <div></div>
                                                 </td>
+                                                <td></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -360,9 +359,9 @@
                                                     <div style="width:100px;height:100px">
                                                         <ImageComponent [WidthImage]="'95px'" [HeightImage]="'95px'" [ImageId]="ImageId" [EntityId]="EntityId" [EntityName]="EntityName" (UploadCompleted)="ImageUploadedCompleted($event)" style="height:72px;width:72px"> </ImageComponent>
                                                         <!--<span><img style="width: 70px; height: 70px; vertical-align: middle; margin:0; margin-left: -0px;" src="../../../../../Images/Maintenance/Customer.png" (click)="OpenUpLoadLogo()" [attr.id]="LogoFileHtmlId" /></span>
-                                                        <span>
-                                                            <input [attr.id]="LogoInput" accept=".jpg,.jpeg,.JPG,.JPEG" type="file" [(ngModel)]="DataImage" (change)="UploadogoFile($event)" style="display:none" class="upload" />
-                                                        </span>-->
+                                        <span>
+                                            <input [attr.id]="LogoInput" accept=".jpg,.jpeg,.JPG,.JPEG" type="file" [(ngModel)]="DataImage" (change)="UploadogoFile($event)" style="display:none" class="upload" />
+                                        </span>-->
 
 
 
@@ -394,9 +393,7 @@
         </tr>
 
         <tr style="height:5px">
-            <td>
-                <div></div>
-            </td>
+            <td><div></div></td>
         </tr>
 
         <tr style="height:50%">
@@ -414,14 +411,14 @@
 
                                         <table>
                                             <tr>
-                                                <td style="padding-left: 10px;">Activity Status</td>
+                                                <td>Activity Status</td>
 
                                                 <td style="font-size:x-small; width:50px;">
-                                                    <span class="hyperlink" (click)="MoreDetails()">More Details</span>
+                                                    <span class="hyperlink" (click)="MoreDetails()">More Details</span>                                                   
                                                 </td>
 
                                                 <td style="width:5px;">
-                                                    <div></div>
+                                                   <div></div>
                                                 </td>
                                             </tr>
                                         </table>
@@ -448,16 +445,13 @@
                                                             <td style="width:120px">
                                                                 <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityToDate" [ObjectTableName]="'Shipment'" [HideColumns]="true" [ObjectFieldName]="'ActivityToDate'" [DataContext]="DataContext"></LogDatePicker>
                                                             </td>
-
+                                                           
                                                             <td style="width:3px"></td>
-
+                                                           
                                                             <td style="width:120px">
                                                                 <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityFromDate" [ObjectTableName]="'Shipment'" [HideColumns]="true" [ObjectFieldName]="'ActivityFromDate'" [DataContext]="DataContext"></LogDatePicker>
                                                             </td>
-
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
+                                                            <td></td>
 
                                                             <td style="width:50px">Show:</td>
                                                             <td style="width:130px">
@@ -468,11 +462,11 @@
                                                     </table>
                                                 </td>
                                             </tr>
-
+                                            
                                             <tr style="height:100%">
-                                                <td>
+                                                <td>            
                                                     <div [attr.id]="ActivityStatusOverViewDashboardId" class="CellContent"></div>
-                                                    <div *ngIf="NoData" style="text-align:center;vertical-align:central;width:100%;overflow-y:hidden">
+                                                                                           <div *ngIf="NoData" style="text-align:center;vertical-align:central;width:100%;overflow-y:hidden">
                                                         <label style="font-size:large;text-align:center;vertical-align:central;width:100%;height:100%">No Shipments</label>
                                                     </div>
 

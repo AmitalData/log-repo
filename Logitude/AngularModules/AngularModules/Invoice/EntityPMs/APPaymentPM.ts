@@ -262,11 +262,6 @@ export class APPaymentPM {
     public set CreditCardTypeId(newValue: string) { if (this.creditCardTypeId != newValue) { this.creditCardTypeId = newValue; this.MarkAsDirty("CreditCardTypeId"); } }
        
 	 
-    private firstApproveDate: Date;
-    public get FirstApproveDate() { return this.firstApproveDate; }
-    public set FirstApproveDate(newValue: Date) { if (this.firstApproveDate != newValue) { this.firstApproveDate = newValue; this.MarkAsDirty("FirstApproveDate"); } }
-       
-	 
      
 	private paymentInvoices: APPaymentInvoicePM[];
     get  PaymentInvoices() {
@@ -328,11 +323,6 @@ export class APPaymentPM {
     public set VendorPartnerTypeId(newValue: string) { if (this.vendorPartnerTypeId != newValue) { this.vendorPartnerTypeId = newValue; this.MarkAsDirty("VendorPartnerTypeId"); } }
        
 	 
-    private setReSendQBO: boolean;
-    public get SetReSendQBO() { return this.setReSendQBO; }
-    public set SetReSendQBO(newValue: boolean) { if (this.setReSendQBO != newValue) { this.setReSendQBO = newValue; this.MarkAsDirty("SetReSendQBO"); } }
-       
-	 
     private taxDeductionLocalAmount: number;
     public get TaxDeductionLocalAmount() { return this.taxDeductionLocalAmount; }
     public set TaxDeductionLocalAmount(newValue: number) { if (this.taxDeductionLocalAmount != newValue) { this.taxDeductionLocalAmount = newValue; this.MarkAsDirty("TaxDeductionLocalAmount"); } }
@@ -356,11 +346,6 @@ export class APPaymentPM {
     private bankAccountId: string;
     public get BankAccountId() { return this.bankAccountId; }
     public set BankAccountId(newValue: string) { if (this.bankAccountId != newValue) { this.bankAccountId = newValue; this.MarkAsDirty("BankAccountId"); } }
-       
-	 
-    private branchName: string;
-    public get BranchName() { return this.branchName; }
-    public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
        
 	 
 

@@ -94,25 +94,14 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         List<string> allStatusedIds_DEP = (from d in myFreightContext.EntityStatus where d.Tenant == tenant && d.ObjectTableId == myObjectTableId && allStatusedCodes_DEP.Contains(d.Code) select d.Id).ToList();
 
                         iQueryableData = (from d in iQueryableData
-                                          where
-                                          d.Tenant == tenant
-                                          && d.IsCancelled == false
-                                          && d.DirectionId == "I"
-                                          &&
-                                          (
-                                          d.TransportModeId == "O" && (d.ShipmentTypeId == "FCLD" || d.ShipmentTypeId == "MYGO")
-                                          ||
-                                          d.TransportModeId == "I" && (d.ShipmentTypeId == "FTL" || d.ShipmentTypeId == "MYGI")
+                                          where d.Tenant == tenant                                      
+                                          && allStatusedIds_DEP.Contains(d.StatusId)                                      
+                                          &&                                      
+                                          (                                      
+                                          d.IsDeliveryFU                                      
+                                          ||                                      
+                                          d.IsEmptyContainerReturnFU                                      
                                           )
-                                          && allStatusedIds_DEP.Contains(d.StatusId)
-
-                                          // Task 44634: In Transit Query | follow up is not required
-                                          //&&                                      
-                                          //(                                      
-                                          //d.IsDeliveryFU                                      
-                                          //||                                      
-                                          //d.IsEmptyContainerReturnFU                                      
-                                          //)
                                           select d);
                     }
                 }

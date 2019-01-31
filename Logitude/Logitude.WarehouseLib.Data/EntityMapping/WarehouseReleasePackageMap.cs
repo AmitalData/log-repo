@@ -60,8 +60,6 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
             this.Property(t => t.Height).HasColumnName("Height");
 
             this.Property(t => t.IsContainer).HasColumnName("IsContainer");
-
-            this.Property(t => t.VolumetricWeight).HasColumnName("VolumetricWeight");
         }
     }
 }

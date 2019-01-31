@@ -75,22 +75,15 @@ export class ShipmentHelperComponent implements OnDestroy {
                         else if (this.isShippingInstructionsClicked) {
                             this.ShowINTTRAWizard();
                         }
-                        else if (this.isShareManifestRequested) {
-                            this.StartShareManifest();
-                        }
-                        else if (this.isUpdateSharedAgentRequested) {
-                            this.StartShareManifest(true);
-                        } else if (this.isSharingDocumentRequested) {
+
+                        else if (this.isSharingDocumentRequested) {
                             this.StartSharingDocument();
                         }
-                        
 
                     }
-                    
-                    this.isShareManifestRequested = false;
-                    this.isUpdateSharedAgentRequested = false;
-                    this.isSharingDocumentRequested = false;
 
+
+                    this.isSharingDocumentRequested = false;
                     this.isAWBButtonClicked = false;
                     this.isSendToCustomClicked = false;
                     this.isShippingInstructionsClicked = false;
@@ -120,22 +113,11 @@ export class ShipmentHelperComponent implements OnDestroy {
             }
         }
 
-
-        if (FeatureLocator.HasFeaturePermession("AgentSharedManifest", "UPDATESHAREDAGENT")) {
-            if (this.EntityPM.DirectionId == "E" && (this.EntityPM.ShipmentLevelCode == "C" || this.EntityPM.ShipmentLevelCode == "D")) {
-                this.IsUpdateSharedAgentButtonVisible = true;
-
-            }
-        }
-
-
         if (FeatureLocator.HasFeaturePermession("AgentSharedDocument", "NEW")) {
             if (this.EntityPM.DirectionId == "E" && (this.EntityPM.ShipmentLevelCode == "C" || this.EntityPM.ShipmentLevelCode == "D")) {
                 this.IsShareDocumentsButtonVisible = true;
             }
         }
-
-
 
         if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentCustomsTransmission")) {
             this.CheckArtemusVisibility_BOL();
@@ -323,15 +305,23 @@ export class ShipmentHelperComponent implements OnDestroy {
             ServiceLocator.SendTotangoUserActivity("Shipment", "Notes update");
         }
     }
-
-    public IsUpdateSharedAgentButtonVisible: boolean = false;
+    
     public IsShareDocumentsButtonVisible: boolean = false;
     public IsShareManifestButtonVisible: boolean = false;
+    public ShareManifestClicked() {
 
 
-  
+                  var windowArgs: any = {};
+                  windowArgs.EntityPM = this.EntityPM;
+                  var logWindow = new LogitudeWindow();
+                  logWindow.Width = 600;
+                  logWindow.Height = 350;
+                  logWindow.Title = "Sharing Manifest";
+                  logWindow.WindowArgs = windowArgs;
+                  logWindow.Show("./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestStarted");
 
-    //ShareDocument
+    }
+
     isSharingDocumentRequested: boolean = false;
     ShareDocumentsClicked() {
 
@@ -344,6 +334,8 @@ export class ShipmentHelperComponent implements OnDestroy {
         }
 
     }
+
+
     StartSharingDocument() {
 
         if (this.EntityPM.IsManifestSentToAgent) {
@@ -366,49 +358,7 @@ export class ShipmentHelperComponent implements OnDestroy {
 
     }
 
-      //ShareManifest
-    isShareManifestRequested: boolean = false;
-    ShareManifestClicked() {
-        if (this.EntityPM.IsDirty) {
-            this.isShareManifestRequested = true;
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
-        }
-        else {
-            this.StartShareManifest();
-        }
 
-    }
-    public StartShareManifest(isUpdateAgent: boolean = false) {
-
-        var windowArgs: any = {};
-        windowArgs.EntityPM = this.EntityPM;
-        var logWindow = new LogitudeWindow();
-
-        if (!isUpdateAgent) {
-            logWindow.Width = 600;
-            logWindow.Height = 350;
-        }
-        logWindow.Title = !isUpdateAgent ? "Sharing Manifest" : "Share Updated Agent";
-        windowArgs.IsShareUpdatedAgent = isUpdateAgent;
-
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Show("./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestStarted");
-
-    }
-
-    
-       //UpdateAgentShareManifest
-    isUpdateSharedAgentRequested: boolean = false;
-    UpdateSharedAgentClicked() {
-        if (this.EntityPM.IsDirty) {
-            this.isUpdateSharedAgentRequested = true;
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
-        }
-        else {
-            this.StartShareManifest(true);
-        }
-
-    }
 
 
     ArtemusClicked() {

@@ -56,8 +56,7 @@ namespace Logitude.BL.InvoiceModel.Tools
         private  IInvoiceContext objectContext;
         private  ARInvoiceTotalVATRepository invoiceTotalVatRepository;
         private  string ExternalCurrencyCode;
-        private string OldTransferStatusCode;
-        private string ExternalTableIdCustomerRef;
+        private  string ExternalTableIdCustomerRef;
         public  string PaymentTermExternalCode = null;
         private  string LoggedContactId { get; set; }
         private  List<string> ExternalChargesTypesCode;
@@ -113,8 +112,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                     }
             }
-
-            else if (IsSetApproved || (entityPM.IsAutoCredit && entityPM.ExternalAccountingEntityId==null))
+                if (IsSetApproved || (entityPM.IsAutoCredit && entityPM.ExternalAccountingEntityId==null))
             {
                 commonContext = CommonContext;
                 Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
@@ -280,7 +278,6 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                         if (isReady)
                         {
-                            OldTransferStatusCode = entityPM.TransferStatusCode;
                             entityPM.TransferStatusCode = "IP";
                             entityPM.TransferError = null;
                             Run(entityPM);
@@ -337,13 +334,18 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 ServiceContext context = getServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.Vendor> VendorQueryService = new QueryService<Intuit.Ipp.Data.Vendor>(context);
-                List<Intuit.Ipp.Data.Vendor> myResult = VendorQueryService.ExecuteIdsQuery(sql).ToList();                
+                List<Intuit.Ipp.Data.Vendor> myResult = VendorQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;
+
+
+
             }
 
             catch (Exception ex)
             {
+
                 throw new ApplicationException(ex.ToString());
+
             }
 
 
@@ -770,7 +772,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 DbQueueService queueservice;
                 queueservice = new DbQueueService();
                 queueservice.InitializeQueue("QBO", 0);
-                Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "Invoice" },{ "OldTransferStatusCode", OldTransferStatusCode } };
+                Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "Invoice" } };
                 queueservice.Send(param);
                 queueservice.Complete();          
                   }

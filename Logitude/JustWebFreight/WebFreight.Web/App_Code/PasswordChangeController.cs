@@ -28,7 +28,7 @@ namespace WebFreight.Web.App_Code
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 PasswordCheckService passwordCheckService = new PasswordCheckService();
-                bool result = passwordCheckService.CheckUserPassword(changePasswordParameter.CurrentPassword, changePasswordParameter.ContactId, authToken.Tenant, changePasswordParameter.Email);
+                bool result = passwordCheckService.CheckUserPassword(changePasswordParameter.CurrentPassword, changePasswordParameter.ContactId, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }

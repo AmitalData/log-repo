@@ -96,8 +96,5 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public virtual User ApprovedByUser { get; set; }
 
         public string VendorGLAccountId { get; set; }
-
-        public DateTime? FirstApproveDate { get; set; }
-
     }
 }

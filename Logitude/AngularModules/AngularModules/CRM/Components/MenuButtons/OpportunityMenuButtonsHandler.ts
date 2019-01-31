@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {OpportunityPM} from '../../EntityPMs/OpportunityPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -27,7 +27,7 @@ import {OpportunityArgs} from '../../Args';
 import {OpportunityPMInitService} from '../../EntityPMInitServices/OpportunityPMInitService';
 import {CreateTenantHelper} from '../../../InfrastructureModules/InfrastructureOthers/Components/CreateTenant/CreateTenantHelper';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+
 
 export class OpportunityMenuButtonsHandler {
     public EntityPM: OpportunityPM;
@@ -418,24 +418,26 @@ export class OpportunityMenuButtonsHandler {
             var id: number = parseInt(this.EntityPM.CustomerExternalId);
 
             var managementService: TenantManagementPMService = new TenantManagementPMService();
-            managementService.get(id).subscribe((myResponse: ServiceResponse) => {
-                if (myResponse.HasError) {
+            managementService.get(id).subscribe(result => {
+
+                var ten: TenantManagementPM = result.Result;
+               
+                if (ten != null) {
+                    this.StartEditing(ten.Id);
+                }
+                else {
                     var window: MessageWindow = new MessageWindow();
                     window.Width = 350;
                     window.Height = 180;
-                    window.Show(myResponse.ErrorsArray[0]);
+                    window.Show("Invalid Tenant !");
+                    this.StopFlags();
+
                 }
 
-                else {
-                    var ten: TenantManagementPM = myResponse.Result;
+            });
 
-                    if (ten != null) {
-                        this.StartEditing(ten.Id);
-                    }
-                }
-            });    
+    
         }
-
         else {
             var window: MessageWindow = new MessageWindow();
             window.Width = 350;

@@ -100,16 +100,6 @@ namespace Logitude.Customs.Data.EntityLists
        public string CourierSuspentionCode  { get; set; }
        [DataMember]
        public string CourierSuspentionName  { get; set; }
-       [DataMember]
-       public string SpecialActionStatus  { get; set; }
-       [DataMember]
-       public string SpecialActionsErrorXml  { get; set; }
-       [DataMember]
-       public string CourierPendingReasonErrorPlace  { get; set; }
-       [DataMember]
-       public string FastIndividualProcessCode  { get; set; }
-       [DataMember]
-       public string ManualProcessCode  { get; set; }
    }
 
 }

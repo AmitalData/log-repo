@@ -36,21 +36,21 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             {
 
                 decimal LocalAmountCredit = MyLedgerTransaction.LocalAmountCredit;
-                decimal ForeignAmountCredit = MyLedgerTransaction.ForeignAmountCredit;
-                if (LocalAmountCredit == 0)
+                decimal ForeignAmountCredit = MyLedgerTransaction.ForeignAmountCredit ;
+                if (LocalAmountCredit ==0)
                 {
                     MyLedgerTransaction.ExchangeRate = 0;
                 }
-                else if (ForeignAmountCredit == 0)//Journalvalidation not null !!
+                else if (ForeignAmountCredit==0)//Journalvalidation not null !!
                 {
-
+                    
                 }
                 else
                 {
                     MyLedgerTransaction.ExchangeRate = LocalAmountCredit / ForeignAmountCredit;
                 }
 
-
+                
             }
 
 
@@ -66,10 +66,10 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             }
             if ((!string.IsNullOrWhiteSpace(parentAccount.AccountTypeCode)) &&
                 (parentAccount.AccountTypeCode != ((int)GLAccountTypePM.GLAccountTypeEnum.Card).ToString())
-        //AccountingSettingResolver.ResolveCard1AccountType())
+                //AccountingSettingResolver.ResolveCard1AccountType())
         )
             {
-
+                
                 if (parentAccount.ControlAccountId != _JournalLine.CreditControlAccountId)
                 {
                     throw new Exception("(parentAccount.ControlAccountId != _JournalLine.CreditControlAccountId)");
@@ -109,7 +109,6 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                 MyLedgerTransaction.OpenAmountCurrencyId = _JournalLine.CurrencyId;
 
             }
-            MapExternalOpenAmount();
 
             MyLedgerTransaction.OppositeAccountId = _JournalLine.DebitAccountId;
 
@@ -119,7 +118,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 
         }
 
-        
+    
         public virtual string ResolveAccountingCurrencyId(int Tenant)
         {
             return (new AccountingSettingResolver()).ResolveAccountingCurrencyId(Tenant);

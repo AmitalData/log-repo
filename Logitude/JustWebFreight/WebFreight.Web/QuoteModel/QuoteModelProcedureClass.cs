@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Transactions;
 using System.Web;
-//test
+
 namespace WebFreight.Web.QuoteModel
 {
     public class QuoteModelProcedureClass

@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {CashBookPM} from '../../EntityPMs/CashBookPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -46,7 +46,7 @@ export class CashBookMenuButtonsHandler {
                 for (var i = 0; i < menuButtons.length; i++) {
                     var button = menuButtons[i];
                     switch (button.EventCode) {
-
+                        
                         case "CashBookInactive":
                             {
                                 if (this.EntityPM.Inactive == true) {
@@ -80,11 +80,11 @@ export class CashBookMenuButtonsHandler {
     public MenuButtonClick(menuButton: MenuButtonPM) {
 
         var errors = [];
-
+        
         if (errors.length == 0) {
             switch (menuButton.EventCode) {
 
-                case "CashBookInactive":
+                case "CashBookInactive": 
                     {
                         this.CalculateTotals();
                         //if (this.TotalSum != 0) {
@@ -152,9 +152,7 @@ export class CashBookMenuButtonsHandler {
         logWindow.Height = 240;
         logWindow.Title = windowTitle;
         logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        });
+        //logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show('./Accounting/Components/NewEntity/NewBankDepositComponent');
     }
 

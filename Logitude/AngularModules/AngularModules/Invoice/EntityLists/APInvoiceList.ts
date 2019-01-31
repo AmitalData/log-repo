@@ -76,6 +76,5 @@ export class APInvoiceList {
 		AccountingDate: Date;
 		IsExternalEntity: boolean;
 		IsGeneralInvoice: boolean;
-		FirstApproveDate: Date;
 	
 }

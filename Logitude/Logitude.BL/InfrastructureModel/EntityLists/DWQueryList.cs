@@ -10,7 +10,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
     {
         public string Id { get; set; }
         public int Tenant { get; set; }
-        //public string DWObjectTableCode { get; set; }
+        public string DWObjectTableCode { get; set; }
         public string SQLString { get; set; }
         public string CreatedByUserId { get; set; }
         public string UpdateByUserId { get; set; }

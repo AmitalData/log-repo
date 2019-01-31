@@ -72,8 +72,6 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CreatedByUserName  { get; set; }
        [DataMember]
        public string BankAccountNumber  { get; set; }
-       [DataMember]
-       public string JournalQueueId  { get; set; }
    }
 
 }

@@ -25,16 +25,13 @@ namespace WebFreight.Web.Helpers
     {
         public void ExecuteEmailAutomation(EntityChange entityChange, List<Field> AutomationConditionFieldLists, Automation automation, EntityChangeAutomation entityChangesAutomation, List<EntityChangeAutomation> entityChangesAutomationsSsucceedList, string objectTableName = null)
         {
-
+           
             AutomationResultEmailRecipientQuery automationResultEmailRecipientQuery = new AutomationResultEmailRecipientQuery(automation.Tenant);
-            List<AutomationResultEmailRecipientList> automationResultEmailRecipientLists = automationResultEmailRecipientQuery.GetAutomationResultEmailRecipientListsByAutomationId(automation.Id, automation.Tenant).Where(d=>!string.IsNullOrEmpty(d.RecipientValue)).ToList();
-          
-            var automatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automation.AutomationXML);
-            bool allActiveUsers = automatedBackup.IsAutomationResultEmailAllActiveUsers;
+            List<AutomationResultEmailRecipientList> automationResultEmailRecipientLists = automationResultEmailRecipientQuery.GetAutomationResultEmailRecipientListsByAutomationId(automation.Id, automation.Tenant);
 
             //  #region Send Email Prosess
 
-            if (automationResultEmailRecipientLists.Count > 0 || allActiveUsers)
+            if (automationResultEmailRecipientLists.Count > 0)
             {
                 if (!string.IsNullOrEmpty(automation.TemplateId))
                 {
@@ -42,7 +39,7 @@ namespace WebFreight.Web.Helpers
                     DocumentTypeTemplateRepository documentTypeTemplateRepository = new DocumentTypeTemplateRepository(entityChange.Tenant);
                     DocumentTypeTemplate template = documentTypeTemplateRepository.GetSingleDocumentTypeTemplateWithOutInClude(automation.TemplateId, automation.Tenant);
 
-
+             
                     if (template != null)
                     {
                         #region Get TemplateHtml
@@ -57,7 +54,7 @@ namespace WebFreight.Web.Helpers
                         try
                         {
 
-                            string html = htmlEditorHelper.GetEditorHtmlData("", entityChange.EntityId, entityChange.ObjectTableId, "", "", entityChange.Tenant, userId, true, template.Id, ref subject, ref from, ref replyTo, ref cc, "", template);
+                            string html =htmlEditorHelper.GetEditorHtmlData("", entityChange.EntityId, entityChange.ObjectTableId, "", "", entityChange.Tenant, userId, true, template.Id, ref subject, ref from, ref replyTo, ref cc, "",template);
 
                             if (!string.IsNullOrEmpty(html))
                             {
@@ -79,24 +76,13 @@ namespace WebFreight.Web.Helpers
 
                         #endregion
 
-                        #region  Automation Email Recipient
+                        #region  AutomationResultEmailRecipient
 
                         List<string> contactIds = new List<string>();
                         string Emails = "";
-
-                        if (allActiveUsers)
-                        {
-                            UserQuery userQuery = new UserQuery(entityChange.Tenant);
-                            contactIds = userQuery.GetUserIdsByTenant(entityChange.Tenant);
-                        }
-
-
                         foreach (AutomationResultEmailRecipientList automationResultEmail in automationResultEmailRecipientLists)
                         {
-                            if (automationResultEmail.RecipientType == "Fixed")
-                            {
-                                if (!contactIds.Contains(automationResultEmail.RecipientValue)) contactIds.Add(automationResultEmail.RecipientValue);
-                            }
+                            if (automationResultEmail.RecipientType == "Fixed") contactIds.Add(automationResultEmail.RecipientValue);
                             else
                             {
                                 if (AutomationConditionFieldLists != null)
@@ -106,29 +92,25 @@ namespace WebFreight.Web.Helpers
                                     {
                                         if (automationResultEmail.RecipientType == "Emails")
                                         {
-                                            if (!Emails.Split(';').Contains(entityContactVariable.Value)) Emails += entityContactVariable.Value + ";";
+                                            Emails += entityContactVariable.Value + ";";
+
                                         }
                                         else
                                         {
-                                            if (!contactIds.Contains(entityContactVariable.Value)) contactIds.Add(entityContactVariable.Value);
+                                            contactIds.Add(entityContactVariable.Value);
                                         }
                                     }
                                 }
                             }
                         }
 
-
                         if (contactIds.Count > 0)
                         {
                             ContactQuery contactQuery = new ContactQuery(automation.Tenant);
-                            List<string> contactEmailLists = contactQuery.GetContactEmailsListsByIds(contactIds, automation.Tenant);
-                            foreach (string contactEmail in contactEmailLists)
+                            List<ContactList> contactLists = contactQuery.GetContactEmailsListsByIds(contactIds, automation.Tenant);
+                            foreach (ContactList contact in contactLists)
                             {
-                                if (!string.IsNullOrEmpty(contactEmail))
-                                {
-                                    if (!Emails.Split(';').Contains(contactEmail)) Emails += contactEmail + ";";
-                                }
-                             
+                                Emails += contact.Email + ";";
                             }
 
                         }
@@ -137,7 +119,7 @@ namespace WebFreight.Web.Helpers
 
                         if (!string.IsNullOrEmpty(Emails) && htmldata != null)
                         {
-                            string communicationLog = AddAutomationToQueue(automation, entityChange, htmldata, Emails, from, replyTo, cc, subject);
+                            string communicationLog = AddAutomationToQueue(automation, entityChange, htmldata, Emails,  from, replyTo, cc,subject);
                             entityChangesAutomation.ComunicationLogId = communicationLog;
                         }
                     }

@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .SquareIcon {
         width: 10px;
@@ -124,19 +124,13 @@
 
                                             <!-- General Invoices-->
                                             <div class="QueriesSection">
-                                                <div>{{'General.O.Invoices' | TextCodeTranslationPipe}}</div>
+                                                <div>{{'Accounting.General.O.GeneralInvoice' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
                                                     <button class="Button" (click)="NewGeneralAPInvoice()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
-                                                <!--<div>
-                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Draft General APInvoices')">{{'APInvoice.Q.DraftGeneralInvoices' | TextCodeTranslationPipe}}</p>
-                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Approval General APInvoices')">{{'APInvoice.Q.ApprovalGeneralInvoices' | TextCodeTranslationPipe}}</p>
-                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:All General APInvoices')">{{'APInvoice.Q.AllGeneralInvoices' | TextCodeTranslationPipe}}</p>
-                                                </div>-->
+                                             
                                                 <div>
-                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Waiting for Approval')">{{'APInvoice.Q.WaitingApprovalAPInvoices'|TextCodeTranslationPipe}} ({{APInvoicesDraftsCount}})</p>
-                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Unpaid Invoices')">{{'APInvoice.Q.UnpaidAPInvoices'|TextCodeTranslationPipe}} ({{APInvoicesUnpaidCount}})</p>
-                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:All Invoices')">{{'APInvoice.Q.AllAPInvoices'|TextCodeTranslationPipe}}</p>
+                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:All General APInvoices')">{{'APInvoice.Q.AllGeneralInvoices' | TextCodeTranslationPipe}}</p>
                                                 </div>
                                             </div>
 

@@ -1,4 +1,4 @@
-import {Component, OnDestroy}  from '@angular/core';
+﻿import {Component, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
 import {APInvoiceMultipleShipmentPM} from '../../../../Invoice/EntityPMs/APInvoiceMultipleShipmentPM';
@@ -15,7 +15,6 @@ import {PaymentTermListService} from '../../../../Common/Services/StandardLists/
 import {ShipmentList} from '../../../../Shipment/EntityLists/ShipmentList';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
-import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
@@ -576,67 +575,59 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     private editingShipmentId: string = null;
     private editingShipmentRequested: boolean = false;
     AddShipment(item: ShipmentList) {
-        if (item != null) {
-            if (this.EntityPM.InvoiceMultipleShipments.filter(f => f.ShipmentId == item.Id).length == 0) {
+if(item!=null){
+        if (this.EntityPM.InvoiceMultipleShipments.filter(f => f.ShipmentId == item.Id).length == 0) {
+            var itemPM = new APInvoiceMultipleShipmentPM(null);
+            itemPM.ShipmentId = item.Id;
+            itemPM.APInvoiceId = this.EntityPM.Id;
+            itemPM.Tenant = this.EntityPM.Tenant;
+            itemPM.House = item.House;
+            itemPM.Master = item.Master;
+            itemPM.LongMaster = item.LongMaster;
+            itemPM.ShipmentNumber = item.ShipmentNumber;
+            itemPM.ShipmentLevelCode = item.ShipmentLevelCode;
+            itemPM.PartnerType = item.ShipmentLevelCode == "C" ? "Agent:" : "Customer:";
+            itemPM.PartnerName = item.ShipmentLevelCode == "C" ? item.AgentName : item.CustomerName;
+            itemPM.MainCarriageCarrierName = item.MainCarriageCarrierName;
+            itemPM.ExpectedAmount = 0;
+            itemPM.OpenAmount = 0;
+            itemPM.TotalAmount = 0;
+            itemPM.TotalVATAmount = 0;
+            itemPM.AccountedAmount = 0;
+            itemPM.SubTotalInLocalCurrency = 0;
+            itemPM.SubTotalInInvoiceCurrency = 0;
 
-                if (item.IsAccountingClosed) {
-                    var window = new MessageWindow();
-                    window.Show("Please open for accounting to enable adding");
+            var myIndexOrder = 0;
+            if (this.EntityPM.InvoiceMultipleShipments.length > 0) {
+                myIndexOrder = ArrayTool.Max(this.EntityPM.InvoiceMultipleShipments, "IndexOrder");
+                myIndexOrder += 1;
+            }
+
+            itemPM.IndexOrder = myIndexOrder;
+            itemPM.TotalVatsList = new Array<string>();
+
+            if (this.EntityPM.InvoiceCurrencyId == this.EntityPM.ProfitCurrencyId) {
+                itemPM.OpenAmount = item.OpenPayablesInProfitCurrency;
+                itemPM.ExpectedAmount = AppTool.Round(item.OpenPayablesInProfitCurrency + item.AccountedPayablesInProfitCurrency, 2);
+            }
+
+            else {
+                if (AppTool.IsNullOrZero(this.InvoiceCurrencyExchangeRate)) {
+                    itemPM.OpenAmount = 0;
+                    itemPM.ExpectedAmount = 0;
                 }
 
                 else {
-                    var itemPM = new APInvoiceMultipleShipmentPM(null);
-                    itemPM.ShipmentId = item.Id;
-                    itemPM.APInvoiceId = this.EntityPM.Id;
-                    itemPM.Tenant = this.EntityPM.Tenant;
-                    itemPM.House = item.House;
-                    itemPM.Master = item.Master;
-                    itemPM.LongMaster = item.LongMaster;
-                    itemPM.ShipmentNumber = item.ShipmentNumber;
-                    itemPM.ShipmentLevelCode = item.ShipmentLevelCode;
-                    itemPM.PartnerType = item.ShipmentLevelCode == "C" ? "Agent:" : "Customer:";
-                    itemPM.PartnerName = item.ShipmentLevelCode == "C" ? item.AgentName : item.CustomerName;
-                    itemPM.MainCarriageCarrierName = item.MainCarriageCarrierName;
-                    itemPM.ExpectedAmount = 0;
-                    itemPM.OpenAmount = 0;
-                    itemPM.TotalAmount = 0;
-                    itemPM.TotalVATAmount = 0;
-                    itemPM.AccountedAmount = 0;
-                    itemPM.SubTotalInLocalCurrency = 0;
-                    itemPM.SubTotalInInvoiceCurrency = 0;
-
-                    var myIndexOrder = 0;
-                    if (this.EntityPM.InvoiceMultipleShipments.length > 0) {
-                        myIndexOrder = ArrayTool.Max(this.EntityPM.InvoiceMultipleShipments, "IndexOrder");
-                        myIndexOrder += 1;
-                    }
-
-                    itemPM.IndexOrder = myIndexOrder;
-                    itemPM.TotalVatsList = new Array<string>();
-
-                    if (this.EntityPM.InvoiceCurrencyId == this.EntityPM.ProfitCurrencyId) {
-                        itemPM.OpenAmount = item.OpenPayablesInProfitCurrency;
-                        itemPM.ExpectedAmount = AppTool.Round(item.OpenPayablesInProfitCurrency + item.AccountedPayablesInProfitCurrency, 2);
-                    }
-
-                    else {
-                        if (AppTool.IsNullOrZero(this.InvoiceCurrencyExchangeRate)) {
-                            itemPM.OpenAmount = 0;
-                            itemPM.ExpectedAmount = 0;
-                        }
-
-                        else {
-                            itemPM.OpenAmount = AppTool.Round(item.OpenPayablesInLocalCurrency / this.InvoiceCurrencyExchangeRate, 2);
-                            itemPM.ExpectedAmount = AppTool.Round((item.OpenPayablesInLocalCurrency + item.AccountedPayablesInLocalCurrency) / this.InvoiceCurrencyExchangeRate, 2);
-                        }
-                    }
-
-                    this.EntityPM.AddAPInvoiceMultipleShipmentPM(itemPM);
-                    this.BuildItemsSource();
-                    this.ComputeTotals();
+                    itemPM.OpenAmount = AppTool.Round(item.OpenPayablesInLocalCurrency / this.InvoiceCurrencyExchangeRate, 2);
+                    itemPM.ExpectedAmount = AppTool.Round((item.OpenPayablesInLocalCurrency + item.AccountedPayablesInLocalCurrency) / this.InvoiceCurrencyExchangeRate, 2);
                 }
             }
+
+            this.EntityPM.AddAPInvoiceMultipleShipmentPM(itemPM);
+            this.BuildItemsSource();
+            this.ComputeTotals();
         }
+}
     }
     EditShipmentLine(item: MultipleShipmentLine) {
         if (!this.editingShipmentRequested) {

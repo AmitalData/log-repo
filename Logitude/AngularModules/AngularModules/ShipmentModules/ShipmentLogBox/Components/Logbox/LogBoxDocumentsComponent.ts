@@ -1,4 +1,4 @@
-declare var System: any, window: any;
+﻿declare var System: any, window: any;
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {Http, Response} from '@angular/http';
@@ -104,16 +104,6 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         }
         this.ShipmentSelectedEvent.subscribe((res) => {
             //SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");//
-            if (res == null)
-            {
-                this.externalDocs = [];
-                this.SignReqDocs = [];
-                this.externalRequestedDocs = [];
-                this.AllHeader = "By Category (0)";
-                this.RequestedCount = 0;
-                this.SignRequiredCount = 0;
-                return;
-            }
             this.DisableAddDocumentButton = false;
             this.StartBusyIndicator("Loading ...");
             var div = document.getElementById("DocsTab");
@@ -752,8 +742,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         this.BusyIndicatorText = null;
         this.ShowBusyIndicator = false;
     }
-    SignReqPureDocs: any[] = [];
-    DeletedDocsCount: number = 0;
+    SignReqPureDocs: any[] = []; 
     ReloadDocuments(ChangeTab: boolean = false) {
         var MyDate: Date = DateTool.GetCurrentDateTimeAsUtc();// new Date();
         if (this.TimerStartDate && (MyDate.getMinutes() > (this.TimerStartDate.getMinutes() + 5))) {
@@ -780,7 +769,6 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.SelectedShipment.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
             var Result = [];
             var ResultSignReq = [];
-            this.DeletedDocsCount = res.Result.filter(a => a.IsDeleted == true).length;
             if (!this.ShowDeleted) {
                 if (res.Result){
                     Result = res.Result.filter(a => a.IsDeleted == false);
@@ -883,7 +871,6 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         this._documentsFilingExtendedPMService.getRequestedDocumentsFilingsByEntityIdAndObjectTable(this.SelectedShipment.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
             var Count = 0;
             var Result = [];
-            //this.DeletedDocsCount = res.Result.filter(a => a.IsDeleted == true).length;
             if (!this.ShowDeleted) {
                 if (res.Result) {
                     Result = res.Result.filter(a => a.IsDeleted == false);
@@ -957,7 +944,6 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                                             this.ShipmentPM.ShipperReference1 = this.ShipmentPM.CustomerReference1;
                                             this.ShipmentPM.ShipperReference2 = this.ShipmentPM.CustomerReference2;
                                             this.ShipmentPM.ShipperId = this.ShipmentPM.CustomerId;
-                                            this.ShipmentPM.DontAddToForwarderQueue = true;
                                             this._ShipmentPMService.update(this.ShipmentPM).subscribe(myResult => {
                                                 if (!myResult.HasError) {
                                                     this.DisableAddDocumentButton = true;

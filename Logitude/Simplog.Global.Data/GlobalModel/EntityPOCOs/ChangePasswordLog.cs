@@ -17,7 +17,6 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string CurrentPassword { get; set; }
         public string EnteredPassword { get; set; }
         public string log { get; set; }
-        public string IP { get; set; }
 
     }
 }

@@ -457,29 +457,6 @@ namespace Logitude.TimeManagement.BL.EntityPMs
 			
 		 }
 	   }
-	  private string externalProjectNumber ;
-	  	  
-       
-	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExternalProjectNumber  
-	   {
-	    
-	     get
-		{
-		   return externalProjectNumber;
-		 }
-		 set
-		 {
-		   if(externalProjectNumber != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalProjectNumber",OldValue=externalProjectNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   externalProjectNumber=value;
-		   }
-			
-		 }
-	   }
    }
    
 }

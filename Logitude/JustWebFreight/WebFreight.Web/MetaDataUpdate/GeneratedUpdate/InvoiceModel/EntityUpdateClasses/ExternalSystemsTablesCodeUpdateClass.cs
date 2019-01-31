@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class ExternalSystemsTablesCodeUpdateClass
@@ -114,11 +111,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
 			      				    IsEditable =  true,
+			      				    AllowedForComputingPartners =  false,
+			      				    DisableSearchBox =  false,
+			      				    ClientModuleName =  "Invoice",
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
-			      				    ClientModuleName =  "Invoice",
+			      				    AllowedInQueues =  false,
 			      				    Code =  "ESTC",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -133,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "Code",
 					  						ObjectTableName =  "ExternalSystemsTablesCode",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "Code",
 					  						MaxLength =  4,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -156,9 +156,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "ExternalSystemsTablesCode",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ExternalSystemsTablesCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -169,19 +170,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "Code",
-					  						DefaultText =  @"Code",
-					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  @"Code",
-					  						HelpTextCode =  "Code",
-					  						Code =  "Code",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "Code",
+					  						DefaultText =  "Code",
+					  						ListFieldLable =  "CodeListLable",
+					  						ListLableDefaultText =  "Code",
+					  						HelpTextCode =  "Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -192,7 +190,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "ExternalSystemsTablesCode",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "Name",
 					  						MaxLength =  40,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -216,9 +214,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  1,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "ExternalSystemsTablesCode",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ExternalSystemsTablesCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -229,19 +228,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
-					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  @"Name",
-					  						HelpTextCode =  "Name",
-					  						Code =  "Name",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "Name",
+					  						DefaultText =  "Name",
+					  						ListFieldLable =  "NameListLable",
+					  						ListLableDefaultText =  "Name",
+					  						HelpTextCode =  "Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -252,7 +248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "LogitudeTable",
 					  						ObjectTableName =  "ExternalSystemsTablesCode",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "LogitudeTable",
 					  						MaxLength =  40,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -276,9 +272,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "ExternalSystemsTablesCode",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ExternalSystemsTablesCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -289,19 +286,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "LogitudeTable",
-					  						DefaultText =  @"Logitude Table",
-					  						ListFieldLable =  "LogitudeTableListLable",
-					  						ListLableDefaultText =  @"Logitude Table",
-					  						HelpTextCode =  "LogitudeTable",
-					  						Code =  "LogitudeTable",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "LogitudeTable",
+					  						DefaultText =  "Logitude Table",
+					  						ListFieldLable =  "LogitudeTableListLable",
+					  						ListLableDefaultText =  "Logitude Table",
+					  						HelpTextCode =  "LogitudeTable",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -312,7 +306,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "CreatedDate",
 					  						ObjectTableName =  "ExternalSystemsTablesCode",
 					  						FieldsDataType =  "DateTime",
-					  						DataTypeCode =  "DateTime",
+					  						Code =  "CreatedDate",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -336,9 +330,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "ExternalSystemsTablesCode",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ExternalSystemsTablesCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -349,20 +344,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "CreatedDate",
-					  						DefaultText =  @"Created Date",
-					  						ListFieldLable =  "CreatedDateListLable",
-					  						ListLableDefaultText =  @"Created Date",
-					  						HelpTextCode =  "CreatedDate",
-					  						Code =  "CreatedDate",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "CreatedDate",
+					  						DefaultText =  "Created Date",
+					  						ListFieldLable =  "CreatedDateListLable",
+					  						ListLableDefaultText =  "Created Date",
+					  						HelpTextCode =  "CreatedDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -373,7 +365,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "UpdatedDate",
 					  						ObjectTableName =  "ExternalSystemsTablesCode",
 					  						FieldsDataType =  "DateTime",
-					  						DataTypeCode =  "DateTime",
+					  						Code =  "UpdatedDate",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -397,9 +389,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "ExternalSystemsTablesCode",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ExternalSystemsTablesCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -410,20 +403,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "UpdatedDate",
-					  						DefaultText =  @"Updated Date",
-					  						ListFieldLable =  "UpdatedDateListLable",
-					  						ListLableDefaultText =  @"Updated Date",
-					  						HelpTextCode =  "UpdatedDate",
-					  						Code =  "UpdatedDate",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "UpdatedDate",
+					  						DefaultText =  "Updated Date",
+					  						ListFieldLable =  "UpdatedDateListLable",
+					  						ListLableDefaultText =  "Updated Date",
+					  						HelpTextCode =  "UpdatedDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -434,7 +424,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "ExternalSystemsTablesCode",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "SearchFields",
 					  						MaxLength =  1000,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -458,9 +448,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "ExternalSystemsTablesCode",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ExternalSystemsTablesCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -471,18 +462,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search Code / Name ",
-					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  @"Searching by :\n1: Code \n2: Name \n: Logitude Table",
-					  						Code =  "SearchFields",
-					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "Search Code / Name ",
+					  						HelpTextCode =  "SearchFields",
+					  						HelpTextDefaultText =  "Searching by :\n1: Code \n2: Name \n: Logitude Table",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -491,7 +479,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ExternalSystemsTablesCodeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ESTC", Name = "ExternalSystemsTablesCode" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -506,7 +494,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllExternalTablesCodesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExternalSystemsTablesCodeTextCode_0.Id, Code = "All External Tables Codes",  QueryGroupCode = "ESTC", IndexOrder = 0, Tenant = 0, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, QuerySection = "ExternalSystemsTablesCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExternalSystemsTablesCodeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllExternalTablesCodesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExternalSystemsTablesCodeTextCode_0.Id, Code = "All External Tables Codes",  QueryGroupCode = "ESTC", IndexOrder = 0, Tenant = 0, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, QuerySection = "ExternalSystemsTablesCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExternalSystemsTablesCodeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllExternalTablesCodesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalTablesCodesQuery.Id, IndexOrder = 1, ObjectFieldId = ExternalSystemsTablesCodeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ExternalSystemsTablesCodeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -565,13 +553,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 		   Feature ExternalSystemsTablesCodeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalSystemsTablesCode.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ExternalSystemsTablesCodeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalSystemsTablesCode.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ExternalSystemsTablesCodeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalSystemsTablesCode.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ExternalSystemsTablesCodeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalSystemsTablesCode.Features.PackageFeature", NameTextCodeDefaultText = "ExternalSystemsTablesCode Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ExternalSystemsTablesCodeFeature_EXTERNALSYSTEMSTABLESCODES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXTERNALSYSTEMSTABLESCODES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalSystemsTablesCode.Features.ExternalSystemsTablesCodes", NameTextCodeDefaultText = @"External Tables Codes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+		   Feature ExternalSystemsTablesCodeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalSystemsTablesCode.Features.PackageFeature", NameTextCodeDefaultText = "ExternalSystemsTablesCode Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 
@@ -582,14 +564,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

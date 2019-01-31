@@ -121,7 +121,7 @@ export class QuoteTemplateGeneralSetting extends BaseComponent implements OnInit
             this.QuoteTemplateSettingPM.QuoteTemplatePDFMarginLeft = this.QuoteTemplatePDFMarginLeft;
 
             if (this.QuoteTemplateSettingPM.IsDirty) {
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
                 this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
                     this.QuoteTemplateSettingPM.IsDirty = false;
                     SessionLocator.CurrentSession.StopBusyIndicator();

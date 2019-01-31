@@ -1,0 +1,115 @@
+﻿
+<table>
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 150px">
+                        <ul class="FiltersMenu">
+                            <li style="width: 50px; font-size: 11px;" (click)="FilterChanged('ALL')" [class.SelectedFilter]="SelectedFilter === 'ALL'">
+                                All
+                            </li>
+
+                            <li style="width: 50px; font-size: 11px;" (click)="FilterChanged('ACT')" [class.SelectedFilter]="SelectedFilter === 'ACT'">
+                                Active
+                            </li>
+
+                            <li style="width: 50px; font-size: 11px;" (click)="FilterChanged('INA')" [class.SelectedFilter]="SelectedFilter === 'INA'">
+                                Inactive
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="CellStretch">
+            <div class="CellContent">
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 120px; min-width: 120px; max-width: 120px;">Start Date</td>
+                                <td style="width: 120px; min-width: 120px; max-width: 120px;">End Date</td>
+                                <td style="width: 80px; min-width: 80px; max-width: 80px;">Amount</td>
+                                <td style="width: 80px; min-width: 80px; max-width: 80px;">Remaining</td>
+                                <td style="width: 100px; min-width: 100px; max-width: 100px;">Status</td>
+                                <td class="LastChild">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+
+                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                    {{item.StartDate | DateTimeToDatePipe}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                    {{item.EndDate | DateTimeToDatePipe}}
+                                </td>
+
+
+                                <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                    {{item.Amount}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                    {{item.Remaining}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                    <span [ngStyle]="{color: item.Status | StringToColorPipe:'AWBMessagingStock'}">{{item.Status}}</span>
+                                </td>
+
+                                <td class="CellTools">
+                                    <span class="CellSeparator"></span>
+                                    <span class="hyperlink" style="margin-left: 3px;" (click)="ViewHistory(item)">View history</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="6">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

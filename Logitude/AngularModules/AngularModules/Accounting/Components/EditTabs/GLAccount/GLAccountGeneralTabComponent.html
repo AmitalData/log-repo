@@ -54,7 +54,7 @@
                                                             [LookUpTableName]="'ChartOfAccount'"
                                                             [SelectedValue]="ChartOfAccountsId"
                                                             [DependencyFilter1Value]="null"
-                                                            [DependencyFilter2Value]="IsVendor ? '4' : (IsCustomerAccount ? '3' :  ChartOfAccountsTypeCode)"
+                                                            [DependencyFilter2Value]="IsCustomerAccount ? '3' : ChartOfAccountsTypeCode"
                                                             [HideColumns]="true">
                                                     </LogLov>
                                                 </td>
@@ -207,8 +207,8 @@
 
                         <!-- Card: Categories + ParentAccountId -->
                         <td>
-                            <table>
-
+                            <table>     
+                                
                                 <tr class="FormFieldRow">
                                     <td>
                                         <table>
@@ -355,11 +355,11 @@
                                             <!-- IsPartOfDeductionReport -->
                                             <tr class="FormFieldRow" *ngIf="IsVendor">
                                                 <td style="width: 150px;">
-                                                    <LogLabel [ObjectFieldName]="'ExcludeFromDeductionReport'" [ObjectTableName]="ObjectTableName"
+                                                    <LogLabel [ObjectFieldName]="'IsPartOfDeductionReport'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext"></LogLabel>
                                                 </td>
                                                 <td>
-                                                    <CheckBox [IsChecked]="ExcludeFromDeductionReport" (Checked)="ExcludeFromDeductionReport = $event"></CheckBox>
+                                                    <CheckBox [IsChecked]="IsPartOfDeductionReport" (Checked)="IsPartOfDeductionReport = $event"></CheckBox>
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>

@@ -181,12 +181,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string reportNumber ;
+	  private int? reportNumber ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string ReportNumber  
+       public int? ReportNumber  
 	   {
 	    
 	     get
@@ -197,7 +197,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(reportNumber != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReportNumber",OldValue=reportNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReportNumber",OldValue=reportNumber,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   reportNumber=value;
 		   }
@@ -361,29 +361,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Status",OldValue=status,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   status=value;
-		   }
-			
-		 }
-	   }
-	  private string statusLocalName ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StatusLocalName  
-	   {
-	    
-	     get
-		{
-		   return statusLocalName;
-		 }
-		 set
-		 {
-		   if(statusLocalName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusLocalName",OldValue=statusLocalName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   statusLocalName=value;
 		   }
 			
 		 }

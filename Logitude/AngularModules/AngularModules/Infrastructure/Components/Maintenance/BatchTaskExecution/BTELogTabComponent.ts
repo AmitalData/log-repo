@@ -17,7 +17,7 @@ export class BTELogTabComponent extends BaseComponent {
     public EntityPM: BatchTaskExecutionPM = null;
     public ObjectTableName = "BatchTaskExecution";
     public DataContext = this;
-
+    
     public isRTL: boolean = false;
     public isReady: boolean = false;
 
@@ -64,12 +64,10 @@ export class BTELogTabComponent extends BaseComponent {
 
     //#region Properties
     get ErrorLog() { return this.EntityPM.ErrorLog; }
-    get CallStack() { return this.EntityPM.CallStack; }
     //#endregion
 
     SetUIProperties() {
         //if (!this.EntityPM.TypeCode) {
-        this.UIProperties.SetEnabled("CallStack", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("ErrorLog", this.ObjectTableName, false);
         //}
 

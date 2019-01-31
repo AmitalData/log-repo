@@ -4,10 +4,6 @@
     <tr>
         <td>
             <div class="MediaFill">
-       
-                <div *ngIf="ObjectTableName == 'CustomsShipper' && FieldName == 'ValidityEndDate'">
-                    <span style="font-weight: bold;" [ngStyle]="{color: CustomsShipperValidityEndDateBackgroudColor}"> {{FieldValue | DateTimeToDatePipe}}</span>
-                </div>
 
                 <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'RankCode'">
                     <span><img style="width: 20px; height: 20px; vertical-align: middle; margin:0; margin-left: -0px;" [attr.src]="RankSource1" [attr.title]="Entity['RankName']" /></span>

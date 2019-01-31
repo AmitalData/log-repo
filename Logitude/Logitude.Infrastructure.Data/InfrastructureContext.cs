@@ -70,10 +70,6 @@ namespace Logitude.Infrastructure.Data
 	
             modelBuilder.Configurations.Add(new BatchTaskExecutionStatusMap());
 	
-            modelBuilder.Configurations.Add(new BIReportMap());
-	
-            modelBuilder.Configurations.Add(new BIReportsTypeMap());
-	
             modelBuilder.Configurations.Add(new BusinessProcessQueueMap());
 	
             modelBuilder.Configurations.Add(new BusinessRoleMap());
@@ -330,7 +326,7 @@ namespace Logitude.Infrastructure.Data
             modelBuilder.Configurations.Add(new AirlineStatisticsMap());
 			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
 			modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
-			modelBuilder.Configurations.Add(new CustomsShipperMap());
+
 			#endregion
 
             base.OnModelCreating(modelBuilder);
@@ -372,18 +368,6 @@ namespace Logitude.Infrastructure.Data
 	 }
 	
 	 public IDbSet<BatchTaskExecutionStatus> BatchTaskExecutionStatus 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<BIReport> BIReports 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<BIReportsType> BIReportsTypes 
 	 {
 	      get; set;
 	 

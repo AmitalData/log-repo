@@ -46,8 +46,6 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string CreatedByUserName  { get; set; }
        [DataMember]
        public string Subject  { get; set; }
-       [DataMember]
-       public string CallStack  { get; set; }
    }
 
 }

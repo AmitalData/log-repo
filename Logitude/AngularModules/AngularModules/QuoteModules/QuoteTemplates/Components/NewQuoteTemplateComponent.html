@@ -1,4 +1,4 @@
-﻿<table *ngIf="IsReady">
+﻿<table>
 
 
     <tr>
@@ -21,7 +21,7 @@
                                     <div class="RadioButton" style="width:60px;">
                                         <input [attr.id]="NewRadioButton"  type="radio" (change)="RadioButtonChoice('New')" name="RadioButtonChoice" [checked]="true" />
                                         <label [attr.for]="NewRadioButton" style="font-size: 12px">
-                                            {{'QuoteTemplate.B.New' | TextCodeTranslationPipe}} 
+                                            New
                                         </label>
                                     </div>
                                 </td>
@@ -30,8 +30,7 @@
                                     <div class="RadioButton" style="width:64px;">
                                         <input [attr.id]="CopyRadioButton"   type="radio" (change)="RadioButtonChoice('Copy')" name="RadioButtonChoice" [checked]="false" />
                                         <label [attr.for]="CopyRadioButton"   style="font-size: 12px">
-                                            {{'QuoteTemplate.B.Copy' | TextCodeTranslationPipe}}
- 
+                                            Copy
                                         </label>
                                     </div>
                                 </td>
@@ -41,8 +40,8 @@
                                     <div class="RadioButton" style="width:70px;">
                                         <input  [attr.id]="FromAllTenantRadioButton"   type="radio" (change)="RadioButtonChoice('FromAllTenant')" name="RadioButtonChoice" [checked]="false" />
                                         <label [attr.for]="FromAllTenantRadioButton" style="font-size: 12px">
-                                            
-                                            {{'QuoteTemplate.B.FromAllTenant' | TextCodeTranslationPipe}}
+                                            From All Tenant
+
                                         </label>
                                     </div>
                                 </td>
@@ -98,10 +97,10 @@
                                             <table>
                                                 <tr>
 
-                                                    <td style="width: 150px; min-width: 150px;max-width: 150px">{{'QuoteTemplate.F.Name' | TextCodeTranslationPipe}} </td>
-                                                    <td style="width: 150px; min-width: 150px;max-width: 150px">{{'QuoteTemplate.F.CreateDate' | TextCodeTranslationPipe}} </td>
-                                                    <td style="width: 150px; min-width: 150px;max-width: 150px">{{'QuoteTemplate.F.UpdateDate' | TextCodeTranslationPipe}}  </td>
-                                                    <td style="width: 60px; min-width: 60px;max-width: 60px">{{'QuoteTemplate.F.IsDefault' | TextCodeTranslationPipe}} </td>
+                                                    <td style="width: 150px; min-width: 150px;max-width: 150px">Name</td>
+                                                    <td style="width: 150px; min-width: 150px;max-width: 150px">Create Date</td>
+                                                    <td style="width: 150px; min-width: 150px;max-width: 150px">Update Date</td>
+                                                    <td style="width: 60px; min-width: 60px;max-width: 60px">Is Default</td>
 
 
                                                     <td style="width:100%;">
@@ -212,7 +211,7 @@
 
                     <td style="width: 57px;">
                         <div>
-                            <button class="Button" (click)="CloseButtonClicked()">{{'QuoteTemplate.B.Cancel' | TextCodeTranslationPipe}} </button>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
                         </div>
                     </td>
 
@@ -221,7 +220,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="NextButtonClicked()">{{'QuoteTemplate.B.Next' | TextCodeTranslationPipe}} </button>
+                        <button class="RedButton" (click)="NextButtonClicked()">Next</button>
                     </td>
                 </tr>
             </table>

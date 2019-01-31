@@ -178,8 +178,7 @@ namespace WarehouseData
                             List<TableClass> tableNameLists = warehouseHelper.FillTable();
 
                             warehouseHelper.BuildWarehouseObjectField( tableNameLists, sourceConnectionString);
-                            warehouseHelper.BuildDWObjectFieldDB(tableNameLists, sourceConnectionString);
-                            
+
                             foreach (TableClass table in tableNameLists)
                             {
                                 if (table.DispayInScreen)
@@ -238,7 +237,7 @@ namespace WarehouseData
                             #endregion
 
                             #region Create and Build Dimensions Table
-                            warehouseHelper.ExecuteScript( "BuildWarehouse", destinationConnectionString , null , "BuildDateDimensionsTable");
+                            warehouseHelper.ExecuteScript("BuildDateDimensionsTable", "BuildWarehouse", destinationConnectionString);
 
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
                             {
@@ -255,7 +254,7 @@ namespace WarehouseData
 
                                     stepName = table.BuildScriptName;
 
-                                    warehouseHelper.ExecuteScript("BuildWarehouse", destinationConnectionString , table);
+                                    warehouseHelper.ExecuteScript(table.BuildScriptName, "BuildWarehouse", destinationConnectionString);
 
 
                                     if (table.DispayInScreen)
@@ -283,7 +282,7 @@ namespace WarehouseData
                                         SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "Fact");
                                         SetControlPropertyValue("Text", "Building...", table.DBTableName, "Fact");
                                     }
-                                    warehouseHelper.ExecuteScript("BuildWarehouse", destinationConnectionString , table);
+                                    warehouseHelper.ExecuteScript(table.BuildScriptName, "BuildWarehouse", destinationConnectionString);
                           
                                     if (table.TableName == "Shipment")
                                     {

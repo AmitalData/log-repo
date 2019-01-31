@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CommodityUpdateClass
@@ -82,40 +79,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DBTableName =  "Commodities",
 			      				    ObjectTableSingular =  "Commodity",
 			      				    ObjectTablePlural =  "Commodities",
-			      				    HasCustomFilter =  false,
-			      				    HasCustomFields =  false,
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    IsEditable =  true,
+			      				    DefaultText =  "Commodity",
+			      				    Name =  "Commodity",
 			      				    IsNewWizard =  false,
+			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
+			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
-			      				    EnableEditFromLOV =  false,
+			      				    CustomFieldsCount =  0,
+			      				    HasCustomFields =  false,
 			      				    InActive =  false,
+			      				    SearchFields =  "Commodity,Commodities,,Id,",
 			      				    IsSaveButtonVisible =  true,
-			      				    IsComposition =  false,
 			      				    EnableSecurity =  true,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    IsComposition =  false,
+			      				    MaxNumberOfCustomFields =  0,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    ObjectTableTypeCode =  "MD",
-			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Commodity",
-			      				    Code =  "CMMD",
-			      				    Name =  "Commodity",
-			      				    GenerateDomainService =  false,
-			      				    HasMenuButtons =  false,
-			      				    CustomFieldsCount =  0,
-			      				    SearchFields =  "Commodity,Commodities,,Id,",
+			      				    HasDocuments =  false,
+			      				    IsLookUp =  false,
+			      				    IsEditable =  true,
+			      				    AllowedForComputingPartners =  false,
+			      				    DisableSearchBox =  false,
 			      				    ClientModuleName =  "Common",
-			      				    DescriptionDefaultText =  "Manage the commodities to be used in shipments and printed and sent in FWB and FHL messages.",
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasMenuButtons =  false,
+			      				    HasFiltersMenu =  false,
+			      				    AllowedInQueues =  false,
+			      				    Code =  "CMMD",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -129,9 +130,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Code",
 					  						ObjectTableName =  "Commodity",
 					  						FieldsDataType =  "Text",
-					  						MinLength =  4,
+					  						Code =  "Code",
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsCustom =  false,
+					  						MinLength =  4,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -143,42 +145,38 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Code",
 					  						ListPropertyPath =  "Code",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Commodity",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Code",
-					  						DefaultText =  @"Code",
-					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  @"Code",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						Code =  "Code",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  true,
+					  						FullFieldLable =  "Code",
+					  						DefaultText =  "Code",
+					  						ListFieldLable =  "CodeListLable",
+					  						ListLableDefaultText =  "Code",
 					  						HelpTextCode =  "Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -190,9 +188,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "Commodity",
 					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
+					  						Code =  "Name",
 					  						MaxLength =  250,
-					  						IsRequired =  true,
+					  						IsCustom =  false,
+					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -204,42 +203,38 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Name",
 					  						ListPropertyPath =  "Name",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Commodity",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
-					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  @"Name",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						Code =  "Name",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  true,
+					  						FullFieldLable =  "Name",
+					  						DefaultText =  "Name",
+					  						ListFieldLable =  "NameListLable",
+					  						ListLableDefaultText =  "Name",
 					  						HelpTextCode =  "Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -251,9 +246,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "Commodity",
 					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
+					  						Code =  "SearchFields",
 					  						MaxLength =  1000,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
+					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -265,40 +261,36 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Commodity",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search codes/ names",
-					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  @"Searching by :\n1: codes \n2: names",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						Code =  "SearchFields",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "Search codes/ names",
+					  						HelpTextCode =  "SearchFields",
+					  						HelpTextDefaultText =  "Searching by :\n1: codes \n2: names",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -309,9 +301,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "InActive",
 					  						ObjectTableName =  "Commodity",
 					  						FieldsDataType =  "Boolean",
-					  						MinLength =  0,
+					  						Code =  "InActive",
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsCustom =  false,
+					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -323,42 +316,38 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "InActive",
 					  						ListPropertyPath =  "InActive",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Commodity",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "InActive",
-					  						DefaultText =  @"Inactive",
-					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  @"Inactive",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						Code =  "InActive",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  true,
+					  						FullFieldLable =  "InActive",
+					  						DefaultText =  "Inactive",
+					  						ListFieldLable =  "InActiveListLable",
+					  						ListLableDefaultText =  "Inactive",
 					  						HelpTextCode =  "InActive",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -371,9 +360,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "Commodity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
-					  						MinLength =  0,
+					  						Code =  "AirlineId",
 					  						MaxLength =  15,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
+					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -385,40 +375,36 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "AirlineId",
 					  						ListPropertyPath =  "AirlineId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Commodity",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "AirlineId",
-					  						DefaultText =  @"Airline",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						Code =  "AirlineId",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "AirlineId",
+					  						DefaultText =  "Airline",
 					  						HelpTextCode =  "AirlineId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -428,7 +414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup CommodityQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CMMD", Name = "Commodity" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -443,7 +429,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCommoditiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommodityTextCode_0.Id, Code = "All Commodities",  QueryGroupCode = "CMMD", IndexOrder = 0, Tenant = 0, ObjectTableId = CommodityObjectTable.Id, QuerySection = "Commodity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CommodityFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllCommoditiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommodityTextCode_0.Id, Code = "All Commodities",  QueryGroupCode = "CMMD", IndexOrder = 0, Tenant = 0, ObjectTableId = CommodityObjectTable.Id, QuerySection = "Commodity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CommodityFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllCommoditiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommoditiesQuery.Id, IndexOrder = 1, ObjectFieldId = CommodityObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CommodityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -479,9 +465,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {                
-			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
-			   ObjectTable CommodityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Commodity" && d.Tenant == 0).FirstOrDefault();  
+	    {    
+			 ObjectTable CommodityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Commodity" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CommodityGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature CommodityGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Commodity.Tab.General", ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -491,12 +476,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature CommodityEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Commodity.Tab.Events", ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CMGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CommodityGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CommodityObjectTable.Id, TabNameTextCodeId = CommodityGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CMGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "Commodity.Tab.General" && d.ObjectTableId == CommodityObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CommodityObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Commodity.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CMEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CommodityEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CommodityObjectTable.Id, TabNameTextCodeId = CommodityEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CMEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "Commodity.Tab.Events" && d.ObjectTableId == CommodityObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CommodityObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Commodity.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -506,13 +491,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature CommodityFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CommodityFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CommodityFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CommodityFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.PackageFeature", NameTextCodeDefaultText = "Commodity Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CommodityFeature_Commodity_M_Commodities = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Commodity.M.Commodities", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.Commodities", NameTextCodeDefaultText = @"Commodities" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+		   Feature CommodityFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.PackageFeature", NameTextCodeDefaultText = "Commodity Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 
@@ -561,14 +540,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

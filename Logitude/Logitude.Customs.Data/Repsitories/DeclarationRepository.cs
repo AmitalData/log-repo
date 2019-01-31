@@ -381,9 +381,9 @@ namespace Logitude.Customs.Data.Repsitories
 
         public IQueryable<Declaration> GetCourierConnectedDeclaratins(string CourierMasterId, int tenant)
         {
-            var /*List<string>*/ courierDeclarations = (from a in context.CourierDeclarations
+            List<string> courierDeclarations = (from a in context.CourierDeclarations
                                                 where a.CourierMasterId == CourierMasterId && a.Tenant == tenant
-                                                select a.DeclarationId)/*.ToList()*/;
+                                                select a.DeclarationId).ToList();
 
             IQueryable<Declaration> declarations = (from a in context.Declarations
                                                     where courierDeclarations.Contains(a.Id)
@@ -394,46 +394,14 @@ namespace Logitude.Customs.Data.Repsitories
 
         public IQueryable<Declaration> GetNotConnectedDeclaratins(int tenant)
         {
-            bool joinIt = false;
+            List<string> courierDeclarations = (from a in context.CourierDeclarations
+                                                where a.CourierMasterId != null && a.Tenant == tenant
+                                                select a.DeclarationId).ToList();
 
-#if (false)
-            {
-                List<string> courierDeclarations = (from a in context.CourierDeclarations
-                                                    where a.CourierMasterId != null && a.Tenant == tenant
-                                                    select a.DeclarationId).ToList();
+            IQueryable<Declaration> declarations = (from a in context.Declarations
+                                                    where !courierDeclarations.Contains(a.Id) && a.IsCourierDeclaration == true
+                                                    select a);
 
-                IQueryable<Declaration> declarations = (from a in context.Declarations
-                                                        where !courierDeclarations.Contains(a.Id) && a.IsCourierDeclaration == true
-                                                        select a);
-            }
-#endif
-            IQueryable<Declaration> declarations = null;
-            if (!joinIt)
-            {
-                var courierDeclarations = (from a in context.CourierDeclarations
-                                           where a.CourierMasterId != null && a.Tenant == tenant
-                                           select a.DeclarationId);
-
-                declarations = (from a in context.Declarations
-                                                        where !courierDeclarations.Contains(a.Id) && a.IsCourierDeclaration == true
-                                                        select a);
-            }
-            else
-            {
-                declarations = (from a in context.Declarations
-
-                                where /*!courierDeclarations.Contains(a.Id) */
-                                !context.CourierDeclarations.Any(cd => cd.DeclarationId == a.Id)
-                                && a.IsCourierDeclaration == true
-                                select a
-                 );
-
-            }
-            bool testIt = false;
-            if (testIt)
-            {
-                var res = declarations.ToList();
-            }
             return declarations;
         }
 

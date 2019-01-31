@@ -63,6 +63,19 @@
         border-radius: 5px;
         box-shadow: 2.5px 2.5px #D1D1D1;
     }
+
+    .CalendarHeader {
+        width: 180px;
+        /*border: 1px solid #A7A9AC;*/
+        border-radius: 5px;
+        padding: 3px;
+        margin: 2px;
+    }
+
+        .CalendarHeader td {
+            text-align: center;
+        }
+
     .CalendarWeek {
         color: #1B90CB;
         line-height: 25px;
@@ -94,14 +107,7 @@
         text-align: center;
     }
 
-
-    .CalendarHeader {
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        text-align: center;
-    }
-
-    .CalendarHeader button {
+    .CalendarButton {
         font-size: 12px;
         font-weight: normal;
         cursor: pointer;
@@ -110,10 +116,9 @@
         height: 14px;
         background-position: center center;
         background-repeat: no-repeat;
-
     }
 
-        .CalendarHeader button:focus {
+        .CalendarButton:focus {
             outline: 0;
         }
 
@@ -122,33 +127,6 @@
         color: #454545;
         font-size: 10px;
     }
-
-    .CalendarHeader > div:first-child{
-        float:left;display: block; width: 20px;height:20px; padding-top: 3px;
-
-    }
-    .CalendarHeader > div:first-child > button{
-
-        /* Icon */
-        background-image: url('Images/Arrow-left.png');
-        background-size: 8px 8px;
-        background-position: center;
-        background-color: transparent !important;
-    }
-    .CalendarHeader > div:nth-child(2){
-        float:left;display: block; width:142px; text-align: center;height: 20px;line-height: 1;padding-top:4px;
-    }
-    .CalendarHeader > div:last-child{
-        float:right;display: block; width: 20px;height:20px; padding-top: 3px;
-
-    }
-        .CalendarHeader > div:last-child > button{
-            /* Icon */
-            background-color: transparent !important;
-            background-image: url('Images/Arrow-right.png');
-            background-size: 8px 8px;
-            background-position: center;
-        }
 
     .CalendarHeader .calender-header-left-button {
         background-image: url('Images/Arrow-left.png');
@@ -169,56 +147,62 @@
 
 <div class="Calendar">
     <div class="DateTimePickerBox">
+        <table>
+            <tr class="DateTimePickerBoxHeader">
+                <td>
+                    <table class="CalendarHeader">
+                        <tr>
+                            <td style="width:18px">
+                                <button tabindex="-1" (click)="Previous()" class="CalendarButton LeftCenter calender-header-left-button CustomButton"
+                                        style=""></button>
+                            </td>
+                            <td>
+                                <a tabindex="-1" href="#" class="calender-header-text" style=""> {{SelectedMonthYear}} </a>
+                            </td>
+                            <td style="width:18px">
+                                <button tabindex="-1" (click)="Next()" class="CalendarButton RightCenter calender-header-right-button CustomButton"
+                                        style=""></button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
 
-        <!-- Header -->
-        <div class="CalendarHeader DateTimePickerBoxHeader" style="height: 20px;">
-
-            <div>
-                <button  tabindex="-1" (click)="Previous()" class="CustomButton" ></button>
-            </div>
-
-            <div tabindex="-1"  class="calender-header-text">
-                {{SelectedMonthYear}}
-            </div>
-
-            <div>
-                <button  tabindex="-1" (click)="Next()" class="CustomButton" ></button>
-            </div>
-        </div>
-
-        <!-- Calendar -->
-        <div>
-                <div class="CalendarWeek">
-                    <div *ngFor="let dayOfWeek of shortDayNames">
-                        <div class="WeekDayCell">{{dayOfWeek}}</div>
+            <tr>
+                <td>
+                    <div class="CalendarWeek">
+                        <div *ngFor="let dayOfWeek of shortDayNames">
+                            <div class="WeekDayCell">{{dayOfWeek}}</div>
+                        </div>
                     </div>
-                </div>
 
-                <div style="position:relative">
-                    <div class="WeekRow" *ngFor="let week of weekRows; let weekIndex=index">
-                        <div *ngFor="let day of weekRows[weekIndex]">
-                            <div class="DayCellDev">
-                                <a tabindex="-1" class="DayCell" *ngIf="day"
-                                   [class.Selected]="SelectedDate && day.Day === SelectedDate.getDate()"
-                                   [class.today]="day.Day === TodayDate.getDate()"
-                                   href="#"
-                                   (click)="OnDayClick(day)">
-                                    {{day.Day}}
-                                </a>
+                    <div style="position:relative">
+                        <div class="WeekRow" *ngFor="let week of weekRows; let weekIndex=index">
+                            <div *ngFor="let day of weekRows[weekIndex]">
+                                <div class="DayCellDev">
+                                    <a tabindex="-1" class="DayCell" *ngIf="day"
+                                       [class.Selected]="SelectedDate && day.Day === SelectedDate.getDate()"
+                                       [class.today]="day.Day === TodayDate.getDate()"
+                                       href="#"
+                                       (click)="OnDayClick(day)">
+                                        {{day.Day}}
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Today Button -->
-                <div style="height: 35px; width: 100%; position: relative;">
-                    <div style="height: 1px; background: #7BA4E0; position: absolute; top: 3px; left: 15px; right: 15px;"></div>
+                    <!-- Today Button -->
+                    <div style="height: 35px; width: 100%; position: relative;">
+                        <div style="height: 1px; background: #7BA4E0; position: absolute; top: 3px; left: 15px; right: 15px;"></div>
 
-                    <div class="CenterCenter" style="height: 22px; width: 57px; padding-top: 2px;">
-                        <button class="Button" (click)="TodayButtonClicked()">Today</button>
+                        <div class="CenterCenter" style="height: 22px; width: 57px; padding-top: 2px;">
+                            <button class="Button" (click)="TodayButtonClicked()">Today</button>
+                        </div>
                     </div>
-                </div>
-        </div>
+                </td>
+            </tr>
+        </table>
 
     </div>
 </div>

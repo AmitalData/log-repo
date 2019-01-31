@@ -321,8 +321,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CourierSuspentionCode { get; set; }
 	      
         public virtual DeclarationStatusType CourierSuspention { get; set; }
-        [Column("DepositionStatusCode")]
-	    public string DepositionStatusCode { get; set; }
     }
 }
 	 

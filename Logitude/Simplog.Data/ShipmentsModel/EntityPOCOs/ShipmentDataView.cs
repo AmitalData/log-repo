@@ -98,27 +98,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Field18 { get; set; }
         public string Field19 { get; set; }
         public string Field20 { get; set; }
-        public string Field21 { get; set; }
-        public string Field22 { get; set; }
-        public string Field23 { get; set; }
-        public string Field24 { get; set; }
-        public string Field25 { get; set; }
-        public string Field26 { get; set; }
-        public string Field27 { get; set; }
-        public string Field28 { get; set; }
-        public string Field29 { get; set; }
-        public string Field30 { get; set; }
-        public string Field31 { get; set; }
-        public string Field32 { get; set; }
-        public string Field33 { get; set; }
-        public string Field34 { get; set; }
-        public string Field35 { get; set; }
-        public string Field36 { get; set; }
-        public string Field37 { get; set; }
-        public string Field38 { get; set; }
-        public string Field39 { get; set; }
-        public string Field40 { get; set; }
-
 
         public string SearchFields { get; set; }        
         public string Master { get; set; }
@@ -316,7 +295,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ConsigneeNotImporterName { get; set; }
         public string ConsigneeNotImporterNote { get; set; }
         public string ConsigneeNotImporterReference { get; set; }
-        public string ProjectNumber { get; set; }
 
         public string ConsolidatorId { get; set; }
         public string ConsolidatorAddressId { get; set; }
@@ -712,7 +690,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? FirstPickupETD { get; set; }
         public DateTime? FirstPickupETA { get; set; }
         public DateTime? INTTRALastStatusDate { get; set; }
-        public DateTime? ContainerLastStatusDate { get; set; }
 
     }
 }

@@ -182,7 +182,6 @@ export class DynamicLoader {
             case "InfrastructureModules/InfrastructureUser": { myResult = "InfrastructureModules/InfrastructureUser/ModuleInfrastructureUser#ModuleInfrastructureUser"; break; }
             case "InfrastructureModules/InfrastructureComputingPartner": { myResult = "InfrastructureModules/InfrastructureComputingPartner/ModuleInfrastructureComputingPartner#ModuleInfrastructureComputingPartner"; break; }
             case "InfrastructureModules/InfrastructureBusinessProcess": { myResult = "InfrastructureModules/InfrastructureBusinessProcess/ModuleInfrastructureBusinessProcess#ModuleInfrastructureBusinessProcess"; break; }
-            case "InfrastructureModules/InfrastructureBIReport": { myResult = "InfrastructureModules/InfrastructureBIReport/ModuleInfrastructureBIReport#ModuleInfrastructureBIReport"; break; }
 
                 //Common
             case "Common": { myResult = "Common/Module_COMN#LogitudeCommonModule"; break; }
@@ -211,26 +210,26 @@ export class DynamicLoader {
             
                  
              //Customs
-           case "Customs": { myResult = "Customs/Module_CUST#CustomsModule"; break; }// must comment if in main dev mode.
-           case "CustomsModules/CustomsClaim": { myResult = "CustomsModules/CustomsClaim/ModuleCustomsClaim#ModuleCustomsClaim"; break; }
-           case "CustomsModules/CustomsControls": { myResult = "CustomsModules/CustomsControls/ModuleCustomsControls#ModuleCustomsControls"; break; }
-           case "CustomsModules/CustomControls": { myResult = "CustomsModules/CustomsControls/ModuleCustomsControls#ModuleCustomsControls"; break; }
-           case "CustomsModules/CustomsClient": { myResult = "CustomsModules/CustomsClient/ModuleCustomsClient#ModuleCustomsClient"; break; }
-           case "CustomsModules/CustomsCourier": { myResult = "CustomsModules/CustomsCourier/ModuleCustomsCourier#ModuleCustomsCourier"; break; }
-           case "CustomsModules/CustomsMaintenance": { myResult = "CustomsModules/CustomsMaintenance/ModuleCustomsMaintenance#ModuleCustomsMaintenance"; break; }
-           case "CustomsModules/DeclarationTabs": { myResult = "CustomsModules/CustomsDeclarationModules/DeclarationTabs/ModuleDeclarationTabs#ModuleDeclarationTabs"; break; }
-           case "CustomsModules/DeclarationSupplierInvoice": { myResult = "CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/ModuleDeclarationSupplierInvoice#ModuleDeclarationSupplierInvoice"; break; }
-           case "CustomsModules/DeclarationOthers": { myResult = "CustomsModules/CustomsDeclarationModules/DeclarationOthers/ModuleDeclarationOthers#ModuleDeclarationOthers"; break; }
-           case "CustomsModules/CustomsCollateral": { myResult = "CustomsModules/CustomsCollateral/ModuleCustomsCollateral#ModuleCustomsCollateral"; break; }
-           case "CustomsModules/CustomsVehicle": { myResult = "CustomsModules/CustomsVehicle/ModuleCustomsVehicle#ModuleCustomsVehicle"; break; }
-           case "CustomsModules/CustomsPhysicalCheck": { myResult = "CustomsModules/CustomsPhysicalCheck/ModulePhysicalCheck#ModulePhysicalCheck"; break; }
-           case "CustomsModules/CustomsProceduralFault": { myResult = "CustomsModules/CustomsProceduralFault/ModuleProceduralFault#ModuleProceduralFault"; break; }
-           case "CustomsModules/CustomsDeclarationCargoSplit": { myResult = "CustomsModules/CustomsDeclarationCargoSplit/ModuleCustomsDeclarationCargoSplit#ModuleCustomsDeclarationCargoSplit"; break; }
+            case "Customs": { myResult = "Customs/Module_CUST#CustomsModule"; break; }// must comment if in main dev mode.
+            case "CustomsModules/CustomsClaim": { myResult = "CustomsModules/CustomsClaim/ModuleCustomsClaim#ModuleCustomsClaim"; break; }
+            case "CustomsModules/CustomsControls": { myResult = "CustomsModules/CustomsControls/ModuleCustomsControls#ModuleCustomsControls"; break; }
+            case "CustomsModules/CustomControls": { myResult = "CustomsModules/CustomsControls/ModuleCustomsControls#ModuleCustomsControls"; break; }
+            case "CustomsModules/CustomsClient": { myResult = "CustomsModules/CustomsClient/ModuleCustomsClient#ModuleCustomsClient"; break; }
+            case "CustomsModules/CustomsCourier": { myResult = "CustomsModules/CustomsCourier/ModuleCustomsCourier#ModuleCustomsCourier"; break; }
+            case "CustomsModules/CustomsMaintenance": { myResult = "CustomsModules/CustomsMaintenance/ModuleCustomsMaintenance#ModuleCustomsMaintenance"; break; }
+            case "CustomsModules/DeclarationTabs": { myResult = "CustomsModules/CustomsDeclarationModules/DeclarationTabs/ModuleDeclarationTabs#ModuleDeclarationTabs"; break; }
+            case "CustomsModules/DeclarationSupplierInvoice": { myResult = "CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/ModuleDeclarationSupplierInvoice#ModuleDeclarationSupplierInvoice"; break; }
+            case "CustomsModules/DeclarationOthers": { myResult = "CustomsModules/CustomsDeclarationModules/DeclarationOthers/ModuleDeclarationOthers#ModuleDeclarationOthers"; break; }
+            case "CustomsModules/CustomsCollateral": { myResult = "CustomsModules/CustomsCollateral/ModuleCustomsCollateral#ModuleCustomsCollateral"; break; }
+            case "CustomsModules/CustomsVehicle": { myResult = "CustomsModules/CustomsVehicle/ModuleCustomsVehicle#ModuleCustomsVehicle"; break; }
+            case "CustomsModules/CustomsPhysicalCheck": { myResult = "CustomsModules/CustomsPhysicalCheck/ModulePhysicalCheck#ModulePhysicalCheck"; break; }
+            case "CustomsModules/CustomsProceduralFault": { myResult = "CustomsModules/CustomsProceduralFault/ModuleProceduralFault#ModuleProceduralFault"; break; }
+            case "CustomsModules/CustomsDeclarationCargoSplit": { myResult = "CustomsModules/CustomsDeclarationCargoSplit/ModuleCustomsDeclarationCargoSplit#ModuleCustomsDeclarationCargoSplit"; break; }
           case "CustomsModules/CustomsListTemplates": { myResult = "CustomsModules/CustomsListTemplates/ModuleCustomsListTemplates#ModuleCustomsListTemplates"; break; }
           case "CustomsModules/CustomsDocuments": { myResult = "CustomsModules/CustomsDocuments/ModuleCustomsDocuments#ModuleCustomsDocuments"; break; }
           case "CustomsModules/CustomsPaymentOrder": { myResult = "CustomsModules/CustomsPaymentOrder/ModuleCustomsPaymentOrder#ModuleCustomsPaymentOrder"; break; }
-           case "CustomsModules/CustomsRequests": { myResult = "CustomsModules/CustomsRequests/ModuleCustomsRequests#ModuleCustomsRequests"; break; }
-           case "CustomsModules/CustomsGeneralRequests": { myResult = "CustomsModules/CustomsGeneralRequests/ModuleCustomsGeneralRequests#ModuleCustomsGeneralRequests"; break; }
+            case "CustomsModules/CustomsRequests": { myResult = "CustomsModules/CustomsRequests/ModuleCustomsRequests#ModuleCustomsRequests"; break; }
+            case "CustomsModules/CustomsGeneralRequests": { myResult = "CustomsModules/CustomsGeneralRequests/ModuleCustomsGeneralRequests#ModuleCustomsGeneralRequests"; break; }
           case "CustomsModules/CustomsVendor": { myResult = "CustomsModules/CustomsVendor/ModuleCustomsVendor#ModuleCustomsVendor"; break; }
 
 

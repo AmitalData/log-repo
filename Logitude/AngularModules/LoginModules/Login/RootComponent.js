@@ -104,7 +104,7 @@ var RootComponent = /** @class */ (function () {
                 });
             }
             else {
-                DynamicLoaderTSC_1.DynamicLoaderTSC.Load("./Login/Components/DSVLoginComponent", this.location)
+                DynamicLoaderTSC_1.DynamicLoaderTSC.Load("./Login/Components/LoginComponent", this.location)
                     .then(function (cmpRef) {
                     //cmpRef.instance.Blocking.subscribe(s => {
                     //    SessionLocator.BlockType = s;

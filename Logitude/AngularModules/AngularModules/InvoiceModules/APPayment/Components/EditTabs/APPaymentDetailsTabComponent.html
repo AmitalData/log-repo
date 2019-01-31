@@ -446,17 +446,7 @@
                         <td>
                             <table>
                                 <tr>
-                                    <td style="width: 1px;">
-                                        {{'APPayment.S.Details.APInvoices' | TextCodeTranslationPipe}}
-                                    </td>
-
-                                    <td style="width: 1px; padding-left: 5px;">
-                                        ({{ItemsSource.Length}})
-                                    </td>
-
-                                    <td>
-                                        <div></div>
-                                    </td>
+                                    <td>{{'APPayment.S.Details.ARInvoices' | TextCodeTranslationPipe}}</td>
 
                                     <td style="width:200px;">
                                         <SearchTextBox [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="SearchTextKeyUp($event)" [PlaceHolder]="'ARPayment.M.SearchByMsg' | TextCodeTranslationPipe"></SearchTextBox>

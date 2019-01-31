@@ -312,7 +312,7 @@ namespace CommunicationWorkerRole
                                             if (entityPM != null)
                                             {
                                                 entityChangeHelper.AddAutomationFollowUp(entityPM, entityChange, AutomationConditionFieldLists, dateString, entityChangesAutomationsLists, automation, entityChangesAutomation, dateBefore);
-                                               // UpdateEntitiy(entityPM, objectTable.Name, entityChange.CreateByUserId, Tenant);
+                                                UpdateEntitiy(entityPM, objectTable.Name, entityChange.CreateByUserId, Tenant);
                                             }
                                         }
 
@@ -591,8 +591,10 @@ namespace CommunicationWorkerRole
 
         public void UpdateEntitiy(object theEntity, string tableName, string userId, int tenant)
         {
-            if (tableName == "Master") tableName = "Shipment";
-          
+            if (tableName == "Master")
+            {
+                tableName = "Shipment";
+            }
 
             if (tableName == "Ticket")
             {

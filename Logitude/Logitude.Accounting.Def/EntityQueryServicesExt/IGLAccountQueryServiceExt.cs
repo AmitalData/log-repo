@@ -1,5 +1,4 @@
-﻿using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +11,5 @@ namespace Logitude.Accounting.Def.EntityQueryServicesExt
     {
         GLAccountPM GetSingleGLAccountPM(string id, int tenant);
         GLAccountPM GetGLAccountByDisplayNumber(string id, int tenant);
-        GLAccountPM GetGLAccountByInternalNumber(string id, int tenant);
     }
 }

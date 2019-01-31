@@ -104,11 +104,6 @@ export class BatchTaskExecutionPM {
     public set Subject(newValue: string) { if (this.subject != newValue) { this.subject = newValue; this.MarkAsDirty("Subject"); } }
        
 	 
-    private callStack: string;
-    public get CallStack() { return this.callStack; }
-    public set CallStack(newValue: string) { if (this.callStack != newValue) { this.callStack = newValue; this.MarkAsDirty("CallStack"); } }
-       
-	 
 
     public OldEntityPM: BatchTaskExecutionPM;
 		

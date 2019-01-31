@@ -57,7 +57,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("FilingInbox", "READ", authToken.Tenant);
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				FilingInboxRepository  filingInboxRepository = new FilingInboxRepository(MyContext);
@@ -95,7 +94,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("FilingInbox", "READ", authToken.Tenant);
 
 
 				ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
@@ -128,9 +126,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				int tenant = authToken.Tenant;
 				if(filters.Tenant != null)
 					tenant = filters.Tenant.Value;
-				                
-				SecurityUtility.CheckContactFeature("FilingInbox", "READ", authToken.Tenant);
-	
+				
                 QueryOperations queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "FilingInbox",

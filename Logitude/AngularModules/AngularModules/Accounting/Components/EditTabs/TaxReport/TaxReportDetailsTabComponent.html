@@ -169,14 +169,21 @@
                         <td colspan="3">
                             {{ 'Accounting.General.O.Details' | TextCodeTranslationPipe}}
                         </td>
-                        <div *ngIf="ShowErrorMsg" style="position: absolute;width: 100%;text-align: center;left: 0;right: 0;">
-                            <div class="DisbleBox" style="margin: 0 auto;">
-                                {{GetErrorMsg()}}
-                                <!--<span style="padding: 0px 16px;">-</span>
-                                <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>-->
-                            </div>
-                        </div>
 
+                    </tr>
+
+                    <!--Error Msg-->
+                    <tr *ngIf="ShowErrorMsg" style="height: 30px;">
+                        <td colspan="3">
+                            <div style="width: 100%;text-align:center">
+                                <div class="DisbleBox">
+                                    {{GetErrorMsg()}}
+                                    <!--<span style="padding: 0px 16px;">-</span>
+                                    <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>-->
+
+                                </div>
+                            </div>
+                        </td>
                     </tr>
 
                     <!-- Fields -->
@@ -394,38 +401,38 @@
                         <td>
 
                             <!-- Filters -->
-                            <div *ngIf="reportCounters" [style.float]="isRTL ? 'right' : 'left'" class="noselect">
+                            <div [style.float]="isRTL ? 'right' : 'left'" class="noselect">
 
                                 <ul class="FiltersMenu">
 
                                     <li id="TaxableTransactions" (click)="FilterItemClicked('TaxableTransactions')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
                                         [class.SelectedFilter]="FilterSelectedValue === 'TaxableTransactions'">
-                                        {{'Accounting.O.TaxableTransactions' | TextCodeTranslationPipe}} ({{reportCounters.TaxableTransactions}})
+                                        {{'Accounting.O.TaxableTransactions' | TextCodeTranslationPipe}} ({{TaxableTransactionsCount}})
                                     </li>
 
                                     <li id="ExemptTransactions" (click)="FilterItemClicked('ExemptTransactions')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
                                         [class.SelectedFilter]="FilterSelectedValue === 'ExemptTransactions'">
-                                        {{'Accounting.O.ExemptTransactions' | TextCodeTranslationPipe}} ({{reportCounters.ExcemptTransactions}})
+                                        {{'Accounting.O.ExemptTransactions' | TextCodeTranslationPipe}} ({{ExemptTransactionsCount}})
                                     </li>
 
                                     <li id="AllTransactions" (click)="FilterItemClicked('AllTransactions')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
                                         [class.SelectedFilter]="FilterSelectedValue === 'AllTransactions'">
-                                        {{'Accounting.O.AllTransactions' | TextCodeTranslationPipe}} ({{reportCounters.AllTransaxtions}})
+                                        {{'Accounting.O.AllTransactions' | TextCodeTranslationPipe}} ({{AllTransactionsCount}})
                                     </li>
 
                                     <li id="InputsEquipments" (click)="FilterItemClicked('InputsEquipments')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
                                         [class.SelectedFilter]="FilterSelectedValue === 'InputsEquipments'">
-                                        {{'Accounting.O.InputsEquipments' | TextCodeTranslationPipe}} ({{reportCounters.InputEquipments}})
+                                        {{'Accounting.O.InputsEquipments' | TextCodeTranslationPipe}} ({{InputsEquipmentsCount}})
                                     </li>
 
                                     <li id="InputsOther" (click)="FilterItemClicked('InputsOther')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
                                         [class.SelectedFilter]="FilterSelectedValue === 'InputsOther'">
-                                        {{'Accounting.O.InputsOther' | TextCodeTranslationPipe}} ({{reportCounters.InputOthers}})
+                                        {{'Accounting.O.InputsOther' | TextCodeTranslationPipe}} ({{InputsOtherCount}})
                                     </li>
 
                                     <li id="All" (click)="FilterItemClicked('All')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
                                         [class.SelectedFilter]="FilterSelectedValue === 'All'">
-                                        {{'Accounting.General.O.All' | TextCodeTranslationPipe}} ({{reportCounters.All}})
+                                        {{'Accounting.General.O.All' | TextCodeTranslationPipe}} ({{AllCount}})
                                     </li>
 
                                 </ul>
@@ -492,22 +499,8 @@
                     </tr>
 
                     <tr>
-                        <!-- Grid -->
                         <td style="">
-
-                            <div class="GeneratedGridContainer">
-                                <logitude-grid GridWidth="100%" GridHeight="100%"
-                                    [ObjectTable]="'TaxReportLine'"
-                                    [dataSource]="DataSource"
-                                    [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                                    [columns]="columns" [autoLoad]="true"
-                                    [QueryChangeEvent]="onQueryChangeEvent"
-                                    [IsCustomTemplate]="true">
-                                </logitude-grid>
-                            </div>
-
-                            <!-- edit -->
-                            <div *ngIf="0" class="CellContent">
+                            <div class="CellContent">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%"
                                                     [ItemSource]="ReportLines"
                                                     [UseVirtuallization]="true">

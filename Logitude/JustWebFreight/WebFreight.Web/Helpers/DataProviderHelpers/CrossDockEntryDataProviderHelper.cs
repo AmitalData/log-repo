@@ -58,7 +58,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 dataProvider.Destination = warehouseEntryPM.Destination;
                 dataProvider.ShipperName = warehouseEntryPM.ShipperName;
                 dataProvider.ConsigneeName =  warehouseEntryPM.ConsigneeName;
-                dataProvider.EntryNumber = warehouseEntryPM.EntryNumber;
+
 
                 List<string> cardIds = new List<string>();
                 List<CardList> cardLists = new List<CardList>();
@@ -70,7 +70,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 if (cardIds.Count > 0)
                 {
                     CardQuery cardQuery = new CardQuery(tenant);
-                    cardLists = cardQuery.GetCardListsByCardIds(cardIds,tenant);
+                    cardLists = cardQuery.GetCardListForInventoryReportsByCardIds(cardIds,tenant);
                 }
 
                 if (!string.IsNullOrEmpty(warehouseEntryPM.UpdatedByUserId))
@@ -165,7 +165,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     if (shipmentDataView != null)
                     {
                         dataProvider.MainCarriageCarrierName = shipmentDataView.MainCarriageCarrierName;
-                        dataProvider.ShipmentNumber = shipmentDataView.ShipmentNumber;
                     }
                 }
 
@@ -191,8 +190,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 item.Weight = package.Weight;
                 item.WeightUnit = warehouseEntryPM.GrossWeightUnitCode;
                 item.Seal = package.Seal;
-                item.VolumetricWeight = package.VolumetricWeight;
-                item.VolumetricWeightUnit = warehouseEntryPM.ChargeableWeightUnitCode;
                 result.Add(item);
             }
            

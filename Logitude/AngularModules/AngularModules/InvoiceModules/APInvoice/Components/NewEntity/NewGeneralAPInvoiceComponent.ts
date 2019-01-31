@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
@@ -53,9 +53,9 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.InitializeServices();
 
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
+        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "APInvoiceEditExchangeRate")) {
             this.IsEditExchangeRateVisible = true;
-        }        
+        }
     }
 
     public AllVatTypes: VatTypeList[] = [];
@@ -101,6 +101,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         });
     }
 
+
     // SetUIProperties
     public PaymentTermDisplayInLOV: boolean = true;
     SetUIProperties() {
@@ -113,10 +114,19 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         }
 
         this.UIProperties.SetRequired("VATNumber", "APInvoice", isVatNumberRequired);
-        this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AccountingDate));
-        
+
+        var isFieldtEnabled = true;
+
+        if (this.EntityPM.InvoiceCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.InvoiceCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null) {
+            isFieldtEnabled = false;
+        }
+
+        this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", "APInvoice", isFieldtEnabled);
+        this.RateIsEnabled = isFieldtEnabled;
+
         this.SetUIProperties_DueDate();
-        this.SetUIProperties_ExchangeRate();        
+
+        this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AccountingDate));
     }
     SetUIProperties_DueDate() {
         var AllowManuallyDueDate: boolean = false;
@@ -130,23 +140,6 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         if (AllowManuallyDueDate) {
             this.PaymentTermDisplayInLOV = null;
         }
-    }
-    SetUIProperties_ExchangeRate() {
-        var isEnabled = true;
-
-        if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "APInvoiceEditExchangeRate")) {
-            isEnabled = false;
-        }
-
-        else {
-            if (this.EntityPM.InvoiceCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.InvoiceCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null) {
-                isEnabled = false;
-            }
-        }
-
-        //this.RateIsEnabled = isEnabled;
-        this.RateIsEnabled = true;
-        this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", "APInvoice", isEnabled);        
     }
 
     // Load Data 

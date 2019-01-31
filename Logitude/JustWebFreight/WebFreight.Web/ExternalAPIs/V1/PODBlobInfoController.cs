@@ -5,7 +5,6 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -14,13 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading;
-using System.Web;
 using System.Web.Http;
-using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
-using WebFreight.Web.Security;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -33,40 +28,27 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 try
                 {
-                    if (blobInfo.BlobChunk.Length > 100000) throw new ApplicationException("Blob chunk must not be larger than 100 KB");
 
-                    #region Authentication
+                    if (blobInfo.BlobChunk.Length > 100000)
+                    {
+                        throw new ApplicationException("Blob chunk must not be larger than 100 KB");
+                    }
 
-                    string token = HttpContext.Current.Request.Headers["Token"];
-
-                    if (string.IsNullOrEmpty(blobInfo.SecurityKey) && string.IsNullOrEmpty(token)) throw new AutenticationException("Sorry! this user is not authorized!");
-
-                    bool isUsedToken = false;
+                    #region SecurityKey
                     string shipmentId = string.Empty;
-                    ShipmentQuery shipmentQuery = new ShipmentQuery(blobInfo.Tenant);
+                    ShipmentQuery shipmentQuery = new ShipmentQuery(blobInfo.Tenant); 
+
                     if (!string.IsNullOrEmpty(blobInfo.SecurityKey))
                     {
                         shipmentId = shipmentQuery.GetShipmentIdBySecurityKeyAndShipmentNumber(blobInfo.ShipmentNumber, blobInfo.SecurityKey, blobInfo.Tenant);
                     }
-                    else if (!string.IsNullOrEmpty(token))
-                    {
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        if (authToken == null) throw new AutenticationException("Sorry! this user is not authorized!");
-                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        shipmentId = shipmentQuery.GetShipmentIdByShipmentNumber(blobInfo.ShipmentNumber, blobInfo.Tenant);
-                        isUsedToken = true;
-                    }
 
                     if (string.IsNullOrEmpty(shipmentId))
                     {
+                        
                         bool isExist = shipmentQuery.CheckIfShipmentExistByShipmentNumber(blobInfo.ShipmentNumber, blobInfo.Tenant);
                         if (!isExist) throw new ApplicationException("התיק לא אותר");
-                        else
-                        {
-                            if (isUsedToken) throw new AutenticationException("Sorry! this user is not authorized!");
-                            else throw new ApplicationException("זיהוי משלוח לא תקין- אנא פנה לסוכן מכס");
-                        }
-
+                        throw new ApplicationException("זיהוי משלוח לא תקין- אנא פנה לסוכן מכס");
                     }
 
                     #endregion
@@ -85,13 +67,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         if (blobInfo.BlobSize == blobInfo.TotalSentChunksSize)
                         {
-
-                            if (HttpContext.Current != null && HttpContext.Current.User.Identity != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
-                            {
-                                HttpContext.Current.User = Thread.CurrentPrincipal =new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(""), new string[0]);
-                            }
-
-
                             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(blobInfo.Tenant);
                             ContactRepository contactRepository = new ContactRepository(blobInfo.Tenant);
                             DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(blobInfo.Tenant);

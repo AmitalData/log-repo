@@ -24,7 +24,6 @@ export class BatchTaskExecutionList {
 	StatusName: string;
 	CreatedByUserName: string;
 	Subject: string;
-	CallStack: string;
 	
 }
  

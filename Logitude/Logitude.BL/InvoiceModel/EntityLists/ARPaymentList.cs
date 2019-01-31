@@ -69,7 +69,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string SATTransferStatusName { get; set; }
         public string TransmissionError { get; set; }
         public string BankAccountLiteId { get; set; }
-        public string BankAccountName { get; set; }
 
         public string MetodoPagoCode { get; set; }
         public string TipoCadenaPago { get; set; }
@@ -77,7 +76,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string CadPago { get; set; }
         public string SelloPago { get; set; }
         public string BranchName { get; set; }
-        public DateTime? SATApprovalDate { get; set; }
 
     }
 }

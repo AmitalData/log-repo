@@ -83,9 +83,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string UpdatedByUserId { get; set; }
         public string CreditCardTypeId { get; set; }
 
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? FirstApproveDate { get; set; }
-
         private List<APPaymentInvoicePM> paymentInvoices;
         [Include]
         [Composition]
@@ -116,7 +113,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool SetCancelApproval { get; set; }
         public bool HasInvoicesErrors { get; set; }
         public string VendorPartnerTypeId { get; set; }
-        public bool SetReSendQBO { get; set; }
 
         public Decimal? TaxDeductionLocalAmount { get; set; }
         public int? TaxDeductionPercentage { get; set; }

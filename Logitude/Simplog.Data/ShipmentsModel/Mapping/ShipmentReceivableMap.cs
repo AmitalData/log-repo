@@ -57,12 +57,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.IATACodeId).HasColumnName("IATACodeId");
+            this.Property(t => t.QuoteSaleMinPrice).HasColumnName("QuoteSaleMinPrice");
             this.Property(t => t.VatTypeId).HasColumnName("VatTypeId");
             this.Property(t => t.IsBackToBack).HasColumnName("IsBackToBack");
             this.Property(t => t.IsExpense).HasColumnName("IsExpense");
             this.Property(t => t.ShipmentReceivableParentId).HasColumnName("ShipmentReceivableParentId");
-            this.Property(t => t.QuoteSaleMinAmount).HasColumnName("QuoteSaleMinAmount");
-            this.Property(t => t.QuoteSaleMaxAmount).HasColumnName("QuoteSaleMaxAmount");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

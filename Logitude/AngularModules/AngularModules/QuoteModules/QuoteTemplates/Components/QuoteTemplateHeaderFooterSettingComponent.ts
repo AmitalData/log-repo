@@ -17,7 +17,7 @@ import {FroalaEditorSetting} from '../../../InfrastructureModules/Infrastructure
 import {QuoteTemplateSectionViewModel} from './EditQuoteTemplateComponent';
 import {BorderType} from '../../../Infrastructure/Components/LogitudeCustomComponents/TextDesignComponent';
 import {QuoteTemplateSectionExtendedPMService} from '../../../Quote/Services/ExtendedPMs/QuoteTemplateSectionExtendedPMService';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+
 @Component({
     selector: 'QuoteTemplateHeaderFooterSettingComponent',
     moduleId: module.id,
@@ -295,7 +295,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
             logWindow.WindowArgs = windowArgs;
             logWindow.Width = 400;
             logWindow.Height = 130;
-            logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.DesignTable");
+            logWindow.Title = "Design Table";
             logWindow.Show("./QuoteModules/QuoteTemplates/Components/AdvanceDesignTableComponent");
             logWindow.WindowClosed.subscribe(($event: any) => {
                 if ($event == "Refresh") {
@@ -324,7 +324,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
         logWindow.Width = 800;
         logWindow.Height = 600;
         logWindow.BottomBorderForTitle = "1px solid LightGray";
-        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.Edit" + type); 
+        logWindow.Title = "Edit Area 1";
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/PageAreaHeaderFooterComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "Refresh") {
@@ -339,7 +339,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
 
         if (this.QuoteTemplateSettingPM.IsDirty) {
             this.IsChangeSetting = true;
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
             this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
                 this.QuoteTemplateSettingPM.IsDirty = false;
                 SessionLocator.CurrentSession.StopBusyIndicator();
@@ -350,7 +350,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     }
 
     RefreshQuoteTemplateSectionBodyHtml() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.QuoteTemplateSectionViewModel.QuoteTemplateSectionTypeCode, this.QuoteTemplateSectionViewModel.Id, this.QuoteTemplateSectionViewModel.EntityPM.QuoteTemplateId, this.QuoteTemplateSettingPM.Id, this.QuoteId, this.QuoteTemplatePM.CreatedByUserId, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             SessionLocator.CurrentSession.StopBusyIndicator();
@@ -389,7 +389,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
 
            if (this.QuoteTemplateSettingPM.IsDirty) {
 
-               SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+               SessionLocator.CurrentSession.StartBusyIndicatorSaving();
                this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
                    this.QuoteTemplateSettingPM.IsDirty = false;
                    SessionLocator.CurrentSession.StopBusyIndicator();

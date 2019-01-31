@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuotePM} from '../../EntityPMs/QuotePM';
 import {QuotePackagePM} from '../../EntityPMs/QuotePackagePM';
@@ -36,7 +36,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     public EntityPM: QuotePM;
     public DataContext: NewQuoteComponent = this;
     public ObjectTableName: string = "Quote";    
-    public LabelColumnWidth: number = 120;
+    public LabelColumnWidth: number = 110;
     public ControlColumnWidth: number = 220;
     public CardDependencyProperty1: string = "CS,PO";
     public IsLCLEntity: boolean = false;
@@ -83,7 +83,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     }
 
     LoadAllowedAirline() {
-        if (SessionLocator.TenantManagementJS.IsRestrictedByAirline) {
+        if (SessionLocator.TenantManagementPM.IsRestrictedByAirline) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                 if (this.EntityPM.TransportModeId == "A") {
                     this.myPartnersDomainService.GetAllowedAirlineId().subscribe((myResponse: ServiceResponse) => {
@@ -1696,7 +1696,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
             if (this.GrossWeight == null && this.EntityPM.VolumetricWeight == null) {
                 this.EntityPM.VolumetricWeight = result;
                 this.EntityPM.GrossWeight = AppTool.GetWeightFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeightUnitCode, result);
-                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.EntityPM.Ratio);                
+                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.VolumeUnitCode, result, this.EntityPM.Ratio);                
             }
         }
     }

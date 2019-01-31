@@ -24,7 +24,7 @@
 
     
 
-    .SettingDesignButton:hover:not(:disabled) {
+    .SettingDesginButton:hover:not(:disabled) {
         background: #fefcea; /* Old browsers */
         background: -moz-linear-gradient(top, #fefcea 0%, #f1da36 100%); /* FF3.6-15 */
         background: -webkit-linear-gradient(top, #fefcea 0%,#f1da36 100%); /* Chrome10-25,Safari5.1-6 */
@@ -32,16 +32,16 @@
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=0 ); /* IE6-9 */
     }
 
-    .SettingDesignButton span, .RedButton span, .GreenButton span {
+    .SettingDesginButton span, .RedButton span, .GreenButton span {
         text-shadow: 1px 1px white;
     }
 
-    .SettingDesignButton:disabled, .RedButton:disabled, .GreenButton:disabled {
+    .SettingDesginButton:disabled, .RedButton:disabled, .GreenButton:disabled {
         opacity: 0.5;
         pointer-events: none;
     }
 
-    .SettingDesignButton {
+    .SettingDesginButton {
         border: 1px solid #848484;
         background: #ffffff; /* Old browsers */
         background: -moz-linear-gradient(top, #ffffff 0%, #dddddd 40%, #c4c4c4 51%, #e2e2e2 98%, #ffffff 99%); /* FF3.6-15 */
@@ -93,7 +93,7 @@
                                                     <td style="width:285px;">
                                                         <table>
                                                             <tr>
-                                                                <td style="width:55px;"><span style="width:55px;font-size:14px;color:gray">{{'QuoteTemplate.S.Width' | TextCodeTranslationPipe}}:</span></td>
+                                                                <td style="width:55px;"><span style="width:55px;font-size:14px;color:gray">Width:</span></td>
                                                                 <td><input style="width:50px;height:22px;" type="text" [(ngModel)]="ImageWidth" /></td>
                                                                 <td style="width: 15px;">
                                                                     <div class="NumericButton" (mousedown)="ImageNumericButtonClicked('ImageWidth' , true)">
@@ -109,7 +109,7 @@
 
                                                                 <td style="width:10px;"><span></span></td>
 
-                                                                <td style="width:55px;"><span style="width:55px;font-size:14px;color:gray">{{'QuoteTemplate.S.Height' | TextCodeTranslationPipe}}: </span></td>
+                                                                <td style="width:55px;"><span style="width:55px;font-size:14px;color:gray">Height:</span></td>
                                                                 <td><input style="width:50px;height:22px;" type="text" [(ngModel)]="ImageHeight" /></td>
 
                                                                 <td style="width: 15px;">
@@ -124,7 +124,7 @@
 
                                                                 <td style="width:5px;"><span></span></td>
 
-                                                                <td style="width:7px;"><span style="width:55px;font-size:14px;color:gray">{{'QuoteTemplate.S.px' | TextCodeTranslationPipe}} </span></td>
+                                                                <td style="width:7px;"><span style="width:55px;font-size:14px;color:gray">px</span></td>
 
 
                                                                 <td></td>
@@ -137,15 +137,15 @@
                                                     <td style="width:10px"><div style="width:10px"></div></td>
                                                     <td style="width:62px;">
                                                         <div style="width:57px;display:inline">
-                                                            <button (click)="AlignmentButtonClick('left')" class="SettingDesignButton" [class.SelectedSettingButton]="Alignment =='left'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                                            <button (click)="AlignmentButtonClick('left')" class="SettingDesginButton" [class.SelectedSettingButton]="Alignment =='left'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
                                                                 <img style="height:16px;width:16px;margin-top:-5px" src="./Images/Icons/Align-left-icon.png" />
                                                             </button>
 
-                                                            <button (click)="AlignmentButtonClick('center')" class="SettingDesignButton" [class.SelectedSettingButton]="Alignment =='center'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                                            <button (click)="AlignmentButtonClick('center')" class="SettingDesginButton" [class.SelectedSettingButton]="Alignment =='center'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
                                                                 <img style="height:16px;width:16px;margin-top:-5px" src="./Images/Icons/Align-center-icon.png" />
                                                             </button>
 
-                                                            <button (click)="AlignmentButtonClick('right')" class="SettingDesignButton" [class.SelectedSettingButton]="Alignment =='right'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                                            <button (click)="AlignmentButtonClick('right')" class="SettingDesginButton" [class.SelectedSettingButton]="Alignment =='right'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
                                                                 <img style="height:16px;width:16px;margin-top:-5px" src="./Images/Icons/Align-right-icon.png" />
                                                             </button>
                                                         </div>
@@ -210,7 +210,7 @@
 
                     <td style="width: 57px;">
                         <div>
-                            <button class="Button" (click)="CloseButtonClicked()">{{'QuoteTemplate.B.Cancel' | TextCodeTranslationPipe}} </button>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
                         </div>
                     </td>
 
@@ -219,7 +219,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
+                        <button class="RedButton" (click)="SaveButtonClicked()">Save</button>
                     </td>
                 </tr>
             </table>

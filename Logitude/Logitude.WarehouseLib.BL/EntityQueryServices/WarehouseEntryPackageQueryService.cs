@@ -96,8 +96,6 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                           TransportModeId = a.WarehouseEntry.TransportModeId,
                                                           DirectionId = a.WarehouseEntry.DirectionId,
                                                           IsConnectedToShipment = a.IsConnectedToShipment,
-                                                          VolumetricWeight = a.VolumetricWeight,
-                                                          ChargeableWeightUnitCode = a.WarehouseEntry.ChargeableWeightUnitCode,
                                                       }).ToList();
 
 
@@ -144,13 +142,9 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                                                         ShipperId = a.WarehouseEntry != null ? a.WarehouseEntry.ShipperId : "",
                                                                                         ConsigneeId = a.WarehouseEntry != null ? a.WarehouseEntry.ConsigneeId : "",
                                                                                         DirectionId = a.WarehouseEntry != null ? a.WarehouseEntry.DirectionId : "",
-                                                                                        GrossWeight = a.Weight,
-                                                                                        Volume = a.Volume,
-                                                                                        Quantity = a.Quantity,
+                                                                                        GrossWeight = a.Weight!=null ? a.Weight.ToString() +" "+ (a.WarehouseEntry != null ? a.WarehouseEntry.GrossWeightUnitCode : "" ):"",
                                                                                         InternalNotes = a.WarehouseEntry.Notes,
                                                                                         SpecialInstructions = a.WarehouseEntry.SpecialInstruction,
-                                                                                        VolumetricWeight = a.VolumetricWeight,
-                                                                                        
                                                                                     });
 
 
@@ -222,7 +216,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
 
             List<CardList> cardLists = null;
             CardQuery cardQuery = new CardQuery(tenant);
-            if (cardIds.Count > 0) cardLists = cardQuery.GetCardListsByCardIds(cardIds, tenant);
+            if (cardIds.Count > 0) cardLists = cardQuery.GetCardListForInventoryReportsByCardIds(cardIds, tenant);
             #endregion
 
             foreach (WarehouseEntryPackageItem item in myResult)

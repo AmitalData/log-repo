@@ -130,7 +130,11 @@
     <None Include="Files\DIM_Currencies.dwml" />
     <None Include="Files\DIM_Dates.dwml" />
     <None Include="Files\DIM_Departments.dwml" />
+    <None Include="Files\DIM_Directions.dwml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Files\DIM_Incoterms.dwml" />
+    <None Include="Files\DIM_Levels.dwml" />
     <None Include="Files\DIM_Partners.dwml">
       <SubType>Designer</SubType>
     </None>
@@ -139,6 +143,8 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Files\DIM_Tenants.dwml" />
+    <None Include="Files\DIM_TransportModes.dwml" />
+    <None Include="Files\DIM_Types.dwml" />
     <None Include="Files\DIM_Users.dwml" />
     <None Include="Files\Fact_Shipments.dwml" />
     <None Include="packages.config" />

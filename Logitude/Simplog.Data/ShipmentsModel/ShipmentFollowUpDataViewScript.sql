@@ -34,12 +34,11 @@ SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNum
                          dbo.ShipmentMasterDatas.ManifestReason, dbo.ShipmentMasterDatas.ManifestStatusCode, dbo.ShipmentMasterDatas.AirlinePrefix, dbo.Shipments.OperationalCloseDate, dbo.Shipments.AccountingCloseDate,
 						 dbo.MoveTypes.MoveTypeEnglishName AS MoveTypeName,
 
-						 dbo.Shipments.ContainerLastStatusDate,
 						 dbo.Shipments.Notify1Reference,
 						 dbo.Shipments.Notify2Reference,
 						 dbo.Shipments.ShipperNotExporterReference,
 						 dbo.Shipments.ConsigneeNotImporterReference,
-						 dbo.Shipments.ProjectNumber,
+
 						 dbo.Shipments.INTTRALastStatusDate,
 						 dbo.Shipments.INTTRASIError,
 						 dbo.Shipments.INTTRASIStatusCode,
@@ -76,11 +75,6 @@ SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNum
                          dbo.Shipments.Field1, dbo.Shipments.GrossWeight, dbo.Shipments.ChargeableWeight, dbo.Shipments.IsOperationalClosed, dbo.Shipments.ConsigneeContactId,
 						 dbo.Shipments.Field11, dbo.Shipments.Field12, dbo.Shipments.Field13, dbo.Shipments.Field14, dbo.Shipments.Field15,
 						 dbo.Shipments.Field16, dbo.Shipments.Field17, dbo.Shipments.Field18, dbo.Shipments.Field19, dbo.Shipments.Field20,
-						 dbo.Shipments.Field21, dbo.Shipments.Field22, dbo.Shipments.Field23, dbo.Shipments.Field24, dbo.Shipments.Field25,
-						 dbo.Shipments.Field26, dbo.Shipments.Field27, dbo.Shipments.Field28, dbo.Shipments.Field29, dbo.Shipments.Field30,
-						 dbo.Shipments.Field31, dbo.Shipments.Field32, dbo.Shipments.Field33, dbo.Shipments.Field34, dbo.Shipments.Field35,
-						 dbo.Shipments.Field36, dbo.Shipments.Field37, dbo.Shipments.Field38, dbo.Shipments.Field39, dbo.Shipments.Field40,
-
                          dbo.Shipments.AgentContactId, dbo.Shipments.AgentAddressId, dbo.Shipments.CustomAgentImportAddressId, dbo.Shipments.CustomAgentImportContactId, 
                          dbo.Shipments.ShipperContactId, dbo.Shipments.Notify2ContactId, dbo.Shipments.Notify1ContactId, dbo.Shipments.Notify2AddressId, 
                          dbo.Shipments.Notify1AddressId, dbo.Shipments.PreCarriageETD, dbo.Shipments.PreCarriageETA, dbo.Shipments.OnCarriageETA, dbo.Shipments.OnCarriageETD, 

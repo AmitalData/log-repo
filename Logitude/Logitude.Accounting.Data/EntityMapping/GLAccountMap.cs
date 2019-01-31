@@ -127,7 +127,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.IsEquipmentVendor).HasColumnName("IsEquipmentVendor");
 
-            this.Property(t => t.ExcludeFromDeductionReport).HasColumnName("ExcludeFromDeductionReport");
+            this.Property(t => t.IsPartOfDeductionReport).HasColumnName("IsPartOfDeductionReport");
         }
     }
 }

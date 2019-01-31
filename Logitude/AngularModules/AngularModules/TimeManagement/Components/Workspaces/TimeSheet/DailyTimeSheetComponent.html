@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .ItemBox {
         height: 40px;
@@ -68,7 +68,6 @@
                                         <div></div>
                                     </td>
 
-
                                     <!-- Locations Filters -->
                                     <td style="width:70px;">
                                         <LogLabel [Text]="'Location'" [DataContext]="DataContext" [NoObjectField]="true"></LogLabel>
@@ -78,7 +77,7 @@
                                         <LocationsFilter (SelectedValueChanged)="SelectedLocationFilter = $event" [SelectedValue]="SelectedLocationFilter"></LocationsFilter>
                                     </td>
 
-                                    <td style="width:5px;">
+                                    <td style="width:10px;">
                                         <div></div>
                                     </td>
 
@@ -87,11 +86,11 @@
                                         <LogLabel [Text]="'Date'" [DataContext]="DataContext" [NoObjectField]="true"></LogLabel>
                                     </td>
 
-                                    <td style="width:200px;">
+                                    <td style="width:195px;">
                                         <DatesFilter (SelectedValueChanged)="SelectedDateFilter = $event" [SelectedValue]="SelectedDateFilter"></DatesFilter>
                                     </td>
 
-                                    <td style="width:5px;">
+                                    <td style="width:10px;">
                                         <div></div>
                                     </td>
 
@@ -137,7 +136,7 @@
                                                         <tr>
                                                             <td style="width:100px">
                                                                 <button class="Button" (click)="SearchButtonClicked()">Search</button>
-                                                            </td>
+                                                            </td> 
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -158,12 +157,6 @@
                                             <tr style="height: 32px;">
                                                 <td>
                                                     <div></div>
-                                                </td>
-
-                                                <td style="width: 30px;">
-                                                        <button class="Button" style="height:25px;width:25px;" (click)="RefreshButtonClicked()">
-                                                            <img class="CenterCenter" style="padding-left:2px;padding-right:2px;" src="./Images/Buttons/Refresh.png" />
-                                                        </button>
                                                 </td>
 
                                                 <td style="width: 90px;">
@@ -216,7 +209,6 @@
                         <td>
                             <div class="MediaFill">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemSource">
-
                                     <!-- ProjectName -->
                                     <log-column [width]="'150'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.ProjectName' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate>
@@ -244,21 +236,15 @@
                                     </log-column>
 
                                     <!-- Hours -->
-                                    <log-column [width]="'120'" [Alignment]="'center'" [header]="'Hours'">
+                                    <log-column [width]="'120'" [Alignment]="'center'" [header]="'Hours' ">
                                         <log-cell-template template="let item" #logcelltemplate>
-                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: center;">
-                                                {{item.TimeInMinutes | MinutesToTimePipe}}
-                                            </div>
-
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <TimeInput [FocusOnMe]="true" [TotalMinutes]="item.TimeInMinutes" (TotalMinutesChanged)="item.TimeInMinutes = $event" [InputValue]="item.DayDateFormat" [DisplayValue]="item.DayDateFormat" (Changed)="item.DayDateFormat = $event"></TimeInput>
-                                            </div>
+                                            <TimeInput [TotalMinutes]="item.TimeInMinutes" (TotalMinutesChanged)="item.TimeInMinutes = $event" [InputValue]="item.DayDateFormat" [DisplayValue]="item.DayDateFormat" (Changed)="item.DayDateFormat = $event"></TimeInput>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- WINumber -->
                                     <log-column [width]="'120'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.WINumber' | TextCodeTranslationPipe ">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                        <log-cell-template template="let item" #logcelltemplate>
                                             <Hyperlink [FontSize]="14" (click)="item.ViewWI(item.WINumber)" [Text]="item.WINumber"></Hyperlink>
                                         </log-cell-template>
                                     </log-column>
@@ -283,7 +269,7 @@
                                                     <tr>
                                                         <td style="width:18px;">
                                                             <div style="width: 18px; height: 18px;">
-                                                                <IconButton [Title]="'Copy'" [Name]="'copy'" [IsSmall]="true" (click)="CopyLineClicked(item)"></IconButton>
+                                                                <IconButton [Name]="'copy'" [IsSmall]="true" (click)="CopyLineClicked(item)"></IconButton>
                                                             </div>
                                                         </td>
                                                         <td style="width:2px;">
@@ -291,15 +277,7 @@
                                                         </td>
                                                         <td style="width:18px;">
                                                             <div style="width: 18px; height: 18px;">
-                                                                <IconButton [Title]="'Delete'" [Name]="'Delete'" [IsSmall]="true" (click)="DeleteLineClicked(item)"></IconButton>
-                                                            </div>
-                                                        </td>
-                                                        <td style="width:2px;">
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width:18px;">
-                                                            <div style="width: 18px; height: 18px;">
-                                                                <IconButton [Title]="'Edit'" [Name]="'Edit'" [IsSmall]="true" (click)="EditLineClicked(item)"></IconButton>
+                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteLineClicked(item)"></IconButton>
                                                             </div>
                                                         </td>
                                                         <td>

@@ -81,16 +81,7 @@ export class GLAccountList {
 	DeductionTypeId: string;
 	ConsolidationVat: string;
 	IsEquipmentVendor: boolean;
-	ExcludeFromDeductionReport: boolean;
-	DeductionTypeName: string;
-	DeductionFileTypeCode: string;
-	DeductionFileTypeName: string;
-	AssessingOfficeName: string;
-	DeductionTypeEnglishName: string;
-	TotalOpenChequesInLocalCur: number;
-	AutomaticReconcileLocalName: string;
-	ReconcileMethodLocalName: string;
-	TotFutureOpenChequesInLocalCur: number;
+	IsPartOfDeductionReport: boolean;
 	
 }
  

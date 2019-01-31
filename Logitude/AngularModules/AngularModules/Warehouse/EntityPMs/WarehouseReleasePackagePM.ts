@@ -162,16 +162,6 @@ export class WarehouseReleasePackagePM {
     public set GrossWeightUnitCode(newValue: string) { if (this.grossWeightUnitCode != newValue) { this.grossWeightUnitCode = newValue; this.MarkAsDirty("GrossWeightUnitCode"); } }
        
 	 
-    private volumetricWeight: number;
-    public get VolumetricWeight() { return this.volumetricWeight; }
-    public set VolumetricWeight(newValue: number) { if (this.volumetricWeight != newValue) { this.volumetricWeight = newValue; this.MarkAsDirty("VolumetricWeight"); } }
-       
-	 
-    private chargeableWeightUnitCode: string;
-    public get ChargeableWeightUnitCode() { return this.chargeableWeightUnitCode; }
-    public set ChargeableWeightUnitCode(newValue: string) { if (this.chargeableWeightUnitCode != newValue) { this.chargeableWeightUnitCode = newValue; this.MarkAsDirty("ChargeableWeightUnitCode"); } }
-       
-	 
 
     public OldEntityPM: WarehouseReleasePackagePM;
 	

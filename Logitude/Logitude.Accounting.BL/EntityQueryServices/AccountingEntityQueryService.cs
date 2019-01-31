@@ -1,5 +1,4 @@
-﻿using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,21 +45,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return entityPM;
         }
-
-
-        public IQueryable<AccountingEntityPM> GetAccountingEntityPMsByTenant(int tenant)
-        {
-            IQueryable<AccountingEntity> pocos = repository.GetAccountingEntities();
-            IQueryable<AccountingEntityPM> query = from a in pocos
-                                           select new AccountingEntityPM()
-                                           {
-                                               Code = a.Code,
-                                               EnglishName = a.EnglishName,
-                                               LocalName = a.LocalName,
-                                           };
-            return query;
-        }
-
 
     }
 }

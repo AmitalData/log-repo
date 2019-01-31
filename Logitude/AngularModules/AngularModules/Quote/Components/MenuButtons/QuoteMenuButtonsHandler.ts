@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {NewQuoteComponentArgs, QuoteEventNotesArgs} from '../../Args';
 import {QuotePM} from '../../EntityPMs/QuotePM';
 import {QuoteUtilities} from '../../Utilities/QuoteUtilities';
@@ -335,7 +335,7 @@ export class QuoteMenuButtonsHandler {
         if (this.isValid) {
             if (this.EntityPM.QuoteTypeCode != "A") {
                 var window = new MessageWindow();
-                window.Show(TextCodeTranslator.Translate("Quote.M.BuildShipmentMessage"));
+                window.Show("Build Shipment is Available Only if Ad-hoc Quotes");
 
                 this.isButtonClicked = false;
             }
@@ -353,7 +353,7 @@ export class QuoteMenuButtonsHandler {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 350;
                         logitudeWindow.Height = 170;
-                        logitudeWindow.Title = TextCodeTranslator.Translate("Quote.B.BuildShipment");
+                        logitudeWindow.Title = "Build Shipment";
                         logitudeWindow.Show('./Quote/Components/MenuButtons/ApproveBuildShipmentComponent');
 
                         logitudeWindow.ComponentLoaded.subscribe(comp => {
@@ -498,7 +498,7 @@ export class QuoteMenuButtonsHandler {
         logWindow.Width = 960;
         logWindow.Height = 570;
         logWindow.WindowArgs = args;
-        logWindow.Title = TextCodeTranslator.Translate("Quote.B.CopyQuote");
+        logWindow.Title = "Copy Quote";
         logWindow.Show('./Quote/Components/NewEntity/NewQuoteComponent');
 
         logWindow.WindowClosed.subscribe(s => {
@@ -512,13 +512,13 @@ export class QuoteMenuButtonsHandler {
         if (this.isValid) {
             var args = new QuoteEventNotesArgs();
             args.EntityPM = this.EntityPM;
-            args.NotesHeader = TextCodeTranslator.Translate("Quote.F.Notes");
+            args.NotesHeader = "Sent To Customer Notes";
 
             var logWindow = new LogitudeWindow();
             logWindow.WindowArgs = args;
             logWindow.Width = 450;
             logWindow.Height = 300;
-            logWindow.Title = TextCodeTranslator.Translate("Quote.B.SetAsSent");
+            logWindow.Title = "Set As Sent To Customer";
             logWindow.Show('./Quote/Components/MenuButtons/QuoteEventNotesComponent');
 
             logWindow.WindowClosed.subscribe(s => {
@@ -546,21 +546,21 @@ export class QuoteMenuButtonsHandler {
                             var window = new MessageWindow();
                             window.Width = 450;
                             window.Height = 180;
-                            window.Title = TextCodeTranslator.Translate("Quote.B.CancelQuote");
-                            window.Show(TextCodeTranslator.Translate("Quote.M.QuoteCancelMessage"));
+                            window.Title = "Cancel Quote";
+                            window.Show("Quote cannot be Cancelled, since it has connected Shipments !");
                             this.isButtonClicked = false;
                         }
 
                         else {
                             var args = new QuoteEventNotesArgs();
                             args.EntityPM = this.EntityPM;
-                            args.NotesHeader = TextCodeTranslator.Translate("Quote.F.Notes");
+                            args.NotesHeader = "Cancel Quote Notes";
 
                             var logWindow = new LogitudeWindow();
                             logWindow.WindowArgs = args;
                             logWindow.Width = 450;
                             logWindow.Height = 300;
-                            logWindow.Title = TextCodeTranslator.Translate("Quote.B.CancelQuote");
+                            logWindow.Title = "Cancel Quote";
                             logWindow.Show('./Quote/Components/MenuButtons/QuoteEventNotesComponent');
 
                             logWindow.WindowClosed.subscribe(s => {
@@ -584,13 +584,13 @@ export class QuoteMenuButtonsHandler {
         if (this.isValid) {
             var args = new QuoteEventNotesArgs();
             args.EntityPM = this.EntityPM;
-            args.NotesHeader = TextCodeTranslator.Translate("Quote.F.Notes");
+            args.NotesHeader = "Reactivate Quote Notes";
 
             var logWindow = new LogitudeWindow();
             logWindow.WindowArgs = args;
             logWindow.Width = 450;
             logWindow.Height = 300;
-            logWindow.Title = TextCodeTranslator.Translate("Quote.B.ReactivateQuote");
+            logWindow.Title = "Reactivate Quote";
             logWindow.Show('./Quote/Components/MenuButtons/QuoteEventNotesComponent');
 
             logWindow.WindowClosed.subscribe(s => {
@@ -615,19 +615,19 @@ export class QuoteMenuButtonsHandler {
              
                     if (result) {
                         var window = new MessageWindow();
-                        window.Show(TextCodeTranslator.Translate("Quote.M.QuoteReturnMessage"));
+                        window.Show("Quote can't be returned to draft since it is connected to a shipment");
                         this.isButtonClicked = false;
                     }
                     else {
                         var args = new QuoteEventNotesArgs();
                         args.EntityPM = this.EntityPM;
-                        args.NotesHeader = TextCodeTranslator.Translate("Quote.F.Notes");
+                        args.NotesHeader = "Return Quote To Draft Notes";
 
                         var logWindow = new LogitudeWindow();
                         logWindow.WindowArgs = args;
                         logWindow.Width = 450;
                         logWindow.Height = 300;
-                        logWindow.Title = TextCodeTranslator.Translate("Quote.B.ReturnToDraft");
+                        logWindow.Title = "Return Quote To Draft";
                         logWindow.Show('./Quote/Components/MenuButtons/QuoteEventNotesComponent');
 
                         logWindow.WindowClosed.subscribe(s => {
@@ -651,13 +651,13 @@ export class QuoteMenuButtonsHandler {
         if (this.isValid) {
             var args = new QuoteEventNotesArgs();
             args.EntityPM = this.EntityPM;
-            args.NotesHeader = TextCodeTranslator.Translate("Quote.F.Notes");
+            args.NotesHeader = "Quote Accepted Notes";
 
             var logWindow = new LogitudeWindow();
             logWindow.WindowArgs = args;
             logWindow.Width = 450;
             logWindow.Height = 300;
-            logWindow.Title = TextCodeTranslator.Translate("Quote.B.Accept");
+            logWindow.Title = "Accept Quote";
             logWindow.Show('./Quote/Components/MenuButtons/QuoteEventNotesComponent');
 
             logWindow.WindowClosed.subscribe(s => {
@@ -677,14 +677,14 @@ export class QuoteMenuButtonsHandler {
         if (this.isValid) {
             var args = new QuoteEventNotesArgs();
             args.EntityPM = this.EntityPM;
-            args.NotesHeader = TextCodeTranslator.Translate("Quote.F.Notes");
+            args.NotesHeader = "Quote Declined Notes";
             args.ShowClosingReason = true;
 
             var logWindow = new LogitudeWindow();
             logWindow.WindowArgs = args;
             logWindow.Width = 450;
             logWindow.Height = 300;
-            logWindow.Title = TextCodeTranslator.Translate("Quote.B.Decline");
+            logWindow.Title = "Decline Quote";
             logWindow.Show('./Quote/Components/MenuButtons/QuoteEventNotesComponent');
 
             logWindow.WindowClosed.subscribe(s => {
@@ -722,7 +722,7 @@ export class QuoteMenuButtonsHandler {
         logWindow.Width = window.innerWidth - 150;
         logWindow.Height = window.innerHeight - 150;
         logWindow.IsShowCloseButton = true;
-        logWindow.Title = TextCodeTranslator.Translate("Quote.B.Quotation");
+        logWindow.Title = "Quotation";
         logWindow.Show('./QuoteModules/QuoteOthers/Components/Quotation/QuotationComponent');
 
         logWindow.WindowClosed.subscribe(s => {

@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {Component, ViewChildren, QueryList, ViewChild, ViewContainerRef, Output, EventEmitter} from '@angular/core';
 import {InvoiceDomainService, CreditorsClass} from '../../../Invoice/Services/InvoiceDomainService';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
@@ -33,9 +33,6 @@ export class AccountPayablesComponent {
     public TenantPM: TenantPM;
     public CreditorsObsList: CreditorsClass[] = [];
     public myViewsQueryVisibility = false;
-    public APInvoiceErrorInTransferVisibility: boolean = false;
-    public APPaymentErrorInTransferVisibility: boolean = false;
-
     public PayablesChartId: string = "PayablesChartId";
     FilterList: DashBoardFilters[] = [];
     SelectedItem: any;
@@ -156,8 +153,6 @@ export class AccountPayablesComponent {
 
     InitComponent() {
         this.LoadAllScreenData();
-        this.APInvoiceErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "ErrorInTransfer")) ? true : false;
-        this.APPaymentErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "ErrorInTransfer")) ? true : false;
     }
 
     LoadAllScreenData() {
@@ -294,8 +289,6 @@ export class AccountPayablesComponent {
     public APPaymentsDraftsCount: string;
     public APPaymentsOpenedCount: string;
 
-    public APInvoiceErrorInTransferCount: string
-    public APPaymentErrorInTransferCount: string;
     private invoiceDomainService: InvoiceDomainService;
     LoadQueriesCounts() {
         if (this.invoiceDomainService == null) {
@@ -308,9 +301,6 @@ export class AccountPayablesComponent {
                 this.APInvoicesUnpaidCount = myResult.APInvoicesUnpaidCount > 1000 ? "1000+" : myResult.APInvoicesUnpaidCount.toString();
                 this.APPaymentsDraftsCount = myResult.APPaymentsDraftsCount > 1000 ? "1000+" : myResult.APPaymentsDraftsCount.toString();
                 this.APPaymentsOpenedCount = myResult.APPaymentsOpenedCount > 1000 ? "1000+" : myResult.APPaymentsOpenedCount.toString();
-                this.APInvoiceErrorInTransferCount = myResult.ARInvoicesFailedCount > 1000 ? "1000+" : myResult.APInvoicesFailedCount.toString();
-                this.APPaymentErrorInTransferCount = myResult.ARPaymentFailedCount > 1000 ? "1000+" : myResult.APPaymentFailedCount.toString();
-
             }
         });
     }

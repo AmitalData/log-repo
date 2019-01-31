@@ -1,4 +1,4 @@
-import {Component, AfterViewInit} from '@angular/core';
+﻿import {Component, AfterViewInit} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {CardList} from '../../../../../Common/EntityLists/CardList';
@@ -133,13 +133,13 @@ export class AWBPartnersTabComponent extends BaseComponent
             isAgentFieldEnabled = this.EntityPM.ViaColoader ? true : false;
         }
 
-        if (SessionLocator.TenantManagementJS.AWBMessagesCCSTypeCode == "GLSHK") {
+        if (SessionLocator.TenantManagementPM.AWBMessagesCCSTypeCode == "GLSHK") {
             this.ViaColoaderIsVisible = true;
             this.ViaColoaderHeader = TextCodeTranslator.Translate("Shipment.S.Partners.IssuingCarrierColoader");
         }
 
         else {
-            if (SessionLocator.TenantManagementJS.PackageCode != "BUBK" && SessionLocator.TenantManagementJS.PackageCode != "EAWB" && SessionLocator.TenantManagementJS.PackageCode != "EACR") {
+            if (SessionLocator.TenantManagementPM.PackageCode != "BUBK" && SessionLocator.TenantManagementPM.PackageCode != "EAWB" && SessionLocator.TenantManagementPM.PackageCode != "EACR") {
                 this.ViaColoaderIsVisible = true;
                 this.ViaColoaderHeader = TextCodeTranslator.Translate("Shipment.S.Partners.IssuingCarrierColoader");
             }

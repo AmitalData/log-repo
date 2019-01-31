@@ -19,10 +19,9 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public DateTime ValueDate { get; set; }
         public bool IsAllIN { get; set; }
         public bool IsChargeBySteps { get; set; }
-        public double? CostMinAmount { get; set; }
         public double? CostMaxAmount { get; set; }
+        public double? CostMinAmount { get; set; }
         public double? SaleMinAmount { get; set; }
-        public double? SaleMaxAmount { get; set; }
 
         // Cost        
         public string CostCurrencyId { get; set; }

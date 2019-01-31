@@ -26,8 +26,6 @@ namespace Logitude.Accounting.Data.EntityLists
        public DateTime? NextDueDate  { get; set; }
        [DataMember]
        public decimal? TotalOpenChequesInLocalCur  { get; set; }
-       [DataMember]
-       public decimal? TotFutureOpenChequesInLocalCur  { get; set; }
    }
 
 }

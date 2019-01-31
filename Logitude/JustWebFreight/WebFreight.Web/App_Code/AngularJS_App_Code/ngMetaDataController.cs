@@ -636,7 +636,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             //SecurityUtility.AuthenticationOnTenant(tenant);
             QueryRepository queryRepository = new QueryRepository(0);
             QueryQuery queryQuery = new QueryQuery(queryRepository);
-            var queryFirst = queryQuery.GetQueries_Login(tenant, UserId)
+            var queryFirst = queryQuery.GetQueries(tenant, UserId)
                 //.Where(x => x.ObjectTableId == objecttableid)
                 .OrderBy(d => d.IndexOrder)
                 .ToList(); // .FirstOrDefault();
@@ -647,16 +647,18 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "getquerycolumnpms/{tenant}/{queryid}/{objecttableid}/{userid}")]
         public List<QueryColumnPM> GetQueryColumnPMs(int tenant, string queryid, string objecttableid, string userid)
         {
+            //SecurityUtility.AuthenticationOnTenant(tenant);
             QueryColumnRepository queryColumnRepository = new QueryColumnRepository(tenant);
             QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRepository);
-            var querycolumns = queryColumnQuery.GetQueryColumnsByQueryIdAndUser(tenant, userid, queryid);
+            //var querycolumns = queryColumnQuery.GetQueryColumnsByQueryIdAndUserAngular(tenant, userid, queryid);//.ToList();
+            var querycolumns = queryColumnQuery.GetQueryColumnsByQueryIdAndUser(tenant, userid, queryid);//.ToList();
             if (querycolumns.Count() > 0)
             {
                 return querycolumns.OrderBy(a => a.IndexOrder).ToList();
             }
             else
             {
-                var querycolumns2 = queryColumnQuery.GetQueryColumnsByQueryIdAndUserAngular(0, null, queryid);
+                var querycolumns2 = queryColumnQuery.GetQueryColumnsByQueryIdAndUserAngular(0, null, queryid);//.ToList();
                 return querycolumns2.OrderBy(a => a.IndexOrder).ToList();
             }
         }

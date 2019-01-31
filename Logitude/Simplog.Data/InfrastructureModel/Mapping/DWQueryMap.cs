@@ -16,7 +16,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
         {
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
-            //this.Property(t => t.DWObjectTableCode).IsRequired().HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.DWObjectTableCode).IsRequired().HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.SQLString).IsMaxLength().IsUnicode(true);
             this.Property(t => t.CreatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.UpdateByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
@@ -27,7 +27,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.ToTable("DWQueries");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
-            //this.Property(t => t.DWObjectTableCode).HasColumnName("DWObjectTableCode");
+            this.Property(t => t.DWObjectTableCode).HasColumnName("DWObjectTableCode");
             this.Property(t => t.SQLString).HasColumnName("SQLString");
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
             this.Property(t => t.UpdateByUserId).HasColumnName("UpdateByUserId");
@@ -35,7 +35,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.UpdatedDate).HasColumnName("UpdatedDate");
 
 
-            //this.HasRequired(t => t.DWObjectTable).WithMany().HasForeignKey(d => d.DWObjectTableCode);
+            this.HasRequired(t => t.DWObjectTable).WithMany().HasForeignKey(d => d.DWObjectTableCode);
             this.HasRequired(t => t.CreatedBy).WithMany().HasForeignKey(d => d.CreatedByUserId);
             this.HasRequired(t => t.UpdateBy).WithMany().HasForeignKey(d => d.UpdateByUserId);
 

@@ -4,7 +4,7 @@ import {SharedManifestStarted} from './Components/SharedManifestStarted';
 import {SharedManifestAdditionalComponent} from './Components/SharedManifestAdditionalComponent';
 import {SharedManifestsWorkSpaces} from './Components/SharedManifestsWorkSpaces';
 import {SharedManifestHeaderComponent} from './Components/SharedManifestHeaderComponent';
-import {SharedManifestEditAgentComponent} from './Components/SharedManifestEditAgentComponent';
+
 export const Components =
     [
         SharedManifestComponent,
@@ -12,7 +12,6 @@ export const Components =
         SharedManifestAdditionalComponent,
         SharedManifestHeaderComponent,
         SharedManifestsWorkSpaces,
-        SharedManifestEditAgentComponent,
     ];
 
 export class ModuleDeclarations {
@@ -26,8 +25,6 @@ export class ModuleDeclarations {
             case "SharedManifestAdditionalComponent": { myResult = SharedManifestAdditionalComponent; break }
             case "SharedManifestHeaderComponent": { myResult = SharedManifestHeaderComponent; break }
             case "SharedManifestsWorkSpaces": { myResult = SharedManifestsWorkSpaces; break }
-            case "SharedManifestEditAgentComponent": { myResult = SharedManifestEditAgentComponent; break }
-                
         }
 
         return myResult;

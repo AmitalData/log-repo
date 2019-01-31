@@ -31,11 +31,6 @@ export class LoginComponent {
     PasswordExpirationDateMessage: string;
     PasswordExpirationDateMessage2: string;
 
-    IsShowAreaCaptcha: boolean;
-    CaptchaImageUrl: string;
-    CaptchaTextValue: string;
-    CaptchaKey: string;
-
     public IsShowPasswordExpirationDateArea: boolean = false;
 
     //private _objectTableRulePMService: ObjectTableRulePMService = new ObjectTableRulePMService();
@@ -253,22 +248,44 @@ export class LoginComponent {
                 this.loginService.CurrentTenant = userData.CurrentTenant;
                 this.loginService.LoggedUserId = SessionInfo.LoggedUserId;
                 this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
+
+                //this.loginService.GetLoggedUser().subscribe(myResult => {
+                //    this.loginService.GetTenantManagement().subscribe(myResult2 => {
+
+                //        SessionInfo.LoggedUserPM = myResult;
+                //        InfraSettings.TenantManagementPM = myResult2;
+
+                //        if (SessionInfo.LoggedUserPM.ExpirationDate != null && DateTool.GetDateParts(SessionInfo.LoggedUserPM.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
+                //            this.Blocking.emit("user");
+                //        }
+
+                //        else {
+                //            this.CheckTenantBlocking(userData);
+                //        }
+                //    });
+                //});
             }
         }
         window.sessionStorage.setItem("userdata", "");
     }
+    //OneUsePasswordMethod() {
+    //    this.loginService.GetOneUsePassword().subscribe(userData => {
 
-    onEmailBlur(email) {
-        if (email != this.Email) {
-            this.IsShowAreaCaptcha = false;
-            this.CaptchaKey = null;
-            this.CaptchaTextValue = null;
-            if (this.errorMessage == "Please re-enter the characters you see in the image above") {
-                this.errorMessage = "";
-            }
+    //        if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
+    //            var message = "Can't use this key (" + SessionLocator.ExternalParams.OneTimePasswordId + ") again because you used it before ";
+    //            if (userData && userData.ExceptionMessage) message = userData.ExceptionMessage;
+    //            alert(message);
+    //            document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
+    //            SessionLocator.ExternalParams.OneTimePasswordId = null;
+    //        }
+    //        else {
+    //            this.StartLoading(userData);
+    //        }
+    //        this.HidePendingLoading = true;
+    //    });
 
-        }
-    }
+    //}
+
 
     PasswordExpirationButtomClicked(type: string) {
 
@@ -329,23 +346,13 @@ export class LoginComponent {
 
 
     LoginClicked() {
-
-        if (!this.Email || !this.Password) {
-            this.errorMessage = "Login failed! invalid user name or password.";
-            return; 
-        }
-
-        if (this.IsShowAreaCaptcha && !this.CaptchaTextValue) {
-            this.errorMessage = "Please re-enter the characters you see in the image above";
-            return;
-        }
-
         if (IsBrowserSupported() == false) {
             alert("This Browser is not supported in HTML5 version, please use Chrome, Firefox or Opera.");
         }
         else {
             this.SaveDataToCookie();
             this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
+            if (this.Email != null && this.Password != null) {
                 this.ShowLoadingIndicator = true;
                 this.LoginParams = {
                     Email: this.Email,
@@ -359,14 +366,12 @@ export class LoginComponent {
                     IsAngularLogin: true,
                     MobileVersion: "",
                     ClientType: "Web",
-                    CaptchaKey: this.CaptchaKey,
-                    CaptchaCode: this.CaptchaTextValue,
 
                 };
 
                 this.HidePendingLoading = false;
                 this.PostUserValidation(this.LoginParams);
-            
+            }
         }
     }
 
@@ -376,7 +381,6 @@ export class LoginComponent {
 
     ShowTenantList: boolean = false;
     errorMessage: string = "";
-
     PostUserValidation(loginParameters) {
         this.errorMessage = "";
         this.loginService.PostUserValidation(loginParameters).subscribe(userData => {
@@ -384,16 +388,11 @@ export class LoginComponent {
             if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
                 this.LoginFailed = true;
                 this.HidePendingLoading = true;
-                
-                this.CaptchaKey = userData ? userData.CaptchaKey:"";
 
                 if (userData && userData.ExceptionMessage) {
                     alert(userData.ExceptionMessage);
                 }
-
-
-              
-                 if (userData.MustChangePassword) {
+                else if (userData.MustChangePassword) {
                     SessionInfo.LoggedUserEmail = userData.UserName;
                     if (SessionInfo.MainLocation) {
                         SessionInfo.MainLocation.clear();
@@ -415,31 +414,26 @@ export class LoginComponent {
                     this.IsShowPasswordExpirationDateArea = true;
                 }
                 else {
-                    this.errorMessage = "";
-
-                     if (userData.InValidCaptcha) {
-                         if (this.IsShowAreaCaptcha) {
-                             this.CaptchaTextValue = "";
-                         }
-
-                         this.IsShowAreaCaptcha = true;
-                         this.CaptchaImageUrl = userData.CaptchaImage;
-                     }
-
-       
-                         this.errorMessage = "";
-
-                          if (userData.InValidCaptcha) this.errorMessage = "Please re-enter the characters you see in the image above";
-                          if (userData.IpRestricted) this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";//
-                         if (userData.InActive) this.errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                         if (userData.Unlicensed) this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
-                       
-                     if (userData.InValidMailOrPassword) this.errorMessage = "Login failed! invalid user name or password.";
-            
-                     
+                    this.errorMessage = "Login failed! invalid user name or password.";
 
 
-             
+                    if (userData.IpRestricted) {
+
+                        this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";//
+
+                    }
+
+                    if (userData.IsLocked) {
+
+                        this.errorMessage = "Your account has been locked out!" + " please try again after 30 minutes.";
+                    }
+                    if (userData.InActive) {
+                        this.errorMessage = "Your account has been deactivated!" + " please contact your administrator.";
+                    }
+                    if (userData.Unlicensed) {
+
+                        this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
+                    }
                 }
 
             }
@@ -475,8 +469,6 @@ export class LoginComponent {
                 IsAngularLogin: true,
                 MobileVersion: "",
                 ClientType: "Web",
-                CaptchaKey: this.CaptchaKey,
-                CaptchaCode: this.CaptchaTextValue,
             };
 
             this.loginService.CurrentTenant = this.Tenant;
@@ -494,56 +486,49 @@ export class LoginComponent {
     }
     PostLoginData() {
         this.loginService.PostLoginData(this.LoginParams).subscribe(userData => {
+            var data = JSON.stringify(userData);
+            window.sessionStorage.setItem("userdata", data);
+            var mypageUrl = window.location.href;
+            var AngularURL = "";
+            var urlMenu = "";
+            //userData.KeepUserLoggedIn == true &&
+            if (userData.Token && this.IsHaveTenantInUrl) {
+                window.localStorage.setItem("Token_" + userData.CurrentTenant, userData.Token);
+            }
 
-            if (userData && !userData.HasError) {
-                var data = JSON.stringify(userData);
+            var pageUrl = window.location.href;
 
-                window.sessionStorage.setItem("userdata", data);
-                var mypageUrl = window.location.href;
-                var AngularURL = "";
-                var urlMenu = "";
-                //userData.KeepUserLoggedIn == true &&
-                if (userData.Token && this.IsHaveTenantInUrl) {
-                    window.localStorage.setItem("Token_" + userData.CurrentTenant, userData.Token);
+
+            var externalTenant = null;
+
+            if (pageUrl) {
+                var args = pageUrl.split('&');
+                if (args[1] && args[1].indexOf('Tenant=') != -1) {
+                    externalTenant = args[1].split('=')[1];
                 }
-
-                var pageUrl = window.location.href;
-
-
-                var externalTenant = null;
-
-                if (pageUrl) {
-                    var args = pageUrl.split('&');
-                    if (args[1] && args[1].indexOf('Tenant=') != -1) {
-                        externalTenant = args[1].split('=')[1];
-                    }
-                }
-
-
-                if (userData.HtmlVersion) {
-                    var version = userData.HtmlVersion;
-                    AngularURL = SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
-                }
-                else {
-                    AngularURL = SessionInfo.GetLogitudeURL() + "Angular/index.html";
-                }
-
-
-                if (mypageUrl && mypageUrl.indexOf("Menu=") > -1) {
-                    urlMenu = mypageUrl.split("Menu=")[1];
-                    AngularURL += ("?Menu=" + urlMenu);
-
-                    if (externalTenant) {
-                        AngularURL = AngularURL.replace("&Tenant=" + externalTenant, "");
-                    }
-
-                }
-
-                document.location.href = AngularURL;
             }
 
 
+            if (userData.HtmlVersion) {
+                var version = userData.HtmlVersion;
+                AngularURL = SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
+            }
+            else {
+                AngularURL = SessionInfo.GetLogitudeURL() + "Angular/index.html";
+            }
 
+
+            if (mypageUrl && mypageUrl.indexOf("Menu=") > -1) {
+                urlMenu = mypageUrl.split("Menu=")[1];
+                AngularURL += ("?Menu=" + urlMenu);
+
+                if (externalTenant) {
+                    AngularURL = AngularURL.replace("&Tenant=" + externalTenant, "");
+                }
+
+            }
+
+            document.location.href = AngularURL;
 
         });
     }
@@ -601,10 +586,430 @@ export class LoginComponent {
         document.location.href = SessionInfo.GetLogitudeURL() + "Login.aspx";
     }
 
+    //ForgotPasswordClicked() {
+
+    //}
+    //LoadClosedTablesToWindow(CurrentTenant: number) {
+
+    //    this.IndexedDbService.InitializeIndexedDB().subscribe(response => {
+
+    //        InfraSettings.IndexedDbService = IndexedDbService;
+
+    //        this.loginService.AuthHeader = this.authHeader;
+    //        this.loginService.CurrentTenant = CurrentTenant;
+    //        this.loginService.LoggedUserId = SessionInfo.LoggedUserId;
+    //        this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
+
+    //        // UserPM
+    //        this.loginService.GetLoggedUser().subscribe(myResult => {
+    //            var myUserPMService = new UserPMService();
+    //            SessionInfo.LoggedUserPM = myUserPMService.MapJsonToEntityPM(myResult);
+
+    //            if (SessionInfo.LoggedUserPM) {
+    //                this.loginService.LoggedUserId = SessionInfo.LoggedUserPM.Id;
+    //                SessionInfo.LoggedUserId = SessionInfo.LoggedUserPM.Id;
+    //            }
+
+    //            this.IncreaseProgressBar();
+    //            //1
+
+    //            // TenantPM
+    //            this.loginService.GetLoggedTenant().subscribe(myResult => {
+    //                var myTenantPMService = new TenantPMService();
+    //                InfraSettings.TenantPM = myTenantPMService.MapJsonToEntityPM(myResult);
+    //                this.IncreaseProgressBar();
+    //                //2
+    //            });
+
+    //            // LastFilters
+    //            this.loginService.GetLastFilters().subscribe(myResult => {
+    //                LastFilterClass.MapJSON(myResult);
+    //                this.IncreaseProgressBar();
+    //                //3
+    //            });
+
+    //            // TenantManagementPM
+    //            this.loginService.GetTenantManagement().subscribe(myResult => {
+    //                var myTenantManagementPMService = new TenantManagementPMService();
+    //                InfraSettings.TenantManagementPM = myTenantManagementPMService.MapJsonToEntityPM(myResult);
+    //                this.IncreaseProgressBar();
+    //                //4
+
+    //                this.loginService.GetPrivateLableById(SessionLocator.TenantManagementPM.PrivateLabelId).subscribe(Result => {
+    //                    SessionLocator.PrivateLableSettings = Result;
+    //                    this.IncreaseProgressBar();
+    //                    AppTool.SetFavIconAndTitle();
+    //                    //5
+    //                });
+    //            });
+
+    //            this.loginService.GetFeatures().subscribe(myResult => {
+    //                FeatureLocator.MapFeatures(myResult);
+    //                this.IncreaseProgressBar();
+    //                //6
+
+
+    //                // Ayman: please don't modify this (24)
+    //                if (FeatureLocator.HasFeaturePermession("CreditLimitSetting", "READ")) {
+    //                    var myCreditLimitSettingPMService = new CreditLimitSettingPMService();
+    //                    myCreditLimitSettingPMService.get(CurrentTenant + "").subscribe((myResponse: ServiceResponse) => {
+    //                        SessionLocatorrrrr.CreditLimitSettingPM = myResponse.Result;
+    //                        this.IncreaseProgressBar();
+    //                        //24
+    //                    });
+    //                }
+
+    //                else {
+    //                    this.IncreaseProgressBar();
+    //                    //24
+    //                }
+    //            });
+
+    //            this.loginService.GetQueries().subscribe(myResult => {
+    //                window.Queries = myResult;
+    //                this.IncreaseProgressBar();
+    //                //7
+    //            });
+
+    //            this.loginService.GetStatuses().subscribe(myResult => {
+    //                window.Statuses = myResult;
+    //                this.IncreaseProgressBar();
+    //                //8
+    //            });
+
+    //            this.loginService.GetPreDefinedFilters().subscribe(myResult => {
+    //                window.PreDefinedFilters = myResult;
+    //                this.IncreaseProgressBar();
+    //                //9
+    //            });
+
+    //            this.loginService.GetTenantTranslations().subscribe(myResult => {
+    //                window.TenantTranslations = myResult;
+    //                this.IncreaseProgressBar();
+    //                //10
+    //            });
+
+    //            this.loginService.GetTransportModes().subscribe(myResult => {
+    //                window.TransportModes = myResult;
+    //                this.IncreaseProgressBar();
+    //                //11
+    //            });
+
+    //            this.loginService.GetDirections().subscribe(myResult => {
+    //                window.Directions = myResult;
+    //                this.IncreaseProgressBar();
+    //                //12
+    //            });
+
+    //            this.loginService.GetMenusTables().subscribe(myResult => {
+    //                window.MenusTables = myResult;
+    //                this.IncreaseProgressBar();
+    //                //13
+    //            });
+
+    //            this.loginService.GetObjectTables().subscribe(myResult => {
+    //                window.ObjectTables = myResult;
+    //                this.IncreaseProgressBar();
+    //                //14
+    //            });
+
+    //            this.loginService.GetScreens().subscribe(myResult => {
+    //                window.Screens = myResult;
+    //                this.IncreaseProgressBar();
+    //                //15
+    //            });
+
+    //            this.loginService.GetScreenFields().subscribe(myResult => {
+    //                window.ScreenFields = myResult;
+    //                this.IncreaseProgressBar();
+    //                //16
+    //            });
+
+    //            this.loginService.GetObjectTableTabs().subscribe(myResult => {
+    //                window.ObjectTableTabs = myResult;
+    //                this.IncreaseProgressBar();
+    //                //17
+    //            });
+
+    //            this.loginService.GetAccountingSetting().subscribe(myResult => {
+    //                var myAccountingSettingPMService = new AccountingSettingPMService();
+    //                if (myResult) {
+    //                    InfraSettings.AccountingSettingPM = myAccountingSettingPMService.MapJsonToEntityPM(myResult);
+    //                }
+    //                this.IncreaseProgressBar();
+    //                //18
+
+    //                var myAccountingSystemCode = null;
+    //                if (InfraSettings.AccountingSettingPM) {
+    //                    myAccountingSystemCode = InfraSettings.AccountingSettingPM.AccountingSystemCode;
+    //                }
+
+    //                this.loginService.GetAccountingSystem(myAccountingSystemCode).subscribe(myResult2 => {
+    //                    SessionLocator.AccountingSystemPM = myResult2;
+    //                    this.IncreaseProgressBar();
+    //                    //19
+    //                });
+    //            });
+
+    //            this.loginService.GetGlobalSetting().subscribe(myResult => {
+    //                SessionLocatorrrrr.GlobalSetting = myResult;
+    //                this.IncreaseProgressBar();
+    //                AppTool.SetFavIconAndTitle();
+    //                //20
+    //            });
+
+    //            this.loginService.GetTenantSetting().subscribe(myResult => {
+    //                SessionLocator.TenantSettings = myResult;
+    //                this.IncreaseProgressBar();
+    //                //21
+    //            });
+
+    //            this.loginService.GetTips().subscribe(myResult => {
+    //                window.Tips = myResult;
+    //                this.IncreaseProgressBar();
+    //                //22
+    //            });
+
+    //            this.loginService.GetTipsVisibilities().subscribe(myResult => {
+    //                window.TipsVisibilities = myResult;
+    //                this.IncreaseProgressBar();
+    //                //23
+    //            });
+
+    //            if (!SessionLocator.UseCachedData) {
+
+    //                this.loginService.GetObjectFields().subscribe(myResult => {
+
+    //                    if (!SessionLocator.UseCachedData) {
+    //                        window.ObjectFields = myResult;
+    //                    }
+
+    //                    this.IncreaseProgressBar();
+    //                });
+
+    //                this.loginService.GetTextCodesTranslations().subscribe(myResult => {
+
+    //                    if (!SessionLocator.UseCachedData) {
+    //                        window.TextCodesTranslations = myResult;
+    //                    }
+
+    //                    window.TranslationsCache = [];
+    //                    this.IncreaseProgressBar();
+    //                });
+    //            }
+
+    //            else {
+    //                this.loginService.GetTenantTextCode().subscribe(myResult => {
+    //                    if (myResult) {
+    //                        window.TextCodes = window.TextCodes.concat(myResult);
+    //                        this.IncreaseProgressBar();
+    //                        //25
+    //                    }
+    //                });
+    //            }
+
+    //            CachedDataManager.CheckSystemMetadataLastUpdate().subscribe(response => {
+    //                this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
+    //                    this.IncreaseProgressBar();
+    //                    //26
+    //                });
+    //            });
+    //        });
+    //    });
+
+
+    //    this._objectTableRulePMService.getAllByTenant(CurrentTenant).subscribe(response => {
+    //        if (response) {
+    //            window.ObjectTableRules = response.Result;
+    //        }
+
+    //        this.IncreaseProgressBar();
+    //        //27
+    //    });
+
+    //    this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe(response => {
+    //        if (response) {
+    //            window.ObjectTableRuleFields = response.Result;
+    //        }
+
+    //        this.IncreaseProgressBar();
+    //        //28
+    //    });
+
+    //    this._userLastLoginPMService.GetUserLastLogin(SessionInfo.LoggedUserId, CurrentTenant).subscribe(response => {
+    //        if (!response.HasError && response.Result) {
+
+    //            var lastloginPM: UserLastLoginPM = response.Result;
+
+    //            var computerId: string = SessionLocator.GetComputerIdFromStorage();
+    //            if (AppTool.IsNullOrEmpty(computerId)) {
+    //                computerId = Guid.newGuid();
+    //                SessionLocator.StoreLogedComputerId(computerId);
+    //            }
+
+    //            lastloginPM.ComputerId = computerId;
+    //            this._userLastLoginPMService.update(lastloginPM).subscribe(response => {
+    //                this.IncreaseProgressBar();
+    //                //29
+    //            });
+    //        }
+
+    //        else {
+    //            this.IncreaseProgressBar();
+    //            //29
+    //        }
+    //    });
+
+    //    this.loginService.GeLoggedTenantObjectFields().subscribe(response => {
+    //        if (response) {
+    //            window.ObjectFields = window.ObjectFields.concat(response);
+    //        }
+
+    //        this.IncreaseProgressBar();
+    //        //30
+    //    });
+
+
+    //    this.loginService.GetTenantLanguageTranslations().subscribe(myResult => {
+    //        window.TenantLanguageTranslations = myResult;
+    //        this.IncreaseProgressBar();
+    //        //31
+    //    });
+
+    //    //this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe(myResult => {
+    //    //    window.ObjectTableRulePMs = myResult;
+    //    //    this.IncreaseProgressBar();
+    //    //    //11
+    //    //});       
+    //}
+
+
+    //private CheckTenantBlocking(userData: any) {
+    //    var isCheckedCompleted = false;
+    //    var todayDateTicks = DateTool.GetCurrentDateAsUtc().valueOf();
+
+    //    if (InfraSettings.TenantManagementPM.PaymentFailure) {
+
+    //        if (AppTool.IsNullOrEmpty(InfraSettings.TenantManagementPM.SuspendDate)) {
+    //            isCheckedCompleted = true;
+    //            this.Blocking.emit("company");
+    //        }
+
+    //        else if (DateTool.GetDateParts(InfraSettings.TenantManagementPM.SuspendDate).DateTicks < todayDateTicks) {
+    //            isCheckedCompleted = true;
+    //            this.Blocking.emit("suspend");
+    //        }
+
+    //        else {
+    //            isCheckedCompleted = true;
+    //            this.LoadClosedTablesToWindow(userData.CurrentTenant);
+    //        }
+    //    }
+
+    //    if (!isCheckedCompleted) {
+    //        if (InfraSettings.TenantManagementPM.IsTrial) {
+
+    //            if (AppTool.IsNullOrEmpty(InfraSettings.TenantManagementPM.TrialEndDate)) {
+    //                isCheckedCompleted = true;
+    //                this.Blocking.emit("company");
+    //            }
+
+    //            else if (DateTool.GetDateParts(InfraSettings.TenantManagementPM.TrialEndDate).DateTicks < todayDateTicks) {
+    //                isCheckedCompleted = true;
+    //                this.Blocking.emit("company");
+    //            }
+
+    //            else {
+    //                isCheckedCompleted = true;
+    //                this.LoadClosedTablesToWindow(userData.CurrentTenant);
+    //            }
+    //        }
+    //    }
+
+    //    if (!isCheckedCompleted) {
+    //        if (!AppTool.IsNullOrEmpty(InfraSettings.TenantManagementPM.PaidUntilDate)) {
+
+    //            if (DateTool.GetDateParts(InfraSettings.TenantManagementPM.PaidUntilDate).DateTicks < todayDateTicks && !InfraSettings.TenantManagementPM.IsRecurring) {
+    //                isCheckedCompleted = true;
+    //                this.Blocking.emit("company");
+    //            }
+
+    //            else {
+    //                isCheckedCompleted = true;
+    //                this.LoadClosedTablesToWindow(userData.CurrentTenant);
+    //            }
+    //        }
+    //    }
+
+    //    if (!isCheckedCompleted) {
+    //        this.LoadClosedTablesToWindow(userData.CurrentTenant);
+    //    }
+    //}
+
     private timerToken: any;
     private TotalNumberOfLoads: number = 0;
     private LoadSize: number = 0;
     private LastLoadSize: number = 0;
     public LoadingCounter: number = 0;
     public CompletedLoadsCount = 0;
+    //IncreaseProgressBar() {
+
+    //    if (this.TotalNumberOfLoads == 0) {
+    //        this.TotalNumberOfLoads = 31;
+
+    //        if (!SessionLocator.UseCachedData) {
+    //            this.TotalNumberOfLoads += 1;
+    //        }
+
+    //        this.LoadSize = 100 / this.TotalNumberOfLoads;
+
+    //        if (this.LoadSize.toString().indexOf(".") > -1) {
+    //            this.LoadSize = +this.LoadSize.toString().split(".")[0];
+    //            this.LastLoadSize = 100 - ((this.TotalNumberOfLoads - 1) * this.LoadSize);
+    //        }
+
+    //        else {
+    //            this.LastLoadSize = this.LoadSize;
+    //        }
+    //    }
+
+    //    this.CompletedLoadsCount++;
+
+    //    if (this.CompletedLoadsCount <= this.TotalNumberOfLoads) {
+
+    //        var elem = document.getElementById("myBar");
+
+    //        var length = this.LoadSize;
+    //        if (this.CompletedLoadsCount == this.TotalNumberOfLoads) {
+    //            length = this.LastLoadSize;
+    //        }
+
+    //        for (var i = 1; i <= length; i++) {
+    //            if (this.LoadingCounter < 100) {
+    //                this.LoadingCounter = this.LoadingCounter + 1;
+    //                elem.style.width = this.LoadingCounter + '%';
+    //            }
+    //        }
+
+    //        if (this.CompletedLoadsCount == this.TotalNumberOfLoads) {
+    //            this.timerToken = setTimeout(() => this.ChangePage(), 1000);
+    //        }
+    //    }
+    //}
+    //private ChangePage() {
+    //    if (this.timerToken) {
+    //        clearTimeout(this.timerToken);
+    //    }
+
+    //    this._applicationTimersManager.StartApplicationTimers();
+
+    //    this.LoginCompleted.emit("event");
+
+    //    if (SessionLocator.UseCachedData && SessionInfo.LoggedUserTenant != 0) {
+    //        CachedDataManager.GetCacheOnClientTablesData(this.entityListService);
+    //    }
+    //}
+
+
+
 }

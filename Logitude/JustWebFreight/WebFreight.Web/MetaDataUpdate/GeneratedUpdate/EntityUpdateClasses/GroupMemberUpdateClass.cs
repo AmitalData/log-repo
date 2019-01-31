@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GroupMemberUpdateClass
@@ -142,9 +139,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GroupId",
-					  						DefaultText =  @"Group",
+					  						DefaultText =  "Group",
 					  						ListFieldLable =  "GroupIdListLable",
-					  						ListLableDefaultText =  @"Group",
+					  						ListLableDefaultText =  "Group",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -181,9 +178,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UserId",
-					  						DefaultText =  @"User",
+					  						DefaultText =  "User",
 					  						ListFieldLable =  "UserIdListLable",
-					  						ListLableDefaultText =  @"User",
+					  						ListLableDefaultText =  "User",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -220,9 +217,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  @"Create Date",
+					  						DefaultText =  "Create Date",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  @"Create Date",
+					  						ListLableDefaultText =  "Create Date",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -259,9 +256,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCancelled",
-					  						DefaultText =  @"Is Cancelled",
+					  						DefaultText =  "Is Cancelled",
 					  						ListFieldLable =  "IsCancelledListLable",
-					  						ListLableDefaultText =  @"Is Cancelled",
+					  						ListLableDefaultText =  "Is Cancelled",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -298,9 +295,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CancelledDate",
-					  						DefaultText =  @"Cancelled Date",
+					  						DefaultText =  "Cancelled Date",
 					  						ListFieldLable =  "CancelledDateListLable",
-					  						ListLableDefaultText =  @"Cancelled Date",
+					  						ListLableDefaultText =  "Cancelled Date",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -337,14 +334,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

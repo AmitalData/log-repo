@@ -129,7 +129,7 @@
                     $.CurrentEntityId = shipmentPM.Id;
                     $.IsMoneyTabEnabled = shipmentPM.IsSharedLogisticsMoneyTabEnabled;
                     ko.applyBindings(BuildShipmentBackAreaViewModel(shipmentPM, "../"), document.getElementById("BackArea"));
-                    ko.applyBindings(BuildShipmentHeaderViewModel(shipmentPM, $.TenantDateTimeFormat, "../"), document.getElementById("EntityHeaderArea"));
+                    ko.applyBindings(BuildShipmentHeaderViewModel(shipmentPM, "../"), document.getElementById("EntityHeaderArea"));
 
                     BuildRoutingLegs(shipmentPM, $.TenantDateTimeFormat);
 

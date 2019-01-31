@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {Component, ViewContainerRef, OnInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {CommonDomainService} from '../../../Common/Services/CommonDomainService';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';

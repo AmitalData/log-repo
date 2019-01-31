@@ -366,7 +366,7 @@ namespace Simplog.Server.Infrastructure.Azure
             switch (enviroment)
             {
                 case "Simplog" :
-                    result = "Endpoint=sb://logitudeeu1.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=l4gltH9kzHBZSaedncIYYu5tb6YTS4UZftIGUPYHHFw=";//"Endpoint=sb://logitudeeu1.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=t3IPjGhc6MOE5FZfKqKv5R6JNwsC/RPkW5axmdp+RUY=";
+                    result = "Endpoint=sb://logitudeeu1.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=t3IPjGhc6MOE5FZfKqKv5R6JNwsC/RPkW5axmdp+RUY=";
                     break;
 
                 case "amitalstorage":
@@ -391,7 +391,6 @@ namespace Simplog.Server.Infrastructure.Azure
                     result = "Endpoint=sb://logitudetest2.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Uo7BHCCC7xAQIs1gO27hmruaGpFvoXDhwqATqVsH6PY=";
                     //result = "Endpoint=sb://logitudetest1.servicebus.windows.net;SharedSecretIssuer=owner;SharedSecretValue=5iKNFIINnT+5u3Zj5SFkaRou/0QYxx7OWzZL/Wlh7us=";
                     break;
-
             }
 
             return result;

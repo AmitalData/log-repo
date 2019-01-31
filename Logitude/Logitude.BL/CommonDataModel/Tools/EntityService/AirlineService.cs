@@ -78,7 +78,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 this.isNewEntity = true;
 
                 entityPM.Id = IdCounter.GetNumber("Card", entityPM.Tenant).ToString();
-                entityPM.Tenant = tenant;
 
                 this.entityCard = new Card()
                 {
@@ -93,12 +92,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     Tenant = tenant,
                     LimitedLength = true,
                 };
-
-                if (tenant == 0)
-                {
-                    this.entityPM.CheckDigit = true;
-                    this.entityPM.LimitedLength = true;
-                }
 
                 this.InitializeComponent();
 

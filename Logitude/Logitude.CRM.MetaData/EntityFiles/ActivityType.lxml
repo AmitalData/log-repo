@@ -15,5 +15,4 @@
     <Record Code="&quot;TS&quot;" SearchFields="&quot;TS,Task&quot;" Name="&quot;Task&quot;" />
     <Record Code="&quot;TX&quot;" SearchFields="&quot;TX,Task Extended&quot;" Name="&quot;Task Extended&quot;" />
   </Records>
-  <AdditionalFeatures />
 </entity>

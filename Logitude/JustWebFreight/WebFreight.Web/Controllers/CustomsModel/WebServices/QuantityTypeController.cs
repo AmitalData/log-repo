@@ -46,30 +46,29 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     if (CacheManager.CacheWrapper.Get(key) == null)
                     {
                         CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(tenant);
-                        //CustomsItemPM customsItem = customsItemQueryService.GetCustomsItemByClassificationCode(classificationCode);
+                        CustomsItemPM customsItem = customsItemQueryService.GetCustomsItemByClassificationCode(classificationCode);
 
 
-                        //PropertiesDetailsHistoryQueryService propertiesDetailsHistoryQueryService = new PropertiesDetailsHistoryQueryService(tenant);
-                        //if (customsItem != null)
-                        //{
-                        //    propertiesDetailsHistory = propertiesDetailsHistoryQueryService.GetPropertiesDetailsHistoryByCustomsItemId(customsItem.ID);
+                        PropertiesDetailsHistoryQueryService propertiesDetailsHistoryQueryService = new PropertiesDetailsHistoryQueryService(tenant);
+                        if (customsItem != null)
+                        {
+                            propertiesDetailsHistory = propertiesDetailsHistoryQueryService.GetPropertiesDetailsHistoryByCustomsItemId(customsItem.ID);
 
-                        //}
-                        //MeasurmentUnitQueryService measurmentUnitQueryService = new MeasurmentUnitQueryService(tenant);
+                        }
+                        MeasurmentUnitQueryService measurmentUnitQueryService = new MeasurmentUnitQueryService(tenant);
 
-                        //if (propertiesDetailsHistory != null && propertiesDetailsHistory.MeasurementUnitID.HasValue)
-                        //{
+                        if (propertiesDetailsHistory != null && propertiesDetailsHistory.MeasurementUnitID.HasValue)
+                        {
 
-                        //    measurmentUnit = measurmentUnitQueryService.GetMeasurmentUnitByMalamId(propertiesDetailsHistory.MeasurementUnitID.Value);
+                            measurmentUnit = measurmentUnitQueryService.GetMeasurmentUnitByMalamId(propertiesDetailsHistory.MeasurementUnitID.Value);
 
-                        //}
+                        }
 
-                        //if (measurmentUnit != null)
-                        //{
-                        //    QuantityTypeCode = measurmentUnit.Code;
-                        //}
+                        if (measurmentUnit != null)
+                        {
+                            QuantityTypeCode = measurmentUnit.Code;
+                        }
 
-                        QuantityTypeCode = customsItemQueryService.GetQuantityTypeByClassificationCode(classificationCode, tenant);
                         if (QuantityTypeCode != null)
                         {
 

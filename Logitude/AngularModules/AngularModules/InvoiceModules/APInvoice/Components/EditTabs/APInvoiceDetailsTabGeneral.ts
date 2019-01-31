@@ -1,4 +1,4 @@
-import {Component, OnDestroy}  from '@angular/core';
+﻿import {Component, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -51,6 +51,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
 
+
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");      
@@ -63,9 +64,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.BuildScreenData();
         this.Listen();
 
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
+        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "APInvoiceEditExchangeRate")) {
             this.IsEditExchangeRateVisible = true;
-        }   
+        }
     }
 
     private SaveCompletedEvent: any = null;
@@ -133,6 +134,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("LocalDescription", this.ObjectTableName, false);
 
@@ -151,18 +153,20 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             if (this.EntityPM.InvoicePayments.length > 0) {
                 this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
-                
+
+                this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
             }
 
             if (this.EntityPM.InvoiceCurrencyId == SessionLocator.TenantPM.CurrencyId) {
+                this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
             }
         }
 
         this.SetUIProperties_DueDate();
         this.SetUIProperties_VATNumber();
-        this.SetUIProperties_ExchangeRate();
+
     }
     SetUIProperties_DueDate() {
         var AllowManuallyDueDate: boolean = false;
@@ -191,26 +195,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
 
         this.UIProperties.SetRequired("VATNumber", this.ObjectTableName, isRequired);
-    }
-    SetUIProperties_ExchangeRate() {
-        var isEnabled: boolean = false;
-
-        if (this.IsScreenEnabled) {
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "APInvoiceEditExchangeRate")) {
-                if (this.EntityPM.InvoicePayments.length > 0) {
-                    isEnabled = false;
-                }
-                else {
-                    isEnabled = true;
-                }
-
-                if (this.EntityPM.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
-                    isEnabled = true;
-                }
-            }            
-        }
-
-        this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isEnabled);
     }
 
     get RateIsEnabled() {
@@ -1238,18 +1222,17 @@ export class APInvoiceLineItem extends BaseComponent {
         this.SetUIProperties_Description();
     }
     SetUIProperties_Rate() {
-        var isFieldEnabled = false;
+        var isFieldEnabled = true;
 
-        if (this.IsEditingEnabled) {
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "APInvoiceEditExchangeRate")) {
-                if (this.ForiegnCurrencyId != this.LocalCurrencyId) {
-                    isFieldEnabled = true;
-                }
-            }
+        if (!this.IsEditingEnabled) {
+            isFieldEnabled = false;
         }
-        
-        //this.IsRateEnabled = isFieldEnabled;
-        this.IsRateEnabled = true;
+
+        else if (this.ForiegnCurrencyId == this.LocalCurrencyId) {
+            isFieldEnabled = false;
+        }
+
+        this.IsRateEnabled = isFieldEnabled;
         this.UIProperties.SetEnabled("ForiegnExchangeRate", this.ObjectTableName, isFieldEnabled);
     }
     private SetUIProperties_EditControls() {

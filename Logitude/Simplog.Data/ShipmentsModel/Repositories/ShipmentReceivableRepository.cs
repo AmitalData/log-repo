@@ -11,19 +11,21 @@ namespace Simplog.Data.ShipmentsModel.Repositories
     public class ShipmentReceivableRepository: IRepository<ShipmentReceivable>
     {
         IShipmentsContext shipmentsContext;
+
         public ShipmentReceivableRepository()
         {
             shipmentsContext = new ShipmentsContext();
         }
-        public ShipmentReceivableRepository(int tenant)
-        {
-            shipmentsContext = ShipmentsContext.GetContext(tenant);
-        }
+
         public ShipmentReceivableRepository(IShipmentsContext context)
         {
             shipmentsContext = context;
         }
 
+        public ShipmentReceivableRepository(int tenant)
+        {
+            shipmentsContext = ShipmentsContext.GetContext(tenant);
+        }
 
         public IQueryable<ShipmentReceivable> GetShipmentReceivables(int tenant)
         {
@@ -35,19 +37,6 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return (from record in context.ShipmentReceivables where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
 
-        public List<ShipmentReceivable> GetShipmentReceivablesByIds(List<string> ids, int tenant)
-        {
-            List<ShipmentReceivable> myResult = new List<ShipmentReceivable>();
-
-            if (ids.Count > 0)
-            {
-                myResult = (from a in context.ShipmentReceivables
-                            where a.Tenant == tenant && ids.Contains(a.Id)
-                            select a).ToList();
-            }
-
-            return myResult;
-        }
         public List<ShipmentReceivable> GetShipmentReceivablesByEntityIds(List<string> ids, int tenant)
         {
             List<ShipmentReceivable> myResult = new List<ShipmentReceivable>();

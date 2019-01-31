@@ -57,7 +57,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("ChargesGroup", "READ", authToken.Tenant);
 				
 		    	IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
 				ChargesGroupRepository  chargesGroupRepository = new ChargesGroupRepository(MyContext);
@@ -95,7 +94,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("ChargesGroup", "READ", authToken.Tenant);
 
 
 				IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
@@ -128,9 +126,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				int tenant = authToken.Tenant;
 				if(filters.Tenant != null)
 					tenant = filters.Tenant.Value;
-				                
-				SecurityUtility.CheckContactFeature("ChargesGroup", "READ", authToken.Tenant);
-	
+				
                 QueryOperations queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "ChargesGroup",

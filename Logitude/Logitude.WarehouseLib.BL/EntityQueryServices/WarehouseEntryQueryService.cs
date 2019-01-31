@@ -88,7 +88,6 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                 item.VolumeUnitCode = entityPM.VolumeUnitCode;
                 item.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
                 item.DimensionUnitCode = entityPM.DimensionsUnitCode;
-                item.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
             }
 
         }

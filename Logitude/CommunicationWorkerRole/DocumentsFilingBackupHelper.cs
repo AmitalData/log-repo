@@ -58,29 +58,29 @@ namespace CommunicationWorkerRole
                     string ftpPassword = ftpDetail.Password;
                     string ftpFolderName = ftpDetail.Folder;
                     string fileName = GetFileName(documentFilingPOCO, document, documentType);
-					if (!ftpDetail.UseSFTP)
-					{
-						FTPService ftpService = new FTPService(ftpHostIP, ftpUserName, ftpPassword);
-						ftpService.Upload(fileName, ftpFolderName, filedata, true, true);
-					}
-					else
-					{
-						ftpHostIP = ftpDetail.Host;
-						string p_status = "";
-						string p_message = "";
-						SFTPService sftpService = new SFTPService();
-						sftpService.Logon(ftpHostIP, ftpUserName, ftpPassword, "22", ftpFolderName, out p_status, out p_message);
-						if (p_status == "0")
-						{
-
-							sftpService.Upload(fileName, filedata, true, true, out p_status, out p_message);
-
-							if (p_status == "-1")
-								throw new Exception("SFTP upload file failed: " + p_message);
-						}
-						else
-							throw new Exception("SFTP Login failed: " + p_message);
-					}
+                    if (!ftpDetail.UseSFTP)
+                    {
+                        FTPService ftpService = new FTPService(ftpHostIP, ftpUserName, ftpPassword);
+                        ftpService.Upload(fileName, ftpFolderName, filedata, true, true);
+                    }
+                    else
+                    {
+                        string p_status = "";
+                        string p_message = "";
+                        SFTPService sftpService = new SFTPService();
+                        sftpService.Logon(ftpHostIP, ftpUserName, ftpPassword, "22", ftpFolderName, out p_status, out p_message);
+                        if (p_status == "0")
+                        {
+                            if (p_status == "0")
+                            {
+                                sftpService.Upload(fileName, filedata, true, true, out p_status, out p_message);
+                            }
+                            else
+                                throw new Exception("SFTP upload file failed: " + p_message);
+                        }
+                        else
+                            throw new Exception("SFTP Login failed: " + p_message);
+                    }
 
                     documentFilingPOCO.BackedupExternally = true;
                     documentFilingPOCO.LastBackupDate = TenantServerConfigration.GetCurrentDateTime(tenant);
@@ -100,9 +100,9 @@ namespace CommunicationWorkerRole
 
         private static string GetFileName(DocumentsFiling documentFiling, Document document, DocumentType documentType)
         {
-
+            
             ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
-            string filename = (!string.IsNullOrEmpty(documentFiling.Description) ? documentFiling.Description : (!string.IsNullOrEmpty(document.FileName) ? document.FileName : document.Id)) + "_" + documentFiling.Code + "." + document.Extension;
+            string filename = (!string.IsNullOrEmpty(document.FileName) ? document.FileName : document.Id) + "_" + documentFiling.Code + "." + document.Extension;
             if ((!string.IsNullOrEmpty(documentFiling.EntityNumber) || !string.IsNullOrEmpty(documentFiling.EntityId)) && !string.IsNullOrEmpty(documentFiling.ObjectTableId))
             {
                 ObjectTable table = objectTableRepository.GetSingleObjectTable(documentFiling.ObjectTableId, 0, false);
@@ -117,7 +117,7 @@ namespace CommunicationWorkerRole
                             else
                                 forwarderShipmentNumber = shipmentRepository.GetForwarderShipmentNumberByShipmentIdTenant(documentFiling.EntityId, documentFiling.Tenant);
 
-                            filename = documentFiling.Tenant + "_" + documentType.Code + "_" + documentFiling.Code + (!string.IsNullOrWhiteSpace(forwarderShipmentNumber) ? ("_" + forwarderShipmentNumber) : "") + (!string.IsNullOrEmpty(documentFiling.Description) ? "_" + documentFiling.Description : "") + "." + document.Extension;
+                            filename = documentFiling.Tenant + "_" + documentType.Code + "_" + documentFiling.Code + (!string.IsNullOrWhiteSpace(forwarderShipmentNumber) ? ("_" + forwarderShipmentNumber) : "");
                             break;
                         }
                     default:
@@ -127,5 +127,6 @@ namespace CommunicationWorkerRole
 
             return filename;
         }
+
     }
 }

@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {Component, OnDestroy} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
@@ -22,8 +22,7 @@ export class CommunicationsTabComponent implements OnDestroy {
     public IsTitleHidden: boolean = false;
     public ItemsSource: Array<CommunicationLogList>;
     private EntityPM: any;
-    public IsResourcesReady: boolean = false;
-    public TabHeaderTextCode: string;
+    public IsResourcesReady: boolean = false;   
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.ItemsSource = [];
 
@@ -57,11 +56,6 @@ export class CommunicationsTabComponent implements OnDestroy {
         if (this.ObjectTableName == "Master") {
             this.ObjectTableName = "Shipment";
         }
-
-        // Ayman:
-        // we need this for Translation
-        // Please don't remove it
-        this.TabHeaderTextCode = this.ObjectTableName + ".TH.Communications";
 
         this.ObjectTableId = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0].Id;
         this.LoadData();
@@ -107,14 +101,5 @@ export class CommunicationsTabComponent implements OnDestroy {
 
     ViewXMLClicked(item: CommunicationLogList) {
         DownloadManager.DownloadCommunicationLogXML(item);
-    }
-    EditItemClicked(item: CommunicationLogList) {
-        var entityId = item.Id;
-
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'CommunicationLog' });
-            });
     }
 }

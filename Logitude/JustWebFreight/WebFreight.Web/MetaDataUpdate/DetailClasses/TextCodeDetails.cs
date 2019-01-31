@@ -12,6 +12,5 @@
         public bool InActive { get; set; }
         public string LocalDefaultText { get; set; }
         public bool IsMemoryAdded { get; set; } // dont fill
-        public bool IsSpellChecked { get; set; }
     }
 }

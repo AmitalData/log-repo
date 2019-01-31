@@ -55,13 +55,6 @@ using Microsoft.VisualBasic.FileIO;
 using System.Configuration;
 using System.Data.SqlClient;
 using Logitude.Accounting.BL.CoreBL;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.BL.EntityUpdateServices;
-using Logitude.Accounting.BL.Utils;
-using System.Data.Common;
 
 namespace Logitude.Update
 {
@@ -160,7 +153,7 @@ namespace Logitude.Update
             generalLabel = null;
             timer1.Start();
 
-            if (name == "accounting" || name == "UpdateTenantZeroNew")
+            if (name == "accounting")
                 UpdateZipFiles();
 
             stopWatch.Stop();
@@ -2074,7 +2067,7 @@ User/Pass",
             try
             {
 
-                SetControlPropertyValue(lblUShipment, "Text", "Updating Customs...");
+                SetControlPropertyValue(UCUSStatusLabel, "Text", "Updating Customs...");
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
                 UpdateModule(0, "customs", UpdateCustomslbl);
@@ -2097,7 +2090,7 @@ User/Pass",
 
                 stopWatch.Stop();
                 TimeSpan ts = stopWatch.Elapsed;
-                SetControlPropertyValue(lblUShipment, "Text", "Updating Customs Is Done in: " + ts.ToString());
+                SetControlPropertyValue(UCUSStatusLabel, "Text", "Updating Customs Is Done in: " + ts.ToString());
             }
             catch (Exception ex2)
             {
@@ -3223,42 +3216,42 @@ User/Pass",
 
         private void btnUpdateShipment_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => UpdateModule(0, "Shipment", lblUShipment));
+            Thread thread = new Thread(() => UpdateModule(0, "Shipment", UpdateCRMlbl));
             thread.IsBackground = true;
             thread.Start();
         }
 
         private void btnUpdateQuote_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => UpdateModule(0, "Quote", lblUQuote));
+            Thread thread = new Thread(() => UpdateModule(0, "Quote", UpdateCRMlbl));
             thread.IsBackground = true;
             thread.Start();
         }
 
         private void btnUpdateInvoice_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => UpdateModule(0, "Invoice", lblUInvoice));
+            Thread thread = new Thread(() => UpdateModule(0, "Invoice", UpdateCRMlbl));
             thread.IsBackground = true;
             thread.Start();
         }
 
         private void btnUpdateCommon_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => UpdateModule(0, "Common", lblUCommon));
+            Thread thread = new Thread(() => UpdateModule(0, "Common", UpdateCRMlbl));
             thread.IsBackground = true;
             thread.Start();
         }
 
         private void btnUpdateInfrastructure_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => UpdateModule(0, "Infrastructure", lblUInfra));
+            Thread thread = new Thread(() => UpdateModule(0, "Infrastructure", UpdateCRMlbl));
             thread.IsBackground = true;
             thread.Start();
         }
 
         private void btnUpdateGlobal_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => UpdateModule(0, "Global", lblUGlobal));
+            Thread thread = new Thread(() => UpdateModule(0, "Global", UpdateCRMlbl));
             thread.IsBackground = true;
             thread.Start();
         }
@@ -3332,61 +3325,6 @@ User/Pass",
         {
 
         }
-
-        private void button37_Click(object sender, EventArgs e)
-        {
-            IAccountingContext accountingContext = AccountingContext.GetContext(0);
-            JournalQueryService journalQuery = new JournalQueryService(1);
-            List<Journal> journals = accountingContext.Journals.ToList();
-            foreach(Journal line in journals)
-            {
-                JournalMoreDataPM moreDataPM = new JournalMoreDataPM()
-                {
-                    JournalId = line.Id,
-                    Line= 1,
-                    TaxReportId = null,
-                    Tenant = 1,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    GeneralData = "empty",
-                };
-
-                JournalMoreDataUpdateService serivce = new JournalMoreDataUpdateService(accountingContext, new Dictionary<string, IContext>(), 1);
-                serivce.Update(moreDataPM, true);
-            }
-
-        }
-
-        private void button38_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void btnUpdateTenantZeroNew_Click(object sender, EventArgs e)
-        {
-            Thread thread = new Thread(() => UpdateModule(0, "UpdateTenantZeroNew", lblTenantNew));
-            thread.IsBackground = true;
-            thread.Start();
-        }
-
-        private void button39_Click(object sender, EventArgs e)
-        {
-            FutureOpenChequesBatch batch = new FutureOpenChequesBatch();
-            batch.SetTotalFutureOpenChequesInLocalCurrency(1);
-        }
-
-        private void btnDownloadMrt_Click(object sender, EventArgs e)
-        {
-            //string connectionString = "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
-            //DbConnection Logitudeconnection = DatabaseInitializer.GetConnection(connectionString);
-            //CommonDataContext Logitudecontext = new CommonDataContext(Logitudeconnection);
-            //DocumentTypeTemplate template = (from a in Logitudecontext.DocumentTypeTemplates
-            //                                 where a.Id == "1-149534"
-            //                                 select a).FirstOrDefault();
-
-            //File.WriteAllBytes("template.mrt", template.TemplateBody); // Requires System.IO
-
-        }
-
     }
 
 

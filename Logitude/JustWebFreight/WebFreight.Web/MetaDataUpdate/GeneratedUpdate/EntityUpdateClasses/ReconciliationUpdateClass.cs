@@ -174,11 +174,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountId",
-					  						DefaultText =  @"Account",
-					  						FullLocalDefaultText =  @"חשבון",
+					  						DefaultText =  "Account",
+					  						FullLocalDefaultText =  "חשבון",
 					  						ListFieldLable =  "AccountIdListLable",
-					  						ListLableDefaultText =  @"Account",
-					  						ListLocalDefaultText =  @"חשבון",
+					  						ListLableDefaultText =  "Account",
+					  						ListLocalDefaultText =  "חשבון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -233,11 +233,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Number",
-					  						DefaultText =  @"Reconciliation No.",
-					  						FullLocalDefaultText =  @"מספר התאמה",
+					  						DefaultText =  "Reconciliation No.",
+					  						FullLocalDefaultText =  "מספר התאמה",
 					  						ListFieldLable =  "NumberListLable",
-					  						ListLableDefaultText =  @"Reconciliation No.",
-					  						ListLocalDefaultText =  @"מספר התאמה",
+					  						ListLableDefaultText =  "Reconciliation No.",
+					  						ListLocalDefaultText =  "מספר התאמה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -292,11 +292,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  @"Create Date",
-					  						FullLocalDefaultText =  @"תאריך פתיחה",
+					  						DefaultText =  "Create Date",
+					  						FullLocalDefaultText =  "תאריך פתיחה",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  @"Create Date",
-					  						ListLocalDefaultText =  @"תאריך פתיחה",
+					  						ListLableDefaultText =  "Create Date",
+					  						ListLocalDefaultText =  "תאריך פתיחה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -352,11 +352,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  @"Created by User",
-					  						FullLocalDefaultText =  @"נוצר על ידי משתמש",
+					  						DefaultText =  "Created by User",
+					  						FullLocalDefaultText =  "נוצר על ידי משתמש",
 					  						ListFieldLable =  "CreatedByUserIdListLable",
-					  						ListLableDefaultText =  @"Created by User",
-					  						ListLocalDefaultText =  @"נוצר על ידי משתמש",
+					  						ListLableDefaultText =  "Created by User",
+					  						ListLocalDefaultText =  "נוצר על ידי משתמש",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -410,9 +410,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Reconciliation No.",
+					  						DefaultText =  "Reconciliation No.",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  @"Reconciliation No.",
+					  						ListLableDefaultText =  "Reconciliation No.",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -466,9 +466,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReconciliationLines",
-					  						DefaultText =  @"Reconciliation Lines",
+					  						DefaultText =  "Reconciliation Lines",
 					  						ListFieldLable =  "ReconciliationLinesListLable",
-					  						ListLableDefaultText =  @"Reconciliation Lines",
+					  						ListLableDefaultText =  "Reconciliation Lines",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -523,11 +523,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserName",
-					  						DefaultText =  @"Created by",
-					  						FullLocalDefaultText =  @"נוצר על ידי",
+					  						DefaultText =  "Created by",
+					  						FullLocalDefaultText =  "נוצר על ידי",
 					  						ListFieldLable =  "CreatedByUserNameListLable",
-					  						ListLableDefaultText =  @"Created by",
-					  						ListLocalDefaultText =  @"נוצר על ידי",
+					  						ListLableDefaultText =  "Created by",
+					  						ListLocalDefaultText =  "נוצר על ידי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -582,11 +582,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountNumber",
-					  						DefaultText =  @"Account Number",
-					  						FullLocalDefaultText =  @"מספר חשבון",
+					  						DefaultText =  "Account Number",
+					  						FullLocalDefaultText =  "מספר חשבון",
 					  						ListFieldLable =  "AccountNumberListLable",
-					  						ListLableDefaultText =  @"Account Number",
-					  						ListLocalDefaultText =  @"מספר חשבון",
+					  						ListLableDefaultText =  "Account Number",
+					  						ListLocalDefaultText =  "מספר חשבון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -641,11 +641,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountName",
-					  						DefaultText =  @"Account",
-					  						FullLocalDefaultText =  @"חשבון",
+					  						DefaultText =  "Account",
+					  						FullLocalDefaultText =  "חשבון",
 					  						ListFieldLable =  "AccountNameListLable",
-					  						ListLableDefaultText =  @"Account",
-					  						ListLocalDefaultText =  @"חשבון",
+					  						ListLableDefaultText =  "Account",
+					  						ListLocalDefaultText =  "חשבון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -700,11 +700,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCancelled",
-					  						DefaultText =  @"Is Cancelled",
-					  						FullLocalDefaultText =  @"מבוטלת",
+					  						DefaultText =  "Is Cancelled",
+					  						FullLocalDefaultText =  "מבוטלת",
 					  						ListFieldLable =  "IsCancelledListLable",
-					  						ListLableDefaultText =  @"Is Cancelled",
-					  						ListLocalDefaultText =  @"מבוטלת",
+					  						ListLableDefaultText =  "Is Cancelled",
+					  						ListLocalDefaultText =  "מבוטלת",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -757,7 +757,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencyCode",
-					  						DefaultText =  @"Currency",
+					  						DefaultText =  "Currency",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -798,9 +798,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {                
-			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
-			   ObjectTable ReconciliationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Reconciliation" && d.Tenant == 0).FirstOrDefault();  
+	    {    
+			 ObjectTable ReconciliationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Reconciliation" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode ReconciliationDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ReconciliationDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Reconciliation.Tab.Details", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Reconciliation.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -810,12 +809,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature ReconciliationEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Reconciliation.Tab.Events", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReconciliationFeatures.REEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RCDT",HtmlComponentName = "ReconciliationDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/Reconciliation/ReconciliationDetailsTabComponent", FeatureId = ReconciliationDetailsFeature_TH0.Id, ControlPath = "ReconciliationDetailsTabComponent", ObjectTableId = ReconciliationObjectTable.Id, TabNameTextCodeId = ReconciliationDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RCDT",HtmlComponentName = "ReconciliationDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/Reconciliation/ReconciliationDetailsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "Reconciliation.Tab.Details" && d.ObjectTableId == ReconciliationObjectTable.Id).FirstOrDefault().Id, ControlPath = "ReconciliationDetailsTabComponent", ObjectTableId = ReconciliationObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Reconciliation.TH.Details" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "REEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReconciliationEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ReconciliationObjectTable.Id, TabNameTextCodeId = ReconciliationEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "REEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "Reconciliation.Tab.Events" && d.ObjectTableId == ReconciliationObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ReconciliationObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Reconciliation.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -893,7 +892,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable ReconciliationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Reconciliation" && d.Tenant == 0).FirstOrDefault();       
     
 			   Feature ReconciliationFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReconciliationCancelMenuButton", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Reconciliation.Features.CancelReconcileMenuButton", NameTextCodeDefaultText = "Cancel Reconciltiation", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -926,14 +925,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LocalDefaultText = " ביטול התאמה",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

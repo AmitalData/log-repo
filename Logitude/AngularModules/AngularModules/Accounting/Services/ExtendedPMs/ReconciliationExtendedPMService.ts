@@ -11,7 +11,6 @@ import {LedgerTransactionPM} from '../../EntityPMs/LedgerTransactionPM';
 import {JournalPM} from '../../EntityPMs/JournalPM';
 import {ReconciliationLinePM} from '../../EntityPMs/ReconciliationLinePM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import { RecoCallback } from '../../DataContracts/RecoCallback';
 
 @Injectable()
 
@@ -45,30 +44,16 @@ export class ReconciliationExtendedPMService {
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
                 return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((res) =>
-                    {
-                        var _callBack: RecoCallback = res.json();
-                        if(_callBack)
-                        {
-                            serviceResponse.Result = _callBack;
-                            // if(_callBack.isSplitted)
-                            // {
-                            //     serviceResponse.Result = _callBack;
-                            // }
-                            // else
-                            // {
-                            //     // var pm = _callBack.reconciliationPM;
-                            //     // if (pm) {
-                            //     //     var mappedResult: ReconciliationPM;
-                            //     //     //mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                            //     //     serviceResponse.Result = pm;
-                            //     // }
-                            // }
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
+                        if (pm) {
+                            var mappedResult: ReconciliationPM;
+                            //mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                            serviceResponse.Result = pm;
                         }
-                        else
-                        {
-                            console.log("[WARNING!!] no callback for reconciliation!");
-                        }
+
+
+
                         return serviceResponse;
 
                     }).catch(ServiceHelper.HandleServiceError);
@@ -184,15 +169,15 @@ export class ReconciliationExtendedPMService {
             serviceResponse = new ServiceResponse();
             //if (errorsArray.length == 0) {
             //var mappedEntity: ReconciliationPM[];
-
+            
 
             return this._http.post(this._apiUrl + "/PostCreateJournalReconcile?"
                 + "&TheAccountId=" + TheAccountId
-                + "&AdjustAccountId=" + AdjustAccountId
-                +"&AccountDate=" + AccountDate
-                +"&Ref1=" + Ref1
-                +"&Ref2=" + Ref2
-                +"&Ref3=" + Ref3
+                + "&AdjustAccountId=" + AdjustAccountId 
+                +"&AccountDate=" + AccountDate 
+                +"&Ref1=" + Ref1 
+                +"&Ref2=" + Ref2 
+                +"&Ref3=" + Ref3 
                 +"&Remarks=" + Remarks
                 , JSON.stringify(myReconciliationLines),
                 { headers: authHeader }).map((res) => {

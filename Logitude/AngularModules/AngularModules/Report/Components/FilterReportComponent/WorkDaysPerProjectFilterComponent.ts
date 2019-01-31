@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ReportsPreviewComponent } from '../../Components/ReportsPreviewComponent';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { ReportFliter } from '../../Components/Filters/ReportFliter';
-import { QueryFilterItem } from '../../Components/Filters/QueryFilterItem';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+﻿import {Component}  from '@angular/core';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import {ReportFliter} from '../../Components/Filters/ReportFliter';
+import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     moduleId: module.id,
@@ -24,8 +24,6 @@ export class WorkDaysPerProjectFilterComponent extends BaseComponent {
     OwnerId: string;
     ProjectId: string;
     BudgetId: string;
-    CategoryId: string;
-    ExternalProjectNumber: string;
 
     queryFilterItems: QueryFilterItem[];
     public AgentId = null;
@@ -120,13 +118,6 @@ export class WorkDaysPerProjectFilterComponent extends BaseComponent {
 
             this.queryFilterItem = new QueryFilterItem();
             this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "CategoryId";
-            this.queryFilterItem.FieldValue = this.CategoryId;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
             this.queryFilterItem.FieldName = "OwnerId";
             this.queryFilterItem.FieldValue = this.OwnerId;
             this.queryFilterItem.Operator = "Equals";
@@ -147,12 +138,6 @@ export class WorkDaysPerProjectFilterComponent extends BaseComponent {
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "ExternalProjectNumber";
-            this.queryFilterItem.FieldValue = this.ExternalProjectNumber;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
 
             this.queryFilterItem = new QueryFilterItem();
             this.queryFilterItem.DisplayInList = false;

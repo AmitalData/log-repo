@@ -37,7 +37,6 @@ namespace WebFreight.Web.DataContracts
         public string OceanChargesTypeId { get; set; }
         public string InlandChargesTypeId { get; set; }
         public string OtherTenantShipmentId { get; set; }
-        public string Notify1Id { get; set; }
-        public string Notify1AddressId { get;  set; }
+
     }
 }

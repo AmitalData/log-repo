@@ -52,8 +52,8 @@ namespace Logitude.Accounting.BL
             all.Add(new TaxReportLineTypeDetails()
             {    
                 Code = "I", 
-                Name = "עסקאות- לקוח רש''פ", 
-                SearchFields = "I,עסקאות- לקוח רש''פ", 
+                Name = "עסקאות- לקוח רש\"פ", 
+                SearchFields = "I,עסקאות- לקוח רש\"פ", 
 			});
 			 
             all.Add(new TaxReportLineTypeDetails()
@@ -87,15 +87,15 @@ namespace Logitude.Accounting.BL
             all.Add(new TaxReportLineTypeDetails()
             {    
                 Code = "P", 
-                Name = "תשומות- ספק מהרש''פ", 
-                SearchFields = "P,תשומות- ספק מהרש''פ", 
+                Name = "תשומות- ספק מהרש\"פ", 
+                SearchFields = "P,תשומות- ספק מהרש\"פ", 
 			});
 			 
             all.Add(new TaxReportLineTypeDetails()
             {    
                 Code = "H", 
-                Name = "תשומות- מסמך אחר עפ''י החוק", 
-                SearchFields = "H,תשומות- מסמך אחר עפ''י החוק", 
+                Name = "תשומות- מסמך אחר עפ\"י החוק", 
+                SearchFields = "H,תשומות- מסמך אחר עפ\"י החוק", 
 			});
 			
             return all;

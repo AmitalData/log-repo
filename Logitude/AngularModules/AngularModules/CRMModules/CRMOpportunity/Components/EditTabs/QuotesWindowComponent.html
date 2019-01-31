@@ -1,5 +1,4 @@
-
-<table>
+﻿<table>
     <tr style="height:460px">
         <td>
             <table>
@@ -7,10 +6,7 @@
                     <td colspan="3">
                         <table>
                             <tr>
-                                <td>
-                                    <div></div>
-                                </td>
-
+                                <td></td>
                                 <td style="padding-right:10px;width:200px">
                                     <SearchBox (TextChanged)="SearchText = $event" [Watermark]="SearchTextLabel"></SearchBox>
                                 </td>
@@ -60,18 +56,14 @@
                                             <table>
                                                 <tr>
                                                     <td style="width:20px">
-                                                        <div [attr.title]="item.FromPortCountry">
-                                                            <img style="height:16px;width:16px" src="{{item.FromCountryCode | CountryFlagPipe}}" />
-                                                        </div>
+                                                        <div [attr.title]="item.FromPortCountry"><img style="height:16px;width:16px" src="{{item.FromCountryCode | CountryFlagPipe}}" /> </div>
 
                                                     </td>
                                                     <td style="width:20px">
                                                         >
                                                     </td>
                                                     <td>
-                                                        <div [attr.title]="item.ToPortCountry">
-                                                            <img style="height:16px;width:16px" src="{{item.ToCountryCode | CountryFlagPipe}}" />
-                                                        </div>
+                                                        <div [attr.title]="item.ToPortCountry"><img style="height:16px;width:16px" src="{{item.ToCountryCode | CountryFlagPipe}}" /> </div>
 
                                                     </td>
                                                 </tr>
@@ -104,16 +96,16 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <table *ngIf="NoConnectedQuotes" style="height:100%;width:100%">
-                                    <tr>
-                                        <td colspan="7" style="vertical-align:middle;text-align:center;align-items:center;align-content:center;font-size:medium">
-                                            <label style="color:#7F7F76"> The System doesn't contain any matches Quotes</label>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </td>
+                <table *ngIf="NoConnectedQuotes" style="height:100%;width:100%">
+                    <tr>
+                        <td colspan="7" style="vertical-align:middle;text-align:center;align-items:center;align-content:center;font-size:medium">
+                        <label style="color:#7F7F76"> The System doesn't contain any matches Quotes</label>
+                            </td>
+                    </tr>
+                </table>
+                </div>
+                </div>
+</td>
                     <td style="width:10px"></td>
                 </tr>
             </table>
@@ -121,7 +113,9 @@
     </tr>
 
     <tr>
-        <td></td>
+<td>
+
+</td>
     </tr>
 
     <tr style="height: 32px;">

@@ -250,10 +250,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
           itemPoco.ShowTitleTotalPerContainersTable = itemPM.ShowTitleTotalPerContainersTable;
           itemPoco.ShowChargeNotePackages = itemPM.ShowChargeNotePackages;
           itemPoco.ShowChargeNoteContainers = itemPM.ShowChargeNoteContainers;
-          itemPoco.ShowSaleMaxMinAmountContainers = itemPM.ShowSaleMaxMinAmountContainers;
-          itemPoco.ShowSaleMaxMinAmountPackages = itemPM.ShowSaleMaxMinAmountPackages;
-
-
         }
     }
 }

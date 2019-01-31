@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class HybridTenantThresholdUpdateClass
@@ -112,10 +109,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsLookUp =  false,
 			      				    IsEditable =  false,
 			      				    AllowedForComputingPartners =  false,
+			      				    DisableSearchBox =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
+			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -129,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Description",
 					  						ObjectTableName =  "HybridTenantThreshold",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "Description",
 					  						MaxLength =  40,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -155,6 +154,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -166,18 +166,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "Description",
-					  						DefaultText =  @"Description",
-					  						ListFieldLable =  "DescriptionListLable",
-					  						ListLableDefaultText =  @"Description",
-					  						HelpTextCode =  "Description",
-					  						Code =  "Description",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  true,
+					  						FullFieldLable =  "Description",
+					  						DefaultText =  "Description",
+					  						ListFieldLable =  "DescriptionListLable",
+					  						ListLableDefaultText =  "Description",
+					  						HelpTextCode =  "Description",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -188,7 +185,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Language",
 					  						ObjectTableName =  "HybridTenantThreshold",
 					  						FieldsDataType =  "nText",
-					  						DataTypeCode =  "nText",
+					  						Code =  "Language",
 					  						MaxLength =  100,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -214,6 +211,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -225,18 +223,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "Language",
-					  						DefaultText =  @"Language",
-					  						ListFieldLable =  "LanguageListLable",
-					  						ListLableDefaultText =  @"Language",
-					  						HelpTextCode =  "Language",
-					  						Code =  "Language",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "Language",
+					  						DefaultText =  "Language",
+					  						ListFieldLable =  "LanguageListLable",
+					  						ListLableDefaultText =  "Language",
+					  						HelpTextCode =  "Language",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -247,7 +242,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "InternalRemarks",
 					  						ObjectTableName =  "HybridTenantThreshold",
 					  						FieldsDataType =  "nText",
-					  						DataTypeCode =  "nText",
+					  						Code =  "InternalRemarks",
 					  						MaxLength =  500,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -273,6 +268,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -284,18 +280,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "InternalRemarks",
-					  						DefaultText =  @"Remarks",
-					  						ListFieldLable =  "InternalRemarkseListLable",
-					  						ListLableDefaultText =  @"Language",
-					  						HelpTextCode =  "InternalRemarks",
-					  						Code =  "InternalRemarks",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "InternalRemarks",
+					  						DefaultText =  "Remarks",
+					  						ListFieldLable =  "InternalRemarkseListLable",
+					  						ListLableDefaultText =  "Language",
+					  						HelpTextCode =  "InternalRemarks",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -306,7 +299,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "CountryCode",
 					  						ObjectTableName =  "HybridTenantThreshold",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
+					  						Code =  "CountryCode",
 					  						MaxLength =  2,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -332,6 +325,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -343,18 +337,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "CountryCode",
-					  						DefaultText =  @"Country",
-					  						ListFieldLable =  "CountryCodeListLable",
-					  						ListLableDefaultText =  @"CountryCode",
-					  						HelpTextCode =  "CountryCode",
-					  						Code =  "CountryCode",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "CountryCode",
+					  						DefaultText =  "Country",
+					  						ListFieldLable =  "CountryCodeListLable",
+					  						ListLableDefaultText =  "CountryCode",
+					  						HelpTextCode =  "CountryCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -365,7 +356,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "IsEnabledForCustomers",
 					  						ObjectTableName =  "HybridTenantThreshold",
 					  						FieldsDataType =  "Boolean",
-					  						DataTypeCode =  "Boolean",
+					  						Code =  "IsEnabledForCustomers",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -391,6 +382,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -402,18 +394,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "IsEnabledForCustomers",
-					  						DefaultText =  @"Enabled for Customers",
-					  						ListFieldLable =  "IsEnabledForCustomersListLable",
-					  						ListLableDefaultText =  @"IsEnabledForCustomers",
-					  						HelpTextCode =  "IsEnabledForCustomers",
-					  						Code =  "IsEnabledForCustomers",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "IsEnabledForCustomers",
+					  						DefaultText =  "Enabled for Customers",
+					  						ListFieldLable =  "IsEnabledForCustomersListLable",
+					  						ListLableDefaultText =  "IsEnabledForCustomers",
+					  						HelpTextCode =  "IsEnabledForCustomers",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -424,7 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "IsCopiedAtSignup",
 					  						ObjectTableName =  "HybridTenantThreshold",
 					  						FieldsDataType =  "Boolean",
-					  						DataTypeCode =  "Boolean",
+					  						Code =  "IsCopiedAtSignup",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -450,6 +439,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -461,18 +451,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "IsCopiedAtSignup",
-					  						DefaultText =  @"Copy at Signup",
-					  						ListFieldLable =  "IsCopiedAtSignupListLable",
-					  						ListLableDefaultText =  @"IsCopiedAtSignup",
-					  						HelpTextCode =  "IsCopiedAtSignup",
-					  						Code =  "IsCopiedAtSignup",
-					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
+					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						FullFieldLable =  "IsCopiedAtSignup",
+					  						DefaultText =  "Copy at Signup",
+					  						ListFieldLable =  "IsCopiedAtSignupListLable",
+					  						ListLableDefaultText =  "IsCopiedAtSignup",
+					  						HelpTextCode =  "IsCopiedAtSignup",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -508,14 +495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
-}
-
-    
+	    }     
 
    }
     

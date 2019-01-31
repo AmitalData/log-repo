@@ -1,4 +1,5 @@
 ﻿
+
 declare var window: any;
 import {JournalPM} from '../../EntityPMs/JournalPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
@@ -57,15 +58,15 @@ export class JournalMenuButtonsHandler {
                     var button = menuButtons[i];
 
                     // Status codes:
-                    //  0- Draft
-                    //  1- Waiting for Approve
-                    //  2- Approved
+                    //  0- Draft 
+                    //  1- Waiting for Approve 
+                    //  2- Approved 
                     //  3- Voided
 
                     switch (button.EventCode) {
                         case "JournalSave": // save and close
                             {
-                                if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "3") {
+                                if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "3") { 
                                     button.IsDisabled = true;
                                 }
 
@@ -98,33 +99,12 @@ export class JournalMenuButtonsHandler {
                             }
                         case "JournalVoid":
                             {
-
-                                // the VOID button is only available on this case:          BUG #44819
-                                //    - Approved Journal, not storno
-
-                                if (this.EntityPM.StatusCode == "2"                 // 2- Approved
-                                    && this.EntityPM.AccountingEntityCode == "1"    // 1- Journal
-                                    && this.EntityPM.OriginalJournalId == null)     // Not Storno
-                                {
-                                    button.IsDisabled = false;
-                                }
-                                else
-                                {
+                                if (this.EntityPM.StatusCode == "3" || this.EntityPM.AccountingEntityCode != "1") { // 3- Voided | 1- Journal
                                     button.IsDisabled = true;
                                 }
-
-
-                                // if (this.EntityPM.StatusCode == "3" || this.EntityPM.AccountingEntityCode != "1") { // 3- Voided | 1- Journal
-                                //     button.IsDisabled = true;
-                                // }
-                                // else if( this.EntityPM.AccountingEntityCode == "1" && this.EntityPM.StatusCode == "2" && (this.EntityPM.OriginalJournalId != null)) // STORNO  1-Journal
-                                // {
-                                //     button.IsDisabled = true;
-                                // }
-                                // else if (this.EntityPM.StatusCode == "2" && this.EntityPM.AccountingEntityCode == "1" && this.EntityPM.OriginalJournalId == null) { // 2- Approved
-                                //     button.IsDisabled = false;
-                                // }
-
+                                else if (this.EntityPM.StatusCode == "2" && this.EntityPM.OriginalJournalId == null) { // 2- Approved
+                                    button.IsDisabled = false;
+                                }
                                 break;
                             }
                         case "JournalPrint":
@@ -175,7 +155,7 @@ export class JournalMenuButtonsHandler {
             case "JournalSaveAsDraft":
                 {
                     this.EntityPM.StatusCode = "0"; // Draft
-                    this.EntityPM.IsDirty = true;
+
                     this.SaveChenges();
                     break;
                 }
@@ -228,7 +208,7 @@ export class JournalMenuButtonsHandler {
         this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
             if ($event == true) {
                 this.entityArgs.EditComponent.ReloadEntityPM();
-
+                
 
             }
         });
@@ -304,7 +284,7 @@ export class JournalMenuButtonsHandler {
                                                 //5
                                                 //view page
                                                 var documentName =  documentOutCopy.Id;
-
+                                              
                                                 this.ViewPage(documentName, documentOutCopy.DocoumentTypeCopyName, documentout);
                                             } else {
                                                 this.BuildDocument(); // resend the request, the method [getCreateDocumentOut] does not create document out copy!!
@@ -312,7 +292,7 @@ export class JournalMenuButtonsHandler {
                                             }
 
 
-
+                                            
                                         }
                                         else
                                             this.StopBusyIndicator();
@@ -331,7 +311,7 @@ export class JournalMenuButtonsHandler {
                             //    this.BuildDocument(); // resend the request, the method [getCreateDocumentOut] does not create document out copy!!
                             //}
 
-
+                            
 
 
                         } else {
@@ -345,16 +325,11 @@ export class JournalMenuButtonsHandler {
 
 
 
-            } else {
-                var msg = new MessageWindow();
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                msg.Show("No document type found!");
             }
-
         });
 
 
-
+        
     }
 
     ViewPage(documentName: string, docoumentTypeCopyName: string, documentOut: DocumentOutPM) {

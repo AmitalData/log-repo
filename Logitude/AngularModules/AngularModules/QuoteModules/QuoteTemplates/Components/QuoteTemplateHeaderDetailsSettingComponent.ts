@@ -402,14 +402,14 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
 
     LoadData() {
     
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+       SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         this.QuoteTemplateTextDesignPMLists = [];
         this.LoadTableDesign();
         this.CustomQuoteFieldList();
     }
 
 
-    LoadTextDesign() {
+    LoadTextDesgin() {
 
         var ids: string = "";
         if (this.QuoteTemplateSectionTypeCode == "QD") {
@@ -470,7 +470,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.TableDesignPM = pmResponse.Result;
             }
-            this.LoadTextDesign();
+            this.LoadTextDesgin();
 
         });
     }
@@ -860,7 +860,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
 
         if (this.IsSaveQuoteTemplateTextDesignRuning || this.IsSaveQuoteTemplateTableDesignRuning || this.IsSaveQuoteTemplateTextCodeRuning || this.IsSaveQuoteTemplateObjectField) {
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
 
             if (this.QuoteTemplateSettingPM.IsDirty) {
                 this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
@@ -1015,7 +1015,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     }
 
     SaveQuoteTemplateSetting() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
         this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
             this.QuoteTemplateSettingPM.IsDirty = false;
             this.SaveCompleted();

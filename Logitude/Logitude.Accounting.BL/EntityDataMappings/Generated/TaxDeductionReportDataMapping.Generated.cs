@@ -55,8 +55,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Email, 
 	         ErrorMessage, 
 	         CreatedByUser, 
-	         Status, 
-	         StatusLocalName,
+	         Status,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

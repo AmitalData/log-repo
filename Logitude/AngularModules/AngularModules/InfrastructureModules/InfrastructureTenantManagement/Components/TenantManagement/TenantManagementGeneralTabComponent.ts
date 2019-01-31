@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {Component, OnInit, OnDestroy}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -30,11 +30,10 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     public DataContext: TenantManagementGeneralTabComponent = this;
     public ObjectTableName: string = "TenantManagement";
     public EntityPM: TenantManagementPM;
-    private iGlobalDomainService: GlobalDomainService;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
-        this.iGlobalDomainService = new GlobalDomainService();
+
         this.LoadParentTenants();
         this.Listen();
     }
@@ -49,14 +48,14 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
+                    InfraSettings.TenantManagementPM = this.EntityPM;
                 }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
+                    InfraSettings.TenantManagementPM = this.EntityPM;
                 }
             });
         }
@@ -101,7 +100,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.UIProperties.SetEnabled("PackageCode", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("TTY", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsAWBStockPrepaid", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("IsINTTRAStockPrepaid", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsActive", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsSystemSupportEnabled", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsDistributorSupportEnabled", this.ObjectTableName, false);
@@ -301,7 +299,9 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     }
 
     private LoadParentTenants() {
-        this.iGlobalDomainService.GetParentTenants().subscribe((myResponse: ServiceResponse) => {
+        var service: GlobalDomainService = new GlobalDomainService();
+
+        service.GetParentTenants().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var myList: TenantManagementList[] = myResponse.Result
 
@@ -413,13 +413,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     set IsAWBStockPrepaid(newValue: boolean) {
         if (this.EntityPM.IsAWBStockPrepaid != newValue) {
             this.EntityPM.IsAWBStockPrepaid = newValue;
-        }
-    }
-
-    get IsINTTRAStockPrepaid() { return this.EntityPM.IsINTTRAStockPrepaid; }
-    set IsINTTRAStockPrepaid(newValue: boolean) {
-        if (this.EntityPM.IsINTTRAStockPrepaid != newValue) {
-            this.EntityPM.IsINTTRAStockPrepaid = newValue;
         }
     }
 

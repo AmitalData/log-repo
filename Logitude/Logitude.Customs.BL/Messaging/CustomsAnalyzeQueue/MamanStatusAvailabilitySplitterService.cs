@@ -33,7 +33,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
         protected override AnalyzeResultModel AnalyzeData(string communicationsData)
         {
-            string courierMasterId = null, objectTableID = null, entityReference = null;
+            string courierMasterId = null, objectTableID = null, entityReference=null;
             var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
             var defInterfaceName_ECSTS_Splited = customsPartnerFtpDetails.GetAllInterfaceDetails()
                     .Where(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECSTB_Splited).First();
@@ -43,7 +43,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                     .Where(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECSTB).First();
             LogMessagingUtil.Instance.AppendLine("MamanStatusAvailabilitySplitterService");
             communicationsData = communicationsData ?? "";
-            communicationsData = communicationsData.Trim();
+            communicationsData=communicationsData.Trim();
 
 
             // Encode the XML string in a UTF-8 byte array
@@ -64,18 +64,59 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             //foreach (var itemSTBMessage in listSTBMessage)
             var listSTBMessage = new List<string>();
             foreach (XmlNode itemChildNode in xmlDoc.DocumentElement.ChildNodes)
+                
             {
 
                 var currSTBMessage = itemChildNode.OuterXml;
                 listSTBMessage.Add(currSTBMessage);
+                var analyzeQueueUtil = new AnalyzeQueueUtil();
+                 var new_analyze =analyzeQueueUtil
+                    .SaveMessageToAnalyzeQueue(this._AnalyzeQueue.FileName, Encoding.UTF8.GetBytes(currSTBMessage), this._CommunicationLog.Tenant,defInterfaceName_ECSTS_Splited);
+
+                LogMessagingUtil.Instance.AppendLine($"new_analyze  CommunicationLogId = {new_analyze.CommunicationLogId}");
             }
-
-            
+            var qs = new DeclarationQueryService(_CommunicationLog.Tenant);
             var courierDeclarationQueryService = new CourierDeclarationQueryService(_CommunicationLog.Tenant);
+            //do
+            //{
 
-            string decID =
-            Get1stDeclarationId(listSTBMessage, courierDeclarationQueryService);
+            //} while (true);
 
+            string decID = null;
+            listSTBMessage
+                .ToList().Any(// any stop first true !!!!
+                xml =>
+            {
+                var xElementGWMessageSTBData = XElement.Parse(xml);
+                string myBaldarAwb = (string)xElementGWMessageSTBData.Element("BaldarAwb");
+                var idList = qs.GetListByCourierHAWB(myBaldarAwb, _CommunicationLog.Tenant);
+                if (idList.Count == 0)
+                {
+                    //decID = idList.FirstOrDefault();
+                    return false;
+                }
+
+                if (idList.Count == 1)
+                {
+                    decID = idList.FirstOrDefault();
+                    return true;
+                }
+                string myBaldarOpenDate = (string)xElementGWMessageSTBData.Element("BaldarOpenDate");
+                var consignmentQueryService = new ConsignmentQueryService(_CommunicationLog.Tenant);
+                string myDeclarationId = consignmentQueryService.GetDeclarationIdBythirdCargoID(myBaldarOpenDate, _CommunicationLog.Tenant, idList);
+
+
+                if (!string.IsNullOrWhiteSpace(myDeclarationId))
+                {
+                    decID = myDeclarationId;
+
+                    return true;
+                }
+
+                return false;
+
+            }
+            );
             if (!string.IsNullOrWhiteSpace(decID))
             {
                 var courierDeclaration = courierDeclarationQueryService.GetCourierDeclarationByDeclarationId(decID, _CommunicationLog.Tenant);
@@ -88,9 +129,9 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
                 }
             }
+            
 
-
-            var  res=new AnalyzeResultModel()
+            return new AnalyzeResultModel()
             {
                 ErrorMessage = null,
                 MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.D,
@@ -98,68 +139,9 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 ObjectTableID = objectTableID,
                 EntityReference = entityReference,
             };
-
-            listSTBMessage.ForEach(currSTBMessage =>
-            {
-                var analyzeQueueUtil = new AnalyzeQueueUtil();
-                var new_analyze = analyzeQueueUtil
-                   .SaveMessageToAnalyzeQueue(this._AnalyzeQueue.FileName, Encoding.UTF8.GetBytes(currSTBMessage), this._CommunicationLog.Tenant, defInterfaceName_ECSTS_Splited, res);
-
-                LogMessagingUtil.Instance.AppendLine($"new_analyze  CommunicationLogId = {new_analyze.CommunicationLogId}");
-            });
-
-
-
-            
-
-
-
-            return res;
         }
 
-        private string Get1stDeclarationId(List<string> listSTBMessage,  CourierDeclarationQueryService courierDeclarationQueryService)
-        {
-            string decID = null;
-            
-            var qs = new DeclarationQueryService(_CommunicationLog.Tenant);
 
-            listSTBMessage
-.ToList().Any(// any stop first true !!!!
-xml =>
-{
-    var xElementGWMessageSTBData = XElement.Parse(xml);
-    string myBaldarAwb = (string)xElementGWMessageSTBData.Element("BaldarAwb");
-    var idList = qs.GetListByCourierHAWB(myBaldarAwb, _CommunicationLog.Tenant);
-    if (idList.Count == 0)
-    {
-                        //decID = idList.FirstOrDefault();
-                        return false;
-    }
-
-    if (idList.Count == 1)
-    {
-        decID = idList.FirstOrDefault();
-        return true;
-    }
-    string myBaldarOpenDate = (string)xElementGWMessageSTBData.Element("BaldarOpenDate");
-    var consignmentQueryService = new ConsignmentQueryService(_CommunicationLog.Tenant);
-    string myDeclarationId = consignmentQueryService.GetDeclarationIdBythirdCargoID(myBaldarOpenDate, _CommunicationLog.Tenant, idList);
-
-
-    if (!string.IsNullOrWhiteSpace(myDeclarationId))
-    {
-        decID = myDeclarationId;
-
-        return true;
-    }
-
-    return false;
-
-}
-);
-            return decID;
-        }
-        
-
+ 
     }
 }

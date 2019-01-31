@@ -26,10 +26,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
             return context.AccountTypes;
         }
 
-        public IQueryable<AccountType> GetAll()
-        {
-            return context.AccountTypes;
-        }
+   
 
         public AccountType GetSingleAccountType(string code)
         {

@@ -45,7 +45,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 ARPaymentChequePM cheque = chequeQueryService.GetSingle(entityPOCO.ARPChequeId, false, false);
                 if (cheque != null)
                 {
-                    entityPM.Bank = cheque.BankId;
+                    entityPM.Bank = cheque.BankName;
                     entityPM.ChequeNumber = cheque.ChequeNumber;
                     entityPM.ARPaymentNumber = cheque.PaymentNumber;
                     entityPM.DueDate = cheque.ValueDate;

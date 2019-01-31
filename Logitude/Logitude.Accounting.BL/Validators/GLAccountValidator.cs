@@ -9,9 +9,6 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using System.Web;
-using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.Accounting.BL.Validators
 {
@@ -20,36 +17,31 @@ namespace Logitude.Accounting.BL.Validators
 
         public static ValidationResult IsGLAccountValid(GLAccountPM myGLAccountPM)
         {
-            // GET logged contact, RTL
-            ContactPM contact = GetLoggedContact(myGLAccountPM.Tenant);
-            bool showLocals = !contact.DontShowLocal;
-
-
             if (String.IsNullOrWhiteSpace(myGLAccountPM.AccountTypeCode))
             {
-                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.AccountTypeCodeMissing", myGLAccountPM.Tenant, showLocals));
+                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.AccountTypeCodeMissing", myGLAccountPM.Tenant, true));
             }
             
             if (myGLAccountPM.IsMultiCurrency != true && String.IsNullOrWhiteSpace(myGLAccountPM.CurrencyId))
             {
-                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.CurrencyOrMulti", myGLAccountPM.Tenant, showLocals));
+                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.CurrencyOrMulti", myGLAccountPM.Tenant, true));
             }
 
             if (myGLAccountPM.IsMultiCurrency == true && !String.IsNullOrWhiteSpace(myGLAccountPM.CurrencyId))
             {
-                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.AccountIsaMulti", myGLAccountPM.Tenant, showLocals));
+                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.AccountIsaMulti", myGLAccountPM.Tenant, true));
             }
             
             bool exists = CheckDisplayNumber(myGLAccountPM.DisplayNumber, myGLAccountPM.InternalNumber, myGLAccountPM.Tenant);
             if (exists == true)
             {
-                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.DisplayNumberAlreadyExists", myGLAccountPM.Tenant, showLocals));
+                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.DisplayNumberAlreadyExists", myGLAccountPM.Tenant, true));
             }
 
             bool internalExists = CheckInternalNumber(myGLAccountPM.InternalNumber, myGLAccountPM.Id, myGLAccountPM.Tenant);
             if (internalExists == true)
             {
-                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.InternalNumberAlreadyExists", myGLAccountPM.Tenant, showLocals));
+                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.InternalNumberAlreadyExists", myGLAccountPM.Tenant, true));
             }
 
             //if (!String.IsNullOrWhiteSpace(myGLAccountPM.ClientId))
@@ -100,7 +92,7 @@ namespace Logitude.Accounting.BL.Validators
                 bool customerExists = CheckIfGLAccountExists(myGLAccountPM.CustomerGLAccountId, myGLAccountPM.Tenant);
                 if (customerExists != true)
                 {
-                    return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.CustomerAccountNotFound", myGLAccountPM.Tenant, showLocals));
+                    return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.CustomerAccountNotFound", myGLAccountPM.Tenant, true));
                 }
             }
 
@@ -122,7 +114,7 @@ namespace Logitude.Accounting.BL.Validators
             }
             else if (myGLAccountPM.AccountTypeCode != "1" && myGLAccountPM.RevenueExpenseType != "3")
             {
-                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.RevExpOther", myGLAccountPM.Tenant, showLocals));
+                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.RevExpOther", myGLAccountPM.Tenant, true));
             }
             else if (myGLAccountPM.AccountTypeCode == "5")
             {
@@ -137,7 +129,7 @@ namespace Logitude.Accounting.BL.Validators
 
                 if (String.IsNullOrWhiteSpace(myGLAccountPM.CustomerGLAccountId))
                 {
-                    return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.CustomerAccountMissing", myGLAccountPM.Tenant, showLocals));
+                    return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.CustomerAccountMissing", myGLAccountPM.Tenant, true));
                 }
                 else
                 {
@@ -152,7 +144,7 @@ namespace Logitude.Accounting.BL.Validators
 
             if (myGLAccountPM.IsMultiCurrency == true && myGLAccountPM.ReconcileMethodCode != "0")
             {
-                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.LocalCurrencyErr", myGLAccountPM.Tenant, showLocals));
+                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.LocalCurrencyErr", myGLAccountPM.Tenant, true));
             }
             if (myGLAccountPM.IsControlAccount.GetValueOrDefault())
             {
@@ -212,18 +204,6 @@ namespace Logitude.Accounting.BL.Validators
                 
 
             }
-
-            //
-            // Check parent
-            if (!string.IsNullOrWhiteSpace(myGLAccountPM.ParentAccountId))
-            {
-                string errorMessage = CheckParent(myGLAccountPM, myGLAccountPM.ParentAccountId, myGLAccountPM.Tenant);
-                if (!string.IsNullOrEmpty(errorMessage))
-                    return new ValidationResult(errorMessage);
-            }
-
-            
-
             return null;
         }
 
@@ -357,61 +337,5 @@ namespace Logitude.Accounting.BL.Validators
                 return null;
             }
         }
-
-        public static string CheckParent(GLAccountPM glaccountPM, string parentId, int tenant)
-        {
-            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
-            GLAccountQueryService query = new GLAccountQueryService(accountingContext);
-            GLAccountPM parentPM = query.GetSingle(parentId, false, true);
-
-            if (parentPM == null || glaccountPM == null)
-            {
-                return "Account not found!";
-            }
-            else if (parentPM.Id == glaccountPM.Id)
-            {
-                return "Parent cannot be the account itself!";
-            }
-            else if (parentPM.ChartOfAccountsTypeCode != glaccountPM.ChartOfAccountsTypeCode)
-            {
-                return TextCodesTranslator.TranslateText("GLAccounts.O.GLAParentValidation1",0);
-                //return "GLAccount and its parent must be same chart of account type!";
-            }
-            else if (parentPM.ChartOfAccountsId != glaccountPM.ChartOfAccountsId)
-            {
-                return TextCodesTranslator.TranslateText("GLAccounts.O.GLAParentValidation2",0);
-                //return "GLAccount and its parent must be same chart of account!";
-            }
-            else if (parentPM.AccountTypeCode != glaccountPM.AccountTypeCode)
-            {
-                return "GLAccount and its parent must be same account type!";
-            }
-            else if (parentPM.AccountTypeCode != glaccountPM.AccountTypeCode)
-            {
-                return "GLAccount and its parent must be same account type!";
-            }
-            else if (!string.IsNullOrWhiteSpace(parentPM.ParentAccountId))
-            {
-                return "Cannot connect GL Account to parent account that has parent (multi level is not allowd)!"; //לא ניתן לקשר כרטיס לכרטיס אב שיש לו כרטיס אב
-            }
-            return null;
-        }
-
-        private static ContactPM GetLoggedContact(int tenant)
-        {
-            //email
-            string email = "";
-            if (HttpContext.Current != null)
-                email = HttpContext.Current.User.Identity.Name;
-            else
-                email = "system@tenant" + tenant.ToString() + ".com";
-
-            //contact
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            ContactPM contactPM = contactQuery.GetContactByEmailOnly(email, tenant);
-            return contactPM;
-        }
-
-
     }
 }

@@ -34,15 +34,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         IsPickDelivCarriesShared, 
 	         IsInvoicesMenuEnabled, 
 	         IsMoneyTabEnabled, 
-	         Id, 
-	         IsIssuingCarrierAgentShared, 
-	         IsCustomsAgentExportShared, 
-	         IsCustomsAgentImportShared, 
-	         IsCustomClearancePoinShared, 
-	         IsConsolidatorShared, 
-	         IsReleasingAgentShared, 
-	         IsShipperShared, 
-	         IsConsigneeShared,
+	         Id,
 	      }
 
 
@@ -61,15 +53,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         IsPickDelivCarriesShared, 
 	         IsInvoicesMenuEnabled, 
 	         IsMoneyTabEnabled, 
-	         Id, 
-	         IsIssuingCarrierAgentShared, 
-	         IsCustomsAgentExportShared, 
-	         IsCustomsAgentImportShared, 
-	         IsCustomClearancePoinShared, 
-	         IsConsolidatorShared, 
-	         IsReleasingAgentShared, 
-	         IsShipperShared, 
-	         IsConsigneeShared,
+	         Id,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -136,46 +120,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMoneyTabEnabled))
             {
 				entityPOCO.IsMoneyTabEnabled = entityPM.IsMoneyTabEnabled;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsIssuingCarrierAgentShared))
-            {
-				entityPOCO.IsIssuingCarrierAgentShared = entityPM.IsIssuingCarrierAgentShared;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsAgentExportShared))
-            {
-				entityPOCO.IsCustomsAgentExportShared = entityPM.IsCustomsAgentExportShared;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsAgentImportShared))
-            {
-				entityPOCO.IsCustomsAgentImportShared = entityPM.IsCustomsAgentImportShared;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomClearancePoinShared))
-            {
-				entityPOCO.IsCustomClearancePoinShared = entityPM.IsCustomClearancePoinShared;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConsolidatorShared))
-            {
-				entityPOCO.IsConsolidatorShared = entityPM.IsConsolidatorShared;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReleasingAgentShared))
-            {
-				entityPOCO.IsReleasingAgentShared = entityPM.IsReleasingAgentShared;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsShipperShared))
-            {
-				entityPOCO.IsShipperShared = entityPM.IsShipperShared;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConsigneeShared))
-            {
-				entityPOCO.IsConsigneeShared = entityPM.IsConsigneeShared;
 			}
 			}
 
@@ -247,46 +191,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.Id = entityPOCO.Id;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsIssuingCarrierAgentShared))
-            {
-					entityPM.IsIssuingCarrierAgentShared = entityPOCO.IsIssuingCarrierAgentShared;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCustomsAgentExportShared))
-            {
-					entityPM.IsCustomsAgentExportShared = entityPOCO.IsCustomsAgentExportShared;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCustomsAgentImportShared))
-            {
-					entityPM.IsCustomsAgentImportShared = entityPOCO.IsCustomsAgentImportShared;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCustomClearancePoinShared))
-            {
-					entityPM.IsCustomClearancePoinShared = entityPOCO.IsCustomClearancePoinShared;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsConsolidatorShared))
-            {
-					entityPM.IsConsolidatorShared = entityPOCO.IsConsolidatorShared;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsReleasingAgentShared))
-            {
-					entityPM.IsReleasingAgentShared = entityPOCO.IsReleasingAgentShared;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsShipperShared))
-            {
-					entityPM.IsShipperShared = entityPOCO.IsShipperShared;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsConsigneeShared))
-            {
-					entityPM.IsConsigneeShared = entityPOCO.IsConsigneeShared;
-            }
-
 		}
 
 		public void PMToOldPM(SharedLogisticsSettingPM entityPM, SharedLogisticsSettingPM oldEntityPM)
@@ -351,46 +255,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMoneyTabEnabled))
             {
                 oldEntityPM.IsMoneyTabEnabled = entityPM.IsMoneyTabEnabled;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsIssuingCarrierAgentShared))
-            {
-                oldEntityPM.IsIssuingCarrierAgentShared = entityPM.IsIssuingCarrierAgentShared;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsAgentExportShared))
-            {
-                oldEntityPM.IsCustomsAgentExportShared = entityPM.IsCustomsAgentExportShared;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsAgentImportShared))
-            {
-                oldEntityPM.IsCustomsAgentImportShared = entityPM.IsCustomsAgentImportShared;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomClearancePoinShared))
-            {
-                oldEntityPM.IsCustomClearancePoinShared = entityPM.IsCustomClearancePoinShared;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConsolidatorShared))
-            {
-                oldEntityPM.IsConsolidatorShared = entityPM.IsConsolidatorShared;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReleasingAgentShared))
-            {
-                oldEntityPM.IsReleasingAgentShared = entityPM.IsReleasingAgentShared;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsShipperShared))
-            {
-                oldEntityPM.IsShipperShared = entityPM.IsShipperShared;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConsigneeShared))
-            {
-                oldEntityPM.IsConsigneeShared = entityPM.IsConsigneeShared;
             }
 			
 		}

@@ -12,5 +12,4 @@
     <Record Code="&quot;02&quot;" SearchFields="&quot;02,Normal,&quot;" Name="&quot;Normal&quot;" />
     <Record Code="&quot;03&quot;" SearchFields="&quot;03,High,&quot;" Name="&quot;High&quot;" />
   </Records>
-  <AdditionalFeatures />
 </entity>

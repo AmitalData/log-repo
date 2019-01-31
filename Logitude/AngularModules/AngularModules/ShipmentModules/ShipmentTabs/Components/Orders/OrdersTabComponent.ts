@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy}  from '@angular/core';
+﻿import {Component, OnInit, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentOrderPackagePM} from '../../../../Shipment/EntityPMs/ShipmentOrderPackagePM';
@@ -1178,12 +1178,12 @@ export class ShipmentOrderPackageItem extends BaseComponent {
         }
     }
 
-    OnGrossWeightLostFocus(input1: number) {
+    OnGrossWeightLostFocus(input: number) {
         if (this.fatherComponent.IsLCLEntity) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
                 if (this.Width == null || this.Height == null || this.Length == null) {
                     this.EntityPM.VolumetricWeight = AppTool.GetWeightFromWeight(this.ShipmentPM.GrossWeightUnitCode, this.ShipmentPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeight);
-                    this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.ShipmentPM.Ratio);
+                    this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.GrossWeight, this.ShipmentPM.Ratio);
 
                     this.SetUIProperties();
                     this.ComputeTotals();

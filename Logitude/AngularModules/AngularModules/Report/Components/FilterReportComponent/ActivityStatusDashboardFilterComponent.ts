@@ -1,4 +1,4 @@
-import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
@@ -146,117 +146,101 @@ export class ActivityStatusDashboardFilterComponent extends BaseComponent implem
     }
 
     RunReport() {
+        var showIndex;
 
 
-        this.ValidationErrorsList = [];
+        switch (this.SelectedItemShow.Code) {
+            case "SHI":
+                {
+                    showIndex = 0;
+                    break;
+                }
 
-        if (!this.SelectedItem) {
-            this.ValidationErrorsList.push("Time Range field is required");
+            case "CHW":
+                {
+                    showIndex = 1;
+                    break;
+                }
+
+            case "GSW":
+                {
+                    showIndex = 2;
+                    break;
+                }
+
+            case "PAC":
+                {
+                    showIndex = 3;
+                    break;
+                }
+
+            case "PPT":
+                {
+                    showIndex = 4;
+                    break;
+                }
+
+            case "RAC":
+                {
+                    showIndex = 5;
+                    break;
+                }
+
+            case "RPT":
+                {
+                    showIndex = 6;
+                    break;
+                }
         }
 
-        if (!this.SelectedItemShow) {
-            this.ValidationErrorsList.push("Show field is required");
-        }
+        if (this.MySelectedDirectionFilter == "All")
+            this.MySelectedDirectionFilter = "";
+        if (this.MySelectedTransportFilter == "All")
+            this.MySelectedTransportFilter = "";
+
+        this.queryFilterItems = []; 
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "LastDays";
+        this.queryFilterItem.FieldValue = this.SelectedItem.LastDays;
+
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
 
-        if (this.ValidationErrorsList.length == 0) {
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "LastMonths";
+        this.queryFilterItem.FieldValue =0+"";
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
 
-            var showIndex;
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "ShowIndex";
+        this.queryFilterItem.FieldValue = showIndex;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
 
-            switch (this.SelectedItemShow.Code) {
-                case "SHI":
-                    {
-                        showIndex = 0;
-                        break;
-                    }
-
-                case "CHW":
-                    {
-                        showIndex = 1;
-                        break;
-                    }
-
-                case "GSW":
-                    {
-                        showIndex = 2;
-                        break;
-                    }
-
-                case "PAC":
-                    {
-                        showIndex = 3;
-                        break;
-                    }
-
-                case "PPT":
-                    {
-                        showIndex = 4;
-                        break;
-                    }
-
-                case "RAC":
-                    {
-                        showIndex = 5;
-                        break;
-                    }
-
-                case "RPT":
-                    {
-                        showIndex = 6;
-                        break;
-                    }
-            }
-
-            if (this.MySelectedDirectionFilter == "All")
-                this.MySelectedDirectionFilter = "";
-            if (this.MySelectedTransportFilter == "All")
-                this.MySelectedTransportFilter = "";
-
-            this.queryFilterItems = [];
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "LastDays";
-            this.queryFilterItem.FieldValue = this.SelectedItem.LastDays;
-
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "DirectionId";
+        this.queryFilterItem.FieldValue = this.MySelectedDirectionFilter;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "LastMonths";
-            this.queryFilterItem.FieldValue = 0 + "";
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "TransportModeId";
+        this.queryFilterItem.FieldValue = this.MySelectedTransportFilter;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "ShowIndex";
-            this.queryFilterItem.FieldValue = showIndex;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "DirectionId";
-            this.queryFilterItem.FieldValue = this.MySelectedDirectionFilter;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "TransportModeId";
-            this.queryFilterItem.FieldValue = this.MySelectedTransportFilter;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-
-
+        
 
 
             this.reportFliter = new ReportFliter();
@@ -269,7 +253,6 @@ export class ActivityStatusDashboardFilterComponent extends BaseComponent implem
             this.reportFliter.ProcessType = "GenerateReport";
 
             this.ReportsPreview.GenerateReport(this.reportFliter, true);
-        }
         }
     
 

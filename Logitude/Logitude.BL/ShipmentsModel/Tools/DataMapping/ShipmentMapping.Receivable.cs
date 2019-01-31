@@ -53,14 +53,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.AmountInProfitCurrency = itemPM.AmountInProfitCurrency;
             itemPoco.ARInvoiceId = itemPM.ARInvoiceId;
             itemPoco.IATACodeId = itemPM.IATACodeId;
+            itemPoco.QuoteSaleMinPrice = itemPM.QuoteSaleMinPrice;
             itemPoco.QuoteChargeId = itemPM.QuoteChargeId;
             itemPoco.IsChargeBySteps = itemPM.IsChargeBySteps;
             itemPoco.VatTypeId = itemPM.VatTypeId;
             itemPoco.IsBackToBack = itemPM.IsBackToBack;
             itemPoco.IsExpense = itemPM.IsExpense;
             itemPoco.ShipmentReceivableParentId = itemPM.ShipmentReceivableParentId;
-            itemPoco.QuoteSaleMinAmount = itemPM.QuoteSaleMinAmount;
-            itemPoco.QuoteSaleMaxAmount = itemPM.QuoteSaleMaxAmount;
         }
     }
 }

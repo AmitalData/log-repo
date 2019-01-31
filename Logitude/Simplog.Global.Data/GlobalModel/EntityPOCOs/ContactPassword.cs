@@ -23,8 +23,5 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
 
         public bool IsBCrypt { get; set; }
         public DateTime? PasswordExpirationDate { get; set; }
-
-        public string CaptchaKey { get; set; }
-         
     }
 }

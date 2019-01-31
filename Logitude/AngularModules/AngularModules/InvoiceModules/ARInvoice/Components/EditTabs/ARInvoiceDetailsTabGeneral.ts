@@ -1,4 +1,4 @@
-import {Component, OnDestroy}  from '@angular/core';
+﻿import {Component, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
 import {ARInvoiceLinePM} from '../../../../Invoice/EntityPMs/ARInvoiceLinePM';
@@ -70,7 +70,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.BuildScreenData();
         this.Listen();
 
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
+        if (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoiceEditExchangeRate")) {
             this.IsEditExchangeRateVisible = true;
         }
     }
@@ -248,26 +248,27 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
     SetUIProperties_ExchangeRate() {
-        var isFieldtEnabled = false;
-        
-        if (this.IsEditingEnabled) {
-            if (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoiceEditExchangeRate")) {
-                if (!AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-                    isFieldtEnabled = true;
-                }
+        var isFieldtEnabled = true;
 
-                else if (SessionLocator.TenantPM.CurrencyId != null) {
-                    isFieldtEnabled = true;
-                }
+        if (!this.IsEditingEnabled) {
+            isFieldtEnabled = false;
+        }
 
-                else if (SessionLocator.TenantPM.CurrencyId != this.InvoiceCurrencyId) {
-                    isFieldtEnabled = true;
-                }
+        else {
+            if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
+                isFieldtEnabled = false;
+            }
+
+            else if (SessionLocator.TenantPM.CurrencyId == null) {
+                isFieldtEnabled = false;
+            }
+
+            else if (SessionLocator.TenantPM.CurrencyId == this.InvoiceCurrencyId) {
+                isFieldtEnabled = false;
             }
         }
 
-        //this.RateIsEnabled = isFieldtEnabled;
-        this.RateIsEnabled = true;
+        this.RateIsEnabled = isFieldtEnabled;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isFieldtEnabled);
     }
     SetUIProperties_PrintNotes() {
@@ -1280,7 +1281,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         line.ForiegnCurrencyId = this.InvoiceCurrencyId;
         line.ForiegnCurrencyCode = this.InvoiceCurrencyCode;
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
-        line.LineActionCode = "1";
+
         var logWindow = new LogitudeWindow();
         logWindow.Title = TextCodeTranslator.Translate("ARInvoiceLine.O.EditInvoiceLine");
         var addEditViewModel: ARInvoiceLineItem = new ARInvoiceLineItem(line, this, true);
@@ -1357,18 +1358,17 @@ export class ARInvoiceLineItem extends BaseComponent {
         this.SetUIProperties_Rate();
     }
     SetUIProperties_Rate() {
-        var isFieldEnabled = false;
+        var isFieldEnabled = true;
 
-        if (this.IsEditingEnabled) {
-            if (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoiceEditExchangeRate")) {
-                if (this.ForiegnCurrencyId != SessionLocator.LocalCurrencyId && !this.IsExchangeRateFixed) {
-                    isFieldEnabled = true;
-                }
-            }
+        if (!this.IsEditingEnabled) {
+            isFieldEnabled = false;
         }
-        
-        //this.IsRateEnabled = isFieldEnabled;
-        this.IsRateEnabled = true;
+
+        else if (this.ForiegnCurrencyId == SessionLocator.LocalCurrencyId || this.IsExchangeRateFixed) {
+            isFieldEnabled = false;
+        }
+
+        this.IsRateEnabled = isFieldEnabled;
         this.UIProperties.SetEnabled("ForiegnExchangeRate", this.ObjectTableName, isFieldEnabled);
     }
 

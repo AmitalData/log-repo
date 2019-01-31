@@ -1,12 +1,10 @@
-
+﻿
 import {UpdateCurrencyRateComponent} from './Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
 import {UpdateVATPercentageComponent} from './Components/UpdateVATPercentage/UpdateVATPercentageComponent';
 import {CitySelectionComponent} from './Components/CitySelection/CitySelectionComponent';
 import {LoadSampleDataComponent} from './Components/LoadSampleData/LoadSampleDataComponent';
-import { DWQueryBuilderComponent } from './Components/DWQueryBuilder/DWQueryBuilderComponent';
-import { DWQueryBuilderFiltersComponent } from './Components/DWQueryBuilder/DWQueryBuilderFiltersComponent'; 
-import { CustomsShipperGeneralTabComponent } from './Components/Depositions/EditTab/CustomsShipperGeneralTabComponent';
-import { DWFilterSettings } from './Components/DWQueryBuilder/DWFilterSettings';
+import {DWQueryBuilderComponent} from './Components/DWQueryBuilder/DWQueryBuilderComponent';
+
 
 export const Components =
     [
@@ -15,9 +13,6 @@ export const Components =
         UpdateVATPercentageComponent,
         LoadSampleDataComponent,
         DWQueryBuilderComponent,
-        DWQueryBuilderFiltersComponent,
-        CustomsShipperGeneralTabComponent,
-        DWFilterSettings,
     ];
 
 export class ModuleDeclarations {
@@ -31,11 +26,6 @@ export class ModuleDeclarations {
             case "CitySelectionComponent": { myResult = CitySelectionComponent; break; }
             case "LoadSampleDataComponent": { myResult = LoadSampleDataComponent; break; }
             case "DWQueryBuilderComponent": { myResult = DWQueryBuilderComponent; break; }
-            case "DWQueryBuilderFiltersComponent": { myResult = DWQueryBuilderFiltersComponent; break; }
-            case "CustomsShipperGeneralTabComponent": { myResult = CustomsShipperGeneralTabComponent; break; }
-            case "DWFilterSettings": { myResult = DWFilterSettings; break; }
-                 
-                
         }
 
         return myResult;

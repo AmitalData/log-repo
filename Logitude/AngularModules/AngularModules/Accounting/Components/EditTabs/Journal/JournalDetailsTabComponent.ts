@@ -55,8 +55,8 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
     OnRowEnded($event) {
         console.log("this.JournalLines.Length : " + this.JournalLines.Length);
-        if (($event) == this.JournalLines.Length) {
-            this.AddLine();
+        if (($event) == this.JournalLines.Length) { 
+            this.AddLine(); 
             //SessionLocator.CurrentSession.ResetRowIndex();
         }
     }
@@ -85,93 +85,9 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         if (this.AccountingDate == null)
             this.AccountingDate = new Date();
 
-
-
-        this.FillGrid();
-        this.SetUIProperties();
-
-
-
-
-        // redraw
-        SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe(isSuccess => {
-            if (isSuccess) {
-                this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-
-                this.FillGrid();
-                this.SetUIProperties();
-
-            }
-
-        });
-
-
-        this.Listen();
-    }
-
-    public CurrentEditComponentId: string;
-    private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;
-    private TabSelectedEvent: any = null;
-    Listen() {
-
-
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-
-            //
-            if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-
-                        this.FillGrid();
-                        this.SetUIProperties();
-                    }
-                });
-            }
-
-            //
-            if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                    if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-
-                        this.FillGrid();
-                        this.SetUIProperties();
-                        console.log("Entity Reloaded");
-                    }
-                });
-            }
-        }
-    }
-
-    SetUIProperties() {
-        //Display only
-        if (this.EntityPM.StatusCode == "3") { // 3-Voided and 2-Approved
-            //disable controls
-            this.journalDisabled = true;
-            this.PointerEvents = 'none';
-            this.Opacity = "1";
-        }
-        else if (this.EntityPM.StatusCode == "2") { // 3-Voided and 2-Approved
-            //disable controls
-            this.journalDisabled = true;
-            this.PointerEvents = 'none';
-            this.Opacity = "1";
-            this.referencesDivHeight = 0;
-            this.Approved = true;
-            this.UIProperties.SetVisibility("Reference1", "Journal", false);
-            this.UIProperties.SetVisibility("Reference2", "Journal", false);
-            this.UIProperties.SetVisibility("Reference3", "Journal", false);
-            this.UIProperties.SetVisibility("Notes", "Journal", false);
-        }
-    }
-
-    FillGrid() {
-
         // if entity in edit mode
-        if (this.EntityPM.Id != undefined) {
+        if (this.EntityPM.Id != undefined)
+        {
             var tempItemSource: JournalLineModel[] = [];
             if (this.EntityPM.JournalLines != null) {
                 for (var i = 0; i < this.EntityPM.JournalLines.length; i++) {
@@ -186,9 +102,34 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                 //}
             }
             this.CalculateTotals();
-
+            if ( this.EntityPM.StatusCode == "3") { // 3-Voided and 2-Approved
+                //disable controls
+                this.journalDisabled = true;
+                this.PointerEvents = 'none';
+                this.Opacity = "1";
+              
+                //this.UIProperties.SetEnabled("AccountingDate", "Journal", false);
+                //this.UIProperties.SetEnabled("Reference1", "Journal", false);
+                //this.UIProperties.SetEnabled("Reference2", "Journal", false);
+                //this.UIProperties.SetEnabled("Reference3", "Journal", false); 
+                //this.UIProperties.SetEnabled("Notes", "Journal", false);
+            }
+           else if (this.EntityPM.StatusCode == "2") { // 3-Voided and 2-Approved
+                //disable controls
+                this.journalDisabled = true;
+                this.PointerEvents = 'none';
+                this.Opacity = "1";
+                this.referencesDivHeight = 0;
+                this.Approved = true;
+                //this.UIProperties.SetEnabled("AccountingDate", "Journal", false);
+                this.UIProperties.SetVisibility("Reference1", "Journal", false);
+                this.UIProperties.SetVisibility("Reference2", "Journal", false);
+                this.UIProperties.SetVisibility("Reference3", "Journal", false);
+                this.UIProperties.SetVisibility("Notes", "Journal", false);
+            }
         }
-        else {
+        else
+        {
             this.EntityPM.StatusCode = "0"; // Draft
             this.EntityPM.TypeCode = "0"; // Manual
             this.EntityPM.AccountingEntityCode = "1"; // Journal
@@ -204,6 +145,39 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             this.JournalLines.Insert(line);
 
         }
+
+        // redraw
+        SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe(isSuccess => {
+            if (isSuccess) {
+                
+                this.CalculateTotals();
+                if ( this.EntityPM.StatusCode == "3") { // 3-Voided and 2-Approved
+                    //disable controls
+                    this.journalDisabled = true;
+                    this.PointerEvents = 'none';
+                    this.Opacity = "1";
+                    //this.UIProperties.SetEnabled("AccountingDate", "Journal", false);
+                    //this.UIProperties.SetEnabled("Reference1", "Journal", false);
+                    //this.UIProperties.SetEnabled("Reference2", "Journal", false);
+                    //this.UIProperties.SetEnabled("Reference3", "Journal", false);
+                    //this.UIProperties.SetEnabled("Notes", "Journal", false);
+                }
+                else if (this.EntityPM.StatusCode == "2") {
+                    this.journalDisabled = true;
+                    this.PointerEvents = 'none';
+                    this.Opacity = "1";
+                    this.referencesDivHeight = 0;
+                    this.Approved = true;
+                    //this.UIProperties.SetEnabled("AccountingDate", "Journal", false);
+                    this.UIProperties.SetVisibility("Reference1", "Journal", false);
+                    this.UIProperties.SetVisibility("Reference2", "Journal", false);
+                    this.UIProperties.SetVisibility("Reference3", "Journal", false);
+                    this.UIProperties.SetVisibility("Notes", "Journal", false);
+                }
+            }
+
+        });
+
     }
 
     txt_Reference: string = TextCodeTranslator.Translate("Accounting.General.O.Reference");
@@ -334,7 +308,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                     this.UIProperties.SetValidity("AccountingDate", this.ObjectTableName, true, "OK");
                 }
 
-
+                
             }
 
             this.EntityPM.AccountingDate = value;
@@ -489,7 +463,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                     this.debitTotal += line.LocalAmount;
                 }
             }
-
+            
 
         }
     }
@@ -564,7 +538,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         console.log("[TEST] ", entity, this.JournalLines);
     }
 
-
+  
 }
 
 
@@ -603,7 +577,7 @@ class JournalLineModel extends BaseComponent {
             var date = new Date(this.AccountingDate.toString());
             this.accDay = date.getDate();
         }
-
+            
 
         this.ratesTableExtendedListService = new RatesTableExtendedListService();
         this._GLAccountExtendedListService = new GLAccountExtendedListService();
@@ -644,7 +618,7 @@ class JournalLineModel extends BaseComponent {
   OnSelectedItemChanged($event) {
     console.log($event);
   }
-
+ 
 
     get ActionCode() { return this.JournalLinePM.ActionCode; }
     set ActionCode(value: string) {
@@ -663,7 +637,7 @@ class JournalLineModel extends BaseComponent {
     set ActionName(value: string) {
         if (this.JournalLinePM.ActionName != value) {
             this.JournalLinePM.ActionName = value;
-            //alert(value);
+            //alert(value); 
         }
 
     }
@@ -776,7 +750,7 @@ class JournalLineModel extends BaseComponent {
     isLocalEntered: boolean = false;
     isForeignEntered: boolean = false;
 
-    // [!]
+    // [!] 
     // [!] Warning!! Any changes in one function must done in another function
     // [!]
 
@@ -1097,7 +1071,7 @@ class JournalLineModel extends BaseComponent {
     }
 
     currency: CurrencyList;
-    get Currency() { return this.currency; }
+    get Currency() { return this.currency; } 
     set Currency(value: CurrencyList) {
         if (this.currency != value) {
             this.currency = value;
@@ -1146,7 +1120,7 @@ class JournalLineModel extends BaseComponent {
                                 ////    confirmWindow.Show(TextCodeTranslator.Translate("Accounting.General.O.SplittedAccountMsgCredit"));
                                 ////else
                                 ////    confirmWindow.Show(TextCodeTranslator.Translate("Accounting.General.O.SplittedAccountMsgDebit"));
-
+                                
                                 ////console.log("DetectChanges");
                                 //////this.parent.DetectChanges();
                                 ////confirmWindow.WindowClosed.subscribe((event: any) => {

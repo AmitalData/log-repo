@@ -164,7 +164,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string SATTransferStatusName { get; set; }
         public string SATInvoiceStatusName { get; set; }
         public bool Intercompany { get; set; }
-        public DateTime? SATApprovalDate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BankAccountLiteId { get; set; }
@@ -314,7 +313,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool SetReTransfer { get; set; }
         public bool SetCancelDraft { get; set; }
         public bool IsExternalAPI { get; set; }
-        public bool SetReSendQBO { get; set; }
 
         // Full Accounting Fields 
         public string JournalId { get; set; }

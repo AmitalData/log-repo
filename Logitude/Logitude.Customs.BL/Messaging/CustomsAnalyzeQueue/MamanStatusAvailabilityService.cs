@@ -6,7 +6,6 @@ using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Data;
-using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
@@ -37,7 +36,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             var res = new AnalyzeResultModel();
             try
             {
-
+                
                 res.ObjectTableID = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 LogMessagingUtil.Instance.AppendLine("MamanStatusAvailabilityService");
 
@@ -146,7 +145,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
 
             }
-
+            
             catch (BusinessErrorException ee)
             {
                 res.ErrorMessage = ee.ToString();
@@ -281,78 +280,5 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         public string EventCode { get; internal set; }
         public DateTime EventTime { get; internal set; }
         public int EventQty { get; internal set; }
-    }
-    public class MamanStatusAvailabilityTesterService
-    {
-        public List<KeyValuePair<string, string>> Tester(string AirlinePreFixMAWB)
-        {
-            var list = new List<KeyValuePair<string, string>>();
-            AirlinePreFixMAWB = AirlinePreFixMAWB ?? "";
-            var parts = AirlinePreFixMAWB.Split('-').ToList();
-            if (parts.Count != 2)
-            {
-                throw new Exception("AirlineIdMAWB.Split('-').ToList() != 2");
-            }
-            int tenant = 1;
-            var customsAirlineRepo = new CustomsAirlineRepository(tenant);
-            var customsAirline = customsAirlineRepo.GetByPrefix(parts[0], tenant);
-            if (customsAirline == null)
-            {
-                throw new Exception($"GetByPrefix({parts[0]}) not in DB");
-            }
-            var qs = new CourierMasterQueryService(tenant);
-            var pm = qs.GetSingleByAirlineAWBs(customsAirline.Id, null, parts[1], tenant);
-            if (pm == null)
-            {
-                throw new Exception($"{AirlinePreFixMAWB} not in DB ");
-            }
-            var declarationRep = new DeclarationRepository(tenant);
-            var declarations = declarationRep.GetCourierConnectedDeclaratins(pm.Id, tenant).ToList();
-            int indx = 0;
-            foreach (var group50 in declarations
-                .Select((rec, index) => new { rec, index })
-                .GroupBy(x => x.index / 50))
-            {
-                string fileName = $"A{parts[1]}_{DateTime.Now.Year}{DateTime.Now.Month}{DateTime.Now.Day}{indx}.STB";
-
-
-
-                var declist= group50.Select(R => R.rec).ToList();
-                var XMLData = new XDocument(
-                        new XElement("MamanBaldarSTB",
-
-                        (from item in declist
-                         select
-                             new XElement("STBMessage",
-                                        new XElement("BaldarAwb", item.CourierHAWB),
-                                    new XElement("BaldarHp", "HowCare"),
-                                    new XElement("BaldarOpenDate", "111118"),
-                                    new XElement("BaldarCode", "HowCare"),
-                                    new XElement("EventCode", "0001"),
-                                    new XElement("EventTime", "2019-01-01T10:14:35.433269+02:00"),
-                                    new XElement("AirlineCode", "HowCare"),
-                                    new XElement("Fltno", "HowCare"),
-                                    new XElement("FltDate", "HowCare"),
-                                    new XElement("LandTime", "HowCare"),
-                                    new XElement("EventQty", "1"),
-                                    new XElement("Weight", "HowCare"),
-                                    new XElement("DeclarationId", "HowCare"),
-                                    new XElement("HataraTime", "HowCare"),
-                                    new XElement("DestLineCode", "HowCare"),
-                                    new XElement("DestLineName", "HowCare"),
-                                    new XElement("DistributorHp", "HowCare"),
-                                    new XElement("DistributorName", "HowCare")
-                                    )
-
-                 )));
-                
-                var xml = XMLData.ToString(SaveOptions.None);
-                list.Add(new KeyValuePair<string, string>(fileName, xml));
-                indx++;
-            }
-
-            return list;
-
-        }
     }
 }

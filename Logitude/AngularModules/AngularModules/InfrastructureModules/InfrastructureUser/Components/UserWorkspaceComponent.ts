@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {Component, OnInit, ComponentRef, Output, EventEmitter}  from '@angular/core';
 import {QueryPM} from '../../../Infrastructure/EntityPMs/QueryPM';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -73,7 +73,7 @@ export class UserWorkspaceComponent implements OnInit {
     private InitLicensesManagment() {
         var isLicensesManagmentSystem: boolean = false;        
 
-        if (SessionLocator.TenantManagementJS.IsMultiPackage) {
+        if (InfraSettings.TenantManagementPM.IsMultiPackage) {
             if (FeatureLocator.HasFeaturePermession("User", "User.Feature.LicensesManagment")) {
                 isLicensesManagmentSystem = true;
             }
@@ -117,7 +117,7 @@ export class UserWorkspaceComponent implements OnInit {
 
     private FillLicensesManagmentsList() {
         var index: number = 0;
-        SessionLocator.TenantManagementJS.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode === b.PackageCode) ? 0 : (a.PackageCode < b.PackageCode) ? -1 : 1 }).forEach(item => {
+        InfraSettings.TenantManagementPM.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode === b.PackageCode) ? 0 : (a.PackageCode < b.PackageCode) ? -1 : 1 }).forEach(item => {
             index++;
 
             if (index <= 10) {
@@ -146,7 +146,7 @@ export class UserWorkspaceComponent implements OnInit {
         this.ShowUserLicenseExclamationMark = false;
 
         if (this.allUserLicenses != null) {
-            SessionLocator.TenantManagementJS.TenantManagementLicenses.forEach(item => {
+            InfraSettings.TenantManagementPM.TenantManagementLicenses.forEach(item => {
                 var usersCount: number = this.allUserLicenses.filter(d => d.PackageCode == item.PackageCode).length;
                 var numberOfUsers: number = AppTool.IsNullOrZero(item.NumberOfUsers) ? 0 : item.NumberOfUsers;
 
@@ -284,7 +284,7 @@ export class UserWorkspaceComponent implements OnInit {
             this.MyViewsQueryVisibility = true;
         }
 
-        if (SessionLocator.TenantManagementJS.ManageLicencesPerUser) {
+        if (InfraSettings.TenantManagementPM.ManageLicencesPerUser) {
             this.IsLicensesVisibile = true;
         }
     }

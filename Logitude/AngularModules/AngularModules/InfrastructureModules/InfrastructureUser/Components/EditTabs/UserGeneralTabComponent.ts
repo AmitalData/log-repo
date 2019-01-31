@@ -1,4 +1,4 @@
-import {Component, OnDestroy}  from '@angular/core';
+﻿import {Component, OnDestroy}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UserPM} from '../../../../Common/EntityPMs/UserPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -127,7 +127,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
             this.IsSalesmanVisible = true;
         }
 
-        if (SessionLocator.TenantManagementJS.ManageLicencesPerUser) {
+        if (SessionLocator.TenantManagementPM.ManageLicencesPerUser) {
             this.IsLicencedUserVisible = true;
         }
 
@@ -158,7 +158,6 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         this.UIProperties.SetEnabled("InActive", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("LicencedUser", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("IsShowContactDetailsInTheMobileApp", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("ShowLocalNameInLOV", this.ObjectTableName, isEditingEnabled);
     }
 
     public get Email() { return this.EntityPM.Email; }
@@ -245,7 +244,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
             var isDirty: boolean = this.EntityPM.IsDirty;
             this.EntityPM.InActive = value;
 
-            if (SessionLocator.TenantManagementJS.IsMultiPackage) {
+            if (SessionLocator.TenantManagementPM.IsMultiPackage) {
                 var service: UserExtendedListService = new UserExtendedListService();
                 service.GetUserLicensesCountForUser(this.EntityPM.Id).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
@@ -307,12 +306,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         }
     }
     
-    public get ShowLocalNameInLOV () { return this.EntityPM.ShowLocalNameInLOV ; }
-    public set ShowLocalNameInLOV (value: boolean) {
-        if (this.EntityPM.ShowLocalNameInLOV  != value) {
-            this.EntityPM.ShowLocalNameInLOV  = value;
-        }
-    }
+
 
 
 

@@ -47,7 +47,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityPM.Id = IdCounter.GetNumber("DWQuery", tenant).ToString();
             this.Poco = new DWQuery();
             this.Poco.Id = this.entityPM.Id;
-            //this.Poco.CreatedByUserId = 
+
 
             DWQueryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);

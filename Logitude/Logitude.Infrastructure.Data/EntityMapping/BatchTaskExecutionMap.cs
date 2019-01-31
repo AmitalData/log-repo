@@ -72,8 +72,6 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             this.Property(t => t.ProgressPercentage).HasColumnName("ProgressPercentage");
 
             this.Property(t => t.Subject).HasColumnName("Subject").HasMaxLength(200).IsUnicode(true);
-
-            this.Property(t => t.CallStack).HasColumnName("CallStack").IsMaxLength().IsUnicode(true);
         }
     }
 }

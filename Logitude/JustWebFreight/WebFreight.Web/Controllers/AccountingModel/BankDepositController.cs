@@ -78,35 +78,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
 
-        public HttpResponseMessage PostCancelDeposit(string bankDepositId)
-        {
-
-            try
-            {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
-
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    int tenant = authToken.Tenant;
-                    var accountingContext = AccountingContext.GetContext(tenant);
-
-                    BankDepositQueryService query = new BankDepositQueryService(accountingContext);
-                    query.CancelDeposit(bankDepositId, tenant);
-
-                    scope.Complete();
-
-                    return Request.CreateResponse(HttpStatusCode.OK, "OK");
-                }
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
+        
     }
 }
 	 

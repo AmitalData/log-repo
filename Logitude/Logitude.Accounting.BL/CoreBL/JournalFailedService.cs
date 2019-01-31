@@ -43,16 +43,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-
-
                     var repo = new JournalRepository(accountingContext);
-                    
-                    var up = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
-                    up.SetStatusCodeFailed(_SeedJournalId, _Tenant);
-                    //var poco = repo.GetSingle(_SeedJournalId, _Tenant);
-                    //poco.StatusCode = ((int)Def.EntityPMs.JournalStatusTypePM.StatusCodeEnum.Failed).ToString();
-                    //repo.Update(poco);
-
+                    var poco=repo.GetSingle(_SeedJournalId, _Tenant);
+                    poco.StatusCode = ((int)Def.EntityPMs.JournalStatusTypePM.StatusCodeEnum.Failed).ToString();
+                    repo.Update(poco);
                     
                     if (ex != null)
                     {

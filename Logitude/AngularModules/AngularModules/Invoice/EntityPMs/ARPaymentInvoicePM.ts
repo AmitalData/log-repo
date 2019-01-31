@@ -57,10 +57,6 @@ export class ARPaymentInvoicePM {
   public get ARInvoiceMetodoPagoCode() { return this.aRInvoiceMetodoPagoCode; }
   public set ARInvoiceMetodoPagoCode(newValue: string) { this.aRInvoiceMetodoPagoCode = newValue; this.MarkAsDirty(); }
 
-    private aRInvoiceTransferStatusCode: string;
-    public get ARInvoiceTransferStatusCode() { return this.aRInvoiceTransferStatusCode; }
-    public set ARInvoiceTransferStatusCode(newValue: string) { this.aRInvoiceTransferStatusCode = newValue; this.MarkAsDirty(); }
-    
   private changeSetOp: string;
   public get ChangeSetOp() { return this.changeSetOp; }
   public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue; this.MarkAsDirty(); }

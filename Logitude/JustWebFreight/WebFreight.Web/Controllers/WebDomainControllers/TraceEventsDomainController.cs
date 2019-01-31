@@ -316,11 +316,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (eventType.IsCustomerView)
                     {
                         this.ComputeLastSharedEvent(entityPOCO, tenant);
-
-                        myResult.LastSharedEventId = entityPOCO.LastSharedEventId;
-                        myResult.LastSharedEventLocation = entityPOCO.LastSharedEventLocation;
-                        myResult.LastSharedEventNotes = entityPOCO.LastSharedEventNotes;
-                        myResult.LastSharedEventDate = entityPOCO.LastSharedEventDate;
                     }
 
                     shipmentRepository.Update(entityPOCO);
@@ -371,9 +366,5 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string StatusLocation { get; set; }
         public DateTime? StatusDate { get; set; }
         public DateTime? LastStatusLogDate { get; set; }
-        public string LastSharedEventId { get; set; }
-        public string LastSharedEventLocation { get; set; }
-        public string LastSharedEventNotes { get; set; }
-        public DateTime? LastSharedEventDate { get; set; }
     }
 }

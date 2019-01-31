@@ -8,7 +8,6 @@ declare var window: any;
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 declare var insertAtSubject : any;
 @Component({
     moduleId: module.id,
@@ -31,11 +30,9 @@ export class TextDesignComponent implements OnInit {
    private _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor(elementRef: ElementRef, private cd: ChangeDetectorRef) {
         this.elementRef = elementRef;
-   }
-    Title: string = "";
+    }
     ngOnInit() {
         if (this.QuoteTemplateTextDesignPM) {
-            this.Title =   TextCodeTranslator.Translate("QuoteTemplate.S." + this.QuoteTemplateTextDesignPM.Title.replace(" ", ""));
             var fontFamilyString = "Arial,Arial Black,Calibri,Comic Sans MS,Courier New,Georgia,Lucida Sans Unicode,Times New Roman,Trebuchet MS,Verdana";
             var fontSizeString = "8,9,10,11,12,14,16,18,20,22,24,26,28,36,48,72";
             fontSizeString.split(',').forEach((fontsize) => { this.FontSizeLists.push(Number(fontsize)); });
@@ -54,7 +51,6 @@ export class TextDesignComponent implements OnInit {
 
         if (this.QuoteTemplateTableDesignPM) {
             this.BorderTypes = [];
-
             this.BorderTypes.push(new BorderType("None", "NONE"));
             this.BorderTypes.push(new BorderType("All", "ALL"));
             this.BorderTypes.push(new BorderType("Box", "BOX"));
@@ -237,8 +233,7 @@ export class BorderType   {
     Code: string;
     Name: string;
     constructor(name: string, code: string) {
-        this.Name = TextCodeTranslator.Translate("QuoteTemplate.S." + name.replace(" ",""));
-
+        this.Name = name;
         this.Code = code;
     }
 }

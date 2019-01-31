@@ -33,10 +33,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DocumentStatusCode, 
 	         TotalInvoiceAmountInUSD, 
 	         CourierPendingReasonCode, 
-	         PendingRemarks, 
-	         SpecialActionStatus, 
-	         FastIndividualProcessCode, 
-	         ManualProcessCode,
+	         PendingRemarks,
 	      }
 
 
@@ -85,12 +82,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         MamanStatusCode, 
 	         MamanErrorXml, 
 	         CourierSuspentionCode, 
-	         CourierSuspentionName, 
-	         SpecialActionStatus, 
-	         SpecialActionsErrorXml, 
-	         CourierPendingReasonErrorPlace, 
-	         FastIndividualProcessCode, 
-	         ManualProcessCode,
+	         CourierSuspentionName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -152,21 +144,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PendingRemarks))
             {
 				entityPOCO.PendingRemarks = entityPM.PendingRemarks;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SpecialActionStatus))
-            {
-				entityPOCO.SpecialActionStatus = entityPM.SpecialActionStatus;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FastIndividualProcessCode))
-            {
-				entityPOCO.FastIndividualProcessCode = entityPM.FastIndividualProcessCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ManualProcessCode))
-            {
-				entityPOCO.ManualProcessCode = entityPM.ManualProcessCode;
 			}
 			}
 
@@ -233,21 +210,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.PendingRemarks = entityPOCO.PendingRemarks;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SpecialActionStatus))
-            {
-					entityPM.SpecialActionStatus = entityPOCO.SpecialActionStatus;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FastIndividualProcessCode))
-            {
-					entityPM.FastIndividualProcessCode = entityPOCO.FastIndividualProcessCode;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ManualProcessCode))
-            {
-					entityPM.ManualProcessCode = entityPOCO.ManualProcessCode;
-            }
-
 		}
 
 		public void PMToOldPM(DeclarationCourierStatusPM entityPM, DeclarationCourierStatusPM oldEntityPM)
@@ -307,21 +269,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PendingRemarks))
             {
                 oldEntityPM.PendingRemarks = entityPM.PendingRemarks;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SpecialActionStatus))
-            {
-                oldEntityPM.SpecialActionStatus = entityPM.SpecialActionStatus;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FastIndividualProcessCode))
-            {
-                oldEntityPM.FastIndividualProcessCode = entityPM.FastIndividualProcessCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ManualProcessCode))
-            {
-                oldEntityPM.ManualProcessCode = entityPM.ManualProcessCode;
             }
 			
 		}

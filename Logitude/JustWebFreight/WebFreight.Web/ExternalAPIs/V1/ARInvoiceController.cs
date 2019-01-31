@@ -34,29 +34,21 @@ namespace WebFreight.Web.ExternalAPIs.V1
         {
             try
             {
-
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
-                bool exist = SecurityUtility.CheckFeature("General", "EXTERNALAPIS", tenant);
-                if (!exist)
-                {
-
-                }
-
-                ARInvoiceQueryService Service = new ARInvoiceQueryService(tenant);
+               ARInvoiceQueryService Service = new ARInvoiceQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = new ARInvoice();
                 if (!string.IsNullOrEmpty(id))
                 {
-                    Result = Service.GetARInvoiceById(id, tenant);
+                     Result = Service.GetARInvoiceById(id, tenant);
                 }
                 else if (!string.IsNullOrEmpty(number))
                 {
                     Result = Service.GetARInvoiceByInvoiceNumber(number, tenant);
                 }
-
+               
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }

@@ -46,17 +46,11 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                 {
                                     isContainerExists_Message = true;
                                     ContainerNumber = equipmentDetails.EquipmentIdentifier.Value;
+                                    iContainer = this.shipmentPM.ShipmentPackages.Where(d => d.ContainerNumber == ContainerNumber).FirstOrDefault();
 
-                                    if (ContainerNumber != null)
+                                    if (iContainer != null)
                                     {
-                                        ContainerNumber = ContainerNumber.Trim();
-
-                                        iContainer = this.shipmentPM.ShipmentPackages.Where(d => d.ContainerNumber != null && d.ContainerNumber.ToUpper() == ContainerNumber.ToUpper()).FirstOrDefault();
-
-                                        if (iContainer != null)
-                                        {
-                                            isContainerExists_Shipment = true;
-                                        }
+                                        isContainerExists_Shipment = true;
                                     }
                                 }
                             }
@@ -74,33 +68,38 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                     }
 
                     else
-                    {                        
+                    {
+                        
                         INTTRA_Status.MessagePropertiesType iMessageProperties = iMessageBody.MessageProperties;
 
                         if (iMessageProperties != null)
                         {
-                            string EventCode = iMessageProperties.EventCode;
+                            DateTime? StatusDate = null;
+                            string StatusDateString = "";
+                            string StatusCode = iMessageProperties.EventCode;
 
-                            #region EventLocation
-                            string EventLocationPortId = null;
-                            string EventLocationPortCode = null;
-                            DateTime? EventLocationeDate = null;
-                            string EventLocationDateString = "";
+                            if (iMessageProperties.EventLocation != null)
+                            {
+                                StatusDate = this.GetDateFromString(iMessageProperties.EventLocation.Location);
+
+                                if (StatusDate != null)
+                                {
+                                    StatusDateString = StatusDate.ToString();
+                                }
+                            }
+                            
+                            #region Location
+                            string LocationPortId = null;
+                            string LocationPortCode = null;
+                            DateTime? LocationeDate = null;
                             if (iMessageProperties.EventLocation != null)
                             {
                                 if (iMessageProperties.EventLocation.Location != null)
                                 {
                                     INTTRA_Status.LocationType location = iMessageProperties.EventLocation.Location;
-
-                                    EventLocationeDate = this.GetDateFromString(location);
-
-                                    if(EventLocationeDate != null)
-                                    {
-                                        EventLocationDateString = EventLocationeDate.ToString();
-                                    }
-
                                     string CountryCode = location.LocationCountry;
                                     string CombinedCode = location.LocationCode.Value;
+                                    DateTime? LocationsDate = this.GetDateFromString(location);
                                     string PortCode = CombinedCode.Substring(CountryCode.Length);
 
                                     Port iPort = iPortRepository.GetSinglePortByCode(this.Tenant, PortCode, true);
@@ -115,10 +114,11 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                                     if (iPort != null)
                                     {
-                                        EventLocationPortId = iPort.Id;
+                                        LocationPortId = iPort.Id;
                                     }
 
-                                    EventLocationPortCode = PortCode;
+                                    LocationPortCode = PortCode;
+                                    LocationeDate = LocationsDate;
                                 }
                             }
                             #endregion
@@ -127,11 +127,9 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                             string DeparturePortId = null;
                             string DeparturePortCode = null;
                             DateTime? DepartureDate = null;
-                            string DepartureDateIndicator = null;
                             string ArrivalPortId = null;
                             string ArrivalPortCode = null;
                             DateTime? ArrivalDate = null;
-                            string ArrivalDateIndicator = null;
                             List<INTTRA_Status.LocationType1> locations = new List<INTTRA_Status.LocationType1>();
                             if (iMessageProperties.TransportationDetails != null)
                             {
@@ -166,16 +164,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                                         DeparturePortCode = PortCode;
                                         DepartureDate = LocationsDate;
-
-                                        if (location_From.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.DepartureActual)
-                                        {
-                                            DepartureDateIndicator = "A";
-                                        }
-
-                                        else if (location_From.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.DepartureEstimated)
-                                        {
-                                            DepartureDateIndicator = "E";
-                                        }
                                     }
 
                                     if (location_To != null)
@@ -203,16 +191,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                                         ArrivalPortCode = PortCode;
                                         ArrivalDate = LocationsDate;
-
-                                        if (location_To.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.ArrivalActual)
-                                        {
-                                            ArrivalDateIndicator = "A";
-                                        }
-
-                                        else if (location_To.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.ArrivalEstimated)
-                                        {
-                                            ArrivalDateIndicator = "E";
-                                        }
                                     }
                                 }
                             }
@@ -235,18 +213,17 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                             #endregion
 
                             #region Build Status
-                            string iDetails = EventCode;
+                            string iDetails = StatusCode;
                             DateTime iLogDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant);
 
-                            string iInfo = this.shipmentPM.Id + this.ShipmentNumber + this.Tenant.ToString() + DeparturePortId + ArrivalPortId + ContainerNumber + EventCode + EventLocationDateString;
+                            string iInfo = this.shipmentPM.Id + this.ShipmentNumber + this.Tenant.ToString() + DeparturePortId + ArrivalPortId + ContainerNumber + StatusCode + StatusDateString;
                             string iHash = GetHashedData(iInfo);
                             if (!iShipmentContainerStatusRepository.DoesRecordExist(iHash))
                             {
-                                this.UpdateShipmentRoutings(locations, EventCode, EventLocationeDate);
-                                this.UpdateContainerFields(iContainer, iVoyageNumber, DeparturePortId, DeparturePortCode, DepartureDate, DepartureDateIndicator, ArrivalPortId, ArrivalPortCode, ArrivalDate, ArrivalDateIndicator);
+                                this.UpdateShipmentRoutings(locations);
 
                                 shipmentPM.INTTRALastStatusDate = iLogDate;
-                                this.UpdateLastStatus(EventCode, EventLocationeDate, iLogDate, iContainer);
+                                this.UpdateLastStatus(StatusCode, StatusDate, iLogDate, iContainer);
                                 ShipmentService service = new ShipmentService(myShipmentContext, shipmentPM, systemEmail);
                                 service.Update(true);
 
@@ -257,8 +234,8 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     ContainerId = iContainer.Id,
                                     RecordHash = iHash,
                                     Tenant = this.Tenant,
-                                    StatusCode = EventCode,
-                                    EventDate = EventLocationeDate,
+                                    StatusCode = StatusCode,
+                                    EventDate = StatusDate,
                                     FromPortId = DeparturePortId,
                                     ToPortId = ArrivalPortId,
                                     DepartureDate = DepartureDate,
@@ -268,13 +245,13 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     VoyageNumber = iVoyageNumber,
                                     ShippingLineName = ShippingLineName,
                                     ContainerNumber = ContainerNumber,
-                                    Location = EventLocationPortId,
+                                    Location = LocationPortId,
 
                                     //Partial = statusParams.Partial,
                                     //Pieces = statusParams.Pieces,
                                     //Weight = d,
-                                    TimeOfArrivalInfo = ArrivalDateIndicator,
-                                    TimeOfDepartureInfo = DepartureDateIndicator,
+                                    //TimeOfArrivalInfo = statusParams.TimeOfArrivalInfo,
+                                    //TimeOfDepartureInfo = statusParams.TimeOfDepartureInfo,
                                 };
 
                                 iShipmentContainerStatusRepository.Add(iStatus);
@@ -298,11 +275,11 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                             if (iHouseContainer != null)
                                             {
                                                 iHouse.INTTRALastStatusDate = iLogDate;
-                                                this.UpdateLastStatus(EventCode, EventLocationeDate, iLogDate, iHouseContainer);
+                                                this.UpdateLastStatus(StatusCode, StatusDate, iLogDate, iHouseContainer);
                                                 ShipmentService iHouseService = new ShipmentService(myShipmentContext, iHouse, systemEmail);
                                                 iHouseService.Update(true);
 
-                                                string iHouseInfo = iHouse.Id + iHouse.ShipmentNumber + this.Tenant.ToString() + DeparturePortId + ArrivalPortId + ContainerNumber + EventCode + EventLocationDateString;
+                                                string iHouseInfo = iHouse.Id + iHouse.ShipmentNumber + this.Tenant.ToString() + DeparturePortId + ArrivalPortId + ContainerNumber + StatusCode + StatusDateString;
                                                 string iHouseHash = GetHashedData(iHouseInfo);
                                                 if (!iShipmentContainerStatusRepository.DoesRecordExist(iHouseHash))
                                                 {
@@ -313,8 +290,8 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                                         ContainerId = iHouseContainer.Id,
                                                         RecordHash = iHouseHash,
                                                         Tenant = this.Tenant,
-                                                        StatusCode = EventCode,
-                                                        EventDate = EventLocationeDate,
+                                                        StatusCode = StatusCode,
+                                                        EventDate = StatusDate,
                                                         FromPortId = DeparturePortId,
                                                         ToPortId = ArrivalPortId,
                                                         DepartureDate = DepartureDate,
@@ -324,14 +301,13 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                                         VoyageNumber = iVoyageNumber,
                                                         ShippingLineName = ShippingLineName,
                                                         ContainerNumber = ContainerNumber,
-                                                        Location = EventLocationPortId,
+                                                        Location = LocationPortId,
 
                                                         //Partial = statusParams.Partial,
                                                         //Pieces = statusParams.Pieces,
                                                         //Weight = d,
-
-                                                        TimeOfArrivalInfo = ArrivalDateIndicator,
-                                                        TimeOfDepartureInfo = DepartureDateIndicator,
+                                                        //TimeOfArrivalInfo = statusParams.TimeOfArrivalInfo,
+                                                        //TimeOfDepartureInfo = statusParams.TimeOfDepartureInfo,
                                                     };
 
                                                     iShipmentContainerStatusRepository.Add(iHouseStatus);
@@ -351,9 +327,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             }
         }
 
-
-
-        private void UpdateShipmentRoutings(List<INTTRA_Status.LocationType1> locations, string EventCode, DateTime? EventLocationeDate)
+        private void UpdateShipmentRoutings(List<INTTRA_Status.LocationType1> locations)
         {
             foreach (INTTRA_Status.LocationType1 iLocation in locations)
             {
@@ -379,23 +353,13 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                         {
                                             case INTTRA_Status.DateTimeType2DateType.DepartureEstimated:
                                                 {
-                                                    if (this.shipmentPM.MainCarriageETD == null && this.shipmentPM.MainCarriageATD == null)
-                                                    {
-                                                        this.shipmentPM.MainCarriageETD = LocationsDate;
-                                                    }
-
+                                                    this.shipmentPM.MainCarriageETD = LocationsDate;
                                                     break;
                                                 }
 
                                             case INTTRA_Status.DateTimeType2DateType.DepartureActual:
                                                 {
-                                                    //this.shipmentPM.MainCarriageATD = LocationsDate;
-
-                                                    if (EventCode == "VD")
-                                                    {
-                                                        this.shipmentPM.MainCarriageATD = EventLocationeDate;
-                                                    }
-
+                                                    this.shipmentPM.MainCarriageATD = LocationsDate;
                                                     break;
                                                 }
                                         }
@@ -412,23 +376,13 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                         {
                                             case INTTRA_Status.DateTimeType2DateType.ArrivalEstimated:
                                                 {
-                                                    if (this.shipmentPM.MainCarriageETA == null && this.shipmentPM.MainCarriageATA == null)
-                                                    {
-                                                        this.shipmentPM.MainCarriageETA = LocationsDate;
-                                                    }
-
+                                                    this.shipmentPM.MainCarriageETA = LocationsDate;
                                                     break;
                                                 }
 
                                             case INTTRA_Status.DateTimeType2DateType.ArrivalActual:
                                                 {
-                                                    //this.shipmentPM.MainCarriageATA = LocationsDate;
-
-                                                    if (EventCode == "VA")
-                                                    {
-                                                        this.shipmentPM.MainCarriageATA = EventLocationeDate;
-                                                    }
-
+                                                    this.shipmentPM.MainCarriageATA = LocationsDate;
                                                     break;
                                                 }
                                         }
@@ -447,23 +401,13 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                             {
                                                 case INTTRA_Status.DateTimeType2DateType.DepartureEstimated:
                                                     {
-                                                        if (this.shipmentPM.PreCarriageETD == null && this.shipmentPM.PreCarriageATD == null)
-                                                        {
-                                                            this.shipmentPM.PreCarriageETD = LocationsDate;
-                                                        }
-
+                                                        this.shipmentPM.PreCarriageETD = LocationsDate;
                                                         break;
                                                     }
 
                                                 case INTTRA_Status.DateTimeType2DateType.DepartureActual:
                                                     {
-                                                        //this.shipmentPM.PreCarriageATD = LocationsDate;
-
-                                                        if (EventCode == "VD")
-                                                        {
-                                                            this.shipmentPM.PreCarriageATD = EventLocationeDate;
-                                                        }
-
+                                                        this.shipmentPM.PreCarriageATD = LocationsDate;
                                                         break;
                                                     }
                                             }
@@ -483,23 +427,13 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                             {
                                                 case INTTRA_Status.DateTimeType2DateType.ArrivalEstimated:
                                                     {
-                                                        if (this.shipmentPM.OnCarriageETA == null && this.shipmentPM.OnCarriageATA == null)
-                                                        {
-                                                            this.shipmentPM.OnCarriageETA = LocationsDate;
-                                                        }
-
+                                                        this.shipmentPM.OnCarriageETA = LocationsDate;
                                                         break;
                                                     }
 
                                                 case INTTRA_Status.DateTimeType2DateType.ArrivalActual:
                                                     {
-                                                        //this.shipmentPM.OnCarriageATA = LocationsDate;
-
-                                                        if (EventCode == "VA")
-                                                        {
-                                                            this.shipmentPM.OnCarriageATA = EventLocationeDate;
-                                                        }
-
+                                                        this.shipmentPM.OnCarriageATA = LocationsDate;
                                                         break;
                                                     }
                                             }
@@ -524,23 +458,13 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                                         {
                                                             case INTTRA_Status.DateTimeType2DateType.DepartureEstimated:
                                                                 {
-                                                                    if (this.shipmentPM.PreCarriageETD == null && this.shipmentPM.PreCarriageATD == null)
-                                                                    {
-                                                                        this.shipmentPM.PreCarriageETD = LocationsDate;
-                                                                    }
-
+                                                                    this.shipmentPM.PreCarriageETD = LocationsDate;
                                                                     break;
                                                                 }
 
                                                             case INTTRA_Status.DateTimeType2DateType.DepartureActual:
                                                                 {
-                                                                    //this.shipmentPM.PreCarriageATD = LocationsDate;
-
-                                                                    if (EventCode == "VD")
-                                                                    {
-                                                                        this.shipmentPM.PreCarriageATD = EventLocationeDate;
-                                                                    }
-
+                                                                    this.shipmentPM.PreCarriageATD = LocationsDate;
                                                                     break;
                                                                 }
                                                         }
@@ -553,23 +477,13 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                                     {
                                                         case INTTRA_Status.DateTimeType2DateType.DepartureEstimated:
                                                             {
-                                                                if (this.shipmentPM.MainCarriageETD == null && this.shipmentPM.MainCarriageATD == null)
-                                                                {
-                                                                    this.shipmentPM.MainCarriageETD = LocationsDate;
-                                                                }
-
+                                                                this.shipmentPM.MainCarriageETD = LocationsDate;
                                                                 break;
                                                             }
 
                                                         case INTTRA_Status.DateTimeType2DateType.DepartureActual:
                                                             {
-                                                                //this.shipmentPM.MainCarriageATD = LocationsDate;
-
-                                                                if (EventCode == "VD")
-                                                                {
-                                                                    this.shipmentPM.MainCarriageATD = EventLocationeDate;
-                                                                }
-
+                                                                this.shipmentPM.MainCarriageATD = LocationsDate;
                                                                 break;
                                                             }  
                                                     }
@@ -583,29 +497,19 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                             {
                                                 if (this.shipmentPM.OnCarriageFromPortId != null && this.shipmentPM.OnCarriageToPortId != null)
                                                 {
-                                                    if (PortId == this.shipmentPM.OnCarriageToPortId)
+                                                    if (PortId == this.shipmentPM.PreCarriageToPortId)
                                                     {
                                                         switch (iLocation.DateTime.DateType)
                                                         {
                                                             case INTTRA_Status.DateTimeType2DateType.ArrivalEstimated:
                                                                 {
-                                                                    if (this.shipmentPM.OnCarriageETA == null && this.shipmentPM.OnCarriageATA == null)
-                                                                    {
-                                                                        this.shipmentPM.OnCarriageETA = LocationsDate;
-                                                                    }
-
+                                                                    this.shipmentPM.OnCarriageETA = LocationsDate;
                                                                     break;
                                                                 }
 
                                                             case INTTRA_Status.DateTimeType2DateType.ArrivalActual:
                                                                 {
-                                                                    //this.shipmentPM.OnCarriageATA = LocationsDate;
-
-                                                                    if (EventCode == "VA")
-                                                                    {
-                                                                        this.shipmentPM.OnCarriageATA = EventLocationeDate;
-                                                                    }
-
+                                                                    this.shipmentPM.OnCarriageATA = LocationsDate;
                                                                     break;
                                                                 }          
                                                         }
@@ -618,23 +522,13 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                                     {
                                                         case INTTRA_Status.DateTimeType2DateType.ArrivalEstimated:
                                                             {
-                                                                if (this.shipmentPM.MainCarriageETA == null && this.shipmentPM.MainCarriageATA == null)
-                                                                {
-                                                                    this.shipmentPM.MainCarriageETA = LocationsDate;
-                                                                }
-
+                                                                this.shipmentPM.MainCarriageETA = LocationsDate;
                                                                 break;
                                                             }
 
                                                         case INTTRA_Status.DateTimeType2DateType.ArrivalActual:
                                                             {
-                                                                //this.shipmentPM.MainCarriageATA = LocationsDate;
-
-                                                                if (EventCode == "VA")
-                                                                {
-                                                                    this.shipmentPM.MainCarriageATA = EventLocationeDate;
-                                                                }
-
+                                                                this.shipmentPM.MainCarriageATA = LocationsDate;
                                                                 break;
                                                             }                                                 
                                                     }
@@ -651,6 +545,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 }
             }
         }
+
         private void UpdateLastStatus(string lastStatusCode, DateTime? lastStatusDate, DateTime iLogDate, ShipmentPackagePM iContainer)
         {
             if (lastStatusDate == null)
@@ -671,82 +566,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 iContainer.LastStatusDate = lastStatusDate;
                 iContainer.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             }
-        }
-        private void UpdateContainerFields(ShipmentPackagePM iContainer, string iVoyageNumber, string departurePortId, string departurePortCode, DateTime? departureDate, string departureDateIndicator, string arrivalPortId, string arrivalPortCode, DateTime? arrivalDate, string arrivalDateIndicator)
-        {
-            iContainer.VoyageTripNumber = iVoyageNumber;
-
-            if (departurePortCode == null)
-            {
-                departurePortCode = "";
-            }
-            if (arrivalPortCode == null)
-            {
-                arrivalPortCode = "";
-            }
-
-            iContainer.Routing = departurePortCode + " > " + arrivalPortCode;
-
-            if (departureDateIndicator == "E")
-            {
-                iContainer.ETD = departureDate;
-            }
-
-            if (arrivalDateIndicator == "E")
-            {
-                iContainer.ETA = arrivalDate;
-            }
-
-            bool iHasContainerException = false;
-            List<ShipmentPackagePM> AllContainers = this.shipmentPM.ShipmentPackages.ToList();
-            if (AllContainers.Count > 1)
-            {
-                List<string> AllVoyageNumber = (from a in AllContainers
-                                                where a.VoyageTripNumber != null
-                                                group a by iVoyageNumber into g
-                                                select g.Key).ToList();
-
-                if (AllVoyageNumber.Count >1)
-                {
-                    iHasContainerException = true;
-                }
-            }
-
-            if (iHasContainerException)
-            {
-                iContainer.HasContainerException = true;
-                shipmentPM.HasContainerException = true;
-            }
-
-            else
-            {
-                iContainer.HasContainerException = false;
-                shipmentPM.HasContainerException = false;
-
-                if (departureDateIndicator == "E")
-                {
-                    if (departurePortId == this.shipmentPM.MainCarriageFromPortId)
-                    {
-                        if (this.shipmentPM.MainCarriageATD == null)
-                        {
-                            this.shipmentPM.MainCarriageETD = departureDate;
-                        }
-                    }
-                }
-
-                if (arrivalDateIndicator == "E")
-                {
-                    if (arrivalPortId == this.shipmentPM.MainCarriageFinalDestinationPortId)
-                    {
-                        if (this.shipmentPM.MainCarriageATA == null)
-                        {
-                            this.shipmentPM.MainCarriageETA = arrivalDate;
-                        }
-                    }
-                }
-            }
-
-            iContainer.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
         }
         private DateTime? GetDateFromString(INTTRA_Status.LocationType iLocation)
         {

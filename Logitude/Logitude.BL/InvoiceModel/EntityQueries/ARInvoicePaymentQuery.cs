@@ -44,7 +44,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                   ExchangeRate = a.ExchangeRate,
                   PaymentAmount = a.PaymentAmount,
                   PaymentNumber = a.ARPayment == null ? null : a.ARPayment.PaymentNo,
-                  
               }).ToList();
 
 
@@ -68,7 +67,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         ARPaymentId = a.ARPaymentId,
                         ARInvoiceNumber = a.ARInvoice == null ? null : a.ARInvoice.InvoiceNumber,        
                         ARInvoiceMetodoPagoCode = a.ARInvoice == null ? null : a.ARInvoice.MetodoPagoCode,
-                        ARInvoiceTransferStatusCode=a.ARInvoice==null?null:a.ARInvoice.TransferStatusCode,
                     }).ToList();
         }
 

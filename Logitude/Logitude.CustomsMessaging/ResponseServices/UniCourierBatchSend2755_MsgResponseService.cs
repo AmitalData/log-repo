@@ -2,7 +2,6 @@
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.Data;
-using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
@@ -47,10 +46,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 listPM = qs.GetByMasterIDCourierPaymentStatusCode(requestParams.Tenant, requestParams.AppicationId, "R", "L");
             }
-
-            
-
-
             if (listPM.Count == 0)
             {
                 mess.AppendLine($"There ARE  NOT any Declarations (LOW Val.) 'R'eady to (DEc.Payment) send  for master {requestParams.AppicationId} ");
@@ -59,25 +54,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             dic.Add("InternalBankId", customResponse.InternalBankId);
 
             var UnifreightListOnServerOnly = UnifreightListsUtil.Serialize(dic);
-            var repo = new CourierPendingReasonRepository(requestParams.Tenant);
-            var allCourierPendingReason =repo.GetAll(requestParams.Tenant);
+
             foreach (var itemPM in listPM)
             {
-
-
-                // If  ErrorPlace.CourierPendingReasons == 1 Display error Message 
-                //"קיים Pending עם עצירה בתשלום הצהרה"
-
-
-                if (!String.IsNullOrWhiteSpace(itemPM.CourierPendingReasonCode))
-                {
-
-                    if (allCourierPendingReason.First(r=> r.Code == itemPM.CourierPendingReasonCode).ErrorPlace == "1")
-                    {
-                        mess.AppendLine($" קיים Pending עם עצירה בתשלום הצהרה ({itemPM.DeclarationId})");
-                        continue;
-                    }
-                }
                 try
                 {
                     var requestParams2755 = new GenericRequestParams()

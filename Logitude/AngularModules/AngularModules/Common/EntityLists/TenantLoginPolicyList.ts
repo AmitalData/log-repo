@@ -13,7 +13,7 @@ export class TenantLoginPolicyList {
 		TwoFactorInternalIPs: string;
 		KeepUserLoggedIn: boolean;
 		ExcludeInternalIPs: boolean;
-		AllowedIPs: string;
-		SessionTimeout: number;
-	
+        AllowedIPs: string;
+        SessionTimeout: number;
+
 }

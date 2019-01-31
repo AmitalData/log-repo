@@ -65,9 +65,6 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class ChargesExternalAccountsByProductUpdateClass
@@ -176,7 +173,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PayablesGLAccount",
-					  						DefaultText =  @"Payables GL Account",
+					  						DefaultText =  "Payables GL Account",
 					  						HelpTextCode =  "PayablesGLAccount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -232,7 +229,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PayablesCostCenter",
-					  						DefaultText =  @"Payables Cost Center",
+					  						DefaultText =  "Payables Cost Center",
 					  						HelpTextCode =  "PayablesCostCenter",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -288,7 +285,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ReceivablesGLAccount",
-					  						DefaultText =  @"Receivables GL Account",
+					  						DefaultText =  "Receivables GL Account",
 					  						HelpTextCode =  "ReceivablesGLAccount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -344,7 +341,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ReceivablesCostCenter",
-					  						DefaultText =  @"Receivables Cost Center",
+					  						DefaultText =  "Receivables Cost Center",
 					  						HelpTextCode =  "ReceivablesCostCenter",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -401,7 +398,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ChargesTypeId",
-					  						DefaultText =  @"Charges Type",
+					  						DefaultText =  "Charges Type",
 					  						HelpTextCode =  "ChargesTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -458,7 +455,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ProductTypeCode",
-					  						DefaultText =  @"Product",
+					  						DefaultText =  "Product",
 					  						HelpTextCode =  "ProductTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -514,7 +511,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  @"Update Date",
+					  						DefaultText =  "Update Date",
 					  						HelpTextCode =  "UpdateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -571,7 +568,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
-					  						DefaultText =  @"Updated By",
+					  						DefaultText =  "Updated By",
 					  						HelpTextCode =  "UpdatedByUserId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -608,22 +605,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }
-
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable ChargesExternalAccountsByProductObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChargesExternalAccountsByProduct" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode ChargesExternalAccountsByProductTextCode_ChargesExternalAccountsByProduct = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesExternalAccountsByProduct", DefaultText = "Charges External Accounts By Product",LocalDefaultText = null, ObjectTableId = ChargesExternalAccountsByProductObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
-	    
-}
-
-    
+	    }     
 
    }
     

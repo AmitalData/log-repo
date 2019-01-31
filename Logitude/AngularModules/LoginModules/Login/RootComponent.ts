@@ -127,7 +127,7 @@ export class RootComponent implements OnInit {
                     });
             }
             else {
-               DynamicLoaderTSC.Load("./Login/Components/DSVLoginComponent", this.location)
+               DynamicLoaderTSC.Load("./Login/Components/LoginComponent", this.location)
                     .then(cmpRef => {
 
                         //cmpRef.instance.Blocking.subscribe(s => {

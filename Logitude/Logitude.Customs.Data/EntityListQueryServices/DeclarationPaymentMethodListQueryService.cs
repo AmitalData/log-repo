@@ -35,7 +35,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                             SequenceNumeric = a.SequenceNumeric,
                                                             Tenant = a.Tenant,
                                                             InternalBankId = a.InternalBankId,
-                                                            CustomsBranchId = a.CustomsBranchId,
                                                         });
             return query;
 		}

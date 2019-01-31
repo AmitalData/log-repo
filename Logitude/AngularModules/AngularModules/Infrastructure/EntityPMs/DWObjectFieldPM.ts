@@ -79,42 +79,14 @@ export class DWObjectFieldPM {
     public get IsPrimaryKey() { return this.isPrimaryKey; }
     public set IsPrimaryKey(newValue: boolean) { if (this.isPrimaryKey != newValue) { this.isPrimaryKey = newValue; this.MarkAsDirty("IsPrimaryKey"); } }
        
-	 
     private isMeasurement: boolean;
     public get IsMeasurement() { return this.isMeasurement; }
     public set IsMeasurement(newValue: boolean) { if (this.isMeasurement != newValue) { this.isMeasurement = newValue; this.MarkAsDirty("IsMeasurement"); } }
-       
-	 
+
     private aggregationTypeCode: string;
     public get AggregationTypeCode() { return this.aggregationTypeCode; }
     public set AggregationTypeCode(newValue: string) { if (this.aggregationTypeCode != newValue) { this.aggregationTypeCode = newValue; this.MarkAsDirty("AggregationTypeCode"); } }
-       
-	 
-    private displayInQueryBuilder: boolean;
-    public get DisplayInQueryBuilder() { return this.displayInQueryBuilder; }
-    public set DisplayInQueryBuilder(newValue: boolean) { if (this.displayInQueryBuilder != newValue) { this.displayInQueryBuilder = newValue; this.MarkAsDirty("DisplayInQueryBuilder"); } }
-       
-	 
-    private displayName: string;
-    public get DisplayName() { return this.displayName; }
-    public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
-       
-	 
-    private category1: string;
-    public get Category1() { return this.category1; }
-    public set Category1(newValue: string) { if (this.category1 != newValue) { this.category1 = newValue; this.MarkAsDirty("Category1"); } }
-       
-	 
-    private category2: string;
-    public get Category2() { return this.category2; }
-    public set Category2(newValue: string) { if (this.category2 != newValue) { this.category2 = newValue; this.MarkAsDirty("Category2"); } }
-       
-	 
-    private lOVAdditionalColumns: string;
-    public get LOVAdditionalColumns() { return this.lOVAdditionalColumns; }
-    public set LOVAdditionalColumns(newValue: string) { if (this.lOVAdditionalColumns != newValue) { this.lOVAdditionalColumns = newValue; this.MarkAsDirty("LOVAdditionalColumns"); } }
-       
-	 
+
 
     public OldEntityPM: DWObjectFieldPM;
 		

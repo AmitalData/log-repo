@@ -63,27 +63,14 @@ namespace WebFreight.Web.Helpers.ExternalAPIHelpers
                 {
                     foreach (var error in modValue.Errors)
                     {
-                        string errorStr = error.ErrorMessage;
-                        if (!string.IsNullOrEmpty(error.ErrorMessage))
-                        {
-                            errorStr = error.ErrorMessage;
-                        }
-                        else if (error.Exception != null)
-                        {
-                            errorStr = error.Exception.Message;
-                            if (error.Exception.InnerException != null)
-                                errorStr = error.Exception.InnerException.Message;
-
-                        }
-
-                        ErrorMessage += errorStr + Environment.NewLine;
-                        ShortErrorMessage += errorStr + Environment.NewLine;
+                        ErrorMessage += error.ErrorMessage + Environment.NewLine;
+                        ShortErrorMessage += error.ErrorMessage + Environment.NewLine;
                     }
                 }
 
                 apiException = new APIException()
                 {
-                    ErrorType = "Invalid Xml",
+                    ErrorType = "ModelStateError",
                     ErrorMessage = ErrorMessage,
                     ShortErrorMessage = ShortErrorMessage,
                 };

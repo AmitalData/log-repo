@@ -1,13 +1,50 @@
-import {Component, Output, EventEmitter, ChangeDetectionStrategy, Input} from '@angular/core';
+﻿import {Component, Output, EventEmitter, ChangeDetectionStrategy, Input} from '@angular/core';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {AppTool, ImageTool} from  '../../Tools';
 import {BaseComponent} from '../../Components/LogitudeComponents/BaseComponent';
 
 @Component({
     selector: "TimeInput",
-    inputs: ["TextAlign", "IsShowText", "IsNew", "Disabled", "TotalMinutes", "FocusOnMe"],
-    moduleId: module.id,
-    templateUrl: './TimeInput.html',
+    inputs: ["TextAlign", "IsShowText", "IsLOV", "IsNew", "Disabled", "IsTime", "IsDate", "TotalMinutes"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template:
+    `
+        <div class="MediaFill" [attr.id]="ControlId">
+            <button style="background: transparent; border: none; height: 100%;" (blur)="OnLostFocus()" (focus)="OnFocus()">
+                <table (mouseover)="IsMouseOverMe = true;" (mouseleave)="IsMouseOverMe = false;">
+                    <tr>
+                        <td>
+                                       <div class="MediaFill TextTrimming" [hidden]="!IsShowText" style="line-height: 22px; font-size: 14px;" [ngStyle]="{'text-align': TextAlign}">{{DisplayValue}}</div>
+                                       <div *ngIf="!Disabled">
+                                          <LogTextBox *ngIf="!IsLOV && !IsTime && !IsDate" [hidden]="IsShowText"
+                                                (LostFocus)="TextBoxLostFocus()" 
+                                                (keydown)="onkeydown($event)"
+                                                [NoObjectField]="true" 
+                                                [ObjectFieldName]="'InputValue'" 
+                                                [Text]="InputValue" 
+                                                [ObjectTableName]="'TMEmployeeTime'" 
+                                                [DataContext]="DataContext" 
+                                                [HideColumns]="true">
+                                           </LogTextBox>
+
+                                           <LogDatePicker (LostFocus)="TextBoxLostFocus()" *ngIf="IsTime" [hidden]="IsShowText" [ObjectFieldName]="'InputValue'" [SelectedDateValue]="'InputValue'" [ObjectTableName]="'TMOfficeHour'" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                           <LogDatePicker (LostFocus)="TextBoxLostFocus()" *ngIf="IsDate" [hidden]="IsShowText" [ObjectFieldName]="'InputValue'" [SelectedDateValue]="'InputValue'" [ObjectTableName]="'TMOfficeHour'" [DataContext]="DataContext" [HideColumns]="true" ></LogDatePicker>
+                                           <LogLov (LostFocus)="IsShowText = true" *ngIf="IsLOV" [hidden]="IsShowText"
+                                                        [NoObjectField]="true"
+                                                        [DataContext]="DataContext"
+                                                        [ObjectTableName]="'TMProject'"
+                                                        [ObjectFieldName]="'InputValue'"
+                                                        [SelectedValue]="InputValue"
+                                                        [LookUpTableName]="'TMProject'"
+                                                        [HideColumns]="true">
+                                          </LogLov>
+                                     </div>
+                        </td>
+                    </tr>
+                </table>
+            </button>
+        </div>
+    `,
 })
 
 export class TimeInput extends BaseComponent {
@@ -17,20 +54,21 @@ export class TimeInput extends BaseComponent {
     public IsShowText = true;
     public IsNew = false;
     public FormattedMinutes: string = "";
+    public IsLOV = false;
     public Disabled = false;
     public TextAlign: string = "center";
-    public TotalMinutes; number;
-    public FocusOnMe: boolean = false;
+    public TotalMinutes; number; 
     @Output() Changed: EventEmitter<string> = new EventEmitter<string>();
     @Output() DisplayChanged: EventEmitter<any> = new EventEmitter<any>();
     @Output() TotalMinutesChanged: EventEmitter<any> = new EventEmitter<any>();
+
     constructor() {
         super();
         var idIndex = SessionLocator.CurrentSession.GetNewId("TimeInput");
         this.ControlId = "TimeInputControl_" + idIndex;
     }
 
-    private inputValue: string = "";
+    private inputValue: string;
     @Input() public get InputValue() {
         return this.inputValue;
     }
@@ -462,9 +500,5 @@ export class TimeInput extends BaseComponent {
             }
 
         }
-    }
-
-    onButtonClick(e) {
-        e.preventDefault();
     }
 }

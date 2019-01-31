@@ -105,10 +105,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string IATACodeId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? QuoteSaleMinAmount { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? QuoteSaleMaxAmount { get; set; }
+        public double? QuoteSaleMinPrice { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string QuoteChargeId { get; set; }

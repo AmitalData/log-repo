@@ -67,28 +67,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
             }
 
         }
-
-        public HttpResponseMessage GetAdvancedQueryFiltersByTenantAndQuery(int tenant, string loggedcontactid, string queryId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                AdvancedQueryFilterQuery advancedQueryFilterQuery = new AdvancedQueryFilterQuery(tenant);
-                var result = advancedQueryFilterQuery.GetAdvancedQueryFilterPMsByTenantAndUserAndQuery(tenant, loggedcontactid, queryId);
-
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
-
         public HttpResponseMessage GetAdvancedQueryFiltersByTenantuserobjecttablequery(int tenant,string objecttableid,string queryid, string loggedcontactid)
         {
             try

@@ -251,8 +251,5 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool ShowTitleTotalPerContainersTable { get; set; }
         public bool ShowChargeNotePackages { get; set; }
         public bool ShowChargeNoteContainers { get; set; }
-
-        public bool ShowSaleMaxMinAmountPackages { get; set; }
-        public bool ShowSaleMaxMinAmountContainers { get; set; }
     }
 }

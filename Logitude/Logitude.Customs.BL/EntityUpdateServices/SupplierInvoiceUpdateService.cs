@@ -442,11 +442,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Delete || entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 SubmitChanges();
-                if(supplierInvoices == null || supplierInvoices.Count() < 1)
-                {
-                    supplierInvoices = invoiceRepository.GetMulti(new DeclarationKeys() { Id = entityPM.DeclarationId });
-                }
-                
                 isSubmitChanges = true;
                 int index = 0;
                 var my = new SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.InvoiceCounterKey };
