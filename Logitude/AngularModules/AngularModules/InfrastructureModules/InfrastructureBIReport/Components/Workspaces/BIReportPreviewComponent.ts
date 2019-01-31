@@ -422,7 +422,6 @@ export class BIReportPreviewComponent implements OnInit {
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 if (s != null  ||( d != null && d != "cancel")) {
-                    this.DWQueryId = s.ID;
                     this.LoadBIReportData();
                 }
             });
