@@ -325,7 +325,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (!string.IsNullOrWhiteSpace(notificationDefinitionCode))
             {
                 LogMessagingUtil.Instance.AppendLine("Start Sending Notification... ");
-                DoUpdateNotification(notificationDefinitionCode, _DeclarationCargoSplitPM.Tenant, customResponse.ResponseContentHeader.Remark, notificationDescription, assigneToNotificationTypeCode, declaration);
+                DoUpdateNotification(notificationDefinitionCode, _DeclarationCargoSplitPM.Tenant, customResponse.ResponseContentHeader.Remark, notificationDescription, assigneToNotificationTypeCode, declaration, _DeclarationCargoSplitPM);
             }
 
             this.MyRequestSheetParam.CustomFileNo = customsFileNo;
@@ -341,7 +341,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-        private void DoUpdateNotification(string notificationDefinitionCode, int tenant, string responseToMessage, string description, string typeCode, DeclarationPM connectedDeclarationPM)
+        private void DoUpdateNotification(string notificationDefinitionCode, int tenant, string responseToMessage, string description, string typeCode, DeclarationPM connectedDeclarationPM, DeclarationCargoSplitPM _DeclarationCargoSplitPM)
         {
             LogMessagingUtil.Instance.AppendLine("New Message To Agent Request Notification");
 
@@ -358,11 +358,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
             newNotificationPM.Reference2Number = responseToMessage;
             newNotificationPM.DueDate = DateTime.Now;
             newNotificationPM.AssigneToNotificationTypeCode = typeCode;
+            if(_DeclarationCargoSplitPM != null)
+            {
+                newNotificationPM.EntityId = _DeclarationCargoSplitPM.Id;
+                newNotificationPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.DeclarationCargoSplit");
+            }
 
             string customerId = null;
             string referentUserId = null;
             if (connectedDeclarationPM != null)
             {
+                if (_DeclarationCargoSplitPM != null) newNotificationPM.Reference2Number = _DeclarationCargoSplitPM.Id;
                 newNotificationPM.EntityId = connectedDeclarationPM.Id;
                 newNotificationPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 newNotificationPM.Reference1Number = connectedDeclarationPM.CustomFileNo;
