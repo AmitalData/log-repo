@@ -1453,89 +1453,113 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
 
-        public HttpResponseMessage GetARPaymentSATCancellationStatus(string paymentId)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        string loggedUserEmail = authToken.Email;
-                        int tenant = authToken.Tenant;
+		public HttpResponseMessage GetARPaymentSATCancellationStatus(string paymentId)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					using (TransactionScope scope = TransactionFactory.GetTransaction())
+					{
+						string token = HttpContext.Current.Request.Headers["Token"];
+						AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+						string loggedUserEmail = authToken.Email;
+						int tenant = authToken.Tenant;
 
 
-                        ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
-                        ARPaymentPM entityPM = paymentQuery.GetSinglePM(paymentId, tenant);
+						ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
+						ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(tenant);
+						ARInvoiceRepository arInvoiceRepository = new ARInvoiceRepository(tenant);
 
-                        Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, entityPM.SATXML);
-
-                        /*
-                         * Catalog EstadoCancelacion
-                           EnProceso  
-                           SinRespuesta
-                           CanceladoSinAceptacion
-                           CanceladoConAceptacion
-                           PlazoVencido
-
-                         * */
-                        scope.Complete();
-                        return Request.CreateResponse(HttpStatusCode.OK, "");
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
-            }
-        }
+						ARPaymentPM entityPM = paymentQuery.GetSinglePM(paymentId, tenant);
+						ARPayment payment = aRPaymentRepository.GetSingleARPayment(paymentId, tenant);
 
 
-        public HttpResponseMessage GetARInvoiceSATCancellationStatus(string invoiceId)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        string loggedUserEmail = authToken.Email;
-                        int tenant = authToken.Tenant;
+						Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, payment.SATXML);
+						if (resultadoConsultaEstatusSAT.Descripcion == "t")
+						{
+							payment.SATXML = null;
+							payment.SATTransferStatusCode = "TD";
+							aRPaymentRepository.Update(payment);
+							aRPaymentRepository.SubmitChanges();
+
+							Profact.TimbraCFDI33.Comprobante comprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(payment.SATXML);
+							SATInterfaceHelper sATInterfaceHelper = new SATInterfaceHelper();
+							sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobante, arInvoiceRepository, aRPaymentRepository);
+						}
+						/*
+						 * Catalog EstadoCancelacion
+						   EnProceso  
+						   SinRespuesta
+						   CanceladoSinAceptacion
+						   CanceladoConAceptacion
+						   PlazoVencido
+
+						 * */
+						scope.Complete();
+						return Request.CreateResponse(HttpStatusCode.OK, "");
+					}
+				}
+
+				catch (Exception ex)
+				{
+					return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+				}
+			}
+
+			else
+			{
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+			}
+		}
 
 
-                        ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(tenant);
-                        ARInvoicePM entityPM = invoiceQuery.GetSinglePM(invoiceId, tenant);
-                        Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, entityPM.SATXML);
-
-                        scope.Complete();
-                        return Request.CreateResponse(HttpStatusCode.OK, "");
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
-            }
-        }
+		public HttpResponseMessage GetARInvoiceSATCancellationStatus(string invoiceId)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					using (TransactionScope scope = TransactionFactory.GetTransaction())
+					{
+						string token = HttpContext.Current.Request.Headers["Token"];
+						AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+						string loggedUserEmail = authToken.Email;
+						int tenant = authToken.Tenant;
 
 
-        public HttpResponseMessage getConnectedARPayments(string invoiceId)
+						ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(tenant);
+						ARInvoiceRepository arInvoiceRepository = new ARInvoiceRepository(tenant);
+						ARInvoicePM entityPM = invoiceQuery.GetSinglePM(invoiceId, tenant);
+						ARInvoice entity = arInvoiceRepository.GetSingleInvoice(invoiceId);
+
+						Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, entity.SATXML);
+						if (resultadoConsultaEstatusSAT.Descripcion == "t")
+						{
+							entity.SATTransferStatusCode = "TD";
+							arInvoiceRepository.Update(entity);
+							arInvoiceRepository.SubmitChanges();
+						}
+
+						scope.Complete();
+						return Request.CreateResponse(HttpStatusCode.OK, "");
+					}
+				}
+
+				catch (Exception ex)
+				{
+					return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+				}
+			}
+
+			else
+			{
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+			}
+		}
+
+
+		public HttpResponseMessage getConnectedARPayments(string invoiceId)
         {
             if (ModelState.IsValid)
             {

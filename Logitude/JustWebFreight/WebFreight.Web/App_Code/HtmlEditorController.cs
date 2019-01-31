@@ -177,7 +177,7 @@ namespace WebFreight.Web.App_Code
                         htmlstring = encodedHtmlHelper.EncodedHtmlScript(htmlstring);
                     }
 
-
+                   
                     byte[] bytedata = enc.GetBytes(htmlstring);
                     if (!filter.IsCRM)
                     {

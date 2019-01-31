@@ -4,19 +4,20 @@ using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
 {
     [TestClass]
-    public class BankAccountOnCreatingServiceUnitTest
+    public class BankAccountOnCreatingServiceUnitTest:TestBase
     {
 
         [TestMethod]
         public void OnCreating_IdMatchesExpected_Success()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
-            string expectedLoggedUserId = loggedcontact.Id;
+            //ContactPM loggedcontact = GetLoggedContactInstance();
+            //string expectedLoggedUserId = loggedcontact.Id;
             DateTime expectedDateTime = DateTime.Now;
             string expectedIdCounter = "myNewIdCounter";
             BankAccountPM entityPM = new BankAccountPM()
@@ -33,7 +34,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
 
 
             var bankAccountOnCreatingService = A.Fake<BankAccountOnCreatingService>(option => option.CallsBaseMethods());
-            A.CallTo(() => bankAccountOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+            //A.CallTo(() => bankAccountOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountOnCreatingService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
             A.CallTo(() => bankAccountOnCreatingService.IdCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedIdCounter);
             bankAccountOnCreatingService.OnCreating(entityPM);
@@ -45,7 +46,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
         [TestMethod]
         public void OnCreating_UpdatedByUserIdMatchesExpected_Success()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);
             string expectedLoggedUserId = loggedcontact.Id;
             DateTime expectedDateTime = DateTime.Now;
             string expectedIdCounter = "myNewIdCounter";
@@ -63,7 +64,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
 
 
             var bankAccountOnCreatingService = A.Fake<BankAccountOnCreatingService>(option => option.CallsBaseMethods());
-            A.CallTo(() => bankAccountOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+            //A.CallTo(() => bankAccountOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountOnCreatingService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
             A.CallTo(() => bankAccountOnCreatingService.IdCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedIdCounter);
             bankAccountOnCreatingService.OnCreating(entityPM);
@@ -74,7 +75,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
         [TestMethod]
         public void OnCreating_CreatedByUserIdMatchesExpectedIfNull_Success()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(1);
             string expectedIdCounter = loggedcontact.Id;
             DateTime expectedDateTime = DateTime.Now;
 
@@ -92,7 +93,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
             };
 
             var bankAccountOnCreatingService = A.Fake<BankAccountOnCreatingService>(option => option.CallsBaseMethods());
-            A.CallTo(() => bankAccountOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+            //A.CallTo(() => bankAccountOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountOnCreatingService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
             A.CallTo(() => bankAccountOnCreatingService.IdCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedIdCounter);
             bankAccountOnCreatingService.OnCreating(entityPM);
@@ -104,8 +105,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
        
         public void OnCreating_SearchFieldsMatchesExpected_Success()
         {
-            ContactPM loggedcontact = GetLoggedContactInstance();
-            string expectedLoggedUserId = loggedcontact.Id;
+           
             DateTime expectedDateTime = DateTime.Now;
 
             BankAccountPM entityPM = new BankAccountPM()
@@ -118,14 +118,13 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
                 GLAccountId = "GLA1",
                 DeferredGLAccountId = "GLA2",
                 Tenant = 1,
-                CreatedByUserId = expectedLoggedUserId,
                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update,
             };
 
             var expectedSearchFields = entityPM.AccountNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.BranchNumber;
 
             var bankAccountOnCreatingService = A.Fake<BankAccountOnCreatingService>(option => option.CallsBaseMethods());
-            A.CallTo(() => bankAccountOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+            //A.CallTo(() => bankAccountOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountOnCreatingService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
             bankAccountOnCreatingService.OnCreating(entityPM);
 

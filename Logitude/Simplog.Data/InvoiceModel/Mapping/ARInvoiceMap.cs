@@ -28,7 +28,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.PrepaidCollectId).HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.DraftNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(4000).IsUnicode(true);
-            this.Property(t => t.MainEntityReference).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.MainEntityReference).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.MainEntityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomerRef).HasMaxLength(105).IsUnicode(false);
             this.Property(t => t.HouseNumber).HasMaxLength(20).IsUnicode(true);
