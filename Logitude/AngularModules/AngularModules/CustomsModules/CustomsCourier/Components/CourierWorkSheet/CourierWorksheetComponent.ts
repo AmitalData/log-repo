@@ -296,7 +296,7 @@ implements OnDestroy
     
     SendReadyLOWPAYToBatch() {
 
-        if (this._ReadyLOWPAYToBatchSend == 0) {
+        if (this._PAYReadyNotFastindividual == 0) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
@@ -550,7 +550,7 @@ implements OnDestroy
 
     _ReadyDECToBatchSend = 0;
     _ReadyMNFToBatchSend = 0;
-    _ReadyLOWPAYToBatchSend = 0;
+    _PAYReadyNotFastindividual /*_ReadyLOWPAYToBatchSend*/= 0;
     _SVGTotal = 0;
     _DOCTotal = 0;
     _DOC_U_Total = 0;
@@ -633,9 +633,9 @@ implements OnDestroy
                             this._DEC_W_Total = item.Value;
                             break;
                         }
-                        case "PAY_RL": {
+                        case "PAYReadyNotFastindividual": {
                             //statements; 
-                            this._ReadyLOWPAYToBatchSend = item.Value;
+                            this._PAYReadyNotFastindividual = item.Value;
                             break;
                         }
 
