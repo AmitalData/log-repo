@@ -80,6 +80,7 @@ implements OnDestroy
     _SelectedStatusValue: string = 'A';//ALL//Open//Close
     _SelectedAvailableValue: string = 'A';//ALL//Available//NotAvailable//Additional
     _SelectedTotalInvoiceValue: string = 'A';
+    _SelectedFastIndividualProcessValue: string = 'A';
 
     _SelectedMNFValue: string = 'A'; // ALL/Complete/Wrong
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
@@ -395,6 +396,7 @@ implements OnDestroy
         currRequestParams.SelectedBOLValue = this._SelectedBOLValue;
         currRequestParams.SelectedStatusValue = this._SelectedStatusValue;
         currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
+        currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
 
         this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
             .subscribe(res => {
@@ -424,6 +426,7 @@ implements OnDestroy
                 currRequestParams.SelectedBOLValue = this._SelectedBOLValue;
                 currRequestParams.SelectedStatusValue = this._SelectedStatusValue;
                 currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
+                currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
 
                 this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
                     .subscribe(res => {
@@ -1144,6 +1147,17 @@ implements OnDestroy
         if (AppTool.IsNullOrEmpty(filters.SortDirection)) {
             filters.SortDirection = "Descending";
         }
+
+        switch (this._SelectedFastIndividualProcessValue) {
+            case "F": {
+                filters.addAdditionalFilter("FastIndividualProcessCode", "F", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "I": {
+                filters.addAdditionalFilter("FastIndividualProcessCode", "I", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
     }
 
     ViewInitCompleted($event) {
@@ -1185,7 +1199,7 @@ implements OnDestroy
 
     SelectedBOLValueClick(value: string) {
         this._SelectedBOLValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A") {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1196,7 +1210,7 @@ implements OnDestroy
 
     SelectedTotalInvoiceValue(value: string) {
         this._SelectedTotalInvoiceValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A") {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1207,7 +1221,7 @@ implements OnDestroy
 
     SelectedStatusValueClick(value: string) {
         this._SelectedStatusValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A") {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1218,7 +1232,18 @@ implements OnDestroy
 
     SelectedAvailableValueClick(value: string) {
         this._SelectedAvailableValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A") {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A') {
+            this.IsFiltered = false;
+        }
+        else {
+            this.IsFiltered = true;
+        }
+        this.RefreshList();
+    }
+
+    SelectedFastIndividualProcessValueClick(value: string) {
+        this._SelectedFastIndividualProcessValue = value;
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1237,6 +1262,7 @@ implements OnDestroy
         this._SelectedStatusValue = 'A';
         this._SelectedAvailableValue = 'A';
         this._SelectedTotalInvoiceValue = 'A';
+        this._SelectedFastIndividualProcessValue = 'A';
         this.IsFiltered = false;
         this.RefreshList();
     }
