@@ -5,7 +5,7 @@ declare var dragger: any;
 
 export class LogitudeWindow {
     public Width: number = 750;
-    public Height: number = 500; 
+    public Height: number = 500;
     public Title: string = null;
     public TitleIcon: string = null;
     public CustomTitleIcon: string = null;
@@ -49,6 +49,8 @@ export class LogitudeWindow {
 
     private ComponentRef: any = null;
     private InstanceComponent: LogitudeWindowTemplateComponent = null;
+    parentWindow:LogitudeWindow;
+
     public Show(myContent: any) {
         if (myContent != null) {
             var viewContainerRefLocation: ViewContainerRef = SessionLocator.CurrentSession.SessionLocation.viewContainerRef;
@@ -61,6 +63,7 @@ export class LogitudeWindow {
 
             if (SessionLocator.CurrentSession.CurrentWindow) {
                 this.IsOverWindow = true;
+                this.parentWindow = SessionLocator.CurrentSession.CurrentWindow;
             }
 
             if (this.IsOverAll) {
@@ -123,6 +126,7 @@ export class LogitudeWindow {
 
                 if (SessionLocator.CurrentSession.CurrentWindow != null) {
                     this.IsOverWindow = true;
+                    this.parentWindow = SessionLocator.CurrentSession.CurrentWindow;
 
                     if (SessionLocator.CurrentSession.CurrentWindow.Width == this.Width && SessionLocator.CurrentSession.CurrentWindow.Height == this.Height) {
                         this.IsSameWindowSize = true;
@@ -195,7 +199,7 @@ export class LogitudeWindow {
     }
 }
 
-@Component({    
+@Component({
     moduleId: module.id,
     templateUrl: "./LogitudeWindow.html",
 })
@@ -230,7 +234,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     public HelpText: string = null;
     public RTL: boolean = false;
     public BottomBorderForTitle: string = "none";
-    
+
     LayoutDirection: string = 'ltr';
     public ZIndex: number = 0;
 
@@ -273,14 +277,14 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.IsFullScreen = logWindow.IsFullScreen;
         this.IsOverAll = logWindow.IsOverAll;
         this.IsShowAutomationDelayTitle = logWindow.IsShowAutomationDelayTitle;
-        this.ShowHelpIcon = logWindow.ShowHelpIcon;   
-        this.ZIndex = logWindow.ZIndex;   
+        this.ShowHelpIcon = logWindow.ShowHelpIcon;
+        this.ZIndex = logWindow.ZIndex;
         this.ChildComponentPath = myComponentPath;
         this.HelpText = logWindow.HelpText;
         this.RTL = logWindow.RTL;
         this.CustomTitleIcon = logWindow.CustomTitleIcon;
         this.BottomBorderForTitle = logWindow.BottomBorderForTitle;
-        
+
         this.SetWindowSize();
         this.RunComponent();
     }
@@ -308,11 +312,11 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.IsHideHeader = logWindow.IsHideHeader;
         this.IsFullScreen = logWindow.IsFullScreen;
         this.IsShowAutomationDelayTitle = logWindow.IsShowAutomationDelayTitle;
-        this.ShowHelpIcon = logWindow.ShowHelpIcon;   
-        this.ZIndex = logWindow.ZIndex;      
+        this.ShowHelpIcon = logWindow.ShowHelpIcon;
+        this.ZIndex = logWindow.ZIndex;
         this.NotifyOnClose = logWindow.NotifyOnClose;
         this.BottomBorderForTitle = logWindow.BottomBorderForTitle;
-        
+
         this.ChildComponentPath = "./Infrastructure/Components/EditComponent/EditComponent";
         this.HelpText = logWindow.HelpText;
         this.RTL = logWindow.RTL;
@@ -385,13 +389,13 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
 
             isOverEditComponent = SessionLocator.CurrentSession.CurrentEditComponent != null && SessionLocator.CurrentSession.CurrentEditComponent != undefined;
 
-            if (SessionLocator.CurrentSession.CurrentWindow.IsOverWindow)
-                isOverEditComponent = false;
+            // if (SessionLocator.CurrentSession.CurrentWindow.IsOverWindow)
+            //     isOverEditComponent = false;
 
 
 
             //change window position according to editcomponent location
-            if (isOverEditComponent) {
+             if (isOverEditComponent || (isOverEditComponent && this.logWindow.IsOverWindow)) {
 
                 //get window location from edit component
                 var editComponentCelId = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentCellId;
@@ -401,7 +405,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
                     windowPlaceholderHeight = windowPlaceholderDiv.clientHeight;
                 }
 
-                //update top,left poisition 
+                //update top,left poisition
                 topProperty = (windowPlaceholderHeight - windowHeight) / 2;
                 leftProperty = (windowPlaceholderWidth - windowWidth) / 2;
             }
@@ -506,7 +510,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
                                     this.ComponentRef.instance.SetNewWizardArgs(this.NewWizardArgs);
                                 }
                             }
-                            
+
                             if (this.DataContext != null) {
                                 if (this.ComponentRef.instance['SetDataContext']) {
                                     this.ComponentRef.instance.SetDataContext(this.DataContext);
@@ -530,7 +534,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     public Destroy() {
         //if (this.ComponentRef != null) {
         //    this.ComponentRef.destroy();
-        //    this.ComponentRef = null;            
+        //    this.ComponentRef = null;
         //}
 
         //this.ChildComponent = null;
