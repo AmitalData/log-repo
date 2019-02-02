@@ -21,6 +21,7 @@ import { GeneralPrintHelper } from '../../../Infrastructure/Helpers/GeneralPrint
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
+import { DocumentsFilingViewsExtService } from '../../../Common/Services/ExtendedLists/DocumentsFilingViewsExtService';
 
 export class TaxDeductionReportMenuButtonsHandler {
 
@@ -30,7 +31,8 @@ export class TaxDeductionReportMenuButtonsHandler {
     public ObjectTableName: string = "TaxDeductionReport"
     EntityResourceService: EntityResourceService = new EntityResourceService();
    // _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
-
+    _DocumentsFilingViewsExtService: DocumentsFilingViewsExtService = new DocumentsFilingViewsExtService();
+     docFilingPM: any;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
@@ -53,6 +55,19 @@ export class TaxDeductionReportMenuButtonsHandler {
                                
                                     button.IsDisabled = false;
                                 
+                                break;
+                            }
+
+                        case "DNPD":
+                        case "TXFL":
+                            {
+                                if (this.EntityPM.StatusTypeCode != "3") {
+                                    button.IsDisabled = true;
+                                }
+                                else {
+                                    button.IsDisabled = false;
+                                }
+
                                 break;
                             }
                     }
@@ -79,28 +94,29 @@ export class TaxDeductionReportMenuButtonsHandler {
                 }
             case "TXFL":
                 {
-                    this.EntityResourceService.getEntityResourceByTableName("TaxReport").subscribe(response => {
+
+                    var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
+              
+
+
+                        this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.EntityPM.Id, objectTable.Id).subscribe(myResult => {
+                            console.log("[GetLastDocumentsFilingPM]", myResult);
+                            var mm: ServiceResponse = myResult;
+                            if (!mm.HasError) {
+                                this.docFilingPM = mm.Result;
+
+                                if (this.docFilingPM) {
+                                 
+                                        DownloadManager.DownloadPage(null, this.docFilingPM.SecurityId);
+                                    
+                                }
+
+                            }
+                           
+                        });
+
+
                    
-                    var windowTitle = TextCodeTranslator.Translate("TaxReport.B.Download");
-
-                    var windowArgs: any = {};
-                    windowArgs.ObjectTableName = "TaxDeductionReport";
-                    windowArgs.EntityPM = this.EntityPM;
-                    windowArgs.StartDirectly = false; // start service after show window
-                    windowArgs.TimerInterval = 1000; // wait time between requests
-
-                    var logWindow = new LogitudeWindow();
-                    logWindow.Width = 350;
-                    logWindow.Height = 150;
-                    logWindow.Title = windowTitle;
-                    logWindow.ShowCloseButton = true;
-                    logWindow.WindowArgs = windowArgs;
-                    logWindow.WindowClosed.subscribe(($event: any) => {
-                        this.entityArgs.EditComponent.ReloadEntityPM();
-                    });
-                    logWindow.Show('./Accounting/Components/Others/AccountingFlatFileDownloadComponent');
-
-                    });
                     break;
                 }
 
