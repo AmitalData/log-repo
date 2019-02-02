@@ -25,6 +25,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
 using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
+using Logitude.BL.Helpers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -166,8 +167,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 return OverrideGetLoggedContactFunc(tenant);
             }
 
-            ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
-            ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
             return loggedcontact;
         }
 

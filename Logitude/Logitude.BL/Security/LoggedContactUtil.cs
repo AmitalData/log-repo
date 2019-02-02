@@ -15,16 +15,20 @@ namespace Logitude.BL.Security
     {
         public ContactPM GetLoggedContact(int tenant)
         {
-            ContactPM loggedContact;
-
-            if (HttpContext.Current != null)
+            ContactPM loggedContact=null;
+            try
             {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(AuthenticationUtil.ResolveUserIdentityName(tenant), tenant);
+                if (HttpContext.Current != null)
+                {
+                    loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(AuthenticationUtil.ResolveUserIdentityName(tenant), tenant);
+                }
+                else
+                {
+                    loggedContact = new ContactQuery(tenant).GetSingleByEmail("system@tenant" + tenant + ".com", tenant);
+                }
             }
-            else
-            {
-                loggedContact = new ContactQuery(tenant).GetSingleByEmail("system@tenant" + tenant + ".com", tenant);
-            }
+            catch { }
+            
 
             loggedContact = loggedContact ?? new ContactPM() { DontShowLocal = true };
             return loggedContact;

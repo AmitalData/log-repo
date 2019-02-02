@@ -173,6 +173,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.TotalAmountForTaxReport = entityPM.TotalAmountForTaxReport;
             entity.TotalVAT = entityPM.TotalVAT;
             entity.TotaVatableAmountForTaxReport = entityPM.TotaVatableAmountForTaxReport;
+            entity.IsFullAccounting = entityPM.IsFullAccounting;
 
             entityPM.SetVoided = false;
             entityPM.SetAsSent = false;

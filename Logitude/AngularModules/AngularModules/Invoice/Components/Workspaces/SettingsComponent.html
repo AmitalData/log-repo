@@ -1,4 +1,4 @@
-﻿
+
 <table *ngIf="IsResourcesReady">
     <tr>
         <td style="width: 300px;">
@@ -9,7 +9,7 @@
                     <td>
 
                         <div>
-                            <HyperlinkQuery (click)="OpenAccountingSettings()">{{'General.O.AccountingSettings' | TextCodeTranslationPipe}}</HyperlinkQuery>
+                            <HyperlinkQuery *ngIf="IsVisible_AccountingSetting" (click)="OpenAccountingSettings()">{{'General.O.AccountingSettings' | TextCodeTranslationPipe}}</HyperlinkQuery>
                         </div>
 
                         <div>

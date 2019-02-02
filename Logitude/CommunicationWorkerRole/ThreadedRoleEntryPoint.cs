@@ -29,6 +29,11 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Utils;
 using Logitude.BL.Security;
 using System.Timers;
+using WebFreight.Web.AccountingModel;
+using Logitude.BL.Interfaces;
+using WebFreight.Web.Validators;
+using Logitude.BL.Helpers;
+using Microsoft.Practices.Unity;
 
 namespace CommunicationWorkerRole
 {
@@ -152,6 +157,16 @@ namespace CommunicationWorkerRole
 
             StartStatic();
             ContainerAccessor.InitContainer();
+            ContainerAccessor.RegisterTypeFactory<IRulesValidator, RulesValidator>("RulesValidator", new RulesValidator());
+            ContainerAccessor.RegisterTypeFactory<IQuoteTemplateReportHelper, QuoteTemplateReportHelper>("QuoteTemplateReportHelper", new QuoteTemplateReportHelper());
+            LoggedContactResolver.RegisterLoggedContactUtil();
+
+
+
+            AccountingRegistrations.Register();
+            
+
+
 
             if (LogitudeSettings.IsCostomsDeploy)
             {

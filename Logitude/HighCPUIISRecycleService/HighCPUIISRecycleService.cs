@@ -21,6 +21,7 @@ namespace HighCPUIISRecycleService
         DateTime? FirstRecycleTime = null;
         DateTime? CurrentRecycleTime = null;
         TimeSpan TenMin = new TimeSpan(0,10,0);
+        TimeSpan AnHour = new TimeSpan(1,0,0);
         public HighCPUIISRecycleService()
         {
             InitializeComponent();
@@ -51,7 +52,7 @@ namespace HighCPUIISRecycleService
                     if (cpuPercent >= 90)
                     {
                         totalHits = totalHits + 2;
-                        if (totalHits == 60)
+                        if (totalHits >= 300)
                         {
                             EventLog.WriteEntry("CPU Consumption is more than 90% in the last minute");
                             if (FirstRecycleTime == null)
@@ -62,19 +63,31 @@ namespace HighCPUIISRecycleService
                             {
                                 CurrentRecycleTime = DateTime.Now;
                             }
-                            if (CurrentRecycleTime.Value.Subtract(FirstRecycleTime.Value) <= TenMin && totalRecycles >= 5)
+                            if (CurrentRecycleTime.Value.Subtract(FirstRecycleTime.Value) <= AnHour && totalRecycles < 5)
                             {
-                                RecycleApplicationPool("Default Web Site");
+                                RecycleApplicationPool("Default Web Site"); 
+                                Thread.Sleep(TenMin);
                                 CurrentRecycleTime = DateTime.Now;
                                 totalRecycles++;
                             }
                             else
                             {
-                                FirstRecycleTime = CurrentRecycleTime;
-                                totalRecycles = 0;
+                                if (CurrentRecycleTime.Value.Subtract(FirstRecycleTime.Value) > AnHour && totalRecycles < 5)
+                                {
+                                    EventLog.WriteEntry("IIS is now Healthy..");
+                                    FirstRecycleTime = CurrentRecycleTime;
+                                    totalRecycles = 0;
+                                }
+                                else
+                                {
+
+                                    EventLog.WriteEntry("Recycled Too Many Times in one hour, the service stopped..");
+                                    return;
+                                }
+                               
                             }
                             totalHits = 0;
-                            Thread.Sleep(120000);
+                            
                         }
                     }
                     else

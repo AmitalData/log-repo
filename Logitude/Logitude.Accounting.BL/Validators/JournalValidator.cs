@@ -4,6 +4,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
 using Logitude.BL.Interfaces;
 using Logitude.BL.Security;
 using Logitude.Server.Tools;
@@ -746,10 +747,12 @@ namespace Logitude.Accounting.BL.Validators
         //        return OverrideGetLoggedContactFunc(tenant);
         //    }
 
-        //    ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
-        //    ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
-        //    return loggedcontact;
-        //}
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
 
 
     }

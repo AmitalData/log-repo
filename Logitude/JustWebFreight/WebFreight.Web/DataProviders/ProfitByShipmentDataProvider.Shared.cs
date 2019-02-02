@@ -88,6 +88,7 @@ namespace WebFreight.Web.DataProviders
             public string ShipmentField20 { get; set; }
             public string Notes { get; set; }
             public string RealShipmentType { get; set; }
+            public string Master { get; set; }
         }
     }
 }
