@@ -1463,6 +1463,7 @@
     <Compile Include="InfrastructureModel\EntityLists\CustomTableList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DescriptionOfGoodsList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DirectionList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DWCategoriesList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DWObjectFieldList.cs.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DWObjectTableList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DWQueryColumnList.cs" />
@@ -1513,6 +1514,7 @@
     <Compile Include="InfrastructureModel\EntityPMs\CustomTablePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DescriptionOfGoodsPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DirectionPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DWCategoriesPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DWObjectFieldPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DWObjectTablePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DWQueryColumnPM.cs" />
