@@ -2071,9 +2071,9 @@ namespace Logitude.BL.Helpers
 
         private static string CombinedReferences(string ref1 , string ref2)
         {
-            string result = ref1 + ref2;
-            //if (!string.IsNullOrEmpty(ref1) && !string.IsNullOrEmpty(ref2)) result += ",";
-            //result += ref2;
+            string result = ref1;
+            if (!string.IsNullOrEmpty(ref1) && !string.IsNullOrEmpty(ref2)) result += ",";
+            result += ref2;
 
             return result;
         }
