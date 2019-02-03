@@ -125,6 +125,9 @@ export class NewARInvoiceComponent extends BaseComponent {
             }
             this.EntityPM.Description = myDescription;
 
+            if (SessionLocator.TenantPM.AccountingActivated) {
+                this.EntityPM.IsFullAccounting = true;
+            }
             if (this.InvoiceTypeCode == "MN" || this.shipmentPM.ShipmentLevelCode == "C") {
                 this.EntityTableName = "Master";
             }
