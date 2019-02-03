@@ -1447,8 +1447,10 @@
     <Compile Include="InfrastructureModel\APIDataContract\QueryService\VolumeUnitQueryService.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\TransportMode.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\VolumeUnit.Generated.cs" />
+    <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\DWCategoriesDetails.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\PrepaidCollectDetails.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\VolumeUnitDetails.Generated.cs" />
+    <Compile Include="InfrastructureModel\CloseTables\EnumGenerated\DWCategoriesStruct.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\EnumGenerated\PrepaidCollectStruct.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\EnumGenerated\VolumeUnitStruct.Generated.cs" />
     <Compile Include="InfrastructureModel\CustomFilters\EntityStatusCustomFilter.cs" />
