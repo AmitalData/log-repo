@@ -248,7 +248,11 @@ export class AddEditMainCarriageComponent extends BaseComponent {
             isPortVia1Enabled = true;
 
             if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
-                isMainPortsEnabled = false;
+                //isMainPortsEnabled = false;
+
+                if (this.EntityPM.StatusWeight >= 60) {
+                    isMainPortsEnabled = false;
+                }
             }
 
             if (this.Transshipment1FromPortId != null || this.Transshipment2FromPortId != null || this.Transshipment3FromPortId != null) {
@@ -260,11 +264,8 @@ export class AddEditMainCarriageComponent extends BaseComponent {
             }
         }
 
-        //this.UIProperties.SetEnabled("MainCarriageFromPortId", this.ObjectTableName, isMainPortsEnabled);
-        //this.UIProperties.SetEnabled("MainCarriageFinalDestinationPortId", this.ObjectTableName, isMainPortsEnabled);
-
-        this.UIProperties.SetEnabled("MainCarriageFromPortId", this.ObjectTableName, isPortsEditingEnabled);
-        this.UIProperties.SetEnabled("MainCarriageFinalDestinationPortId", this.ObjectTableName, isPortsEditingEnabled);
+        this.UIProperties.SetEnabled("MainCarriageFromPortId", this.ObjectTableName, isMainPortsEnabled);
+        this.UIProperties.SetEnabled("MainCarriageFinalDestinationPortId", this.ObjectTableName, isMainPortsEnabled);
 
         this.UIProperties.SetEnabled("Transshipment1FromPortId", this.ObjectTableName, isPortVia1Enabled);
         this.UIProperties.SetEnabled("Transshipment2FromPortId", this.ObjectTableName, isPortVia2Enabled);

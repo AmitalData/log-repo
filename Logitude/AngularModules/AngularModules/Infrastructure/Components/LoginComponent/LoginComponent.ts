@@ -101,7 +101,7 @@ export class LoginComponent implements OnInit {
             this.SampleLogoURL = AppTool.GetEnvironmentLogo(LogoCode);
         }
 
-        
+
         window.Statuses = [];
         window.Ports = [];
         window.TransportModes = [];
@@ -193,7 +193,7 @@ export class LoginComponent implements OnInit {
                 this.StartLoading(userData);
             }
         }
-   
+
 
 
         //this.idxdb = window.indexedDB.open("mydb", 1);
@@ -223,7 +223,7 @@ export class LoginComponent implements OnInit {
             SessionInfo.WebTokenLifeTimeInMinutes = userData.WebTokenLifeTimeInMinutes;
             SessionInfo.KeepUserLoggedIn = userData.KeepUserLoggedIn;
             SessionInfo.LastLoginDateTime = userData.LastLoginDateTime;
-            
+
 
 
             AmitalGatewayUtil.Instance.AmitalBrowserInUse = userData.AmitalBrowserInUse;
@@ -282,49 +282,6 @@ export class LoginComponent implements OnInit {
             this.HidePendingLoading = true;
         });
 
-    }
-
-
-    HRClicked() { // just for testing, abdullah
-        if (this.Email != null && this.Password != null) {
-            this.LoginParams = {
-                Email: "mohammad@fnarsoft.com",
-                Password: this.Password,
-                ByToken: false,
-                CardId: "",
-                CardType: "",
-                IsMobileLogin: false,
-                IsUser: true,
-                GetToken: true,
-                IsAngularLogin: true,
-                ClientType : "Web",
-
-            };
-
-            this.HidePendingLoading = false;
-            this.PostUserValidation(this.LoginParams);
-        }
-    }
-    
-    T0Clicked() { // just for testing, abdullah
-        if (this.Email != null && this.Password != null) {
-            this.LoginParams = {
-                Email: "admin@fnarsoft.com",
-                Password: this.Password,
-                ByToken: false,
-                CardId: "",
-                CardType: "",
-                IsMobileLogin: false,
-                IsUser: true,
-                GetToken: true,
-                IsAngularLogin: true,
-                ClientType: "Web",
-
-            };
-
-            this.HidePendingLoading = false;
-            this.PostUserValidation(this.LoginParams);
-        }
     }
 
     LoginClicked() {
@@ -546,7 +503,7 @@ export class LoginComponent implements OnInit {
                 });
 
                 //this.loginService.GetTenantManagement().subscribe(myResult => {
-   
+
                 //});
 
                 this.myInfrastructureDomainService.GetAllowedFeaturesForLoggedUser().subscribe((myResponse: ServiceResponse) => {
@@ -556,7 +513,7 @@ export class LoginComponent implements OnInit {
                     // Ayman: please don't modify this (24)
                     if (FeatureLocator.HasFeaturePermession("CreditLimitSetting", "READ") && ObjectsLocator.GlobalSetting && ObjectsLocator.GlobalSetting.WorkEnvironment != 'customs') {
                         var myCreditLimitSettingPMService = new CreditLimitSettingPMService();
-                        myCreditLimitSettingPMService.get(CurrentTenant + "").subscribe((myResponse: ServiceResponse) => {                            
+                        myCreditLimitSettingPMService.get(CurrentTenant + "").subscribe((myResponse: ServiceResponse) => {
                             ObjectsLocator.UpdateCreditLimitSettingPM(myResponse.Result);
                             this.IncreaseProgressBar();
                             //24
@@ -644,7 +601,7 @@ export class LoginComponent implements OnInit {
                     }
 
                     ObjectsUpdater.UpdateAccountingSettingPM(myAccountingSettingPM);
-                   
+
                     this.IncreaseProgressBar();
                     //18
 
@@ -675,7 +632,7 @@ export class LoginComponent implements OnInit {
                         ObjectsUpdater.UpdateCustomsInterfaceSettingPM(myCustomsInterfaceSettingPMService.MapJsonToEntityPM(myResult));
                     }
 
-                    this.IncreaseProgressBar();                    
+                    this.IncreaseProgressBar();
                 });
 
                 this.loginService.GetSharedLogisticsSetting().subscribe(myResult => {
@@ -687,13 +644,13 @@ export class LoginComponent implements OnInit {
                     this.IncreaseProgressBar();
                 });
 
-                this.loginService.GetGlobalSetting().subscribe(myResult => {  
+                this.loginService.GetGlobalSetting().subscribe(myResult => {
 
                     // Accounting - Abdullah
                     if (InfraSettings.TenantPM) {
                         myResult.LayoutDirection = InfraSettings.TenantPM.LayoutDirection ? InfraSettings.TenantPM.LayoutDirection.toLowerCase() : InfraSettings.TenantPM.LayoutDirection;
-                    }                  
-                    
+                    }
+
                     //
 
                     ObjectsLocator.UpdateGlobalSetting(myResult);
@@ -830,7 +787,7 @@ export class LoginComponent implements OnInit {
         //    window.ObjectTableRulePMs = myResult;
         //    this.IncreaseProgressBar();
         //    //11
-        //});       
+        //});
     }
 
 
@@ -942,7 +899,7 @@ export class LoginComponent implements OnInit {
             }
 
             if (this.CompletedLoadsCount == this.TotalNumberOfLoads) {
-                ServiceLocator.RulesValidator = new RulesValidator(); 
+                ServiceLocator.RulesValidator = new RulesValidator();
                 this.timerToken = setTimeout(() => this.ChangePage(), 1000);
             }
         }
@@ -1002,7 +959,7 @@ export class LoginComponent implements OnInit {
     //    //        queryEnd = new Date().getTime();
     //    //    };
 
-    //    //    // 1-98 // 
+    //    //    // 1-98 //
     //    //    // 350 - 1-13699
     //    //    // 2650 - 1-16602
     //    //    // 5400 - 1-952
@@ -1013,7 +970,7 @@ export class LoginComponent implements OnInit {
     //    //        indexEnd = new Date().getTime();
     //    //    };
 
-    //    //    //// 1-98 // 
+    //    //    //// 1-98 //
     //    //    //var storeStart = new Date().getTime();
     //    //    //var storeEnd;
     //    //    //var getObjectFieldById = store.get("1-98");

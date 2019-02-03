@@ -428,6 +428,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string StatusLocation { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public int StatusWeight { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string QuoteId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
