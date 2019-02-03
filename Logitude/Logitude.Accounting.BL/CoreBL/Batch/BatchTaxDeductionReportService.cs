@@ -30,6 +30,9 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             System.IO.StringReader stringReader = new System.IO.StringReader(xmlParameters);
             XmlSerializer serializer = new XmlSerializer(typeof(PNCFileArgs));
             PNCFileArgs parameterArgs = serializer.Deserialize(stringReader) as PNCFileArgs;
+            IContext MainContext = AccountingContext.GetContext(parameterArgs.Tenant);
+
+            TaxDeductionReportUpdateService taxDeductionReportUpdateService = new TaxDeductionReportUpdateService(MainContext, new Dictionary<string, IContext>(), parameterArgs.Tenant);
 
             // Call the service
 
@@ -38,14 +41,17 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             try
             {
                 DocumentsFilingPM docFilingPM = TaxDeductionReportService.Create856File(parameterArgs.ReportId, parameterArgs.Tenant);
+
+                taxDeductionReportPM.StatusTypeCode = "3";
+                taxDeductionReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                taxDeductionReportUpdateService.Update(taxDeductionReportPM, true);
             }
 
             catch (Exception ex)
             {
-                
-                IContext MainContext = AccountingContext.GetContext(parameterArgs.Tenant);
-            
-                TaxDeductionReportUpdateService taxDeductionReportUpdateService = new TaxDeductionReportUpdateService(MainContext, new Dictionary<string, IContext>(), taxDeductionReportPM.Tenant);
+
+
+                taxDeductionReportPM.StatusTypeCode = "4";
                 taxDeductionReportPM.ErrorMessage = ex.Message;
                 taxDeductionReportPM.ChangeSetOp = ChangeSetOperation.Update;
                 taxDeductionReportUpdateService.Update(taxDeductionReportPM, true);

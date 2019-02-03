@@ -685,7 +685,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         //if (this.DWQueryData.Filters) {
         if (this.SelectedFieldsDataSource.length > 0) {
 
-            
+
             this.StartBusyIndicator("Loading ..");
             this.IsPreview = !StopPreview;
             this._DWQueryBuilderService.GetNewDWQueryData(this.DWQueryData).subscribe(myResult => {
@@ -696,12 +696,12 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         this.SampleData = [];
                         var MySql = myResult.Result.SQLString.split("ORDER BY")[0];
                         this.Notes = MySql;//myResult.Result.SQLString;
-                       
+
                     }
                     else {
                         this.PreviewData(StopPreview, myResult.Result.SQLDataResult);
                     }
-                    
+
                 }
             });
 
@@ -967,14 +967,19 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     //////////////////////////////////////////
 
                     ////////////////////////////////////////////////
-                    var DWObjectField = new DWObjectFieldsDetails(null, this);
-                    DWObjectField.IsGroup = true;
-                    DWObjectField.setAndOrOperation(QueryData.Filters.AndOr, false);
-                    DWObjectField.IndexOrder = this.SelectedFiltersDataSource.length;
-                    var MyFilter = this.RestoreFilters(QueryData.Filters, DWObjectField);
-                    var temp = [];
-                    temp.push(MyFilter);
-                    this.SelectedFiltersDataSource = temp;
+                    if (QueryData.Filters) {
+                        var DWObjectField = new DWObjectFieldsDetails(null, this);
+                        DWObjectField.IsGroup = true;
+                        DWObjectField.setAndOrOperation(QueryData.Filters.AndOr, false);
+                        DWObjectField.IndexOrder = this.SelectedFiltersDataSource.length;
+                        var MyFilter = this.RestoreFilters(QueryData.Filters, DWObjectField);
+                        var temp = [];
+                        temp.push(MyFilter);
+                        this.SelectedFiltersDataSource = temp;
+                    }
+                    else {
+                        this.SelectedFiltersDataSource = [];
+                    }
                     SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
                     this.SaveChanges();
                     //////////////////////////////////////////
@@ -1230,8 +1235,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
             //    //    //this.MyParentClass.SaveChanges();
             //    //    this.MyParentClass.ClearData();
             //    //}
-             
-              
+
+
             //}
             //else if (newValue != true || newValue != false) {
             //    this.textValue = newValue;
@@ -1389,8 +1394,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     DontSaveChanges: boolean = false;
     OperationValueChanged(operation) {
-   
- 
+
+
 
         if (operation.Code == this.currentOp.Code || operation.Code == this.beforeOp.Code || operation.Code == this.afterOp.Code || operation.Code == this.previousOp.Code || operation.Code == this.nextOp.Code || operation.Code == this.currentOp.Code) {
             this.DontSaveChanges = true;
@@ -1466,8 +1471,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
     }
 
     onTextChange(value) {
-       this.TextValue = value;
-       
+        this.TextValue = value;
+
     }
 
     AndOrOpsChanged(value) {
@@ -1575,7 +1580,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         if (field.ParentDataTypeCode == "Integer" || field.ParentDataTypeCode == "UnsInteger"
             || field.ParentDataTypeCode == "Double" || field.ParentDataTypeCode == "SigDouble"
             || field.ParentDataTypeCode == "Decimal" || field.ParentDataTypeCode == "UnsDecimal"
-             ) {
+        ) {
             this.list.push(this.largerThanOp);
             this.list.push(this.lessThanOp);
             this.list.push(this.equalsOp);
@@ -1598,7 +1603,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.list.push(this.notEqualsOp);
         }
 
-        if (field.ParentDataTypeCode == "DateTime" || field.ParentDataTypeCode == "Date"){
+        if (field.ParentDataTypeCode == "DateTime" || field.ParentDataTypeCode == "Date") {
             this.list.push(this.beforeOp);
             this.list.push(this.afterOp);
             this.list.push(this.previousOp);

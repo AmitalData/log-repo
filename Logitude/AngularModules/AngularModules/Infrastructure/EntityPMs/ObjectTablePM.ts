@@ -324,11 +324,7 @@ export class ObjectTablePM {
     public get LovDisplayMemberPathLocal() { return this.lovDisplayMemberPathLocal; }
     public set LovDisplayMemberPathLocal(newValue: string) { if (this.lovDisplayMemberPathLocal != newValue) { this.lovDisplayMemberPathLocal = newValue; this.MarkAsDirty("LovDisplayMemberPathLocal"); } }
        
-    private displayName: string; /// abed hamodi should add this to the tool and to the pm and the list
-    public get DisplayName() { return this.displayName; }
-    public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
-
-
+	 
 
     public OldEntityPM: ObjectTablePM;
 		
@@ -352,4 +348,4 @@ export class ObjectTablePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
