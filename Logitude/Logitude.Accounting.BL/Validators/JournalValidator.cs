@@ -94,11 +94,11 @@ namespace Logitude.Accounting.BL.Validators
             {
                 valid = false;
 
-                //bool useLocal = !(GetLoggedContact(myJournalPM.Tenant).DontShowLocal);
+             //   bool useLocal = !(GetLoggedContact(myJournalPM.Tenant).DontShowLocal);
 
                 bool useLocal = true;
-                //var user = GetLoggedContact(myJournalPM.Tenant);
-                //if (user != null) useLocal = !(GetLoggedContact(myJournalPM.Tenant).DontShowLocal);
+                var user = GetLoggedContact(myJournalPM.Tenant);
+                if (user != null) useLocal = !(GetLoggedContact(myJournalPM.Tenant).DontShowLocal);
 
                 string msg =
                     TranslateMyTextCode("Journal.M.YouShouldHaveOneLineAtLeast", 0);
@@ -500,8 +500,8 @@ namespace Logitude.Accounting.BL.Validators
                 //bool useLocal = !(GetLoggedContact(tenant).DontShowLocal);
 
                 bool useLocal = true;
-                //var user = GetLoggedContact(tenant);
-                //if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
+                var user = GetLoggedContact(tenant);
+                if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
 
                 //trans = TextCodesTranslator.TranslateText(textCodeCode, tenant);
                 trans = TranslateTextsClass.Translate(textCodeCode, tenant, useLocal);
