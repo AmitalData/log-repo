@@ -66,7 +66,18 @@ namespace Simplog.Server.Infrastructure.Helpers
 
         }
 
-        public I_IISManager IISManager { get => _IISManager; private set => _IISManager = value; }
+        //public I_IISManager IISManager { get => _IISManager; private set => _IISManager = value; }
+
+        public I_IISManager IISManager {
+            get
+            {
+                return _IISManager;
+            }
+            set
+            {
+                _IISManager = value;
+            }
+        }
 
         public static void Init(
             Func<IAmitalRestrictOwnerService> CreateAmitalRestrictOwnerModelService,
