@@ -1,4 +1,4 @@
-
+select top(1)* from DIM_Tenants
 
     declare @Id as int
     declare @Company as varchar(100)
@@ -16,7 +16,7 @@
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
-	insert into #DIM_TenantsTemp values(@Id,@Company,@Country)
+	insert into #DIM_TenantsTemp ([Tenant Number] , [Tenant Name] , [Country]) values(@Id,@Company,@Country)
 
 	FETCH NEXT FROM TenantsCursor  INTO @Id , @Company, @Country
 		End
