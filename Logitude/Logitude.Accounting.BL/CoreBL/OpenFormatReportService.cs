@@ -3247,14 +3247,14 @@ namespace Logitude.Accounting.BL.CoreBL
             stringBuilder.Append("A000");
             stringBuilder.Append(' ', 4);
 
-            if (rowsCount.ToString().Length > 9)
+            if (rowsCount.ToString().Length > 15)
             {
-                rowsCount.ToString().Substring(0, 9);
-                stringBuilder.Append("a" + rowsCount.ToString().PadLeft(9, '0'));
+                rowsCount.ToString().Substring(0,15);
+                stringBuilder.Append("a" + rowsCount.ToString().PadLeft(15, '0'));
             }
             else
             {
-               stringBuilder.Append(rowsCount.ToString().PadLeft(9, '0'));
+               stringBuilder.Append(rowsCount.ToString().PadLeft(15, '0'));
             }
             if (tenantPM.VatNumber != null)
             {
