@@ -270,7 +270,7 @@ namespace CommunicationWorkerRole
         private void StartWorkerRoles(List<BatchServicesDefinitionPM> BatchServicesDefinitions)
         {
             workers = new List<WorkerEntryPoint>();
-            var tst = false;
+            var tst = true;
             if (tst)
             {
                 BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "SchedularWorkerRole").ToList();

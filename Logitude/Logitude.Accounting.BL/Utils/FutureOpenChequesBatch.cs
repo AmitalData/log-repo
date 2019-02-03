@@ -45,31 +45,29 @@ namespace Logitude.Accounting.BL.Utils
             return _StatusCode;
         }
 
-        public void SetTotalFutureOpenChequesInLocalCurrency(int Tenant)
+        public void SetTotalFutureOpenChequesInLocalCurrency()
         {
             List<GlobalTenant> globalTenants;
-            using (var scope = TransactionFactory.GetTransaction())
+            using (var scope = TransactionFactory.GetNewTransaction())
             {
-                
-
                 globalTenants = GlobalTenantRepository.GetGlobalTenants();
-
-
+                scope.Complete();
             }
 
-            using (var scope = TransactionFactory.GetTransaction())
+            using (var scope = TransactionFactory.GetNewTransaction())
             {
                 if (globalTenants != null)
                 {
                     GlobalTenant tenantZero = globalTenants.Where(d => d.Id == 0).FirstOrDefault();
                     List<GlobalTenant> upgradableTenants = (from a in globalTenants
-                                                            where  a.IsActive == true
+                                                            where a.IsActive == true
                                                             select a).ToList();
                     if (upgradableTenants.Count > 0)
                     {
                         foreach (GlobalTenant tenant in upgradableTenants)
                         {
-                            try{
+                            try
+                            {
 
                                 FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant.Id);
                                 FullAccountingSettingPM fullAccountingSettingPM = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant.Id);
@@ -92,7 +90,7 @@ namespace Logitude.Accounting.BL.Utils
                                     List<string> glAccountIds = new List<string>();
                                     foreach (ARPaymentChequeFutureData item in data)
                                     {
-                                      
+
                                         if (glAccountIds.Contains(item.GLAccountId))
                                         {
                                             continue;
@@ -148,9 +146,9 @@ namespace Logitude.Accounting.BL.Utils
                             {
 
                             }
-   
-                            }
-                        
+
+                        }
+
 
 
                     }
@@ -159,10 +157,10 @@ namespace Logitude.Accounting.BL.Utils
                 scope.Complete();
             }
 
-            }
-
-
-
         }
+
+
+
     }
+}
 
