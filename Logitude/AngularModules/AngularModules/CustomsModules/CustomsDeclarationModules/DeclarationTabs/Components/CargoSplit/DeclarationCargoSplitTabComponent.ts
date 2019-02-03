@@ -1,4 +1,4 @@
-import { DeclarationEditComponentController } from './../../../../../Customs/Controller/DeclarationEditComponentController';
+
 declare var System: any;
 declare var window: any;
 import { Component, OnInit } from '@angular/core';
