@@ -747,10 +747,10 @@ namespace Logitude.Accounting.BL.Validators
                 return OverrideGetLoggedContactFunc(tenant);
             }
 
-            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
-            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+            ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
 
-            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            //ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
             return loggedcontact;
         }
 
