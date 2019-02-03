@@ -28,7 +28,13 @@ export class DWQueryBuilderHelper   {
             var view = new DWObjectFieldsDetails(field);
             if (field.FilterItems.length == 0) {
                 if (field.DWObjectTableCode.indexOf("DIM_") != -1) {
-                    view.ParentDataTypeCode = "LookUp";
+                    if (view.Code == '[Full Date]') {
+                        view.ParentDataTypeCode = "DateTime";
+                    }
+                    else {
+                        view.ParentDataTypeCode = "LookUp";
+                    }
+                    //view.ParentDataTypeCode = "LookUp";
                     view.ParentDimTabelName = field.DWObjectTableCode;
                 }
                 else {

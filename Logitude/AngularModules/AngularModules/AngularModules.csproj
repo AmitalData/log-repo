@@ -684,6 +684,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\BusinessProcessQueueList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BusinessRoleList.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\DWCategoriesList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWObjectFieldList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWObjectTableList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryColumnList.ts" />
@@ -721,6 +722,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BusinessProcessQueueListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BusinessRoleListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWObjectFieldExtendedPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWCategoriesListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWObjectFieldListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWObjectTableListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\FeatureToggleListService.ts" />
