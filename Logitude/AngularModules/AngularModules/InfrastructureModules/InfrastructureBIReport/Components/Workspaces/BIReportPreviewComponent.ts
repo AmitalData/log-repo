@@ -159,7 +159,7 @@ export class BIReportPreviewComponent implements OnInit {
     public BuildRows(arg: BIReportXMLData) {
         this.rowData = [];
         this.StartBusyIndicator();
-        this.RunReportCommand.emit({ MyData : this.DWQueryData,FirstTime : true });
+        this.RunReportCommand.emit({ MyData: arg.DWQueryData,FirstTime : true });
 
        
         //this._DWQueryBuilderService.GetNewDWQueryData(arg.DWQueryData).subscribe(myResult => {

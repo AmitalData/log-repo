@@ -198,9 +198,13 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 }
                 if (!IsClosed)
                 {
-                    if (Tabel != "DIM_Tenants")
+                    if (Tabel != "DIM_Tenants" && Tabel != "DIM_Dates")
                     {
                         WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + ".[Parent Tenant] = " + authToken.Tenant); //authToken.Tenant
+                    }
+                    if (Tabel == "DIM_Dates")
+                    {
+                        WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + ".[Date Key] not in (-1,-2,-3) "); //authToken.Tenant
                     }
 
                     //if (!string.IsNullOrEmpty(SearchData))
