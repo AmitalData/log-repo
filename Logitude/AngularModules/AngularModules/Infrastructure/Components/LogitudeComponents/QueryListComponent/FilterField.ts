@@ -111,7 +111,7 @@ export class FilterField extends BaseComponent {
 
                     if (!this.IsCustomFilter) {
                         this.BooleanFiltersEnabled = true;
-                    }
+                    }                    
                 }
             }
         }
@@ -124,6 +124,9 @@ export class FilterField extends BaseComponent {
             this.DateFiltersEnabled = true;
             this.PickFiltersEnabled = true;
         }
+
+        this.UIProperties.SetEnabled("TextValue", "", this.TextFiltersEnabled);
+        this.UIProperties.SetEnabled("TextValue", "", this.LOVFiltersEnabled);
     }
     
     private filterchangeevent: PubSubService;

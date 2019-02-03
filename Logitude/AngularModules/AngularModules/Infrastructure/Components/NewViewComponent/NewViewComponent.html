@@ -453,7 +453,7 @@
                                                                                                 <ComboBox [IsDisabled]="!item.TextFiltersEnabled" style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>
 
                                                                                                 <div style="width:150px;">
-                                                                                                    <LogTextBox [IsDisabled]="!item.TextFiltersEnabled" (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                                                                                 </div>
                                                                                             </div>
 
@@ -462,7 +462,7 @@
                                                                                                 <ComboBox [IsDisabled]="!item.TextFiltersEnabled" style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>
 
                                                                                                 <div style="width:150px;">
-                                                                                                    <LogTextBox [IsDisabled]="!item.TextFiltersEnabled" (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
+                                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
                                                                                                 </div>
                                                                                             </div>
 
@@ -478,8 +478,7 @@
                                                                                                             [ObjectTableName]="CurrentObjectTable"
                                                                                                             [LookUpTableName]="item.ObjectField.ObjectTable_LookUpTableName"
                                                                                                             (ValueChanged)="item.onTextChange($event)"
-                                                                                                            [NoValidation]="true"
-                                                                                                            [IsDisabled]="!item.LOVFiltersEnabled">
+                                                                                                            [NoValidation]="true">
                                                                                                     </LogLov>
                                                                                                 </div>
                                                                                             </div>
@@ -503,7 +502,7 @@
                                                                                                 <ComboBox [IsDisabled]="!item.TextFiltersEnabled" style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>
 
                                                                                                 <div style="width:150px;">
-                                                                                                    <LogTextBox [IsDisabled]="!item.TextFiltersEnabled" (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                                                                                 </div>
                                                                                             </div>
 
@@ -512,7 +511,7 @@
                                                                                                 <ComboBox [IsDisabled]="!item.TextFiltersEnabled" style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>
 
                                                                                                 <div style="width:150px;">
-                                                                                                    <LogTextBox [IsDisabled]="!item.TextFiltersEnabled" (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                                                                                 </div>
                                                                                             </div>
 
@@ -521,7 +520,7 @@
                                                                                                 <ComboBox [IsDisabled]="!item.TextFiltersEnabled" style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>
 
                                                                                                 <div style="width:150px;">
-                                                                                                    <LogTextBox [IsDisabled]="!item.TextFiltersEnabled" (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                                                                                 </div>
                                                                                             </div>
 
