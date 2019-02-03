@@ -170,6 +170,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.TotalAmountForTaxReport).HasColumnName("TotalAmountForTaxReport");
             this.Property(t => t.TotaVatableAmountForTaxReport).HasColumnName("TotaVatableAmountForTaxReport");
             this.Property(t => t.SATApprovalDate).HasColumnName("SATApprovalDate");
+            this.Property(t => t.IsFullAccounting).HasColumnName("IsFullAccounting");
+
             // Relationships
             this.HasOptional(t => t.BillToAddress).WithMany().HasForeignKey(d => d.BillToAddressId);
             this.HasRequired(t => t.Branch).WithMany().HasForeignKey(d => d.BranchId);
