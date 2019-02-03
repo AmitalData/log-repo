@@ -3299,7 +3299,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var date = DateTime.Now;
              string dateFormat = String.Format("{0:MMddhhmm}", date);
 
-            string filePath = @"D:\OPENFRMT\" + tenantPM.VatNumber + "." + date.Year + @"\" + dateFormat;
+            string filePath = @"D:\OPENFRMT\" + tenantPM.VatNumber + "." + date.Year.ToString().Substring(2,2) + @"\" + dateFormat;
 
             if (filePath.ToString().Length > 50)
             {
