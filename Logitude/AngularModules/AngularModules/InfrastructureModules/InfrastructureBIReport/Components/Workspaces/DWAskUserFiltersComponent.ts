@@ -12,7 +12,7 @@ import { AppTool } from '../../../../Infrastructure/Tools';
     selector: 'DWAskUserFiltersComponent',
     moduleId: module.id,
     templateUrl: './DWAskUserFiltersComponent.html',
-    inputs: ['SelectedFiltersDataSource', 'ShowRunButton','RunReportCommand']
+    inputs: ['SelectedFiltersDataSource', 'ShowRunButton','RunReportCommand','IsDateFilter']
 })
 
 export class DWAskUserFiltersComponent implements OnInit{
@@ -32,6 +32,7 @@ export class DWAskUserFiltersComponent implements OnInit{
     public _DWSubQueryPMService: DWSubQueryPMService;
     ValidationErrorsList: any[];
     public DWQueryData: DWQueryData;
+    IsDateFilter: boolean = false;
 
     constructor() {
         this._DWQueryBuilderService = new DWQueryBuilderService();
