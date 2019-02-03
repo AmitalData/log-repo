@@ -97,14 +97,14 @@
     <tr *ngIf="IsDateFilter == false">
         <td>
             <div *ngFor="let item of SelectedFiltersDataSource; let i=index;">
-                <div style="float:left;margin-left:15px;" *ngIf="item && item.FilterType == 'Ask User' && (!item.IsGroup) && (item.ParentDataTypeCode != 'DateTime' && item.ParentDataTypeCode != 'Date')">
+                <div style="float:left;margin-left:15px;width: 250px;" *ngIf="item && item.FilterType == 'Ask User' && (!item.IsGroup) && (item.ParentDataTypeCode != 'DateTime' && item.ParentDataTypeCode != 'Date')">
                     <div>
                         <table style="height:30px;">
                             <tr style="height:30px;" class="MyFilterItem">
                                 <td *ngIf="item.IsMandatoryFilter == true" style="height: 22px;width:16px;">
                                     <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
                                 </td>
-                                <td>
+                                <td  style="width: 115px;">
                                     <span>{{item.DisplayName.replace('[', '').replace(']','')}}</span>
                                 </td>
                                 <td style="width:7px;">
@@ -229,53 +229,52 @@
     </tr>
     <tr>
         <td>
-            <div *ngFor="let item of SelectedFiltersDataSource; let i=index;">
-                <div style="float:left;margin-left:15px;" *ngIf="item && item.FilterType == 'Ask User' && (!item.IsGroup) && (item.ParentDataTypeCode == 'DateTime' || item.ParentDataTypeCode == 'Date')">
-                    <div>
-                        <table style="height:30px;">
-                            <tr style="height:30px;" class="MyFilterItem">
-                                <td *ngIf="item.IsMandatoryFilter == true" style="height: 22px;width:16px;">
-                                    <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
-                                </td>
-                                <td>
-                                    <span>{{item.DisplayName.replace('[', '').replace(']','')}}</span>
-                                </td>
-                                <td style="width:7px;">
-                                    <div style="width:7px;"></div>
-                                </td>
-                                <td style="width:150px;" [ngSwitch]="item.ParentDataTypeCode">
+            <table>
+                <tr *ngFor="let item of SelectedFiltersDataSource; let i=index;">
+                    <td style="float:left;margin-left:15px;" *ngIf="item && item.FilterType == 'Ask User' && (!item.IsGroup) && (item.ParentDataTypeCode == 'DateTime' || item.ParentDataTypeCode == 'Date')">
+                        <div>
+                            <table style="height:30px;">
+                                <tr style="height:30px;" class="MyFilterItem">
+                                    <td *ngIf="item.IsMandatoryFilter == true" style="height: 22px;width:16px;">
+                                        <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                    </td>
+                                    <td style="width: 115px;">
+                                        <span>{{item.DisplayName.replace('[', '').replace(']','')}}</span>
+                                    </td>
+                                    <td style="width:7px;">
+                                        <div style="width:7px;"></div>
+                                    </td>
+                                    <td style="width:150px;" [ngSwitch]="item.ParentDataTypeCode">
 
-                                    <!--Date-->
-                                    <div *ngSwitchCase="'DateTime' || 'Date'">
+                                        <!--Date-->
+                                        <div *ngSwitchCase="'DateTime' || 'Date'">
 
-                                        <div style="width:180px;">
+                                            <div style="width:180px;">
 
-                                            <DWDate [ObjectFieldName]="item.Code"
-                                                    [DataContext]="item"
-                                                    [Operation]="item.Operation.Code"
-                                                    (ValueChanged)="item.onTextChange($event)"
-                                                    [SelectedValue]="item.TextValue">
-                                            </DWDate>
+                                                <DWDate [ObjectFieldName]="item.Code"
+                                                        [DataContext]="item"
+                                                        [Operation]="item.Operation.Code"
+                                                        (ValueChanged)="item.onTextChange($event)"
+                                                        [SelectedValue]="item.TextValue">
+                                                </DWDate>
 
+                                            </div>
                                         </div>
-                                    </div>
 
-                                </td>
-                                
-                            </tr>
-                        </table>
-                        <!-------------------------->
-                      
-                        <DWAskUserFiltersComponent [SelectedFiltersDataSource]="item.FilterItems" [IsDateFilter]="true"></DWAskUserFiltersComponent>
-                        
-                    </div>
+                                    </td>
 
-                </div>
-                <!--<div style="width:100%;" *ngIf="item && item.IsGroup == true">
-                    <DWAskUserFiltersComponent [SelectedFiltersDataSource]="item.FilterItems" [IsDateFilter]="true"></DWAskUserFiltersComponent>
-                </div>-->
+                                </tr>
+                            </table>
+                            <!-------------------------->
 
-            </div>
+                            <DWAskUserFiltersComponent [SelectedFiltersDataSource]="item.FilterItems" [IsDateFilter]="true"></DWAskUserFiltersComponent>
+
+                        </div>
+
+                    </td> 
+
+                </tr>
+            </table>
         </td>
 
     </tr>

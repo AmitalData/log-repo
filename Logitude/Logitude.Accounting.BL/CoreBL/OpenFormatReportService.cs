@@ -1764,12 +1764,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.CreatedbyUser != null)
                 {
                     if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, '0'));
+                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
                 }
                 else
                 {
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append('0', 9);
+                    myStringBuilder.Append(' ', 9);
                 }
 
                 myStringBuilder.Append('0', 7);
@@ -2308,12 +2308,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.CreatedbyUser != null)
                 {
                     if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, '0'));
+                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
                 }
                 else
                 {
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append('0', 9);
+                    myStringBuilder.Append(' ', 9);
                 }
 
                 myStringBuilder.Append('0', 7);
@@ -2678,12 +2678,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.CreatedbyUser != null)
                 {
                     if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, '0'));
+                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
                 }
                 else
                 {
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append('0', 9);
+                    myStringBuilder.Append(' ', 9);
                 }
 
                 myStringBuilder.Append('0', 7);
@@ -3247,14 +3247,14 @@ namespace Logitude.Accounting.BL.CoreBL
             stringBuilder.Append("A000");
             stringBuilder.Append(' ', 4);
 
-            if (rowsCount.ToString().Length > 9)
+            if (rowsCount.ToString().Length > 15)
             {
-                rowsCount.ToString().Substring(0, 9);
-                stringBuilder.Append("a" + rowsCount.ToString().PadLeft(9, '0'));
+                rowsCount.ToString().Substring(0,15);
+                stringBuilder.Append("a" + rowsCount.ToString().PadLeft(15, '0'));
             }
             else
             {
-               stringBuilder.Append(rowsCount.ToString().PadLeft(9, '0'));
+               stringBuilder.Append(rowsCount.ToString().PadLeft(15, '0'));
             }
             if (tenantPM.VatNumber != null)
             {
@@ -3299,7 +3299,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var date = DateTime.Now;
              string dateFormat = String.Format("{0:MMddhhmm}", date);
 
-            string filePath = @"D:\OPENFRMT\" + tenantPM.VatNumber + "." + date.Year + @"\" + dateFormat;
+            string filePath = @"D:\OPENFRMT\" + tenantPM.VatNumber + "." + date.Year.ToString().Substring(2,2) + @"\" + dateFormat;
 
             if (filePath.ToString().Length > 50)
             {
