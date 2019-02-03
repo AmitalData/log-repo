@@ -1850,7 +1850,7 @@ namespace Logitude.Customs.BL.StimulReport
         private List<add_tolltax_type> add_tolltax_typeField;
 
         private string multi_lineField;
-        
+
         public add_toll()
         {
             this.multi_lineField = "yes";
@@ -3768,7 +3768,7 @@ namespace Logitude.Customs.BL.StimulReport
             }
         }
 
-        
+
     }
 
     /// <remarks/>
@@ -5916,6 +5916,8 @@ namespace Logitude.Customs.BL.StimulReport
 
         private string importernameField;
 
+        private string importerfacilitationTypeCodeField;
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("importer-id")]
         public string importerid
@@ -5941,6 +5943,20 @@ namespace Logitude.Customs.BL.StimulReport
             set
             {
                 this.importernameField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("importer-facilitationTypeCode")]
+        public string importerfacilitationTypeCode
+        {
+            get
+            {
+                return this.importerfacilitationTypeCodeField;
+            }
+            set
+            {
+                this.importerfacilitationTypeCodeField = value;
             }
         }
     }
