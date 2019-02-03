@@ -12,7 +12,7 @@ import { AppTool } from '../../../../Infrastructure/Tools';
     selector: 'DWAskUserFiltersComponent',
     moduleId: module.id,
     templateUrl: './DWAskUserFiltersComponent.html',
-    inputs: ['SelectedFiltersDataSource', 'ShowRunButton','RunReportCommand']
+    inputs: ['SelectedFiltersDataSource', 'ShowRunButton','RunReportCommand','IsDateFilter']
 })
 
 export class DWAskUserFiltersComponent implements OnInit{
@@ -32,6 +32,7 @@ export class DWAskUserFiltersComponent implements OnInit{
     public _DWSubQueryPMService: DWSubQueryPMService;
     ValidationErrorsList: any[];
     public DWQueryData: DWQueryData;
+    IsDateFilter: boolean = false;
 
     constructor() {
         this._DWQueryBuilderService = new DWQueryBuilderService();
@@ -54,30 +55,45 @@ export class DWAskUserFiltersComponent implements OnInit{
 
     RunReport(MyDWQueryData) {
         this.ValidationErrorsList = [];
-        
-        this.DWQueryData = MyDWQueryData;
-        //this.DWQueryData.Filters = this.SelectedFiltersDataSource;
-        if (this.DWQueryData.Filters) {
-            this.CheckFiltersValidationsFilters(this.SelectedFiltersDataSource[0]);
-            if (this.ValidationErrorsList.length == 0) {
-                var QueryData = new DWQueryData();
-                QueryData.Columns = this.DWQueryData.Columns;
-                QueryData.Filters = this.SelectedFiltersDataSource[0];
-                QueryData.PageIndex = 0;
-                QueryData.PageSize = 100;
-                this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
-                    if (!myResult.HasError) {
-                        //this.rowData = myResult.Result;
-                        this.RunReportComplete.emit(myResult.Result.SQLDataResult);
-                    }
-                    else {
-                        //this.StopBusyIndicator();
-                    }
 
-                    //this.LoadBIReportData();
-                });
-            }
+        if (MyDWQueryData.FirstTime == true) {
+            this.DWQueryData = MyDWQueryData.MyData;
+        }
+        else {
+            this.DWQueryData = MyDWQueryData;
         } 
+        
+        //this.DWQueryData.Filters = this.SelectedFiltersDataSource;
+        //if (this.DWQueryData.Filters) {
+            this.CheckFiltersValidationsFilters(this.SelectedFiltersDataSource[0]);
+        if (this.ValidationErrorsList.length == 0) {
+            var QueryData = new DWQueryData();
+            QueryData.Columns = this.DWQueryData.Columns;
+            QueryData.Filters = this.SelectedFiltersDataSource[0];
+            QueryData.PageIndex = 0;
+            QueryData.PageSize = 100;
+            this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
+                if (!myResult.HasError) {
+                    //this.rowData = myResult.Result;
+                    this.RunReportComplete.emit(myResult.Result.SQLDataResult);
+                }
+                else {
+                    //this.StopBusyIndicator();
+                }
+
+                //this.LoadBIReportData();
+            });
+        }
+        else {
+            if (MyDWQueryData.FirstTime == true) {
+                this.ValidationErrorsList = [];
+                this.RunReportComplete.emit("ValidationError");
+            }
+            else {
+                this.RunReportComplete.emit("ValidationError");
+            } 
+        }
+        //} 
         
     }
 
@@ -136,7 +152,9 @@ export class DWAskUserFiltersComponent implements OnInit{
 
     Msg : string = "";
     CheckFiltersValidationsFilters(MyFilter: DWObjectFieldsDetails) {
-
+        if (!MyFilter) {
+            return;
+        }
         MyFilter.FilterItems.forEach((field) => {
           
             if (field.FilterItems.length == 0) {

@@ -97,6 +97,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
 
         public DateTime? SATApprovalDate { get; set; }
 
+        public bool IsFullAccounting { get; set; }
+
         [ForeignKey("SalesmanUserId")]
         public virtual User SalesmanUser { get; set; }
         

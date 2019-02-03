@@ -389,7 +389,7 @@
 
                                             <li *ngFor="let note of accountingNotesList">
                                                 <!-- <span style="width:70px;color:gray; font-size: 9px;display: inline-block;">2018-02-15</span> -->
-                                                <span class="TextTrimming">{{note.Notes}}</span>
+                                                <span class="TextTrimming">{{note.Notes?note.Notes:'&nbsp;'}}</span>
                                                 <div class="btns" [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'">
                                                     <IconButton [IsSmall]="true" [style.float]="isRTL ? 'right' : 'left'"
                                                         [Name]="'Edit'" (click)="ItemEditButton(note)"></IconButton>
@@ -524,7 +524,7 @@
                                             </div>
                                             <div class="progress" [style.float]="isRTL ? 'left' : 'right'">
                                                 <progress [attr.value]="creditPercentage" max="100"></progress>
-                                                <div class="percentage-label">{{creditPercentage?creditPercentage:0}}%</div>
+                                                <div class="percentage-label">{{ (creditPercentage?creditPercentage:0) | NumbersPipe:'N2'}}%</div>
                                             </div>
                                         </div>
 

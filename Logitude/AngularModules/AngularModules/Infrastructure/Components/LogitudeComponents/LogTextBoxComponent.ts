@@ -1534,10 +1534,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             .subscribe((response: any) => {
                 var table = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
                 this.ObjectField = window.ObjectFields.filter(d => d.ObjectTableId === table.Id && d.FieldName === this.ObjectFieldName)[0];
-                if(this.ObjectField)
-                    this.showMultiLineWindow();
-                else
-                    console.error("[Multiline textbox window] no object field found to open the window ", this.ObjectTableName, this.ObjectFieldName);
+                this.showMultiLineWindow();
              });
         }
 
@@ -1586,7 +1583,12 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         wind.Width = 960;
         wind.Height = 570;
         wind.WindowArgs = windowArgs;
-        wind.Title = this.showLocal ? this.ObjectField.FullNameTextCodeLocalDefaultText :  this.ObjectField.FullNameTextCodeDefaultText;
+
+        if(this.ObjectField)
+            wind.Title = this.showLocal ? this.ObjectField.FullNameTextCodeLocalDefaultText :  this.ObjectField.FullNameTextCodeDefaultText;
+        else
+            wind.Title = "";
+
         wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
         wind.WindowClosed.subscribe(res=>{
             console.log("Rsukt--",res);

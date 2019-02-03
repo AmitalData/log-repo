@@ -39,44 +39,114 @@ using Logitude.BL.GlobalModel;
 using Logitude.BL.GlobalModel.EntityLists;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.Tools.EntityService;
+using WebFreight.Web.DataContracts;
+using System.Security.Authentication;
 
 namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
 { 
 
     
-    public partial class WebhookKeysController : ApiController
+    public partial class WebhookKeysExtendedController : ApiController
     {
-	  
-       
+        [ActionName("PostPushHookContent")]
+        public HttpResponseMessage PostPushHookContent(WebHookTesterData WebHookData)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    string URL = WebHookData.URL;
+                    if (WebHookData.Operation == "In URL")
+                    {
+                        URL = URL + "?AccessKey=" + WebHookData.AccessKey;
+                    }
+                    WebRequest request = WebRequest.Create(URL);
+
+                    request.Method = "POST";
+                    if (WebHookData.Operation == "In Header")
+                    {
+                        request.Headers.Add("AccessKey", WebHookData.AccessKey);
+                    }
+
+
+                    string postData = WebHookData.ContentToPush;
+
+                    // Create POST data and convert it to a byte array.
+
+                    byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+                    // Set the ContentType property of the WebRequest.
+                    request.ContentType = "application/x-www-form-urlencoded";
+                    // Set the ContentLength property of the WebRequest.
+                    request.ContentLength = byteArray.Length;
+                    // Get the request stream.
+                    Stream dataStream = request.GetRequestStream();
+                    // Write the data to the request stream.
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    // Close the Stream object.
+                    dataStream.Close();
+                    // Get the response.
+                    WebResponse response = request.GetResponse();
+                    // Display the status.
+                    //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+                    // Get the stream containing content returned by the server.
+                    dataStream = response.GetResponseStream();
+                    // Open the stream using a StreamReader for easy access.
+                    StreamReader reader = new StreamReader(dataStream);
+                    // Read the content.
+                    string responseFromServer = reader.ReadToEnd();
+                    // Display the content.
+                    //Console.WriteLine(responseFromServer);
+                    // Clean up the streams.
+                    reader.Close();
+                    dataStream.Close();
+                    response.Close();
+                    if (responseFromServer == "you are not authonticated to call this page.")
+                    {
+                        throw new AuthenticationException("you are not authonticated to call this page.");
+                    }
+                    return Request.CreateResponse(HttpStatusCode.OK, "Sent Successfully");
+                }
+
+                catch (Exception ex)
+                { 
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            { 
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
         public HttpResponseMessage GetSingle(string id)
         {
-		  try
+            try
             {
-			    string logKey = PerformanceLogger.LogCurrentTime();
-			    string token = HttpContext.Current.Request.Headers["Token"];
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 SecurityUtility.CheckContactFeature("WebhookKeys", "READ", authToken.Tenant);
                 WebhookKeysQuery webhookKeysQuery = new WebhookKeysQuery();
                 WebhookKeysPM webhookKeysPM = webhookKeysQuery.GetSinglePM(id, authToken.Tenant);
-                
-				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, webhookKeysPM);
-			 
-			}
+
+            }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-           
+
         }
 
-         
-		
 
-        public HttpResponseMessage Post(WebhookKeysPM entityPM)
+
+        [ActionName("PostWebhookKeys")]
+        public HttpResponseMessage PostWebhookKeys(WebhookKeysPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -89,11 +159,11 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("WebhookKeys", "NEW", authToken.Tenant);
-                
+
                         IGlobalContext MyContext = GlobalContext.GetContext();
                         WebhookKeysService service = new WebhookKeysService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
-				
+
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
                         // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("WebhookKeys", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
@@ -117,7 +187,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                 }
             }
             else
-            { 
+            {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
@@ -147,10 +217,10 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                         {
                             CacheManager.CacheWrapper.Invalidate(entityPmName);
                         }
-                
+
                         IGlobalContext MyContext = GlobalContext.GetContext();
                         WebhookKeysService service = new WebhookKeysService(MyContext, entityPM.Tenant);
- 
+
                         service.Update(entityPM);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
@@ -177,7 +247,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                 }
             }
             else
-            { 
+            {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
@@ -186,19 +256,9 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
         public void Delete(int id)
         {
         }
-	    
 
 
-		
-          
-			
-			 
-		  
-        
 
-		
-			 		
-      
     }
 }
 	 

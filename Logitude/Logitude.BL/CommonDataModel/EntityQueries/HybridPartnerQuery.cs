@@ -269,5 +269,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
+        public string GetPartnerNameByPartnerTenant(int PartnerTenant)
+        {
+            string partnerName = (from a in repository.context.HybridPartners
+                                      where a.PartnerTenant == PartnerTenant
+                                    select a.Name).FirstOrDefault();
+
+
+            return partnerName;
+
+
+        }
+
+
+
     }
 }
