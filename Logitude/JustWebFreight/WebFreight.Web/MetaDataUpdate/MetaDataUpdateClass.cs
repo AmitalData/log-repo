@@ -15183,6 +15183,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactEmail",
                 PMPropertyPath = "ContactEmail",
+                DisplayInEntityVariables = false,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -15201,6 +15202,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactName",
                 PMPropertyPath = "ContactName",
+                DisplayInEntityVariables = false,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -15237,6 +15239,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactBusinessPhone",
                 PMPropertyPath = "ContactBusinessPhone",
+                DisplayInEntityVariables = false,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -15255,6 +15258,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactMobile",
                 PMPropertyPath = "ContactMobile",
+                DisplayInEntityVariables = false,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -15273,6 +15277,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactFax",
                 PMPropertyPath = "ContactFax",
+                DisplayInEntityVariables = false,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -15309,6 +15314,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactEmail",
                 PMPropertyPath = "ContactEmail",
+                DisplayInEntityVariables = false,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -40954,28 +40960,28 @@ namespace WebFreight.Web.MetaDataUpdate
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             //BluesnapContractCode
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Contract",
-                FullFieldLable = "BluesnapContractCode",
-                FieldName = "BluesnapContractCode",
-                FieldsDataType = "LookUp",
-                IsRequired = false,
-                MinLength = 0,
-                MaxLength = 10,
-                ObjectTableId = TenantManagementObject.Id,
-                ObjectTableName = TenantManagementObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                Operator = "Equals",
-                LookUpTableId = BluesnapContractObject.Id,
-                CanFilter = true,
-                ListFieldLable = "BluesnapContractCodeListLable",
-                ListLableDefaultText = "Contract",
-                ValidForQuerySection1 = "TenantManagement",
-                ListPropertyPath = "BluesnapContractCode",
-                PMPropertyPath = "BluesnapContractCode",
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            //{
+            //    DefaultText = "Contract",
+            //    FullFieldLable = "BluesnapContractCode",
+            //    FieldName = "BluesnapContractCode",
+            //    FieldsDataType = "LookUp",
+            //    IsRequired = false,
+            //    MinLength = 0,
+            //    MaxLength = 10,
+            //    ObjectTableId = TenantManagementObject.Id,
+            //    ObjectTableName = TenantManagementObject.Name,
+            //    Tenant = 0,
+            //    TextCodeType = "F",
+            //    Operator = "Equals",
+            //    LookUpTableId = BluesnapContractObject.Id,
+            //    CanFilter = true,
+            //    ListFieldLable = "BluesnapContractCodeListLable",
+            //    ListLableDefaultText = "Contract",
+            //    ValidForQuerySection1 = "TenantManagement",
+            //    ListPropertyPath = "BluesnapContractCode",
+            //    PMPropertyPath = "BluesnapContractCode",
+            //}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {

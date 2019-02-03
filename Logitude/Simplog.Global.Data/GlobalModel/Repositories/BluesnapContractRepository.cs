@@ -21,10 +21,10 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             globalContext = context;
         }
 
-        public BluesnapContract GetSingleBluesnapContract(string code, int tenant)
+        public BluesnapContract GetSingleBluesnapContract(string Id, int tenant)
         {
             return (from a in context.BluesnapContracts
-                    where a.Code == code
+                    where a.Id == Id
                     select a).FirstOrDefault();
         }
 

@@ -7,7 +7,8 @@
 //------------------------------------------------------------------------------
 
 export class BluesnapContractList {
-   		Code: string;
+   		Id: string;
+		Code: string;
 		Name: string;
 		ContractId: string;
 		SearchFields: string;

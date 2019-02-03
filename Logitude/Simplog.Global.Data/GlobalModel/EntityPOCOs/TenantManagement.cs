@@ -72,7 +72,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public bool PaymentFailure { get; set; }
         public DateTime? SuspendDate  { get; set; }
         public string InternalNotes { get; set; }
-        public string BluesnapContractCode { get; set; }
+        public string BluesnapContractId { get; set; }
         public string AWBMessagesCCSTypeCode { get; set; }
         public string PIMA { get; set; }
         public bool IsEAWBOnlyDemo { get; set; }
@@ -136,7 +136,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         [ForeignKey("PaymentCurrencyCode")]
         public virtual PaymentCurrency PaymentCurrency { get; set; }
 
-        [ForeignKey("BluesnapContractCode")]
+        [ForeignKey("BluesnapContractId")]
         public virtual BluesnapContract BluesnapContract { get; set; }
 
         [ForeignKey("AWBMessagesCCSTypeCode")]

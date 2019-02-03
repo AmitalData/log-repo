@@ -18,5 +18,7 @@
     <field Id="&quot;fe3502f2-8d81-49ed-a107-cc15945d77c8&quot;" Code="&quot;[Parent Tenant]&quot;" Name="&quot;Parent Tenant&quot;" DataTypeCode="&quot;Integer&quot;" IsRequired="true" MinLength="0" MaxLength="0" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="false" />
     <field Id="&quot;d9e3c40f-d0b5-4028-ad4e-b1574f5f91fd&quot;" Code="&quot;[Country Code]&quot;" Name="&quot;Country Code&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="false" MinLength="0" MaxLength="2" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" />
     <field Id="&quot;b35b38d3-14aa-4160-afb6-25d5cd3d5dde&quot;" Code="&quot;[Primary Contact Email]&quot;" Name="&quot;Primary Contact Email&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="false" MinLength="0" MaxLength="70" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" />
+    <field Id="&quot;0129145d-109b-401e-a766-226709093a6f&quot;" Code="&quot;[Receivables Accounting Card]&quot;" Name="&quot;Receivables Accounting Card&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="false" MinLength="0" MaxLength="25" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" />
+    <field Id="&quot;06e9ec66-4b00-48a9-ab44-46e94aba3d5c&quot;" Code="&quot;[Payables Accounting Card]&quot;" Name="&quot;Payables Accounting Card&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="false" MinLength="0" MaxLength="25" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" />
   </fields>
 </entity>
