@@ -873,10 +873,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.IncotermCode = myIncotermCode;
             entityPM.IncotermName = myIncotermName;
 
+            entityPM.StatusName = null;
+            entityPM.StatusWeight = 0;
             if (entityPoco.StatusId != null)
             {
-                EntityStatus status = EntityStatusRepository.GetSingleEntityStatus(entityPoco.StatusId, entityPoco.Tenant, true);
-                entityPM.StatusName = status.Name;
+                EntityStatus iEntityStatus = EntityStatusRepository.GetSingleEntityStatus(entityPoco.StatusId, entityPoco.Tenant, true);
+                if (iEntityStatus != null)
+                {
+                    entityPM.StatusName = iEntityStatus.Name;
+                    entityPM.StatusWeight = iEntityStatus.StatusWeight;
+                }
             }
 
             string myShipmentType = "";

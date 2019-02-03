@@ -1359,6 +1359,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 950;
             logitudeWindow.Height = 595;
+            logitudeWindow.IsFillScreen = true;
             logitudeWindow.Title = "Container Statuses";
             logitudeWindow.WindowArgs = { ShipmentId: this.EntityPM.Id, ContainerId: item.EntityPM.Id };
             logitudeWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/LastStatusComponent");

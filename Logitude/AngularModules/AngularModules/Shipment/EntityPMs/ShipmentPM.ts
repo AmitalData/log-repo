@@ -793,8 +793,11 @@ export class ShipmentPM {
     private statusLocation: string;
     public get StatusLocation() { return this.statusLocation; }
     public set StatusLocation(newValue: string) { if (this.statusLocation != newValue) { this.statusLocation = newValue; this.MarkAsDirty("StatusLocation"); } }
-       
-	 
+
+    private statusWeight: number;
+    public get StatusWeight() { return this.statusWeight; }
+    public set StatusWeight(newValue: number) { if (this.statusWeight != newValue) { this.statusWeight = newValue; this.MarkAsDirty("StatusWeight"); } }
+
     private quoteId: string;
     public get QuoteId() { return this.quoteId; }
     public set QuoteId(newValue: string) { if (this.quoteId != newValue) { this.quoteId = newValue; this.MarkAsDirty("QuoteId"); } }
