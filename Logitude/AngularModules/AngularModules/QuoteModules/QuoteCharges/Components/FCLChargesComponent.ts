@@ -1677,7 +1677,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     if (iAmount < this.CostMinAmount) {
                         iAmount = this.CostMinAmount;
                         iVisible = true;
-                        iTitle = "Amount is due to Charge Min Amount";
+                        iTitle = "Amount is due to Charge Min Amount: " + this.CostMinAmount;
                     }
                 }
 
@@ -1685,7 +1685,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     if (iAmount > this.CostMaxAmount) {
                         iAmount = this.CostMaxAmount;
                         iVisible = true;
-                        iTitle = "Amount is due to Charge Max Amount";
+                        iTitle = "Amount is due to Charge Max Amount: " + this.CostMaxAmount;
                     }
                 }
             }
@@ -1712,7 +1712,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     if (iAmount < this.SaleMinAmount) {
                         iAmount = this.SaleMinAmount;
                         iVisible = true;
-                        iTitle = "Amount is due to Charge Min Amount";
+                        iTitle = "Amount is due to Charge Min Amount: " + this.SaleMinAmount;
                     }
                 }
 
@@ -1720,7 +1720,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     if (iAmount > this.SaleMaxAmount) {
                         iAmount = this.SaleMaxAmount;
                         iVisible = true;
-                        iTitle = "Amount is due to Charge Max Amount";
+                        iTitle = "Amount is due to Charge Max Amount: " + this.SaleMaxAmount;
                     }
                 }
             }

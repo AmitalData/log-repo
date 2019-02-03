@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { WebhookKeysPM } from '../../../../Infrastructure/EntityPMs/WebhookKeysPM';
-import { WebhookKeysPMService } from '../../../../Infrastructure/Services/StandardPMs/WebhookKeysPMService';
+import { WebhookKeysExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/WebhookKeysExtendedPMService';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
@@ -23,13 +23,13 @@ export class WebhookTesterComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     //public IsEntityReady: boolean = false;
     //public IsResourcesReady: boolean = false;
-    private myService: WebhookKeysPMService;
+    private myService: WebhookKeysExtendedPMService;
     //private isPrimaryGenerated: boolean = false;
     //private isSecondaryGenerated: boolean = false;
     public Operators = ["In Header", "In URL"];
     constructor(private entityResourceService: EntityResourceService) {
         super();
-        this.myService = new WebhookKeysPMService();
+        this.myService = new WebhookKeysExtendedPMService();
     }
 
     SetWindowArgs(args: any) {
