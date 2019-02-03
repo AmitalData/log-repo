@@ -3355,10 +3355,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 stringBuilder.Append(' ', 50);
             }
 
-            if (tenantPM.CompanyAddress != null)
+            if (address !=null &&  address.Address1 != null)
             {
-                if (tenantPM.CompanyAddress.Length > 50) { tenantPM.CompanyAddress = tenantPM.CompanyAddress.Substring(0, 50); }
-                stringBuilder.Append("a" + tenantPM.CompanyAddress.PadLeft(50, ' '));
+                if (address.Address1.Length > 50) { address.Address1 = address.Address1.Substring(0, 50); }
+                stringBuilder.Append("a" + address.Address1.PadLeft(50, ' '));
             }
             else
             {
