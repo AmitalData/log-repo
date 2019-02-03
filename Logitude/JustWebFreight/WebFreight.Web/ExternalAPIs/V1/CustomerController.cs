@@ -69,7 +69,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     string computingPartnerCode = "";
                     if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                     {
-                        computingPartnerCode = entity.ComputingPartnerCode;//loggedContactInfo.ComputingPartnerCode;
+                        computingPartnerCode = entity.ComputingPartnerCode;
                     }
 
                     if (!string.IsNullOrEmpty(entity.PartnerCode) && string.IsNullOrEmpty(computingPartnerCode))
@@ -330,6 +330,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
             if (myPartner == null)
             {
                 myPartner = computingPartnerQuery.GetSinglePMByCode(computingPartnerCode, 0);
+            }
+
+            if (myPartner == null)
+            {
+                throw new ApplicationException("Computing Partner with Name " + computingPartnerCode + " doesn't match any record");
             }
 
             ObjectTableQuery objectTableQuery = new ObjectTableQuery(0);

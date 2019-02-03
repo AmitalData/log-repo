@@ -99,12 +99,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                         temp.BillingAddressId = myBillingAddressPM.Id;
                     }
                 }
-
-                if (string.IsNullOrEmpty(temp.Code))
-                {
-                    temp.Code = MyEntity.PartnerCode;
-                }
-
+                
                 if (MyEntity.Contacts != null && MyEntity.Contacts.Count > 0)
                 {
                     ContactQueryService ContactService2 = new ContactQueryService(Tenant);

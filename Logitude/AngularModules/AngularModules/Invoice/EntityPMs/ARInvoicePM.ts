@@ -932,6 +932,11 @@ export class ARInvoicePM {
     public set IsMultiCurrency(newValue: boolean) { if (this.isMultiCurrency != newValue) { this.isMultiCurrency = newValue; this.MarkAsDirty("IsMultiCurrency"); } }
        
 	 
+    private creditARInvoice: string;
+    public get CreditARInvoice() { return this.creditARInvoice; }
+    public set CreditARInvoice(newValue: string) { if (this.creditARInvoice != newValue) { this.creditARInvoice = newValue; this.MarkAsDirty("CreditARInvoice"); } }
+       
+	 
     private totalAmountForTaxReport: number;
     public get TotalAmountForTaxReport() { return this.totalAmountForTaxReport; }
     public set TotalAmountForTaxReport(newValue: number) { if (this.totalAmountForTaxReport != newValue) { this.totalAmountForTaxReport = newValue; this.MarkAsDirty("TotalAmountForTaxReport"); } }

@@ -158,19 +158,22 @@ export class BIReportPreviewComponent implements OnInit {
     }
     public BuildRows(arg: BIReportXMLData) {
         this.rowData = [];
-        this.StopBusyIndicator();
-        this._DWQueryBuilderService.GetNewDWQueryData(arg.DWQueryData).subscribe(myResult => {
-            if (!myResult.HasError) {
-                this.rowData = myResult.Result.SQLDataResult;
-                this.timerToken = setTimeout(() => this.UpdateAGGrid(arg), 500);
-                this.StopBusyIndicator();
-            }
-            else {
-                this.StopBusyIndicator();
-            }
+        this.StartBusyIndicator();
+        this.RunReportCommand.emit({ MyData : this.DWQueryData,FirstTime : true });
 
-            //this.LoadBIReportData();
-        });
+       
+        //this._DWQueryBuilderService.GetNewDWQueryData(arg.DWQueryData).subscribe(myResult => {
+        //    if (!myResult.HasError) {
+        //        this.rowData = myResult.Result.SQLDataResult;
+        //        this.timerToken = setTimeout(() => this.UpdateAGGrid(arg), 500);
+        //        this.StopBusyIndicator();
+        //    }
+        //    else {
+        //        this.StopBusyIndicator();
+        //    }
+
+        //    //this.LoadBIReportData();
+        //});
         //this.RunReportCommand.emit(arg.DWQueryData);
 
         //if (arg.DWQueryData != null && arg.DWQueryData.SubQueryData != null && arg.DWQueryData.SubQueryData.SQLString != null) {
@@ -422,7 +425,6 @@ export class BIReportPreviewComponent implements OnInit {
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 if (s != null  ||( d != null && d != "cancel")) {
-                    this.DWQueryId = s.ID;
                     this.LoadBIReportData();
                 }
             });
@@ -448,8 +450,15 @@ export class BIReportPreviewComponent implements OnInit {
         this.RunReportCommand.emit(this.DWQueryData);
     }
     OnRunReportComplete(MyData) {
-        this.rowData = MyData;
-        this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML), 500);
+        if (MyData == "ValidationError") {
+            this.StopBusyIndicator();
+        }
+        else {
+            this.rowData = MyData;
+            this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML), 500);
+            this.StopBusyIndicator();
+        }
+       
         this.StopBusyIndicator();
     }
     CountClicked() {
