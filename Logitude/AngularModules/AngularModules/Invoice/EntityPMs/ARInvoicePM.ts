@@ -952,6 +952,11 @@ export class ARInvoicePM {
     public set TotalVAT(newValue: number) { if (this.totalVAT != newValue) { this.totalVAT = newValue; this.MarkAsDirty("TotalVAT"); } }
        
 	 
+    private isFullAccounting: boolean;
+    public get IsFullAccounting() { return this.isFullAccounting; }
+    public set IsFullAccounting(newValue: boolean) { if (this.isFullAccounting != newValue) { this.isFullAccounting = newValue; this.MarkAsDirty("IsFullAccounting"); } }
+       
+	 
 
     public OldEntityPM: ARInvoicePM;
 		
