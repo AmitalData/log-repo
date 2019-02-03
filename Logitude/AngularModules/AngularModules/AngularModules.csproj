@@ -658,6 +658,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleInfrastructureBusinessProcess.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookKeysComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\CustomControls\RatioBoxComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\ExportBI2ExcelControl\ExportBI2ExcelControl.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWDateComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.ts" />
@@ -684,6 +685,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\BusinessProcessQueueList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BusinessRoleList.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\DWCategoriesList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWObjectFieldList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWObjectTableList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryColumnList.ts" />
@@ -721,6 +723,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BusinessProcessQueueListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BusinessRoleListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWObjectFieldExtendedPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWCategoriesListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWObjectFieldListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWObjectTableListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\FeatureToggleListService.ts" />
@@ -737,6 +740,7 @@
     <TypeScriptCompile Include="InvoiceModules\APInvoice\ModuleAPInvoice.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleAPPayment.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleDeclarations.ts" />
+    <Content Include="Infrastructure\Components\CustomControls\RatioBoxComponent.html" />
     <Content Include="Infrastructure\Components\ExportBI2ExcelControl\ExportBI2ExcelControl.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\DWDateComponent.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.html" />

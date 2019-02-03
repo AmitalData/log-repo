@@ -3451,7 +3451,7 @@ User/Pass",
                                 SubChapterDescription = lineArray[5],
                             };
 
-                            iEntity.SearchFields = iEntity.Code + "," + iEntity.ChapterCode + "," + iEntity.SubChapterCode;
+                            iEntity.SearchFields = iEntity.Code + "," + iEntity.ChapterCode + "," + iEntity.SubChapterCode + "," + iEntity.Description;
                             iRepository.Add(iEntity);
                         }
 
@@ -3462,7 +3462,7 @@ User/Pass",
                             iEntity.ChapterDescription = lineArray[3];
                             iEntity.SubChapterCode = lineArray[4];
                             iEntity.SubChapterDescription = lineArray[5];
-                            iEntity.SearchFields = iEntity.Code + "," + iEntity.ChapterCode + "," + iEntity.SubChapterCode;
+                            iEntity.SearchFields = iEntity.Code + "," + iEntity.ChapterCode + "," + iEntity.SubChapterCode + "," + iEntity.Description;
                             iRepository.Update(iEntity);
                         }
 
