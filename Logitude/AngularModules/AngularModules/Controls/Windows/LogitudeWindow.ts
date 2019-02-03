@@ -37,7 +37,7 @@ export class LogitudeWindow {
     public IsFillScreen_90: boolean = false;
     public SuppressBusyIndicator: boolean = false;
 
-
+    IsHideWindowMargin: any;/// jit problem after khalid revert code ?!?!?
     @Output() WindowClosed: EventEmitter<any> = new EventEmitter();
     @Output() ComponentLoaded: EventEmitter<any> = new EventEmitter();
     constructor() {

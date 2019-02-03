@@ -156,7 +156,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                  dEC_C = g.Count(r => (r.dStatus.CourierDeclarationStatusCode == "M")),
                  dEC_W = g.Count(r => (r.dStatus.CourierDeclarationStatusCode == "X")),
                  pAY = g.Count(r => (r.dStatus.CourierPaymentStatusCode == "R")),
-                 PAY_RL = g.Count(r => (r.dStatus.CourierPaymentStatusCode == "R" && r.dStatus.HighLowValue=="L")),
+                 //PAY_RL = g.Count(r => (r.CourierPaymentStatusCode == "R" && r.HighLowValue=="L")),
+                 PAYReadyNotFastindividual = g.Count(r => (r.dStatus.CourierPaymentStatusCode == "R" && r.dStatus.FastIndividualProcessCode == "F")),//Task 47220: שינוי לוגיקת תשלום מרוכז 
                  MNFR = g.Count(r => (r.dStatus.CourierManifestStatusCode == "R" )),
                  MNFR_RV = g.Count(r => (r.dStatus.CourierManifestStatusCode == "R" || r.dStatus.CourierManifestStatusCode == "V")),
                  DECR = g.Count(r => (r.dStatus.CourierDeclarationStatusCode == "R" )),
