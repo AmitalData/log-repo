@@ -104,10 +104,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     throw new ApplicationException("Receivable Charges Type is required");
                                 }
 
-                                if (item.Measurement == null)
-                                {
-                                    throw new ApplicationException("Receivable Measurement is required");
-                                }
+                                //if (item.Measurement == null)
+                                //{
+                                //    throw new ApplicationException("Receivable Measurement is required");
+                                //}
 
                                 if (item.Currency == null)
                                 {
@@ -125,10 +125,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     throw new ApplicationException("Payable Charges Type is required");
                                 }
 
-                                if (item.Measurement == null)
-                                {
-                                    throw new ApplicationException("Payable Measurement is required");
-                                }
+                                //if (item.Measurement == null)
+                                //{
+                                //    throw new ApplicationException("Payable Measurement is required");
+                                //}
 
                                 if (item.Currency == null)
                                 {
@@ -383,6 +383,37 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         item.IATACodeId = chargesType.IATACodeId;
                         item.IsExpense = chargesType.IsExpense;
 
+                        if (string.IsNullOrEmpty(item.MeasurementId))
+                        {
+                            if(MethodHelper.IsLCLEntity(temp.TransportModeId, temp.ShipmentTypeId))
+                            {
+                                if(!string.IsNullOrEmpty(chargesType.MeasurementId))
+                                {
+                                    item.MeasurementId = chargesType.MeasurementId;                                   
+                                }
+                                else
+                                {
+                                    throw new ApplicationException("Receivable Measurement is required");
+                                }
+                            }
+
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(chargesType.ContainerMeasurementId))
+                                {
+                                    item.MeasurementId = chargesType.ContainerMeasurementId;                                    
+                                }
+                                else if (!string.IsNullOrEmpty(chargesType.MeasurementId))
+                                {
+                                    item.MeasurementId = chargesType.MeasurementId;
+                                }
+                                else
+                                {
+                                    throw new ApplicationException("Receivable Measurement is required");
+                                }
+                            }
+                        }
+
                         if (string.IsNullOrEmpty(item.PrepaidCollectId))
                         {
                             if (chargesType.ChargesGroupCode == "FRT")
@@ -615,6 +646,37 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         item.VatTypeId = chargesType.VatTypeId;
                         item.IATACodeId = chargesType.IATACodeId;
 
+                        if (string.IsNullOrEmpty(item.MeasurementId))
+                        {
+                            if (MethodHelper.IsLCLEntity(temp.TransportModeId, temp.ShipmentTypeId))
+                            {
+                                if (!string.IsNullOrEmpty(chargesType.MeasurementId))
+                                {
+                                    item.MeasurementId = chargesType.MeasurementId;
+                                }
+                                else
+                                {
+                                    throw new ApplicationException("Payable Measurement is required");
+                                }
+                            }
+
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(chargesType.ContainerMeasurementId))
+                                {
+                                    item.MeasurementId = chargesType.ContainerMeasurementId;
+                                }
+                                else if (!string.IsNullOrEmpty(chargesType.MeasurementId))
+                                {
+                                    item.MeasurementId = chargesType.MeasurementId;
+                                }
+                                else
+                                {
+                                    throw new ApplicationException("Payable Measurement is required");
+                                }
+                            }
+                        }
+                        
                         if (string.IsNullOrEmpty(item.PrepaidCollectId))
                         {
                             if (chargesType.ChargesGroupCode == "FRT")
