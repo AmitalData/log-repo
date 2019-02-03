@@ -1764,12 +1764,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.CreatedbyUser != null)
                 {
                     if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, '0'));
+                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
                 }
                 else
                 {
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append('0', 9);
+                    myStringBuilder.Append(' ', 9);
                 }
 
                 myStringBuilder.Append('0', 7);
@@ -2308,12 +2308,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.CreatedbyUser != null)
                 {
                     if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, '0'));
+                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
                 }
                 else
                 {
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append('0', 9);
+                    myStringBuilder.Append(' ', 9);
                 }
 
                 myStringBuilder.Append('0', 7);
@@ -2678,12 +2678,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.CreatedbyUser != null)
                 {
                     if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, '0'));
+                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
                 }
                 else
                 {
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append('0', 9);
+                    myStringBuilder.Append(' ', 9);
                 }
 
                 myStringBuilder.Append('0', 7);
