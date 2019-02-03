@@ -452,7 +452,13 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
         var view = new DWObjectFieldsDetails(item.BaseDWObjectField, this);
         if (view.DWObjectTableCode.indexOf("DIM_") != -1) {
-            view.ParentDataTypeCode = "LookUp";
+            //view.ParentDataTypeCode = "LookUp";
+            if (view.Code == '[Full Date]') {
+                view.ParentDataTypeCode = "DateTime";
+            }
+            else {
+                view.ParentDataTypeCode = "LookUp";
+            }
             if (item.BaseDWObjectField.DataTypeCode == "LookUp" || item.BaseDWObjectField.DataTypeCode == "Dimension") {
                 view.ParentDimTabelName = item.BaseDWObjectField.DimensionTableCode;
             }
@@ -994,7 +1000,13 @@ export class DWQueryBuilderComponent extends BaseComponent {
             var view = new DWObjectFieldsDetails(field, this);
             if (field.FilterItems.length == 0) {
                 if (field.DWObjectTableCode.indexOf("DIM_") != -1) {
-                    view.ParentDataTypeCode = "LookUp";
+                    
+                    if (view.Code == '[Full Date]') {
+                        view.ParentDataTypeCode = "DateTime";
+                    }
+                    else {
+                        view.ParentDataTypeCode = "LookUp";
+                    }
                     view.ParentDimTabelName = field.DWObjectTableCode;
                 }
                 else {
@@ -1442,7 +1454,13 @@ export class DWObjectFieldsDetails extends BaseComponent {
                         Result.Result.forEach((field) => {
                             if (field.DisplayInQueryBuilder == true) {
                                 var view = new DWObjectFieldsDetails(field, this.MyParentClass);
-                                view.ParentDataTypeCode = DWObjectField.DataTypeCode;
+                                if (field.Code == '[Full Date]') {
+                                    view.ParentDataTypeCode = field.DataTypeCode;
+                                }
+                                else {
+                                    view.ParentDataTypeCode = DWObjectField.DataTypeCode;
+                                }
+                               
                                 if (!AppTool.IsNullOrEmpty(DWObjectField.Code)) {
                                     view.DisplayName = '[' + (DWObjectField.Name.replace('[', '').replace(']', '') + ' ' + view.Code.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
                                 }
@@ -1540,6 +1558,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         }
         else {
             this.ParentDataTypeCode = DWObjectField.DataTypeCode;
+
             this.ParentDimTabelName = DWObjectField.ParentDimTabelName;
         }
 

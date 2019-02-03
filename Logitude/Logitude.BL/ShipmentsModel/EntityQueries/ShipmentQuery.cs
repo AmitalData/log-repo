@@ -1516,6 +1516,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.StatusName = shipment.EntityStatus.Name;
             shipmentPM.StatusLocation = shipment.StatusLocation;
             shipmentPM.StatusDate = shipment.StatusDate;
+            shipmentPM.StatusWeight = shipment.EntityStatus.StatusWeight;
+
             shipmentPM.LastSentByUserId = shipment.LastSentByUserId;
             shipmentPM.ProfitCurrencyId = shipment.ProfitCurrencyId;
             shipmentPM.ProfitExchangeRate = shipment.ProfitExchangeRate;

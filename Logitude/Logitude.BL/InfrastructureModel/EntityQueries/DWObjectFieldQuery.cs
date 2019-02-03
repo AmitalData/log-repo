@@ -158,7 +158,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          IsMeasurement = a.IsMeasurement,
                                          AggregationTypeCode = a.AggregationTypeCode,
                                          DisplayInQueryBuilder = a.DisplayInQueryBuilder,
-                                         DisplayName = a.DWObjectTableCode.Replace("DIM_","") + "." + a.Name,
+                                         DisplayName = item.Name + " " + a.Name,
                                          //Category1 = a.Category1,
                                          //Category2 = a.Category2,
                                          LOVAdditionalColumns = a.LOVAdditionalColumns

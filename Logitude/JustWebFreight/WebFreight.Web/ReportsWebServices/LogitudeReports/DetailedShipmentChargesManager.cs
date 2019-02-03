@@ -485,7 +485,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                            }).ToList();
                 }
 
-                iQueryable_APInvoices = iQueryable_APInvoices.Where(d => d.StatusCode != "VD" && d.StatusCode != "WA");
+                iQueryable_APInvoices = iQueryable_APInvoices.Where(d => d.StatusCode != "VD");
                 iQueryable_ARInvoices = iQueryable_ARInvoices.Where(d => d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsCancelled == false);
 
                 if (!this.IncludeDraftInvoices)
