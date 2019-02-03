@@ -40954,28 +40954,28 @@ namespace WebFreight.Web.MetaDataUpdate
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             //BluesnapContractCode
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "Contract",
-                FullFieldLable = "BluesnapContractCode",
-                FieldName = "BluesnapContractCode",
-                FieldsDataType = "LookUp",
-                IsRequired = false,
-                MinLength = 0,
-                MaxLength = 10,
-                ObjectTableId = TenantManagementObject.Id,
-                ObjectTableName = TenantManagementObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                Operator = "Equals",
-                LookUpTableId = BluesnapContractObject.Id,
-                CanFilter = true,
-                ListFieldLable = "BluesnapContractCodeListLable",
-                ListLableDefaultText = "Contract",
-                ValidForQuerySection1 = "TenantManagement",
-                ListPropertyPath = "BluesnapContractCode",
-                PMPropertyPath = "BluesnapContractCode",
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            //{
+            //    DefaultText = "Contract",
+            //    FullFieldLable = "BluesnapContractCode",
+            //    FieldName = "BluesnapContractCode",
+            //    FieldsDataType = "LookUp",
+            //    IsRequired = false,
+            //    MinLength = 0,
+            //    MaxLength = 10,
+            //    ObjectTableId = TenantManagementObject.Id,
+            //    ObjectTableName = TenantManagementObject.Name,
+            //    Tenant = 0,
+            //    TextCodeType = "F",
+            //    Operator = "Equals",
+            //    LookUpTableId = BluesnapContractObject.Id,
+            //    CanFilter = true,
+            //    ListFieldLable = "BluesnapContractCodeListLable",
+            //    ListLableDefaultText = "Contract",
+            //    ValidForQuerySection1 = "TenantManagement",
+            //    ListPropertyPath = "BluesnapContractCode",
+            //    PMPropertyPath = "BluesnapContractCode",
+            //}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {

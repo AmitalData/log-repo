@@ -9,6 +9,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
     public class BluesnapContractPM
     {
         [Key]
+        public string Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public string ContractId { get; set; }
