@@ -1,3 +1,4 @@
+import { IntegrityCheckStatusListService } from './Services/StandardLists/IntegrityCheckStatusListService';
 import { AccountingNoteExtendedListService } from './Services/ExtendedLists/AccountingNoteExtendedListService';
 //#region import services
 import { AccountingIntegrityCheckListService } from './Services/StandardLists/AccountingIntegrityCheckListService';
@@ -244,6 +245,7 @@ export class ModuleProviders {
             case "AccountingIntegrityCheckListService": { myResult = new AccountingIntegrityCheckListService; break; }
             case "AccountingIntegrityCheckPMService": { myResult = new AccountingIntegrityCheckPMService; break; }
             case "AccountingNoteExtendedListService": { myResult = new AccountingNoteExtendedListService; break; }
+            case "IntegrityCheckStatusListService": { myResult = new IntegrityCheckStatusListService; break; }
 
 
             //Menu Buttons
