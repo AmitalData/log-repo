@@ -125,8 +125,17 @@ export class FilterField extends BaseComponent {
             this.PickFiltersEnabled = true;
         }
 
-        this.UIProperties.SetEnabled("TextValue", "", this.TextFiltersEnabled);
-        this.UIProperties.SetEnabled("TextValue", "", this.LOVFiltersEnabled);
+        if (this.ObjectField.DataTypeCode == "Text" || this.ObjectField.DataTypeCode == "nText" || this.ObjectField.DataTypeCode == "Integer" || this.ObjectField.DataTypeCode == "Double" || this.ObjectField.DataTypeCode == "Decimal") {
+            this.UIProperties.SetEnabled("TextValue", null, this.TextFiltersEnabled);
+        }
+
+        else if (this.ObjectField.DataTypeCode == "LookUp") {
+            this.UIProperties.SetEnabled("TextValue", this.ObjectTable.Name, this.LOVFiltersEnabled);
+        }
+
+        else if (this.ObjectField.DataTypeCode == "PickList") {
+            this.UIProperties.SetEnabled(this.ObjectField.FieldName, this.ObjectTable.Name, this.PickFiltersEnabled);
+        }
     }
     
     private filterchangeevent: PubSubService;
