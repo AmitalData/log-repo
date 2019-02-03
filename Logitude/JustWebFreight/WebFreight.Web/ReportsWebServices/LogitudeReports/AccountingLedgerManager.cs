@@ -121,8 +121,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             List<Currency> systemCurrencies = currencyRepository.GetCurrencies(tenant).ToList();
             List<ARInvoiceType> ARInvoiceTypes = myInvoiceContext.ARInvoiceTypes.ToList();
-            List<AccountingPaymentMethod> ARPaymentMethods = myInvoiceContext.AccountingPaymentMethods.Where(d => d.Tenant == tenant).ToList();
-            List<APPaymentMethod> APPaymentMethods = myInvoiceContext.APPaymentMethods.Where(d => d.Tenant == tenant).ToList();
+            List<AccountingPaymentMethod> AllPaymentMethods = myInvoiceContext.AccountingPaymentMethods.Where(d => d.Tenant == tenant).ToList();
+            List<AccountingPaymentMethod> ARPaymentMethods = AllPaymentMethods.Where(d => d.IsAR).ToList();
+            List<AccountingPaymentMethod> APPaymentMethods = AllPaymentMethods.Where(d => d.IsAP).ToList();
 
             #region General Data
 
@@ -375,7 +376,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.ReferenceType = "A\\P Payment";
                 accountingLedgerRecord.CustomerId = openAPpayment.VendorId;
 
-                if (APPaymentMethods.Where(d => d.Id == openAPpayment.PaymentMethodId).FirstOrDefault().Code == "FS")
+                if (APPaymentMethods.Where(d => d.Id == openAPpayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
                 {
                     if (openAPpayment.AmountInPaymentCurrency < 0)
                     {
@@ -647,7 +648,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.ReferenceType = "A\\P Payment";
                 accountingLedgerRecord.CustomerId = apPayment.VendorId;
 
-                if (APPaymentMethods.Where(d => d.Id == apPayment.PaymentMethodId).FirstOrDefault().Code == "FS")
+                if (APPaymentMethods.Where(d => d.Id == apPayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
                 {
                     if (apPayment.AmountInPaymentCurrency < 0)
                     {
@@ -669,7 +670,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Notes = apPayment.InternalNotes;
                 accountingLedgerRecord.RegisterDate = apPayment.RegisterDate;
                 accountingLedgerRecord.ValueDate = apPayment.ValueDate;
-                accountingLedgerRecord.PaymentMethod = APPaymentMethods.Where(d => d.Id == apPayment.PaymentMethodId).FirstOrDefault().Name;
+                accountingLedgerRecord.PaymentMethod = APPaymentMethods.Where(d => d.Id == apPayment.AccountingPaymentMethodId).FirstOrDefault().Name;
 
                 tempList.Add(accountingLedgerRecord);
             }
@@ -750,6 +751,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         currencyRecord.ShipperReference1 = ledger.ShipperReference1;
                         currencyRecord.ShipperReference2 = ledger.ShipperReference2;
                         currencyRecord.ShipmentNumber = ledger.ShipmentNumber;
+                        currencyRecord.Notes = ledger.Notes;
 
                         customerRecord.AccountingLedgerList.Add(currencyRecord);
                     }                    

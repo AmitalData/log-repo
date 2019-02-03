@@ -1,3 +1,4 @@
+import { IntegrityCheckTabComponent } from './Components/EditTabs/AccountingIntegrityCheck/IntegrityCheckTabComponent';
 import {AccountingWorkspaceComponent} from './Components/Workspaces/AccountingWorkspaceComponent';
 import {GLAccountPageComponent} from './Components/Workspaces/Main/GLAccountPageComponent';
 import {JournalPageComponent} from './Components/Workspaces/Journal/JournalPageComponent';
@@ -29,7 +30,8 @@ import {AccountingPeriodsComponent} from './Components/Maintenance/AccountingPer
 import {EditAccountingPeriodComponent} from './Components/Maintenance/EditAccountingPeriodComponent';
 import {AccountingPeriodEventComponent} from './Components/Maintenance/AccountingPeriodEventComponent';
 import {YearTransferComponent} from './Components/Maintenance/YearTransferComponent';
-import { NewTaxReportComponent} from './Components/NewEntity/NewTaxReportComponent';
+import { NewTaxReportComponent } from './Components/NewEntity/NewTaxReportComponent';
+import { NewOpenFormatReportComponent } from './Components/NewEntity/NewOpenFormatReportComponent';
 
 import {GLAccountGeneralTabComponent} from './Components/EditTabs/GLAccount/GLAccountGeneralTabComponent';
 import {GLAccountTransactionsTabComponent} from './Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent';
@@ -47,12 +49,14 @@ import {RevaluationDetailsComponent} from './Components/EditTabs/Revaluation/Rev
 import {GLAccountTaxWithholdingTabComponent} from './Components/EditTabs/GLAccount/GLAccountTaxWithholdingTabComponent';
 import {BankCodeGeneralTabComponent} from './Components/EditTabs/BankCode/BankCodeGeneralTabComponent';
 import {ExternalRecoDetailsTabComponent} from './Components/EditTabs/ExternalReconciliation/ExternalRecoDetailsTabComponent';
+import { OpenFormatReportLogTabComponent } from './Components/EditTabs/OpenFormatReport/OpenFormatReportLogTabComponent';
 
 import {GlAccountLedgerTransactionsListTemplate} from './Components/ListTemplates/GlAccountLedgerTransactionsListTemplate';
 import {ReconcileExternalPageListTemplate} from './Components/ListTemplates/ReconcileExternalPageListTemplate';
 import {ReconcileExternalPageLineListTemplate} from './Components/ListTemplates/ReconcileExternalPageLineListTemplate';
 import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
 import {ManageReconciliationListTemplate} from './Components/ListTemplates/ManageReconciliationListTemplate';
+import {TaxReportListTemplate} from './Components/ListTemplates/TaxReportListTemplate';
 
 import {ReconcileComponent} from './Components/Others/ReconcileComponent';
 import {ReconciledMessage} from './Components/Others/ReconciledMessage';
@@ -106,6 +110,7 @@ export const Components =
         AddEditRecoExPageComponent,
         NewConnectedGLAccountComponent,
         NewPaymentChequeComponent,
+        NewOpenFormatReportComponent,
         //Maintenance
         NewCategory1Component,
         NewCategory2Component,
@@ -142,12 +147,14 @@ export const Components =
         BankCodeGeneralTabComponent,
         EditTaxReportLineComponent,
         TaxDeductionReportLogTabComponent,
+        OpenFormatReportLogTabComponent,
         //Templates
         GlAccountLedgerTransactionsListTemplate,
         ReconcileExternalPageListTemplate,
         ReconcileExternalPageLineListTemplate,
         FieldTemplateComponent,
-        ManageReconciliationListTemplate, 
+        ManageReconciliationListTemplate,
+        TaxReportListTemplate,
         //Others
         ReconcileComponent,
         ReconciledMessage,
@@ -169,6 +176,7 @@ export const Components =
         NewTaxReportComponent,
         AccountingFlatFileDownloadComponent,
         NewTaxDeductionReportComponent,
+        IntegrityCheckTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -201,6 +209,7 @@ export class ModuleDeclarations {
             case "NewPaymentChequeComponent": { myResult = NewPaymentChequeComponent; break; }
             case "NewTaxReportComponent": { myResult = NewTaxReportComponent; break; }
             case "NewTaxDeductionReportComponent": { myResult = NewTaxDeductionReportComponent; break; }
+            case "NewOpenFormatReportComponent": { myResult = NewOpenFormatReportComponent; break; }
             //Maintenance
             case "NewCategory1Component": { myResult = NewCategory1Component; break; }
             case "NewCategory2Component": { myResult = NewCategory2Component; break; }
@@ -220,12 +229,12 @@ export class ModuleDeclarations {
             case "ManageReconciliationsTabComponent": { myResult = ManageReconciliationsTabComponent; break; }
             case "JournalDetailsTabComponent": { myResult = JournalDetailsTabComponent; break; }
             case "CashBookDetailsTabComponent": { myResult = CashBookDetailsTabComponent; break; }
-            case "CashBookManageDepoTabComponent": { myResult = CashBookManageDepoTabComponent; break; } 
-            case "ChartOfAccountGeneralTabComponent": { myResult = ChartOfAccountGeneralTabComponent; break; } 
-            case "BankDepositDetailsTabComponent": { myResult = BankDepositDetailsTabComponent; break; } 
-            case "BankAccountGeneralTabComponent": { myResult = BankAccountGeneralTabComponent; break; } 
-            case "BankPagesTabComponent": { myResult = BankPagesTabComponent; break; } 
-            case "ManageRecoTabComponent": { myResult = ManageRecoTabComponent; break; } 
+            case "CashBookManageDepoTabComponent": { myResult = CashBookManageDepoTabComponent; break; }
+            case "ChartOfAccountGeneralTabComponent": { myResult = ChartOfAccountGeneralTabComponent; break; }
+            case "BankDepositDetailsTabComponent": { myResult = BankDepositDetailsTabComponent; break; }
+            case "BankAccountGeneralTabComponent": { myResult = BankAccountGeneralTabComponent; break; }
+            case "BankPagesTabComponent": { myResult = BankPagesTabComponent; break; }
+            case "ManageRecoTabComponent": { myResult = ManageRecoTabComponent; break; }
             case "ReconciliationDetailsTabComponent": { myResult = ReconciliationDetailsTabComponent; break; }
             case "RevaluationDetailsComponent": { myResult = RevaluationDetailsComponent; break; }
             case "ExternalRecoDetailsTabComponent": { myResult = ExternalRecoDetailsTabComponent; break; }
@@ -235,13 +244,15 @@ export class ModuleDeclarations {
             case "GLAccountTaxWithholdingTabComponent": { myResult = GLAccountTaxWithholdingTabComponent; break; }
             case "BankCodeGeneralTabComponent": { myResult = BankCodeGeneralTabComponent; break; }
             case "EditTaxReportLineComponent": { myResult = EditTaxReportLineComponent; break; }
-            case "TaxDeductionReportLogTabComponent": { myResult = TaxDeductionReportLogTabComponent; break;}
+            case "TaxDeductionReportLogTabComponent": { myResult = TaxDeductionReportLogTabComponent; break; }
+            case "OpenFormatReportLogTabComponent": { myResult = OpenFormatReportLogTabComponent; break; }
             //Templates
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }
             case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }
             case "ReconcileExternalPageLineListTemplate": { myResult = ReconcileExternalPageLineListTemplate; break; }
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
             case "ManageReconciliationListTemplate": { myResult = ManageReconciliationListTemplate; break; }
+            case "TaxReportListTemplate": { myResult = TaxReportListTemplate; break; }
             //Others
             case "ReconcileComponent": { myResult = ReconcileComponent; break; }
             case "ReconciledMessage": { myResult = ReconciledMessage; break; }
@@ -263,6 +274,7 @@ export class ModuleDeclarations {
             case "ExternalReconcileComponent": { myResult = ExternalReconcileComponent; break; }
             case "AddEditTaxWithholdingLineComponent": { myResult = AddEditTaxWithholdingLineComponent; break; }
             case "AccountingFlatFileDownloadComponent": { myResult = AccountingFlatFileDownloadComponent; break; }
+            case "IntegrityCheckTabComponent": { myResult = IntegrityCheckTabComponent; break; }
         }
 
         return myResult;

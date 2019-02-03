@@ -33,19 +33,21 @@ export class SessionInfo {
     public static get SessionTimeout(): number { return this.sessionTimeout; }
     public static set SessionTimeout(newValue: number) { this.sessionTimeout = newValue; }
 
-    private static webTokenLifeTime: number;
-    public static get WebTokenLifeTime(): number { return this.webTokenLifeTime; }
-    public static set WebTokenLifeTime(newValue: number) { this.webTokenLifeTime = newValue; }
+    private static webTokenLifeTimeInMinutes: number;
+    public static get WebTokenLifeTimeInMinutes(): number { return this.webTokenLifeTimeInMinutes; }
+    public static set WebTokenLifeTimeInMinutes(newValue: number) { this.webTokenLifeTimeInMinutes = newValue; }
 
-    private static webTokenExpirationWarning: number;
-    public static get WebTokenExpirationWarning(): number { return this.webTokenExpirationWarning; }
-    public static set WebTokenExpirationWarning(newValue: number) { this.webTokenExpirationWarning = newValue; }
+    private static webTokenExpirationWarningInMinutes: number;
+    public static get WebTokenExpirationWarningInMinutes(): number { return this.webTokenExpirationWarningInMinutes; }
+    public static set WebTokenExpirationWarningInMinutes(newValue: number) { this.webTokenExpirationWarningInMinutes = newValue; }
 
     private static keepUserLoggedIn: boolean;
     public static get KeepUserLoggedIn(): boolean { return this.keepUserLoggedIn; }
     public static set KeepUserLoggedIn(newValue: boolean) { this.keepUserLoggedIn = newValue; }
-
-
+    
+    private static lastLoginDateTime: Date;
+    public static get LastLoginDateTime(): Date { return this.lastLoginDateTime; }
+    public static set LastLoginDateTime(newValue: Date) { this.lastLoginDateTime = newValue; }
 
     private static loggedUserPM: UserPM;
     public static get LoggedUserPM(): UserPM { return this.loggedUserPM; }
@@ -61,11 +63,11 @@ export class SessionInfo {
         }
     }
 
+    private static loggedUserCardId: string;
+    public static get LoggedUserCardId(): string { return this.loggedUserCardId; }
+    public static set LoggedUserCardId(newValue: string) { this.loggedUserCardId = newValue; }
 
-
-
-
-
-
-
+    private static loggedUserCardType: string;
+    public static get LoggedUserCardType(): string { return this.loggedUserCardType; }
+    public static set LoggedUserCardType(newValue: string) { this.loggedUserCardType = newValue; }
 }

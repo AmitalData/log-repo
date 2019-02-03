@@ -73,8 +73,6 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<ScreenModification> ScreenModifications { get; }
         IDbSet<ImageDetail> ImageDetails { get; }
         IDbSet<ImageLibrary> ImageLibrarys { get; }
-        
-
         IDbSet<PermissionType> PermissionTypes { get; }
         IDbSet<ObjectTableType> ObjectTableTypes { get; }
         IDbSet<RuleConditionField> RuleConditionFields { get; }
@@ -84,34 +82,27 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<EntityLastUpdate> EntityLastUpdates { get; }
         IDbSet<EntityLastActivityType> EntityLastActivityTypes { get; }
         IDbSet<EventTypeCategory> EventTypeCategories { get; }
-
         IDbSet<EmailAlertSetting> EmailAlertSettings { get; }
-
         IDbSet<SharedLogisticsInvitationStatus> SharedLogisticsInvitationStatus { get; set; }
         IDbSet<ObjectTableLastUpdate> ObjectTableLastUpdates { get; }
-
         IDbSet<InboundEmail> InboundEmails { get; }
         IDbSet<InboundEmailLine> InboundEmailLines { get; }
-
         IDbSet<QueueDefinition> QueueDefinitions { get; }
         IDbSet<QueueMessage> QueueMessages { get; }
-
         IDbSet<BusinessHour> BusinessHours { get; }
         IDbSet<BusinessHoursHoliday> BusinessHoursHolidays { get; }
-
         IDbSet<APILogs> APILogs { get; }
         IDbSet<APILogsData> APILogsData { get; }
-
         IDbSet<QueueMessageMoreDetails> QueueMessageMoreDetails { get; }
         IDbSet<TasksScheduler> TasksSchedulers { get; }
         IDbSet<TaskSchedulerHistory> TaskSchedulerHistories { get; }
         IDbSet<DWObjectTable> DWObjectTables { get; }
         IDbSet<DWObjectField> DWObjectFields { get; }
-
-
         IDbSet<DWQuery> DWQueries { get;}
+        IDbSet<DWSubQuery> DWSubQueries { get; }
         IDbSet<DWQueryColumn> DWQueryColumns { get; }
         IDbSet<DWQueryFilter> DWQueryFilters { get; }
+        IDbSet<SharedUserQuery> SharedUserQueries { get; }
 
         void SetAsModified(object entity);
         void DetectChanges();

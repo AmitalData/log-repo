@@ -19,6 +19,7 @@ import { DeclarationCargoSplitPM } from '../../../../../Customs/EntityPMs/Declar
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';//test4
 import { CargoSplitRequestParams } from '../../../../../Customs/DataContract/RequestParams/CargoSplitRequestParams';
 import { INF_MSG_GenericResponseData } from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
+import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 
 import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPMService';
 
@@ -103,8 +104,10 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
             .subscribe((myResponse: ServiceResponse) => {
                 SessionLocator.CurrentSession.StopBusyIndicator();
                 this.GetDeclarationCargoSplitByDeclarationIdListsOp_Completed(myResponse, false);
+                this.CargoSplitIdEdit();
             });
     }
+
 
     private GetDeclarationCargoSplitByDeclarationIdListsOp_Completed(myResponse: ServiceResponse, sourceIsCostomFile: boolean) {
         if (myResponse.Result != null) {
@@ -112,6 +115,20 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
             myResponse.Result.forEach((item) => {
                 this.DeclarationCargoSplitList.Insert(item);
             });
+        }
+    }
+
+    CargoSplitIdEdit(): any {
+        var myDeclarationEditComponentController = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
+        if (!AppTool.IsNullOrEmpty(myDeclarationEditComponentController.CargoSplitId)) {
+            if (this.DeclarationCargoSplitList != null && this.DeclarationCargoSplitList.Collection != null) {
+                var item = this.DeclarationCargoSplitList.Collection.find(r => r.Id == myDeclarationEditComponentController.CargoSplitId);
+                if (item != null) {
+                    this.EditButtonClicked(item);
+                    console.log("CargoSplitId " + myDeclarationEditComponentController.CargoSplitId);
+                    myDeclarationEditComponentController.CargoSplitId = null;
+                }
+            }
         }
     }
 

@@ -336,6 +336,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             {
                 result = (from f in result where f.CustomerId == customerid select f);
             }
+            else
+            {
+                result = (from f in result where f.CustomerId !=null select f);
+            }
             if (!string.IsNullOrEmpty(directionId))
             {
                 result = (from f in result where f.DirectionId == directionId select f);
@@ -348,6 +352,29 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return result;
         }
 
+
+
+        public IQueryable<ShipmentsCustomersDashboardView> GetShipmentDataViewsForCustomersDashboard(int tenant, string directionId, string transportmodeId)
+        {
+            IShipmentDataViewContext dataViewEntities = ShipmentDataViewContext.GetContext(tenant);
+
+            IQueryable<ShipmentsCustomersDashboardView> result = (from f in dataViewEntities.ShipmentsCustomersDashboardViews where f.Tenant == tenant && !f.IsCancelled select f);
+            
+                result = (from f in result where f.CustomerId != null select f);
+            
+            if (!string.IsNullOrEmpty(directionId) && directionId!="All")
+            {
+                result = (from f in result where f.DirectionId == directionId select f);
+            }
+            if (!string.IsNullOrEmpty(transportmodeId) && transportmodeId != "All")
+            {
+                result = (from f in result where f.TransportModeId == transportmodeId select f);
+            }
+
+            return result;
+        }
+
+
         public IQueryable<ShipmentDirectionTransmodeView> GetShipmentDataViewsForDirectionAndTransmodeDashboard(int tenant, string customerid)
         {
             IShipmentDataViewContext dataViewEntities = ShipmentDataViewContext.GetContext(tenant);
@@ -356,6 +383,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             if (!string.IsNullOrEmpty(customerid))
             {
                 result = (from f in result where f.CustomerId == customerid select f);
+            }
+            else
+            {
+                result = (from f in result where f.CustomerId !=null select f);
             }
 
             return result;

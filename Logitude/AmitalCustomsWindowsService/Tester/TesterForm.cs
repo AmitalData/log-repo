@@ -20,6 +20,7 @@ using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.Messaging.Maman;
+using System.Threading;
 //using System.Windows.Interactivity;
 
 namespace AmitalCustomsWindowsService.Tester
@@ -44,10 +45,19 @@ namespace AmitalCustomsWindowsService.Tester
 
             Debug.WriteLine("Env:");
             Debug.WriteLine(LogitudeSettings.LogitudeURL);
-            var pmCustomsSetting= Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(1);
-            var jsonSetting=ProxyUtil.JsonConvertSerialize(pmCustomsSetting);
-            Debug.WriteLine(jsonSetting);
+
+            var t = new Thread(GetENV);
+            t.Start();
+            //GetENV();
             ///customsMessagingSheetWRToolStripMenuItem_Click(this, null);
+        }
+
+        private static void GetENV()
+        {
+            
+            var pmCustomsSetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(1);
+            var jsonSetting = ProxyUtil.JsonConvertSerialize(pmCustomsSetting);
+            Debug.WriteLine(jsonSetting);
         }
 
         private void BlobToolStripMenuItem_Click(object sender, EventArgs e)
@@ -249,13 +259,19 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+            string customsResponseXml = File.ReadAllText(@"C:\Users\itzik\Desktop\zevel\1-43468729.xml");
+            WebFreight.Web.CustomWebServices.Testers.Tester.DeSerializeObject3052(customsResponseXml);
+            customsResponseXml = File.ReadAllText(@"C:\Users\itzik\Desktop\zevel\1-20980020.xml");
+            WebFreight.Web.CustomWebServices.Testers.Tester.DeSerializeObject3052(customsResponseXml);
+
             //http://lodmpn05/DSVWebFreightDebug/api/DeclarationWebService/GetDeclarationMandatoryTicketList/?parentEntityId=1-92241&parentEntityCode=Declaration
             //DbContextBaseUtil.ToLog = true;
-            WebFreight.Web.CustomWebServices.Testers.Tester.TestNOWait();
+            //WebFreight.Web.CustomWebServices.Testers.Tester.TestNOWait();
 
             //clsTester.GetDeclarationMandatoryTicketList(parentEntityId: "1-92241", parentEntityCode: "Declaration");
             //clsTester.TestLockTab();
-            return;
+            //return;
             clsTester.TestNull();
         }
 
@@ -478,10 +494,23 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void debugStepToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            switch (_CBWorkerRole.Text)
+            {
+                case "CustomsAnalyzeQueueWR":
+                    {
+                        var customsAnalyzeQueueWR = new CustomsAnalyzeQueueWR();
+                        customsAnalyzeQueueWR.DebugStep(_TBID.Text, _CBInterfaceID.Text, GetTenant());
 
-            CustomsWorkerRole.Test.clsTester.DebugRQStep(
+                    }
+                    break;
+                default:
+                    CustomsWorkerRole.Test.clsTester.DebugRQStep(
                 _CBInterfaceID.Text, GetTenant(), _TBID.Text,
                 _CBWorkerRole.Text);
+                    break;
+            }
+            
+            
 
 
         }
@@ -762,6 +791,38 @@ namespace AmitalCustomsWindowsService.Tester
         }
 
         private void TesterForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buildMamanBaldarSTBToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var AirlineIdMAWB=_tstbMamanBaldarSTB.Text;
+            AirlineIdMAWB = AirlineIdMAWB.Trim();
+            if (string.IsNullOrEmpty(AirlineIdMAWB))
+            {
+                MessageBox.Show("AirlineId-MAWB is must");
+            }
+            var my = new Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue.MamanStatusAvailabilityTesterService();
+            var list = my.Tester(AirlineIdMAWB);
+            string dir = @"C:\inetpub\wwwroot\FTP_MAMAN";
+            if (!Directory.Exists(dir))
+            {
+                dir = Path.Combine(Path.GetTempPath(), "FTP_MAMAN");
+                if (!Directory.Exists(dir)) {
+                    Directory.CreateDirectory(dir);
+                }
+
+            }
+            System.Diagnostics.Process.Start(dir);
+            foreach (var item in list)
+            {
+                var f = Path.Combine(dir, item.Key);
+                File.WriteAllText(f, item.Value);
+            }
+        }
+
+        private void textBoxLogger_TextChanged(object sender, EventArgs e)
         {
 
         }

@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef,ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef,ChangeDetectorRef} from '@angular/core';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -1257,44 +1257,45 @@ export class ProductTypeItemClass {
 
                 var type: string = null;
 
-                        var ProductsToggleButtonList = [];
+                var ProductsToggleButtonList = [];
 
-                        this.ProductTypesByTenantList.forEach((i) => {
-                            if (!i.InActive) {
-                                var item = new ProductTypeList();
-                                item.Code = i.Code;
-                                item.Name = i.Name;
-                                item.InActive = i.InActive;
-                                item.Id = i.Id;
-                                item.SearchFields = i.SearchFields;
+                this.ProductTypesByTenantList.forEach((i) => {
+                    if (!i.InActive) {
+                        var item = new ProductTypeList();
+                        item.Code = i.Code;
+                        item.Name = i.Name;
+                        item.InActive = i.InActive;
+                        item.Id = i.Id;
+                        item.SearchFields = i.SearchFields;
 
-                                ProductsToggleButtonList.push(i);
+                        ProductsToggleButtonList.push(i);
 
-                            }
-                            else {
+                    }
+                    else {
 
 
-                            }
-                        });
+                    }
+                });
 
-                        ProductsToggleButtonList.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
-                        var typelist: ProductTypeList = ProductsToggleButtonList.filter(d => d.Code == this.Code)[0];
-                        if (typelist != null) {
-                            type = typelist.Name;
-                        }
-                        newItem.ProductTypeName = type;
-                        var flag: boolean = true;
-                        for (var i = 0; i < this.entityPM.CustomerProducts.length; i++) {
-                            if (this.entityPM.CustomerProducts[i].ProductTypeCode == newItem.ProductTypeCode) {
-                                flag = false; break;
-                            }
-                        }
-                        if (flag) {
-                            this.entityPM.AddCustomerProductPM(newItem);                            
-                        }                     
+                ProductsToggleButtonList.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
+                var typelist: ProductTypeList = ProductsToggleButtonList.filter(d => d.Code == this.Code)[0];
+                if (typelist != null) {
+                    type = typelist.Name;
+                }
+                newItem.ProductTypeName = type;
+                var flag: boolean = true;
+                for (var i = 0; i < this.entityPM.CustomerProducts.length; i++) {
+                    if (this.entityPM.CustomerProducts[i].ProductTypeCode == newItem.ProductTypeCode) {
+                        flag = false; break;
+                    }
+                }
+                if (flag) {
+                    this.entityPM.AddCustomerProductPM(newItem);
+                }
+
+                if (!this.entityPM.ActivityWatch)
+                    this.entityPM.ActivityWatch = true;
             }
-
-
             else {
                 var item: CustomerProductPM = this.entityPM.CustomerProducts.filter(d => d.ProductTypeCode == this.Code)[0];
                 if (item != null) {
@@ -1585,8 +1586,8 @@ class ServiceItemClass {
 
                 var notesRightToLeft = false;
                 if (SessionLocator.TenantPM.IsNotesRightToLeftEnabled == true) {
-                        notesRightToLeft = true;
-                    }
+                    notesRightToLeft = true;
+                }
 
                 var newItem: CustomerAdditionalServicePM = new CustomerAdditionalServicePM(null);
 
@@ -1595,7 +1596,7 @@ class ServiceItemClass {
                 newItem.AdditionalServiceId = this.Id;
                 newItem.Potential = true;
                 newItem.NotesRightToLeft = notesRightToLeft;
-                        
+
 
                 var type: string = null;
 
@@ -1612,10 +1613,12 @@ class ServiceItemClass {
                     }
 
                 });
-           
 
-                   
+
+                if (!this.entityPM.ActivityWatch) {
+                    this.entityPM.ActivityWatch = true;
                 }
+            }
 
             else {
                 var item: CustomerAdditionalServicePM = this.entityPM.CustomerAdditionalServices.filter(d => d.AdditionalServiceId == this.Id)[0];

@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
@@ -153,7 +153,7 @@ export class ClaimRefundDetailsTabComponent extends BaseComponent {
 
             if (value != null) {
                 this.BankTypeCode = value.BankCode;
-                this.AccountBranchCode = value.BranchCode + "," + value.BankCode;
+                this.AccountBranchCode = Number(value.BranchCode).toString() + "," + value.BankCode;
                 this.AccountNumber = value.AccountNumber;
             }
             else {

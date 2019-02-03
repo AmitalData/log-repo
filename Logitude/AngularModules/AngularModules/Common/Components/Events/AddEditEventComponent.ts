@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {EventItemClass} from './EventsTabComponent';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {TraceEventPM} from '../../../Infrastructure/EntityPMs/TraceEventPM';
@@ -69,6 +69,10 @@ export class AddEditEventComponent {
                                                 SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.StatusDate = myResult.StatusDate;
                                                 SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.StatusLocation = myResult.StatusLocation;
                                                 SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.LastStatusLogDate = myResult.LastStatusLogDate;
+                                                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.LastSharedEventId = myResult.LastSharedEventId;
+                                                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.LastSharedEventLocation = myResult.LastSharedEventLocation;
+                                                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.LastSharedEventNotes = myResult.LastSharedEventNotes;
+                                                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.LastSharedEventDate = myResult.LastSharedEventDate;
                                                 SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = isEntityDirty;
                                                 SessionLocator.CurrentSession.CurrentEditComponent.BuildHeaderScreen();
                                                 SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);

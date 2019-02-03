@@ -4,7 +4,6 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 // </auto-generated>
-//
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
@@ -317,7 +316,7 @@ export class ObjectTablePM {
        
     private displayName: string;
     public get DisplayName() { return this.displayName; }
-    public set DisplayName(newValue: string) { this.displayName = newValue; this.MarkAsDirty(); }
+    public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
 
 
     public OldEntityPM: ObjectTablePM;

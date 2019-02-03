@@ -45,9 +45,60 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                           BankBranch = a.BankBranch,
                                                           BankAccount = a.BankAccount,
                                                           StatusName = a.ARPaymentChequeStatus != null ? a.ARPaymentChequeStatus.EnglishName : "",
+                                                          PaymentId = paymentId,
+                                                          ExchangeRate = a.ExchangeRate,
+                                                          StatusCode = a.StatusCode,
+                                                          CurrencyId = a.CurrencyId,
+                                                         
 
                                                       }).ToList();
             return paymentCheques;
+        }
+        public ARPaymentChequePM GetSingleByPaymentId(string paymentId, int tenant)
+        {
+            ARPaymentChequePM paymentCheques = (from a in context.ARPaymentCheques
+                                                      where a.PaymentId == paymentId && a.Tenant == tenant
+                                                      select new ARPaymentChequePM()
+                                                      {
+                                                          Id = a.Id,
+                                                          Tenant = a.Tenant,
+                                                          CurrencyCode = a.Currency.Code,
+                                                          SearchFields = a.SearchFields,
+                                                          LineNumber = a.LineNumber,
+                                                          ChequeNumber = a.ChequeNumber,
+                                                          ValueDate = a.ValueDate,
+                                                          LocalAmount = a.LocalAmount,
+                                                          ForeignAmount = a.ForeignAmount,
+                                                          BankId = a.BankId,
+                                                          BankBranch = a.BankBranch,
+                                                          BankAccount = a.BankAccount,
+                                                          StatusName = a.ARPaymentChequeStatus != null ? a.ARPaymentChequeStatus.EnglishName : "",
+                                                          StatusCode = a.ARPaymentChequeStatus != null ? a.ARPaymentChequeStatus.Code : "",
+
+                                                      }).FirstOrDefault();
+            return paymentCheques;
+        }
+
+
+
+        public ARPaymentChequePM GetPaymentChequeByChequeNo(string chequeNumber, int tenant)
+        {
+            ARPaymentCheque poco = (from a in context.ARPaymentCheques
+                                  where a.ChequeNumber == chequeNumber && a.Tenant == tenant
+                                  select a).FirstOrDefault();
+
+            return this.GetEntityPM(poco);
+        }
+
+
+        public List<ARPaymentChequePM> GetOpenARPaymentCheques( int tenant)
+        {
+            List<ARPaymentCheque> pocos = (from a in context.ARPaymentCheques
+                                    where  a.Tenant == tenant && a.StatusCode != "5" && a.StatusCode != "6"
+                                    
+                                    select a).ToList();
+
+            return pocos.Select(r => this.GetEntityPM(r)).ToList();
         }
     }
 }

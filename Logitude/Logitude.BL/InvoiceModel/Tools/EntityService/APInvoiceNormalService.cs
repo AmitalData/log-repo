@@ -65,6 +65,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private List<ShipmentPayable> allPayables;
         private ShipmentRepository shipmentRepository;
         private ShipmentPayableRepository shipmentPayableRepository;
+        private string QBOAPPaymentId;
+
         public APInvoiceNormalService(IInvoiceContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -294,8 +296,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.VoidAPInvoiceInFullAccounting(entityPM, entityPM.SetVoided);
 
             var IsSetApproved = entityPM.SetApproved;
+
+
+
             APInvoiceHelper helper = new APInvoiceHelper();
-            helper.APInvoiceQuickbooksValidating(entityPM, IsSetApproved, isNewEntity,this.objectContext,this.myCommonContext);
+            if (entityPM.SetReSendQBO)
+            {
+                helper.APInvoiceQuickbooksValidating(entityPM, true, isNewEntity, this.objectContext, this.myCommonContext);
+
+            }
+            else
+            {
+                helper.APInvoiceQuickbooksValidating(entityPM, IsSetApproved, isNewEntity, this.objectContext, this.myCommonContext);
+            }
+
+
+
             APInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity);
 
             // DropBox
@@ -316,7 +332,24 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
 
-            this.GetForeignFields();
+
+            if (!String.IsNullOrEmpty(QBOAPPaymentId))
+            {
+
+                APPaymentHelper service = new APPaymentHelper();
+                APPaymentQuery PaymentQuery = new APPaymentQuery(paymentRepository);
+                APPaymentPM paymentPM = PaymentQuery.GetSinglePM(QBOAPPaymentId, tenant);
+                if (paymentPM.TransferStatusCode == "TR")
+                {
+                    APPaymentRepository repository = new APPaymentRepository(tenant);
+                    APPayment payment = repository.GetSingleAPPayment(paymentPM.Id, tenant);
+
+                    service.APPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, false);
+                }
+            }
+
+
+                this.GetForeignFields();
 
             if (!entityPM.IsGeneralInvoice)
             {
@@ -1569,6 +1602,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
 
+            if (this.entityPM.TransferStatusCode == "TR")
+            {
+                QBOAPPaymentId = itemPM.APPaymentId;
+            }         
+
+
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 Tenant = tenant,
@@ -1605,6 +1644,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                 }
             }
+
+
+            if (this.entityPM.TransferStatusCode == "TR")
+            {
+                QBOAPPaymentId = itemPM.APPaymentId;
+            }
+
 
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
@@ -1934,6 +1980,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
                                                             JournalId = journal.Id,
                                                             DebitAccountId = g.Key.ChargeTypeGLAccountId,
+                                                            CreditAccountId = theEntityPm.VendorGLAccountId,
                                                             Line = ++counter,
                                                             DocumentDate = theEntityPm.InvoiceDate.Value,
                                                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
@@ -1978,6 +2025,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             Reference1 = theEntityPm.InvoiceNumber,
                             Reference2 = theEntityPm.MainEntityReference,
                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
+                            CreditAccountId = theEntityPm.VendorGLAccountId,
                         };
 
                         journal.JournalLines.Add(journalLine);

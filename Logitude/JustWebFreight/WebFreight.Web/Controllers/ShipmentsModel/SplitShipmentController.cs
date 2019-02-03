@@ -82,7 +82,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                                             this.CopyRoutingDelivery(oldShipmentPM, newShipmentPM, oldPackagePM.EmptyContainerReturnId, SplitIndex);
                                         }
                                     }
-
                                 }
 
                                 else if (item.IsPartialSplit)
@@ -335,49 +334,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 Transshipment3CarrierNumber = oldEntity.Transshipment3CarrierNumber,
                 Transshipment3CarrierCode = oldEntity.Transshipment3CarrierCode,
                 Transshipment3CarrierPrefix = oldEntity.Transshipment3CarrierPrefix,
-
-                // Partners
-                ShipperId = oldEntity.ShipperId,
-                ShipperAddress1 = oldEntity.ShipperAddress1,
-                ShipperAddress2 = oldEntity.ShipperAddress2,
-                ShipperAddressCountryCode = oldEntity.ShipperAddressCountryCode,
-                ShipperAddressId = oldEntity.ShipperAddressId,
-                ShipperAddressOneTime = oldEntity.ShipperAddressOneTime,
-                ShipperAddressText = oldEntity.ShipperAddressText,
-                ShipperCity = oldEntity.ShipperCity,
-                ShipperContactId = oldEntity.ShipperContactId,
-                ShipperCountryId = oldEntity.ShipperCountryId,
-                ShipperMainAddressId = oldEntity.ShipperMainAddressId,
-                ShipperName = oldEntity.ShipperName,
-                ShipperNote = oldEntity.ShipperNote,
-                ShipperStateId = oldEntity.ShipperStateId,
-                ShipperZipCode = oldEntity.ShipperZipCode,
-                ShipperPickAddressId = oldEntity.ShipperPickAddressId,
-
-                ConsigneeAddress1 = oldEntity.ConsigneeAddress1,
-                ConsigneeAddress2 = oldEntity.ConsigneeAddress2,
-                ConsigneeAddressCountryCode = oldEntity.ConsigneeAddressCountryCode,
-                ConsigneeAddressId = oldEntity.ConsigneeAddressId,
-                ConsigneeAddressOneTime = oldEntity.ConsigneeAddressOneTime,
-                ConsigneeAddressText = oldEntity.ConsigneeAddressText,
-                ConsigneeCity = oldEntity.ConsigneeCity,
-                ConsigneeContactId = oldEntity.ConsigneeContactId,
-                ConsigneeCountryId = oldEntity.ConsigneeCountryId,
-                ConsigneeId = oldEntity.ConsigneeId,
-                ConsigneeMainAddressId = oldEntity.ConsigneeMainAddressId,
-                ConsigneeName = oldEntity.ConsigneeName,
-                ConsigneeNote = oldEntity.ConsigneeNote,
-                ConsigneePickAddressId = oldEntity.ConsigneePickAddressId,
-                ConsigneeStateId = oldEntity.ConsigneeStateId,
-                ConsigneeZipCode = oldEntity.ConsigneeZipCode,
-
-                CustomerAddressId = oldEntity.CustomerAddressId,
-                CustomerContactId = oldEntity.CustomerContactId,
-                CustomerId = oldEntity.CustomerId,
-                CustomerName = oldEntity.CustomerName,
-                CustomerNote = oldEntity.CustomerNote,
-                CustomerRankName = oldEntity.CustomerRankName,
-                ShipmentCustomerTypeCode = oldEntity.ShipmentCustomerTypeCode,
+               
                 Field1 = oldEntity.Field1,
                 Field2 = oldEntity.Field2,
                 Field3 = oldEntity.Field3,
@@ -397,8 +354,31 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 Field17 = oldEntity.Field17,
                 Field18 = oldEntity.Field18,
                 Field19 = oldEntity.Field19,
-                Field20 = oldEntity.Field20,               
+                Field20 = oldEntity.Field20,
+                Field21 = oldEntity.Field21,
+                Field22 = oldEntity.Field22,
+                Field23 = oldEntity.Field23,
+                Field24 = oldEntity.Field24,
+                Field25 = oldEntity.Field25,
+                Field26 = oldEntity.Field26,
+                Field27 = oldEntity.Field27,
+                Field28 = oldEntity.Field28,
+                Field29 = oldEntity.Field29,
+                Field30 = oldEntity.Field30,
+                Field31 = oldEntity.Field31,
+                Field32 = oldEntity.Field32,
+                Field33 = oldEntity.Field33,
+                Field34 = oldEntity.Field34,
+                Field35 = oldEntity.Field35,
+                Field36 = oldEntity.Field36,
+                Field37 = oldEntity.Field37,
+                Field38 = oldEntity.Field38,
+                Field39 = oldEntity.Field39,
+                Field40 = oldEntity.Field40,
             };
+
+            this.CopyPartners(entityPM, oldEntity);
+            this.CopyPickups(entityPM, oldEntity);
 
             entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
             entityPM.SplitFromShipmentNo = oldEntity.ShipmentNumber;
@@ -429,6 +409,314 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
             return entityPM;
         }
+
+        private void CopyPartners(ShipmentPM entityPM, ShipmentPM oldEntity)
+        {
+            #region Customer
+            entityPM.CustomerId = oldEntity.CustomerId;
+            entityPM.CustomerName = oldEntity.CustomerName;
+            entityPM.CustomerNote = oldEntity.CustomerNote;
+            entityPM.CustomerAddressId = oldEntity.CustomerAddressId;
+            entityPM.CustomerContactId = oldEntity.CustomerContactId;
+            entityPM.CustomerReference1 = oldEntity.CustomerReference1;
+            entityPM.CustomerReference2 = oldEntity.CustomerReference2;
+            entityPM.CustomerRankName = oldEntity.CustomerRankName;
+            entityPM.ShipmentCustomerTypeCode = oldEntity.ShipmentCustomerTypeCode;
+            #endregion
+
+            #region Shipper
+            entityPM.ShipperId = oldEntity.ShipperId;
+            entityPM.ShipperAddressId = oldEntity.ShipperAddressId;
+            entityPM.ShipperContactId = oldEntity.ShipperContactId;
+            entityPM.ShipperName = oldEntity.ShipperName;
+            entityPM.ShipperNote = oldEntity.ShipperNote;
+            entityPM.ShipperReference1 = oldEntity.ShipperReference1;
+            entityPM.ShipperReference2 = oldEntity.ShipperReference2;
+            entityPM.ShipperAddress1 = oldEntity.ShipperAddress1;
+            entityPM.ShipperAddress2 = oldEntity.ShipperAddress2;
+            entityPM.ShipperCity = oldEntity.ShipperCity;
+            entityPM.ShipperCountryId = oldEntity.ShipperCountryId;
+            entityPM.ShipperAddressCountryCode = oldEntity.ShipperAddressCountryCode;
+            entityPM.ShipperStateId = oldEntity.ShipperStateId;
+            entityPM.ShipperZipCode = oldEntity.ShipperZipCode;
+            entityPM.ShipperFaxNumber = oldEntity.ShipperFaxNumber;
+            entityPM.ShipperPhoneNumber = oldEntity.ShipperPhoneNumber;
+            entityPM.ShipperMainAddressId = oldEntity.ShipperMainAddressId;
+            entityPM.ShipperPickAddressId = oldEntity.ShipperPickAddressId;
+            entityPM.ShipperAddressText = oldEntity.ShipperAddressText;
+            entityPM.ShipperAddressOneTime = oldEntity.ShipperAddressOneTime;
+            #endregion
+
+            #region Consignee
+            entityPM.ConsigneeId = oldEntity.ConsigneeId;
+            entityPM.ConsigneeAddressId = oldEntity.ConsigneeAddressId;
+            entityPM.ConsigneeContactId = oldEntity.ConsigneeContactId;
+            entityPM.ConsigneeName = oldEntity.ConsigneeName;
+            entityPM.ConsigneeNote = oldEntity.ConsigneeNote;
+            entityPM.ConsigneeReference1 = oldEntity.ConsigneeReference1;
+            entityPM.ConsigneeReference2 = oldEntity.ConsigneeReference2;
+            entityPM.ConsigneeAddress1 = oldEntity.ConsigneeAddress1;
+            entityPM.ConsigneeAddress2 = oldEntity.ConsigneeAddress2;
+            entityPM.ConsigneeCity = oldEntity.ConsigneeCity;
+            entityPM.ConsigneeCountryId = oldEntity.ConsigneeCountryId;
+            entityPM.ConsigneeAddressCountryCode = oldEntity.ConsigneeAddressCountryCode;
+            entityPM.ConsigneeStateId = oldEntity.ConsigneeStateId;
+            entityPM.ConsigneeZipCode = oldEntity.ConsigneeZipCode;
+            entityPM.ConsigneeFaxNumber = oldEntity.ConsigneeFaxNumber;
+            entityPM.ConsigneePhoneNumber = oldEntity.ConsigneePhoneNumber;
+            entityPM.ConsigneeMainAddressId = oldEntity.ConsigneeMainAddressId;
+            entityPM.ConsigneePickAddressId = oldEntity.ConsigneePickAddressId;
+            entityPM.ConsigneeAddressText = oldEntity.ConsigneeAddressText;
+            entityPM.ConsigneeAddressOneTime = oldEntity.ConsigneeAddressOneTime;
+            #endregion
+
+            #region Agent
+            entityPM.AgentId = oldEntity.AgentId;
+            entityPM.AgentAddressId = oldEntity.AgentAddressId;
+            entityPM.AgentContactId = oldEntity.AgentContactId;
+            entityPM.AgentName = oldEntity.AgentName;
+            entityPM.AgentNote = oldEntity.AgentNote;
+            entityPM.AgentReference1 = oldEntity.AgentReference1;
+            entityPM.AgentReference2 = oldEntity.AgentReference2;
+            entityPM.AgentAddressCountryCode = oldEntity.AgentAddressCountryCode;
+            entityPM.AgentAddressText = oldEntity.AgentAddressText;
+            #endregion
+
+            #region IssuingCarrier
+            entityPM.IssuingCarrierAgentId = oldEntity.IssuingCarrierAgentId;
+            entityPM.IssuingCarrierAddressId = oldEntity.IssuingCarrierAddressId;
+            entityPM.IssuingCarrierAgentName = oldEntity.IssuingCarrierAgentName;
+            entityPM.IssuingCarrierAgentNote = oldEntity.IssuingCarrierAgentNote;
+            entityPM.IssuingCarrierIATACode = oldEntity.IssuingCarrierIATACode;
+            entityPM.IssuingCarrierReference1 = oldEntity.IssuingCarrierReference1;
+            entityPM.IssuingCarrierCity = oldEntity.IssuingCarrierCity;
+            #endregion
+
+            #region CustomAgentExport
+            entityPM.CustomAgentExportId = oldEntity.CustomAgentExportId;
+            entityPM.CustomAgentExportAddressId = oldEntity.CustomAgentExportAddressId;
+            entityPM.CustomAgentExportContactId = oldEntity.CustomAgentExportContactId;
+            entityPM.CustomAgentExportName = oldEntity.CustomAgentExportName;
+            entityPM.CustomAgentExportNote = oldEntity.CustomAgentExportNote;
+            entityPM.CustomAgentExportReference = oldEntity.CustomAgentExportReference;
+            #endregion
+
+            #region CustomAgentImport
+            entityPM.CustomAgentImportId = oldEntity.CustomAgentImportId;
+            entityPM.CustomAgentImportAddressId = oldEntity.CustomAgentImportAddressId;
+            entityPM.CustomAgentImportContactId = oldEntity.CustomAgentImportContactId;
+            entityPM.CustomAgentImportName = oldEntity.CustomAgentImportName;
+            entityPM.CustomAgentImportNote = oldEntity.CustomAgentImportNote;
+            entityPM.CustomAgentImportReference = oldEntity.CustomAgentImportReference;
+            #endregion
+
+            #region Notify1
+            entityPM.Notify1Id = oldEntity.Notify1Id;
+            entityPM.Notify1AddressId = oldEntity.Notify1AddressId;
+            entityPM.Notify1ContactId = oldEntity.Notify1ContactId;
+            entityPM.Notify1Name = oldEntity.Notify1Name;
+            entityPM.Notify1Note = oldEntity.Notify1Note;
+            entityPM.Notify1Reference = oldEntity.Notify1Reference;
+            entityPM.Notify1Address1 = oldEntity.Notify1Address1;
+            entityPM.Notify1Address2 = oldEntity.Notify1Address2;
+            entityPM.Notify1City = oldEntity.Notify1City;
+            entityPM.Notify1CountryId = oldEntity.Notify1CountryId;
+            entityPM.Notify1AddressCountryCode = oldEntity.Notify1AddressCountryCode;
+            entityPM.Notify1StateId = oldEntity.Notify1StateId;
+            entityPM.Notify1ZipCode = oldEntity.Notify1ZipCode;
+            entityPM.Notify1FaxNumber = oldEntity.Notify1FaxNumber;
+            entityPM.Notify1PhoneNumber = oldEntity.Notify1PhoneNumber;
+            #endregion
+
+            #region Notify2
+            entityPM.Notify2Id = oldEntity.Notify2Id;
+            entityPM.Notify2AddressId = oldEntity.Notify2AddressId;
+            entityPM.Notify2ContactId = oldEntity.Notify2ContactId;
+            entityPM.Notify2Name = oldEntity.Notify2Name;
+            entityPM.Notify2Note = oldEntity.Notify2Note;
+            entityPM.Notify2Reference = oldEntity.Notify2Reference;
+            entityPM.Notify2Address1 = oldEntity.Notify2Address1;
+            entityPM.Notify2Address2 = oldEntity.Notify2Address2;
+            entityPM.Notify2City = oldEntity.Notify2City;
+            entityPM.Notify2AddressCountryCode = oldEntity.Notify2AddressCountryCode;
+            entityPM.Notify2StateId = oldEntity.Notify2StateId;
+            entityPM.Notify2ZipCode = oldEntity.Notify2ZipCode;
+            #endregion
+
+            #region ShipperNotExporter
+            entityPM.ShipperNotExporterId = oldEntity.ShipperNotExporterId;
+            entityPM.ShipperNotExporterAddressId = oldEntity.ShipperNotExporterAddressId;
+            entityPM.ShipperNotExporterContactId = oldEntity.ShipperNotExporterContactId;
+            entityPM.ShipperNotExporterName = oldEntity.ShipperNotExporterName;
+            entityPM.ShipperNotExporterNote = oldEntity.ShipperNotExporterNote;
+            entityPM.ShipperNotExporterReference = oldEntity.ShipperNotExporterReference;
+            #endregion
+
+            #region ConsigneeNotImporter
+            entityPM.ConsigneeNotImporterId = oldEntity.ConsigneeNotImporterId;
+            entityPM.ConsigneeNotImporterAddressId = oldEntity.ConsigneeNotImporterAddressId;
+            entityPM.ConsigneeNotImporterContactId = oldEntity.ConsigneeNotImporterContactId;
+            entityPM.ConsigneeNotImporterName = oldEntity.ConsigneeNotImporterName;
+            entityPM.ConsigneeNotImporterNote = oldEntity.ConsigneeNotImporterNote;
+            entityPM.ConsigneeNotImporterReference = oldEntity.ConsigneeNotImporterReference;
+            #endregion
+
+            #region FreightForwarder
+            entityPM.FreightForwarderId = oldEntity.FreightForwarderId;
+            entityPM.FreightForwarderAddressId = oldEntity.FreightForwarderAddressId;
+            entityPM.FreightForwarderContactId = oldEntity.FreightForwarderContactId;
+            entityPM.FreightForwarderName = oldEntity.FreightForwarderName;
+            entityPM.FreightForwarderNote = oldEntity.FreightForwarderNote;
+            entityPM.FreightForwarderReference = oldEntity.FreightForwarderReference;
+            #endregion
+
+            #region Coloader
+            entityPM.ColoaderId = oldEntity.ColoaderId;
+            entityPM.ColoaderAddressId = oldEntity.ColoaderAddressId;
+            entityPM.ColoaderContactId = oldEntity.ColoaderContactId;
+            entityPM.ColoaderName = oldEntity.ColoaderName;
+            entityPM.ColoaderNote = oldEntity.ColoaderNote;
+            entityPM.ColoaderReference1 = oldEntity.ColoaderReference1;
+            #endregion
+
+            #region CustomClearancePoint
+            entityPM.CustomClearancePointId = oldEntity.CustomClearancePointId;
+            entityPM.CustomClearancePointAddressId = oldEntity.CustomClearancePointAddressId;
+            entityPM.CustomClearancePointContactId = oldEntity.CustomClearancePointContactId;
+            entityPM.CustomClearancePointName = oldEntity.CustomClearancePointName;
+            entityPM.CustomClearancePointNote = oldEntity.CustomClearancePointNote;
+            entityPM.CustomClearancePointReference1 = oldEntity.CustomClearancePointReference1;
+            #endregion
+
+            #region Consolidator
+            entityPM.ConsolidatorId = oldEntity.ConsolidatorId;
+            entityPM.ConsolidatorAddressId = oldEntity.ConsolidatorAddressId;
+            entityPM.ConsolidatorContactId = oldEntity.ConsolidatorContactId;
+            entityPM.ConsolidatorName = oldEntity.ConsolidatorName;
+            entityPM.ConsolidatorNote = oldEntity.ConsolidatorNote;
+            entityPM.ConsolidatorReference = oldEntity.ConsolidatorReference;
+            #endregion
+
+            #region ReleasingAgent
+            entityPM.ReleasingAgentId = oldEntity.ReleasingAgentId;
+            entityPM.ReleasingAgentAddressId = oldEntity.ReleasingAgentAddressId;
+            entityPM.ReleasingAgentContactId = oldEntity.ReleasingAgentContactId;
+            entityPM.ReleasingAgentName = oldEntity.ReleasingAgentName;
+            entityPM.ReleasingAgentNote = oldEntity.ReleasingAgentNote;
+            entityPM.ReleasingAgentReference1 = oldEntity.ReleasingAgentReference1;
+            entityPM.ReleasingAgentReference2 = oldEntity.ReleasingAgentReference2;
+            #endregion
+        }
+        private void CopyPickups(ShipmentPM entityPM, ShipmentPM oldEntity)
+        {
+            foreach (ShipmentPickUpPM oldPickup in oldEntity.ShipmentPickUps)
+            {
+                #region newPickup
+                ShipmentPickUpPM newPickup = new ShipmentPickUpPM()
+                {
+                    Tenant = oldPickup.Tenant,
+                    AgentId = oldPickup.AgentId,
+                    AgentName = oldPickup.AgentName,
+                    ATA = oldPickup.ATA,
+                    ATD = oldPickup.ATD,
+                    CarrierCode = oldPickup.CarrierCode,
+                    CarrierId = oldPickup.CarrierId,
+                    CarrierName = oldPickup.CarrierName,
+                    CarrierNumber = oldPickup.CarrierNumber,
+                    CarrierWebSite = oldPickup.CarrierWebSite,
+                    CustomerId = oldPickup.CustomerId,
+                    DirectionId = oldPickup.DirectionId,
+                    Driver = oldPickup.Driver,
+                    EmptyDeliveryContainerPartnerId = oldPickup.EmptyDeliveryContainerPartnerId,
+                    EmptyDeliveryDepotReference = oldPickup.EmptyDeliveryDepotReference,
+                    EmptyPickupContainerPartnerId = oldPickup.EmptyPickupContainerPartnerId,
+                    EmptyPickupDepotReference = oldPickup.EmptyPickupDepotReference,
+                    ETA = oldPickup.ETA,
+                    ETD = oldPickup.ETD,
+                    FromAddress = oldPickup.FromAddress,
+                    FromAddressCity = oldPickup.FromAddressCity,
+                    FromAddressCity_Dummy = oldPickup.FromAddressCity_Dummy,
+                    FromAddressCountryCode = oldPickup.FromAddressCountryCode,
+                    FromAddressCountryId = oldPickup.FromAddressCountryId,
+                    FromAddressCountryName = oldPickup.FromAddressCountryName,
+                    FromAddressId = oldPickup.FromAddressId,
+                    FromAddressZipCode = oldPickup.FromAddressZipCode,
+                    FromLocation = oldPickup.FromLocation,
+                    FromPartnerCardId = oldPickup.FromPartnerCardId,
+                    FromPortCode = oldPickup.FromPortCode,
+                    FromPortCountryCode = oldPickup.FromPortCountryCode,
+                    FromPortCountryName = oldPickup.FromPortCountryName,
+                    FromPortId = oldPickup.FromPortId,
+                    FromPortName = oldPickup.FromPortName,
+                    FullResponsibility = oldPickup.FullResponsibility,
+                    MasterNumber = oldPickup.MasterNumber,
+                    Notes = oldPickup.Notes,
+                    PackageTEU = oldPickup.PackageTEU,
+                    PickUpDeliveryFromTypeCode = oldPickup.PickUpDeliveryFromTypeCode,
+                    PickUpDeliveryNumber = oldPickup.PickUpDeliveryNumber,
+                    PickUpDeliveryToTypeCode = oldPickup.PickUpDeliveryToTypeCode,
+                    PickUpDeliveryTypeCode = oldPickup.PickUpDeliveryTypeCode,
+                    ShippingLine = oldPickup.ShippingLine,
+                    ToAddress = oldPickup.ToAddress,
+                    ToAddressCity = oldPickup.ToAddressCity,
+                    ToAddressCity_Dummy = oldPickup.ToAddressCity_Dummy,
+                    ToAddressCountryCode = oldPickup.ToAddressCountryCode,
+                    ToAddressCountryId = oldPickup.ToAddressCountryId,
+                    ToAddressCountryName = oldPickup.ToAddressCountryName,
+                    ToAddressId = oldPickup.ToAddressId,
+                    ToAddressZipCode = oldPickup.ToAddressZipCode,
+                    ToLocation = oldPickup.ToLocation,
+                    ToPartnerCardId = oldPickup.ToPartnerCardId,
+                    ToPortCode = oldPickup.ToPortCode,
+                    ToPortCountryCode = oldPickup.ToPortCountryCode,
+                    ToPortCountryName = oldPickup.ToPortCountryName,
+                    ToPortId = oldPickup.ToPortId,
+                    ToPortName = oldPickup.ToPortName,
+                    TrailerNumber = oldPickup.TrailerNumber,
+                    TransportModeCode = oldPickup.TransportModeCode,
+                    TransportModeName = oldPickup.TransportModeName,
+                    TruckNumber = oldPickup.TruckNumber,
+                };
+                #endregion
+
+                foreach (ShipmentPickUpDeliveryPackagePM oldPickupPackage in oldPickup.ShipmentPickUpDeliveryPackages)
+                {
+                    ShipmentPickUpDeliveryPackagePM newPickupPackage = new ShipmentPickUpDeliveryPackagePM()
+                    {
+                        ContainerNumber = oldPickupPackage.ContainerNumber,
+                        Description = oldPickupPackage.Description,
+                        Harmonize = oldPickupPackage.Harmonize,
+                        Height = oldPickupPackage.Height,
+                        IsMultiHarmonize = oldPickupPackage.IsMultiHarmonize,
+                        Length = oldPickupPackage.Length,
+                        PackageTypeId = oldPickupPackage.PackageTypeId,
+                        PackageTypeName = oldPickupPackage.PackageTypeName,
+                        PackageTypeTEU = oldPickupPackage.PackageTypeTEU,
+                        Quantity = oldPickupPackage.Quantity,
+                        ShipperSeal = oldPickupPackage.ShipperSeal,
+                        Tenant = oldPickupPackage.Tenant,
+                        Volume = oldPickupPackage.Volume,
+                        Weight = oldPickupPackage.Weight,
+                        Width = oldPickupPackage.Width,
+                    };
+
+                    foreach(PickUpDeliveryPackageHarmonizePM oldHarmonize in oldPickupPackage.PickUpDeliveryPackageHarmonizes)
+                    {
+                        newPickupPackage.PickUpDeliveryPackageHarmonizes.Add(new PickUpDeliveryPackageHarmonizePM()
+                        {
+                            Tenant = oldHarmonize.Tenant,
+                            Harmonize = oldHarmonize.Harmonize,
+                        });
+                    }
+
+
+                    newPickup.ShipmentPickUpDeliveryPackages.Add(newPickupPackage);
+                }
+
+                entityPM.ShipmentPickUps.Add(newPickup);
+            }
+        }
+
         private ShipmentPackagePM CopyPackage(ShipmentPackagePM oldEntity, bool isFullSplit)
         {
             ShipmentPackagePM entityPM = new ShipmentPackagePM()

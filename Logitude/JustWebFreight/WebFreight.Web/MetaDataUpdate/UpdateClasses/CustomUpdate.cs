@@ -14435,7 +14435,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.HighLowValue.Low", DefaultText = "Low", LocalDefaultText = "פרטני", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.MNF.CompleteMissing", DefaultText = "Complete Missing Data", LocalDefaultText = "השלם נתונים חסרים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.MNF.HandleWrong", DefaultText = "Handle Wrong Feedback", LocalDefaultText = "טפל במשובים שגויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.ACC.Wrong", DefaultText = "Wrong", LocalDefaultText = "משובים שגויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.ACC.Wrong", DefaultText = "Wrong", LocalDefaultText = "ש.מ.ב שגויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.ACC.WrongSpecial", DefaultText = "Wrong Special", LocalDefaultText = "מיוחדות שגויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.SVG.Classification", DefaultText = "Classification", LocalDefaultText = "עבור לסיווג", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.DOC.DocumentCorrection", DefaultText = "Document Correction", LocalDefaultText = "חסרים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.DOC.DocumentCorrectionUploaded", DefaultText = "Document Correction Uploaded", LocalDefaultText = "שגיאות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
@@ -15829,6 +15830,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddClosedTables.AddCustomsEnvoirmentType(new CustomsEnvoirmentTypeDetails() { Code = ((int)CustomsDeploymentStage.Production).ToString()  /* "3" */, EnglishName = "Production", LocalName = "ייצור", }, customsEnvoirmentTypeRepository);
 
             AddClosedTables.AddCustomsEnvoirmentType(new CustomsEnvoirmentTypeDetails() { Code = ((int)CustomsDeploymentStage.Test).ToString()  /* "3" */, EnglishName = "Test", LocalName = "בדיקות", }, customsEnvoirmentTypeRepository);
+
+            AddClosedTables.AddCustomsEnvoirmentType(new CustomsEnvoirmentTypeDetails() { Code = ((int)CustomsDeploymentStage.PREPROD).ToString()  /* "5" */, EnglishName = "PRE Production", LocalName = "קדם יצור", }, customsEnvoirmentTypeRepository);
 
             customsEnvoirmentTypeRepository.SubmitChanges();
             AddNewDeclarationErrorMappingSample();

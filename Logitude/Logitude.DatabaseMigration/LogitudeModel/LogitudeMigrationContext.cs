@@ -881,6 +881,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<DWHSetting> DWHSettings { get; set; }
 
 
+        public IDbSet<CustomsShipper> CustomsShippers { get; set; }
+        public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
+
+
+
+
         #endregion
 
         #region Webfreight Context
@@ -1376,6 +1382,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
+        public IDbSet<DWSubQuery> DWSubQueries
+        {
+            get;
+            set;
+        }
+
         public IDbSet<DWQueryColumn> DWQueryColumns
         {
             get;
@@ -1388,7 +1400,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
-
+        public IDbSet<SharedUserQuery> SharedUserQueries
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Shipment Context
@@ -1577,8 +1593,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<AWBInformation> AWBInformations { get; set; }
         public IDbSet<ShipmentPackageItem> ShipmentPackageItems { get; set; }
         public IDbSet<ShipmentCommodity> ShipmentCommodities { get; set; }
-        public IDbSet<AWBMessagingStock> AWBMessagingStocks { get; set; }
-        public IDbSet<AWBStockUsageHistory> AWBStockUsageHistories { get; set; }
+        public IDbSet<MessagingStock> MessagingStocks { get; set; }
+        public IDbSet<MessagingStockUsageHistory> MessagingStockUsageHistories { get; set; }
         public IDbSet<UserPermittedProduct> UserPermittedProducts { get; set; }
         public IDbSet<AccountingInformationIdentifier> AccountingInformationIdentifiers { get; set; }
         public IDbSet<ManifestStatus> ManifestStatus { get; set; }
@@ -1601,6 +1617,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<ShipmentContainerStatus> ShipmentContainerStatuses { get; }
         public IDbSet<PickUpDeliveryTransportMode> PickUpDeliveryTransportModes { get; }
         public IDbSet<INTTRADocumentType> INTTRADocumentTypes { get; }
+        public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; }
+
         #endregion
 
         #region Invoice Context
@@ -3307,7 +3325,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<VatReportStatus> VatReportStatuses { get; set; }
         public IDbSet<TaxDeductionReport> TaxDeductionReports { get; set; }
         public IDbSet<TaxDeductionReportStatus> TaxDeductionReportStatuses { get; set; }
+        public IDbSet<JournalAdditionalData> JournalAdditionalDatas { get; set; }
 
+        public IDbSet<OpenFormatReport> OpenFormatReports { get; set; }
+        public IDbSet<OpenFormatReportStatus> OpenFormatReportStatuses { get; set; }
+        public IDbSet<AccountingIntegrityCheck> AccountingIntegrityChecks { get; set; }
+        public IDbSet<IntegrityCheckStatus> IntegrityCheckStatuses { get; set; }
+   
 
         #endregion
 
@@ -3426,6 +3450,19 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         #endregion
 
         #region Infrastructure Generated
+        public IDbSet<BIReport> BIReports
+        {
+            get;
+            set;
+
+        }
+        public IDbSet<BIReportsType> BIReportsTypes
+        {
+            get;
+            set;
+
+        }
+
         public IDbSet<BusinessRole> BusinessRoles
         {
             get;
@@ -4141,10 +4178,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new VatReportStatusMap());
             modelBuilder.Configurations.Add(new TaxDeductionReportMap());
             modelBuilder.Configurations.Add(new TaxDeductionReportStatusMap());
-
-
+            modelBuilder.Configurations.Add(new JournalAdditionalDataMap());
+            modelBuilder.Configurations.Add(new OpenFormatReportMap());
+        //    modelBuilder.Configurations.Add(new OpenFormatDateTypeMap());
+            modelBuilder.Configurations.Add(new OpenFormatReportStatusMap());
             #endregion
-
 
             #region WareHouse
             modelBuilder.Configurations.Add(new WarehouseEntryMap());
@@ -4155,7 +4193,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new WarehouseEntryStatusMap());
             modelBuilder.Configurations.Add(new WarehouseReleaseStatusMap());
             #endregion
-
 
             #region Time Management
             modelBuilder.Configurations.Add(new TMEmployeeTimeMap());
@@ -4169,9 +4206,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
             #endregion
 
-
-
             #region Infrastructure Generated
+            modelBuilder.Configurations.Add(new BIReportMap());
+            modelBuilder.Configurations.Add(new BIReportsTypeMap());
             modelBuilder.Configurations.Add(new BusinessRoleMap());
             modelBuilder.Configurations.Add(new BusinessProcessQueueMap());
             modelBuilder.Configurations.Add(new TeamMap());
@@ -4181,8 +4218,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new BatchTaskExecutionStatusMap());
             modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
             #endregion
-
-
 
             modelBuilder.Configurations.Add(new BlobFileMap());
 
@@ -4573,8 +4608,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new SpecialServicesTypeMap());
             modelBuilder.Configurations.Add(new EmailProviderMap());
             modelBuilder.Configurations.Add(new RegionMap());
-            modelBuilder.Configurations.Add(new AWBMessagingStockMap());
-            modelBuilder.Configurations.Add(new AWBStockUsageHistoryMap());
+            modelBuilder.Configurations.Add(new MessagingStockMap());
+            modelBuilder.Configurations.Add(new MessagingStockUsageHistoryMap());
             modelBuilder.Configurations.Add(new QuoteStageMap());
             modelBuilder.Configurations.Add(new QuoteRatingMap());
             modelBuilder.Configurations.Add(new CountryCityMap());
@@ -4704,6 +4739,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DWQueryMap());
             modelBuilder.Configurations.Add(new DWQueryColumnMap());
             modelBuilder.Configurations.Add(new DWQueryFilterMap());
+            modelBuilder.Configurations.Add(new ShipmentPackageHarmonizeMap());
+            modelBuilder.Configurations.Add(new PickUpDeliveryPackageHarmonizeMap());
+            modelBuilder.Configurations.Add(new CustomsShipperMap());
+            modelBuilder.Configurations.Add(new CustomerDepositionMap());
+            modelBuilder.Configurations.Add(new SharedUserQueryMap());
+            modelBuilder.Configurations.Add(new AccountingIntegrityCheckMap());
+            modelBuilder.Configurations.Add(new IntegrityCheckStatusMap());
 
             base.OnModelCreating(modelBuilder);
         }

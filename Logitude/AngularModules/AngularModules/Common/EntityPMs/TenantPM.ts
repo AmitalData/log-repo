@@ -35,6 +35,11 @@ export class TenantPM {
     public set AddressId(newValue: string) { if (this.addressId != newValue) { this.addressId = newValue; this.MarkAsDirty("AddressId"); } }
        
 	 
+    private localAddressId: string;
+    public get LocalAddressId() { return this.localAddressId; }
+    public set LocalAddressId(newValue: string) { if (this.localAddressId != newValue) { this.localAddressId = newValue; this.MarkAsDirty("LocalAddressId"); } }
+       
+	 
     private companyAddress: string;
     public get CompanyAddress() { return this.companyAddress; }
     public set CompanyAddress(newValue: string) { if (this.companyAddress != newValue) { this.companyAddress = newValue; this.MarkAsDirty("CompanyAddress"); } }
@@ -603,11 +608,12 @@ export class TenantPM {
     private defaultSLAId: string;
     public get DefaultSLAId() { return this.defaultSLAId; }
     public set DefaultSLAId(newValue: string) { if (this.defaultSLAId != newValue) { this.defaultSLAId = newValue; this.MarkAsDirty("DefaultSLAId"); } }
-
+       
+	 
     private stockTypeCode: string;
     public get StockTypeCode() { return this.stockTypeCode; }
     public set StockTypeCode(newValue: string) { if (this.stockTypeCode != newValue) { this.stockTypeCode = newValue; this.MarkAsDirty("StockTypeCode"); } }
-      
+       
 	 
 
     public OldEntityPM: TenantPM;

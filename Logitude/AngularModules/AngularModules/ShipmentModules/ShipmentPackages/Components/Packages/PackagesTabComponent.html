@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .RatioBox .NumericButtonDisabled {
         opacity: 0.5;
@@ -520,7 +520,7 @@
                                     <!-- Commodity No-->
                                     <log-column [width]="'100'" [header]="'Commodity #'" *ngIf="IsCommodityNumberVisible">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            {{item.CommodityNumber}}                                           
+                                            {{item.CommodityNumber}}
                                         </log-cell-template>
                                     </log-column>
 
@@ -529,7 +529,7 @@
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             {{item.CommodityName}}
                                         </log-cell-template>
-                                    </log-column>                                    
+                                    </log-column>
 
                                     <!-- Last Status -->
                                     <log-column [width]="'150'" [header]="'ShipmentPackage.F.LastStatusCode' | TextCodeTranslationPipe" *ngIf="IsShippingInstructionsVisible">
@@ -553,6 +553,13 @@
                                                     </tr>
                                                 </table>
                                             </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Icon:HasContainerException -->
+                                    <log-column [width]="'25'" *ngIf="IsShippingInstructionsVisible">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                            <img *ngIf="item.HasContainerException" src="./Images/WarningIcon.png" class="CenterCenter" title="In a different voyage than the other containers"/>
                                         </log-cell-template>
                                     </log-column>
 
@@ -682,11 +689,7 @@
 
                                         <div *ngIf="IsGeneratePackagesfromCrossDockReleasesButtonVisible">
                                             <Hyperlink id="{{ 'GenerateCrossDockReleases' | IdGeneratorPipe}}" [IsEnabled]="IsGeneratePackagesfromCrossDockReleasesButtonEnabled" (click)="GeneratePackagesfromCrossDockReleasesButtonClicked()">{{GenerateCrossDockReleasesButtonLabel}}</Hyperlink>
-
                                         </div>
-
-
-
                                     </div>
                                 </div>
 

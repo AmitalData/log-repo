@@ -41,6 +41,8 @@ using Logitude.WarehouseLib.BL.EntityQueryServices;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers.DataProviderHelpers;
 using WebFreight.Web.AccountingModel.Reports.PaymentCheque;
+using WebFreight.Web.AccountingModel.Reports.TaxDeductionReport;
+using Logitude.Accounting.BL.DataContract;
 
 namespace WebFreight.Web.Helpers
 {
@@ -428,6 +430,17 @@ namespace WebFreight.Web.Helpers
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "PCDR", Name = "PaymentChequeDataProvider", BusinessObjectValue = paymentChequeDP };
                         report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant);
+                        break;
+                    }
+
+                case "TDDP":
+                    {
+                        TaxDeductionReportPrintService service = new TaxDeductionReportPrintService();
+                        TaxDeductionReportData taxDeductionDP = service.LoadDataProvider(entityId, tenant);
+
+                        theT2 = System.DateTime.Now.Ticks;
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "TDDP", Name = "TaxDeductionReportData", BusinessObjectValue = taxDeductionDP };
+                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant);
 
                     }
 
@@ -511,6 +524,7 @@ namespace WebFreight.Web.Helpers
                 case "CRCCU":
                 case "CRCCM":
                 case "CRCCB":
+                case "DESCH":
                     {
                         theT1 = System.DateTime.Now.Ticks;
                         ShippingDeclarationWebService shippingDeclarationWebService = new ShippingDeclarationWebService();
@@ -666,6 +680,7 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "999G":
                 case "999C":
                     {
                         theT1 = System.DateTime.Now.Ticks;
@@ -1012,8 +1027,8 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
                 case "CDE":
+                case "WHL":
                     {
-                      
                         theT1 = System.DateTime.Now.Ticks;
                         CrossDockEntryDataProviderHelper crossDockEntryDataProviderHelper = new CrossDockEntryDataProviderHelper();
                         byte[] byteArray = crossDockEntryDataProviderHelper.LoadDataToCrossDockEntryDataProvider(entityId, tenant);
@@ -1027,8 +1042,6 @@ namespace WebFreight.Web.Helpers
                         report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
                         break;
                     }
-
-
 
                 case "CDR":
                     {

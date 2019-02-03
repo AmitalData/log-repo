@@ -1,4 +1,5 @@
-﻿<style type="text/css">
+
+<style type="text/css">
     .NotesBox p {
         font-size: 11px;
         color: #6E7172;
@@ -234,7 +235,7 @@
                                                 <div style="height:22px;">
                                                     <CheckBox [IsChecked]="CopySaleIsChecked" (Checked)="CopySaleIsChecked = $event" [Text]="'Sale'" [IsEnabled]="ChargesTypesCopyIsChecked"></CheckBox>
                                                 </div>
-                                            </div>                                            
+                                            </div>
 
                                         </div>
                                     </td>
@@ -327,7 +328,7 @@
                                                                                 <div class="ToggleButtonMenu" style="right: -110px;">
                                                                                     <button (click)="AddCustomerClicked('Shipper')">{{'Quote.B.NewQuote.AddShipper' | TextCodeTranslationPipe}}</button>
                                                                                     <button (click)="AddPotentialCustomerClicked('Shipper')">{{'Quote.B.NewQuote.AddPotentialShipper' | TextCodeTranslationPipe}}</button>
-                                                                                    <button (click)="AddAgentClicked('Shipper')" *ngIf="IsAddAgentVisible">Add Agent</button>
+                                                                                    <button (click)="AddAgentClicked('Shipper')" *ngIf="IsAddAgentVisible">{{'Quote.B.NewQuote.AddAgent' | TextCodeTranslationPipe}}</button>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
@@ -335,7 +336,7 @@
 
                                                                     <tr class="FormFieldRow" style="height: 80px;" *ngIf="ShipperId">
                                                                         <td [style.width.px]="LabelColumnWidth" style="vertical-align: top; padding-left: 10px; padding-top: 10px;" class="TextTrimming">
-                                                                            <label class="Label" style="vertical-align:top;">Address:</label>
+                                                                            <label class="Label" style="vertical-align:top;">{{'Quote.S.NewQuote.Address' | TextCodeTranslationPipe}}:</label>
                                                                         </td>
 
                                                                         <td [style.width.px]="ControlColumnWidth">
@@ -480,7 +481,7 @@
                                                                                 <div class="ToggleButtonMenu" style="right: -125px;">
                                                                                     <button (click)="AddCustomerClicked('Consignee')">{{'Quote.B.NewQuote.AddConsignee' | TextCodeTranslationPipe}}</button>
                                                                                     <button (click)="AddPotentialCustomerClicked('Consignee')">{{'Quote.B.NewQuote.AddPotentialConsignee' | TextCodeTranslationPipe}}</button>
-                                                                                    <button (click)="AddAgentClicked('Consignee')" *ngIf="IsAddAgentVisible">Add Agent</button>
+                                                                                    <button (click)="AddAgentClicked('Consignee')" *ngIf="IsAddAgentVisible">{{'Quote.B.NewQuote.AddAgent' | TextCodeTranslationPipe}}</button>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
@@ -488,11 +489,11 @@
 
                                                                     <tr class="FormFieldRow" style="height: 80px;" *ngIf="ConsigneeId">
                                                                         <td [style.width.px]="LabelColumnWidth" style="vertical-align: top; padding-left: 10px; padding-top: 10px;" class="TextTrimming">
-                                                                            <label class="Label" style="vertical-align:top;">Address:</label>
+                                                                            <label class="Label" style="vertical-align:top;">{{'Quote.S.NewQuote.Address' | TextCodeTranslationPipe}}:</label>
                                                                         </td>
 
                                                                         <td [style.width.px]="ControlColumnWidth">
-                                                                            <AddressTemplate [Address]="ConsigneeAddressList" [Right]="36"></AddressTemplate>                                                                           
+                                                                            <AddressTemplate [Address]="ConsigneeAddressList" [Right]="36"></AddressTemplate>
                                                                         </td>
 
                                                                         <td>
@@ -605,7 +606,9 @@
                                                                     </LogLov>
                                                                 </td>
 
-                                                                <td style="width:3px;"><div></div></td>
+                                                                <td style="width:3px;">
+                                                                    <div></div>
+                                                                </td>
 
                                                                 <td>
                                                                     <div class="MediaFill">
@@ -636,33 +639,37 @@
                                                                             <LogLabel [ObjectFieldName]="'QuoteTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
                                                                         <td [style.width.px]="ControlColumnWidth" style="padding-right:36px;">
-                                                                            <table>
-                                                                                <tr>
-                                                                                    <td style="width:70px;">
-                                                                                        <div class="RadioButton">
-                                                                                            <input [attr.id]="'AdhocRadio' + SessionIndex" type="radio" [attr.name]="'QuoteTypesRadio' + SessionIndex" [disabled]="!QuoteTypeIsEnabled" [checked]="IsAdhoc" (click)="SetQuoteType('A')" />
-                                                                                            <label [attr.for]="'AdhocRadio' + SessionIndex" style="font-size: 10px">{{'Quote.S.NewQuote.SpotRate' | TextCodeTranslationPipe}}</label>
-                                                                                        </div>
-                                                                                    </td>
+                                                                            <table>                                                                                
+                                                                                <tr style="height: 20px;">
+                                                                                    <td>
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <div class="RadioButton">
+                                                                                                        <input [attr.id]="'AdhocRadio' + SessionIndex" type="radio" [attr.name]="'QuoteTypesRadio' + SessionIndex" [disabled]="!QuoteTypeIsEnabled" [checked]="IsAdhoc" (click)="SetQuoteType('A')" />
+                                                                                                        <label [attr.for]="'AdhocRadio' + SessionIndex" style="font-size: 10px">{{'Quote.S.NewQuote.SpotRate' | TextCodeTranslationPipe}}</label>
+                                                                                                    </div>
+                                                                                                </td>
 
-                                                                                    <td style="width:5px;">
-                                                                                        <div></div>
+                                                                                                <td style="width: 1px; padding-left: 3px;">
+                                                                                                    <HelpIcon [Header]="RoutingHelpHeader" [Text]="RoutingHelpText"></HelpIcon>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>                                                                                        
                                                                                     </td>
+                                                                                </tr>
 
-                                                                                    <td style="width:90px;">
+                                                                                <tr style="height: 20px;">
+                                                                                    <td>
                                                                                         <div class="RadioButton">
                                                                                             <input [attr.id]="'RoutingRadio' + SessionIndex" type="radio" [attr.name]="'QuoteTypesRadio' + SessionIndex" [disabled]="!QuoteTypeIsEnabled" [checked]="IsRoutingRates" (click)="SetQuoteType('P')" />
                                                                                             <label [attr.for]="'RoutingRadio' + SessionIndex" style="font-size: 10px">{{'Quote.S.NewQuote.RoutingRates' | TextCodeTranslationPipe}}</label>
                                                                                         </div>
                                                                                     </td>
-
-                                                                                    <td style="width:18px;">
-                                                                                        <HelpIcon [Header]="RoutingHelpHeader" [Text]="RoutingHelpText"></HelpIcon>
-                                                                                    </td>
                                                                                 </tr>
                                                                             </table>
                                                                         </td>
-                                                                    </tr>
+                                                                    </tr>                                                                   
 
                                                                     <!-- Expiration Days -->
                                                                     <tr class="FormFieldRow">
@@ -710,6 +717,7 @@
                                                                         </td>
                                                                     </tr>
 
+                                                                    <!-- MainCarriageCarrier -->
                                                                     <tr class="FormFieldRow" *ngIf="IsInlandDomestic">
                                                                         <td [style.width.px]="LabelColumnWidth">
                                                                             <LogLabel [ObjectFieldName]="'MainCarriageCarrierId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="CarrierLabel"></LogLabel>
@@ -898,7 +906,8 @@
                                                                                 <div></div>
                                                                             </td>
                                                                         </tr>
-                                                                    </table></div>
+                                                                    </table>
+                                                                </div>
 
                                                                 <div [hidden]="PickUpAddressId">
                                                                     <table>
@@ -981,8 +990,7 @@
                                                                                     [ObjectTableName]="ObjectTableName"
                                                                                     [DataContext]="DataContext"
                                                                                     [LookUpTableName]="'Port'"
-                                                                                    [DependencyFilter1Value]="TransportModeId"
-                                                                                    >
+                                                                                    [DependencyFilter1Value]="TransportModeId">
                                                                             </LogLov>
                                                                         </td>
                                                                     </tr>
@@ -997,8 +1005,7 @@
                                                                                     [ObjectTableName]="ObjectTableName"
                                                                                     [DataContext]="DataContext"
                                                                                     [LookUpTableName]="'Port'"
-                                                                                    [DependencyFilter1Value]="TransportModeId"
-                                                                                    >
+                                                                                    [DependencyFilter1Value]="TransportModeId">
                                                                             </LogLov>
                                                                         </td>
                                                                     </tr>

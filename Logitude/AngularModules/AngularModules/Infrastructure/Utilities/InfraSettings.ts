@@ -1,6 +1,4 @@
-﻿import {TenantPM} from '../../Common/EntityPMs/TenantPM';
-import {TenantManagementPM} from '../EntityPMs/TenantManagementPM';
-import {AccountingSettingPM} from '../../Common/EntityPMs/AccountingSettingPM';
+import {TenantPM} from '../../Common/EntityPMs/TenantPM';
 import {SessionLocator} from './SessionLocator';
 import {ObjectsLocator} from '../Locators/ObjectsLocator';
 import {ObjectsUpdater} from '../Locators/ObjectsUpdater';
@@ -27,18 +25,6 @@ export class InfraSettings {
         }
     }
 
-    private static tenantManagementPM: TenantManagementPM;
-    public static get TenantManagementPM() { return this.tenantManagementPM; }
-    public static set TenantManagementPM(newValue: TenantManagementPM)
-    {
-        if (this.tenantManagementPM != newValue) {
-            this.tenantManagementPM = newValue;
-            SessionLocator.TenantManagementPM = newValue;
-        }
-    }
-
-
     public static LogitudeIndexedDB: any;
     public static IndexedDbService: any;
-
 }

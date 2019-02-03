@@ -1,4 +1,4 @@
-﻿
+
 <table>
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -11,6 +11,23 @@
         <td>
             <table>
 
+                <tr class="FormFieldRow">
+                    <td style="width:120px;">
+                        <LogLabel [ObjectFieldName]="'EmployeeUserId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:370px;">
+                        <LogLov [ObjectFieldName]="'EmployeeUserId'"
+                                [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="EmployeeUserId"
+                                [LookUpTableName]="'User'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
                 <!-- Project Id -->
                 <tr class="FormFieldRow">
                     <td style="width:120px;">
@@ -88,6 +105,25 @@
                     </td>
                 </tr>
 
+                <!-- LocationCode -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'LocationCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'LocationCode'"
+                                [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="LocationCode"
+                                [LookUpTableName]="'TMLocation'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
                 <!-- Date -->
                 <tr class="FormFieldRow">
                     <td>
@@ -104,13 +140,23 @@
                 <!-- Time -->
                 <tr class="FormFieldRow">
                     <td>
-                        <LogLabel [NoObjectField]="true"  [ObjectFieldName]="'Time'" [Text]="'Time'" [DataContext]="DataContext"></LogLabel>
+                        <LogLabel [NoObjectField]="true" [ObjectFieldName]="'Time'" [Text]="'Time'" [DataContext]="DataContext"></LogLabel>
                     </td>
+
                     <td>
-                        <div class="MediaFill" style="width:100px;max-width:100px;float:left;margin-left:-5px;">
-                            <TimeInput [TextAlign]="'left'" [TotalMinutes]="DateOfWorkMinutes" (TotalMinutesChanged)="DateOfWorkMinutes = $event" [InputValue]="DateOfWorkDateFormat" [IsNew]="true" [DisplayValue]="DateOfWorkDateFormat" (Changed)="DateOfWorkDateFormat = $event" [IsShowText]="false"></TimeInput>
-                        </div>
+                        <table>
+                            <tr>
+                                <td style="width: 100px;">
+                                    <TimeInput [TextAlign]="'left'" [TotalMinutes]="DateOfWorkMinutes" (TotalMinutesChanged)="DateOfWorkMinutes = $event" [InputValue]="DateOfWorkDateFormat" [DisplayValue]="DateOfWorkDateFormat" (Changed)="DateOfWorkDateFormat = $event" [IsShowText]="false"></TimeInput>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
+
                     <td>
                         <div></div>
                     </td>
@@ -143,7 +189,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">Create</button>
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
                     </td>
                 </tr>
             </table>

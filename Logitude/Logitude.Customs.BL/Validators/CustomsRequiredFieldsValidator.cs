@@ -1126,6 +1126,15 @@ namespace Logitude.Customs.BL.Validators
                             requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
                         }
                     }
+                    if (info.Name == "GatewayPortCode")
+                    {
+                        if (info.GetValue(courierMaster) == null)
+                        {
+
+                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
+
+                        }
+                    }
                 }
             }
 
@@ -1239,7 +1248,7 @@ namespace Logitude.Customs.BL.Validators
                 foreach (PropertyInfo info in ConsignmentProperties)
                 {
                     //if(info.Name == "StorageSiteCode" || info.Name == "LoadingPortCode" || info.Name == "ThirdCargoID"|| info.Name == "ManifestNumber" || info.Name== "UnloadDate" || info.Name== "CargoDescription" || info.Name == "DeliveryPlaceName")
-                    if (info.Name == "StorageSiteCode" || info.Name == "ThirdCargoID" || info.Name == "ManifestNumber" || info.Name == "CargoDescription")//task 46459
+                    if (info.Name == "StorageSiteCode"  || info.Name == "ThirdCargoID" || info.Name == "ManifestNumber" || info.Name == "CargoDescription")//task 46459 // task 47157
                     {
                         if (info.GetValue(Consignment) == null)
                         {

@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class AccountingTransferTypeUpdateClass
@@ -109,14 +112,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
 			      				    IsEditable =  true,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
-			      				    ClientModuleName =  "Invoice",
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
+			      				    NoViewsController =  true,
+			      				    ClientModuleName =  "Invoice",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
 			                    
@@ -132,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "Code",
 					  						ObjectTableName =  "AccountingTransferType",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Code",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  4,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -158,7 +159,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -169,14 +169,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						HasTemplate =  false,
+					  						FullFieldLable =  "Code",
+					  						DefaultText =  @"Code",
+					  						HelpTextCode =  "Code",
+					  						Code =  "Code",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
-					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
-					  						HelpTextCode =  "Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -187,7 +190,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "AccountingTransferType",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Name",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  40,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -213,7 +216,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -224,14 +226,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						HasTemplate =  false,
+					  						FullFieldLable =  "Name",
+					  						DefaultText =  @"Name",
+					  						HelpTextCode =  "Name",
+					  						Code =  "Name",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
-					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
-					  						HelpTextCode =  "Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -242,7 +247,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "AccountingTransferType",
 					  						FieldsDataType =  "Text",
-					  						Code =  "SearchFields",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  1000,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -268,7 +273,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -279,14 +283,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						HasTemplate =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  @"Search..",
+					  						HelpTextCode =  "SearchFields",
+					  						Code =  "SearchFields",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
-					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search..",
-					  						HelpTextCode =  "SearchFields",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -317,7 +324,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    } 
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+
 	    public void FillAccountingTransferType()
         { 
             var repo = new AccountingTransferTypeRepository(0);

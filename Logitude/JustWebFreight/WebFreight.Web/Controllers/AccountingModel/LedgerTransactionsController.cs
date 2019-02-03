@@ -56,9 +56,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     //var to = filters_list.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldValue2;
                     var includeRelatedCurrenciesAccount = filters_list.Where(d => d.FieldName == "IncludeRelatedCurrenciesAccount").FirstOrDefault().FieldValue;
                     var includeChildAccounts = filters_list.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault().FieldValue;
+                    string _dateTypeCode = filters_list.Where(d => d.FieldName == "DateTypeCode").FirstOrDefault().FieldValue.ToString();
 
                     // dates
-                    var createDateFilter = filters_list.Where(d => d.FieldName == "CreateDate").FirstOrDefault();
+                    var createDateFilter = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault();
                     if (createDateFilter != null)
                     {
                         var from = createDateFilter.FieldValue.ToString();
@@ -85,6 +86,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     }
 
                     LTBFilter.GLAccountId = glAccountId;
+                    LTBFilter.DateTypeCode = _dateTypeCode;
                     //LTBFilter.From = Convert.ToDateTime(from);
                     //LTBFilter.To = Convert.ToDateTime(to);
                     LTBFilter.IncludeRelatedCurrenciesAccount = Convert.ToBoolean(includeRelatedCurrenciesAccount);
@@ -150,10 +152,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
                     var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
                     var glAccountId = filters_list.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().FieldValue.ToString();
-                    var from = filters_list.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldValue;
-                    var to = filters_list.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldValue2;
+                    var from = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue;
+                    var to = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue2;
                     var includeRelatedCurrenciesAccount = filters_list.Where(d => d.FieldName == "IncludeRelatedCurrenciesAccount").FirstOrDefault().FieldValue;
                     var includeChildAccounts = filters_list.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault().FieldValue;
+                    string _dateTypeCode = filters_list.Where(d => d.FieldName == "DateTypeCode").FirstOrDefault().FieldValue.ToString();
 
                     var currencyIdFilter = filters_list.Where(d => d.FieldName == "CurrencyId").FirstOrDefault();
                     if (currencyIdFilter != null)
@@ -173,6 +176,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     LTBFilter.To = Convert.ToDateTime(to);
                     LTBFilter.IncludeRelatedCurrenciesAccount = Convert.ToBoolean(includeRelatedCurrenciesAccount);
                     LTBFilter.IncludeChildAccounts = Convert.ToBoolean(includeChildAccounts);
+                    LTBFilter.DateTypeCode = _dateTypeCode;
                 }
                 var accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
                 var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext,LTBFilter);
@@ -244,6 +248,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     var cat3 = filters_list.Where(d => d.FieldName == "Category3Id").FirstOrDefault().FieldValue.ToString();
                     var cat4 = filters_list.Where(d => d.FieldName == "Category4Id").FirstOrDefault().FieldValue.ToString();
                     var cat5 = filters_list.Where(d => d.FieldName == "Category5Id").FirstOrDefault().FieldValue.ToString();
+                    var gLAccountType = filters_list.Where(d => d.FieldName == "AccountTypeCode").FirstOrDefault().FieldValue.ToString();
                     var from = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue;
                     var to = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue2;
                     var isReconciled = filters_list.Where(d => d.FieldName == "IsReconciled").FirstOrDefault().FieldValue;
@@ -272,6 +277,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     LTCIFilter.Category3Id = cat3;
                     LTCIFilter.Category4Id = cat4;
                     LTCIFilter.Category5Id = cat5;
+                    LTCIFilter.AccountTypeCode = gLAccountType;
                 }
                 var accountingContext = AccountingContext.GetContext(LTCIFilter.Tenant);
                 var ledgerTransactionCardIndexService = new LedgerTransactionCardIndexService(accountingContext, LTCIFilter);

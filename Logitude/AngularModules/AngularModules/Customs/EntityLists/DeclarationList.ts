@@ -136,6 +136,7 @@ export class DeclarationList {
 	AcceptanceStatusName: string;
 	CourierSuspentionCode: string;
 	CourierSuspentionName: string;
+	DepositionStatusCode: string;
 	
 }
  

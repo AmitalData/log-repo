@@ -139,6 +139,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 throw new ApplicationException(msg);
             }
 
+            if (entityPM.PaymentInvoices.Where(a => a.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && (a.ForeignAmount == null || a.ForeignAmount == 0)).Any())
+            {
+                throw new ApplicationException("Can't connect lines with zero Amount to Pay");
+            }
+
             ValidateAirlineRestriction(entityPM.VendorId, tenant);
             ValidateFullAccounting(entityPM);
         }

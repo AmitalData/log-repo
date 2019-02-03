@@ -41,6 +41,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //Analyze message 3052- Answer to the agent request for changing existing payment
 
 
+            customResponse.PrintedPaymentForm = customResponse.PrintedPaymentForm ?? new TSH_MSG7_AgentPaymentReplyPrintedPaymentForm();//compatibility backward
+
             //אם ה Feature מוגדר, אז יש לתייק את המסמך שהגיע כחלק מהמסר, כאשר לפני כן יש לנסות לאתר אם כבר קיים מסמך כזה ואז רק ליצור גרסה חדשה.
             _UNIQUEFILINGPOFeatureExist = ProxyUtil.SecurityUtilityCheckFeature("Customs.PaymentOrder", "UNIQUEFILINGPO", requestParams.Tenant);///
 
@@ -234,6 +236,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             else
             {
+             
                 DeclarationPM myDeclarationPM = null;
                 var myDeclarationQueryService = new DeclarationQueryService(requestParams.Tenant);
                 if (!string.IsNullOrWhiteSpace(declarationId))
@@ -242,33 +245,66 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
                 var myAnalyzePaymentDocumentManager = new AnalyzePaymentDocumentManager(null, _PaymentOrderPM, myDeclarationPM);
-                
 
-                bool AttachmentExistInGDMFILING = true;
-                if (_UNIQUEFILINGPOFeatureExist)
+
+
+                byte[] content = null;
+
+                if (customResponse.PrintedPaymentForm != null)
                 {
-                    myAnalyzePaymentDocumentManager.AnalyzePaymentDocument(
-                        customResponse.PrintedPaymentForm.PrintedPaymentForm.content
-                        , requestParams);
-                }
-                else
-                {
-                    
-                    DocumentsFilingPM documentsFilingPM = myAnalyzePaymentDocumentManager.GetDocumentsFiling(requestParams);
-                    if (documentsFilingPM==null)
+                    if (customResponse.PrintedPaymentForm.PrintedPaymentForm != null)
                     {
-                        // eitan : if get first time Attach add contents
-                        myAnalyzePaymentDocumentManager.CreatePaymentDocument(
+                        if (customResponse.PrintedPaymentForm.PrintedPaymentForm.content != null)
+                        {
+                            content = customResponse.PrintedPaymentForm.PrintedPaymentForm.content;
+                        }
+                    }
+                }
+                if (content != null)
+                {
+
+
+                    bool AttachmentExistInGDMFILING = true;
+                    if (_UNIQUEFILINGPOFeatureExist)
+                    {
+                        LogMessagingUtil.Instance.AppendLine("_UNIQUEFILINGPOFeatureExist  AnalyzePaymentDocument");
+                        myAnalyzePaymentDocumentManager.AnalyzePaymentDocument(
                             customResponse.PrintedPaymentForm.PrintedPaymentForm.content
                             , requestParams);
                     }
                     else
                     {
-                        //CreateUnfreigtFiling()
-                        // eitan : if already have filing - update metadata only !!
-                        myAnalyzePaymentDocumentManager.UpdatePaymentDocument(documentsFilingPM, 
-                            /*content =*/ null,//do not send data only if _UNIQUEFILINGPOFeatureExist !!
-                            requestParams);
+                        //byte[] content = null;
+
+                        //if (customResponse.PrintedPaymentForm != null)
+                        //{
+                        //    if (customResponse.PrintedPaymentForm.PrintedPaymentForm != null)
+                        //    {
+                        //        if (customResponse.PrintedPaymentForm.PrintedPaymentForm.content != null)
+                        //        {
+                        //            content = customResponse.PrintedPaymentForm.PrintedPaymentForm.content;
+                        //        }
+                        //    }
+                        //}
+                        DocumentsFilingPM documentsFilingPM = myAnalyzePaymentDocumentManager.GetDocumentsFiling(requestParams);
+                        if (documentsFilingPM == null)
+                        {
+                            // eitan : if get first time Attach add contents
+                            LogMessagingUtil.Instance.AppendLine("UNIQUEFILINGPOFeature not Exist  but get first time Attach add contents ");
+                            myAnalyzePaymentDocumentManager.CreatePaymentDocument(
+                                content
+                                , requestParams);
+                        }
+                        else
+                        {
+                            //CreateUnfreigtFiling()
+                            // eitan : if already have filing - update metadata only !!
+                            LogMessagingUtil.Instance.AppendLine("UNIQUEFILINGPOFeature not Exist  update metadata only !!");
+
+                            myAnalyzePaymentDocumentManager.UpdatePaymentDocument(documentsFilingPM,
+                                /*content =*/ null,//do not send data only if _UNIQUEFILINGPOFeatureExist !!
+                                requestParams);
+                        }
                     }
                 }
             }

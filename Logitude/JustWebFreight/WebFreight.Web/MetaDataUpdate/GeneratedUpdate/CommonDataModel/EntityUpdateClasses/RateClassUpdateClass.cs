@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class RateClassUpdateClass
@@ -84,7 +87,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Code",
 			      				    LookUp2 =  "Name",
-			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  true,
@@ -110,14 +112,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
 			      				    IsEditable =  true,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
 			      				    ClientModuleName =  "Common",
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
 			                    
@@ -130,66 +125,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "SearchFields",
-					  						ObjectTableName =  "RateClass",
-					  						FieldsDataType =  "Text",
-					  						Code =  "SearchFields",
-					  						MaxLength =  1000,
-					  						IsCustom =  false,
-					  						MinLength =  0,
-					  						DisplayOnLookUp =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  40,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Contains",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "RateClass",
-					  						ValidForQuerySection2 =  "RateClassFollowUp",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search..",
-					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: name",
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
 					 						FieldName =  "Code",
 					  						ObjectTableName =  "RateClass",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Code",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  3,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -215,7 +154,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -226,16 +164,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "Code",
+					  						DefaultText =  @"Code",
+					  						ListFieldLable =  "CodeListLable",
+					  						ListLableDefaultText =  @"Code",
+					  						HelpTextCode =  "Code",
+					  						Code =  "Code",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
-					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
-					  						HelpTextCode =  "Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -246,7 +187,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "RateClass",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Name",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  40,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -272,7 +213,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -283,16 +223,77 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "Name",
+					  						DefaultText =  @"Name",
+					  						ListFieldLable =  "NameListLable",
+					  						ListLableDefaultText =  @"Name",
+					  						HelpTextCode =  "Name",
+					  						Code =  "Name",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
-					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
-					  						HelpTextCode =  "Name",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SearchFields",
+					  						ObjectTableName =  "RateClass",
+					  						FieldsDataType =  "Text",
+					  						DataTypeCode =  "Text",
+					  						MaxLength =  1000,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "RateClass",
+					  						ValidForQuerySection2 =  "RateClassFollowUp",
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  @"Search..",
+					  						HelpTextCode =  "SearchFields",
+					  						HelpTextDefaultText =  @"Searching by :\n1: code\n2: name",
+					  						Code =  "SearchFields",
+					  						DependencyFilter3IsList =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -323,7 +324,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    } 
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+
 	    public void FillRateClass()
         { 
             var repo = new RateClassRepository(0);

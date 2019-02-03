@@ -9,7 +9,7 @@ import { CourierWorksheetComponent} from './Components/CourierWorkSheet/CourierW
 import { GetInternalBankComponent} from './Components/CourierWorkSheet/GetInternalBankComponent';
 import { AddEditMamanStickerComponent } from './Components/MamanSpecialAction/AddEditMamanStickerComponent';
 import { AddCourierPendingToUnifreightStatusComponent } from './Components/CourierPendingReason/AddCourierPendingToUnifreightStatusComponent';
-
+import { GatepassRequestComponent } from './Components/GatepassRequest/GatepassRequestComponent';
 
 export const Components =
     [
@@ -24,6 +24,7 @@ export const Components =
         GetInternalBankComponent,
         AddEditMamanStickerComponent,
         AddCourierPendingToUnifreightStatusComponent,
+        GatepassRequestComponent,
 
     ];
 
@@ -44,6 +45,7 @@ export class ModuleDeclarations {
             case "GetInternalBankComponent": { myResult = GetInternalBankComponent; break; }
             case "AddEditMamanStickerComponent": { myResult = AddEditMamanStickerComponent; break; }
             case "AddCourierPendingToUnifreightStatusComponent": { myResult = AddCourierPendingToUnifreightStatusComponent; break; }
+            case "GatepassRequestComponent": { myResult = GatepassRequestComponent; break; }
         }
 
         return myResult;

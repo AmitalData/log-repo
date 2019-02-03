@@ -1,4 +1,4 @@
-﻿import {AppTool, DateTool, ArrayTool} from '../Infrastructure/Tools';
+import {AppTool, DateTool, ArrayTool} from '../Infrastructure/Tools';
 import {Validator} from '../Infrastructure/Validators/Validator';
 import {FeatureLocator} from '../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
@@ -781,7 +781,7 @@ export class ShipmentTool {
     }
 
     public static IsGLSHK() {
-        if (SessionLocator.TenantManagementPM.AWBMessagesCCSTypeCode == "GLSHK") {
+        if (SessionLocator.TenantManagementJS.AWBMessagesCCSTypeCode == "GLSHK") {
             return true;
         }
 
@@ -792,7 +792,7 @@ export class ShipmentTool {
     public static GetTenantZeroAirlineField(shipmentPM: ShipmentPM) {
         var myResult: string = null;
 
-        if (SessionLocator.TenantManagementPM.AWBMessagesCCSTypeCode == "GLSHK") {
+        if (SessionLocator.TenantManagementJS.AWBMessagesCCSTypeCode == "GLSHK") {
             myResult = shipmentPM.TenantZeroAirlinePIMA;
         }
 
@@ -2359,15 +2359,17 @@ export class ShipmentGenerator {
             }
         }
 
-        if (this.IsRoutingRate) {
-            if (!AppTool.IsNullOrZero(myRecordPM.QuoteCostMinPrice)) {
-
-                if (AppTool.IsNullOrEmpty(myComputedAmount)) {
-                    myComputedAmount = myRecordPM.QuoteCostMinPrice;
+        // MinMax
+        if (myComputedAmount != null) {
+            if (myRecordPM.QuoteCostMinAmount != null) {
+                if (myComputedAmount < myRecordPM.QuoteCostMinAmount) {
+                    myComputedAmount = myRecordPM.QuoteCostMinAmount;
                 }
+            }
 
-                else if (myComputedAmount < myRecordPM.QuoteCostMinPrice) {
-                    myComputedAmount = myRecordPM.QuoteCostMinPrice;
+            if (myRecordPM.QuoteCostMaxAmount != null) {
+                if (myComputedAmount > myRecordPM.QuoteCostMaxAmount) {
+                    myComputedAmount = myRecordPM.QuoteCostMaxAmount;
                 }
             }
         }
@@ -2440,7 +2442,8 @@ export class ShipmentGenerator {
         myRecordPM.VendorId = item.VendorId;
         myRecordPM.VendorName = item.VendorName;
         myRecordPM.QuoteChargeId = item.Id;
-        myRecordPM.QuoteCostMinPrice = item.CostMinAmount;
+        myRecordPM.QuoteCostMinAmount = item.CostMinAmount;
+        myRecordPM.QuoteCostMaxAmount = item.CostMaxAmount;
         myRecordPM.IsChargeBySteps = item.IsChargeBySteps;
         myRecordPM.Rate = this.GetCurrencyRate(item.CostCurrencyId);
         myRecordPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
@@ -2528,6 +2531,12 @@ export class ShipmentGenerator {
                 myRecordPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
 
                 myRecordPM.VatTypeId = OriginItemPM.VatTypeId;
+
+                myRecordPM.IsFromQuote = OriginItemPM.IsFromQuote;
+                myRecordPM.QuoteChargeId = OriginItemPM.QuoteChargeId;
+                myRecordPM.IsChargeBySteps = OriginItemPM.IsChargeBySteps;
+                myRecordPM.QuoteCostMinAmount = OriginItemPM.QuoteCostMinAmount;
+                myRecordPM.QuoteCostMaxAmount = OriginItemPM.QuoteCostMaxAmount;
 
                 //if (OriginItemPM.IsFromQuote) {
                 //    myRecordPM.VatTypeId = OriginItemPM.VatTypeId;
@@ -2996,19 +3005,20 @@ export class ShipmentGenerator {
             }
         }
 
-        if (this.IsRoutingRate) {
-            if (!AppTool.IsNullOrZero(myRecordPM.QuoteSaleMinPrice)) {
-
-                if (AppTool.IsNullOrEmpty(myComputedAmount)) {
-                    myComputedAmount = myRecordPM.QuoteSaleMinPrice;
+        // MinMax
+        if (myComputedAmount != null) {
+            if (myRecordPM.QuoteSaleMinAmount != null) {
+                if (myComputedAmount < myRecordPM.QuoteSaleMinAmount) {
+                    myComputedAmount = myRecordPM.QuoteSaleMinAmount;
                 }
+            }
 
-                else if (myComputedAmount < myRecordPM.QuoteSaleMinPrice) {
-                    myComputedAmount = myRecordPM.QuoteSaleMinPrice;
+            if (myRecordPM.QuoteSaleMaxAmount != null) {
+                if (myComputedAmount > myRecordPM.QuoteSaleMaxAmount) {
+                    myComputedAmount = myRecordPM.QuoteSaleMaxAmount;
                 }
             }
         }
-
 
         if (myRecordPM.IsFixedPrice) {
             myRecordPM.TotalAmount = item.SaleTotalAmount;
@@ -3071,7 +3081,8 @@ export class ShipmentGenerator {
         myRecordPM.MeasurementShortName = QuoteCharge.SaleMeasurementShortName;
         myRecordPM.Notes = QuoteCharge.Notes;
         myRecordPM.IsExchangeRateFixed = QuoteCharge.SaleIsFixedRate;
-        myRecordPM.QuoteSaleMinPrice = QuoteCharge.SaleMinAmount;
+        myRecordPM.QuoteSaleMinAmount = QuoteCharge.SaleMinAmount;
+        myRecordPM.QuoteSaleMaxAmount = QuoteCharge.SaleMaxAmount;
         myRecordPM.QuoteChargeId = QuoteCharge.Id;
         myRecordPM.IsChargeBySteps = QuoteCharge.IsChargeBySteps;
         myRecordPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
@@ -3155,12 +3166,19 @@ export class ShipmentGenerator {
             myRecordPM.IsExchangeRateFixed = OriginItemPM.IsExchangeRateFixed;
             myRecordPM.IsFixedPrice = OriginItemPM.IsFixedPrice;
             myRecordPM.UnitPrice = OriginItemPM.UnitPrice;
-            myRecordPM.QuoteSaleMinPrice = OriginItemPM.QuoteSaleMinPrice;
+            myRecordPM.QuoteSaleMinAmount = OriginItemPM.QuoteSaleMinAmount;
+            myRecordPM.QuoteSaleMaxAmount = OriginItemPM.QuoteSaleMaxAmount;
             myRecordPM.IsBackToBack = OriginItemPM.IsBackToBack;
             myRecordPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
             myRecordPM.IsExpense = OriginItemPM.IsExpense;
 
             myRecordPM.VatTypeId = OriginItemPM.VatTypeId;
+
+            myRecordPM.IsFromQuote = OriginItemPM.IsFromQuote;
+            myRecordPM.QuoteChargeId = OriginItemPM.QuoteChargeId;
+            myRecordPM.IsChargeBySteps = OriginItemPM.IsChargeBySteps;
+            myRecordPM.QuoteSaleMinAmount = OriginItemPM.QuoteSaleMinAmount;
+            myRecordPM.QuoteSaleMaxAmount = OriginItemPM.QuoteSaleMaxAmount;
 
             //if (OriginItemPM.IsFromQuote) {
             //    myRecordPM.VatTypeId = OriginItemPM.VatTypeId;
@@ -3202,9 +3220,7 @@ export class AWBHelper {
     public static ValidateAWBCCS(shipmentPM: ShipmentPM) {
         var myResult = new AWBCCSValidator();
 
-        var myTenantManagementPM = SessionLocator.TenantManagementPM;
-
-        if (myTenantManagementPM.AWBMessagesCCSTypeCode == "GLSHK") {
+        if (SessionLocator.TenantManagementJS.AWBMessagesCCSTypeCode == "GLSHK") {
             myResult.FWB = shipmentPM.TenantZeroAirlineGLSHKFWB;
             myResult.FHL = shipmentPM.TenantZeroAirlineGLSHKFHL;
             myResult.FSU = shipmentPM.TenantZeroAirlineGLSHKFSU;
@@ -3217,7 +3233,7 @@ export class AWBHelper {
                 myResult.AirlineFieldErrorMessage = "Airline communication parameter (PIMA) is missing";
             }
 
-            if (AppTool.IsNullOrEmpty(myTenantManagementPM.PIMA)) {
+            if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PIMA)) {
                 myResult.IsValid = false;
                 myResult.TenantManagementFieldHasError = true;
                 myResult.TenantManagementFieldErrorMessage = "Tenant communication parameter (PIMA) is missing";
@@ -3242,7 +3258,7 @@ export class AWBHelper {
                 myResult.AirlineFieldErrorMessage = "This Airline doesn't support transmitting messages";
             }
 
-            if (AppTool.IsNullOrEmpty(myTenantManagementPM.TTY)) {
+            if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TTY)) {
                 myResult.IsValid = false;
                 myResult.TenantManagementFieldHasError = true;
                 myResult.TenantManagementFieldErrorMessage = "Tenant communication parameter (TTY) is missing";

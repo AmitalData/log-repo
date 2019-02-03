@@ -172,6 +172,19 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 int tenant = authToken.Tenant;
                 var Tabel = filters.Filter1Name;
                 var Field = filters.Filter2Name;
+                var temp = filters.Filter3Name;
+                var Field1 = "";
+                var Field2 = "";
+                var Field3 = "";
+                var Field4 = "";
+                var Field5 = "";
+                var Field6 = "";
+                var Field7 = "";
+                var Field8 = "";
+                var Field9 = "";
+                var Field10 = "";
+                var LovAdditionalFields = !string.IsNullOrEmpty(temp) ? temp.Split(','):null;
+               
                 var SearchData = filters.Filter2Value; 
                 DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(authToken.Tenant);
                 DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(Tabel, authToken.Tenant);
@@ -185,7 +198,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 }
                 if (!IsClosed)
                 {
-                    WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + ".[Parent Tenant] = " + authToken.Tenant); //authToken.Tenant
+                    if (Tabel != "DIM_Tenants")
+                    {
+                        WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + ".[Parent Tenant] = " + authToken.Tenant); //authToken.Tenant
+                    } 
+                   
                     //if (!string.IsNullOrEmpty(SearchData))
                     //{
                     //    WhereStmt = WhereStmt + (" and " + Field + " like '%" + SearchData + "'");
@@ -201,8 +218,58 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                     using (SqlConnection sourceConnection = new SqlConnection(connection.ConnectionString))
                     {
-                        var SQL = "select DISTINCT " + Field + " from " + Tabel + WhereStmt + PagingString;
-                        
+                        var SQL = "select DISTINCT " + Field + " ";
+                        if (LovAdditionalFields != null)
+                        {
+                            int index = 0;
+                            foreach (var item in LovAdditionalFields)
+                            {
+                                SQL = SQL + "," + item;
+                                if (index == 0)
+                                {
+                                    Field1 = LovAdditionalFields[index];
+                                }
+                                else if (index == 1)
+                                {
+                                    Field2 = LovAdditionalFields[index];
+                                }
+                                else if (index == 2)
+                                {
+                                    Field3 = LovAdditionalFields[index];
+                                }
+                                else if (index == 3)
+                                {
+                                    Field4 = LovAdditionalFields[index];
+                                }
+                                else if (index == 4)
+                                {
+                                    Field5 = LovAdditionalFields[index];
+                                }
+                                else if (index == 5)
+                                {
+                                    Field6 = LovAdditionalFields[index];
+                                }
+                                else if (index == 6)
+                                {
+                                    Field7 = LovAdditionalFields[index];
+                                }
+                                else if (index == 7)
+                                {
+                                    Field8 = LovAdditionalFields[index];
+                                }
+                                else if (index == 8)
+                                {
+                                    Field9 = LovAdditionalFields[index];
+                                }
+                                else if (index == 9)
+                                {
+                                    Field10 = LovAdditionalFields[index];
+                                }
+                                index++;
+
+                            }
+                        }
+                        SQL = SQL + " from " + Tabel + WhereStmt + PagingString;
                         sourceConnection.Open();
                         SqlCommand commandSourceData = new SqlCommand(SQL, sourceConnection);
                         SqlDataReader reader = commandSourceData.ExecuteReader();
@@ -223,11 +290,59 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     
                     ServiceResponse response = new ServiceResponse();
                     List<FactDataTable> FactDataList = new List<FactDataTable>();
-                    FactDataList = (from DataRow dr in dataTable.Rows
-                                   select new FactDataTable()
-                                   { 
-                                       Name = dr[Field.Replace("[","").Replace("]","")].ToString(), 
-                                   }).ToList();
+                    var TempFactDataList = (from DataRow dr in dataTable.Rows
+                                    select dr);
+                    //new FactDataTable()
+                    //{ 
+                    //    Name = dr[Field.Replace("[","").Replace("]","")].ToString(), 
+                    //}).ToList();
+                    foreach (var dr in TempFactDataList)
+                    {
+                        var temprec = new FactDataTable();
+                        temprec.Field = dr[Field.Replace("[", "").Replace("]", "")].ToString();
+                        if (!string.IsNullOrEmpty(Field1))
+                        {
+                            temprec.Field1 = dr[Field1.Replace("[", "").Replace("]", "")].ToString();
+                        }
+                        if (!string.IsNullOrEmpty(Field2))
+                        {
+                            temprec.Field2 = dr[Field2.Replace("[", "").Replace("]", "")].ToString();
+                        }
+                        if (!string.IsNullOrEmpty(Field3))
+                        {
+                            temprec.Field3 = dr[Field3.Replace("[", "").Replace("]", "")].ToString();
+                        }
+                        if (!string.IsNullOrEmpty(Field4))
+                        {
+                            temprec.Field4 = dr[Field4.Replace("[", "").Replace("]", "")].ToString();
+                        }
+                        if (!string.IsNullOrEmpty(Field5))
+                        {
+                            temprec.Field5 = dr[Field5.Replace("[", "").Replace("]", "")].ToString();
+                        }
+                        if (!string.IsNullOrEmpty(Field6))
+                        {
+                            temprec.Field6 = dr[Field6.Replace("[", "").Replace("]", "")].ToString();
+                        }
+                        if (!string.IsNullOrEmpty(Field7))
+                        {
+                            temprec.Field7 = dr[Field7.Replace("[", "").Replace("]", "")].ToString();
+                        }
+                        if (!string.IsNullOrEmpty(Field8))
+                        {
+                            temprec.Field8 = dr[Field8.Replace("[", "").Replace("]", "")].ToString();
+                        }
+                        if (!string.IsNullOrEmpty(Field9))
+                        {
+                            temprec.Field9 = dr[Field9.Replace("[", "").Replace("]", "")].ToString();
+                        }
+                        if (!string.IsNullOrEmpty(Field10))
+                        {
+                            temprec.Field10 = dr[Field10.Replace("[", "").Replace("]", "")].ToString();
+                        }
+                         
+                        FactDataList.Add(temprec);
+                    }
                     if (filters.GetCount)
                     {
                         response.Count = (int)Count;
@@ -251,13 +366,45 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
         }
 
+        public HttpResponseMessage Post(DWQueryData QueryData)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+               
+                var XML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Columns);
+                var FilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Filters);
+                var temp = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(XML);
+                var temp1 = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(FilterXML);
+                //IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
+                //QueryColumnService service = new QueryColumnService(objectContext, entityPM.Tenant);
+                //service.Create(entityPM);
 
+                return Request.CreateResponse(HttpStatusCode.OK, FilterXML);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
     }
 
     class FactDataTable
     {
-        public string Name { get; set; }
-        public string Code { get; set; }
+        public string Field { get; set; }
+        public string Field1 { get; set; }
+        public string Field2 { get; set; }
+        public string Field3 { get; set; }
+        public string Field4 { get; set; }
+        public string Field5 { get; set; }
+        public string Field6 { get; set; }
+        public string Field7 { get; set; }
+        public string Field8 { get; set; }
+        public string Field9 { get; set; }
+        public string Field10 { get; set; } 
     }
 }

@@ -1,4 +1,4 @@
-﻿import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import 'rxjs/add/operator/map';
 import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren}  from '@angular/core';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -152,7 +152,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     SLAHeaderLists: SLAHeaderList[];
     IsLoadEventFollowUp: boolean = false;
     IsLoadSLAHeaders: boolean = false;
-    
+    IsAutomationResultEmailAllActiveUsers: boolean = false;
+
     IsMasterShipment: boolean = false;
     SetWindowArgs(args: any) {
         this.ObjectTableId = args.ObjectTableId;
@@ -176,7 +177,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var lists: EventTypeList[] = myResponse.Result;
-                this.EventFollowUpTypeLists = lists.filter(f => f.ObjectTableId == this.ObjectTableId && f.AllowedInAutomation == true);
+                // this.EventFollowUpTypeLists = lists.filter(f => f.ObjectTableId == this.ObjectTableId && f.AllowedInAutomation == true);
+                this.EventFollowUpTypeLists = lists.filter(f => f.ObjectTableId == this.ObjectTableId && f.ManualActivatedFollowUp == true);
                 this.EventDocFollowUpTypeLists = lists.filter(f => f.ObjectTableId == this.ObjectTableId && (f.Code == "DOCO" || f.Code == "DOCI" ));
        
                 if (!AppTool.IsNullOrEmpty(this.AutomationFollowUp.EventTypeId)) {
@@ -627,6 +629,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.Inactive = this.CurrentEntityPM.Inactive;
             this.IsActiveAutomation = this.CurrentEntityPM.Inactive;
             this.DelayTime = this.AutomatedBackupClass.Delaytime;
+            this.IsAutomationResultEmailAllActiveUsers = this.AutomatedBackupClass.IsAutomationResultEmailAllActiveUsers;
+
             this.FillObjectField();
             this.LoadAutomationHistory();
             this.LoadDocumentType();
@@ -1004,7 +1008,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
 
         if (this.ParticipantsList.length == 0 && this.EntityContactVariable.length == 0 && this.CurrentEntityPM.ResultCode == "EMAIL") {
-            this.ValidationErrorsList.push("Please add at least one recipient");
+            if (!this.IsAutomationResultEmailAllActiveUsers) {
+                this.ValidationErrorsList.push("Please add at least one recipient");
+            }
         }
 
         if (this.CurrentEntityPM.ResultCode == "FIELDSET" && this.AutomationSetValueLists && this.AutomationSetValueLists.length > 0) {
@@ -1040,6 +1046,14 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.ValidationErrorsList.push("Please fill Owner or Team");
             }
         }
+
+        if (this.AutomatedBackupClass.Type == "Delayed") {
+            if (!this.DelayTime ||  this.DelayTime<1) {
+                this.ValidationErrorsList.push("Delay time must be greater than 0");
+            }
+        }
+
+
 
         if (this.ValidationErrorsList.length == 0) {
             if (this.IsNewEntity) {
@@ -1211,6 +1225,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automatedBackup.Type = this.AutomatedBackupClass.Type;
         automatedBackup.DelayAautomationConditionLists = this.AutomatedBackupClass.DelayAautomationConditionLists;
         automatedBackup.AautomationConditionLists = automationConditionList;
+        automatedBackup.IsAutomationResultEmailAllActiveUsers = this.IsAutomationResultEmailAllActiveUsers;
 
         if (this.CurrentEntityPM.ResultCode == "FIELDSET") automatedBackup.AutomationSetValueLists = automationSetValuelist;
         else if (this.CurrentEntityPM.ResultCode == "SETSLA") automatedBackup.AutomationSetSLAValue = this.AutomationSetSLAValue;

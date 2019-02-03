@@ -25,6 +25,8 @@ using Logitude.Accounting.BL.Validators;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Accounting.BL.Utils;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -33,6 +35,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnCreating(RevaluationPM entityPM, EntityPM entityParentPM)
         {
+            //RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(this.MainContext as IAccountingContext);
+            //List<RevaluationList> revaluations = revaluationListQueryService.GetOpenRevaluationList(entityPM.Tenant);
+            //if (revaluations != null && revaluations.Count > 0)
+            //{
+            //    throw new ApplicationException(TextCodesTranslator.TranslateText("Revaluations.Q.OpenRevaluations", entityPM.Tenant));
+            //}
+
             if (String.IsNullOrEmpty(entityPM.Id) || entityPM.Id == "new") entityPM.Id = IdCounter.GetNumber("Revaluation", entityPM.Tenant);
             if (String.IsNullOrEmpty(entityPM.CreatedByUserId) || entityPM.CreatedByUserId == "new")
             {

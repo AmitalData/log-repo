@@ -14,6 +14,10 @@ using Simplog.Server.Infrastructure;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.Security;
+using System.Web;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -42,8 +46,31 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 TaxDeductionReportStatusPM status = queryService.GetSingle(entityPOCO.StatusTypeCode, false, false);
                 if (status != null)
                 {
-                    entityPM.Status = status.LocalName;
-                   // entityPM.StatusLocalName = status.LocalName;
+
+                    ContactQuery contactQuery = new ContactQuery(entityPM.Tenant);
+                    ContactPM loggedContact = null;
+
+                    if (HttpContext.Current != null)
+                    {
+                        loggedContact = contactQuery.GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+                    }
+                    else
+                    {
+
+                        loggedContact = contactQuery.GetSingleContactPM(entityPM.CreatedByUserId);
+                    }
+
+
+                    if (loggedContact.DontShowLocal)
+                    {
+                        entityPM.Status = status.EnglishName;
+
+                    }
+                    else
+                    {
+                        //entityPM.Status = status.LocalName;
+                        entityPM.StatusLocalName = status.LocalName;
+                    }
                 }
             }
 

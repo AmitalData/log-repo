@@ -53,7 +53,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.ApprovedByUserId).HasColumnName("ApprovedByUserId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.AccountingEntityReference).HasColumnName("AccountingEntityReference").HasMaxLength(30).IsUnicode(false);
 
@@ -70,10 +70,6 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.ExternalSystem).HasColumnName("ExternalSystem").HasMaxLength(60).IsUnicode(true);
 
             this.Property(t => t.QueueId).HasColumnName("QueueId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.TaxReportId).HasColumnName("TaxReportId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.TaxReportStatusCode).HasColumnName("TaxReportStatusCode").HasMaxLength(1).IsUnicode(false);
         }
     }
 }

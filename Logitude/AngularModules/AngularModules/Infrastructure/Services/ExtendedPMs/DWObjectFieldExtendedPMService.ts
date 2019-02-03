@@ -58,8 +58,63 @@ export class DWObjectFieldExtendedPMService {
      }).catch(ServiceHelper.HandleServiceError);
 
 
- }
+    }
 
+    GetDWObjectFieldsByDWTableIdGroupedByCategory(DWOTId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + "/GetDWObjectFieldsByDWTableIdGroupedByCategory" + '?DWOTId=' + DWOTId, { headers: authHeader }).map(response => {
+
+
+            var result = response.json();
+
+            //var entity: DWObjectFieldPM;
+            //var DWObjectFieldPMLists: DWObjectFieldPM[];
+            //DWObjectFieldPMLists = new Array<DWObjectFieldPM>();
+
+
+            //result.forEach((item) => {
+            //    entity = this.MapJsonToEntityPM(item);
+            //    DWObjectFieldPMLists.push(entity);
+            //});
+
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = result;
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
+
+
+    }
+
+    getDWObjectFieldsWithChildrenByDWTableId(DWOTId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + "/getDWObjectFieldsWithChildrenByDWTableId" + '?DWOTId=' + DWOTId, { headers: authHeader }).map(response => {
+
+
+            var result = response.json();
+
+            var entity: DWObjectFieldPM;
+            var DWObjectFieldPMLists: DWObjectFieldPM[];
+            DWObjectFieldPMLists = new Array<DWObjectFieldPM>();
+
+
+            result.forEach((item) => {
+                entity = this.MapJsonToEntityPM(item);
+                DWObjectFieldPMLists.push(entity);
+            });
+
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = DWObjectFieldPMLists;
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
+
+
+    }
    
 
 	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: DWObjectFieldPM = null) {

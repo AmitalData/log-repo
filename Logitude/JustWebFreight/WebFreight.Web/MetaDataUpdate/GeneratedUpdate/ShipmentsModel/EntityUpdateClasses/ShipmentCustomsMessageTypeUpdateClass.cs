@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class ShipmentCustomsMessageTypeUpdateClass
@@ -110,13 +113,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsLookUp =  true,
 			      				    IsEditable =  false,
 			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
 			      				    ClientModuleName =  "Shipment",
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
 			                    
@@ -132,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "Code",
 					  						ObjectTableName =  "ShipmentCustomsMessageType",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Code",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  4,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -158,7 +159,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -170,15 +170,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
+					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
+					  						DefaultText =  @"Code",
 					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
+					  						ListLableDefaultText =  @"Code",
 					  						HelpTextCode =  "Code",
+					  						Code =  "Code",
+					  						DependencyFilter3IsList =  false,
+					  						CopyToDW =  false,
+					  						IsRequired =  true,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -189,7 +192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "ShipmentCustomsMessageType",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Name",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  70,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -215,7 +218,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -227,15 +229,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
+					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
+					  						DefaultText =  @"Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
+					  						ListLableDefaultText =  @"Name",
 					  						HelpTextCode =  "Name",
+					  						Code =  "Name",
+					  						DependencyFilter3IsList =  false,
+					  						CopyToDW =  false,
+					  						IsRequired =  true,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -246,7 +251,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "ShipmentCustomsMessageType",
 					  						FieldsDataType =  "Text",
-					  						Code =  "SearchFields",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  1000,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -270,7 +275,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -282,14 +286,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
+					  						AllowedInAirlineMessaging =  false,
 					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search..",
+					  						DefaultText =  @"Search..",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: name",
+					  						HelpTextDefaultText =  @"Searching by :\n1: code\n2: name",
+					  						Code =  "SearchFields",
+					  						DependencyFilter3IsList =  false,
+					  						CopyToDW =  false,
+					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -320,7 +327,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    } 
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+
 	    public void FillShipmentCustomsMessageType()
         { 
             var repo = new ShipmentCustomsMessageTypeRepository(0);

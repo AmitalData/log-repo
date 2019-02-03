@@ -11,6 +11,7 @@ using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using System.Diagnostics;
 using Simplog.Data.CommonDataModel;
+using Logitude.Server.Tools;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -28,6 +29,13 @@ namespace Logitude.Accounting.Data.Repositories
             return (from a in context.GLAccounts
              where a.ParentAccountId == GLAccountId && a.Tenant == tenant
              select a).ToList();
+        }
+
+        public List<GLAccount> GetChildAccountsList(List<String> gLAccountIdList, int tenant)
+        {
+            return (from a in context.GLAccounts
+                    where a.Tenant == tenant && gLAccountIdList.Any(b => a.ParentAccountId == b)
+                    select a).ToList();
         }
 
         public GLAccount GetGLAccountByIdTenant(string GLAccountId, int tenant)
@@ -197,6 +205,17 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
+        public IQueryable<string> GetQAccIdByAcountIdTypeCategories(int tenant, string AccountId,
+             string Category1, string Category2, string Category3, string Category4, string Category5, string gLAccountType)
+        {
+            return
+            this
+                .GetByAcountIdTypeCategories(tenant, AccountId, gLAccountType,
+            Category1, Category2, Category3, Category4, Category5)
+            .Select(a => a.Id);
+
+        }
+
         public List<int> GetTenantByNextDueDate(DateTime today, List<string> accountTypeCodeList)
         {
             var q = (from a in context.GLAccounts
@@ -301,6 +320,54 @@ namespace Logitude.Accounting.Data.Repositories
             }
             return q;
         }
+
+
+        public IQueryable<GLAccount> GetByAcountIdTypeCategories(int tenant, string AccountId, string gLAccountType,
+            string Category1, string Category2, string Category3, string Category4, string Category5)
+        {
+            IQueryable<GLAccount> q;
+            if (!string.IsNullOrWhiteSpace(AccountId))
+            {
+                q = (from a in context.GLAccounts
+                     where a.Tenant == tenant
+                     where a.Id == AccountId
+                     select a);
+            }
+            else
+            {
+                q = (from a in context.GLAccounts
+                     where a.Tenant == tenant
+                     select a);
+            }
+            if (!string.IsNullOrWhiteSpace(gLAccountType))
+            {
+                q = q.Where(a => a.AccountTypeCode == gLAccountType);
+            }
+            if (!string.IsNullOrWhiteSpace(Category1))
+            {
+                q = q.Where(a => a.Category1Id == Category1);
+            }
+            if (!string.IsNullOrWhiteSpace(Category2))
+            {
+                q = q.Where(a => a.Category2Id == Category2);
+            }
+            if (!string.IsNullOrWhiteSpace(Category3))
+            {
+                q = q.Where(a => a.Category3Id == Category3);
+            }
+            if (!string.IsNullOrWhiteSpace(Category4))
+            {
+                q = q.Where(a => a.Category4Id == Category4);
+            }
+            if (!string.IsNullOrWhiteSpace(Category5))
+            {
+                q = q.Where(a => a.Category5Id == Category5);
+            }
+            return q;
+        }
+
+
+
 
         public IQueryable<GLAccountAndMoreDTO> GetQAllByAccountTypeCode(int tenant, string AccountTypeCode)
         {
@@ -484,21 +551,45 @@ namespace Logitude.Accounting.Data.Repositories
         {
             if (revaluationEnabled.HasValue && revaluationEnabled.Value)
             {
-                return (from record in context.GLAccounts
-                        where record.Tenant == tenant && record.Inactive != true && record.RevaluationEnabled.HasValue && record.RevaluationEnabled.Value
-                        select record).ToList();
+                List<GLAccount> rv1;
+                IQueryable<GLAccount> rec1 =
+                from record in context.GLAccounts
+                        where record.Tenant == tenant && record.Inactive != true && record.RevaluationEnabled.HasValue && record.RevaluationEnabled.Value 
+                        && (!record.IsControlAccount.HasValue || record.IsControlAccount == false)
+                 select record;
+                if (rec1 != null)
+                {
+                    rv1 = rec1.ToList();
+                    return (rv1);
+                }
+                else
+                {
+                    return null;
+                }
             }
             else if (!String.IsNullOrEmpty(chartOfAccountsTypeCode) || !String.IsNullOrEmpty(chartOfAccountsId) || !String.IsNullOrEmpty(accountTypeCode) || !String.IsNullOrEmpty(gLAccountId))
             {
-                return (from record in context.GLAccounts
+                List<GLAccount> rv2;
+                IQueryable<GLAccount> rec2 = 
+                 from record in context.GLAccounts
                         where record.Tenant == tenant && (record.Inactive == null || record.Inactive == false)
                                     && (record.ChartOfAccountsTypeCode == chartOfAccountsTypeCode || String.IsNullOrEmpty(chartOfAccountsTypeCode))
                                     && (record.ChartOfAccountsId == chartOfAccountsId || String.IsNullOrEmpty(chartOfAccountsId))
                                     && (record.AccountTypeCode == accountTypeCode || String.IsNullOrEmpty(accountTypeCode))
                                     && (record.Id == gLAccountId || String.IsNullOrEmpty(gLAccountId)
                                     && (record.CurrencyId != accountingCurrencyId || (record.IsMultiCurrency.HasValue && record.IsMultiCurrency.Value) || String.IsNullOrEmpty(accountingCurrencyId))
-                            )
-                        select record).ToList();
+                                    && (!record.IsControlAccount.HasValue || record.IsControlAccount == false)
+               )
+                 select record;
+                if (rec2 != null)
+                {
+                    rv2 = rec2.ToList();
+                    return (rv2);
+                }
+                else
+                {
+                    return null;
+                }
             }
             else
             {
@@ -647,9 +738,18 @@ namespace Logitude.Accounting.Data.Repositories
        {
            InsureUsingOnlyByUpdateService();
        }
-       private static void InsureUsingOnlyByUpdateService()
+       private void InsureUsingOnlyByUpdateService()
        {
-            ///return;//mohammad temp fix until itzik is back
+            var myName = this.NameOf();
+            if (myName != "GLAccountRepositoryPriv")
+            {
+                AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Critical);
+
+
+                throw new Exception("InsureUsingOnlyByUpdateService");
+
+            }
+            return;//mohammad temp fix until itzik is back
             int iFrame = 3;
            var mth = new StackTrace().GetFrame(iFrame).GetMethod();
 

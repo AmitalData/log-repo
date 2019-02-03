@@ -33,11 +33,32 @@ namespace DW_Editor_Tool.ViewModels
                 dataTypeCode = value; FirePropertyChanged("DataTypeCode");
                 TextTypeVisibility = ((value == "Text" || value == "nText" || value == "Dimension") ? Visibility.Visible : Visibility.Collapsed);
                 DimensionTabeVisisbilty = ((value == "Dimension") ? Visibility.Visible : Visibility.Collapsed);
+
+                if(dataTypeCode!= "Dimension")
+                {
+                    DimensionTableCode = null;
+                }
+
             }
         }
 
         private string dimensionTableCode;
-        public string DimensionTableCode { get { return dimensionTableCode; } set { dimensionTableCode = value; FirePropertyChanged("DimensionTableCode"); } }
+        public string DimensionTableCode
+        {
+            get {
+
+                return dimensionTableCode;
+
+            }
+
+            set
+            {
+                dimensionTableCode = value;
+
+                FirePropertyChanged("DimensionTableCode");
+            }
+
+        }
 
         private int minLength;
         public int MinLength { get { return minLength; } set { minLength = value; FirePropertyChanged("MinLength"); } }
@@ -72,6 +93,28 @@ namespace DW_Editor_Tool.ViewModels
             get { return aggregationTypeCode; }
             set { aggregationTypeCode = value; FirePropertyChanged("AggregationTypeCode"); }
         }
+
+        string category1;
+        public string Category1
+        {
+            get { return category1; }
+            set { category1 = value; FirePropertyChanged("Category1"); }
+        }
+
+        string category2;
+        public string Category2
+        {
+            get { return category2; }
+            set { category2 = value; FirePropertyChanged("Category2"); }
+        }
+
+        string lOVAdditionalFields;
+        public string LOVAdditionalColumns
+        {
+            get { return lOVAdditionalFields; }
+            set { lOVAdditionalFields = value; FirePropertyChanged("LOVAdditionalColumns"); }
+        }
+        
 
         // is Measurement , Aggregation Type
 
@@ -218,6 +261,13 @@ namespace DW_Editor_Tool.ViewModels
             ((Window)control.Parent).Close();
 
 
+        }
+
+        bool displayInQueryBuilder = true;
+        public bool DisplayInQueryBuilder
+        {
+            get { return displayInQueryBuilder; }
+            set { displayInQueryBuilder = value; FirePropertyChanged("DisplayInQueryBuilder"); }
         }
 
 

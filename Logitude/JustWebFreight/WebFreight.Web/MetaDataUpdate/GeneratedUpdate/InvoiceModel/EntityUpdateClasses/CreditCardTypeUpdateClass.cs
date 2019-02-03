@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class CreditCardTypeUpdateClass
@@ -110,16 +113,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
 			      				    IsEditable =  true,
-			      				    AllowedForComputingPartners =  true,
-			      				    CodeField =  "Code",
-			      				    NameField =  "Name",
-			      				    DisableSearchBox =  false,
-			      				    ClientModuleName =  "Invoice",
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
+			      				    CodeField =  "Code",
+			      				    NameField =  "Name",
+			      				    ClientModuleName =  "Invoice",
 			      				    Code =  "CCTP",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -134,7 +134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "Code",
 					  						ObjectTableName =  "CreditCardType",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Code",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  2,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -158,10 +158,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "CreditCardType",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "CreditCardType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -172,16 +171,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						HasTemplate =  false,
+					  						FullFieldLable =  "Code",
+					  						DefaultText =  @"Code",
+					  						ListFieldLable =  "CodeListLable",
+					  						ListLableDefaultText =  @"Code",
+					  						HelpTextCode =  "Code",
+					  						Code =  "Code",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
-					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
-					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
-					  						HelpTextCode =  "Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -192,7 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "CreditCardType",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Name",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  40,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -216,10 +218,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowListIndex =  1,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "CreditCardType",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "CreditCardType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -230,16 +231,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						HasTemplate =  false,
+					  						FullFieldLable =  "Name",
+					  						DefaultText =  @"Name",
+					  						ListFieldLable =  "NameListLable",
+					  						ListLableDefaultText =  @"Name",
+					  						HelpTextCode =  "Name",
+					  						Code =  "Name",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
-					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
-					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
-					  						HelpTextCode =  "Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -250,7 +254,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "CreditCardType",
 					  						FieldsDataType =  "Text",
-					  						Code =  "SearchFields",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  1000,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -272,11 +276,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "CreditCardType",
 					  						ValidForQuerySection2 =  "CreditCardTypeFollowUp",
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -287,15 +290,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						HasTemplate =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  @"Search codes/ names",
+					  						HelpTextCode =  "SearchFields",
+					  						HelpTextDefaultText =  @"Searching by :\n1: code\n2: name",
+					  						Code =  "SearchFields",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
-					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search codes/ names",
-					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -306,7 +312,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "InActive",
 					  						ObjectTableName =  "CreditCardType",
 					  						FieldsDataType =  "Boolean",
-					  						Code =  "InActive",
+					  						DataTypeCode =  "Boolean",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -330,10 +336,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "CreditCardType",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "CreditCardType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -344,16 +349,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						HasTemplate =  false,
+					  						FullFieldLable =  "InActive",
+					  						DefaultText =  @"InActive",
+					  						ListFieldLable =  "InActiveListLable",
+					  						ListLableDefaultText =  @"InActive",
+					  						HelpTextCode =  "InActive",
+					  						Code =  "InActive",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
-					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "InActive",
-					  						DefaultText =  "InActive",
-					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  "InActive",
-					  						HelpTextCode =  "InActive",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -408,7 +416,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BankAccountId",
-					  						DefaultText =  "Bank Account",
+					  						DefaultText =  @"Bank Account",
 					  						HelpTextCode =  "BankAccountId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -418,7 +426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup CreditCardTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CCTP", Name = "Credit Card Types" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -433,7 +441,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCreditCardTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CreditCardTypeTextCode_0.Id, Code = "All Credit Card Types",  QueryGroupCode = "CCTP", IndexOrder = 0, Tenant = 0, ObjectTableId = CreditCardTypeObjectTable.Id, QuerySection = "CreditCardType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CreditCardTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllCreditCardTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CreditCardTypeTextCode_0.Id, Code = "All Credit Card Types",  QueryGroupCode = "CCTP", IndexOrder = 0, Tenant = 0, ObjectTableId = CreditCardTypeObjectTable.Id, QuerySection = "CreditCardType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CreditCardTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllCreditCardTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id, IndexOrder = 0, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -473,8 +481,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable CreditCardTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CreditCardType" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable CreditCardTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CreditCardType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CreditCardTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature CreditCardTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -484,12 +493,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   Feature CreditCardTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CCGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CreditCardTypeObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "CreditCardType.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CCGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CreditCardTypeGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CreditCardTypeObjectTable.Id, TabNameTextCodeId = CreditCardTypeGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CreditCardTypeObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "CreditCardType.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CreditCardTypeEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CreditCardTypeObjectTable.Id, TabNameTextCodeId = CreditCardTypeEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -548,7 +557,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

@@ -758,7 +758,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 Join_AccountIdList(qGLAccIdByCollectorId);
 
             }
+            if (!String.IsNullOrWhiteSpace(_Param.SalesmanId))
+            {
 
+                var qSalesmanUserId = _myGLAccountQueryService.GetQGLAccIdBySalesmanId(_Param.Tenant, _Param.SalesmanId, GetAccountType(_Param.Aging4AccountTypeCode));
+                Join_AccountIdList(qSalesmanUserId);
+
+            }
+            
 
             if (_MainAccountIdList_ToFetchThenAggragrate == null)//Bug 42372: Reco - Problem with Code (MaxAmount)
             {
@@ -951,7 +958,7 @@ Period	Acc	Currency	Total
             }
             if (!String.IsNullOrWhiteSpace(_Param.SalesmanId))
             {
-                throw new Exception("Sorry ,Salesman ?!?!?!  What 2do==" + _Param.SalesmanId);
+                ///throw new Exception("Sorry ,Salesman ?!?!?!  What 2do==" + _Param.SalesmanId);
             }
             if (this._Param.Aging4AccountTypeCode == AgingReportParam.Aging4AccountTypeCodeEnum.ControlAccountOnly1)
             {

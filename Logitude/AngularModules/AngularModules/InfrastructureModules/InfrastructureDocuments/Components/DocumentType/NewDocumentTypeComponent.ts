@@ -104,8 +104,17 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
                 case "PaymentCheque":
                 case "WarehouseRelease":
                 case "TaxReport":
-                {
-                        
+                case"TaxDeductionReport":
+                case "Airline":
+                case "CustomAgent":
+                case "Participant":
+                case "ShippingAgent":
+                case "ShippingLine":
+                case "Trucker":
+                case "Vendor":
+                case "Warehouse":
+                case "OpenFormatReport":
+                {                        
                     if (tempList.filter(f => f.Name == item.Name).length == 0) {
                         tempList.push(item);
                     }
@@ -210,8 +219,8 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
 
     public ValidationErrorsList: string[];
     SaveButtonClicked() {
-   
-
+        
+      
              this.ValidationErrorsList = [];
              var errorsArray = this.validator.Validate("DocumentType", this.NewDocumentTypePM);
              if (errorsArray.length > 0) {

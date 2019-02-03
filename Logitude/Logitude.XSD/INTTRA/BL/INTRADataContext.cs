@@ -32,6 +32,8 @@ namespace Logitude.XSD.INTTRA.BL
         public string ShipmentId { get; set; }
         public bool IsValid { get; set; }
         public bool IsLimited { get; set; }
+        public bool IsDemoTenant { get; set; }
+        public bool IsStockPrepaid { get; set; }
         public bool IsGroupageEntity { get; set; }
         public bool IsCarrierRegisteredToINTTRA { get; set; }
         public bool IsCarrierRegisteredToBranch { get; set; }
@@ -56,7 +58,7 @@ namespace Logitude.XSD.INTTRA.BL
         public string INTTRA_OutSettingsId { get; set; }
         private Tenant TenantObject;
         private Address TenantAddress;
-        private Port FromPort;
+        public Port FromPort;
         private Port FinalPort;
         private Branch Branch;
         private MoveType MoveType;
@@ -64,13 +66,14 @@ namespace Logitude.XSD.INTTRA.BL
         private Contact LoggedContact;
         private Contact BranchContact;
         private Contact EmergencyContact;
-        private Country FromPortCountry;
+        public Country FromPortCountry;
         private Country FinalPortCountry;
         private Vessel MainVessel;
-        private ShippingLine MainShippingLine;
-        private List<ShipmentPackage> ShipmentPackages = new List<ShipmentPackage>();
+        public ShippingLine MainShippingLine;
+        public List<ShipmentPackage> ShipmentPackages = new List<ShipmentPackage>();
         private List<InsideShipmentPackage> InsidePackages = new List<InsideShipmentPackage>();
-        private IShipmentsContext shipmentContext;
+        private List<ShipmentPackageHarmonize> AllHarmonizes = new List<ShipmentPackageHarmonize>();
+        public IShipmentsContext shipmentContext;
         public ShipmentRepository shipmentRepository;
         private ShipmentMasterDataRepository shipmentMasterDataRepository;
         private void GetObjects()
@@ -82,63 +85,6 @@ namespace Logitude.XSD.INTTRA.BL
             this.Shipment = shipmentRepository.GetSingleShipment(ShipmentId, Tenant);
             this.MasterData = shipmentMasterDataRepository.GetSingleMasterData(Shipment.MasterShipmentDataId);
 
-            if (!string.IsNullOrEmpty(this.Shipment.INTTRASIStatusCode))
-            {
-                if (this.Shipment.INTTRASIStatusCode != "NSEN" && this.Shipment.INTTRASIStatusCode != "RJIN")
-                {
-                    TenantManagement tenantManagement = null;
-                    List<TenantManagementLicense> Licenses = new List<TenantManagementLicense>();
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    {
-                        IGlobalContext globalContext= GlobalContext.GetContext();
-
-                        TenantManagementRepository tenantManagementRepository = new TenantManagementRepository(globalContext);
-                        tenantManagement = tenantManagementRepository.GetSingleTenantManagement(Tenant);
-
-                        if(tenantManagement != null)
-                        {
-                            if (tenantManagement.IsMultiPackage)
-                            {
-                                Licenses = (from d in globalContext.TenantManagementLicenses where d.Tenant == Tenant select d).ToList();
-                            }
-                        }
-
-                        scope.Complete();
-                    }
-
-                    bool isDevelopment = false;
-                    if (tenantManagement != null)
-                    {
-                        if (tenantManagement.IsMultiPackage)
-                        {
-                            List<string> myGroupedList = (from d in Licenses
-                                                          group d by d.PackageCode into g
-                                                          select g.Key).ToList();
-
-                            if (myGroupedList.Count == 1)
-                            {
-                                if (myGroupedList[0] == "DVMT")
-                                {
-                                    isDevelopment = true;
-                                }
-                            }
-                        }
-
-                        else
-                        {
-                            if (tenantManagement.PackageCode == "DVMT")
-                            {
-                                isDevelopment = true;
-                            }
-                        }
-                    }
-
-                    if (!isDevelopment)
-                    {
-                        this.IsLimited = true;
-                    }
-                }
-            }
 
             if (!string.IsNullOrEmpty(this.Shipment.ShipmentTypeId))
             {
@@ -148,6 +94,7 @@ namespace Logitude.XSD.INTTRA.BL
                 }
             }
 
+            this.GetGlobalVariables();
             this.GetObjects_Tenant();
             this.GetObjects_Branch();
             this.GetObjects_MoveType();
@@ -160,6 +107,76 @@ namespace Logitude.XSD.INTTRA.BL
 
             this.IsValid = this.Errors.Count == 0 ? true : false;
         }
+        private void GetGlobalVariables()
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                IGlobalContext globalContext = GlobalContext.GetContext();
+                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository(globalContext);
+
+                bool isINTTRAOnlyDemo = false;
+                TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(Tenant);
+                if (tenantManagement != null)
+                {
+                    isINTTRAOnlyDemo = tenantManagement.IsINTTRAOnlyDemo;
+                    this.IsStockPrepaid = tenantManagement.IsINTTRAStockPrepaid;
+
+                    if (!string.IsNullOrEmpty(this.Shipment.INTTRASIStatusCode))
+                    {
+                        if (this.Shipment.INTTRASIStatusCode != "NSEN" && this.Shipment.INTTRASIStatusCode != "RJIN")
+                        {
+                            List<TenantManagementLicense> Licenses = new List<TenantManagementLicense>();
+
+                            if (tenantManagement.IsMultiPackage)
+                            {
+                                Licenses = (from d in globalContext.TenantManagementLicenses where d.Tenant == Tenant select d).ToList();
+                            }
+                           
+                            bool isDevelopment = false;
+                            if (tenantManagement != null)
+                            {
+                                if (tenantManagement.IsMultiPackage)
+                                {
+                                    List<string> myGroupedList = (from d in Licenses
+                                                                  group d by d.PackageCode into g
+                                                                  select g.Key).ToList();
+
+                                    if (myGroupedList.Count == 1)
+                                    {
+                                        if (myGroupedList[0] == "DVMT")
+                                        {
+                                            isDevelopment = true;
+                                        }
+                                    }
+                                }
+
+                                else
+                                {
+                                    if (tenantManagement.PackageCode == "DVMT")
+                                    {
+                                        isDevelopment = true;
+                                    }
+                                }
+                            }
+
+                            if (!isDevelopment)
+                            {
+                                this.IsLimited = true;
+                            }
+                        }
+                    }
+
+                }
+
+                if (Tenant == 65 || isINTTRAOnlyDemo)
+                {
+                    this.IsDemoTenant = true;
+                }
+
+                scope.Complete();
+            }
+        }
+
         private void GetObjects_Tenant()
         {
             this.TenantObject = (from d in CommonContext.Tenants where d.Id == this.Tenant select d).FirstOrDefault();
@@ -286,7 +303,7 @@ namespace Logitude.XSD.INTTRA.BL
                                 }
 
                             default:
-                                {
+                                 {
                                     this.Errors.Add("Illegal value in move type");
                                     break;
                                 }
@@ -353,7 +370,6 @@ namespace Logitude.XSD.INTTRA.BL
                 this.Errors.Add("Only allowed for Ocean FCL shipments");
             }
 
-
             if (this.Shipment.ShipperId == null)
             {
                 this.Errors.Add("Shipper is required");
@@ -372,6 +388,11 @@ namespace Logitude.XSD.INTTRA.BL
             if (this.Shipment.FreightPrepaidCollectId == null)
             {
                 this.Errors.Add("Freight Prepaid Collect is required");
+            }
+
+            if (this.Shipment.BasicFreightId == null)
+            {
+                this.Errors.Add("Basic Freight is required");
             }
 
             if (this.MasterData.MainCarriageVesselId == null)
@@ -477,10 +498,37 @@ namespace Logitude.XSD.INTTRA.BL
                                        && ShipmentPackagesIds.Contains(d.ShipmentPackageId)
                                        select d).ToList();
 
+                this.AllHarmonizes = (from d in shipmentContext.ShipmentPackageHarmonizes
+                                      where d.Tenant == this.Tenant
+                                      && ShipmentPackagesIds.Contains(d.PackageId)
+                                      select d).ToList();
+
                 bool allContainersHasInsides = true;
 
                 foreach (ShipmentPackage item in this.ShipmentPackages)
                 {
+                    if (item.IsMultiHarmonize)
+                    {
+                        foreach (ShipmentPackageHarmonize itemHarmonize in this.AllHarmonizes)
+                        {
+                            if (itemHarmonize.Harmonize.Length > 35)
+                            {
+                                this.Errors.Add("Harmonize Field max length must be 35");
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(item.Harmonize))
+                        {
+                            if (item.Harmonize.Length > 35)
+                            {
+                                this.Errors.Add("Harmonize Field max length must be 35");
+                            }
+                        }
+                    }
+
                     if (item.IsDangerous)
                     {
                         if (string.IsNullOrEmpty(item.IMDGCode))
@@ -545,7 +593,8 @@ namespace Logitude.XSD.INTTRA.BL
         private Address ConsigneeAddress;
         private Address Notify1Address;
         private Address Notify2Address;
-        private Address FreightForwarderAddress;        
+        private Address FreightForwarderAddress;
+        private Address FreightPayerAddress;        
         private void GetObjects_Partners()
         {
             if (!string.IsNullOrEmpty(this.Shipment.ShipperAddressId))
@@ -636,6 +685,27 @@ namespace Logitude.XSD.INTTRA.BL
                     }
                 }
             }
+
+            if (this.Shipment.FreightPayerId != null)
+            {
+                if (string.IsNullOrEmpty(this.Shipment.FreightPayerAddressId))
+                {
+                    this.Errors.Add("Freight Payer Address required");
+                }
+
+                else
+                {
+                    this.FreightPayerAddress = (from d in CommonContext.Addresses where d.Id == this.Shipment.FreightPayerAddressId select d).FirstOrDefault();
+
+                    if (this.FreightPayerAddress != null)
+                    {
+                        if (string.IsNullOrEmpty(this.FreightPayerAddress.Address1) && string.IsNullOrEmpty(this.FreightPayerAddress.Address2))
+                        {
+                            this.Errors.Add("Freight Payer Address 1 or Address 2 is required");
+                        }
+                    }
+                }
+            }
         }
 
         public System.DateTime TodayDate { get; set; }
@@ -667,8 +737,8 @@ namespace Logitude.XSD.INTTRA.BL
         }
 
         // Message Header
-        private INTTRA_Out.PartnerInformation Sender;
-        private INTTRA_Out.PartnerInformation Recipient;
+        public INTTRA_Out.PartnerInformation Sender;
+        public INTTRA_Out.PartnerInformation Recipient;
         public List<INTTRA_Out.PartnerInformation> MessageHeaderParties;
         private void BuildMessageHeader()
         {
@@ -790,12 +860,57 @@ namespace Logitude.XSD.INTTRA.BL
         {
             this.ChargeCategories = new List<INTTRA_Out.ChargeCategory>();
 
-            if (this.Shipment.FreightPrepaidCollectId != null)
+            //if (this.Shipment.FreightPrepaidCollectId != null)
+            //{
+            //    INTTRA_Out.ChargeCategory item = new INTTRA_Out.ChargeCategory()
+            //    {
+            //        ChargeType = INTTRA_Out.ChargeCategoryChargeType.BasicFreight,
+            //        PrepaidorCollectIndicator = this.Shipment.FreightPrepaidCollectId.ToUpper() == "P" ? INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Prepaid : INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Collect,
+            //    };
+
+            //    this.ChargeCategories.Add(item);
+            //}
+
+
+            if (this.Shipment.BasicFreightId != null)
             {
                 INTTRA_Out.ChargeCategory item = new INTTRA_Out.ChargeCategory()
                 {
                     ChargeType = INTTRA_Out.ChargeCategoryChargeType.BasicFreight,
-                    PrepaidorCollectIndicator = this.Shipment.FreightPrepaidCollectId.ToUpper() == "P" ? INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Prepaid : INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Collect,
+                    PrepaidorCollectIndicator = this.Shipment.BasicFreightId.ToUpper() == "P" ? INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Prepaid : INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Collect,
+                };
+
+                this.ChargeCategories.Add(item);
+            }
+
+            if (this.Shipment.DestinationPortChargesId != null)
+            {
+                INTTRA_Out.ChargeCategory item = new INTTRA_Out.ChargeCategory()
+                {
+                    ChargeType = INTTRA_Out.ChargeCategoryChargeType.DestinationPortCharges,
+                    PrepaidorCollectIndicator = this.Shipment.DestinationPortChargesId.ToUpper() == "P" ? INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Prepaid : INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Collect,
+                };
+
+                this.ChargeCategories.Add(item);
+            }
+
+            if (this.Shipment.DestinationHaulageChargesId != null)
+            {
+                INTTRA_Out.ChargeCategory item = new INTTRA_Out.ChargeCategory()
+                {
+                    ChargeType = INTTRA_Out.ChargeCategoryChargeType.DestinationHaulageCharges,
+                    PrepaidorCollectIndicator = this.Shipment.DestinationHaulageChargesId.ToUpper() == "P" ? INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Prepaid : INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Collect,
+                };
+
+                this.ChargeCategories.Add(item);
+            }
+
+            if (this.Shipment.AdditionalChargesId != null)
+            {
+                INTTRA_Out.ChargeCategory item = new INTTRA_Out.ChargeCategory()
+                {
+                    ChargeType = INTTRA_Out.ChargeCategoryChargeType.AdditionalCharges,
+                    PrepaidorCollectIndicator = this.Shipment.AdditionalChargesId.ToUpper() == "P" ? INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Prepaid : INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Collect,
                 };
 
                 this.ChargeCategories.Add(item);
@@ -1179,11 +1294,13 @@ namespace Logitude.XSD.INTTRA.BL
                             Documents = new INTTRA_Out.Documents()
                             {
                                 Freighted = this.Shipment.INTTRAIsFreighted ? INTTRA_Out.DocumentsFreighted.True : INTTRA_Out.DocumentsFreighted.False,
-                                //DocumentType = DocumentsDocumentType.
                             },
-
-                            Quantity = this.Shipment.INTTRADocumentQTY.ToString(),
                         };
+
+                        if (this.Shipment.INTTRADocumentQTY != null)
+                        {
+                            listItem.Quantity = this.Shipment.INTTRADocumentQTY.ToString();
+                        }
 
                         switch (myDocumentType.Code)
                         {
@@ -1362,50 +1479,72 @@ namespace Logitude.XSD.INTTRA.BL
             #endregion
 
             #region FreightPayer
-            if (this.Shipment.FreightPrepaidCollectId != null)
+            if (this.Shipment.FreightPayerId != null)
             {
-                if (this.Shipment.FreightPrepaidCollectId.ToUpper() == "P")
+                Card myCard = (from d in CommonContext.Cards where d.Id == this.Shipment.FreightPayerId select d).FirstOrDefault();
+                if (myCard != null)
                 {
-                    if (this.Shipper != null)
+                    INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
                     {
-                        INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
-                        {
-                            PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightPayer,
-                            PartnerName = this.GetStringList(this.Shipper.EnglishName, 2, 35).ToArray<string>(),
-                        };
+                        PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightPayer,
+                        PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                    };
 
-                        if (this.ShipperAddress != null)
-                        {
-                            item.AddressInformation = this.GetAddressInformation(this.ShipperAddress);
-                        }
+                   Address FreightPayerAddress = (from d in CommonContext.Addresses where d.Id == this.Shipment.FreightPayerAddressId select d).FirstOrDefault();
 
-                        this.MessagePropertiesParties.Add(item);
-                    }
-                }
-
-                else if (this.Shipment.FreightPrepaidCollectId.ToUpper() == "C")
-                {
-                    if (this.Shipment.AgentId != null)
+                    if (FreightPayerAddress != null)
                     {
-                        Card myCard = (from d in CommonContext.Cards where d.Id == this.Shipment.AgentId select d).FirstOrDefault();
-                        if (myCard != null)
-                        {
-                            INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
-                            {
-                                PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightPayer,
-                                PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
-                            };
-
-                            if (this.AgentAddress != null)
-                            {
-                                item.AddressInformation = this.GetAddressInformation(this.AgentAddress);
-                            }
-
-                            this.MessagePropertiesParties.Add(item);
-                        }
+                        item.AddressInformation = this.GetAddressInformation(FreightPayerAddress);
                     }
+
+                    this.MessagePropertiesParties.Add(item);
                 }
             }
+
+            //if (this.Shipment.FreightPrepaidCollectId != null)
+            //{
+            //    if (this.Shipment.FreightPrepaidCollectId.ToUpper() == "P")
+            //    {
+            //        if (this.Shipper != null)
+            //        {
+            //            INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+            //            {
+            //                PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightPayer,
+            //                PartnerName = this.GetStringList(this.Shipper.EnglishName, 2, 35).ToArray<string>(),
+            //            };
+
+            //            if (this.ShipperAddress != null)
+            //            {
+            //                item.AddressInformation = this.GetAddressInformation(this.ShipperAddress);
+            //            }
+
+            //            this.MessagePropertiesParties.Add(item);
+            //        }
+            //    }
+
+            //    else if (this.Shipment.FreightPrepaidCollectId.ToUpper() == "C")
+            //    {
+            //        if (this.Shipment.AgentId != null)
+            //        {
+            //            Card myCard = (from d in CommonContext.Cards where d.Id == this.Shipment.AgentId select d).FirstOrDefault();
+            //            if (myCard != null)
+            //            {
+            //                INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+            //                {
+            //                    PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightPayer,
+            //                    PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+            //                };
+
+            //                if (this.AgentAddress != null)
+            //                {
+            //                    item.AddressInformation = this.GetAddressInformation(this.AgentAddress);
+            //                }
+
+            //                this.MessagePropertiesParties.Add(item);
+            //            }
+            //        }
+            //    }
+            //}
             #endregion
 
             #region MessageRecipient
@@ -1681,6 +1820,49 @@ namespace Logitude.XSD.INTTRA.BL
 
                         list.Add(itemDescription);
 
+                        if (myShipmentPackage.IsMultiHarmonize)
+                        {
+                            List<ShipmentPackageHarmonize> iHarmonizes = this.AllHarmonizes.Where(d => d.PackageId == myShipmentPackage.Id).ToList();
+
+                            if (iHarmonizes.Count > 0)
+                            {
+                                string iHarmonizeDescription = null;
+
+                                foreach (ShipmentPackageHarmonize itemHarmonize in iHarmonizes)
+                                {
+                                    if (iHarmonizeDescription == null)
+                                    {
+                                        iHarmonizeDescription = "HS Code: " + itemHarmonize.Harmonize;
+                                    }
+
+                                    else
+                                    {
+                                        iHarmonizeDescription += ", " + itemHarmonize.Harmonize;
+                                    }
+                                }
+
+                                list.Add(new INTTRA_Out.PackageDetailComments()
+                                {
+                                    CommentType = INTTRA_Out.PackageDetailCommentsCommentType.GoodsDescription,
+                                    Value = iHarmonizeDescription,
+                                });
+                            }
+                        }
+
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(myShipmentPackage.Harmonize))
+                            {
+                                string iHarmonizeDescription = "HS Code: " + myShipmentPackage.Harmonize;
+
+                                list.Add(new INTTRA_Out.PackageDetailComments()
+                                {
+                                    CommentType = INTTRA_Out.PackageDetailCommentsCommentType.GoodsDescription,
+                                    Value = iHarmonizeDescription,
+                                });
+                            }
+                        }
+
                         itemGoodsDetails.PackageDetailComments = list.ToArray<INTTRA_Out.PackageDetailComments>();
                     }
 
@@ -1805,19 +1987,43 @@ namespace Logitude.XSD.INTTRA.BL
 
                         #endregion
                     }
-                    
-                    if (!string.IsNullOrEmpty(myShipmentPackage.Harmonize))
+
+                    if (myShipmentPackage.IsMultiHarmonize)
                     {
-                        INTTRA_Out.ProductId itemProductId = new INTTRA_Out.ProductId()
+                        List<ShipmentPackageHarmonize> iHarmonizes = this.AllHarmonizes.Where(d => d.PackageId == myShipmentPackage.Id).ToList();
+
+                        if (iHarmonizes.Count > 0)
                         {
-                            ItemTypeIdCode = INTTRA_Out.ProductIdItemTypeIdCode.HarmonizedSystem,
-                            Value = myShipmentPackage.Harmonize
-                        };
+                            List<INTTRA_Out.ProductId> list = new List<INTTRA_Out.ProductId>();
 
-                        List<INTTRA_Out.ProductId> list = new List<INTTRA_Out.ProductId>();
-                        list.Add(itemProductId);
+                            foreach (ShipmentPackageHarmonize itemHarmonize in iHarmonizes)
+                            {
+                                list.Add(new INTTRA_Out.ProductId()
+                                {
+                                    ItemTypeIdCode = INTTRA_Out.ProductIdItemTypeIdCode.HarmonizedSystem,
+                                    Value = itemHarmonize.Harmonize,
+                                });
+                            }
 
-                        itemGoodsDetails.ProductId = list.ToArray<INTTRA_Out.ProductId>();
+                            itemGoodsDetails.ProductId = list.ToArray<INTTRA_Out.ProductId>();
+                        }
+                    }
+
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(myShipmentPackage.Harmonize))
+                        {
+                            INTTRA_Out.ProductId itemProductId = new INTTRA_Out.ProductId()
+                            {
+                                ItemTypeIdCode = INTTRA_Out.ProductIdItemTypeIdCode.HarmonizedSystem,
+                                Value = myShipmentPackage.Harmonize
+                            };
+
+                            List<INTTRA_Out.ProductId> list = new List<INTTRA_Out.ProductId>();
+                            list.Add(itemProductId);
+
+                            itemGoodsDetails.ProductId = list.ToArray<INTTRA_Out.ProductId>();
+                        }
                     }
 
                     if (!string.IsNullOrEmpty(myShipmentPackage.MarksAndNumbers))
@@ -1990,9 +2196,11 @@ namespace Logitude.XSD.INTTRA.BL
 
             if (myAddress != null)
             {
+                string iCountryName = null;
+
                 myResult = new INTTRA_Out.AddressInformation()
                 {
-                    AddressLine = this.GetStringList(myAddress.Address1, 4, 35).ToArray<string>(),
+                    //AddressLine = this.GetStringList(myAddress.Address1, 4, 35).ToArray<string>(),
                     City = this.FormatString(myAddress.City, 35),                     
                 };
 
@@ -2012,6 +2220,7 @@ namespace Logitude.XSD.INTTRA.BL
                     if (myCountry != null)
                     {
                         myResult.CountryCode = myCountry.Code;
+                        iCountryName = myCountry.EnglishName;
                     }
                 }
 
@@ -2023,6 +2232,61 @@ namespace Logitude.XSD.INTTRA.BL
                         myResult.StateProvince = this.FormatString(myState.EnglishName, 9);
                     }
                 }
+
+                List<string> AddressLines = new List<string>();
+
+                if (!string.IsNullOrEmpty(myAddress.Address1))
+                {
+                    if (AddressLines.Count < 4)
+                    {
+                        AddressLines.Add(this.FormatString(myAddress.Address1, 35));
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(myAddress.Address2))
+                {
+                    if (AddressLines.Count < 4)
+                    {
+                        AddressLines.Add(this.FormatString(myAddress.Address2, 35));
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(myAddress.City) || !string.IsNullOrEmpty(myAddress.ZipCode))
+                {
+                    if (AddressLines.Count < 4)
+                    {
+                        string iField = myAddress.City;
+
+                        if (!string.IsNullOrEmpty(myAddress.ZipCode))
+                        {
+                            iField += "," + myAddress.ZipCode;
+                        }
+
+                        AddressLines.Add(this.FormatString(iField, 35));
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(iCountryName))
+                {
+                    if (AddressLines.Count < 4)
+                    {
+                        AddressLines.Add(this.FormatString(iCountryName, 35));
+                    }
+                }
+
+
+
+                myResult.AddressLine = AddressLines.ToArray<string>();
+
+
+
+
+
+
+
+                //string iAddressString = this.GetAddress_OneLine(myAddress);
+
+                //myResult.AddressLine = this.GetStringList(iAddressString, 4, 35).ToArray<string>();
             }
 
             return myResult;
@@ -2150,13 +2414,13 @@ namespace Logitude.XSD.INTTRA.BL
 
                     case INTTRAPattern.Text:
                         {
-                            myFormat = @"[^a-zA-Z0-9\-\. ]*";
+                            myFormat = @"[^a-zA-Z0-9\-\,\. ]*";
                             break;
                         }
 
                     default:
                         {
-                            myFormat = @"[^a-zA-Z0-9\-\. ]*";
+                            myFormat = @"[^a-zA-Z0-9\-\,\. ]*";
                             break;
                         }
                 }
@@ -2187,6 +2451,50 @@ namespace Logitude.XSD.INTTRA.BL
             }
 
             return myResult;
+        }
+        private string GetAddress_OneLine(Address address)
+        {
+            string resultAddress = "";
+
+            if (address != null)
+            {
+                resultAddress = address.Address1 != null ? address.Address1 : "";
+
+                if (!string.IsNullOrEmpty(address.Address2))
+                {
+                    resultAddress = resultAddress + ", " + address.Address2;
+                }
+
+                if (!string.IsNullOrEmpty(address.City))
+                {
+                    resultAddress = resultAddress + ", " + address.City;
+                }
+
+                if (address.State != null)
+                {
+                    resultAddress = resultAddress + ", " + (address.State.Code != null ? address.State.Code : "");
+                }
+
+                if (!string.IsNullOrEmpty(address.ZipCode))
+                {
+                    resultAddress = resultAddress + ", " + address.ZipCode;
+                }
+
+                if (address.Country != null)
+                {
+                    if (address.IsLocalLanguage)
+                    {
+                        resultAddress = resultAddress + ", " + address.Country.LocalName;
+                    }
+
+                    else
+                    {
+                        resultAddress = resultAddress + ", " + address.Country.EnglishName;
+                    }
+                }
+            }
+
+            return resultAddress;
         }
 
         public enum INTTRAPattern

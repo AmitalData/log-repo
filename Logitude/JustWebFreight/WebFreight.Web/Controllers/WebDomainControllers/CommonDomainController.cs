@@ -1,5 +1,7 @@
 ﻿
 using Dropbox.Api;
+using iTextSharp.text.pdf;
+using iTextSharp.text.pdf.security;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -41,6 +43,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,6 +51,7 @@ using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using System.Xml;
 using WebFreight.Web.AccountingModel.DomainServices;
 using WebFreight.Web.BookingModel.DomainServices;
 using WebFreight.Web.CommonDataModel.DomainServices;
@@ -163,6 +167,226 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetBlueSnapToken(string VaultedShopperId)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    if (VaultedShopperId == "undefined")
+                        VaultedShopperId = null;
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    string loggedUserEmail = authToken.Email;
+                    int tenant = authToken.Tenant;
+                    string myResult=null;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    if(!String.IsNullOrEmpty(VaultedShopperId))
+                    {                 
+                        HttpClient client = new HttpClient();
+                        client.BaseAddress = new Uri("https://ws.bluesnap.com/services/2/tools/auth-token");
+                        ServicePointManager.Expect100Continue = true;
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                        client.DefaultRequestHeaders.Accept.Add(
+                        new MediaTypeWithQualityHeaderValue("application/xml"));
+
+                        string authInfo = "API_15408257301181065689979" + ":" + "BlueSand123";
+                        authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+
+                        var request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/auth-token?shopperId=" + VaultedShopperId + "&expirationInMinutes=120");
+                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15408257301181065689979:BlueSand123"));
+                        try
+                        {
+                            var response2 = request.GetResponse();
+
+                            string strResponse = "";
+                            using (var sr = new StreamReader(response2.GetResponseStream()))
+                            {
+                                strResponse = sr.ReadToEnd();
+
+                            }
+
+                            XmlDocument doc = new XmlDocument();
+                            doc.LoadXml(strResponse);
+
+
+                            myResult = doc.InnerText;
+
+                        }
+                        catch (Exception EX1)
+                        {
+
+                             authInfo = "API_15416735830591484092606" + ":" + "BlueSand123";
+                            authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+
+                            //like this:
+                             request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/auth-token?shopperId=" + VaultedShopperId + "&expirationInMinutes=120");
+                            request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15416735830591484092606:BlueSand123"));
+                            try
+                            {
+                                var response2 = request.GetResponse();
+
+                                string strResponse = "";
+                                using (var sr = new StreamReader(response2.GetResponseStream()))
+                                {
+                                    strResponse = sr.ReadToEnd();
+
+                                }
+
+                                XmlDocument doc = new XmlDocument();
+                                doc.LoadXml(strResponse);
+
+
+                               myResult = doc.InnerText;
+
+                            }
+                            catch (Exception EX2)
+                            {
+                                myResult = null;
+                            }
+
+                        }
+
+                    }
+
+
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
+        public HttpResponseMessage GetBlueSnapSecretToken(string VaultedShopperId)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    if (VaultedShopperId == "undefined")
+                        VaultedShopperId = null;
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    string loggedUserEmail = authToken.Email;
+                    int tenant = authToken.Tenant;
+                    string myResult = null;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    if (!String.IsNullOrEmpty(VaultedShopperId))
+                    {
+                        HttpClient client = new HttpClient();
+                        client.BaseAddress = new Uri("https://ws.bluesnap.com/services/2/tools/auth-token");
+                        ServicePointManager.Expect100Continue = true;
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                        client.DefaultRequestHeaders.Accept.Add(
+                        new MediaTypeWithQualityHeaderValue("application/xml"));
+
+                        string authInfo = "API_15408257301181065689979" + ":" + "BlueSand123";
+                        authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+
+
+
+                        string xml = @"<param-encryption xmlns='http://ws.plimus.com'><parameters><parameter><param-key>shopperId</param-key><param-value>"+VaultedShopperId+"</param-value></parameter><parameter><param-key>expirationInMinutes</param-key><param-value>300</param-value></parameter><parameter><param-key>pageName</param-key><param-value>AUTO_LOGIN_PAGE</param-value></parameter></parameters></param-encryption>";
+                        //like this:
+                        var request = WebRequest.Create("https://bluesnap.com/services/2/tools/param-encryption");
+                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15408257301181065689979:BlueSand123"));
+
+                        byte[] bytes;
+                        bytes = System.Text.Encoding.ASCII.GetBytes(xml);
+                        request.ContentType = "application/xml";
+                        request.ContentLength = bytes.Length;
+
+                        request.Method = "POST";
+                        Stream requestStream = request.GetRequestStream();
+                        requestStream.Write(bytes, 0, bytes.Length);
+                        requestStream.Close();
+                        try
+                        {
+                            var response2 = request.GetResponse();
+
+                            string strResponse = "";
+                            using (var sr = new StreamReader(response2.GetResponseStream()))
+                            {
+                                strResponse = sr.ReadToEnd();
+
+                            }
+
+                            XmlDocument doc = new XmlDocument();
+                            doc.LoadXml(strResponse);
+
+
+                            myResult = doc.InnerText;
+
+                        }
+                        catch (Exception EX1)
+                        {
+
+                            authInfo = "API_15416735830591484092606" + ":" + "BlueSand123";
+                            authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+
+                            //like this:
+                             request = WebRequest.Create("https://bluesnap.com/services/2/tools/param-encryption");
+                            request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15416735830591484092606:BlueSand123"));
+
+                            bytes =null;
+                            bytes = System.Text.Encoding.ASCII.GetBytes(xml);
+                            request.ContentType = "application/xml";
+                            request.ContentLength = bytes.Length;
+
+                            request.Method = "POST";
+                             requestStream = request.GetRequestStream();
+                            requestStream.Write(bytes, 0, bytes.Length);
+                            requestStream.Close();
+
+                            try
+                            {
+                                var response2 = request.GetResponse();
+
+                                string strResponse = "";
+                                using (var sr = new StreamReader(response2.GetResponseStream()))
+                                {
+                                    strResponse = sr.ReadToEnd();
+
+                                }
+
+                                XmlDocument doc = new XmlDocument();
+                                doc.LoadXml(strResponse);
+
+
+                                myResult = doc.InnerText;
+
+                            }
+                            catch (Exception EX2)
+                            {
+                                myResult = null;
+                            }
+
+                        }
+
+                    }
+
+
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
         public HttpResponseMessage GetPortCopyToCurrentTenant(string entityId)
         {
             try
@@ -1679,6 +1903,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         var entityId = summary.EntityId;
                         var entityNumber = summary.EntityNumber;
+
                         if (!string.IsNullOrEmpty(item.House))
                         {
                             entityId = item.House;
@@ -1713,6 +1938,34 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             SignRequestByUserEmail = loggedUserEmail,
                             DontAddToQueue = false,
                         };
+                        if (documentInPM.FileExtension != null && documentInPM.FileExtension.ToLower() == "pdf")
+                        {
+                            List<Dictionary<string, string>> signatures = new List<Dictionary<string, string>>();
+                            string message = "";
+                            bool success = this.GetSignatureMetadata(item.FileName, mybytearray, out signatures, out message);
+                            if (success)
+                            {
+                                string Signerslist = "";
+                                if (signatures.Count > 0)
+                                {
+                                    for (int i = 0; i < signatures.Count; i++)
+                                    {
+                                        try
+                                        {
+                                            Signerslist += signatures[i]["CN"] + ',';
+                                            Signerslist += "Vat: " + signatures[i]["O"] + ',';
+                                        }
+                                        catch (Exception exc)
+                                        {
+
+                                        }
+
+                                    }
+                                    documentInPM.SignersList = Signerslist.TrimEnd(',');
+                                    documentInPM.IsDigitallySigned = true;
+                                }
+                            }
+                        }
                         ShipmentRepository ShipmentRepo = new ShipmentRepository(tenant);
                         var myshipment = ShipmentRepo.GetSingleShipment(documentInPM.EntityId, tenant);
                         if (myshipment != null && string.IsNullOrEmpty(myshipment.ForwarderShipmentNumber))
@@ -1766,6 +2019,45 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        private bool GetSignatureMetadata(string filename, byte[] filedata, out List<Dictionary<string, string>> signatures, out string message)
+        {
+            signatures = new List<Dictionary<string, string>>();
+            message = "";
+            try
+            {
+                using (PdfReader reader = new PdfReader(filedata))
+                {
+                    AcroFields af = reader.AcroFields;
+                    var names = af.GetSignatureNames();
+                    for (int i = 0; i < names.Count; ++i)
+                    {
+                        Dictionary<string, string> metadata = new Dictionary<string, string>();
+                        String name = (string)names[i];
+                        PdfPKCS7 pk = af.VerifySignature(name);
+                        metadata.Add("SignDate", pk.SignDate.ToString("dd.MM.yyyy HH:mi.ss"));
+                        var subjectFields = CertificateInfo.GetSubjectFields(pk.SigningCertificate);
+                        List<string> mdlist = new List<string>() { "C", "CN", "SN", "T", "OU", "O", "GIVENNAME", "SURNAME", };
+                        if (subjectFields != null)
+                        {
+                            foreach (var md in mdlist)
+                            {
+                                string value = subjectFields.GetField(md);
+                                if (!string.IsNullOrEmpty(value))
+                                    metadata.Add(md, value);
+                            }
+                        }
+                        signatures.Add(metadata);
+                    }
+                }
+                return (true);
+            }
+            catch (Exception ex)
+            {
+                message = "Failed to get metadata from pdf file '" + filename + "'" + Environment.NewLine + ex.ToString();
+                return (false);
+            }
+        }
+
         public HttpResponseMessage GetLoggedTenantDB()
         {
             try
@@ -1795,19 +2087,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 string result = null;
-                var CachedData = LogitudeCacheManager.ServerCache.GetFromCache("ClientAppStatus_" + authToken.Email);
-                if (CachedData != null)
+                if (LogitudeCacheManager.ServerCache != null)
                 {
-                    var data = JsonConvert.DeserializeObject<StatusData>(CachedData);
-                    if (data != null && data.IsActive == true && data.IsLogged == true && data.IsValidCert == true)
+                    var CachedData = LogitudeCacheManager.ServerCache.GetFromCache("ClientAppStatus_" + authToken.Email);
+                    if (CachedData != null)
                     {
+                        var data = JsonConvert.DeserializeObject<StatusData>(CachedData);
+                        if (data != null && data.IsActive == true && data.IsLogged == true && data.IsValidCert == true)
+                        {
 
-                    }
-                    else // if (data == null || !data.IsActive || !data.IsLogged || !data.IsValidCert)
-                    {
-                        result = "error";
+                        }
+                        else // if (data == null || !data.IsActive || !data.IsLogged || !data.IsValidCert)
+                        {
+                            result = "error";
+                        }
                     }
                 }
+                
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)

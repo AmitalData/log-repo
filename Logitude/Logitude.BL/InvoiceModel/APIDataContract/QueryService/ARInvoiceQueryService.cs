@@ -24,6 +24,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 foreach(ARInvoiceLinePM item in entity.InvoiceLines)
                 {
                     item.EntityId = shipmentId;
+                    
                 }
             }
         }
@@ -173,7 +174,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 if (MyEntity.InvoiceLines != null && MyEntity.InvoiceLines.Count > 0)
                 {
                     ARInvoiceLineQueryService ARInvoiceLineService9 = new ARInvoiceLineQueryService(Tenant);
-                    temp.ARInvoiceLines = ARInvoiceLineService9.ARInvoiceLineDataMapping(MyEntity.InvoiceLines, Tenant);
+                    temp.ARInvoiceLines = ARInvoiceLineService9.ARInvoiceLineCustomDataMapping(MyEntity,MyEntity.InvoiceLines, Tenant);
                 }
 
 

@@ -46,6 +46,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public DateTime? LastLoginDate { get; set; }
         public string AirlineAccountNumber { get; set; }
 
+
         public string ContactId { get; set; }
         public string MainAddressId { get; set; }        
         public string PickAddressId { get; set; }

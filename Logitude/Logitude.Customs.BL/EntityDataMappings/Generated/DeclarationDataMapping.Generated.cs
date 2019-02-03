@@ -124,7 +124,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         MamanErrorXml, 
 	         ItemsProcessTypesList, 
 	         IsClose, 
-	         CourierSuspentionCode,
+	         CourierSuspentionCode, 
+	         DepositionStatusCode,
 	      }
 
 
@@ -283,7 +284,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         MamanStatusName, 
 	         AcceptanceStatusName, 
 	         CourierSuspentionCode, 
-	         CourierSuspentionName,
+	         CourierSuspentionName, 
+	         DepositionStatusCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -800,6 +802,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierSuspentionCode))
             {
 				entityPOCO.CourierSuspentionCode = entityPM.CourierSuspentionCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositionStatusCode))
+            {
+				entityPOCO.DepositionStatusCode = entityPM.DepositionStatusCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1323,6 +1330,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CourierSuspentionCode = entityPOCO.CourierSuspentionCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DepositionStatusCode))
+            {
+					entityPM.DepositionStatusCode = entityPOCO.DepositionStatusCode;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -1837,6 +1849,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierSuspentionCode))
             {
                 oldEntityPM.CourierSuspentionCode = entityPM.CourierSuspentionCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositionStatusCode))
+            {
+                oldEntityPM.DepositionStatusCode = entityPM.DepositionStatusCode;
             }
 			
 		}

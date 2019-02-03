@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -563,6 +563,7 @@ export class AWBPackagesTabComponent extends BaseComponent {
         });
 
         if (!AppTool.IsNullOrEmpty(input)) {
+            input = AppTool.Replace(input, ",", "");
             valueInserted = Number(input);
         }
 
@@ -580,6 +581,7 @@ export class AWBPackagesTabComponent extends BaseComponent {
         valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
 
         if (!AppTool.IsNullOrEmpty(input)) {
+            input = AppTool.Replace(input, ",", "");
             valueInserted = Number(input);
         }
 
@@ -906,11 +908,11 @@ export class AWBWizardPackageItem extends BaseComponent {
         }
     }
 
-    OnGrossWeightLostFocus(input: number) {
+    OnGrossWeightLostFocus(input1: number) {
         if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
             if (this.Width == null || this.Height == null || this.Length == null) {
                 this.EntityPM.VolumetricWeight = AppTool.GetWeightFromWeight(this.ShipmentPM.GrossWeightUnitCode, this.ShipmentPM.ChargeableWeightUnitCode, this.EntityPM.Weight);
-                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.Weight, this.ShipmentPM.Ratio);
+                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.ShipmentPM.Ratio);
 
                 this.SetUIProperties();
                 this.fatherComponent.ResetTotalEditedValues();

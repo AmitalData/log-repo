@@ -41,7 +41,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Reference2, 
 	         Reference3, 
 	         Notes, 
-	         ExternalOpenAmount,
+	         ExternalOpenAmount, 
+	         ExternalReconcileNumber, 
+	         IsExternalReconcile,
 	      }
 
 
@@ -81,7 +83,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ActionTypeCode, 
 	         ExternalOpenAmount, 
 	         IsCreditAccountMulti, 
-	         IsDebitAccountMulti,
+	         IsDebitAccountMulti, 
+	         ExternalReconcileNumber, 
+	         IsExternalReconcile,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -178,6 +182,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalOpenAmount))
             {
 				entityPOCO.ExternalOpenAmount = entityPM.ExternalOpenAmount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalReconcileNumber))
+            {
+				entityPOCO.ExternalReconcileNumber = entityPM.ExternalReconcileNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExternalReconcile))
+            {
+				entityPOCO.IsExternalReconcile = entityPM.IsExternalReconcile;
 			}
 			}
 
@@ -284,6 +298,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ExternalOpenAmount = entityPOCO.ExternalOpenAmount;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExternalReconcileNumber))
+            {
+					entityPM.ExternalReconcileNumber = entityPOCO.ExternalReconcileNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsExternalReconcile))
+            {
+					entityPM.IsExternalReconcile = entityPOCO.IsExternalReconcile;
+            }
+
 		}
 
 		public void PMToOldPM(JournalLinePM entityPM, JournalLinePM oldEntityPM)
@@ -378,6 +402,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalOpenAmount))
             {
                 oldEntityPM.ExternalOpenAmount = entityPM.ExternalOpenAmount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalReconcileNumber))
+            {
+                oldEntityPM.ExternalReconcileNumber = entityPM.ExternalReconcileNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExternalReconcile))
+            {
+                oldEntityPM.IsExternalReconcile = entityPM.IsExternalReconcile;
             }
 			
 		}

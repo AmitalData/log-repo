@@ -126,5 +126,6 @@ export class ARInvoiceList {
 		TotalAmountForTaxReport: number;
 		TotaVatableAmountForTaxReport: number;
 		TotalVAT: number;
+		SATApprovalDate: Date;
 	
 }

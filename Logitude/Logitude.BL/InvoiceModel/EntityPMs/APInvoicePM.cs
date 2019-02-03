@@ -118,6 +118,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public bool IsGeneralInvoice { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? FirstApproveDate { get; set; }
+
         private List<APInvoiceLinePM> invoiceLines;
         [Include]
         [Composition]
@@ -271,7 +274,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool SetApproved { get; set; }
         public bool SetCancelApproval { get; set; }
         public bool SetReTransfer { get; set; }
+        public bool SetReSendQBO { get; set; }
 
         public string JournalNumber { get; set; }
+
     }
 }

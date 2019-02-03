@@ -1,6 +1,5 @@
-/// <reference path="../../helpers/detectuserinactivity.ts" />
 declare var window: any;
-import {HostListener ,Component, ViewContainerRef, ViewChild, ViewChildren, QueryList, Output, EventEmitter} from '@angular/core';
+import { HostListener, Component, ViewContainerRef, ViewChild, ViewChildren, QueryList, Output, EventEmitter, OnDestroy} from '@angular/core';
 import {AppTool} from '../../Tools';
 import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../Utilities/SessionLocator';
@@ -11,7 +10,6 @@ import {SessionComponent} from '../Session/SessionComponent';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../Services/EntityResourceService';
 import {UserPM} from '../../../Common/EntityPMs/UserPM';
-import {TenantManagementPM} from '../../EntityPMs/TenantManagementPM';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {LoginService, LoginParameters} from '../../Services/LoginService';
 import {Headers} from '@angular/http';
@@ -23,12 +21,14 @@ import {Environment} from '../../Locators/Environment';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import {ServiceLocator} from '../../Locators/ServiceLocator';
 import { DetectUserInActivity } from '../../Helpers/DetectUserInActivity';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+
 @Component({
     moduleId: module.id,
     templateUrl: './HomeComponent.html',
 })
 
-export class HomeComponent {
+export class HomeComponent implements OnDestroy{
     public Tenant: number;
     public DataContext = this;
     public Tabs: Array<SessionTabItem>;
@@ -38,13 +38,14 @@ export class HomeComponent {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     @ViewChild("ApplicationLocation", { read: ViewContainerRef }) ApplicationLocation: ViewContainerRef;
     SettingBtnVisibility: boolean = false;
+    IsShowLastSuccessfulLoginComponent: boolean = true;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor() {
         this.Tenant = SessionLocator.Tenant;
         SessionLocator.Index = 0;
         SessionLocator.AllSessions = new Array<SessionComponent>();
         SessionLocator.HomeComponent = this;
-        this.ChangeHeaderColor = ObjectsLocator.TenantManagementPM.ChangeHeaderColor;
+        this.ChangeHeaderColor = ObjectsLocator.TenantManagementJS.ChangeHeaderColor;
 
         this.Tabs = [];
         this.Tabs.push(new SessionTabItem());
@@ -64,7 +65,7 @@ export class HomeComponent {
 
             // tokenExpiration
             var tokenExpiration: DetectUserInActivity = new DetectUserInActivity(true);
-            tokenExpiration.Start(SessionInfo.WebTokenLifeTime, SessionInfo.WebTokenExpirationWarning , "M");//(3, 1, "M")
+            tokenExpiration.Start(SessionInfo.WebTokenLifeTimeInMinutes, SessionInfo.WebTokenExpirationWarningInMinutes , "M");//(3, 1, "M")
 
 
         }
@@ -101,7 +102,7 @@ export class HomeComponent {
 
         if (ObjectsLocator.GlobalSetting) {
           // if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
-          if (!ObjectsLocator.LoggedUserPM.DontShowLocal) {
+            if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs" || !ObjectsLocator.LoggedUserPM.DontShowLocal) {
                 this.SystemFontFamily = 'Arial'; //'OpenSans-Regular';
                 isNewSignupTenant = false;
             }
@@ -125,6 +126,7 @@ export class HomeComponent {
     public IsDataBackupVisible: boolean = false;
     public IsFillLocalStorageVisible: boolean = false;
     public IsDocumentsBackupVisible: boolean = false;
+    public IsCurrenciesRatesVisible: boolean = false;
     InitializeAppHeader() {
         this.EnvironmentUrl = Environment.GetEnvironmentUrl();
         this.EnvironmentSRC = Environment.GetEnvironmentIcon();
@@ -138,6 +140,10 @@ export class HomeComponent {
 
         else if (FeatureLocator.HasFeaturePermession("General", "General.Features.Customization")) {
             this.IsCustomizationVisible = true;
+        }
+                
+        if (!this.IsLogBox && FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
+            this.IsCurrenciesRatesVisible = true;
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "SIGNATURESETTING")) {
@@ -194,13 +200,13 @@ export class HomeComponent {
             this.TrialMessage = "";
             this.messageWindow.Close();
             var user: UserPM = SessionLocator.LoggedUserPM;
-            var tenant: TenantManagementPM = SessionLocator.TenantManagementPM;
             user.ExpirationDaysLeft = tt.ExpirationDaysLeft;
             user.ExpirationDate = tt.ExpirationDate;
 
-            tenant.TrailDaysLeft = tt.TrailDaysLeft;
-            tenant.PaidDaysLeft = tt.PaidDaysLeft;
-            tenant.SuspendDaysLeft = tt.SuspendDaysLeft;
+            SessionLocator.TenantManagementJS.TrailDaysLeft = tt.TrailDaysLeft;
+            SessionLocator.TenantManagementJS.PaidDaysLeft = tt.PaidDaysLeft;
+            SessionLocator.TenantManagementJS.SuspendDaysLeft = tt.SuspendDaysLeft;
+
             var stopTimer = false;
             if (tt.DoBlocking) {
 
@@ -228,7 +234,7 @@ export class HomeComponent {
 
                 if (tt.PaymentFailure) {
                     if (tt.TrailDaysLeft >= 0) {
-                        this.CheckPaymentFailure(tenant);
+                        this.CheckPaymentFailure();
                     }
                     else {
                         SessionLocator.BlockType = "suspend";
@@ -240,7 +246,7 @@ export class HomeComponent {
 
                 else if (tt.IsTrial) {
                     if (tt.TrailDaysLeft >= 0) {
-                        this.CheckTrialDays(tenant);
+                        this.CheckTrialDays();
                     }
                     else {
                         SessionLocator.BlockType = "company";
@@ -252,7 +258,7 @@ export class HomeComponent {
 
                 else if (!tt.IsRecurring && tt.PaidUntilDate != null) {
                     if (tt.PaidDaysLeft >= 0) {
-                        this.CheckPaidUntilDays(tenant);
+                        this.CheckPaidUntilDays();
                     }
                     else {
                         SessionLocator.BlockType = "company";
@@ -279,61 +285,61 @@ export class HomeComponent {
 
 
     }
-    CheckPaymentFailure(currentTenant: TenantManagementPM) {
+    CheckPaymentFailure() {
 
         var HeaderMessage: string = "";
         var WindowMessage: string = "";
         this.messageWindow.Width = 600;
         this.messageWindow.Height = 150;
         var email = Environment.GetContactUsEmail();
-        if (currentTenant.SuspendDate == null) {
+        if (SessionLocator.TenantManagementJS.SuspendDate == null) {
             WindowMessage = "Your Bluesnap payment is failing, \nplease contact Bluesnap to fix the problem";
             HeaderMessage = "Your Bluesnap payment is failing";
         }
         else {
-            HeaderMessage = "Your company subscription will expire in " + currentTenant.SuspendDaysLeft + " days.";
-            WindowMessage = "Your company subscription will expire in " + currentTenant.SuspendDaysLeft + " days due to credit \ncard failure. \nPlease contact your e-commerce vendor or " + email;
+            HeaderMessage = "Your company subscription will expire in " + SessionLocator.TenantManagementJS.SuspendDaysLeft + " days.";
+            WindowMessage = "Your company subscription will expire in " + SessionLocator.TenantManagementJS.SuspendDaysLeft + " days due to credit \ncard failure. \nPlease contact your e-commerce vendor or " + email;
         }
 
         this.messageWindow.Title = HeaderMessage;
         this.messageWindow.Message = WindowMessage;
         this.messageWindow.Show(this.messageWindow.Message);
     }
-    CheckTrialDays(currentTenant: TenantManagementPM) {
+    CheckTrialDays() {
         var HeaderMessage: string = "";
         var WindowMessage: string = "";
         this.messageWindow.Width = 380;
         this.messageWindow.Height = 150;
 
-        if (currentTenant.TrailDaysLeft <= 0) {
+        if (SessionLocator.TenantManagementJS.TrailDaysLeft <= 0) {
             HeaderMessage = "0 Trial Days Left !";
         }
         else {
-            HeaderMessage = currentTenant.TrailDaysLeft + " Trial Days Left !";
+            HeaderMessage = SessionLocator.TenantManagementJS.TrailDaysLeft + " Trial Days Left !";
         }
 
         this.messageWindow.Message = HeaderMessage;
         this.messageWindow.Show(this.messageWindow.Message);
         this.TrialMessage = HeaderMessage;
     }
-    CheckPaidUntilDays(currentTenant: TenantManagementPM) {
+    CheckPaidUntilDays() {
         var HeaderMessage: string = "";
         var WindowMessage: string = "";
         var email = Environment.GetContactUsEmail();
 
-        if (currentTenant.PaidDaysLeft <= 31) {
+        if (SessionLocator.TenantManagementJS.PaidDaysLeft <= 31) {
             this.messageWindow.Width = 600;
             this.messageWindow.Height = 150;
 
-            if (currentTenant.PaidDaysLeft == 0) {
+            if (SessionLocator.TenantManagementJS.PaidDaysLeft == 0) {
                 WindowMessage = "Your company subscription will expire in 0 days. \nTo renew please contact " + email;
                 HeaderMessage = "Your company subscription will expire in 0 days.";
             }
             else {
                 var AbsuluteValue;
-                if (currentTenant.PaidDaysLeft >= 0)
-                    AbsuluteValue = currentTenant.PaidDaysLeft;
-                else AbsuluteValue = currentTenant.PaidDaysLeft * -1;
+                if (SessionLocator.TenantManagementJS.PaidDaysLeft >= 0)
+                    AbsuluteValue = SessionLocator.TenantManagementJS.PaidDaysLeft;
+                else AbsuluteValue = SessionLocator.TenantManagementJS.PaidDaysLeft * -1;
 
                 WindowMessage = "Your company subscription will expire in " + AbsuluteValue + " days. \nTo renew please contact " + email;
                 HeaderMessage = "Your company subscription will expire in " + AbsuluteValue + " days.";
@@ -366,16 +372,16 @@ export class HomeComponent {
 
             }
             else {
-                if (SessionLocator.TenantManagementPM.PaymentFailure) {
-                    this.CheckPaymentFailure(SessionLocator.TenantManagementPM);
+                if (SessionLocator.TenantManagementJS.PaymentFailure) {
+                    this.CheckPaymentFailure();
                 }
 
-                else if (SessionLocator.TenantManagementPM.IsTrial) {
-                    this.CheckTrialDays(SessionLocator.TenantManagementPM);
+                else if (SessionLocator.TenantManagementJS.IsTrial) {
+                    this.CheckTrialDays();
                 }
 
-                else if (!SessionLocator.TenantManagementPM.IsRecurring && !AppTool.IsNullOrEmpty(SessionLocator.TenantManagementPM.PaidUntilDate + "")) {
-                    this.CheckPaidUntilDays(SessionLocator.TenantManagementPM);
+                else if (!SessionLocator.TenantManagementJS.IsRecurring && !AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PaidUntilDate + "")) {
+                    this.CheckPaidUntilDays();
                 }
 
 
@@ -383,16 +389,16 @@ export class HomeComponent {
 
         }
         else {
-            if (SessionLocator.TenantManagementPM.PaymentFailure) {
-                this.CheckPaymentFailure(SessionLocator.TenantManagementPM);
+            if (SessionLocator.TenantManagementJS.PaymentFailure) {
+                this.CheckPaymentFailure();
             }
 
-            else if (SessionLocator.TenantManagementPM.IsTrial) {
-                this.CheckTrialDays(SessionLocator.TenantManagementPM);
+            else if (SessionLocator.TenantManagementJS.IsTrial) {
+                this.CheckTrialDays();
             }
 
-            else if (!SessionLocator.TenantManagementPM.IsRecurring && !AppTool.IsNullOrEmpty(SessionLocator.TenantManagementPM.PaidUntilDate)) {
-                this.CheckPaidUntilDays(SessionLocator.TenantManagementPM);
+            else if (!SessionLocator.TenantManagementJS.IsRecurring && !AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PaidUntilDate)) {
+                this.CheckPaidUntilDays();
             }
 
 
@@ -692,6 +698,9 @@ export class HomeComponent {
         this.SelectionChanged(this.Tabs[this.Tabs.length - 1]);
         this.Retries = 0;
         this.RunComponentTimer();
+
+        if (this.Tabs.length > 4) this.IsShowLastSuccessfulLoginComponent = false;
+  
     }
     SelectionChanged(clickdTab: SessionTabItem) {
         if (clickdTab != null) {
@@ -760,7 +769,51 @@ export class HomeComponent {
             }
         }      
     }
+
     CloseTab(tabItem: SessionTabItem) {
+        var isNeedingConfirmation = false;
+        if (SessionLocator.CurrentSession.CurrentEditComponent) {
+          isNeedingConfirmation = SessionLocator.CurrentSession.CurrentEditComponent.NeedCloseConfirmation();
+        }
+        if (isNeedingConfirmation) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 450;
+            confirmWindow.Height = 190;
+            confirmWindow.ShowCancelButton = true;
+            confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.DontSave");
+            confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
+            confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+            confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(SessionLocator.CurrentSession.CurrentEditComponent.ObjectTableName)));
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+
+
+                    if (!this.SaveCompletedEvent) {
+                        this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                            if (isSaveSuccess) {
+                                this.Close(tabItem);
+                            }
+
+                            AppTool.KillEventEmitter(this.SaveCompletedEvent);
+                            this.SaveCompletedEvent = null;
+                        });
+                    }
+
+                    SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                }
+
+                else if (confirmWindow.No) {
+                    this.Close(tabItem);
+                }
+            });
+        }
+        else {
+            this.Close(tabItem);
+        }
+    }
+
+    Close(tabItem: SessionTabItem) {
+
         var itemIndex = this.Tabs.indexOf(tabItem);
         if (itemIndex > -1) {
 
@@ -773,8 +826,20 @@ export class HomeComponent {
 
             tabItem.SessionComponent.DestroySession();
             tabItem = null;
+
+            if (this.Tabs.length <= 4) {
+                if (!this.IsShowLastSuccessfulLoginComponent) this.IsShowLastSuccessfulLoginComponent = true;
+            }
         }
     }
+
+    private SaveCompletedEvent: any = null;
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        this.SaveCompletedEvent = null;
+
+    }
+
     RunSignupWizard() {
         SessionLocator.DynamicLoader.Load("./Infrastructure/Components/Maintenance/Wizard/WizardBaseComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
@@ -845,8 +910,8 @@ export class HomeComponent {
         if (!SessionLocator.CurrentSession.IsOpenChangePasswordWindowFromSetting) {
             SessionLocator.CurrentSession.IsOpenChangePasswordWindowFromSetting = true;
             var logWindow = new LogitudeWindow();
-            logWindow.Width = 800;
-            logWindow.Height = 550;
+                logWindow.Width = 600;
+                logWindow.Height = 400;
             logWindow.Title = "Change User Password";
             this._entityResourceService.getEntityResourceByTableName("User").subscribe(response => {
                 logWindow.DataContext = this;
@@ -917,28 +982,33 @@ export class HomeComponent {
         var link: string = "";
         switch (code) {
             case "LOG":
-                {
-                    if (SessionLocator.TenantManagementPM.BluesnapContractId) {
-                        link = "https://www.bluesnap.com/jsp/buynow.jsp?contractId=" + SessionLocator.TenantManagementPM.BluesnapContractId
-                            + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant
-                            + "&quantity=" + SessionLocator.TenantManagementPM.NumberOfUsers;
+                {                    
+                    var myService: CommonDomainService = new CommonDomainService();
+                    myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount).subscribe((myResult) => {
+                        var temp = myResult.Result;
+                        this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
+                        var contractId: string = SessionLocator.TenantManagementJS.BluesnapContractId;
+                        if (AppTool.IsNullOrEmpty(contractId)) {
+                            contractId = "3507474";
+                        }
 
+                        var numberofUsers: number = SessionLocator.TenantManagementJS.NumberOfUsers;                       
+                        var link = "https://cp.bluesnap.com/buynow/checkout?storeId=543002&sku" + 3507474 + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+
+                        if (AppTool.IsNullOrEmpty(temp)) {
+                            link = "https://www.bluesnap.com/jsp/buynow.jsp?contractId=3148346&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant + "&quantity=" + SessionLocator.TenantManagementJS.NumberOfUsers;
+                        }
+                        
                         var win = window.open(link, '_blank');
                         win.focus();
-                    }
-                    else {
-
-                        link = "https://www.bluesnap.com/jsp/buynow.jsp?contractId=3148346&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant + "&quantity=" + SessionLocator.TenantManagementPM.NumberOfUsers;
-                        var win = window.open(link, '_blank');
-                        win.focus();
-                    }
+                    });        
                     break;
                 }
 
             case "AWB":
                 {
 
-                    link = "https://www.bluesnap.com/jsp/buynow.jsp?contractId=3285402&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant + "&quantity=" + SessionLocator.TenantManagementPM.NumberOfUsers;
+                    link = "https://www.bluesnap.com/jsp/buynow.jsp?contractId=3285402&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant + "&quantity=" + SessionLocator.TenantManagementJS.NumberOfUsers;
                     var win = window.open(link, '_blank');
                     win.focus();
 
@@ -956,9 +1026,19 @@ export class HomeComponent {
         }
     }
     ManageBluesnapAccountClicked() {
-        var link = "https://cp.bluesnap.com/jsp/account_login.jsp";
-        var win = window.open(link, '_blank');
-        win.focus();
+
+
+        var myService: CommonDomainService = new CommonDomainService();
+        myService.GetBlueSnapToken(SessionLocator.TenantManagementJS.BluesnapAccount).subscribe((myResult) => {
+            var temp = myResult.Result;
+            this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
+            var link = "https://cp.bluesnap.com/jsp/account_login.jsp";
+            if (!AppTool.IsNullOrEmpty(temp)) {         
+                link = "https://www.bluesnap.com/jsp/entrance.jsp?target=cp&token=" + temp + "&pageToShow=my_account.jsp"
+            }
+            var win = window.open(link, '_blank');
+            win.focus();
+        });        
     }
     HelpButtonClicked() {
         ServiceLocator.SendTotangoUserActivity("Help Center", "Help Icon");

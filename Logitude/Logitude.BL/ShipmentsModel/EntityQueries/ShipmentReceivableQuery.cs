@@ -74,7 +74,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                        CreatedByUserId = a.CreatedByUserId,
                                                        ShipmentId = a.ShipmentId,
                                                        ARInvoiceId = a.ARInvoiceId,
-                                                       QuoteSaleMinPrice = a.QuoteSaleMinPrice,
                                                        QuoteChargeId = a.QuoteChargeId,
                                                        IsChargeBySteps = a.IsChargeBySteps,
                                                        ChargesTypeId = a.ChargesTypeId,
@@ -97,7 +96,69 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                        IsExpense = a.IsExpense,
                                                        ShipmentReceivableParentId = a.ShipmentReceivableParentId,
                                                        ShipmentNumber = a.Shipment == null ? null : a.Shipment.ShipmentNumber,
+                                                       QuoteSaleMinAmount = a.QuoteSaleMinAmount,
+                                                       QuoteSaleMaxAmount = a.QuoteSaleMaxAmount,
                                                    }).ToList();
+            return myResult;
+        }
+
+        public ShipmentReceivablePM GetSinglePM(string id, int tenant)
+        {
+            ShipmentReceivablePM myResult
+                = (from a in repository.context.ShipmentReceivables.Include("ChargesType").Include("DueType").Include("Measurement").Include("Currency").Include("ShipmentReceivableLineStatus").Include("Shipment")
+                   where a.Id == id && a.Tenant == tenant
+                   select new ShipmentReceivablePM()
+                   {
+                       Quantity = a.Quantity,
+                       Id = a.Id,
+                       Notes = a.Notes,
+                       Rate = a.Rate,
+                       Tenant = a.Tenant,
+                       TotalAmount = a.TotalAmount,
+                       TotalAmountLocal = a.TotalAmountLocal,
+                       UnitPrice = a.UnitPrice,
+                       PayableLocal = a.PayableLocal,
+                       UpdateByUserId = a.UpdateByUserId,
+                       UpdateDate = a.UpdateDate,
+                       PrepaidCollectId = a.PrepaidCollectId,
+                       AWBPrint = a.AWBPrint,
+                       IATACodeId = a.IATACodeId,
+                       ARInvoiceLineId = a.ARInvoiceLineId,
+                       IsFromQuote = a.IsFromQuote,
+                       IsFixedPrice = a.IsFixedPrice,
+                       IsExchangeRateFixed = a.IsExchangeRateFixed,
+                       AmountInProfitCurrency = a.AmountInProfitCurrency,
+                       ProfitCurrencyExchangeRate = a.ProfitCurrencyExchangeRate,
+                       CreateDate = a.CreateDate,
+                       CreatedByUserId = a.CreatedByUserId,
+                       ShipmentId = a.ShipmentId,
+                       ARInvoiceId = a.ARInvoiceId,
+                       QuoteChargeId = a.QuoteChargeId,
+                       IsChargeBySteps = a.IsChargeBySteps,
+                       ChargesTypeId = a.ChargesTypeId,
+                       ChargesTypeCode = a.ChargesType == null ? null : a.ChargesType.Code,
+                       ChargesTypeName = a.ChargesType == null ? null : a.ChargesType.EnglishName,
+                       ChargesGroupCode = a.ChargesType == null ? null : a.ChargesType.ChargesGroupCode,
+                       ViewOrder = a.ChargesType == null ? 0 : a.ChargesType.ViewOrder,
+                       DueTypeCode = a.DueTypeCode,
+                       DueTypeName = a.DueType == null ? null : a.DueType.Name,
+                       MeasurementId = a.MeasurementId,
+                       MeasurementCode = a.Measurement == null ? null : a.Measurement.Code,
+                       MeasurementShortName = a.Measurement == null ? null : a.Measurement.ShortName,
+                       CurrencyId = a.CurrencyId,
+                       CurrencyCode = a.Currency == null ? null : a.Currency.Code,
+                       ShipmentReceivableLineStatusCode = a.ShipmentReceivableLineStatusCode,
+                       ShipmentReceivableLineStatusName = a.ShipmentReceivableLineStatus == null ? null : a.ShipmentReceivableLineStatus.Name,
+                       VatTypeId = a.VatTypeId,
+                       UOMPercentage = a.Measurement == null ? "" : (a.Measurement.Code == "PRVL" || a.Measurement.Code == "PRFR" ? "%" : ""),
+                       IsBackToBack = a.IsBackToBack,
+                       IsExpense = a.IsExpense,
+                       ShipmentReceivableParentId = a.ShipmentReceivableParentId,
+                       ShipmentNumber = a.Shipment == null ? null : a.Shipment.ShipmentNumber,
+                       QuoteSaleMinAmount = a.QuoteSaleMinAmount,
+                       QuoteSaleMaxAmount = a.QuoteSaleMaxAmount,
+                   }).FirstOrDefault();
+
             return myResult;
         }
     }

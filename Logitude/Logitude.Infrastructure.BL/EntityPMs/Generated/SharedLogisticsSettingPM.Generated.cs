@@ -319,6 +319,190 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isIssuingCarrierAgentShared ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsIssuingCarrierAgentShared  
+	   {
+	    
+	     get
+		{
+		   return isIssuingCarrierAgentShared;
+		 }
+		 set
+		 {
+		   if(isIssuingCarrierAgentShared != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsIssuingCarrierAgentShared",OldValue=isIssuingCarrierAgentShared,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isIssuingCarrierAgentShared=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCustomsAgentExportShared ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCustomsAgentExportShared  
+	   {
+	    
+	     get
+		{
+		   return isCustomsAgentExportShared;
+		 }
+		 set
+		 {
+		   if(isCustomsAgentExportShared != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomsAgentExportShared",OldValue=isCustomsAgentExportShared,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCustomsAgentExportShared=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCustomsAgentImportShared ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCustomsAgentImportShared  
+	   {
+	    
+	     get
+		{
+		   return isCustomsAgentImportShared;
+		 }
+		 set
+		 {
+		   if(isCustomsAgentImportShared != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomsAgentImportShared",OldValue=isCustomsAgentImportShared,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCustomsAgentImportShared=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCustomClearancePoinShared ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCustomClearancePoinShared  
+	   {
+	    
+	     get
+		{
+		   return isCustomClearancePoinShared;
+		 }
+		 set
+		 {
+		   if(isCustomClearancePoinShared != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomClearancePoinShared",OldValue=isCustomClearancePoinShared,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCustomClearancePoinShared=value;
+		   }
+			
+		 }
+	   }
+	  private bool isConsolidatorShared ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsConsolidatorShared  
+	   {
+	    
+	     get
+		{
+		   return isConsolidatorShared;
+		 }
+		 set
+		 {
+		   if(isConsolidatorShared != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsConsolidatorShared",OldValue=isConsolidatorShared,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isConsolidatorShared=value;
+		   }
+			
+		 }
+	   }
+	  private bool isReleasingAgentShared ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsReleasingAgentShared  
+	   {
+	    
+	     get
+		{
+		   return isReleasingAgentShared;
+		 }
+		 set
+		 {
+		   if(isReleasingAgentShared != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsReleasingAgentShared",OldValue=isReleasingAgentShared,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isReleasingAgentShared=value;
+		   }
+			
+		 }
+	   }
+	  private bool isShipperShared ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsShipperShared  
+	   {
+	    
+	     get
+		{
+		   return isShipperShared;
+		 }
+		 set
+		 {
+		   if(isShipperShared != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsShipperShared",OldValue=isShipperShared,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isShipperShared=value;
+		   }
+			
+		 }
+	   }
+	  private bool isConsigneeShared ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsConsigneeShared  
+	   {
+	    
+	     get
+		{
+		   return isConsigneeShared;
+		 }
+		 set
+		 {
+		   if(isConsigneeShared != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsConsigneeShared",OldValue=isConsigneeShared,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isConsigneeShared=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

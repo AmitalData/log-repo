@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .SectionTitle {
         height: 20px;
@@ -30,14 +30,22 @@
                                 <!-- Entity Type -->
                                 <tr class="FormFieldRow">
                                     <td style="width:153px;">
-                                        <LogLabel [NoObjectField]="true" [Text]="'Entity Type'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'EntityType'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        <!--<LogLabel [NoObjectField]="true" [Text]="'Entity Type'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>-->
                                     </td>
 
                                     <td style="width:260px;">
-                                        <ComboBox [IsDisabled]="IsShipmentIdDisabled" [ItemsSource]="EntityList"
+                                        <LogLov [ObjectFieldName]="'EntityType'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [SelectedValue]="EntityType"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'ObjectTable'"
+                                                (SelectedItemChanged)="$event ? EntityObjectTableName = $event.Name : EntityObjectTableName = null"
+                                                [DependencyFilter3Value]="true" [HideColumns]="true"></LogLov>
+                                        <!--<ComboBox [IsDisabled]="IsShipmentIdDisabled" [ItemsSource]="EntityList"
                                                   [SelectedItem]="SelectedFilter"
                                                   (SelectedItemChanged)="SelectedFilter = $event"
-                                                  [Binding]="'Name'"></ComboBox>
+                                                  [Binding]="'Name'"></ComboBox>-->
                                     </td>
 
                                     <td>
@@ -48,13 +56,13 @@
                                 <!-- Entity Number -->
                                 <tr class="FormFieldRow">
                                     <td style="width:153px;">
-                                        <LogLabel [NoObjectField]="true" [Text]="EntityNumberTitle" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        <LogLabel [NoObjectField]="true" [Text]="'Entity Number'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
 
                                     <td style="width:260px;">
-
-                                        <div *ngIf="EntityObjectTableName =='Shipment'">
-                                            <QuickSearchTextBox [IsItemSelected]="'true'" [IsDisabled]="IsShipmentIdDisabled" [Area]="'Ticket.Shipment'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="260" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity()" [Watermark]="' '" [DisplayText]="ShipmentNumber">
+                                         
+                                        <div *ngIf="(EntityObjectTableName =='Shipment')|| (EntityType == null)">
+                                            <QuickSearchTextBox [IsItemSelected]="'true'" [IsDisabled]="IsShipmentIdDisabled || (EntityType == null)" [Area]="'Ticket.Shipment'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="260" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity()" [Watermark]="' '" [DisplayText]="ShipmentNumber">
                                                 <ul>
                                                     <li class="LogitudeQuickSearchItem" style="height:25px;" *ngFor="let item of QuickSearchItems" (mousedown)="QuickSearchTextChanged(item)">
                                                         <table>
@@ -95,7 +103,7 @@
                                         </div>
 
                                         <div *ngIf="EntityObjectTableName =='Quote'">
-                                            <QuickSearchTextBox [IsItemSelected]="'true'" [IsDisabled]="IsShipmentIdDisabled" [Area]="'Ticket.Shipment'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="260" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity()" [Watermark]="' '" [DisplayText]="QuoteNumber">
+                                            <QuickSearchTextBox [IsItemSelected]="'true'" [IsDisabled]="IsShipmentIdDisabled || (EntityType == null)" [Area]="'Ticket.Shipment'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="260" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity()" [Watermark]="' '" [DisplayText]="QuoteNumber">
                                                 <ul>
                                                     <li class="LogitudeQuickSearchItem" style="height:25px;" *ngFor="let item of QuickSearchItems" (mousedown)="QuickSearchTextChanged(item)">
                                                         <table>

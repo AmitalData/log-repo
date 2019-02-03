@@ -51,6 +51,9 @@ export class DeclarationCourierStatusList {
 	MamanErrorXml: string;
 	CourierSuspentionCode: string;
 	CourierSuspentionName: string;
+	SpecialActionStatus: string;
+	SpecialActionsErrorXml: string;
+	CourierPendingReasonErrorPlace: string;
 	FastIndividualProcessCode: string;
 	ManualProcessCode: string;
 	

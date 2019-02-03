@@ -186,6 +186,9 @@ export class AddEditTaxWithholdingLineComponent extends BaseComponent {
             }
 
 
+        //if (this.parent.GLAccountWithholdingTaxes.length > 0) {
+        //    //if (this.parent.GLAccountWithholdingTaxes.find(d => d.FromDate ))
+        //}
             if (errors.length == 0) {
                 this.entity.Percentage = this.newEntity.Percentage;
                 this.entity.FromDate = this.newEntity.FromDate;

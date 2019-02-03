@@ -92,6 +92,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   DocumentFilingInbox = a.DocumentFilingInbox,
                                   ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                   ShowInboxToolTip = a.ShowInboxToolTip,
+                                  ShowLocalNameInLOV=a.ShowLocalNameInLOV,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -174,6 +175,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               DocumentFilingInbox = a.DocumentFilingInbox,
                               ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                               ShowInboxToolTip = a.ShowInboxToolTip,
+                              ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -258,7 +260,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       DocumentFilingInbox = a.DocumentFilingInbox,
                                       ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                       ShowInboxToolTip = a.ShowInboxToolTip,
-
+                                      ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -340,6 +342,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   DocumentFilingInbox = a.DocumentFilingInbox,
                                   ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                   ShowInboxToolTip = a.ShowInboxToolTip,
+                                  ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               }).FirstOrDefault();
                     if (entity != null)
                     {
@@ -408,6 +411,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               DocumentFilingInbox = a.DocumentFilingInbox,
                               ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                               ShowInboxToolTip = a.ShowInboxToolTip,
+                              ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                           }).FirstOrDefault();
                 if (entity != null)
                 {
@@ -491,6 +495,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       DocumentFilingInbox = a.DocumentFilingInbox,
                                       ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                       ShowInboxToolTip = a.ShowInboxToolTip,
+                                      ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -574,6 +579,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   DocumentFilingInbox = a.DocumentFilingInbox,
                                   ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                   ShowInboxToolTip = a.ShowInboxToolTip,
+                                  ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               }).FirstOrDefault();
                     if (entity != null)
                     {
@@ -643,6 +649,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               DocumentFilingInbox = a.DocumentFilingInbox,
                               ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                               ShowInboxToolTip = a.ShowInboxToolTip,
+                              ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                           }).FirstOrDefault();
                 if (entity != null)
                 {
@@ -726,6 +733,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       DocumentFilingInbox = a.DocumentFilingInbox,
                                       ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                       ShowInboxToolTip = a.ShowInboxToolTip,
+                                      ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -806,6 +814,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   DocumentFilingInbox = a.DocumentFilingInbox,
                                   ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                   ShowInboxToolTip = a.ShowInboxToolTip,
+                                  ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -876,6 +885,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               DocumentFilingInbox = a.DocumentFilingInbox,
                               ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                               ShowInboxToolTip = a.ShowInboxToolTip,
+                              ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -951,6 +961,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            DocumentFilingInbox = a.DocumentFilingInbox,
                                            ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                            ShowInboxToolTip = a.ShowInboxToolTip,
+                                           ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                        };
 
             return users;
@@ -1014,6 +1025,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             DocumentFilingInbox = a.DocumentFilingInbox,
                             ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                             ShowInboxToolTip = a.ShowInboxToolTip,
+                            ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                         };
             IQueryable<UserPM> query2 = null;
             if (!string.IsNullOrEmpty(email))
@@ -1081,6 +1093,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SetAngularAsDefault = user.SetAngularAsDefault,
                                               IsTwoFactorAuthenticationEnabled = user.IsTwoFactorAuthenticationEnabled,
                                               DocumentFilingInbox = user.DocumentFilingInbox,
+                                              ShowLocalNameInLOV = user.ShowLocalNameInLOV,
                                           };
 
             //int tenant = 0;
@@ -1166,6 +1179,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     SetAngularAsDefault = user.SetAngularAsDefault,
                     IsTwoFactorAuthenticationEnabled = user.IsTwoFactorAuthenticationEnabled,
                     DocumentFilingInbox = user.DocumentFilingInbox,
+                    ShowLocalNameInLOV = user.ShowLocalNameInLOV,
                 };
 
                 result.Add(newItem);
@@ -1296,6 +1310,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               IsTwoFactorAuthenticationEnabled = a.IsTwoFactorAuthenticationEnabled,
                               DocumentFilingInbox = a.DocumentFilingInbox,
                               ShowLogBoxToolTip = a.ShowLogBoxToolTip,
+                              ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                           }).FirstOrDefault();
                 if (entity != null)
                 {
@@ -1359,6 +1374,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         BusinessPhone = a.Contact.BusinessPhone,
                                         IsTwoFactorAuthenticationEnabled = a.IsTwoFactorAuthenticationEnabled,
                                         DocumentFilingInbox = a.DocumentFilingInbox,
+                                        ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                     }).ToList();
             return users;
         }
@@ -1406,6 +1422,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       DocumentFilingInbox = a.DocumentFilingInbox,
                                       ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                       ShowInboxToolTip = a.ShowInboxToolTip,
+                                      ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   }).ToList();
             return users;
         }
@@ -1520,6 +1537,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           DocumentFilingInbox = a.DocumentFilingInbox,
                           ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                           ShowInboxToolTip = a.ShowInboxToolTip,
+                          ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                       }).FirstOrDefault();
 
             if (entity != null)
@@ -1588,6 +1606,50 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             bool isExist = repository.context.Users.Where(d => d.Id == userId && (d.Tenant == tenant || d.Tenant == 0)).Any();
             return isExist;
+        }
+
+        public UserPM GetSinglePMLite(string id,int tenant)
+        {
+            UserPM entity = (from a in repository.context.Users.Include("Contact")
+                      where a.Tenant == tenant
+                      && a.Id == id
+                      select new UserPM()
+                      {
+                          Id = a.Id,
+                          Tenant = a.Tenant,
+                          Email = a.Contact.Email,
+                          EnglishName = a.Contact.EnglishName,
+                      }).FirstOrDefault();
+            return entity;
+        }
+
+
+        public UserPM GetSingleUserPMByEmailLite(string email, int tenant)
+        {
+           UserPM entity = (from a in repository.context.Users.Include("Contact")
+                      where a.Tenant == tenant
+                      && a.Contact.Email == email
+                      select new UserPM()
+                      {
+                          Id = a.Id,
+                          Tenant = a.Tenant,
+                          Email = a.Contact.Email,
+                          EnglishName = a.Contact.EnglishName,
+
+                      }).FirstOrDefault();
+            return entity;
+        }
+
+
+        public List<string> GetUserIdsByTenant(int tenant)
+        {
+
+
+            var usersIds = (from a in repository.context.Users
+                         where a.Tenant == tenant
+                         select a.Id).ToList();
+
+            return usersIds;
         }
 
     }

@@ -8,8 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
 using System.Web;
+
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Monitoring
 {
@@ -45,27 +47,31 @@ namespace WebFreight.Web.Monitoring
         private bool AnyFailedStatus()
         {
             bool isFailed = false;
-            using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())
+
+            try
             {
-
-                string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment("contactunseenentityqueue");
-                long messagecount = 0;
-                if (!StorageAcountDetails.NameSpaceManager.QueueExists(emailqueueName))
+                using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())
                 {
 
-                    QueueDescription queueDescription = new QueueDescription(emailqueueName);
-                    queueDescription.MaxSizeInMegabytes = 5120;
-                    queueDescription.MaxDeliveryCount = 99999;
-                    queueDescription.LockDuration = new TimeSpan(0, 2, 0);
-                    long messagescount = StorageAcountDetails.NameSpaceManager.CreateQueue(queueDescription).MessageCount;
+                    string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment("contactunseenentityqueue");
+                    long messagecount = 0;
+                    if (!StorageAcountDetails.NameSpaceManager.QueueExists(emailqueueName))
+                    {
 
-                }
-                else
-                {
+                        QueueDescription queueDescription = new QueueDescription(emailqueueName);
+                        queueDescription.MaxSizeInMegabytes = 5120;
+                        queueDescription.MaxDeliveryCount = 99999;
+                        queueDescription.LockDuration = new TimeSpan(0, 2, 0);
+                        long messagescount = StorageAcountDetails.NameSpaceManager.CreateQueue(queueDescription).MessageCount;
 
-                     messagecount = StorageAcountDetails.NameSpaceManager.GetQueue(emailqueueName).MessageCount;
-                     QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName, ReceiveMode.PeekLock);
-                }
+                    }
+                    else
+                    {
+
+                        messagecount = StorageAcountDetails.NameSpaceManager.GetQueue(emailqueueName).MessageCount;
+                        QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName, ReceiveMode.PeekLock);
+
+                    }
 
 
                     if (messagecount > 50)
@@ -74,8 +80,14 @@ namespace WebFreight.Web.Monitoring
                     }
 
                     else isFailed = false;
+                }
             }
 
+            catch (Exception errorInfo)
+            {
+                ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "ContactUnseenMobile", "Bug in ContactUnseenMobile Method ", "");
+            }
+            
             return isFailed;
             
         }

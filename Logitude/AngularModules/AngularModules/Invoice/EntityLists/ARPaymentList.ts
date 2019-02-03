@@ -21,6 +21,7 @@ export class ARPaymentList {
 		BillToId: string;
 		ARAccountId: string;
 		StatusCode: string;
+		PaymentMethodName: string;
 		IsClosed: boolean;
 		PaymentCurrencyId: string;
 		AmountInPaymentCurrency: number;
@@ -69,10 +70,13 @@ export class ARPaymentList {
 		SATTransferStatusName: string;
 		TransmissionError: string;
 		BankAccountLiteId: string;
+		BankAccountName: string;
 		MetodoPagoCode: string;
 		TipoCadenaPago: string;
 		CertPago: string;
 		CadPago: string;
 		SelloPago: string;
+		BranchName: string;
+		SATApprovalDate: Date;
 	
 }

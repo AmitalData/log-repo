@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ContactPM} from '../../../../Common/EntityPMs/ContactPM';
@@ -93,9 +93,11 @@ export class AddEditContactComponent {
                     if (!AppTool.IsNullOrEmpty(this.EntityPM.Email)) {
                         isBlockingEmail = true;
                     }
-                }
+                }         
+
 
                 args.BlockEditingEmail = isBlockingEmail;
+
 
                 this.ContactTemplate.InitTemplate(args);
                 this.Clone();

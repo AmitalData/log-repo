@@ -13,6 +13,11 @@ namespace Logitude.Infrastructure.BL.Validators
             string objectTableName = context.ObjectType.Name.Substring(0, context.ObjectType.Name.Length - 2);
             Type type = Type.GetType(context.ObjectType.FullName);
 
+            if (context.ObjectType.FullName == "WebFreight.Web.DataContracts.BIReportXMLData")
+            {
+                return null;
+            }
+
             PropertyInfo tenantProp = null;
             tenantProp = type.GetProperty("Tenant");
             int tenant = 0;

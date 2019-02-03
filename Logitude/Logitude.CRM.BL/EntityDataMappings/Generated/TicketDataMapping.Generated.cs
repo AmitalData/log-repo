@@ -84,7 +84,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         CustomerContactId, 
 	         QuoteId, 
 	         QuoteNumber, 
-	         SLAId,
+	         SLAId, 
+	         EntityType,
 	      }
 
 
@@ -194,7 +195,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         QuoteNumber, 
 	         ContactTel, 
 	         SLAName, 
-	         SLAId,
+	         SLAId, 
+	         EntityType,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -511,6 +513,11 @@ namespace Logitude.CRM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SLAId))
             {
 				entityPOCO.SLAId = entityPM.SLAId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityType))
+            {
+				entityPOCO.EntityType = entityPM.EntityType;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -834,6 +841,11 @@ namespace Logitude.CRM.BL.EntityDataMappings
 					entityPM.SLAId = entityPOCO.SLAId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntityType))
+            {
+					entityPM.EntityType = entityPOCO.EntityType;
+            }
+
 		}
 
 		public void PMToOldPM(TicketPM entityPM, TicketPM oldEntityPM)
@@ -1148,6 +1160,11 @@ namespace Logitude.CRM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SLAId))
             {
                 oldEntityPM.SLAId = entityPM.SLAId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityType))
+            {
+                oldEntityPM.EntityType = entityPM.EntityType;
             }
 			
 		}

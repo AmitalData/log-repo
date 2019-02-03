@@ -54,6 +54,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return this.repository.GLAccountTotalByMonth(accountId, year, month, tenant);
         }
 
+        public List<CurrencySum> GetCurrencySumUntillNotIncludeDateType(IQueryable<string> accountIdList,string DateTypeCode, int year, int month, int tenant)
+        {
+            return this.repository.GetCurrencySumUntillNotIncludeDateType(accountIdList, DateTypeCode,year, month, tenant);
+        }
+
         public List<CurrencySum> GetCurrencySumUntillNotInclude(IQueryable<string> accountIdList, int year, int month, int tenant)
         {
             return this.repository.GetAllCurrencySumUntillNotInclude(accountIdList, year, month, tenant);

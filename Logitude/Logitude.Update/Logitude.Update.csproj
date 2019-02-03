@@ -65,6 +65,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
     <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo_tr_AVr_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Devart.Data, Version=5.0.2045.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
       <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.dll</HintPath>
@@ -93,7 +96,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JustWebFreight\WebFreight.Web\bin\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
@@ -176,13 +180,13 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.10\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.11\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.10\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.11\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.10\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.11\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -303,6 +307,14 @@
       <Project>{00E5D96D-DD45-47E8-AAA3-FDBFD8ADD61A}</Project>
       <Name>Logitude.Accounting.BL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
+      <Project>{A3799525-14A2-42FC-A2DE-69ED3FD1C5D1}</Project>
+      <Name>Logitude.Accounting.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.Def\Logitude.Accounting.Def.csproj">
+      <Project>{91564685-7EE1-466D-AFCD-183A1BF62259}</Project>
+      <Name>Logitude.Accounting.Def</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
       <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
       <Name>Logitude.BL</Name>
@@ -365,6 +377,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\" />
     <Folder Include="Production\" />
     <Folder Include="ZipFiles\" />
   </ItemGroup>
@@ -375,6 +388,7 @@
     <EmbeddedResource Include="Properties\logitude.update.exe.licenses" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="logo_tr_AVr_icon.ico" />
     <Content Include="UpdateSettings.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

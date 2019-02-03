@@ -135,8 +135,22 @@ namespace WebFreight.Web.ReportsWebServices
                 deliveryNotedataprovider.ShipperReference2 = shipment.ShipperReference2;
                 deliveryNotedataprovider.ConsigneeReference2 = shipment.ConsigneeReference2;
                 deliveryNotedataprovider.ShipmentSalesman = shipment.SalesmanUserName;
+              
+                if (!string.IsNullOrEmpty(shipment.FreightLocationId))
+                {
+                    CardPM cardPM = cardQuery.GetSinglePM(shipment.FreightLocationId, tenant);
+                    if (cardPM != null)
+                    {
+                        deliveryNotedataprovider.FreightLocation = cardPM.EnglishName;
+                    }
+                }
 
-                if(shipment.CutoffDate != null)
+                if (!string.IsNullOrEmpty(shipment.OnCarriageCarrierId))
+                {
+                    deliveryNotedataprovider.OnCarriageCarrier = shipment.OnCarriageCarrierName;
+                }
+
+                if (shipment.CutoffDate != null)
                 {
                     deliveryNotedataprovider.CutOffDate = String.Format("{0:dd MMM yyyy}", shipment.CutoffDate);
                     deliveryNotedataprovider.CutOffDateAsDate = shipment.CutoffDate;
@@ -545,12 +559,19 @@ namespace WebFreight.Web.ReportsWebServices
                     int counter = 1;
 
                     string volumeUnitCode = shipment.VolumeUnitCode != null ? shipment.VolumeUnitCode : "";
+                    int? totalQuantity = 0;
+                    double? totalWeight = 0;
+                    double? totalVolume = 0;
 
                     foreach (ShipmentPickUpDeliveryPackage package in packages)
                     {
                         counter++;
                         PackageLine packageline = new PackageLine();
-                        
+
+                        totalQuantity += package.Quantity;
+                        totalWeight += package.Weight;
+                        totalVolume += package.Volume;
+
                         packageline.PackageDescriptionOfGoods = package.Description != null ? package.Description : "";
                         packageline.PackageGrossWeight = package.Weight != null ? (package.Weight.Value.ToString() + " " + shipment.GrossWeightUnitCode) : "";
                         packageline.PackageQuantity = package.Quantity != null ? package.Quantity.Value.ToString() : "";
@@ -580,8 +601,34 @@ namespace WebFreight.Web.ReportsWebServices
                             packageline.IsContainer = packtype.IsContainer;
                         }
 
+                        #region Harmonize
+                        if (package.IsMultiHarmonize)
+                        {
+                            List<PickUpDeliveryPackageHarmonize> allHarmonizes = shipmentsContext.PickUpDeliveryPackageHarmonizes.Where(d => d.PackageId == package.Id && d.Tenant == package.Tenant).ToList();
+                            foreach (PickUpDeliveryPackageHarmonize itemHarmonize in allHarmonizes)
+                            {
+                                if (string.IsNullOrEmpty(packageline.HSCode))
+                                {
+                                    packageline.HSCode = itemHarmonize.Harmonize;
+                                }
+                                else
+                                {
+                                    packageline.HSCode += "," + itemHarmonize.Harmonize;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            packageline.HSCode = package.Harmonize;
+                        }
+                        #endregion
+
                         deliveryNotedataprovider.PackagesLines.Add(packageline);
                     }
+
+                    deliveryNotedataprovider.TotalNumberOfPackages = totalQuantity;
+                    deliveryNotedataprovider.TotalGrossWeight = totalWeight;
+                    deliveryNotedataprovider.TotalVolume = totalVolume;
                     #endregion
 
                     #region Document
@@ -838,6 +885,19 @@ namespace WebFreight.Web.ReportsWebServices
                 deliveryNotedataprovider.ShipperReference2 = shipment.ShipperReference2;
                 deliveryNotedataprovider.ConsigneeReference2 = shipment.ConsigneeReference2;
                 deliveryNotedataprovider.ShipmentSalesman = shipment.SalesmanUserName;
+                if (!string.IsNullOrEmpty(shipment.FreightLocationId))
+                {
+                    Card card = cardRepository.GetSingleCard(shipment.FreightLocationId, tenant);
+                    if (card != null)
+                    {
+                        deliveryNotedataprovider.FreightLocation = card.EnglishName;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(shipment.OnCarriageCarrierId))
+                {
+                    deliveryNotedataprovider.OnCarriageCarrier = shipment.OnCarriageCarrierName;
+                }
 
                 if (shipment.CutoffDate != null)
                 {
@@ -1340,6 +1400,28 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
                         packageline.ContainerNumber = package.ContainerNumber;
+
+                        #region Harmonize
+                        if (package.IsMultiHarmonize)
+                        {
+                            List<PickUpDeliveryPackageHarmonize> allHarmonizes = shipmentsContext.PickUpDeliveryPackageHarmonizes.Where(d => d.PackageId == package.Id && d.Tenant == package.Tenant).ToList();
+                            foreach (PickUpDeliveryPackageHarmonize itemHarmonize in allHarmonizes)
+                            {
+                                if (string.IsNullOrEmpty(packageline.HSCode))
+                                {
+                                    packageline.HSCode = itemHarmonize.Harmonize;
+                                }
+                                else
+                                {
+                                    packageline.HSCode += "," + itemHarmonize.Harmonize;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            packageline.HSCode = package.Harmonize;
+                        }
+                        #endregion
 
                         PackageType packtype = (from pa in commonContext.PackageTypes
                                                 where pa.Id == package.PackageTypeId

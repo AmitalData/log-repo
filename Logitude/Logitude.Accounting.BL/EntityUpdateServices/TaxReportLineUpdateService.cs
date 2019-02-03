@@ -4,6 +4,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -20,43 +21,45 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     public partial class TaxReportLineUpdateService
     {
 
-        protected override void OnCreating(TaxReportLinePM entityPM, TaxReportPM entityParentPM)
+        protected override void OnCreating(TaxReportLinePM entityPM, EntityPM entityParentPM)
         {
-            entityPM.TaxReportId = entityParentPM.Id;
-            entityParentPM.TaxReportLineLastLine += 1;
-            entityPM.Line = entityParentPM.TaxReportLineLastLine;
+            entityPM.IsManuallyChanged = true;
+
+            base.OnCreating(entityPM, entityParentPM);
         }
 
         protected override void OnUpdating(TaxReportLinePM entityPM, TaxReportLine entityPOCO)
         {
+            JournalQueryService journalQuery = new JournalQueryService(EntityPM.Tenant);
+            JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(entityPM.Tenant);
+            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+            JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+
+
             Validate(entityPM);
+
             // TASK 43057
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            if (this.EntityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 if (entityPM.IsManuallyChanged == true)
-                {
-                    JournalQueryService journalQuery = new JournalQueryService(EntityPM.Tenant);
-
-                    IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-                    JournalUpdateService journalUpdateService = new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-
-                    JournalPM journalPM = journalQuery.GetSingle(EntityPM.JournalId, false, false);
-                    if (journalPM != null)
-                    {
-                        if (entityPM.TransmitStatusCode == "1") // 1- For transmit
-                            journalPM.TaxReportId = entityPM.TaxReportId;
-                        else if (entityPM.TransmitStatusCode == "3") // 3- Not for transmit at all
-                            journalPM.TaxReportId = "1111";
-
-                        //update
-                        journalPM.ChangeSetOp = ChangeSetOperation.Update;
-                        journalUpdateService.Update(journalPM, true);
-                    }
-
-                }
+                    entityPM.IsManuallyChanged = false;
+            }
+            else
+            {
+                entityPM.IsManuallyChanged = true;
             }
 
-          
+            // Update Journal
+            JournalPM journalPM = journalQuery.GetSingle(EntityPM.JournalId, false, false);
+            JournalAdditionalDataPM journalAdditionalDataPM = additionalDataQueryService.GetSingle(journalPM.Id, false, false);
+            if (journalPM != null)
+            {
+                journalAdditionalDataPM.TaxReportTransmitStatusCode = entityPM.TransmitStatusCode;
+                journalAdditionalDataPM.TaxReportId = entityPM.TaxReportId;
+                journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
+                journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
+            }
+
             base.OnUpdating(entityPM, entityPOCO);
         }
 
@@ -70,9 +73,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (entityPM.OutputOrInput == "O")
             {
-                //ARInvoice invoice = aRInvoiceRepository.GetSingleARInvoice(a.AccountingEntityId, a.Tenant);
-
-                //Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(invoice.BillToId, tenant);
 
 
 
@@ -81,47 +81,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     entityPM.LineTypeCode = "M";
 
                 }
-                //else if (card.IsAutonomy)
-                //{
-                //    entityPM.LineTypeCode = "I";
-                //}
-                //else
-                //{
-                //    entityPM.LineTypeCode = "S";
-                //}
+
 
                 if (entityPM.VatNumber == null)
                 {
                     entityPM.StatusCode = "1";
                 }
                
-                //               else if (!string.IsNullOrEmpty(line.VatNumber))
-                //               {
-                //                   //var hasChars = Regex.Matches(line.VatNumber, @"[a-zA-Z]");
 
-
-                //                   //if (line.VatNumber.Length != 9 || hasChars.Count != 0)
-                //                   //{
-                //                   //    line.StatusCode = "2";
-                //                   //}
-
-                //                   //else if (line.VatNumber.Length == 9)
-                //                   //{
-                //                   //    var wrongDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(line.VatNumber);
-                //                   //    var digit = line.VatNumber.ToString().Substring(8);
-                //                   //    if (digit == wrongDigit.ToString())
-                //                   //    {
-                //                   //        line.StatusCode = "6";
-                //                   //    }
-                //                   //    else
-                //                   //    {
-                //                   //        line.StatusCode = "2";
-                //                   //    }
-                //                   //}
-
-                //}
-
-                 if (entityPM.Reference != null)
+               else  if (entityPM.Reference != null)
                 {
                     var chars = Regex.Matches(entityPM.Reference, @"[a-zA-Z]");
                     if (chars.Count != 0)
@@ -147,16 +115,25 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     entityPM.StatusCode = "1";
                 }
 
-                if (entityPM.Reference != null)
+             else   if (entityPM.Reference != null)
                 {
                     var chars = Regex.Matches(entityPM.Reference, @"[a-zA-Z]");
                     if (chars.Count != 0)
                     {
                         entityPM.StatusCode = "3";
                     }
+                    else
+                    {
+                        entityPM.StatusCode = "6";
+                    }
+
                 }
 
-                else { entityPM.StatusCode = "6"; }
+                else
+                {
+                    entityPM.StatusCode = "6";
+                }
+
 
 
             }

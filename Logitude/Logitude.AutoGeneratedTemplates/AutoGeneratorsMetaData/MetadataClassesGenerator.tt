@@ -12,6 +12,8 @@
 <#@ Assembly Name="System.Linq.dll" #>
 <#@ Import Namespace="System.Linq" #>
 <#@ import Namespace="System.IO" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+
 <#
 	//GenerateAllUpdateClasses("../EntityFiles","../.../Logitude.Customs.MetaData/EntityUpdateClasses");
 	//GenerateUpdateClass("../generatedXmls/CheckEntityType.lxml","../EntityUpdateClasses/CheckEntityTypeUpdateClass.cs");
@@ -96,8 +98,8 @@ void SaveUpdateClassOutput(string outputFileName)
 
 
 <#+
-List<string> GeneratedTabFeatures = new List<string>();
-List<string> GeneratedTabTextCodes = new List<string>();
+Dictionary<string, string> GeneratedTabFeatures = new Dictionary<string, string>();
+Dictionary<string, string> GeneratedTabTextCodes = new Dictionary<string, string>();
  private void WriteUpdateClassMethod(XElement entity)
 {
 	string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
@@ -201,7 +203,7 @@ namespace <#= UpdateClassnamespacestring #>
 					&& p.Name != "HasCompactSearch"  && p.Name != "ApplyDefaultValues"  && p.Name != "HasCustomValidator" && p.Name != "ApplyOnPropertyChangedCode" && p.Name != "HasApiHelper" && p.Name != "SortingByDirection"
 					  && p.Name != "DescriptionTextCodeId" && p.Name != "DownloadToExcelFeatureCode"
 					  && p.Name != "Code1"  && p.Name != "Name1" && p.Name != "Code2"  && p.Name != "Name2"
-					   && p.Name != "Code3"  && p.Name != "Name3" && p.Name != "Code4"  && p.Name != "Name4")
+					   && p.Name != "Code3"  && p.Name != "Name3" && p.Name != "Code4"  && p.Name != "Name4" && p.Name != "HeaderScreenId")
                 {
 				  #>
 				    <#= p.Name #> =  <#= p.Value #>,
@@ -249,7 +251,7 @@ namespace <#= UpdateClassnamespacestring #>
 		#>
 
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup <#= ObjectTbl.Trim('"') #>QueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = <#= QGCode.Value #>, Name = <#= QGName.Value #> }, queryGroupRepository);
 			<#+
@@ -320,13 +322,14 @@ namespace <#= UpdateClassnamespacestring #>
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
 	    {    <#+
-		 GeneratedTabFeatures = new List<string>();
-		 GeneratedTabTextCodes = new List<string>();
+		 GeneratedTabFeatures = new Dictionary<string, string>();
+		 GeneratedTabTextCodes = new Dictionary<string, string>();
 		var Tabs = entity.Elements("Tab").FirstOrDefault();
         if (Tabs != null)
         { #>
-
-			 ObjectTable <#= ObjectTbl.Trim('"') #>ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == <#= TableNameFull #> && d.Tenant == 0).FirstOrDefault(); <#+
+            
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable <#= ObjectTbl.Trim('"') #>ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == <#= TableNameFull #> && d.Tenant == 0).FirstOrDefault(); <#+
 			  int x = 0;
 			  foreach(XElement tab in entity.Elements("Tab"))
 			  { //get all Queries
@@ -336,16 +339,20 @@ namespace <#= UpdateClassnamespacestring #>
 			  #>
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			  <#+
 			}
 	    
 			#>  <#+
 			if (Tabs != null)
 			{ 
-				foreach(XElement tab in entity.Elements("Tab"))  //get all classes
-				WriteAddTabMethod(entity,tab,ObjectTbl);
+			    int y = 0;
+				foreach(XElement tab in entity.Elements("Tab"))
+				{   //get all classes
+					WriteAddTabMethod(entity,tab,ObjectTbl,y);
+					y++;
+				}
 			}
 		#>
 
@@ -374,6 +381,34 @@ namespace <#= UpdateClassnamespacestring #>
 		   Feature  <#= ObjectTbl.Trim('"') #>ExcelFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = <#= DownloadToExcelFeatureCode #>, Packagable = true, ObjectTableId = <#= ObjectTbl.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#= ObjectTbl.Trim('"') #>.Features.EXCEL", NameTextCodeDefaultText = "Download to Excel", FeatureTypeCode = "ACT" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 <#+
+		}
+
+		var AdditionalFeatures = entity.Elements("AdditionalFeatures").FirstOrDefault();
+        if (AdditionalFeatures != null && AdditionalFeatures.Elements("Feature").Count() > 0)
+		{
+
+#>
+
+
+		   		   //--------------> Additional Features <--------------\\
+
+<#+
+foreach(XElement featureElement in AdditionalFeatures.Elements("Feature")){
+				    var Code = featureElement.Attributes().Where(a => a.Name == "Code").FirstOrDefault().Value.Trim('"');
+					var FeatureTypeCode = featureElement.Attributes().Where(a => a.Name == "FeatureTypeCode").FirstOrDefault().Value.Trim('"');
+					var FeatureTextCodeCode = featureElement.Attributes().Where(a => a.Name == "FeatureTextCodeCode").FirstOrDefault().Value.Trim('"');
+					var FeatureDefaultText = featureElement.Attributes().Where(a => a.Name == "FeatureDefaultText").FirstOrDefault().Value.Trim('"').Replace("\"",  "''").Replace("\n",  "\\n");
+ 					var IsPackagable = featureElement.Attributes().Where(a => a.Name == "IsPackagable").FirstOrDefault().Value;
+					var IsBusinessUnitEnabled = featureElement.Attributes().Where(a => a.Name == "IsBusinessUnitEnabled").FirstOrDefault().Value;
+					var IsOld = featureElement.Attributes().Where(a => a.Name == "IsOld").FirstOrDefault().Value;
+					var IsCoreFeature = featureElement.Attributes().Where(a => a.Name == "IsCoreFeature").FirstOrDefault().Value;
+
+#>
+		   Feature <#= ObjectTbl.Trim('"') #>Feature_<#=Code.Replace(".","_")#> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "<#=Code#>", FeatureTypeCode = "<#=FeatureTypeCode#>", Packagable = <#=IsPackagable#>, IsBusinessUnitEnabled = <#=IsBusinessUnitEnabled#>, IsOld = <#=IsOld#>, IsCoreFeature = <#=IsCoreFeature#>, ObjectTableId = <#= ObjectTbl.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#=FeatureTextCodeCode#>", NameTextCodeDefaultText = @"<#=FeatureDefaultText#>" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+<#+
+	  
+				}
 		}
 		 #>   
 	    
@@ -405,7 +440,7 @@ namespace <#= UpdateClassnamespacestring #>
 			#>
 
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable <#= ObjectTbl.Trim('"') #>ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == <#= TableNameFull #> && d.Tenant == 0).FirstOrDefault(); <#+
 			 foreach(XElement item in MenuButtons.Elements("MenuButton"))
 			 {  
@@ -436,7 +471,46 @@ namespace <#= UpdateClassnamespacestring #>
 	     
 	#>
 
-	    } <#+ 
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  <#+
+	    
+
+		var AdditionalTextCodes = entity.Elements("AdditionalTextCodes").FirstOrDefault();
+        if (AdditionalTextCodes != null && AdditionalTextCodes.Elements("TextCode").Count() > 0)
+		{
+
+#>
+
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable <#= ObjectTbl.Trim('"') #>ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == <#= TableNameFull #> && d.Tenant == 0).FirstOrDefault(); 
+
+<#+
+foreach(XElement textCodeElement in AdditionalTextCodes.Elements("TextCode")){
+				    var Code = textCodeElement.Attributes().Where(a => a.Name == "Code").FirstOrDefault().Value.Trim('"');
+					var DefaultText = (textCodeElement.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault() != null? '"'  + textCodeElement.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value.Trim('"').Replace("\"",  "''").Replace("\n",  "\\n") + '"' :"null");
+					var LocalDefaultText = (textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault() != null?   (!textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault().Value.Trim('"').Contains("\"")? "@":"") +'"' + (textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault().Value.Trim('"').Replace("\"",  "''").Replace("\n",  "\\n")) +'"'  :"null");
+					var TextCodeTypeCode = textCodeElement.Attributes().Where(a => a.Name == "TextCodeTypeCode").FirstOrDefault().Value;
+ 					var IsSpellChecked = textCodeElement.Attributes().Where(a => a.Name == "IsSpellChecked").FirstOrDefault().Value;
+		
+		Regex regex = new Regex(@"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
+        var className = regex.Replace(Code, "");					 
+
+#>
+ 		   TextCode <#= ObjectTbl.Trim('"') #>TextCode_<#=className#> = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "<#= Code #>", DefaultText = <#= DefaultText #>,LocalDefaultText = <#= LocalDefaultText #>, ObjectTableId = <#= ObjectTbl.Trim('"') #>ObjectTable.Id, Tenant = 0, TextCodeTypeCode = <#= TextCodeTypeCode #>, IsSpellChecked = <#= IsSpellChecked #> }, TextCodeRepository, TextCodes);
+
+<#+
+	  
+				}
+		}
+#>   
+	    
+}
+
+<#+ 
 	var CloseTableCode = entity.Attribute(XName.Get("CloseTableCode"));
 	var CloseTableName = entity.Attribute(XName.Get("CloseTableName"));
 	string originalTableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
@@ -473,13 +547,19 @@ namespace <#= UpdateClassnamespacestring #>
 <#+
 private void WriteAddFieldMethod(XElement entity,XElement field)
 { 
+	bool isCustomField = false;
+	if(field.Attribute(XName.Get("IsCustom")) != null)
+    {
+		isCustomField = (field.Attribute(XName.Get("IsCustom")).Value.ToLower() == "true");
+    }
+
 	bool noObjectField = false;
 	if(field.Attribute(XName.Get("NoMetaDataField")) != null)
     {
 		noObjectField = (field.Attribute(XName.Get("NoMetaDataField")).Value.ToLower() == "true");
     }
 
-	if(field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Id" || field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Tenant" || noObjectField)
+	if(field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Id" || field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Tenant" || noObjectField || isCustomField)
     {
 		return;
     }
@@ -499,11 +579,21 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 				{  
 					if(p.Name != "Id" && p.Name != "ObjectFieldNotRequired" && p.Name != "IsForeignKey" && p.Name != "ForeignEntity"&& p.Name != "NavigationPropertyName"&& p.Name != "IsPrimaryKey"&& p.Name != "Order" && p.Name != "IsNullable" && p.Name != "HasDataBaseField"&& p.Name != "HasPMField" && p.Name != "AssociationName" && p.Name != "ThisKey" && p.Name != "OtherKey" && p.Name != "IsComposition" && p.Name != "NoMetaDataField" && p.Name != "GenerateInList" 
 					&& p.Name != "IsSpellCheckedFullFieldLable" && p.Name != "IsSpellCheckedHelpLocalDefaultText" && p.Name != "IsSpellCheckedShortLocalDefaultText" && p.Name != "IsSpellCheckedListLocalDefaultText"
-					&& p.Name != "IsChecked" && p.Name != "IsDeleted" && p.Name != "IsNew")
+					&& p.Name != "IsChecked" && p.Name != "IsDeleted" && p.Name != "IsNew" && p.Name != "IsRequiered"  && p.Name != "LookUpTableId"
+					&& p.Name != "FullNameTextCodeId"
+					&& p.Name != "HelpTextCodeId"
+					&& p.Name != "ListTextCodeId" && p.Name != "LookUpTableId"
+					
+
+)
 					{
 					if(!string.IsNullOrEmpty(p.Value.Trim('"')))
 					{
 					   var propValue = p.Value.Replace("\n",@"\n");
+					   if(propValue.StartsWith("\"") && propValue.EndsWith("\"") && p.Name.ToString().Contains("DefaultText"))
+					   {
+					     propValue =  (!propValue.Trim('"').Contains("\"")? "@":"") + '"'  + propValue.Trim('"').Replace("\"",  "''") + '"';
+					   }
 						if(p.Name == "IsRequired" ||p.Name == "SystemRequired")
 						{
 							propValue = objectFieldNotRequired ? "false":propValue;
@@ -605,18 +695,31 @@ private void WriteAddTabsFeaturesAndTextCodesMethod(XElement entity,XElement Tab
 
 	   string TextCodeCode = TableNameFull.Trim('"') +".TH." + Name.Trim(new char[]{' ','"'}).Replace(" ","");
 	   if(TextCodeAtt != null)
-			TextCodeCode = TextCodeAtt.Value.ToString().Trim('"');
+        {
+            TextCodeCode = TextCodeAtt.Value.ToString().Trim('"');
+           
+        }
 
 	   string FeatureCode = TblName.Trim('"') +".Tab."+ Name.Trim(new char[]{' ','"'}).Replace(" ","");
 	    if(FeatureCodeAtt != null)
-			FeatureCode = FeatureCodeAtt.Value.ToString().Trim('"');
+        {
+            FeatureCode = FeatureCodeAtt.Value.ToString().Trim('"');
+          
+            
+        }
 
 					var FeatureTextCodeAtt = TabAtt.Attributes().Where(a => a.Name == "FeatureTextCodeCode").FirstOrDefault();
 	   var FeatureDefaultTextCodeAtt = TabAtt.Attributes().Where(a => a.Name == "FeatureDefaultText").FirstOrDefault();
 
 			 string FeatureTextCodeCode = TblName.Trim('"') +"Features."+ Code.Trim(new char[]{' ','"'}).Replace(" ","");
+        string featureTableName = TblName.Trim('"');
 	    if(FeatureTextCodeAtt != null)
-			FeatureTextCodeCode = FeatureTextCodeAtt.Value.ToString().Trim('"');
+        {
+            FeatureTextCodeCode = FeatureTextCodeAtt.Value.ToString().Trim('"');
+              if(FeatureTextCodeCode.Split('.')[0] == "General" )
+                featureTableName = "General";
+        }
+
 
 			 string FeatureDefaultText = Name;
 	    if(FeatureDefaultTextCodeAtt != null)
@@ -637,33 +740,36 @@ private void WriteAddTabsFeaturesAndTextCodesMethod(XElement entity,XElement Tab
     {
 	      Packagable =  IsPackagable.Value;  
     }
-	if(!GeneratedTabTextCodes.Contains(TextCodeCode) && !GeneratedTabFeatures.Contains(FeatureCode))
+           var featureInstanceName= featureTableName.Trim('"')+ Name.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","")+"Feature_TH"+index ;
+            var textCodeInstanceName = TblName.Trim('"')+ Name.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","")+ "TextCode_TH"+index ;
+	if(!GeneratedTabTextCodes.Keys.Contains(TextCodeCode) && !GeneratedTabFeatures.Keys.Contains(FeatureCode))
 	{
-		GeneratedTabTextCodes.Add(TextCodeCode);
-		GeneratedTabFeatures.Add(FeatureCode);
+         
+		    GeneratedTabTextCodes.Add(TextCodeCode, textCodeInstanceName);
+		    GeneratedTabFeatures.Add(FeatureCode, featureInstanceName);
 		 	  
 #> 
                  
-			   TextCode <#= TblName.Trim('"') #><#= Name.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","") #>TextCode_TH<#= index #> = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "<#= TextCodeCode #>", DefaultText = <#= Name #>,LocalDefaultText = <#= LocalName #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature <#= TblName.Trim('"') #><#= Name.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","") #>Feature_TH<#= index #> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "<#= FeatureCode #>", ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#= FeatureTextCodeCode #>", NameTextCodeDefaultText = <#= FeatureDefaultText #>, FeatureTypeCode = "AREA", Packagable = <#= Packagable.ToLower() #> }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode <#= textCodeInstanceName #> = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "<#= TextCodeCode #>", DefaultText = <#= Name #>,LocalDefaultText = <#= LocalName #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature <#= featureInstanceName #> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "<#= FeatureCode #>", ObjectTableId = <#= featureTableName.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#= FeatureTextCodeCode #>", NameTextCodeDefaultText = <#= FeatureDefaultText #>, FeatureTypeCode = "AREA", Packagable = <#= Packagable.ToLower() #> }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 <#+
 }
 else
 {
-if(!GeneratedTabTextCodes.Contains(TextCodeCode))
+if(!GeneratedTabTextCodes.Keys.Contains(TextCodeCode))
 {
-		GeneratedTabTextCodes.Add(TextCodeCode);
+		GeneratedTabTextCodes.Add(TextCodeCode,textCodeInstanceName);
 #> 
                  
-			   TextCode <#= TblName.Trim('"') #><#= Name.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","") #>TextCode_TH<#= index #> = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "<#= TextCodeCode #>", DefaultText = <#= Name #>,LocalDefaultText = <#= LocalName #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode <#= textCodeInstanceName #> = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "<#= TextCodeCode #>", DefaultText = <#= Name #>,LocalDefaultText = <#= LocalName #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 <#+
 }
-if(!GeneratedTabFeatures.Contains(FeatureCode))
+if(!GeneratedTabFeatures.Keys.Contains(FeatureCode))
 {
-		GeneratedTabFeatures.Add(FeatureCode);
+		GeneratedTabFeatures.Add(FeatureCode,featureInstanceName);
 #> 
                  
-			   Feature <#= TblName.Trim('"') #><#= Name.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","") #>Feature_TH<#= index #> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "<#= FeatureCode #>", ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#= FeatureTextCodeCode #>", NameTextCodeDefaultText = <#= FeatureDefaultText #>, FeatureTypeCode = "AREA", Packagable = <#= Packagable.ToLower() #> }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature <#= featureInstanceName #> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "<#= FeatureCode #>", ObjectTableId = <#= featureTableName.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#= FeatureTextCodeCode #>", NameTextCodeDefaultText = <#= FeatureDefaultText #>, FeatureTypeCode = "AREA", Packagable = <#= Packagable.ToLower() #> }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 <#+
 }
 }
@@ -675,7 +781,7 @@ if(!GeneratedTabFeatures.Contains(FeatureCode))
 
 private void WriteAddMenuButtonsFeaturesMethod(XElement MButtonAtt,string TblName,int index)
 { 
-		 
+		var MenuButtonTypeAtt = MButtonAtt.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value != null ?MButtonAtt.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value.Trim('"'):"";
 	   var EventCode = MButtonAtt.Attributes().Where(a => a.Name == "EventCode").FirstOrDefault().Value;
 	   var DefaultText = MButtonAtt.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value.Trim('"'); 
 
@@ -705,14 +811,18 @@ private void WriteAddMenuButtonsFeaturesMethod(XElement MButtonAtt,string TblNam
     {
 	      Packagable =  FeatureIsPackagableAttr.Value;  
     }
+
+      
 	string feaureItemName =TblName.Trim('"')+"Feature_MB"+index.ToString();
-	if(!AddedMenuButtonsFeatures.Keys.Contains(EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')))
+	if(!AddedMenuButtonsFeatures.Keys.Contains(EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')) && MenuButtonTypeAtt.Trim('"') != "dropdownbutton")
 		{AddedMenuButtonsFeatures.Add(EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"') ,feaureItemName);}
+        if(MenuButtonTypeAtt.Trim('"') != "dropdownbutton"){
 #>      
     
 			   Feature <#= feaureItemName #> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = <#= FeatureCode #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#= TextCodeCode #>", NameTextCodeDefaultText = "<#= DefaultText #>", FeatureTypeCode = "ACT", Packagable = <#= Packagable.ToLower() #> }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 <#+
+        }
 	   var MenuItems = MButtonAtt.Elements("MenuItem");
 	   if (MenuItems != null)
        {
@@ -726,7 +836,7 @@ private void WriteAddMenuButtonsFeaturesMethod(XElement MButtonAtt,string TblNam
 			 var ItemFeatureDefaultTextCodeAtt = item.Attributes().Where(a => a.Name == "FeatureDefaultText").FirstOrDefault();
 			 var MenuButtonType = item.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value.Trim('"'); 
 
-			 if(MenuButtonType == "separator")
+			 if(MenuButtonType.Trim('"') == "separator")
 				continue;
 
 	   string ItemTextCodeCode = TblName.Trim('"') + ".Features." + ItemDefaultText.Trim('"').Replace(" ","") ;
@@ -778,7 +888,7 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 			LocalDefaultText = LocalDefaultTextAttr.Value;
 
 	   string IsActive = "false";
-       if (MenuButtonType == "dropdownbutton")
+       if (MenuButtonType.Trim('"') == "dropdownbutton")
        {
 		   IsActive = "false";
        }
@@ -801,7 +911,17 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 	    if(FeatureCodeAtt != null)
 			FeatureCode = FeatureCodeAtt.Value.ToString();
 
-	string featureClassName = AddedMenuButtonsFeatures[EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')];
+	    string featureClassName = "null";
+        
+        if (MenuButtonType.Trim('"') != "dropdownbutton")
+        {
+                        featureClassName = AddedMenuButtonsFeatures[EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')] + ".Id";
+                        
+
+        }
+        else
+            IndexOrder = "100";
+ 
 #>       
    
 			   MenuButton <#= TblName.Trim('"') #>MenuButton<#= index #> = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -815,7 +935,7 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 						MenuButtonGroupId = <#= TblName.Trim('"') #>MenuButtonGroup.Id,
 						ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id,
 						MenuButtonType = <#= MenuButtonType #>,
-						FeatureId = <#=featureClassName #>.Id,
+						FeatureId = <#=featureClassName #>,
 						Style = <#= Style #>,
 						LocalDefaultText = <#= LocalDefaultText #>,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
@@ -853,8 +973,14 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 			ItemTextCodeCode = ItemTextCodeAtt.Value.ToString().Trim('"');
 
 			string itemfeatureClassName = "";
+                var isActive = "true";
 			if(MenuButtonType.Trim('"') != "separator")
-				 itemfeatureClassName = "FeatureId=  " + AddedMenuButtonsFeatures[EventCode.Trim('"') +ItemFeatureCode.Trim('"')+ TblName.Trim('"')] + ".Id,";
+                {itemfeatureClassName = "FeatureId=  " + AddedMenuButtonsFeatures[EventCode.Trim('"') +ItemFeatureCode.Trim('"')+ TblName.Trim('"')] + ".Id,";
+                }
+                else
+                {
+                    isActive = "false";
+                }
 				  
 			 #>
 
@@ -862,7 +988,7 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 					{
 						EventCode = <#= EventCode #>,
 						Index = <#= IndexOrder #>, 
-						IsActive = true,
+						IsActive = <#= isActive #>,
 						LabelTextCodeCode = "<#= ItemTextCodeCode #>",
 						LabelTextCodeDefaultText = <#= DefaultText #>,
 						Tenant = 0,
@@ -915,7 +1041,8 @@ private void WriteAddQueryMethod(XElement entity,XElement QueryAtt,string TblNam
        var DefaultSortName = QueryAtt.Attributes().Where(a => a.Name == "DefaultSortName").FirstOrDefault() != null? QueryAtt.Attributes().Where(a => a.Name == "DefaultSortName").FirstOrDefault().Value:"null";
 	   var DefaultSortDirection = QueryAtt.Attributes().Where(a => a.Name == "DefaultSortDirection").FirstOrDefault() != null? QueryAtt.Attributes().Where(a => a.Name == "DefaultSortDirection").FirstOrDefault().Value:"null";
 	   var QGCode = QueryAtt.Attributes().Where(a => a.Name == "QueryGroupCode").FirstOrDefault().Value;
-	 
+	   var Perspective = QueryAtt.Attributes().Where(a => a.Name == "Perspective").FirstOrDefault() != null? QueryAtt.Attributes().Where(a => a.Name == "Perspective").FirstOrDefault().Value:"null";
+
            #> 
 
 			  Query <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = <#= TblName.Trim('"') #>TextCode_<#= index #>.Id, Code = <#= Code #>, <#+
@@ -928,7 +1055,7 @@ private void WriteAddQueryMethod(XElement entity,XElement QueryAtt,string TblNam
 			  <#+ } if (!string.IsNullOrEmpty(EditWizardComponentPath) && EditWizardComponentPath != "&quot;&quot;")
     {
 			  #> EditWizardComponentPath = <#= EditWizardComponentPath #>,
-			  <#+ }  #> QueryGroupCode = <#= QGCode #>, IndexOrder = <#= IndexOrder #>, Tenant = 0, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, QuerySection = <#= QuerySection #>, SystemLevel = <#= SystemLevel #>, IsAddNewEntityEnabled = <#= IsAddNewEntity #>, FeatureId = <#= TblName.Trim('"') #>Feature_<#= index #>.Id, DefaultSortName = <#= DefaultSortName #>, DefaultSortDirection = <#= DefaultSortDirection #> }, queriesRepository, tenantQueries);
+			  <#+ }  #> QueryGroupCode = <#= QGCode #>, IndexOrder = <#= IndexOrder #>, Tenant = 0, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, QuerySection = <#= QuerySection #>, SystemLevel = <#= SystemLevel #>, IsAddNewEntityEnabled = <#= IsAddNewEntity #>, FeatureId = <#= TblName.Trim('"') #>Feature_<#= index #>.Id, DefaultSortName = <#= DefaultSortName #>, DefaultSortDirection = <#= DefaultSortDirection #>, Perspective = <#= Perspective #> }, queriesRepository, tenantQueries);
 	<#+
 	    int i = 0;
 	    foreach(XElement Column in QueryAtt.Elements("QueryColumns").FirstOrDefault().Elements("QueryColumn"))
@@ -991,8 +1118,11 @@ private void WriteAddScreenMethod(XElement entity,XElement ScreenAtt,string TblN
        { 
 		   Code += ".HeaderScreen";
        }
+	   else  if (IsHeaderScreen.ToLower() == "true" && TblName != "Shipment"){
+		  Code = "HeaderScreen";
+	   }
 	   //ScreenDBCode
-		string screenCode = TblName.Trim('"').Replace(" ","") + Code.Trim('"').Replace(" ","");
+		string screenCode = TblName.Trim('"').Replace(" ","") + "." + Code.Trim('"').Replace(" ","");
 	    var ScreenDBCode = ScreenAtt.Attributes().Where(a => a.Name == "Code").FirstOrDefault();
 		if(ScreenDBCode != null)
 		   screenCode  = ScreenDBCode.Value.ToString().Trim('"');
@@ -1033,7 +1163,7 @@ private void WriteAddScreenFieldMethod(XElement entity,XElement ScreenField,int 
          <#+
 }
 
-private void WriteAddTabMethod(XElement entity,XElement Tab,string TblName)
+private void WriteAddTabMethod(XElement entity,XElement Tab,string TblName,int index)
 { 
 	 var Code = Tab.Attributes().Where(a => a.Name == "Code").FirstOrDefault().Value;
 	   var Name = Tab.Attributes().Where(a => a.Name == "TabName").FirstOrDefault().Value;
@@ -1065,11 +1195,12 @@ private void WriteAddTabMethod(XElement entity,XElement Tab,string TblName)
 	    if(FeatureCodeAtt != null)
 			FeatureCode = FeatureCodeAtt.Value.ToString().Trim('"');
 
-		 
+        var featureInstanceName= GeneratedTabFeatures[FeatureCode];
+        var textCodeInstanceName= GeneratedTabTextCodes[TextCodeCode];
 	  
 #>
 
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = tenantFeatures.Where(d => d.Code == "<#= FeatureCode #>" && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().Id, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "<#= TextCodeCode #>" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = <#= IndexOrder #> }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = <#= featureInstanceName #>.Id, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = <#= textCodeInstanceName #>.Id, Tenant = 0, IndexOrder = <#= IndexOrder #> }, objectTableTabsRepository, TenantObjectTableTabs);
    <#+
 }
 
@@ -1101,7 +1232,7 @@ private void WriteAddEventTypeMethod(XElement entity,XElement EventType,string T
 #>
                 ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id,
 <#+
-				  if(!(string.IsNullOrEmpty(statusCode)))
+				  if(statusCode != null && !(string.IsNullOrEmpty(statusCode.Trim('"'))))
 				  {
 #>
                 EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == <#= statusCode #>).FirstOrDefault().Id,
@@ -1289,6 +1420,7 @@ namespace <#= UpdateClassnamespacestring #>
 		    this.ObjectContext.SaveChanges();
 
 			CreateAllFeatures();
+			CreateAdditionalTextCodes();
 		    this.ObjectContext.SaveChanges();
 		    this.CommonContext.SaveChanges();
 
@@ -1576,7 +1708,34 @@ public void GenerateAddFieldMethods(string sourceFilePath)
 	#>
 
         }
+		public void CreateAdditionalTextCodes()
+        {
+   <#+
+    foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
+    {
+	 
+	 var path= Host.ResolvePath(file);
+     XElement entity = XDocument.Load(path).Root;
+	 string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
+	string dBTableName = entity.Attribute(XName.Get("DBTableName")).Value.ToString();
+	if(tableName.Contains("."))
+    {
+		tableName = tableName.ToString().Split('.')[1];
+		dBTableName = dBTableName.ToString().Split('.')[1];
+          
+    }
+	string classname = tableName + "UpdateClass";
+	 
+	 
+		 #><#=""#>
+	   <#+
+    #>
+	   <#=classname #>.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	<#+
+    }
+	#>
 
+        }
 		public void CreateAllMenuButtons()
         {
    <#+

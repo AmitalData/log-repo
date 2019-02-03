@@ -21,7 +21,6 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DeclarationEditComponentController } from '../../../../Customs/Controller/DeclarationEditComponentController';
 import { DropdownMenuFilterComponent }  from './DropdownMenuFilterComponent'
-import { CustomBankListService } from '../../../../Customs/Services/StandardLists/CustomBankListService';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { SendPayReadyLowRequestParams } from '../../../../Customs/DataContract/RequestParams/SendPayReadyLowRequestParams';
 import { SendALLCorrectRequestParams } from '../../../../Customs/DataContract/RequestParams/SendALLCorrectRequestParams';
@@ -85,7 +84,7 @@ implements OnDestroy
     _SelectedMNFValue: string = 'A'; // ALL/Complete/Wrong
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
     _SelectedDOCValue: string = 'A'; // All/Correction/CorrectionUploaded
-    _SelectedACCValue: string = 'A';//'W'; // All/Wrong eitan temp
+    _SelectedACCValue: string = 'A'; // Wrong/WrongSpecial
 
     public columns: any[] = null;
 
@@ -562,7 +561,8 @@ implements OnDestroy
     _DEC_C_Total = 0;
     _MNF_W_Total = 0;
     _MNF_C_Total = 0;
-    //_ACC_W_Total = 0;
+    _ACC_W_Total = 0;
+    _ACC_WS_Total = 0;
     _CorrectMNFToBatchSend = 0;
     _CorrectDECToBatchSend = 0;
 
@@ -641,7 +641,14 @@ implements OnDestroy
                             this._PAYReadyNotFastindividual = item.Value;
                             break;
                         }
-
+                        case "ACC_W": {
+                            this._ACC_W_Total = item.Value;
+                            break;
+                        }
+                        case "ACC_WS": {
+                            this._ACC_WS_Total = item.Value;
+                            break;
+                        }
                         default: {
                             //statements; 
                             var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
@@ -793,6 +800,17 @@ implements OnDestroy
             FieldName: 'MamanStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.MamanStatusCode"),
+            Styles: { width: '55px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: false,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+        });
+
+        this.columns.push({
+            FieldName: 'SpecialActionStatus',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.SpecialActionStatus"),
             Styles: { width: '55px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
@@ -1136,6 +1154,10 @@ implements OnDestroy
                 filters.addAdditionalFilter("MamanStatusCode", "2", null, null, "Equals", false, false, false, "string");
                 break;
             }
+            case "WS": {
+                filters.addAdditionalFilter("SpecialActionStatus", "X", null, null, "Equals", false, false, false, "string");
+                break;
+            }
         }
 
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
@@ -1458,6 +1480,36 @@ implements OnDestroy
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
             });
+    }
+
+    GatepassRequestMethod() {
+
+        if (AppTool.IsNullOrEmpty(this.entityPM.MAWB)) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show("לא ניתן לבצע גייטפס העברות ללא מזהה מטען"); //TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            return;
+        }
+
+        //this._DeclarationCourierStatusPMService.get(declarationId).subscribe((response: ServiceResponse) => {
+            //if (!response.HasError) {
+                var logitudeWindow = new LogitudeWindow();
+                var windowArgs: any = {};
+                windowArgs.CourierMasterPM = this.entityPM;
+                //windowArgs.Mode = mode;
+
+                logitudeWindow.Width = 750;
+                logitudeWindow.Height = 400;
+                logitudeWindow.IsShowCloseButton = false;
+                logitudeWindow.Title = "גייטפס העברות";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+                logitudeWindow.WindowArgs = windowArgs;
+                logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/GatepassRequest/GatepassRequestComponent');
+                logitudeWindow.WindowClosed.subscribe(($event: any) => {
+                    //this.RefreshData();
+                });
+            //}
+        //});
     }
 
     private GetMamanPUR() {

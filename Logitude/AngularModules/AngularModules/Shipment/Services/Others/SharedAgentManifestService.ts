@@ -86,13 +86,12 @@ export class SharedAgentManifestService {
         });
     }
 
-
-    public ShareAgentManifest(shipmentId: string) {
+    public ShareAgentManifest(shipmentId: string, isUpdateAgent: boolean = false) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '?shipmentId=' + shipmentId + '&tenant=' + SessionInfo.LoggedUserTenant, {
+            return this._http.get(this._apiUrl + '/GetSharedAgentManifest?' + 'shipmentId=' + shipmentId + '&isUpdateAgent=' + isUpdateAgent + '&tenant=' + SessionInfo.LoggedUserTenant, {
                 headers: authHeader
             }).map(response => {
 
@@ -154,7 +153,24 @@ export class SharedAgentManifestService {
         }).catch(ServiceHelper.HandleServiceError);
     }
 
+    GetIsAgentSharedManifests(agentId: string, entityid: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetIsAgentSharedManifests?' + 'agentId=' + agentId + '&entityid=' + entityid , {
+                headers: authHeader
+            }).map(response => {
+                var result = response.json();
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
 
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 
     get(id: string) {
 

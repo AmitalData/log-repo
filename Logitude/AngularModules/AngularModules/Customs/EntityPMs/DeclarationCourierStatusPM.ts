@@ -239,6 +239,21 @@ export class DeclarationCourierStatusPM {
     public set CourierSuspentionName(newValue: string) { if (this.courierSuspentionName != newValue) { this.courierSuspentionName = newValue; this.MarkAsDirty("CourierSuspentionName"); } }
        
 	 
+    private specialActionStatus: string;
+    public get SpecialActionStatus() { return this.specialActionStatus; }
+    public set SpecialActionStatus(newValue: string) { if (this.specialActionStatus != newValue) { this.specialActionStatus = newValue; this.MarkAsDirty("SpecialActionStatus"); } }
+       
+	 
+    private specialActionsErrorXml: string;
+    public get SpecialActionsErrorXml() { return this.specialActionsErrorXml; }
+    public set SpecialActionsErrorXml(newValue: string) { if (this.specialActionsErrorXml != newValue) { this.specialActionsErrorXml = newValue; this.MarkAsDirty("SpecialActionsErrorXml"); } }
+       
+	 
+    private courierPendingReasonErrorPlace: string;
+    public get CourierPendingReasonErrorPlace() { return this.courierPendingReasonErrorPlace; }
+    public set CourierPendingReasonErrorPlace(newValue: string) { if (this.courierPendingReasonErrorPlace != newValue) { this.courierPendingReasonErrorPlace = newValue; this.MarkAsDirty("CourierPendingReasonErrorPlace"); } }
+       
+	 
     private fastIndividualProcessCode: string;
     public get FastIndividualProcessCode() { return this.fastIndividualProcessCode; }
     public set FastIndividualProcessCode(newValue: string) { if (this.fastIndividualProcessCode != newValue) { this.fastIndividualProcessCode = newValue; this.MarkAsDirty("FastIndividualProcessCode"); } }

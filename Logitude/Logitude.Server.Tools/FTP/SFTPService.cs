@@ -66,14 +66,14 @@ namespace Logitude.Server.Tools.FTP
                 sftp.SSHPassword = p_password;
                 sftp.RemotePath = p_directory;
                 sftp.SSHAuthMode = SftpSSHAuthModes.amPublicKey;
-
+                sftp.RuntimeLicense = "31484E42414431535542323031393130323552413153554241544A353234353800000000000000003135554732304250000058415852315432434D5233410000";
                 //string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
                 //DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
                 //string solutionDirectory = solutionDir.FullName;
                 //string cerfFilePath = solutionDirectory + @"\Logitude.Server.Tools\FTP\private.pem";
 
-                string cerfFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"FTP\private.pem");
-                sftp.SSHCert = new Certificate(CertStoreTypes.cstPEMKeyFile, cerfFilePath, "test", "*");//@"C:\temp\private.pem"
+               // string cerfFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"FTP\private.pem");
+                //sftp.SSHCert = new Certificate(CertStoreTypes.cstPEMKeyFile, cerfFilePath, "test", "*");//@"C:\temp\private.pem"
                 
 
 

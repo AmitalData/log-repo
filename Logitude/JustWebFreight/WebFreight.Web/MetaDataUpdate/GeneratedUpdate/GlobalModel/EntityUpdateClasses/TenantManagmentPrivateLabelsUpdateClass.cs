@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdateClasses
 {
    public class TenantManagmentPrivateLabelsUpdateClass
@@ -76,50 +79,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
             {
 			
 	             				    ObjectTableName =  "TenantManagmentPrivateLabels",
+			      				    IsNew =  false,
 			      				    DBTableName =  "TenantManagmentPrivateLabels",
+			      				    OldDBTableName =  "TenantManagmentPrivateLabels",
 			      				    ObjectTableSingular =  "Tenant Managment Private Labels",
 			      				    ObjectTablePlural =  "Tenant Managment Private Labels",
-			      				    DefaultText =  "Tenant Managment Private Labels",
-			      				    Name =  "Private Labels",
+			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  false,
 			      				    IsNewWizard =  true,
-			      				    NewWizardControlName =  "Simplog.Infrastructure.Views.TenantManagmentPrivateLabels.AddEditPrivateLabelsControl",
 			      				    LookUp1 =  "Id",
 			      				    LookUp2 =  "PrivateLabelName",
-			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  true,
+			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
-			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  false,
+			      				    IsMain =  true,
 			      				    IsAutoComplete =  true,
-			      				    CustomFieldsCount =  0,
-			      				    HasCustomFields =  false,
+			      				    EnableEditFromLOV =  false,
 			      				    InActive =  false,
-			      				    SearchFields =  "TenantManagmentPrivateLabels,TenantManagmentPrivateLabels,Simplog.Infrastructure.Views.TenantManagmentPrivateLabels.AddEditPrivateLabelsControl,Id,",
 			      				    IsSaveButtonVisible =  true,
-			      				    EnableSecurity =  false,
-			      				    ObjectTableTypeCode =  "MD",
 			      				    IsComposition =  false,
-			      				    MaxNumberOfCustomFields =  0,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    NewWizardControlName =  "Simplog.Infrastructure.Views.TenantManagmentPrivateLabels.AddEditPrivateLabelsControl",
+			      				    DefaultText =  "Tenant Managment Private Labels",
+			      				    Code =  "TMPL",
+			      				    Name =  "Private Labels",
+			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Infrastructure",
+			      				    NewWizardComponentPath =  "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/AddEditPrivateLabelsComponent",
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
-			      				    IsEditable =  false,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
-			      				    ClientModuleName =  "Infrastructure",
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    Code =  "TMPL",
-			      				    CloseTableCode =  "Id",
+			      				    SearchFields =  "TenantManagmentPrivateLabels,TenantManagmentPrivateLabels,Simplog.Infrastructure.Views.TenantManagmentPrivateLabels.AddEditPrivateLabelsControl,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -131,12 +138,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "PrivateLabelShortName",
+					  						OldFieldName =  "PrivateLabelShortName",
 					  						ObjectTableName =  "TenantManagmentPrivateLabels",
 					  						FieldsDataType =  "Text",
-					  						Code =  "PrivateLabelShortName",
-					  						MaxLength =  60,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  60,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -148,14 +156,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  true,
-					  						DisplayInSearchWindowFilters =  true,
 					  						PMPropertyPath =  "PrivateLabelShortName",
 					  						ListPropertyPath =  "PrivateLabelShortName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -163,22 +169,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ValidForQuerySection1 =  "TenantManagmentPrivateLabels",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "PrivateLabelShortName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  true,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "PrivateLabelShortName",
+					  						DefaultText =  @"Private Label Short Name",
+					  						ListFieldLable =  "PrivateLabelShortNameListLable",
+					  						ListLableDefaultText =  @"Private Label Short Name",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
-					  						FullFieldLable =  "Private Label Short Name",
-					  						DefaultText =  "Private Label Short Name",
-					  						ListFieldLable =  "PrivateLabelShortNameListLable",
-					  						ListLableDefaultText =  "Private Label Short Name",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "Private Label Short Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -188,12 +200,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "PrivateLabelName",
+					  						OldFieldName =  "PrivateLabelName",
 					  						ObjectTableName =  "TenantManagmentPrivateLabels",
 					  						FieldsDataType =  "Text",
-					  						Code =  "PrivateLabelName",
-					  						MaxLength =  60,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  60,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -205,14 +218,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  true,
-					  						DisplayInSearchWindowFilters =  true,
 					  						PMPropertyPath =  "PrivateLabelName",
 					  						ListPropertyPath =  "PrivateLabelName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -220,22 +231,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ValidForQuerySection1 =  "TenantManagmentPrivateLabels",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "PrivateLabelName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  true,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "PrivateLabelName",
+					  						DefaultText =  @"Private Label Name",
+					  						ListFieldLable =  "PrivateLabelNameListLable",
+					  						ListLableDefaultText =  @"Private Label Name",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
-					  						FullFieldLable =  "Private Label Name",
-					  						DefaultText =  "Private Label Name",
-					  						ListFieldLable =  "PrivateLabelNameListLable",
-					  						ListLableDefaultText =  "Private Label Name",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "Private Label Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -245,12 +262,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "PrivateLabelUrl",
+					  						OldFieldName =  "PrivateLabelUrl",
 					  						ObjectTableName =  "TenantManagmentPrivateLabels",
 					  						FieldsDataType =  "Text",
-					  						Code =  "PrivateLabelUrl",
-					  						MaxLength =  100,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -262,14 +280,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "PrivateLabelUrl",
 					  						ListPropertyPath =  "PrivateLabelUrl",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -277,22 +293,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ValidForQuerySection1 =  "TenantManagmentPrivateLabels",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "PrivateLabelUrl",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "PrivateLabelUrl",
+					  						DefaultText =  @"Private Label Url",
+					  						ListFieldLable =  "PrivateLabelUrlListLable",
+					  						ListLableDefaultText =  @"Private Label Url",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
-					  						FullFieldLable =  "Private Label Url",
-					  						DefaultText =  "Private Label Url",
-					  						ListFieldLable =  "PrivateLabelUrlListLable",
-					  						ListLableDefaultText =  "Private Label Url",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "Private Label Url",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -302,12 +324,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ContactUsEmail",
+					  						OldFieldName =  "ContactUsEmail",
 					  						ObjectTableName =  "TenantManagmentPrivateLabels",
 					  						FieldsDataType =  "Text",
-					  						Code =  "ContactUsEmail",
-					  						MaxLength =  70,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  70,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -319,14 +342,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ContactUsEmail",
 					  						ListPropertyPath =  "ContactUsEmaile",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -334,22 +355,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ValidForQuerySection1 =  "TenantManagmentPrivateLabels",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "ContactUsEmail",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "ContactUsEmail",
+					  						DefaultText =  @"Contact Us Email",
+					  						ListFieldLable =  "ContactUsEmailListLable",
+					  						ListLableDefaultText =  @"Contact Us Email",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
-					  						FullFieldLable =  "Contact Us Email",
-					  						DefaultText =  "Contact Us Email",
-					  						ListFieldLable =  "ContactUsEmailListLable",
-					  						ListLableDefaultText =  "Contact Us Email",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "Contact Us Email",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -359,12 +386,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ReceiveAllStatuses",
+					  						OldFieldName =  "ReceiveAllStatuses",
 					  						ObjectTableName =  "TenantManagmentPrivateLabels",
 					  						FieldsDataType =  "Boolean",
-					  						Code =  "ReceiveAllStatuses",
-					  						MaxLength =  0,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -376,14 +404,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ReceiveAllStatuses",
 					  						ListPropertyPath =  "ReceiveAllStatuses",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -391,22 +417,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ValidForQuerySection1 =  "TenantManagmentPrivateLabels",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "ReceiveAllStatuses",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "ReceiveAllStatuses",
+					  						DefaultText =  @"Receive All Statuses",
+					  						ListFieldLable =  "ReceiveAllStatusesListLable",
+					  						ListLableDefaultText =  @"Receive All Statuses",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
-					  						FullFieldLable =  "Receive All Statuses",
-					  						DefaultText =  "Receive All Statuses",
-					  						ListFieldLable =  "ReceiveAllStatusesListLable",
-					  						ListLableDefaultText =  "Receive All Statuses",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "Receive All Statuses",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -416,12 +448,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "InActive",
+					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "TenantManagmentPrivateLabels",
 					  						FieldsDataType =  "Boolean",
-					  						Code =  "InActive",
-					  						MaxLength =  0,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -433,14 +466,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "InActive",
 					  						ListPropertyPath =  "InActive",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -448,22 +479,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ValidForQuerySection1 =  "TenantManagmentPrivateLabels",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "InActive",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "InActive",
+					  						DefaultText =  @"In Active",
+					  						ListFieldLable =  "InActiveListLable",
+					  						ListLableDefaultText =  @"In Active",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
-					  						FullFieldLable =  "In Active",
-					  						DefaultText =  "In Active",
-					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  "In Active",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "In Active",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -473,12 +510,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "SearchFields",
+					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "TenantManagmentPrivateLabels",
 					  						FieldsDataType =  "nText",
-					  						Code =  "SearchFields",
-					  						MaxLength =  500,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  500,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -490,12 +528,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -503,22 +539,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ValidForQuerySection1 =  "TenantManagmentPrivateLabels",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "SearchFields",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  @"Search..",
+					  						HelpTextCode =  "SearchFields",
+					  						HelpTextDefaultText =  @"Searching by :\n1: Short Name\n2: Full Name",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search..",
-					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1: Short Name\n2: Full Name",
+					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -527,9 +569,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup TenantManagmentPrivateLabelsQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TMPL", Name = "Private Labels" }, queryGroupRepository);
+						QueryGroup TenantManagmentPrivateLabelsQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "387b", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable TenantManagmentPrivateLabelsObjectTable = objectContext.ObjectTables.Where(d => d.Name == "TenantManagmentPrivateLabels" && d.Tenant == 0).FirstOrDefault();
@@ -543,7 +586,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	      
 
 			  Query PrivateLabelsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagmentPrivateLabelsTextCode_0.Id, Code = "PrivateLabels",  EditWizardName = "Simplog.Infrastructure.Views.TenantManagmentPrivateLabels.AddEditPrivateLabelsControl",
-			   QueryGroupCode = "TMPL", IndexOrder = 0, Tenant = 0, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, QuerySection = "TenantManagmentPrivateLabels", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TenantManagmentPrivateLabelsFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "TMPL", IndexOrder = 0, Tenant = 0, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, QuerySection = "TenantManagmentPrivateLabels", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TenantManagmentPrivateLabelsFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn PrivateLabelsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PrivateLabelsQuery.Id, IndexOrder = 0, ObjectFieldId = TenantManagmentPrivateLabelsObjectFields.Where(d => d.FieldName == "PrivateLabelName" && d.ObjectTableId == TenantManagmentPrivateLabelsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -569,18 +612,66 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+		   ObjectTable TenantManagmentPrivateLabelsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantManagmentPrivateLabels" && d.Tenant == 0).FirstOrDefault(); 
+		   Feature TenantManagmentPrivateLabelsFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TenantManagmentPrivateLabelsFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TenantManagmentPrivateLabelsFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TenantManagmentPrivateLabelsFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.PackageFeature", NameTextCodeDefaultText = "TenantManagmentPrivateLabels Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable TenantManagmentPrivateLabelsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantManagmentPrivateLabels" && d.Tenant == 0).FirstOrDefault(); 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CREV",
+                EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "UPEV",
+                EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

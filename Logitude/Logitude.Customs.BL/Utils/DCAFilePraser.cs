@@ -146,6 +146,9 @@ namespace Logitude.Customs.BL.Utils
                 //case ".TST":
                 //    customsDeploymentStage = CustomsDeploymentStage.Test;
                 //    break;
+                case ".PRE":
+                    customsDeploymentStage = CustomsDeploymentStage.PREPROD;
+                    break;
                 case ".PLT":
                     customsDeploymentStage = CustomsDeploymentStage.Pilot;
                     break;

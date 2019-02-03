@@ -7,6 +7,14 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
     {
         public static void MapEntity(EventTypePM eventTypePM, EventType eventType, bool isNewState)
         {
+            if (eventTypePM.AddedManually)
+            {
+                // Ayman
+                // Task 44065: Event Types Adjustments
+                eventTypePM.IsManualEntry = true;
+                eventTypePM.ManualActivatedFollowUp = eventTypePM.IsFollowUp;
+            }
+
             eventType.AddedManually = eventTypePM.AddedManually;
             eventType.Code = eventTypePM.Code;
             eventType.EnglishName = eventTypePM.EnglishName;

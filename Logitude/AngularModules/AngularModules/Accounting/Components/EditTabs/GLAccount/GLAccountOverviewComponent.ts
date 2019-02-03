@@ -1,3 +1,5 @@
+import { EntityResourceService } from './../../../../Infrastructure/Services/EntityResourceService';
+import { LedgerTransactionList } from './../../../EntityLists/LedgerTransactionList';
 import {Component, ChangeDetectorRef}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -16,7 +18,6 @@ import { LedgerTransactionExtendedListService } from '../../../Services/Extended
 import { ReconcileEventManager } from '../../../Utilities/ReconcileEventManager';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { LedgerTransactionList } from '../../../EntityLists/LedgerTransactionList';
 import { GLAccountSummary } from '../../../DataContracts/AccountingSummery';
 import { AgingReportParameters } from '../../../DataContracts/AgingReportParameters';
 import { PeriodM } from '../../../DataContracts/PeriodM';
@@ -30,35 +31,92 @@ declare var makeAmBarChart;
 })
 
 export class GLAccountOverviewComponent extends BaseComponent {
-    public AccountPM: GLAccountPM = null;
-    public GLAccountMoreData: GLAccountMoreDataList = null;
-    public ObjectTableName = "GLAccount";
+
+    // Const
     public DataContext = this;
+    public ObjectTableName = "GLAccount";
     txtcode_Amount: string = TextCodeTranslator.Translate("Accounting.General.O.Amount");
     txtcode_AgingDetails: string = TextCodeTranslator.Translate("GLAccounts.O.AgingDetails");
 
+    // Variables
+    public AccountPM: GLAccountPM = null;
+    public GLAccountMoreData: GLAccountMoreDataList = null;
     public isRTL: boolean = false;
+    public isUsedOutside: boolean = false; // when view tab inside customer ..
+
+    //Services
+    _EntityResourceService: EntityResourceService = new EntityResourceService();
     _GLAccountMoreDataListService: GLAccountMoreDataListService = new GLAccountMoreDataListService();
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
+
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-        // Set Entity
-        this.AccountPM = entityArgs.EntityPM;
+        //Resources
+        this._EntityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => { });
+        this._EntityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { });
 
-        this.SetUIProperties();
+        // Set Entity
+        if(entityArgs && entityArgs.ObjectTableName == "GLAccount")
+        {
+            this.AccountPM = entityArgs.EntityPM;
+            this.LoadAllData();
+        }
+        else
+        {
+            this.isUsedOutside = true;
+        }
 
         this.chartId = "CustomerOverview_" + SessionLocator.CurrentSession.GetChartId();
+        this.Listen();
+    }
 
-        this.LoadAllData();
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private TabSelectedEvent: any = null;
+    Listen() {
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            if (this.SaveCompletedEvent == null) {
+                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.LoadAllData();
+                    }
+                });
+            }
+
+            if (this.LoadCompletedEvent == null) {
+                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        console.log("Entity Reloaded");
+                        this.LoadAllData();
+                    }
+                });
+            }
+
+
+            //
+            if (this.TabSelectedEvent == null) {
+                this.TabSelectedEvent = SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (tabCode == "GAOV") {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.LoadAllData();
+                    }
+                });
+            }
+        }
     }
 
     LoadAllData() {
         this.GetDefaultValues();
         this.GetLastTransactions();
         this.LoadChartData();
+        this.SetUIProperties();
+
     }
 
     //#region Properties
@@ -80,7 +138,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
-                this.GLAccountMoreData = mm.Result; 
+                this.GLAccountMoreData = mm.Result;
             }
             else {
             }
@@ -115,7 +173,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         //    this.ChartOfAccountsId = this.AccountPM.ChartOfAccountsId;
         //    this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, true, "");
         //}
-        
+
     }
 
     //#region Balance Section
@@ -124,25 +182,31 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     DisplayTransactionsLinkClicked() {
 
-        SessionLocator.CurrentSession.CurrentEditComponent.SetSelectedTabByCode("GATR");
+        if(this.isUsedOutside)
+        {
+            var editWindow = new LogitudeWindow();
 
-        //var editWindow = new LogitudeWindow();
-
-        //editWindow.ShowHeaderButtons = true;
-        ////editWindow.Title = windowTitle;
-        //editWindow.Height = 770;
-        //editWindow.Width = 1500;
-
-        //editWindow.ShowEditComponent(this.AccountPM.Id, "GLAccount", "GATR");
-        //editWindow.WindowClosed.subscribe(res => {
-
-        //});
+            editWindow.ShowHeaderButtons = true;
+            //editWindow.Title = windowTitle;
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            editWindow.IsHideHeader  = true;
+            editWindow.ShowEditComponent(this.AccountPM.Id, "GLAccount", "GATR");
+            editWindow.WindowClosed.subscribe(res => {
+                this.LoadAllData();
+            });
+        }
+        else
+        {
+            SessionLocator.CurrentSession.CurrentEditComponent.SetSelectedTabByCode("GATR");
+        }
 
     }
     ReconcileLinkClicked() {
         this.ReconcileButtonClicked();
     }
-    ReconcileButtonClicked() {
+    ReconcileButtonClicked()
+    {
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         var screenWidth = this.getScreenWidth();
         var screenHeight = this.getScreenHeight();
@@ -156,8 +220,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
                 // original amount currency
                 var originalAmountCurrency;
-                if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") originalAmountCurrency = SessionLocator.TenantPM.CurrencySign;
-                else if (ReconcileEventManager.GLAccountReconcileMethodCode == "1") originalAmountCurrency = transaction.CurrencySign;
+                if (this.AccountPM.ReconcileMethodCode == "0") originalAmountCurrency = SessionLocator.TenantPM.CurrencySign;
+                else if (this.AccountPM.ReconcileMethodCode == "1") originalAmountCurrency = transaction.CurrencySign;
 
 
                 var windowArgs: any = {};
@@ -173,13 +237,33 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 logitudeWindow.WindowArgs = windowArgs;
                 logitudeWindow.Show('./Accounting/Components/Others/ReconcileComponent');
                 logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                    if ($event == 'ok') {
-                        // show alert
-                    }
+                    // this.LoadAllData();
+                    this.GetNonReconciledTransactionsCount();
 
                 });
 
             }
+        });
+    }
+
+    GetNonReconciledTransactionsCount() {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this._GLAccountExtendedListService.GetAccountReconcilesCount(this.AccountPM.Id).subscribe(myResult => {
+
+
+            if (!AppTool.IsNullOrEmpty(myResult)) {
+
+                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.ReconcilationCount = myResult;
+                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(($event) => {
+                    if ($event == true) {
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+
+                });
+            }
+
         });
     }
     getScreenHeight() {
@@ -215,6 +299,9 @@ export class GLAccountOverviewComponent extends BaseComponent {
     GetAmountLabel() {
         var msg = this.txtcode_Amount + " (" + SessionLocator.TenantPM.CurrencyCode + ")";
         return msg;
+    }
+    GetTransAmount(transaction: LedgerTransactionList) {
+        return transaction.LocalAmountDebit ? transaction.LocalAmountDebit : transaction.LocalAmountCredit;
     }
     GetIconText(line: LedgerTransactionList) {
         var iconTxt = "";
@@ -430,12 +517,20 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
         }
     }
+    GetIndicatorText(transaction)
+    {
+        var showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+        if(transaction['OpenAmount'] != this.CalculateOriginalAmount(transaction))
+            return showLocal ? 'סכום פתוח חלקית' : 'Partial transaction';
+        else
+            return showLocal ? 'סכום פתוח ' : 'Open transaction';
+    }
 
 
     //#endregion
 
     //#region Aging Details
-    chartId: string = ""; 
+    chartId: string = "";
 
     GetAgingHeader() {
         var txt = this.txtcode_AgingDetails;
@@ -455,7 +550,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.LoadChartData();
     }
 
-    // Filter Methods 
+    // Filter Methods
     public DateFilterSelectedValue: string = 'filter_Collecting';
     DateFilterItemClicked(itemValue: string) {
         if (this.DateFilterSelectedValue != itemValue) {
@@ -486,7 +581,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
             case '12mo': {
                 numberOfmonthsbackwards = 12;
                 break;
-            } 
+            }
         }
 
         var args = new AgingReportParameters();
@@ -607,7 +702,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         });
 
         var poisition = this.isRTL == true ? "right" : "left";
-        
+
         makeAmBarChart(this.chartId, Graphs, DataProvider, max, null, null, null, null, poisition);
 
     }

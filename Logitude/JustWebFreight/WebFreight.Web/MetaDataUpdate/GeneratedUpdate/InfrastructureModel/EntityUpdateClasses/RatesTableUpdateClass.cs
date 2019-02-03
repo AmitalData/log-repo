@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class RatesTableUpdateClass
@@ -76,50 +79,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
             {
 			
 	             				    ObjectTableName =  "RatesTable",
-			      				    IsNew =  false,
 			      				    DBTableName =  "RatesTables",
-			      				    OldDBTableName =  "RatesTables",
 			      				    ObjectTableSingular =  "Rates Table",
 			      				    ObjectTablePlural =  "RatesTables",
-			      				    HasCustomFilter =  false,
-			      				    HasCustomFields =  false,
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasFiltersMenu =  false,
-			      				    IsEditable =  true,
+			      				    DefaultText =  "Rates Table",
+			      				    Name =  "Rates",
 			      				    IsNewWizard =  false,
+			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  true,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  true,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
+			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  true,
-			      				    EnableEditFromLOV =  false,
+			      				    CustomFieldsCount =  0,
+			      				    HasCustomFields =  false,
 			      				    InActive =  false,
+			      				    SearchFields =  "RatesTable,RatesTables,,Id,",
 			      				    IsSaveButtonVisible =  true,
-			      				    IsComposition =  false,
 			      				    EnableSecurity =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    IsComposition =  false,
+			      				    MaxNumberOfCustomFields =  0,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    ObjectTableTypeCode =  "MD",
-			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Rates Table",
-			      				    Code =  "RATE",
-			      				    Name =  "Rates",
-			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "Infrastructure",
-			      				    NoTS =  false,
-			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  false,
-			      				    CustomFieldsCount =  0,
-			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
-			      				    SearchFields =  "RatesTable,RatesTables,,Id,",
+			      				    IsEditable =  true,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasMenuButtons =  false,
+			      				    HasFiltersMenu =  false,
+			      				    ClientModuleName =  "Infrastructure",
+			      				    Code =  "RATE",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -130,74 +127,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
-					  						ObjectTableName =  "RatesTable",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  1000,
-					  						IsRequired =  false,
-					  						DisplayOnLookUp =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  40,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Contains",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "RatesTable",
-					  						ValidForQuerySection2 =  "RatesTableFollowUp",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						Code =  "SearchFields",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search codes/ names",
-					  						FullLocalDefaultText =  "תאריך ערך",
-					  						HelpTextCode =  "Name",
-					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: name",
-					  						HelpLocalDefaultText =  "חיפוש לפי קוד\\שם",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
 					 						FieldName =  "ForeignCurrencyId",
-					  						OldFieldName =  "ForeignCurrencyId",
 					  						ObjectTableName =  "RatesTable",
 					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsCustom =  false,
+					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -209,45 +145,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ForeignCurrencyId",
 					  						ListPropertyPath =  "ForeignCurrencyId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  true,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "RatesTable",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "RatesTable",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "ForeignCurrencyId",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ForeignCurrencyId",
-					  						DefaultText =  "Foreign Currency",
-					  						ListFieldLable =  "ForeignCurrencyIdListLable",
-					  						ListLableDefaultText =  "Foreign Currency",
-					  						ShortFieldLable =  "ForeignCurrencyId",
-					  						ShortFieldLableDefaultText =  "Currency",
-					  						ShortLocalDefaultText =  "מטבע זר",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						IsCustom =  false,
+					  						FullFieldLable =  "ForeignCurrencyId",
+					  						DefaultText =  @"Foreign Currency",
+					  						ListFieldLable =  "ForeignCurrencyIdListLable",
+					  						ListLableDefaultText =  @"Foreign Currency",
 					  						HelpTextCode =  "ForeignCurrencyId",
+					  						ShortFieldLable =  "ForeignCurrencyId",
+					  						ShortFieldLableDefaultText =  @"Currency",
+					  						Code =  "ForeignCurrencyId",
+					  						DependencyFilter3IsList =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						IsRequired =  true,
+					  						ShortLocalDefaultText =  @"מטבע זר",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -256,12 +191,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "ForeignCurrencyCode",
-					  						OldFieldName =  "ForeignCurrencyCode",
 					  						ObjectTableName =  "RatesTable",
 					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  15,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
+					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -273,45 +208,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ForeignCurrencyCode",
 					  						ListPropertyPath =  "ForeignCurrencyCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  true,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "RatesTable",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "RatesTable",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "ForeignCurrencyCode",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ForeignCurrencyCode",
-					  						DefaultText =  "Foreign Currency Code",
-					  						ListFieldLable =  "ForeignCurrencyCodeListLable",
-					  						ListLableDefaultText =  "Foreign Currency Code",
-					  						ShortFieldLable =  "ForeignCurrencyCode",
-					  						ShortFieldLableDefaultText =  "Code",
-					  						ShortLocalDefaultText =  "קוד מטבע זר",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						IsCustom =  false,
+					  						FullFieldLable =  "ForeignCurrencyCode",
+					  						DefaultText =  @"Foreign Currency Code",
+					  						ListFieldLable =  "ForeignCurrencyCodeListLable",
+					  						ListLableDefaultText =  @"Foreign Currency Code",
 					  						HelpTextCode =  "ForeignCurrencyCode",
+					  						ShortFieldLable =  "CurrencyCode",
+					  						ShortFieldLableDefaultText =  @"Code",
+					  						Code =  "ForeignCurrencyCode",
+					  						DependencyFilter3IsList =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						IsRequired =  false,
+					  						ShortLocalDefaultText =  @"קוד מטבע זר",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -320,12 +254,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "BaseCurrencyId",
-					  						OldFieldName =  "BaseCurrencyId",
 					  						ObjectTableName =  "RatesTable",
 					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsCustom =  false,
+					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -337,42 +271,41 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "BaseCurrencyId",
 					  						ListPropertyPath =  "BaseCurrencyId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  true,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "RatesTable",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "RatesTable",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "BaseCurrencyId",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BaseCurrencyId",
-					  						DefaultText =  "Base Currency",
-					  						ListFieldLable =  "BaseCurrencyIdListLable",
-					  						ListLableDefaultText =  "Base Currency",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						IsCustom =  false,
+					  						FullFieldLable =  "BaseCurrencyId",
+					  						DefaultText =  @"Base Currency",
+					  						ListFieldLable =  "BaseCurrencyIdListLable",
+					  						ListLableDefaultText =  @"Base Currency",
 					  						HelpTextCode =  "BaseCurrencyId",
+					  						Code =  "BaseCurrencyId",
+					  						DependencyFilter3IsList =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						IsRequired =  true,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -381,12 +314,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Rate",
-					  						OldFieldName =  "Rate",
 					  						ObjectTableName =  "RatesTable",
 					  						FieldsDataType =  "Double",
-					  						MinLength =  0,
+					  						DataTypeCode =  "Double",
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsCustom =  false,
+					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -398,45 +331,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Rate",
 					  						ListPropertyPath =  "Rate",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "RatesTable",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "RatesTable",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "Rate",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Rate",
-					  						DefaultText =  "Rate",
-					  						ListFieldLable =  "RateListLable",
-					  						ListLableDefaultText =  "Rate",
-					  						ShortFieldLable =  "Rate",
-					  						ShortFieldLableDefaultText =  "Rate",
-					  						ShortLocalDefaultText =  "שער",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						IsCustom =  false,
+					  						FullFieldLable =  "Rate",
+					  						DefaultText =  @"Rate",
+					  						ListFieldLable =  "RateListLable",
+					  						ListLableDefaultText =  @"Rate",
 					  						HelpTextCode =  "Rate",
+					  						ShortFieldLable =  "Rate",
+					  						ShortFieldLableDefaultText =  @"Rate",
+					  						Code =  "Rate",
+					  						DependencyFilter3IsList =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						IsRequired =  true,
+					  						ShortLocalDefaultText =  @"שער",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -445,12 +377,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "ValueDate",
-					  						OldFieldName =  "ValueDate",
 					  						ObjectTableName =  "RatesTable",
 					  						FieldsDataType =  "DateTime",
-					  						MinLength =  0,
+					  						DataTypeCode =  "DateTime",
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsCustom =  false,
+					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -462,45 +394,104 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ValueDate",
 					  						ListPropertyPath =  "ValueDate",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "RatesTable",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "RatesTable",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "ValueDate",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ValueDate",
-					  						DefaultText =  "Value Date",
-					  						ListFieldLable =  "ValueDateListLable",
-					  						ListLableDefaultText =  "Value Date",
-					  						ShortFieldLable =  "ValueDate",
-					  						ShortFieldLableDefaultText =  "Date",
-					  						ShortLocalDefaultText =  "תאריך ערך",
+					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
-					  						IsCustom =  false,
+					  						FullFieldLable =  "ValueDate",
+					  						DefaultText =  @"Value Date",
+					  						ListFieldLable =  "ValueDateLable",
+					  						ListLableDefaultText =  @"Value Date",
 					  						HelpTextCode =  "ValueDate",
+					  						ShortFieldLable =  "Date",
+					  						ShortFieldLableDefaultText =  @"Date",
+					  						Code =  "ValueDate",
+					  						DependencyFilter3IsList =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						IsRequired =  true,
+					  						ShortLocalDefaultText =  @"תאריך ערך",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SearchFields",
+					  						ObjectTableName =  "RatesTable",
+					  						FieldsDataType =  "Text",
+					  						DataTypeCode =  "Text",
+					  						MaxLength =  1000,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "RatesTable",
+					  						ValidForQuerySection2 =  "RatesTableFollowUp",
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						HasTemplate =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  @"Search codes/ names",
+					  						HelpTextCode =  "SearchFields",
+					  						HelpTextDefaultText =  @"Searching by :\n1: code\n2: name",
+					  						Code =  "SearchFields",
+					  						DependencyFilter3IsList =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						IsRequired =  false,
+					  						FullLocalDefaultText =  @"תאריך ערך",
+					  						HelpLocalDefaultText =  @"חיפוש לפי קוד\שם",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -509,10 +500,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup RatesTableQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "RATE", Name = "Rates" }, queryGroupRepository);
-						QueryGroup RatesTableQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "bba9", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable RatesTableObjectTable = objectContext.ObjectTables.Where(d => d.Name == "RatesTable" && d.Tenant == 0).FirstOrDefault();
@@ -525,7 +515,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query RatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RatesTableTextCode_0.Id, Code = "Rates",  QueryGroupCode = "RATE", IndexOrder = 0, Tenant = 0, ObjectTableId = RatesTableObjectTable.Id, QuerySection = "RatesTable", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RatesTableFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query RatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RatesTableTextCode_0.Id, Code = "Rates",  QueryGroupCode = "RATE", IndexOrder = 0, Tenant = 0, ObjectTableId = RatesTableObjectTable.Id, QuerySection = "RatesTable", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RatesTableFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn RatesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RatesQuery.Id, IndexOrder = 0, ObjectFieldId = RatesTableObjectFields.Where(d => d.FieldName == "ForeignCurrencyCode" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -541,8 +531,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable RatesTableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "RatesTable" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable RatesTableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "RatesTable" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode RatesTableGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.TH.Main", DefaultText = "General",LocalDefaultText = null, ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature RatesTableGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RatesTable.Tab.General", ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, NameTextCodeCode = "RatesTableFeatures.RTMA", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -552,12 +543,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   Feature RatesTableEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RatesTable.Tab.Events", ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, NameTextCodeCode = "RatesTableFeatures.RTEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RTMA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "RatesTable.Tab.General" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.FreightLib.Views.CurrencyRates.RatesTableMainTabControl", ObjectTableId = RatesTableObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "RatesTable.TH.Main" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RTMA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = RatesTableGeneralFeature_TH0.Id, ControlPath = "Simplog.FreightLib.Views.CurrencyRates.RatesTableMainTabControl", ObjectTableId = RatesTableObjectTable.Id, TabNameTextCodeId = RatesTableGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "RatesTable.Tab.Events" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = RatesTableObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "RatesTable.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = RatesTableEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = RatesTableObjectTable.Id, TabNameTextCodeId = RatesTableEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -574,47 +565,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable RatesTableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "RatesTable" && d.Tenant == 0).FirstOrDefault(); 
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code =  "CREV",
-                EnglishName =  "Created",
-                LocalName =  "Created",
-                IsManualEntry =  false,
-                ShortView =  true,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
-                ObjectTableId = RatesTableObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes);
-
-
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code =  "UPEV",
-                EnglishName =  "Updated",
-                LocalName =  "Updated",
-                IsManualEntry =  false,
-                ShortView =  false,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
-                ObjectTableId = RatesTableObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes);
-
-
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable RatesTableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "RatesTable" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode RatesTableTextCode_RatesTableOEditCurrencyRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.O.EditCurrencyRate", DefaultText = "Edit Currency Rate",LocalDefaultText = null, ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RatesTableTextCode_RatesTableOCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.O.Code", DefaultText = "Code",LocalDefaultText = null, ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RatesTableTextCode_RatesTableOName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.O.Name", DefaultText = "Name",LocalDefaultText = null, ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RatesTableTextCode_RatesTableOOldValues = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.O.OldValues", DefaultText = "Old Values",LocalDefaultText = null, ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RatesTableTextCode_RatesTableOCurrencyHistory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.O.CurrencyHistory", DefaultText = "Currency History",LocalDefaultText = null, ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RatesTableTextCode_RatesTableMDefirenceIsMoreThan = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.M.DefirenceIsMoreThan", DefaultText = "Difference is more than 5 %",LocalDefaultText = @"השינוי גדול מ- 5%", ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RatesTableTextCode_RatesTableBViewHistory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.B.ViewHistory", DefaultText = "View History",LocalDefaultText = null, ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RatesTableTextCode_RatesTableBSetAsToday = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.B.SetAsToday", DefaultText = "Set As Today",LocalDefaultText = null, ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RatesTableTextCode_RatesTableOExchangeDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.O.ExchangeDate", DefaultText = "Exchange Date",LocalDefaultText = null, ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RatesTableTextCode_RatesTableMChangingTheExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.M.ChangingTheExchangeRate", DefaultText = "Please confirm changing the exchange rate to ",LocalDefaultText = @"אנא אשר שינוי שער החליפין ל", ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RatesTableTextCode_RatesTableOUpdateCurrencyRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.O.UpdateCurrencyRate", DefaultText = "Update Currency Rate",LocalDefaultText = @"עדכן שער חליפין למטבע", ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

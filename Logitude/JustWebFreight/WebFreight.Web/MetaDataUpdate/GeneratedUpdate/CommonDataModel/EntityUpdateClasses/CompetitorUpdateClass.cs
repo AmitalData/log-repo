@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CompetitorUpdateClass
@@ -84,7 +87,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsNewWizard =  true,
 			      				    NewWizardControlName =  "Logitude.CRM.NewCompetitorCommand",
 			      				    LookUp1 =  "Name",
-			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -111,16 +113,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
 			      				    IsEditable =  true,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
 			      				    ClientModuleName =  "Common",
 			      				    NewWizardComponentPath =  "./Common/Components/Maintenance/CompetitorComponent",
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
 			      				    Code =  "CMPT",
+			      				    DescriptionDefaultText =  "Define your competitors.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -134,7 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "nText",
-					  						Code =  "Name",
+					  						DataTypeCode =  "nText",
 					  						MaxLength =  60,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -158,10 +154,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "Competitor",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Competitor",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -172,16 +167,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "Name",
+					  						DefaultText =  @"Name",
+					  						ListFieldLable =  "NameListLable",
+					  						ListLableDefaultText =  @"Name",
+					  						HelpTextCode =  "Name",
+					  						Code =  "Name",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
-					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
-					  						HelpTextCode =  "Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -192,7 +190,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Website",
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Website",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  100,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -215,10 +213,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "Competitor",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Competitor",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -229,16 +226,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "Website",
+					  						DefaultText =  @"Website",
+					  						ListFieldLable =  "WebsiteListLable",
+					  						ListLableDefaultText =  @"Website",
+					  						HelpTextCode =  "Website",
+					  						Code =  "Website",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "Website",
-					  						DefaultText =  "Website",
-					  						ListFieldLable =  "WebsiteListLable",
-					  						ListLableDefaultText =  "Website",
-					  						HelpTextCode =  "Website",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -249,7 +249,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Strengths",
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "nText",
-					  						Code =  "Strengths",
+					  						DataTypeCode =  "nText",
 					  						MaxLength =  1000,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -272,10 +272,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "Competitor",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Competitor",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -286,16 +285,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "Strengths",
+					  						DefaultText =  @"Strengths",
+					  						ListFieldLable =  "StrengthsListLable",
+					  						ListLableDefaultText =  @"Strengths",
+					  						HelpTextCode =  "Strengths",
+					  						Code =  "Strengths",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "Strengths",
-					  						DefaultText =  "Strengths",
-					  						ListFieldLable =  "StrengthsListLable",
-					  						ListLableDefaultText =  "Strengths",
-					  						HelpTextCode =  "Strengths",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -306,7 +308,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Weaknesses",
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "nText",
-					  						Code =  "Weaknesses",
+					  						DataTypeCode =  "nText",
 					  						MaxLength =  1000,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -329,10 +331,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "Competitor",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Competitor",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -343,16 +344,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "Weaknesses",
+					  						DefaultText =  @"Weaknesses",
+					  						ListFieldLable =  "WeaknessesListLable",
+					  						ListLableDefaultText =  @"Weaknesses",
+					  						HelpTextCode =  "Weaknesses",
+					  						Code =  "Weaknesses",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "Weaknesses",
-					  						DefaultText =  "Weaknesses",
-					  						ListFieldLable =  "WeaknessesListLable",
-					  						ListLableDefaultText =  "Weaknesses",
-					  						HelpTextCode =  "Weaknesses",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -363,7 +367,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Opportunity",
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "nText",
-					  						Code =  "Opportunity",
+					  						DataTypeCode =  "nText",
 					  						MaxLength =  1000,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -386,10 +390,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "Competitor",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Competitor",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -400,16 +403,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "Opportunity",
+					  						DefaultText =  @"Opportunity",
+					  						ListFieldLable =  "OpportunityListLable",
+					  						ListLableDefaultText =  @"Opportunity",
+					  						HelpTextCode =  "Opportunity",
+					  						Code =  "Opportunity",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "Opportunity",
-					  						DefaultText =  "Opportunity",
-					  						ListFieldLable =  "OpportunityListLable",
-					  						ListLableDefaultText =  "Opportunity",
-					  						HelpTextCode =  "Opportunity",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -420,7 +426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Threat",
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "nText",
-					  						Code =  "Threat",
+					  						DataTypeCode =  "nText",
 					  						MaxLength =  1000,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -443,10 +449,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "Competitor",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Competitor",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -457,16 +462,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "Threat",
+					  						DefaultText =  @"Threat",
+					  						ListFieldLable =  "ThreatListLable",
+					  						ListLableDefaultText =  @"Threat",
+					  						HelpTextCode =  "Threat",
+					  						Code =  "Threat",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "Threat",
-					  						DefaultText =  "Threat",
-					  						ListFieldLable =  "ThreatListLable",
-					  						ListLableDefaultText =  "Threat",
-					  						HelpTextCode =  "Threat",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -478,7 +486,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
-					  						Code =  "AddressId",
+					  						DataTypeCode =  "LookUp",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -502,10 +510,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "Competitor",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Competitor",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -516,16 +523,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "AddressId",
+					  						DefaultText =  @"Address",
+					  						ListFieldLable =  "AddressIdListLable",
+					  						ListLableDefaultText =  @"Address",
+					  						HelpTextCode =  "AddressId",
+					  						Code =  "AddressId",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "AddressId",
-					  						DefaultText =  "Address",
-					  						ListFieldLable =  "AddressIdListLable",
-					  						ListLableDefaultText =  "Address",
-					  						HelpTextCode =  "AddressId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -536,7 +546,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "nText",
-					  						Code =  "SearchFields",
+					  						DataTypeCode =  "nText",
 					  						MaxLength =  1000,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -559,10 +569,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "Competitor",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Competitor",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -573,16 +582,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  @"Search...",
+					  						ListFieldLable =  "SearchFieldsListLable",
+					  						ListLableDefaultText =  @"SearchFields",
+					  						HelpTextCode =  "SearchFields",
+					  						Code =  "SearchFields",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search...",
-					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "SearchFields",
-					  						HelpTextCode =  "SearchFields",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -593,7 +605,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Address1",
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "nText",
-					  						Code =  "Address1",
+					  						DataTypeCode =  "nText",
 					  						MaxLength =  65,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -618,7 +630,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -629,14 +640,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "Address1",
+					  						DefaultText =  @"Address 1",
+					  						HelpTextCode =  "Address1",
+					  						Code =  "Address1",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "Address1",
-					  						DefaultText =  "Address 1",
-					  						HelpTextCode =  "Address1",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -647,7 +661,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Address2",
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "nText",
-					  						Code =  "Address2",
+					  						DataTypeCode =  "nText",
 					  						MaxLength =  65,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -672,7 +686,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -683,14 +696,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "Address2",
+					  						DefaultText =  @"Address 2",
+					  						HelpTextCode =  "Address2",
+					  						Code =  "Address2",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "Address2",
-					  						DefaultText =  "Address 2",
-					  						HelpTextCode =  "Address2",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -701,7 +717,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "ZipCode",
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "Text",
-					  						Code =  "ZipCode",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -726,7 +742,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -737,14 +752,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "ZipCode",
+					  						DefaultText =  @"Zip Code",
+					  						HelpTextCode =  "ZipCode",
+					  						Code =  "ZipCode",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "ZipCode",
-					  						DefaultText =  "Zip Code",
-					  						HelpTextCode =  "ZipCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -755,7 +773,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "City",
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "nText",
-					  						Code =  "City",
+					  						DataTypeCode =  "nText",
 					  						MaxLength =  25,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -780,7 +798,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -791,14 +808,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "City",
+					  						DefaultText =  @"City",
+					  						HelpTextCode =  "City",
+					  						Code =  "City",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "City",
-					  						DefaultText =  "City",
-					  						HelpTextCode =  "City",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -809,8 +829,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "CountryId",
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Country",
-					  						Code =  "CountryId",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -821,7 +840,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -836,7 +854,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -847,14 +864,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "CountryId",
+					  						DefaultText =  @"Country",
+					  						HelpTextCode =  "CountryId",
+					  						LookUpTableName =  "Country",
+					  						Code =  "CountryId",
+					  						Operator =  "Equals",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "CountryId",
-					  						DefaultText =  "Country",
-					  						HelpTextCode =  "CountryId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -865,7 +887,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "StateId",
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "Text",
-					  						Code =  "StateId",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -890,7 +912,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -901,14 +922,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "StateId",
+					  						DefaultText =  @"State",
+					  						HelpTextCode =  "StateId",
+					  						Code =  "StateId",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "StateId",
-					  						DefaultText =  "State",
-					  						HelpTextCode =  "StateId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -919,7 +943,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "PhoneNumber",
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "Text",
-					  						Code =  "PhoneNumber",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  40,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -944,7 +968,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -955,14 +978,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "PhoneNumber",
+					  						DefaultText =  @"Phone",
+					  						HelpTextCode =  "PhoneNumber",
+					  						Code =  "PhoneNumber",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "PhoneNumber",
-					  						DefaultText =  "Phone",
-					  						HelpTextCode =  "PhoneNumber",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -973,7 +999,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "FaxNumber",
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "Text",
-					  						Code =  "FaxNumber",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  40,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -998,7 +1024,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						DigitsAfterPoint =  0,
@@ -1009,14 +1034,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "FaxNumber",
+					  						DefaultText =  @"Fax",
+					  						HelpTextCode =  "FaxNumber",
+					  						Code =  "FaxNumber",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "FaxNumber",
-					  						DefaultText =  "Fax",
-					  						HelpTextCode =  "FaxNumber",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1027,7 +1055,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "InActive",
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "Boolean",
-					  						Code =  "InActive",
+					  						DataTypeCode =  "Boolean",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -1051,10 +1079,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "Competitor",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Competitor",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -1065,16 +1092,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "InActive",
+					  						DefaultText =  @"Inactive",
+					  						ListFieldLable =  "InActiveListLable",
+					  						ListLableDefaultText =  @"Inactive",
+					  						HelpTextCode =  "InActive",
+					  						Code =  "InActive",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "InActive",
-					  						DefaultText =  "Inactive",
-					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  "Inactive",
-					  						HelpTextCode =  "InActive",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1083,7 +1113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup CompetitorQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CMPT", Name = "Competitor" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -1098,7 +1128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCompetitorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CompetitorTextCode_0.Id, Code = "All Competitors",  QueryGroupCode = "CMPT", IndexOrder = 0, Tenant = 0, ObjectTableId = CompetitorObjectTable.Id, QuerySection = "Competitor", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CompetitorFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllCompetitorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CompetitorTextCode_0.Id, Code = "All Competitors",  QueryGroupCode = "CMPT", IndexOrder = 0, Tenant = 0, ObjectTableId = CompetitorObjectTable.Id, QuerySection = "Competitor", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CompetitorFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllCompetitorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCompetitorsQuery.Id, IndexOrder = 0, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CompetitorObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1156,8 +1186,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable CompetitorObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Competitor" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable CompetitorObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Competitor" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CompetitorGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Competitor.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature CompetitorGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Competitor.Tab.General", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Competitor.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -1167,12 +1198,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature CompetitorEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Competitor.Tab.Events", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Competitor.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CTGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "Competitor.Tab.General" && d.ObjectTableId == CompetitorObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CompetitorObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Competitor.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CTGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CompetitorGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CompetitorObjectTable.Id, TabNameTextCodeId = CompetitorGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "Competitor.Tab.Events" && d.ObjectTableId == CompetitorObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CompetitorObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Competitor.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CompetitorEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CompetitorObjectTable.Id, TabNameTextCodeId = CompetitorEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1231,7 +1262,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

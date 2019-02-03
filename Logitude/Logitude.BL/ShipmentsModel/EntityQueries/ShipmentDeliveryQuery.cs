@@ -828,5 +828,274 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return dataList;
         }
+
+        public ShipmentDeliveryPM GetFirstShipmentDeliveryPMsByTenantAndShipment(string shipmentId,string shipmentNumber ,  int tenant)
+        {
+            IQueryable<ShipmentPickUpDelivery> iQueryable = (from d in repository.context.ShipmentPickUpDeliveries.Include("FromPort").Include("ToPort").Include("CarrierCard").Include("TransportMode")
+                                                             where d.ShipmentId == shipmentId && d.Tenant == tenant && d.PickUpDeliveryTypeCode == "DELV"
+                                                             select d).OrderBy(d => d.PickUpDeliveryNumber);
+
+        ShipmentDeliveryPM shipmentDeliveryPM = (from entityPOCO in iQueryable
+                                                     select new ShipmentDeliveryPM()
+                                                     {
+                                                         Id = entityPOCO.Id,
+                                                         Tenant = entityPOCO.Tenant,
+                                                         ShipmentId = entityPOCO.ShipmentId,
+                                                         PickUpDeliveryNumber = entityPOCO.PickUpDeliveryNumber,
+                                                         ATA = entityPOCO.ATA,
+                                                         ATD = entityPOCO.ATD,
+                                                         ETA = entityPOCO.ETA,
+                                                         ETD = entityPOCO.ETD,
+                                                         Driver = entityPOCO.Driver,
+                                                         TruckNumber = entityPOCO.TruckNumber,
+                                                         Notes = entityPOCO.Notes,
+                                                         TrailerNumber = entityPOCO.TrailerNumber,
+                                                         CarrierId = entityPOCO.CarrierId,
+                                                         CarrierCode = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.Code,
+                                                         CarrierName = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.EnglishName,
+                                                         CarrierWebSite = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.Website,
+                                                         CarrierNumber = entityPOCO.CarrierNumber,
+                                                         PickUpDeliveryTypeCode = entityPOCO.PickUpDeliveryTypeCode,
+                                                         FullResponsibility = entityPOCO.FullResponsibility,
+                                                         PickUpDeliveryFromTypeCode = entityPOCO.PickUpDeliveryFromTypeCode,
+                                                         FromPortId = entityPOCO.FromPortId,
+                                                         FromPortCode = entityPOCO.FromPort == null ? null : entityPOCO.FromPort.Code,
+                                                         FromPortName = entityPOCO.FromPort == null ? null : entityPOCO.FromPort.EnglishName,
+                                                         FromPortCountryCode = entityPOCO.FromPort == null ? null : (entityPOCO.FromPort.Country == null ? null : entityPOCO.FromPort.Country.Code),
+                                                         FromPortCountryName = entityPOCO.FromPort == null ? null : (entityPOCO.FromPort.Country == null ? null : entityPOCO.FromPort.Country.EnglishName),
+                                                         FromPartnerCardId = entityPOCO.FromPartnerCardId,
+                                                         FromAddressId = entityPOCO.FromAddressId,
+                                                         FromAddress = entityPOCO.FromAddress,
+                                                         FromAddressCity = entityPOCO.FromAddressCity,
+                                                         FromAddressZipCode = entityPOCO.FromAddressZipCode,
+                                                         FromAddressCountryId = entityPOCO.FromAddressCountryId,
+                                                         PickUpDeliveryToTypeCode = entityPOCO.PickUpDeliveryToTypeCode,
+                                                         ToPortId = entityPOCO.ToPortId,
+                                                         ToPortCode = entityPOCO.ToPort == null ? null : entityPOCO.ToPort.Code,
+                                                         ToPortName = entityPOCO.ToPort == null ? null : entityPOCO.ToPort.EnglishName,
+                                                         ToPortCountryCode = entityPOCO.ToPort == null ? null : (entityPOCO.ToPort.Country == null ? null : entityPOCO.ToPort.Country.Code),
+                                                         ToPortCountryName = entityPOCO.ToPort == null ? null : (entityPOCO.ToPort.Country == null ? null : entityPOCO.ToPort.Country.EnglishName),
+                                                         ToPartnerCardId = entityPOCO.ToPartnerCardId,
+                                                         ToAddressId = entityPOCO.ToAddressId,
+                                                         ToAddress = entityPOCO.ToAddress,
+                                                         ToAddressCity = entityPOCO.ToAddressCity,
+                                                         ToAddressZipCode = entityPOCO.ToAddressZipCode,
+                                                         ToAddressCountryId = entityPOCO.ToAddressCountryId,
+                                                         EmptyPickupContainerPartnerId = entityPOCO.EmptyPickupContainerPartnerId,
+                                                         EmptyPickupDepotReference = entityPOCO.EmptyPickupDepotReference,
+                                                         EmptyDeliveryContainerPartnerId = entityPOCO.EmptyDeliveryContainerPartnerId,
+                                                         EmptyDeliveryDepotReference = entityPOCO.EmptyDeliveryDepotReference,
+                                                         TransportModeCode = entityPOCO.TransportModeCode,
+                                                         TransportModeName = entityPOCO.TransportMode == null ? null : entityPOCO.TransportMode.Name,
+                                                     }).FirstOrDefault();
+
+            if (shipmentDeliveryPM!=null)
+            {
+                ShipmentPickUpDeliveryPackageRepository packageRepository = new ShipmentPickUpDeliveryPackageRepository(repository.context);
+                ShipmentPickUpDeliveryPackageQuery packagesQuery = new ShipmentPickUpDeliveryPackageQuery(packageRepository);
+
+                AddressRepository addressRepository = new AddressRepository(tenant);
+                CountryRepository countryRepository = new CountryRepository(tenant);
+                CardRepository cardRepository = new CardRepository(tenant);
+
+
+                shipmentDeliveryPM.ShipmentPickUpDeliveryPackages = packagesQuery.GetShipmentPickUpDeliveryPackages(shipmentDeliveryPM.Id, tenant);
+
+                #region From PART
+                if (shipmentDeliveryPM.PickUpDeliveryFromTypeCode == "PART")
+                {
+                    if (!string.IsNullOrEmpty(shipmentDeliveryPM.FromPartnerCardId))
+                    {
+                        Card card = cardRepository.GetSingleCard(shipmentDeliveryPM.FromPartnerCardId, tenant);
+
+                        Address address = null;
+
+                        if (!string.IsNullOrEmpty(shipmentDeliveryPM.FromAddressId))
+                        {
+                            address = addressRepository.GetSingleAddress(shipmentDeliveryPM.FromAddressId, tenant);
+                        }
+
+                        else
+                        {
+                            address = addressRepository.GetMainAddressByCardId(shipmentDeliveryPM.FromPartnerCardId, tenant);
+                        }
+
+                        if (address != null)
+                        {
+                            string location = "";
+
+                            if (address.IsLocalLanguage && !string.IsNullOrEmpty(card.LocalName))
+                            {
+                                location = card.LocalName + Environment.NewLine;
+                            }
+
+                            else
+                            {
+                                location = card.EnglishName + Environment.NewLine;
+                            }
+
+
+                            location = location + General.GetAddress(address);
+
+                            shipmentDeliveryPM.FromLocation = location;
+                            shipmentDeliveryPM.FromAddressCity_Dummy = address.City;
+
+                            if (!string.IsNullOrEmpty(address.CountryId))
+                            {
+                                Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
+                                if (country != null)
+                                {
+                                    shipmentDeliveryPM.FromAddressCountryCode = country.Code;
+                                    shipmentDeliveryPM.FromAddressCountryName = country.EnglishName;
+                                }
+                            }
+                        }
+                    }
+                }
+                #endregion
+
+                #region From PORT
+                else if (shipmentDeliveryPM.PickUpDeliveryFromTypeCode == "PORT")
+                {
+                    if (!string.IsNullOrEmpty(shipmentDeliveryPM.FromPortId))
+                    {
+                        shipmentDeliveryPM.FromLocation = shipmentDeliveryPM.FromAddress;
+                    }
+                }
+                #endregion
+
+                #region From CASL
+                else
+                {
+                    string location = "";
+
+                    if (!string.IsNullOrEmpty(shipmentDeliveryPM.FromAddressCity))
+                    {
+                        location = shipmentDeliveryPM.FromAddressCity;
+                    }
+
+                    if (!string.IsNullOrEmpty(shipmentDeliveryPM.FromAddressZipCode))
+                    {
+                        location = location + " " + shipmentDeliveryPM.FromAddressZipCode;
+                    }
+
+                    if (!string.IsNullOrEmpty(shipmentDeliveryPM.FromAddressCountryId))
+                    {
+                        Country country = countryRepository.GetSingleCountry(shipmentDeliveryPM.FromAddressCountryId, tenant);
+                        if (country != null)
+                        {
+                            location = location + Environment.NewLine + country.EnglishName;
+
+                            shipmentDeliveryPM.FromAddressCountryCode = country.Code;
+                            shipmentDeliveryPM.FromAddressCountryName = country.EnglishName;
+                        }
+                    }
+
+                    shipmentDeliveryPM.FromLocation = location;
+                    shipmentDeliveryPM.FromAddressCity_Dummy = shipmentDeliveryPM.FromAddressCity;
+                }
+                #endregion
+
+                #region To PART
+                if (shipmentDeliveryPM.PickUpDeliveryToTypeCode == "PART")
+                {
+                    if (!string.IsNullOrEmpty(shipmentDeliveryPM.ToPartnerCardId))
+                    {
+                        Card card = cardRepository.GetSingleCard(shipmentDeliveryPM.ToPartnerCardId, tenant);
+
+                        Address address = null;
+
+                        if (!string.IsNullOrEmpty(shipmentDeliveryPM.ToAddressId))
+                        {
+                            address = addressRepository.GetSingleAddress(shipmentDeliveryPM.ToAddressId, tenant);
+                        }
+
+                        else
+                        {
+                            address = addressRepository.GetMainAddressByCardId(shipmentDeliveryPM.ToPartnerCardId, tenant);
+                        }
+
+                        if (address != null)
+                        {
+                            string location = "";
+
+                            if (address.IsLocalLanguage && !string.IsNullOrEmpty(card.LocalName))
+                            {
+                                location = card.LocalName + Environment.NewLine;
+                            }
+
+                            else
+                            {
+                                location = card.EnglishName + Environment.NewLine;
+                            }
+
+
+                            location = location + General.GetAddress(address);
+
+                            shipmentDeliveryPM.ToLocation = location;
+                            shipmentDeliveryPM.ToAddressCity_Dummy = address.City;
+
+                            if (!string.IsNullOrEmpty(address.CountryId))
+                            {
+                                Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
+                                if (country != null)
+                                {
+                                    shipmentDeliveryPM.ToAddressCountryCode = country.Code;
+                                    shipmentDeliveryPM.ToAddressCountryName = country.EnglishName;
+                                }
+                            }
+                        }
+                    }
+                }
+                #endregion
+
+                #region To PORT
+                else if (shipmentDeliveryPM.PickUpDeliveryToTypeCode == "PORT")
+                {
+                    if (!string.IsNullOrEmpty(shipmentDeliveryPM.ToPortId))
+                    {
+                        shipmentDeliveryPM.ToLocation = shipmentDeliveryPM.ToAddress;
+                    }
+                }
+                #endregion
+
+                #region To CASL
+                else
+                {
+                    string location = "";
+
+                    if (!string.IsNullOrEmpty(shipmentDeliveryPM.ToAddressCity))
+                    {
+                        location = shipmentDeliveryPM.ToAddressCity;
+                    }
+
+                    if (!string.IsNullOrEmpty(shipmentDeliveryPM.ToAddressZipCode))
+                    {
+                        location = location + " " + shipmentDeliveryPM.ToAddressZipCode;
+                    }
+
+                    if (!string.IsNullOrEmpty(shipmentDeliveryPM.ToAddressCountryId))
+                    {
+                        Country country = countryRepository.GetSingleCountry(shipmentDeliveryPM.ToAddressCountryId, tenant);
+                        if (country != null)
+                        {
+                            location = location + Environment.NewLine + country.EnglishName;
+
+                            shipmentDeliveryPM.ToAddressCountryCode = country.Code;
+                            shipmentDeliveryPM.ToAddressCountryName = country.EnglishName;
+                        }
+                    }
+
+                    shipmentDeliveryPM.ToLocation = location;
+                    shipmentDeliveryPM.ToAddressCity_Dummy = shipmentDeliveryPM.ToAddressCity;
+                }
+                #endregion
+
+            }
+
+            return shipmentDeliveryPM;
+        }
+
+
     }
 }

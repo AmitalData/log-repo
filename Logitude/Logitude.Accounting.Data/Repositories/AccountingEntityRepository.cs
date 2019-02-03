@@ -21,6 +21,11 @@ namespace Logitude.Accounting.Data.Repositories
 			throw new NotImplementedException();
         }
 
+        public IQueryable<AccountingEntity> GetAccountingEntities()
+        {
+            return context.AccountingEntities;
+        }
+
    }
 
 }

@@ -70,7 +70,7 @@
     .color-8 {
         background: #7941a0;
     }
-    
+
     /* 9-Payment Cheque */
     .color-9{
         background:  #e45cea;
@@ -78,8 +78,8 @@
 
 </style>
 <div>
-    <div *ngIf="fieldName == 'Indicator' && rowData['OpenAmount'] != 0" title="{{rowData['OpenAmount'] != CalculateOriginalAmount() ? 'Partial transaction' : 'Open transaction'}}" class="circleWrapper CenterCenter">
-        <div class="circleDraw" 
+    <div *ngIf="fieldName == 'Indicator' && rowData['OpenAmount'] != 0" [attr.title]="GetIndicatorText()" class="circleWrapper CenterCenter">
+        <div class="circleDraw"
              [class.orangeCircle]="rowData['OpenAmount'] != CalculateOriginalAmount()"></div>
     </div>
 
@@ -100,7 +100,7 @@
     <!-- SourceType -->
     <div style="padding: 0px 7px;text-align: left;"  class="TextTrimming" *ngIf="fieldName == 'Source'">
 
-        <span title="{{rowData['SourceType']}}" *ngIf="IconCode" 
+        <span title="{{rowData['SourceType']}}" *ngIf="IconCode"
               [class]="'SourceTypeIcon color-' + rowData['SourceTypeCode']"
               (click)="OpenSource(rowData['SourceId'])" >{{IconCode}}</span>
 
@@ -113,8 +113,8 @@
     <div [style.text-align]="isRTL ? 'right' : 'left'"  class="TextTrimming" *ngIf="fieldName == 'DueDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
 
     <!-- LocalAmountCredit -->
-    <div class="TextTrimming" *ngIf="fieldName == 'LocalAmountCredit'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["LocalAmountCredit"]>0'>
-        {{ (rowData["LocalAmountCredit"] != 0 ? -1*Abs(rowData["LocalAmountCredit"]) : Abs(rowData["LocalAmountDebit"]))| NumbersPipe:'N2' }}
+    <div class="TextTrimming" *ngIf="fieldName == 'LocalAmountCredit'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["LocalAmountCredit"]!=0'>
+        {{ (rowData["LocalAmountCredit"] != 0 ? rowData["LocalAmountCredit"] : rowData["LocalAmountDebit"])| NumbersPipe:'N2' }}
     </div>
 
     <!-- CumulativeLocalAmount -->
@@ -126,8 +126,8 @@
 
 
     <!-- ForeignAmountCredit -->
-    <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmountCredit'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["ForeignAmountCredit"]>0'>
-        {{ (rowData["ForeignAmountCredit"] != 0 ? -1*Abs(rowData["ForeignAmountCredit"]) : Abs(rowData["ForeignAmountDebit"])) | NumbersPipe:'N2' }} {{rowData['CurrencySign']}}
+    <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmountCredit'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["ForeignAmountCredit"]!=0'>
+        {{ (rowData["ForeignAmountCredit"] != 0 ? rowData["ForeignAmountCredit"] : rowData["ForeignAmountDebit"]) | NumbersPipe:'N2' }} {{rowData['CurrencySign']}}
     </div>
 
     <!-- CumulativeForeignAmount -->
@@ -150,7 +150,7 @@
     <div class="TextTrimming" *ngIf="fieldName == 'OpenAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["OpenAmount"]<0'>
         {{ rowData[fieldName] | NumbersPipe:'N2'  }} <!--{{rowData["OpenAmountCurrencySign"]}}-->
     </div>
-    <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["ForeignAmount"]<0'>
+    <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["ForeignAmountCredit"]!=0'>
         {{ rowData[fieldName] | NumbersPipe:'N2'  }} <!--{{rowData["OpenAmountCurrencySign"]}}-->
     </div>
 

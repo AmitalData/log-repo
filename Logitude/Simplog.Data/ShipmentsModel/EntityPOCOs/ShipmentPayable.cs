@@ -53,7 +53,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool IsFromQuote { get; set; }
         public string QuoteChargeId { get; set; }
         public bool IsChargeBySteps { get; set; }
-        public double? QuoteCostMinPrice { get; set; }
+        public double? QuoteCostMinAmount { get; set; }
+        public double? QuoteCostMaxAmount { get; set; }
+
         public string VatTypeId { get; set; }
         public bool IsBackToBack { get; set; }
         public string ReceivableId { get; set; }

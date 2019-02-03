@@ -452,7 +452,7 @@ namespace WebFreight.Web.Helpers
             HtmlTemplate.Append("<b>Password: </b>" + password);
             HtmlTemplate.Append("<br />");
             HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("By Using Logitude Mobile, you can stay up-tp-date online with your shipments, statuses and more");
+            HtmlTemplate.Append("By Using Logitude Mobile, you can stay up-to-date online with your shipments, statuses and more");
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("<table style='width:100%;height:50px; background-color:#EEEEEE'><tbody ><tr><td><p style='text-align:center;font-size:20px;font-weight:bold;padding:5px'>  Get the app </p></td></tr><tr> <td align='center'>" + "<a  href='" + LogitudeSettings.IOSAppLink + "'> <img  width='120' height='40' src='cid:AppleStore' /></a>" + "&nbsp" + "<a  href='" + LogitudeSettings.AndroidAppLink + "'> <img  width='120' height='40' src='cid:GooglePlay' /></a></td></tr></tbody></table>");
 

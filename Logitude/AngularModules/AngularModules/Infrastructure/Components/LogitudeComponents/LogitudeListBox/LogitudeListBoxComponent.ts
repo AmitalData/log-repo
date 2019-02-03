@@ -1,30 +1,28 @@
-﻿import {Component, OnInit, Type, Output, EventEmitter, ComponentRef, ViewChild,Input,AfterViewInit,ChangeDetectorRef} from '@angular/core';
-//import {TextCodeTranslationPipe} from '../../../../Controls/Pipes/TextCodeTranslationPipe';
-
+import {Component, OnInit, Type, Output, EventEmitter,ChangeDetectorRef} from '@angular/core';
+import { TextCodeTranslator } from '../../../Utilities/TextCodeTranslator';
+import { AppTool } from '../../../Tools';
 
 @Component({
     moduleId: module.id,
 
     templateUrl: './LogitudeListBoxComponent.html',
-    inputs: ['DataSource', 'Height', 'SelectedItem', 'Binding','event','DataSourceChanged'],
-    selector:'LogListBox',
-    //directives: [CORE_DIRECTIVES, IconButton, LogGridComponent, NgFormControl, AdvanceSearchComponent],
-    //pipes: [TextCodeTranslationPipe],
-    //providers: [HTTP_PROVIDERS, EntityListService, ServiceArgs, EntityResourceService, PubSubService, PubSubService1],
+    inputs: ['DataSource', 'Height', 'SelectedItem', 'Binding', 'event', 'DataSourceChanged', 'Sort'],
+    selector: 'LogListBox',
 })
 
-export class LogitudeListBoxComponent implements OnInit{
+export class LogitudeListBoxComponent implements OnInit {
 
     @Output() SelectedItemChanged = new EventEmitter();
-    public event: EventEmitter<any>; 
-    public DataSourceChanged: EventEmitter<any>; 
+    public event: EventEmitter<any>;
+    public DataSourceChanged: EventEmitter<any>;
     Height: string;
-    Style: any;// = "width:100%;border:none;margin-top:-8px;height:100%; overflow:auto;background-color: transparent;";
+    Style: any;
     public Binding: string = null;
+    public Sort: boolean = false;
     public SelectedItem: any = null;
     ClassName: string = "ListBoxItem";
     DataSource: any[];
-    SourceItems: any[];
+    SourceItems: ListBoxItem[];
     constructor(private CD: ChangeDetectorRef) {
     }
     ngOnInit() {
@@ -34,62 +32,76 @@ export class LogitudeListBoxComponent implements OnInit{
         else {
             this.Style = { 'width': '100%', 'margin-top': '5px', 'height': '100%', 'overflow': 'auto', 'background-color': 'transparent', 'max-height:': '494px' };
         }
-        this.SourceItems = []; 
+
+        this.SourceItems = [];
+
         this.event.subscribe((res) => {
-            if (this.DataSource) { 
+            if (this.DataSource) {
                 if (this.DataSource.length > 0) {
-                    this.SourceItems = []; 
-                    //this.SelectedItem = res;
+                    this.SourceItems = [];
+                    var iSourceItems: ListBoxItem[] = [];
+
                     this.DataSource.forEach((value, key) => {
                         if (value == this.SelectedItem && res != null) {
-                            this.SourceItems.push(new ListBoxItem(value, this,true));
+                            iSourceItems.push(new ListBoxItem(value, this, true));
+                        }
+
+                        else {
+                            iSourceItems.push(new ListBoxItem(value, this));
+                        }
+
+                        if (this.Sort) {
+                            this.SourceItems = iSourceItems.sort((a, b) => a.TranslatedText.toLowerCase() !== b.TranslatedText.toLowerCase() ? a.TranslatedText.toLowerCase() < b.TranslatedText.toLowerCase() ? -1 : 1 : 0);
                         }
                         else {
-                            this.SourceItems.push(new ListBoxItem(value, this));
+                            this.SourceItems = iSourceItems;
                         }
+
                         this.CD.detectChanges();
                     });
                 }
+
                 else {
                     this.SourceItems = [];
                 }
             }
         });
 
-        if (this.DataSourceChanged){
+        if (this.DataSourceChanged) {
             this.DataSourceChanged.subscribe((res) => {
                 if (res) {
                     if (res.length > 0) {
                         this.DataSource = res;
                         this.SourceItems = [];
+
                         this.DataSource.forEach((value, key) => {
                             if (value == this.SelectedItem && res != null) {
                                 this.SourceItems.push(new ListBoxItem(value, this, true));
                             }
-                        else {
-                            this.SourceItems.push(new ListBoxItem(value, this));
-                        }
-                        this.CD.detectChanges();
-                    });
-                }
-                else {
-                    this.SourceItems = [];
-                }
-            }
-        });
-        }
-       
-        
-    }
- 
 
-    setSelectedItem(item:any) {
+                            else {
+                                this.SourceItems.push(new ListBoxItem(value, this));
+                            }
+
+                            this.CD.detectChanges();
+                        });
+                    }
+                    else {
+                        this.SourceItems = [];
+                    }
+                }
+            });
+        }
+    }
+
+    setSelectedItem(item: any) {
         this.SelectedItem = item;
+
         this.SourceItems.forEach((value, key) => {
             value.ClassName = "ListBoxItem";
         });
+
         this.SelectedItemChanged.emit(this.SelectedItem);
-        
     }
 }
 
@@ -103,21 +115,26 @@ export class ListBoxItem {
     public get Text() { return this.text; }
     public set Text(newValue: any) { this.text = newValue; }
     ClassName: string = "ListBoxItem";
-    constructor(SourceItem: any, private parentComponent: LogitudeListBoxComponent, isselected = false) { 
+    public TranslatedText: string = "";    
+    constructor(SourceItem: any, private parentComponent: LogitudeListBoxComponent, isselected = false) {
         this.Item = SourceItem;
+
         if (isselected == true) {
             this.ClassName = "SelectedListBoxItem";
         }
-       //this.Text = SourceItem.FieldName;
-        //if (this.parentComponent.SelectedItem != null) {
-            if (this.parentComponent.Binding == null) {
-                this.Text = SourceItem;
-            }
 
-            else {
-                this.Text = SourceItem[this.parentComponent.Binding];//this.parentComponent.SelectedItem[this.parentComponent.Binding];
-            }
-       // } 
+        if (this.parentComponent.Binding == null) {
+            this.Text = SourceItem;
+        }
+
+        else {
+            this.Text = SourceItem[this.parentComponent.Binding];
+        }
+
+        this.TranslatedText = TextCodeTranslator.Translate(this.Text);
+        if (AppTool.IsNullOrEmpty(this.TranslatedText)) {
+            this.TranslatedText = "";
+        }
     }
 
     setSelected() {

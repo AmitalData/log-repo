@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class EmployeeGroupUpdateClass
@@ -171,9 +174,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  "Create Date",
+					  						DefaultText =  @"Create Date",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  "Create Date",
+					  						ListLableDefaultText =  @"Create Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -227,7 +230,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  "Created By",
+					  						DefaultText =  @"Created By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -282,9 +285,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  "Update Date",
+					  						DefaultText =  @"Update Date",
 					  						ListFieldLable =  "UpdateDateListLable",
-					  						ListLableDefaultText =  "Update Date",
+					  						ListLableDefaultText =  @"Update Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -338,7 +341,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
-					  						DefaultText =  "Updated By",
+					  						DefaultText =  @"Updated By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -392,9 +395,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search ...",
+					  						DefaultText =  @"Search ...",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "Search ...",
+					  						ListLableDefaultText =  @"Search ...",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -449,9 +452,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
+					  						DefaultText =  @"Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
+					  						ListLableDefaultText =  @"Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -505,9 +508,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Description",
-					  						DefaultText =  "Description ",
+					  						DefaultText =  @"Description ",
 					  						ListFieldLable =  "DescriptionListLable",
-					  						ListLableDefaultText =  "Description ",
+					  						ListLableDefaultText =  @"Description ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -562,9 +565,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
-					  						DefaultText =  "Inactive",
+					  						DefaultText =  @"Inactive",
 					  						ListFieldLable =  "InactiveListLable",
-					  						ListLableDefaultText =  "Inactive",
+					  						ListLableDefaultText =  @"Inactive",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -618,7 +621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EmployeeGroupLines",
-					  						DefaultText =  "Employee Group Lines",
+					  						DefaultText =  @"Employee Group Lines",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -674,7 +677,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManagerUserId",
-					  						DefaultText =  "Manager",
+					  						DefaultText =  @"Manager",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -728,7 +731,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EscalationNotify",
-					  						DefaultText =  "Notify",
+					  						DefaultText =  @"Notify",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -782,7 +785,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManagerUserEmail",
-					  						DefaultText =  "Manager Email",
+					  						DefaultText =  @"Manager Email",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -800,7 +803,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup EmployeeGroupQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "OTQG", Name = "EmployeeGroup Query Group" }, queryGroupRepository);
 						QueryGroup EmployeeGroupQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "1af9", Name = " Query Group" }, queryGroupRepository);
@@ -816,7 +819,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllEmployeeGroupsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = EmployeeGroupTextCode_0.Id, Code = "All Employee Groups",  QueryGroupCode = "OTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = EmployeeGroupObjectTable.Id, QuerySection = "EmployeeGroup", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = EmployeeGroupFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query AllEmployeeGroupsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = EmployeeGroupTextCode_0.Id, Code = "All Employee Groups",  QueryGroupCode = "OTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = EmployeeGroupObjectTable.Id, QuerySection = "EmployeeGroup", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = EmployeeGroupFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllEmployeeGroupsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEmployeeGroupsQuery.Id, IndexOrder = 0, ObjectFieldId = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == EmployeeGroupObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -844,8 +847,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable EmployeeGroupObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "EmployeeGroup" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable EmployeeGroupObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "EmployeeGroup" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode EmployeeGroupGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EmployeeGroup.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = EmployeeGroupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature EmployeeGroupGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EmployeeGroup.Tab.General", ObjectTableId = EmployeeGroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "EmployeeGroup.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -855,12 +859,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature EmployeeGroupEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EmployeeGroup.Tab.Events", ObjectTableId = EmployeeGroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "EmployeeGroup.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EGGE",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMEmployeeGroup/Components/EditTabs/EmployeeGroupGeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "EmployeeGroup.Tab.General" && d.ObjectTableId == EmployeeGroupObjectTable.Id).FirstOrDefault().Id, ControlPath = "Logitude.CRM.Views.Tabs.EmployeeGroupTabs.EmployeeGroupGeneralTabControl", ObjectTableId = EmployeeGroupObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "EmployeeGroup.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EGGE",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMEmployeeGroup/Components/EditTabs/EmployeeGroupGeneralTabComponent", FeatureId = EmployeeGroupGeneralFeature_TH0.Id, ControlPath = "Logitude.CRM.Views.Tabs.EmployeeGroupTabs.EmployeeGroupGeneralTabControl", ObjectTableId = EmployeeGroupObjectTable.Id, TabNameTextCodeId = EmployeeGroupGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EmployeeGroup.Tab.Events" && d.ObjectTableId == EmployeeGroupObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = EmployeeGroupObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "EmployeeGroup.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = EmployeeGroupEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = EmployeeGroupObjectTable.Id, TabNameTextCodeId = EmployeeGroupEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -919,7 +923,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

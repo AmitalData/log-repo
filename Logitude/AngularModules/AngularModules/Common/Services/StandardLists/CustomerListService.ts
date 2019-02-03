@@ -5,15 +5,15 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
-import {Observable}     from 'rxjs/Rx';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
-import {CustomerList} from '../../EntityLists/CustomerList';
+import { Observable } from 'rxjs/Rx';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { InfraGenericFilter } from '../../../Infrastructure/Utilities/InfraGenericFilter';
+import { CustomerList } from '../../EntityLists/CustomerList';
 
 @Injectable()
 

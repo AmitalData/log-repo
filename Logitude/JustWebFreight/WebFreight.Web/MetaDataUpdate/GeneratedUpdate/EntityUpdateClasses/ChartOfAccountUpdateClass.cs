@@ -179,11 +179,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
-					  						FullLocalDefaultText =  "קוד",
+					  						DefaultText =  @"Code",
+					  						FullLocalDefaultText =  @"קוד",
 					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
-					  						ListLocalDefaultText =  "קוד",
+					  						ListLableDefaultText =  @"Code",
+					  						ListLocalDefaultText =  @"קוד",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -238,11 +238,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
-					  						DefaultText =  "Local Name",
-					  						FullLocalDefaultText =  "שם מקומי",
+					  						DefaultText =  @"Local Name",
+					  						FullLocalDefaultText =  @"שם מקומי",
 					  						ListFieldLable =  "LocalNameListLable",
-					  						ListLableDefaultText =  "Local Name",
-					  						ListLocalDefaultText =  "שם מקומי",
+					  						ListLableDefaultText =  @"Local Name",
+					  						ListLocalDefaultText =  @"שם מקומי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -297,11 +297,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
-					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם באנגלית",
+					  						DefaultText =  @"English Name",
+					  						FullLocalDefaultText =  @"שם באנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
-					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם באנגלית",
+					  						ListLableDefaultText =  @"English Name",
+					  						ListLocalDefaultText =  @"שם באנגלית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -356,11 +356,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ParentId",
-					  						DefaultText =  "Parent",
-					  						FullLocalDefaultText =  "קוד אב",
+					  						DefaultText =  @"Parent",
+					  						FullLocalDefaultText =  @"קוד אב",
 					  						ListFieldLable =  "ParentIdListLable",
-					  						ListLableDefaultText =  "Parent",
-					  						ListLocalDefaultText =  "קוד אב",
+					  						ListLableDefaultText =  @"Parent",
+					  						ListLocalDefaultText =  @"קוד אב",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -416,11 +416,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TypeCode",
-					  						DefaultText =  "Type",
-					  						FullLocalDefaultText =  "סוג מאזן",
+					  						DefaultText =  @"Type",
+					  						FullLocalDefaultText =  @"סוג מאזן",
 					  						ListFieldLable =  "TypeCodeListLable",
-					  						ListLableDefaultText =  "Type",
-					  						ListLocalDefaultText =  "סוג מאזן",
+					  						ListLableDefaultText =  @"Type",
+					  						ListLocalDefaultText =  @"סוג מאזן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -474,11 +474,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
-					  						DefaultText =  "Inactive",
-					  						FullLocalDefaultText =  "חסום",
+					  						DefaultText =  @"Inactive",
+					  						FullLocalDefaultText =  @"חסום",
 					  						ListFieldLable =  "InactiveListLable",
-					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultText =  "חסום",
+					  						ListLableDefaultText =  @"Inactive",
+					  						ListLocalDefaultText =  @"חסום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -533,11 +533,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TypeName",
-					  						DefaultText =  "Type",
-					  						FullLocalDefaultText =  "סוג",
+					  						DefaultText =  @"Type",
+					  						FullLocalDefaultText =  @"סוג",
 					  						ListFieldLable =  "TypeNameListLable",
-					  						ListLableDefaultText =  "Type",
-					  						ListLocalDefaultText =  "סוג",
+					  						ListLableDefaultText =  @"Type",
+					  						ListLocalDefaultText =  @"סוג",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -592,11 +592,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ParentName",
-					  						DefaultText =  "Parent",
-					  						FullLocalDefaultText =  "קוד אב",
+					  						DefaultText =  @"Parent",
+					  						FullLocalDefaultText =  @"קוד אב",
 					  						ListFieldLable =  "ParentNameListLable",
-					  						ListLableDefaultText =  "Parent",
-					  						ListLocalDefaultText =  "קוד אב",
+					  						ListLableDefaultText =  @"Parent",
+					  						ListLocalDefaultText =  @"קוד אב",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -650,9 +650,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search Codes/Names",
+					  						DefaultText =  @"Search Codes/Names",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "Search Codes/Names",
+					  						ListLableDefaultText =  @"Search Codes/Names",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -670,7 +670,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ChartOfAccountQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CHAC", Name = "ChartOfAccount" }, queryGroupRepository);
 						QueryGroup ChartOfAccountQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d7a5", Name = " Query Group" }, queryGroupRepository);
@@ -686,7 +686,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ChartofAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ChartOfAccountTextCode_0.Id, Code = "Chart of Accounts",  QueryGroupCode = "CHAC", IndexOrder = 0, Tenant = 0, ObjectTableId = ChartOfAccountObjectTable.Id, QuerySection = "ChartOfAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ChartOfAccountFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query ChartofAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ChartOfAccountTextCode_0.Id, Code = "Chart of Accounts",  QueryGroupCode = "CHAC", IndexOrder = 0, Tenant = 0, ObjectTableId = ChartOfAccountObjectTable.Id, QuerySection = "ChartOfAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ChartOfAccountFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ChartofAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChartofAccountsQuery.Id, IndexOrder = 0, ObjectFieldId = ChartOfAccountObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ChartOfAccountObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -738,8 +738,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable ChartOfAccountObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChartOfAccount" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable ChartOfAccountObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChartOfAccount" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode ChartOfAccountGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChartOfAccount.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ChartOfAccountGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ChartOfAccount.Tab.General", ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChartOfAccount.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -749,12 +750,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature ChartOfAccountEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ChartOfAccount.Tab.Events", ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChartOfAccount.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COAG",HtmlComponentName = "ChartOfAccountGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/ChartOfAccount/ChartOfAccountGeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "ChartOfAccount.Tab.General" && d.ObjectTableId == ChartOfAccountObjectTable.Id).FirstOrDefault().Id, ControlPath = "./Accounting/Components/EditTabs/ChartOfAccount/ChartOfAccountGeneralTabComponent", ObjectTableId = ChartOfAccountObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ChartOfAccount.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COAG",HtmlComponentName = "ChartOfAccountGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/ChartOfAccount/ChartOfAccountGeneralTabComponent", FeatureId = ChartOfAccountGeneralFeature_TH0.Id, ControlPath = "./Accounting/Components/EditTabs/ChartOfAccount/ChartOfAccountGeneralTabComponent", ObjectTableId = ChartOfAccountObjectTable.Id, TabNameTextCodeId = ChartOfAccountGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COAE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "ChartOfAccount.Tab.Events" && d.ObjectTableId == ChartOfAccountObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ChartOfAccountObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ChartOfAccount.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COAE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ChartOfAccountEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ChartOfAccountObjectTable.Id, TabNameTextCodeId = ChartOfAccountEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -851,7 +852,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     
