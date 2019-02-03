@@ -337,7 +337,7 @@ export class CourierWorksheetListTemplate {
 
         if (this._CourierWorksheet.CourierPendingReasonErrorPlace == "1" /*=="בתשלום"*/) {
             var myMessageWindow = new MessageWindow();
-            myMessageWindow.Show("קיים Pending עם עצירה בתשלום הצהרה");
+            myMessageWindow.Show("קיים Pending" + " \n " + " עם עצירה בתשלום הצהרה");
             return;
         }
 
