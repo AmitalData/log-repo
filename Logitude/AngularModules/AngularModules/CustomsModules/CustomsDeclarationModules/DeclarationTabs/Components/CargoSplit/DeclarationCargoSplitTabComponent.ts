@@ -1,3 +1,4 @@
+
 declare var System: any;
 declare var window: any;
 import { Component, OnInit } from '@angular/core';
@@ -161,7 +162,7 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
 
         /*if (!AppTool.IsNullOrEmpty(item)) {
             //SessionLocator.CurrentSession.StartBusyIndicator("");
-    
+
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     //this.showAlert = false;
@@ -171,8 +172,8 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
                         this.RefreshEntity();
                     });
                 });
-            
-    
+
+
         }*/
 
     }
