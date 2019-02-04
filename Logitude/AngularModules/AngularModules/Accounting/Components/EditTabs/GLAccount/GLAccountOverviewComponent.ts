@@ -606,9 +606,9 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 + (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
                 + (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
                 // +(this.accountCardlist.Total?this.accountCardlist.Total:0 Open shipments)
-            ) / ((this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0) * 100);
+            ) / ((this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0));
         }
-        this.creditPercentage = percentage?percentage:0;
+        this.creditPercentage = percentage?(percentage * 100):0;
 
 
     }

@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -23,11 +23,15 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     public HasCreditLimitFeature: boolean = false;
     public IsCreditLimitActivated: boolean = false;
     public LocalCurrencyCode: string;
+    public IsAccountingActivated: boolean;
+
     @ViewChild('BillingChild', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     public DisplaySATSettings: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
+     
+
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
 
         this.HasCreditLimitFeature = FeatureLocator.HasFeaturePermession("CreditLimitSetting", "Module");
@@ -45,6 +49,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     }
 
     ngOnInit() {
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.SetUIProperties();
         this.RunComponent();
         this.LoadCreditLimitData();

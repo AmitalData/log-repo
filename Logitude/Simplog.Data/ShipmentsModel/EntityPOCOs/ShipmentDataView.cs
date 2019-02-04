@@ -634,6 +634,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool IsDigitalSignRequired { get; set; }
         public string TrailerNumber { get; set; }
 
+        public bool IsDepositionRequired { get; set; }
+        
 
         public string DeclarationXmlData { get; set; }
         public bool IsImporterApprovalRequried { get; set; }
@@ -713,6 +715,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? FirstPickupETA { get; set; }
         public DateTime? INTTRALastStatusDate { get; set; }
         public DateTime? ContainerLastStatusDate { get; set; }
+
+    
+        
 
     }
 }
