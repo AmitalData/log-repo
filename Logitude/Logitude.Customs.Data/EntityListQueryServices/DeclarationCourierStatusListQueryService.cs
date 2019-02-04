@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
@@ -38,7 +39,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             //{
             //    var resQ = qMmmnActionError.ToList();
             //}        
-
+            //TestSql(iQueryable);
             IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable
                                                               join d in context.Declarations.Include("GovernmentProcedureCurrent").Include("CourierCustomStatus").Include("DeclarationStatusType").Include("CustomerCard").Include("Importer").Include("AgentTalkBackType")
                                                               on a.DeclarationId equals d.Id
@@ -54,58 +55,88 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                               select new DeclarationCourierStatusList()
                                                               {
-                                                                DeclarationId = a.DeclarationId,
-                                                                Tenant = a.Tenant,
-                                                                CourierMasterId = c.CourierMasterId,
-                                                                IsDOCTab = (a.DocumentStatusCode == "M" || a.DocumentStatusCode == "X"),
-                                                                IsSVGTab = a.IsCourierMissingClassification == true,
-                                                                IsMNFRTab = (a.CourierManifestStatusCode == "R"),
-                                                                IsDECRTab = (a.CourierDeclarationStatusCode == "R"),
-                                                                IsHOLDTab = (a.CourierPendingReasonCode != null),
-                                                                IsMNFTab = (a.CourierManifestStatusCode == "M" || a.CourierManifestStatusCode == "X"),
-                                                                IsPAYTab = a.CourierPaymentStatusCode == "R",
-                                                                IsDECTab = (a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X"),
-                                                                //IsACCTab = (d.MamanStatusCode == "2"), ???
-                                                                CourierManifestStatusCode = a.CourierManifestStatusCode,
-                                                                CourierDeclarationStatusCode = a.CourierDeclarationStatusCode,
-                                                                CourierPaymentStatusCode = a.CourierPaymentStatusCode,
-                                                                IsCourierMissingClassification = a.IsCourierMissingClassification,
-                                                                IsClosedForFollowUp = a.IsClosedForFollowUp,
-                                                                HighLowValue = a.HighLowValue,
-                                                                DocumentStatusCode = a.DocumentStatusCode,
-                                                                CourierHawb = d.CourierHAWB,
-                                                                ProcedureCurrentCode = d.ProcedureCurrentCode,
-                                                                ProcedureCurrentName = d.GovernmentProcedureCurrent != null ? d.GovernmentProcedureCurrent.LocalName : null,
-                                                                CourierCustomStatusCode = d.CourierCustomStatusCode,
-                                                                CourierCustomStatusName = d.CourierCustomStatus != null ? d.CourierCustomStatus.LocalName : null,
-                                                                DeclarationStatusTypeName = d.DeclarationStatusType == null ? null : d.DeclarationStatusType.LocalName,
-                                                                ImporterCode = d.ImporterCode,
-                                                                ImporterName = d.ImporterId != null ? d.Importer.FullName : d.ImporterName,
-                                                                CustomerName = d.CustomerCard.LocalName != null ? d.CustomerCard.LocalName : d.CustomerCard.EnglishName,
-                                                                CourierSearchFields = d.CourierSearchFields,
-                                                                TotalInvoiceAmountInUSD = a.TotalInvoiceAmountInUSD,
-                                                                DeclarationNumber = d.DeclarationNumber,
-                                                                CourierPendingReasonCode = a.CourierPendingReasonCode,
-                                                                CourierPendingReasonName = a.CourierPendingReason != null ? a.CourierPendingReason.LocalName : null,
-                                                                  CourierPendingReasonErrorPlace= a.CourierPendingReason != null ? a.CourierPendingReason.ErrorPlace : null,
+                                                                  DeclarationId = a.DeclarationId,
+                                                                  Tenant = a.Tenant,
+                                                                  CourierMasterId = c.CourierMasterId,
+                                                                  IsDOCTab = (a.DocumentStatusCode == "M" || a.DocumentStatusCode == "X"),
+                                                                  IsSVGTab = a.IsCourierMissingClassification == true,
+                                                                  IsMNFRTab = (a.CourierManifestStatusCode == "R"),
+                                                                  IsDECRTab = (a.CourierDeclarationStatusCode == "R"),
+                                                                  IsHOLDTab = (a.CourierPendingReasonCode != null),
+                                                                  IsMNFTab = (a.CourierManifestStatusCode == "M" || a.CourierManifestStatusCode == "X"),
+                                                                  IsPAYTab = a.CourierPaymentStatusCode == "R",
+                                                                  IsDECTab = (a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X"),
+                                                                  //IsACCTab = (d.MamanStatusCode == "2"), ???
+                                                                  CourierManifestStatusCode = a.CourierManifestStatusCode,
+                                                                  CourierDeclarationStatusCode = a.CourierDeclarationStatusCode,
+                                                                  CourierPaymentStatusCode = a.CourierPaymentStatusCode,
+                                                                  IsCourierMissingClassification = a.IsCourierMissingClassification,
+                                                                  IsClosedForFollowUp = a.IsClosedForFollowUp,
+                                                                  HighLowValue = a.HighLowValue,
+                                                                  DocumentStatusCode = a.DocumentStatusCode,
+                                                                  CourierHawb = d.CourierHAWB,
+                                                                  ProcedureCurrentCode = d.ProcedureCurrentCode,
+                                                                  ProcedureCurrentName = d.GovernmentProcedureCurrent != null ? d.GovernmentProcedureCurrent.LocalName : null,
+                                                                  CourierCustomStatusCode = d.CourierCustomStatusCode,
+                                                                  CourierCustomStatusName = d.CourierCustomStatus != null ? d.CourierCustomStatus.LocalName : null,
+                                                                  DeclarationStatusTypeName = d.DeclarationStatusType == null ? null : d.DeclarationStatusType.LocalName,
+                                                                  ImporterCode = d.ImporterCode,
+                                                                  ImporterName = d.ImporterId != null ? d.Importer.FullName : d.ImporterName,
+                                                                  CustomerName = d.CustomerCard.LocalName != null ? d.CustomerCard.LocalName : d.CustomerCard.EnglishName,
+                                                                  CourierSearchFields = d.CourierSearchFields,
+                                                                  TotalInvoiceAmountInUSD = a.TotalInvoiceAmountInUSD,
+                                                                  DeclarationNumber = d.DeclarationNumber,
+                                                                  CourierPendingReasonCode = a.CourierPendingReasonCode,
+                                                                  CourierPendingReasonName = a.CourierPendingReason != null ? a.CourierPendingReason.LocalName : null,
+                                                                  CourierPendingReasonErrorPlace = a.CourierPendingReason != null ? a.CourierPendingReason.ErrorPlace : null,
                                                                   PendingRemarks = a.PendingRemarks,
-                                                                CourierSuspentionReasonName = d.CourierSuspentionReasonCode != null ? d.AgentTalkBackType.LocalName : null,
-                                                                AcceptanceStatusCode = d.AcceptanceStatusCode,
-                                                                MamanStatusCode = d.MamanStatusCode,
-                                                                MamanErrorXml = d.MamanErrorXml,
-                                                                CourierSuspentionCode = d.CourierSuspentionCode,
-                                                                CourierSuspentionName = d.CourierSuspention != null ? d.CourierSuspention.LocalName : null,
-                                                                SpecialActionStatus = a.SpecialActionStatus,
-                                                                //SpecialActionsErrorXml = ao.text,
-                                                                FastIndividualProcessCode = a.FastIndividualProcessCode,
-                                                                ManualProcessCode = a.ManualProcessCode,
+                                                                  CourierSuspentionReasonName = d.CourierSuspentionReasonCode != null ? d.AgentTalkBackType.LocalName : null,
+                                                                  AcceptanceStatusCode = d.AcceptanceStatusCode,
+                                                                  MamanStatusCode = d.MamanStatusCode,
+                                                                  MamanErrorXml = d.MamanErrorXml,
+                                                                  CourierSuspentionCode = d.CourierSuspentionCode,
+                                                                  CourierSuspentionName = d.CourierSuspention != null ? d.CourierSuspention.LocalName : null,
+                                                                  SpecialActionStatus = a.SpecialActionStatus,
+                                                                  //SpecialActionsErrorXml = ao.text,
+                                                                  FastIndividualProcessCode = a.FastIndividualProcessCode,
+                                                                  ManualProcessCode = a.ManualProcessCode,
                                                               });
 
 
             return query;
-		}
+        }
 
-		private IQueryable<DeclarationCourierStatus> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<DeclarationCourierStatus> iQueryable, int tenant)
+        private void TestSql(IQueryable<DeclarationCourierStatus> iQueryable)
+        {
+            using (var logger = (context as DbContextBase).CreateLogger())
+            {
+                var aa = (from a in iQueryable
+                          join d in context.Declarations.Include("GovernmentProcedureCurrent").Include("CourierCustomStatus").Include("DeclarationStatusType").Include("CustomerCard").Include("Importer").Include("AgentTalkBackType")
+                          on a.DeclarationId equals d.Id
+                          join c in context.CourierDeclarations
+                          on a.DeclarationId equals c.DeclarationId
+
+
+                          //join mmnAction in qMmmnActionError
+                          //on a.DeclarationId equals mmnAction.id
+                          //into leftJoin
+                          //from ao in leftJoin.DefaultIfEmpty()
+
+
+                          select new DeclarationCourierStatusList()
+                          {
+                              CourierPendingReasonCode = a.CourierPendingReasonCode,
+                              CourierPendingReasonName = a.CourierPendingReason != null ? a.CourierPendingReason.LocalName : null,
+                              CourierPendingReasonErrorPlace = a.CourierPendingReason != null ? a.CourierPendingReason.ErrorPlace : null,
+                              PendingRemarks = a.PendingRemarks,
+                              CourierSuspentionReasonName = d.CourierSuspentionReasonCode != null ? d.AgentTalkBackType.LocalName : null
+                          });
+                aa.ToList();
+                var sql = logger.ToString();
+            }
+        }
+
+        private IQueryable<DeclarationCourierStatus> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<DeclarationCourierStatus> iQueryable, int tenant)
         {
             return iQueryable;
         }
