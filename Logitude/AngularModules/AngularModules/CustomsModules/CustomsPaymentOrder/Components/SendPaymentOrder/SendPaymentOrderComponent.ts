@@ -122,7 +122,6 @@ export class SendPaymentOrderComponent {
 
                             if (this.PostSendPaymentOrderChecksAndPrecalculations() == true) {
                                 this.SendPaymentOrder();
-                                this.
                             }
                             else {
                                 SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
