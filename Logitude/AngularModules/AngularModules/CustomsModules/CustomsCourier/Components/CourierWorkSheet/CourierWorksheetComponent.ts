@@ -79,6 +79,7 @@ implements OnDestroy
     _SelectedStatusValue: string = 'A';//ALL//Open//Close
     _SelectedAvailableValue: string = 'A';//ALL//Available//NotAvailable//Additional
     _SelectedTotalInvoiceValue: string = 'A';
+    _SelectedFastIndividualProcessValue: string = 'A';
 
     _SelectedMNFValue: string = 'A'; // ALL/Complete/Wrong
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
@@ -295,7 +296,7 @@ implements OnDestroy
     
     SendReadyLOWPAYToBatch() {
 
-        if (this._ReadyLOWPAYToBatchSend == 0) {
+        if (this._PAYReadyNotFastindividual == 0) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
@@ -394,6 +395,7 @@ implements OnDestroy
         currRequestParams.SelectedBOLValue = this._SelectedBOLValue;
         currRequestParams.SelectedStatusValue = this._SelectedStatusValue;
         currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
+        currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
 
         this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
             .subscribe(res => {
@@ -423,6 +425,7 @@ implements OnDestroy
                 currRequestParams.SelectedBOLValue = this._SelectedBOLValue;
                 currRequestParams.SelectedStatusValue = this._SelectedStatusValue;
                 currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
+                currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
 
                 this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
                     .subscribe(res => {
@@ -549,7 +552,7 @@ implements OnDestroy
 
     _ReadyDECToBatchSend = 0;
     _ReadyMNFToBatchSend = 0;
-    _ReadyLOWPAYToBatchSend = 0;
+    _PAYReadyNotFastindividual /*_ReadyLOWPAYToBatchSend*/= 0;
     _SVGTotal = 0;
     _DOCTotal = 0;
     _DOC_U_Total = 0;
@@ -633,9 +636,9 @@ implements OnDestroy
                             this._DEC_W_Total = item.Value;
                             break;
                         }
-                        case "PAY_RL": {
+                        case "PAYReadyNotFastindividual": {
                             //statements; 
-                            this._ReadyLOWPAYToBatchSend = item.Value;
+                            this._PAYReadyNotFastindividual = item.Value;
                             break;
                         }
                         case "ACC_W": {
@@ -1166,6 +1169,17 @@ implements OnDestroy
         if (AppTool.IsNullOrEmpty(filters.SortDirection)) {
             filters.SortDirection = "Descending";
         }
+
+        switch (this._SelectedFastIndividualProcessValue) {
+            case "F": {
+                filters.addAdditionalFilter("FastIndividualProcessCode", "F", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "I": {
+                filters.addAdditionalFilter("FastIndividualProcessCode", "I", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
     }
 
     ViewInitCompleted($event) {
@@ -1207,7 +1221,7 @@ implements OnDestroy
 
     SelectedBOLValueClick(value: string) {
         this._SelectedBOLValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A") {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1218,7 +1232,7 @@ implements OnDestroy
 
     SelectedTotalInvoiceValue(value: string) {
         this._SelectedTotalInvoiceValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A") {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1229,7 +1243,7 @@ implements OnDestroy
 
     SelectedStatusValueClick(value: string) {
         this._SelectedStatusValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A") {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1240,7 +1254,18 @@ implements OnDestroy
 
     SelectedAvailableValueClick(value: string) {
         this._SelectedAvailableValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A") {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A') {
+            this.IsFiltered = false;
+        }
+        else {
+            this.IsFiltered = true;
+        }
+        this.RefreshList();
+    }
+
+    SelectedFastIndividualProcessValueClick(value: string) {
+        this._SelectedFastIndividualProcessValue = value;
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1259,6 +1284,7 @@ implements OnDestroy
         this._SelectedStatusValue = 'A';
         this._SelectedAvailableValue = 'A';
         this._SelectedTotalInvoiceValue = 'A';
+        this._SelectedFastIndividualProcessValue = 'A';
         this.IsFiltered = false;
         this.RefreshList();
     }

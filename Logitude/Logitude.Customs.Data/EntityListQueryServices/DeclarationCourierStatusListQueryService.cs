@@ -97,6 +97,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 CourierSuspentionName = d.CourierSuspention != null ? d.CourierSuspention.LocalName : null,
                                                                 SpecialActionStatus = a.SpecialActionStatus,
                                                                 //SpecialActionsErrorXml = ao.text,
+                                                                FastIndividualProcessCode = a.FastIndividualProcessCode,
+                                                                ManualProcessCode = a.ManualProcessCode,
                                                               });
 
 

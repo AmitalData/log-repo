@@ -276,7 +276,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                     var analyzeQueueUtil = new AnalyzeQueueUtil();
 
                     
-                    analyzeQueueUtil.SaveMessageToAnalyzeQueue(fileName, fileData, customsPartnerFtpPM.Tenant, defInterfaceDetails);
+                    analyzeQueueUtil.SaveMessageToAnalyzeQueue(fileName, fileData, customsPartnerFtpPM.Tenant, defInterfaceDetails,null);
 
                     Debug.WriteLine($"ftpService.Delete({fileName})");
                     ftpService.Delete(fileWithFolder);

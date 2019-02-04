@@ -1592,4 +1592,5 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     }
+
 }

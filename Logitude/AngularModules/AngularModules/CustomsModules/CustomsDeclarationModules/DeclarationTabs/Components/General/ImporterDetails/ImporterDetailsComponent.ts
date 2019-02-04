@@ -661,20 +661,29 @@ export class ImporterDetailsComponent extends BaseComponent {
         //SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
         //SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
     }
+    Append2ImporterAddress(val:string ) {
+        if (!AppTool.IsNullOrEmpty(val)) {
+            if (!AppTool.IsNullOrEmpty(this.ImporterAddress)) {
+                this.ImporterAddress += " " + val;
+            } else {
+                this.ImporterAddress = val;
+            }
+        }
+    }
     OkButtonClicked() {
         if (this.type == "Importer" && this.isCourierDeclaration) {
             //if (!FormatTool.IsEmail(this.CasualImporterEmail)) {
             //errors.push("Invalid email format!");
             //}
-            this.ImporterAddress = null;
-            if (!AppTool.IsNullOrEmpty(this.CasualImporterAddress1) ||
-                !AppTool.IsNullOrEmpty(this.CasualImporterAddress2) ||
-                !AppTool.IsNullOrEmpty(this.CasualImporterCity) 
 
-                ) {
-                this.ImporterAddress = this.CasualImporterAddress1 + " " +
-                    this.CasualImporterAddress2 + " " + this.CasualImporterCity;
-            }
+            //save Declaration
+            //merge CasualImporterAddress1, CasualImporterAddress2, CasualImporterCity  to ImporterAddress field
+            this.ImporterAddress = null;
+            this.Append2ImporterAddress(this.CasualImporterAddress1);
+            this.Append2ImporterAddress(this.CasualImporterAddress2);
+            this.Append2ImporterAddress(this.CasualImporterCity);
+            
+
         }
         
         SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();

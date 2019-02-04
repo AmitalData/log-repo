@@ -603,8 +603,14 @@
                                         <div style="text-align: right;" *ngIf="item.ErrorType=='4589'">
 
                                             <span>
-                                                <button class="Button" style="height:18px; width: 90px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
-                                                    <img src="DepositionStatusCodeIcon" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
+                                                <button class="Button" style="height:18px; width: 110px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'DEFAULT'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
+                                                    <img src="./Images/LogBox/DSV/Tab_Logo_Original.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
+                                                </button>
+                                            </span>
+
+                                            <span>
+                                                <button class="Button" style="height:18px; width: 90px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'LOGBOX'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
+                                                    <img src="./Images/LogBox/DSV/U_LOGBOX.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
                                                 </button>
                                             </span>
 

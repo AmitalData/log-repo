@@ -22,15 +22,24 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void AfterUpdating(DeclarationMamanSpecialActionPM entityPM, EntityPM entityParentPM)
         {
-            var context = CustomContext.GetContext(entityPM.Tenant);
+            if (!string.IsNullOrEmpty(entityPM.MamanSpecialActionStatusCode))
+            {
+                var context = CustomContext.GetContext(entityPM.Tenant);
 
-            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-            DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.DeclarationId, false, false);
-            CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(null, null, entityPM.Tenant);
-            calculateDeclarationCourierStatus.CalcSpecialActionStatus(myDeclarationCourierStatusPM);
-            
-            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);        
-            declarationCourierStatusUpdateService.Update(myDeclarationCourierStatusPM, true);
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.DeclarationId, false, false);
+                string specialActionStatus = myDeclarationCourierStatusPM.SpecialActionStatus;
+                CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(null, null, entityPM.Tenant);
+                calculateDeclarationCourierStatus.CalcSpecialActionStatus(myDeclarationCourierStatusPM);
+
+                if (specialActionStatus != myDeclarationCourierStatusPM.SpecialActionStatus)
+                {
+                    //LogitudeSettings.HandleLogMe("AfterUpdating myDeclarationCourierStatusPM " + myDeclarationCourierStatusPM.DeclarationId + " SpecialActionStatus " + myDeclarationCourierStatusPM.SpecialActionStatus, false, "maman", new DateTime(2019, 2, 1));
+                    myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    declarationCourierStatusUpdateService.Update(myDeclarationCourierStatusPM, true);
+                }
+            }
 
         }
     }

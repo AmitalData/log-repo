@@ -1078,6 +1078,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string fastIndividualProcessCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FastIndividualProcessCode  
+	   {
+	    
+	     get
+		{
+		   return fastIndividualProcessCode;
+		 }
+		 set
+		 {
+		   if(fastIndividualProcessCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FastIndividualProcessCode",OldValue=fastIndividualProcessCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fastIndividualProcessCode=value;
+		   }
+			
+		 }
+	   }
+	  private string manualProcessCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ManualProcessCode  
+	   {
+	    
+	     get
+		{
+		   return manualProcessCode;
+		 }
+		 set
+		 {
+		   if(manualProcessCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ManualProcessCode",OldValue=manualProcessCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   manualProcessCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -142,8 +142,8 @@
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'HighLowValue'" style="text-align:right;">
-        <span *ngIf="!IsHighLow">{{'Customs.CourierMaster.HighLowValue.High'  | TextCodeTranslationPipe }}</span>
-        <span *ngIf="IsHighLow">{{'Customs.CourierMaster.HighLowValue.Low'  | TextCodeTranslationPipe }}</span>
+        <span *ngIf="_CourierWorksheet['FastIndividualProcessCode'] == I">{{'Customs.CourierMaster.HighLowValue.High'  | TextCodeTranslationPipe }}</span>
+        <span *ngIf="_CourierWorksheet['FastIndividualProcessCode'] == F">{{'Customs.CourierMaster.HighLowValue.Low'  | TextCodeTranslationPipe }}</span>
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'CourierHawb'" style="text-align:right;">
@@ -232,7 +232,7 @@
                             </li>
 
                             <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true">
-                                <span (click)="currSplitButtonComponent.DropdownDisplayClose();GetSendECTHRDataMaman($event);">ש.מ.ב לממן</span>
+                                <span (click)="currSplitButtonComponent.DropdownDisplayClose();GetSendECTHRDataMaman($event);">ש.מ.ב למסוף</span>
                             </li>
 
                         </ul>

@@ -84,6 +84,9 @@
             this.toolStripMenuItemcheckUniqueUpload = new System.Windows.Forms.ToolStripMenuItem();
             this.hAWBALDARMamanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mamanCreateECSpclMessgaeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mamanBaldarSTBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._tstbMamanBaldarSTB = new System.Windows.Forms.ToolStripTextBox();
+            this.buildMamanBaldarSTBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxLogger = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -363,7 +366,8 @@
             this.asDataSetToolStripMenuItem,
             this.uploadMultiToolStripMenuItem,
             this.hAWBALDARMamanToolStripMenuItem,
-            this.mamanCreateECSpclMessgaeToolStripMenuItem});
+            this.mamanCreateECSpclMessgaeToolStripMenuItem,
+            this.mamanBaldarSTBToolStripMenuItem});
             this.adHockToolStripMenuItem.Name = "adHockToolStripMenuItem";
             this.adHockToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
             this.adHockToolStripMenuItem.Text = "AdHock";
@@ -548,6 +552,28 @@
             this.mamanCreateECSpclMessgaeToolStripMenuItem.Text = "MamanCreateECSpclMessgae";
             this.mamanCreateECSpclMessgaeToolStripMenuItem.Click += new System.EventHandler(this.mamanCreateECSpclMessgaeToolStripMenuItem_Click);
             // 
+            // mamanBaldarSTBToolStripMenuItem
+            // 
+            this.mamanBaldarSTBToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._tstbMamanBaldarSTB,
+            this.buildMamanBaldarSTBToolStripMenuItem});
+            this.mamanBaldarSTBToolStripMenuItem.Name = "mamanBaldarSTBToolStripMenuItem";
+            this.mamanBaldarSTBToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.mamanBaldarSTBToolStripMenuItem.Text = "MamanStatusAvailability";
+            // 
+            // _tstbMamanBaldarSTB
+            // 
+            this._tstbMamanBaldarSTB.Name = "_tstbMamanBaldarSTB";
+            this._tstbMamanBaldarSTB.Size = new System.Drawing.Size(100, 23);
+            this._tstbMamanBaldarSTB.Text = "AirlinePreFix-MAWB";
+            // 
+            // buildMamanBaldarSTBToolStripMenuItem
+            // 
+            this.buildMamanBaldarSTBToolStripMenuItem.Name = "buildMamanBaldarSTBToolStripMenuItem";
+            this.buildMamanBaldarSTBToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.buildMamanBaldarSTBToolStripMenuItem.Text = "BuildMessage  MamanBaldarSTB";
+            this.buildMamanBaldarSTBToolStripMenuItem.Click += new System.EventHandler(this.buildMamanBaldarSTBToolStripMenuItem_Click);
+            // 
             // textBoxLogger
             // 
             this.textBoxLogger.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -556,6 +582,7 @@
             this.textBoxLogger.Name = "textBoxLogger";
             this.textBoxLogger.Size = new System.Drawing.Size(638, 308);
             this.textBoxLogger.TabIndex = 1;
+            this.textBoxLogger.TextChanged += new System.EventHandler(this.textBoxLogger_TextChanged);
             // 
             // splitContainer1
             // 
@@ -774,5 +801,8 @@
         private System.Windows.Forms.ToolStripMenuItem asDataSetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hAWBALDARMamanToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mamanCreateECSpclMessgaeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mamanBaldarSTBToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox _tstbMamanBaldarSTB;
+        private System.Windows.Forms.ToolStripMenuItem buildMamanBaldarSTBToolStripMenuItem;
     }
 }

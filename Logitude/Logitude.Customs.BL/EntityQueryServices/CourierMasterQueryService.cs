@@ -132,7 +132,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             int PAY = 0;
             int MNFR = 0;
             int DECR = 0;
-            int PAY_RL = 0;
+            int PAYReadyNotFastindividual = 0;
             int ACC = 0;
             int ACC_W = 0;
             int ACC_WS = 0;
@@ -156,7 +156,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                  dEC_C = g.Count(r => (r.dStatus.CourierDeclarationStatusCode == "M")),
                  dEC_W = g.Count(r => (r.dStatus.CourierDeclarationStatusCode == "X")),
                  pAY = g.Count(r => (r.dStatus.CourierPaymentStatusCode == "R")),
-                 PAY_RL = g.Count(r => (r.dStatus.CourierPaymentStatusCode == "R" && r.dStatus.HighLowValue=="L")),
+                 //PAY_RL = g.Count(r => (r.CourierPaymentStatusCode == "R" && r.HighLowValue=="L")),
+                 PAYReadyNotFastindividual = g.Count(r => (r.dStatus.CourierPaymentStatusCode == "R" && r.dStatus.FastIndividualProcessCode == "F")),//Task 47220: שינוי לוגיקת תשלום מרוכז 
                  MNFR = g.Count(r => (r.dStatus.CourierManifestStatusCode == "R" )),
                  MNFR_RV = g.Count(r => (r.dStatus.CourierManifestStatusCode == "R" || r.dStatus.CourierManifestStatusCode == "V")),
                  DECR = g.Count(r => (r.dStatus.CourierDeclarationStatusCode == "R" )),
@@ -187,7 +188,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 DECR = tot.DECR;
                 MNFR_RV = tot.MNFR_RV;
                 DECR_RV = tot.DECR_RV;
-                PAY_RL = tot.PAY_RL;
+                PAYReadyNotFastindividual = tot.PAYReadyNotFastindividual;
                 ACC = tot.ACC;
                 ACC_W = tot.ACC_W;
                 ACC_WS = tot.ACC_WS;
@@ -210,7 +211,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             keyValuePairList.Add(new KeyValuePair<string, int>("MNFR", MNFR));
             keyValuePairList.Add(new KeyValuePair<string, int>("DECR_RV", DECR_RV));
             keyValuePairList.Add(new KeyValuePair<string, int>("MNFR_RV", MNFR_RV));
-            keyValuePairList.Add(new KeyValuePair<string, int>("PAY_RL", PAY_RL));
+            keyValuePairList.Add(new KeyValuePair<string, int>("PAYReadyNotFastindividual", PAYReadyNotFastindividual));
             keyValuePairList.Add(new KeyValuePair<string, int>("ACC", ACC));
             keyValuePairList.Add(new KeyValuePair<string, int>("ACC_W", ACC_W));
             keyValuePairList.Add(new KeyValuePair<string, int>("ACC_WS", ACC_WS));

@@ -51,6 +51,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string PendingRemarks { get; set; }
         [Column("SpecialActionStatus")]
 	    public string SpecialActionStatus { get; set; }
+        [Column("FastIndividualProcessCode")]
+	    public string FastIndividualProcessCode { get; set; }
+        [Column("ManualProcessCode")]
+	    public string ManualProcessCode { get; set; }
     }
 }
 	 

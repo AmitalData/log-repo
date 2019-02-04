@@ -97,7 +97,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myEventContextTagModel.EventCode = "RSG";
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "7";
-                            declarationPM.CourierCustomStatusCode = "1";
+                            if(declarationPM.IsCourierDeclaration)
+                            {
+                                declarationPM.CourierCustomStatusCode = "1";
+                                //declarationPM.IsClose = "1";
+                            }
                             declarationPM.IsClose = true;
                             MyRequestSheetParam.RequestDescription = "התרה לתיק. מספר הצהרה: " + declarationNumber;//eitan h 26/2/15 task 11525
                             break;

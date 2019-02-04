@@ -126,6 +126,7 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     LayoutDirection: string = 'ltr';
     IdentityKey: string;
+    IsAltF10:boolean=false;
     @Output() OriginalText = new EventEmitter();
 
     @Input() DebounceTime: number;
@@ -284,6 +285,7 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (id == this.InputId) {
                     //SessionLocator.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
                     this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
+                    this.IsAltF10=true;
                     SessionLocator.CurrentSession.CopiedCell = null;
                 }
             });
@@ -458,6 +460,7 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.Detach = true;
         this.show = false;
         this.keydown = false;
+
         this.timerToken = setTimeout(() => {
             this.ShowErrorPopup = false;
             if (this.uiProperty.ValidValue) {
@@ -465,16 +468,23 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
             this.TextValueChanges(this.TextValue);
         }, 300);
+        if(this.IsAltF10){
         this.timerToken = setTimeout(() => {
-       //    this.TextValueChanges(this.TextValue);
+           this.TextValueChanges(this.TextValue);
         //    this.GetValueFormatted(this.TextValue);
         //    this.LostFocus.emit(this.TextValue);
         }, 30);
-
-
+        this.GetValueFormatted(this.TextValue);
+        this.LostFocus.emit(this.TextValue);
+    }
+    else{
         this.TextValueChanges(this.TextValue);
         this.GetValueFormatted(this.TextValue);
         this.LostFocus.emit(this.TextValue);
+    }
+
+
+        
 
         // this.DetectChanges();
 
