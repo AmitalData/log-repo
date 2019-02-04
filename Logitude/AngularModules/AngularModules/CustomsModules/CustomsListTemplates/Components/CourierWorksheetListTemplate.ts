@@ -336,8 +336,10 @@ export class CourierWorksheetListTemplate {
         this.ButtonClick(event);
 
         if (this._CourierWorksheet.CourierPendingReasonErrorPlace == "1" /*=="בתשלום"*/) {
-            var myMessageWindow = new MessageWindow();
-            myMessageWindow.Show("קיים Pending" + " \n " + " עם עצירה בתשלום הצהרה");
+            var myMessageWindow = new MessageWindow
+            //myMessageWindow.Show("קיים Pending" + " \n " + " עם עצירה בתשלום הצהרה");
+            myMessageWindow.Title = "קיים Pending";
+            myMessageWindow.Show(" עם עצירה בתשלום הצהרה");
             return;
         }
 
