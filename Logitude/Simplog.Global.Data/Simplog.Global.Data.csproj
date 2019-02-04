@@ -286,6 +286,18 @@
     <Compile Include="Migrations\201901080726292_ApiCredintials_removing_ComputingPartnerId.Designer.cs">
       <DependentUpon>201901080726292_ApiCredintials_removing_ComputingPartnerId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902031153014_Bluesnapcontract_Id_Add.cs" />
+    <Compile Include="Migrations\201902031153014_Bluesnapcontract_Id_Add.Designer.cs">
+      <DependentUpon>201902031153014_Bluesnapcontract_Id_Add.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902031221475_Remove_ForeginKey_BluesnapcontractId.cs" />
+    <Compile Include="Migrations\201902031221475_Remove_ForeginKey_BluesnapcontractId.Designer.cs">
+      <DependentUpon>201902031221475_Remove_ForeginKey_BluesnapcontractId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902031259001_BluesnapcontractId_Key_TenantManagement_RemoveForeignKey.cs" />
+    <Compile Include="Migrations\201902031259001_BluesnapcontractId_Key_TenantManagement_RemoveForeignKey.Designer.cs">
+      <DependentUpon>201902031259001_BluesnapcontractId_Key_TenantManagement_RemoveForeignKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -358,6 +370,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901080726292_ApiCredintials_removing_ComputingPartnerId.resx">
       <DependentUpon>201901080726292_ApiCredintials_removing_ComputingPartnerId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902031153014_Bluesnapcontract_Id_Add.resx">
+      <DependentUpon>201902031153014_Bluesnapcontract_Id_Add.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902031221475_Remove_ForeginKey_BluesnapcontractId.resx">
+      <DependentUpon>201902031221475_Remove_ForeginKey_BluesnapcontractId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902031259001_BluesnapcontractId_Key_TenantManagement_RemoveForeignKey.resx">
+      <DependentUpon>201902031259001_BluesnapcontractId_Key_TenantManagement_RemoveForeignKey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

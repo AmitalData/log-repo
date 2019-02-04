@@ -28,7 +28,7 @@
 	
 	set @Key = (select Id from DIM_Departments where Id = @Id)
 	
-	if(@Key is  null) begin insert into DIM_Departments values(@Id,@EnglishName,@LocalName,	@SourceTenant , @ParentTenant); end
+	if(@Key is  null) begin insert into DIM_Departments (Id,Name,[Local Name],[Source Tenant],[Parent Tenant]) values(@Id,@EnglishName,@LocalName,	@SourceTenant , @ParentTenant); end
 	else begin update   DIM_Departments set Name =@EnglishName,  [Local Name] =@LocalName , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant Where Id = @Id end
 
 

@@ -12,8 +12,8 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
     {
         public BluesnapContractMap()
         {
-            this.HasKey(t => t.Code);
-
+            this.HasKey(t => t.Id);
+            this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Code).IsRequired().HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.Name).IsRequired().HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ContractId).HasMaxLength(15).IsUnicode(false);
@@ -21,6 +21,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
 
             this.ToTable("BluesnapContracts");
             this.Property(t => t.Code).HasColumnName("Code");
+            this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.ContractId).HasColumnName("ContractId");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");

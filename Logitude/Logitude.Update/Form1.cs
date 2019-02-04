@@ -3372,7 +3372,7 @@ User/Pass",
         private void button39_Click(object sender, EventArgs e)
         {
             FutureOpenChequesBatch batch = new FutureOpenChequesBatch();
-            batch.SetTotalFutureOpenChequesInLocalCurrency(1);
+            batch.SetTotalFutureOpenChequesInLocalCurrency();
         }
 
         private void btnDownloadMrt_Click(object sender, EventArgs e)

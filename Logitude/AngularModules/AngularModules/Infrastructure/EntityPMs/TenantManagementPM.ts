@@ -329,11 +329,6 @@ export class TenantManagementPM {
     public set DistributorCode(newValue: string) { if (this.distributorCode != newValue) { this.distributorCode = newValue; this.MarkAsDirty("DistributorCode"); } }
        
 	 
-    private bluesnapContractCode: string;
-    public get BluesnapContractCode() { return this.bluesnapContractCode; }
-    public set BluesnapContractCode(newValue: string) { if (this.bluesnapContractCode != newValue) { this.bluesnapContractCode = newValue; this.MarkAsDirty("BluesnapContractCode"); } }
-       
-	 
     private bluesnapContractId: string;
     public get BluesnapContractId() { return this.bluesnapContractId; }
     public set BluesnapContractId(newValue: string) { if (this.bluesnapContractId != newValue) { this.bluesnapContractId = newValue; this.MarkAsDirty("BluesnapContractId"); } }

@@ -23,7 +23,7 @@ declare @AutomaticLastUpdateDate as datetime
 	BEGIN
 	
 	set @Key = (select Code from DIM_Types where Code = @Id)
-	if(@Key is  null) begin  insert into DIM_Types values(@Id,@Name); end
+	if(@Key is  null) begin  insert into DIM_Types (Code,Name) values(@Id,@Name); end
 	else begin update   DIM_Types set Name =@Name Where Code = @Id; end
    
     
