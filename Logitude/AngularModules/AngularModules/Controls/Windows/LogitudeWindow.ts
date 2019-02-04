@@ -230,7 +230,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     public HelpText: string = null;
     public RTL: boolean = false;
     public BottomBorderForTitle: string = "none";
-
+    public IsHideWindowMargin: any;/// jit problem after khalid revert code ?!?!?
     LayoutDirection: string = 'ltr';
     public ZIndex: number = 0;
 
