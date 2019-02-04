@@ -66,6 +66,10 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                         {
                             while (true)
                             {
+                                //string logStatus = "";
+                                //this.ChangeStatus("I", null, logStatus);
+                                //Action<string> action = new Action<string>(log=>)
+                                    
                                 Thread.Sleep(TimeSpan.FromMinutes(parameterArgs.SleepEveryMinute));
                                 g = new DummyTenantProvider();
                                 g.GenrateJournals(parameterArgs.Amount, accountingContext, parameterArgs.JournalYYYY, parameterArgs.Tenant);
@@ -82,7 +86,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             catch (Exception ex)
             {
 
-
+                LogitudeSettings.HandleLogMe(ex.ToString(), true, "AccLoadTest", new DateTime(2019, 5, 1));
                 throw;
 
             }

@@ -4,6 +4,7 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.Server.Tools.Counters;
 using Simplog.Data.InvoiceModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -31,12 +32,16 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
-        public void UpdateCreditInvoice(ARInvoicePM invoice, int tenant)
+        public ARInvoicePM UpdateCreditInvoice(ARInvoicePM invoice, int tenant)
         {
-
+            ARInvoicePM invoicePM = null;
+            if (String.IsNullOrEmpty(invoice.Id))
+            {
+                invoice.Id = IdCounter.GetNumber("ARInvoice", invoice.Tenant).ToString();
+            }
             if (invoice.CreditARInvoice != null)
             {
-                ARInvoicePM invoicePM = query.GetSingleInvoiceByInvoiceNumber(invoice.CreditARInvoice, tenant);
+                invoicePM = query.GetSingleInvoiceByInvoiceNumber(invoice.CreditARInvoice, tenant);
             
                 if (invoicePM != null && invoicePM.StatusCode == "AD")
                 {
@@ -93,13 +98,16 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         invoicePM.AmountDue = 0;
                         invoicePM.AmountDueInLocalCurrency = 0;
                         invoicePM.AmountDueInProfitCurrency = 0;
-                        service.Update(invoicePM, true);
+                      //  service.Update(invoicePM, true);
 
 
                     }
                 }
                 }
-            }
+
+            return invoicePM;
+          
+         }
         public ARInvoice ARInvoiceDataMappingAndValidatin(ARInvoicePM MyEntity, int Tenant, string ComputingPartnerName = "")
         {
             try
