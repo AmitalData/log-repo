@@ -1,4 +1,4 @@
-import {Component, ChangeDetectorRef} from '@angular/core';
+﻿import {Component, ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
@@ -49,7 +49,8 @@ export class RemoveTasksButtonListTemplate {
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData; 
         this.ShowRenewButtons = (this.rowData['IsDepositionRequired'] == true);
-
+        
+        
         //if (SessionLocator.PrivateLableSettings) {
         //    this.ShowButtons = this.rowData['StatusName'].toLowerCase() == "in progress" ? false : true;
         //    if (SessionLocator.PrivateLableSettings) {
@@ -127,7 +128,30 @@ export class RemoveTasksButtonListTemplate {
     }
 
     RenewButtonClicked() {
-
+        var newWindow = new LogitudeWindow();
+        newWindow.Width = 600;
+        newWindow.Height = 230;
+        newWindow.Title = "נדרש תצהיר עבור תיק עמילות" +" "+ this.rowData['ShipmentNumber'];
+        var windowArgs: any = {};
+        
+        if (this.rowData) {
+            windowArgs.ShipmentId = this.rowData['Id'];
+            windowArgs.ImporterDepositionRequestDetails = this.rowData['ImporterDepositionRequestDetails'];
+            windowArgs.ForwarderShipmentNumber = this.rowData['ForwarderShipmentNumber'];
+            windowArgs.DirectionId = this.rowData['DirectionId'];
+            windowArgs.ForwarderPartnerId = this.rowData['ForwarderPartnerId'];
+            
+        }
+        //windowArgs.EntityPm = myResult.Result
+        newWindow.WindowArgs = windowArgs;
+        newWindow.RTL = true;
+        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DepositionRequestComponent');
+        newWindow.WindowClosed.subscribe(($event: any) => {
+            SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+            if ($event == "DepositionRequest") {
+                SessionLocator.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
+            }
+        });
 
     }
 

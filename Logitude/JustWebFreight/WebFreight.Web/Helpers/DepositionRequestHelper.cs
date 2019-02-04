@@ -107,7 +107,7 @@ namespace WebFreight.Web.Helpers
                 if (shipmentComputedFields != null)
                 {
                     shipmentComputedFields.IsDepositionRequired = true;
-                    shipmentComputedFields.ImporterDepositionRequestDetails = depositionRequestAM.VendorCode + "," + depositionRequestAM.VendorName;
+                    shipmentComputedFields.ImporterDepositionRequestDetails = depositionRequestAM.VendorCode + "^" + depositionRequestAM.VendorName;
                     shipmentComputedFieldsRepository.Update(shipmentComputedFields);
                     shipmentComputedFieldsRepository.SubmitChanges();
 
