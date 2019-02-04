@@ -53,7 +53,9 @@ import {ListHeaderTemplateComponent} from './Components/LogitudeComponents/LogGr
 import {ListTemplateComponent} from './Components/LogitudeComponents/LogGridComponent/ListTemplateComponent';
 import {UsersQueryList} from './Components/CustomControls/UsersQueryList';
 import {ChooseDatesComponent} from './Components/CustomControls/ChooseDatesComponent';
-import {SearchBox} from './Components/CustomControls/SearchBox';
+import { SearchBox } from './Components/CustomControls/SearchBox';
+import { RatioBoxComponent } from './Components/CustomControls/RatioBoxComponent';
+
 import {LogCellTemplateComponent} from './Components/LogitudeComponents/EditableLogGridComponent/LogCellTemplateComponent';
 import {LogColumnComponent} from './Components/LogitudeComponents/EditableLogGridComponent/LogColumnComponent';
 import {EditableLogGridComponent} from './Components/LogitudeComponents/EditableLogGridComponent/EditableLogGridComponent';
@@ -216,6 +218,7 @@ export const ControlsComponents =
         UsersQueryList,
         ChooseDatesComponent,
         SearchBox,
+        RatioBoxComponent,
         LogCellTemplateComponent,
         LogColumnComponent,
         EditableLogGridComponent,

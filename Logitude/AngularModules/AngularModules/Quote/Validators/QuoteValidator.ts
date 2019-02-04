@@ -1,4 +1,4 @@
-﻿import {QuotePM} from '../EntityPMs/QuotePM';
+import {QuotePM} from '../EntityPMs/QuotePM';
 import {QuoteChargePM} from '../EntityPMs/QuoteChargePM';
 import {AppTool} from '../../Infrastructure/Tools';
 import {QuoteTool} from '../Tools';
@@ -19,6 +19,10 @@ export class QuoteValidator {
             Validator.TryValidateObject(entityPM, objectTableName, errors);
 
             var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+            if (entityPM.Ratio > 10 || entityPM.Ratio < 1) {
+                errors.push("Ratio must be between 1-10");
+            }
 
             // General Data
             if (entityPM.ExpirationDays < 0) {

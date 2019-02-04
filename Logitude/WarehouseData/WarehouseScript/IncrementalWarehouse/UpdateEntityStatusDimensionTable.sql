@@ -28,7 +28,7 @@
 	BEGIN
 	set @Key = (select Id from DIM_ShipmentStatuses where Id = @Id)
 	
-	if(@Key is  null) begin  insert into DIM_ShipmentStatuses values(@Id,@Name,@Code , 	@SourceTenant , @ParentTenant); end
+	if(@Key is  null) begin  insert into DIM_ShipmentStatuses (Id,Name,Code,[Source Tenant],[Parent Tenant]) values(@Id,@Name,@Code , 	@SourceTenant , @ParentTenant) end
 	else begin update   DIM_ShipmentStatuses set Name =@Name,  Code =@Code , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant Where Id = @Id end
    
 

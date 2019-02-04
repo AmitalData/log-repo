@@ -89,6 +89,10 @@ namespace WebFreight.Web.DataProviders
             public string Notes { get; set; }
             public string RealShipmentType { get; set; }
             public string Master { get; set; }
+            public string FromPortCode { get; set; }
+            public string FromPortName { get; set; }
+            public string FinalDestinationPortCode { get; set; }
+            public string FinalDestinationPortName { get; set; }
         }
     }
 }

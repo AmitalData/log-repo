@@ -24,7 +24,7 @@ declare @AutomaticLastUpdateDate as datetime
 	BEGIN
 	
 	set @Key = (select Code from DIM_TransportModes where Code = @Id)
-	if(@Key is  null) begin  insert into DIM_TransportModes values(@Id,@Name); end
+	if(@Key is  null) begin  insert into DIM_TransportModes (Code,Name) values(@Id,@Name); end
 	else begin update   DIM_TransportModes set Name =@Name Where Code = @Id; end
 
     

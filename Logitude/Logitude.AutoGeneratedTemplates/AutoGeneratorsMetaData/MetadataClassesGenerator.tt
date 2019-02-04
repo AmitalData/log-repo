@@ -1089,14 +1089,20 @@ private void WriteAddQueryFilterMethod(XElement entity,XElement Column,int index
 	   var PredefinedValue = Column.Attributes().Where(a => a.Name == "PredefinedValue").FirstOrDefault().Value;
 	   var PredefinedValue2Attr = Column.Attributes().Where(a => a.Name == "PredefinedValue2").FirstOrDefault();
 	   string PredefinedValue2 = "null";
+       var OperatorAttr = Column.Attributes().Where(a => a.Name == "Operator").FirstOrDefault();
+       string Operator = "";
 	   if(PredefinedValue2Attr != null)
 	   {
 			PredefinedValue2 = PredefinedValue2Attr.Value;
 	   }
+       if(OperatorAttr != null)
+	   {
+			Operator = OperatorAttr.Value;
+	   }
 	   var ObjectFieldName = Column.Attributes().Where(a => a.Name == "ObjectFieldName").FirstOrDefault().Value; 
 #>
 
-             AdvancedQueryFilter <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>QueryFilter_<#= index #> = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = <#= TblName.Trim('"') #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #> && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().Id, PredefinedValue = <#= PredefinedValue #>,PredefinedValue2 = <#= PredefinedValue2 #>, QueryId = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>QueryFilter_<#= index #> = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = <#= TblName.Trim('"') #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #> && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().Id, PredefinedValue = <#= PredefinedValue #>,PredefinedValue2 = <#= PredefinedValue2 #>, QueryId = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query.Id, Tenant = 0<#= !string.IsNullOrEmpty(Operator) ?",Operator = " + Operator  : "" #>}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 <#+
 }

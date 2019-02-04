@@ -1800,7 +1800,7 @@ namespace Logitude.BL.Helpers
             string style = "";
             string unDerLine = headerDesign.UnDerLine ? ";text-decoration: underline" : "";
 
-            alignment = isRightToLeft ? "right" : alignment;
+           // alignment = isRightToLeft ? "right" : alignment;
 
             style = "style='" + "font-weight:" + headerDesign.FontWeight + ";font-family:" + headerDesign.FontFamily +
               ";font-size:" + FontSize + ";color:" + TextColor + ";vertical-align:central" + ";height:auto" + unDerLine + ";text-align:" + alignment + " '";
@@ -2071,9 +2071,9 @@ namespace Logitude.BL.Helpers
 
         private static string CombinedReferences(string ref1 , string ref2)
         {
-            string result = ref1 + ref2;
-            //if (!string.IsNullOrEmpty(ref1) && !string.IsNullOrEmpty(ref2)) result += ",";
-            //result += ref2;
+            string result = ref1;
+            if (!string.IsNullOrEmpty(ref1) && !string.IsNullOrEmpty(ref2)) result += ",";
+            result += ref2;
 
             return result;
         }
@@ -2564,7 +2564,7 @@ namespace Logitude.BL.Helpers
             string stylespan = GetSpanRowStyle(headerDesign, "");
             string result = "";
 
-            var alignment = bodyRightToLeft || CodeTypeTd == "FieldPrice" ? ";text-align:right" : ";text-align:" + headerDesign.Alignment;
+            var alignment = CodeTypeTd == "FieldPrice" ? ";text-align:right" : ";text-align:" + headerDesign.Alignment;
             if (CodeTypeTd == "Field") alignment = bodyRightToLeft ? ";text-align:right" : ";text-align:left";
             styleAlgiment = "style='" + "height:auto" + ";width:auto" + alignment + " '";
 

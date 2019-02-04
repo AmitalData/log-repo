@@ -27,7 +27,7 @@ declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
     selector: 'LogTextBox',
     templateUrl: "./LogTextBoxComponent.html",
     //directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, HelpIcon, FixedPositionDirective],
-    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', "IsMultiline", "InputType", "HideColumns", "HideLastColumn", "DigitsAfterPoint", "FocusOnMe", "IsFreeText", "IsAccumulative", "AllowPercentage", "UseArialFont", "DontAllowAutoSelect"],
+    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', "IsMultiline", "InputType", "HideColumns", "HideLastColumn", "DigitsAfterPoint", "FocusOnMe", "IsFreeText", "IsAccumulative", "AllowPercentage", "UseArialFont", "DontAllowAutoSelect", 'IsRatioBox'],
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
@@ -46,6 +46,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     public HideColumns: boolean = false;
     public HideLastColumn: boolean = false;
     public DigitsAfterPoint: number;
+    public IsRatioBox: boolean = false;
     CopyValueSubs: any;
     @Output() KeyUp = new EventEmitter();
     @Output() ValueChanged = new EventEmitter();
@@ -292,6 +293,11 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit() {
 
+        if (this.IsRatioBox == true) {
+            this.DigitsAfterPoint = 1;
+            this.InputDivStyle = {};
+        }
+
         var objectFieldAvailable: boolean = true;
 
         this.counterId = null;
@@ -471,7 +477,15 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         this.show = true;
         if (this.uiProperty.ValidValue) {
             this.timerToken = setTimeout(() => {
-                this.InputDivStyle = { 'border': '1px solid #3BB3E2' };
+                if (this.IsRatioBox) {
+                    this.InputDivStyle = null;
+                }
+
+                else
+                {
+                    this.InputDivStyle = { 'border': '1px solid #3BB3E2' };
+                }
+
                 this.ShowErrorPopup = false;
             }, 300);
 
@@ -1385,7 +1399,13 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         else {
             this.ShowErrorPopup = false;
             if (this.show) {
-                this.InputDivStyle = { 'border': '1px solid #3BB3E2' };
+                if (this.IsRatioBox) {
+                    this.InputDivStyle = null;
+                }
+
+                else {
+                    this.InputDivStyle = { 'border': '1px solid #3BB3E2' };
+                }
             }
             else {
                 this.InputDivStyle = null;
@@ -1506,7 +1526,13 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     OnMouseOver() {
         this.isMouseOver = true;
         if (this.IsDisabled) {
-            this.InputDivStyle = { 'border': '1px solid #AAAAAA' };
+            if (this.IsRatioBox) {
+                this.InputDivStyle = null;
+            }
+
+            else {
+                this.InputDivStyle = { 'border': '1px solid #AAAAAA' };
+            }
         }
     }
     OnMouseLeave() {

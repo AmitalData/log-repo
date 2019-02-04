@@ -204,6 +204,7 @@ namespace WebFreight.Web.ReportsWebServices
                             case "999S":
                             case "999M":
                             case "999C":
+                            case "999G":
                                 invoicedataprovider.CopyName_hebrew = "מקור";
                                 break;
 
