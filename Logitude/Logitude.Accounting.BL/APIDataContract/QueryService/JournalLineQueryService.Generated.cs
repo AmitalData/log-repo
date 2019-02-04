@@ -6,22 +6,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Simplog.Server.Infrastructure;
-using Logitude.BL.CommonDataModel.APIDataContract.;
-using Logitude.BL.QuoteModel.APIDataContract.;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InfrastructureModel.APIDataContract.;
-using Logitude.BL.ShipmentsModel.APIDataContract.;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
+using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.Helpers;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 
- namespace Logitude.Accounting.BL.APIDataContract.
+ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 { 
    public partial class JournalLineQueryService
    {
@@ -121,12 +121,12 @@ using Logitude.Accounting.Data;
 					   
 					var temp = new JournalLinePM();
 										if (!string.IsNullOrEmpty(item.JournalId))
-					{
-						temp = query.GetSinglePMByJournalId(item.JournalId, Tenant);
-					} 					if (!string.IsNullOrEmpty(item.Line))
-					{
-						temp = query.GetSinglePMByLine(item.Line, Tenant);
-					} 					   
+					//{
+					//	temp = query.GetSinglePMByJournalId(item.JournalId, Tenant);
+					//} 					if (!string.IsNullOrEmpty(item.Line))
+					//{
+					//	temp = query.GetSinglePMByLine(item.Line, Tenant);
+					//} 					   
 					if(temp == null)
 					{
 					    throw new ApplicationException("JournalLine with Line " + item.Line + " doesn't exist");

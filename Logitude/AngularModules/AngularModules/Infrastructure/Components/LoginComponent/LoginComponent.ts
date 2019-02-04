@@ -782,6 +782,13 @@ export class LoginComponent implements OnInit {
             this.IncreaseProgressBar();
             //32
         });
+        
+        this.loginService.GetFeatureToggles().subscribe(myResult => {
+            window.FeatureToggles = myResult;
+            this.IncreaseProgressBar();
+            //33
+        });
+
 
         //this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe(myResult => {
         //    window.ObjectTableRulePMs = myResult;

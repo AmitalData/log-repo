@@ -238,7 +238,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             List<TMProject> allProjects = (from d in myContext.TMProjects where d.Tenant == tenant select d).ToList();
 
             officeHours = (from a in myContext.TMOfficeHours
-                           where a.Tenant == tenant && a.UserId == employeeUserId && a.WorkDate != null &&
+                           where a.Tenant == tenant && a.Inactive==false && a.UserId == employeeUserId && a.WorkDate != null &&
                            System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) >= System.Data.Entity.DbFunctions.TruncateTime(myStartDate) &&
                            System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) <= System.Data.Entity.DbFunctions.TruncateTime(myEndDate)
                            select a);

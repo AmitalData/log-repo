@@ -836,8 +836,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                     var user = GetLoggedContact(entityPM.Tenant);
                                     if (user != null) useLocal = !(GetLoggedContact(entityPM.Tenant).DontShowLocal);
 
-                                    string msg = TranslateTextsClass.Translate("ARInvoice.M.ChronologicalDate", entityPM.Tenant, useLocal) + " " + dateString;
-                                    throw new ApplicationException(msg);
+                                    string fieldLabel = TranslateTextsClass.Translate("ARInvoice.M.ChronologicalDate", entityPM.Tenant, useLocal);
+                                    throw new ApplicationException(fieldLabel.Replace("%Date", dateString));
                                 }
                             }
                         }

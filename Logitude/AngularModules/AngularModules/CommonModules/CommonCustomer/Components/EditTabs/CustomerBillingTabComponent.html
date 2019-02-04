@@ -1,4 +1,4 @@
-﻿
+
 <div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
@@ -98,7 +98,7 @@
         </tr>
 
         <!-- CreditLimit -->
-        <tr style="height: 1px;" *ngIf="HasCreditLimitFeature">
+        <tr style="height: 1px;" *ngIf="HasCreditLimitFeature && !IsAccountingActivated">
             <td>
                 <table>
                     <tr style="height: 25px; min-height: 25px;">
