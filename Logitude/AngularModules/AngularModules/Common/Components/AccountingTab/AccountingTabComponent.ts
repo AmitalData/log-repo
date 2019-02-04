@@ -118,7 +118,7 @@ export class AccountingTabComponent implements OnInit {
             && this.ObjectTableName != 'Branch'
             && this.ObjectTableName != 'AccountingPaymentMethod'
             && this.ObjectTableName != 'APPaymentMethod'
-            && !this.isPartnerEntity && !this.isQuickBooksOnline) {
+            && !this.isQuickBooksOnline) {
             myComponentPath = "./Common/Components/AccountingTab/AccountingTab_Full";
         }
         else if (this.isQuickBooksOnline) {
