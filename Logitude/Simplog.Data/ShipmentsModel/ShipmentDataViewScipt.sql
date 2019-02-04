@@ -232,6 +232,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 ShipmentComputedFields.RequestedDocumentsCount as RequestedDocumentsCount,
 						 ShipmentComputedFields.IsRequestedDocuments as IsRequestedDocuments,
 						 ShipmentComputedFields.IsDigitalSignRequired as IsDigitalSignRequired, 
+						 ShipmentComputedFields.IsDepositionRequired as IsDepositionRequired, 
 						 ShipmentComputedFields.NumberOfHouses as NumberOfHouses, 
 						 ShipmentAdditionalCloudDatas.DeclarationXmlData as DeclarationXmlData, 
 						 ShipmentAdditionalCloudDatas.IsImporterApprovalRequried as IsImporterApprovalRequried, 

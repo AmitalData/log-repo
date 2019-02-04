@@ -6,6 +6,7 @@ using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -92,7 +93,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ARInvoiceQueryService mappingService = new ARInvoiceQueryService(entity.Tenant);
                         ARInvoicePM entityPM = mappingService.ARInvoiceDataMappingAndValidatin(entity, entity.Tenant);
                         mappingService.SetInvoiceLinesEntityId(entityPM, entity.Tenant);
-                        mappingService.UpdateCreditInvoice(entityPM, tenant);
+                    
                         entityPM.IsExternalAPI = true;
                         entityPM.Tenant = entity.Tenant;
                         if (entity.IsDraft)
@@ -195,7 +196,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         #endregion
 
                         ARInvoiceService service = new ARInvoiceService(MyContext, entity.Tenant);
+
+                        ARInvoicePM invoice = mappingService.UpdateCreditInvoice(entityPM, tenant);
+
                         service.Create(entityPM);
+                        if (invoice != null)
+                        {
+                            service.Update(invoice, true);
+                        }
 
                         entity = mappingService.ARInvoiceDataMappingAndValidatin(entityPM, entity.Tenant);
                         APIHelper.AddCommunicationLog("D", oldEntity, entity, "ARInvoice", entityPM.Id, "ARInvoice API", entity.Tenant);

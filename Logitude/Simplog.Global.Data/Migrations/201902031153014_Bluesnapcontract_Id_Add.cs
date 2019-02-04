@@ -22,8 +22,7 @@ namespace Simplog.Global.Data.Migrations
                 " BEGIN " +
                 "if  exists(select Code from Bluesnapcontracts where Code = @Code)" +
                 " begin" +
-                " EXECUTE [Logitude2-5_Main].[dbo].usp_GetNextTableIdValue @ID OUTPUT,'BluesnapContract'" +
-                " update Bluesnapcontracts set Id = @Id where Code = @Code " +
+                " update Bluesnapcontracts set Id = @Code where Code = @Code " +
                 "end" +
                 " FETCH NEXT FROM Bluesnapcontract INTO @Code" +
                 " END " +
