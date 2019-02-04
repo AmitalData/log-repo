@@ -121,12 +121,12 @@ using Logitude.Accounting.Data;
 					   
 					var temp = new JournalLinePM();
 										if (!string.IsNullOrEmpty(item.JournalId))
-					{
-						temp = query.GetSinglePMByJournalId(item.JournalId, Tenant);
-					} 					if (!string.IsNullOrEmpty(item.Line))
-					{
-						temp = query.GetSinglePMByLine(item.Line, Tenant);
-					} 					   
+					//{
+					//	temp = query.GetSinglePMByJournalId(item.JournalId, Tenant);
+					//} 					if (!string.IsNullOrEmpty(item.Line))
+					//{
+					//	temp = query.GetSinglePMByLine(item.Line, Tenant);
+					//} 					   
 					if(temp == null)
 					{
 					    throw new ApplicationException("JournalLine with Line " + item.Line + " doesn't exist");

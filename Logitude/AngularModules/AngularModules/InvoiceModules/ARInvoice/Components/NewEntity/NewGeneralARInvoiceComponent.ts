@@ -139,6 +139,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         //}
         this.EntityPM.Description = myDescription;
         this.EntityPM.IsGeneralInvoice = true;
+        this.EntityPM.IsFullAccounting = true;
         this.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
         this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
         this.EntityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
