@@ -707,6 +707,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (ToDate == "null")
                     ToDate = null;
+                if (directionId == "null")
+                    directionId = null;
+                if (transportmodeid == "null")
+                    transportmodeid = null;
 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);

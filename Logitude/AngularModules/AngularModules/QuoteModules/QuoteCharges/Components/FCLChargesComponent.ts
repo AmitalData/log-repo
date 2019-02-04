@@ -800,9 +800,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
-                this.ItemsSource.Collection.forEach((item) => {
+                this.ItemsSource.Collection.forEach((item: FCLQuoteChargeItem) => {
                     item.OnQuoteSaleCurrencyChanged();
-                })
+                });
+
+                this.ItemsSource.Collection.forEach((item: FCLQuoteChargeItem) => {
+                    if (item.IsAllIN) {
+                        item.EntityPM.IsAllIN = false;
+                        item.IsAllIN = true;
+                    }
+                });
 
                 this.ComputeTotals();
             }            
@@ -822,9 +829,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         if (this.EntityPM.ExchangeRate != newValue) {
             this.EntityPM.ExchangeRate = AppTool.Round(newValue, 5);
 
-            this.ItemsSource.Collection.forEach((item) => {
+            this.ItemsSource.Collection.forEach((item: FCLQuoteChargeItem) => {
                 item.OnQuoteSaleCurrencyChanged();
-            })
+            });
+
+            this.ItemsSource.Collection.forEach((item: FCLQuoteChargeItem) => {
+                if (item.IsAllIN) {
+                    item.EntityPM.IsAllIN = false;
+                    item.IsAllIN = true;
+                }
+            });
 
             this.ComputeTotals();
         }
