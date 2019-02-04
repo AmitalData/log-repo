@@ -53,6 +53,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     public AccountPM: GLAccountPM = null;
     public GLAccountMoreData: GLAccountMoreDataList = null;
     public isRTL: boolean = false;
+    public showLocal: boolean = false;
     public isUsedOutside: boolean = false; // when view tab inside customer ..
 
     //Services
@@ -67,6 +68,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        if (SessionLocator.LoggedUserPM) this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
 
         //Resources
         this._EntityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => { });
@@ -599,16 +601,31 @@ export class GLAccountOverviewComponent extends BaseComponent {
     creditPercentage:number = 0;
     LoadCreditDetailsData(){
 
+
+        console.log("LoadCreditDetailsData");
+
         // Calculate credit percentage
-        var percentage=0;
-        if (this.GLAccountMoreData && this.accountCardlist) {
-            percentage = ((this.GLAccountMoreData.BalanceInLocalCurrency ? this.GLAccountMoreData.BalanceInLocalCurrency : 0)
-                + (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
-                + (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
-                // +(this.accountCardlist.Total?this.accountCardlist.Total:0 Open shipments)
-            ) / ((this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0));
+        var percentage = 0;
+        if (this.GLAccountMoreData && this.accountCardlist)
+        {
+            percentage =
+                (this.GLAccountMoreData.BalanceInLocalCurrency ? this.GLAccountMoreData.BalanceInLocalCurrency : 0)
+            +   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
+            +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0);
+            //+ (this.accountCardlist.Total?this.accountCardlist.Total:0 Open shipments)
+
+            if(this.accountCardlist.CreditLimitAmount && this.accountCardlist.CreditLimitAmount != 0)
+                percentage = percentage / (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0);
+            else
+                percentage = 0;
         }
-        this.creditPercentage = percentage?(percentage * 100):0;
+
+        if (!percentage) percentage = 0;
+        if (percentage < 0) percentage = 0;
+
+        percentage = percentage * 100;
+
+        this.creditPercentage = percentage;
 
 
     }
