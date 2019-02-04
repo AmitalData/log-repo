@@ -67,7 +67,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         invoiceResult.ExternalID = invoiceItem.ExternalIDNum;
                         invoiceResult.InvoiceAmount = invoiceItem.InvoiceAmount.ToString();
                         invoiceResult.InvoiceAmountCurrency = invoiceItem.InvoiceAmount.ToString();
-                        if (invoiceItem.InvoiceCurrencyTypeID != null && invoiceItem.InvoiceCurrencyTypeIDSpecified == true)
+                        if (invoiceItem.InvoiceCurrencyTypeID != null /*&& invoiceItem.InvoiceCurrencyTypeIDSpecified == true*/)
                         {
                             invoiceResult.InvoiceCurrency = invoiceItem.InvoiceCurrencyTypeID.ToString();
                             invoiceResult.InvoiceAmountCurrency += " (" + invoiceItem.InvoiceCurrencyTypeID + ")";
@@ -97,7 +97,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 requestResult.ForeignAmount = requestItem.ForeignCurrencyAmount.ToString();
                                 requestResult.ForeignCurrency = requestItem.CurrencyTypeID.ToString();
                                 requestResult.ForeignCurrencyAmount = requestItem.ForeignCurrencyAmount.ToString();
-                                if (requestItem.CurrencyTypeID > 0)
+                                int i = 0;
+                                int.TryParse(requestItem.CurrencyTypeID, out i);
+                                if (/*requestItem.CurrencyTypeID*/ i > 0)
                                 {
                                     requestResult.ForeignCurrencyAmount += " (" + requestItem.CurrencyTypeID + ")";
                                 }
@@ -108,7 +110,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 {
                                     foreach (var governmentProcedureItem in requestItem.GoodsItemGovernmentProcedure)
                                     {
-                                        if (governmentProcedureItem.ItemGovernmentProcedureType != null && governmentProcedureItem.ItemGovernmentProcedureTypeSpecified)
+                                        if (governmentProcedureItem.ItemGovernmentProcedureType != null /*&& governmentProcedureItem.ItemGovernmentProcedureTypeSpecified*/)
                                         {
                                             GovernmentProcedure governmentProcedureResult = new GovernmentProcedure();
                                             governmentProcedureResult.ItemGovernmentProcedureType = governmentProcedureItem.ItemGovernmentProcedureType.ToString();
