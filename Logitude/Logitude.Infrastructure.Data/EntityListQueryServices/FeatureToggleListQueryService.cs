@@ -9,7 +9,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
 
     public partial class FeatureToggleListQueryService
     {
-        private IQueryable<FeatureToggleList> GetIqueryableList(IQueryable<FeatureToggle> iQueryable)
+        public IQueryable<FeatureToggleList> GetIqueryableList(IQueryable<FeatureToggle> iQueryable)
         {
             IQueryable<FeatureToggleList> query = (from a in iQueryable.Include("Toggle").Include("CreatedByUser")
                                                    select new FeatureToggleList()

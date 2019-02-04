@@ -24,13 +24,14 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             repository = bluesnapContractRepository;
         }
 
-        public BluesnapContractPM GetSinglePM(string code, int tenant = 0)
+        public BluesnapContractPM GetSinglePM(string Id, int tenant = 0)
         {
             BluesnapContractPM entity;
             entity = (from a in repository.context.BluesnapContracts
-                      where a.Code == code
+                      where a.Id == Id
                       select new BluesnapContractPM()
                       {
+                          Id=a.Id,
                           Code = a.Code,
                           SearchFields = a.SearchFields,
                           Name = a.Name,
@@ -42,11 +43,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             return entity;
         }
 
-        public BluesnapContractPM GetSingleBluesnapContractPM(string code, int tenant)
+        public BluesnapContractPM GetSingleBluesnapContractPM(string Id, int tenant)
         {
-            if (!string.IsNullOrEmpty(code))
+            if (!string.IsNullOrEmpty(Id))
             {
-                string entityName = "BluesnapContractPM" + code + tenant;
+                string entityName = "BluesnapContractPM" + Id + tenant;
                 BluesnapContractPM entity;
                 if (HttpContext.Current != null)
                 {
@@ -56,6 +57,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                                               select new BluesnapContractPM()
                                               {
+                                                  Id=a.Id,
                                                   Code = a.Code,
                                                   SearchFields = a.SearchFields,
                                                   Name = a.Name,
@@ -64,7 +66,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                               });
                         foreach (var s in entitystatuses)
                         {
-                            string name = "BluesnapContractPM" + s.Code + tenant;
+                            string name = "BluesnapContractPM" + s.Id + tenant;
                             if (CacheManager.CacheWrapper.Get(name) == null)
                             {
                                 CacheManager.CacheWrapper.Insert(name, s, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
@@ -80,7 +82,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                 else
                 {
                     entity = (from a in repository.context.BluesnapContracts
-                              where a.Code == code
+                              where a.Id == Id
                               select new BluesnapContractPM()
                               {
                                   Code = a.Code,
@@ -101,6 +103,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             IQueryable<BluesnapContractList> result = from a in iQueryable
                                                       select new BluesnapContractList()
                                                           {
+                                                          Id=a.Id,
                                                               Code = a.Code,
                                                               SearchFields = a.SearchFields,
                                                               Name = a.Name,

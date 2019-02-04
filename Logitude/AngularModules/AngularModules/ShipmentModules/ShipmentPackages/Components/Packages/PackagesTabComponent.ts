@@ -423,22 +423,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
-    NumericButtonClicked(isIncreas: boolean) {
-        if (this.IsEditingEnabled) {
-            if (isIncreas) {
-                if (this.Ratio < 10) {
-                    this.Ratio += 1;
-                }
-            }
-
-            else {
-                if (this.Ratio > 1) {
-                    this.Ratio -= 1;
-                }
-            }
-        }
-    }
-
     ComputeDimFactor() {
         this.EntityPM.DimFactor = AppTool.GetDimFactorFromRatio(this.Ratio, this.DimensionsUnitCode, this.ChargeableWeightUnitCode);
     }

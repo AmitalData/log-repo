@@ -57,7 +57,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.IsSystemSupportEnabled = entityPM.IsSystemSupportEnabled;
             entityPOCO.IsCargonautEnabled = entityPM.IsCargonautEnabled;
             entityPOCO.IsDEXXConnectionEnabled = entityPM.IsDEXXConnectionEnabled;
-            entityPOCO.BluesnapContractCode = entityPM.BluesnapContractCode;
+            entityPOCO.BluesnapContractId = entityPM.BluesnapContractId;
             entityPOCO.GlobalTenant.TTY = entityPM.TTY;
             entityPOCO.GlobalTenant.IsActive = entityPM.IsActive;
             entityPOCO.GlobalTenant.CompanyName = entityPM.Name;

@@ -658,6 +658,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleInfrastructureBusinessProcess.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookKeysComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\CustomControls\RatioBoxComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\ExportBI2ExcelControl\ExportBI2ExcelControl.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWDateComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.ts" />
@@ -739,6 +740,7 @@
     <TypeScriptCompile Include="InvoiceModules\APInvoice\ModuleAPInvoice.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleAPPayment.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleDeclarations.ts" />
+    <Content Include="Infrastructure\Components\CustomControls\RatioBoxComponent.html" />
     <Content Include="Infrastructure\Components\ExportBI2ExcelControl\ExportBI2ExcelControl.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\DWDateComponent.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.html" />

@@ -455,6 +455,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             //view.ParentDataTypeCode = "LookUp";
             if (view.Code == '[Full Date]') {
                 view.ParentDataTypeCode = "DateTime";
+                view.DataTypeCode = "DateTime";
             }
             else {
                 view.ParentDataTypeCode = "LookUp";
@@ -1003,6 +1004,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     
                     if (view.Code == '[Full Date]') {
                         view.ParentDataTypeCode = "DateTime";
+                        view.DataTypeCode = "DateTime";
                     }
                     else {
                         view.ParentDataTypeCode = "LookUp";
@@ -1360,7 +1362,14 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     private isSetDefaults: boolean = false;
     public get IsSetDefaults() { return this.isSetDefaults; }
-    public set IsSetDefaults(newValue: boolean) { if (this.isSetDefaults != newValue) { this.isSetDefaults = newValue; } }
+    public set IsSetDefaults(newValue: boolean) {
+        if (this.isSetDefaults != newValue) {
+            this.isSetDefaults = newValue;
+            if (newValue == false) {
+                this.TextValue = null;
+            }
+        }
+    }
 
     private isMandatoryFilter: boolean = false;
     public get IsMandatoryFilter() { return this.isMandatoryFilter; }
@@ -1567,6 +1576,9 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
         if ((this.ParentDataTypeCode == "Text" || this.ParentDataTypeCode == "nText")) {
             this.Operation = new ObjectFieldOperator("StartsWith", "Starts With");
+        }
+        else if ((this.ParentDataTypeCode == "Date" || this.ParentDataTypeCode == "DateTime")) {
+            this.Operation = new ObjectFieldOperator("Before", "Before");
         }
         else {
             this.Operation = new ObjectFieldOperator("Equals", "Equals to");

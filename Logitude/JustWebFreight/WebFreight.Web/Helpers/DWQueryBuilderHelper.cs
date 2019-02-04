@@ -231,7 +231,7 @@ namespace WebFreight.Web.Helpers
 
         private bool GetIfFiltersHaveValues(List<DWObjectFieldsDetails> FiltersList)
         {
-            return FiltersList.Where(a => a.TextValue != null).Count() > 0;
+            return FiltersList.Where(a => a.TextValue != null && !string.IsNullOrEmpty(a.TextValue.ToString())).Count() > 0;
         }
 
         public string GetQuerySQL(DWQueryData DWQueryParam)
