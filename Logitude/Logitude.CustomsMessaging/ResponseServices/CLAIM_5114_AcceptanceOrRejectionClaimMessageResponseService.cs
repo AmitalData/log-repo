@@ -84,14 +84,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         claimsRelatedEntityPM.ClaimsRelatedEntitiesRefunds.Add(claimsRelatedEntitiesRefundPM);
                     }
 
-                    foreach (var seizureItem in customResponse.Seizure)
+                    if (customResponse.Seizure != null)
                     {
-                        ClaimsRelatedEntitiesSeizurePM claimsRelatedEntitiesSeizurePM = new ClaimsRelatedEntitiesSeizurePM();
-                        claimsRelatedEntitiesSeizurePM.ChangeSetOp = ChangeSetOperation.Insert;
-                        claimsRelatedEntitiesSeizurePM.SeizureFactorCode = seizureItem.seizureFactorCode.ToString();
-                        claimsRelatedEntitiesSeizurePM.SeizureMethodCode = seizureItem.seizureMethodCode.ToString();
-                        claimsRelatedEntitiesSeizurePM.SeizureAmount = seizureItem.seizureAmount;
-                        claimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures.Add(claimsRelatedEntitiesSeizurePM);
+                        foreach (var seizureItem in customResponse.Seizure)
+                        {
+                            ClaimsRelatedEntitiesSeizurePM claimsRelatedEntitiesSeizurePM = new ClaimsRelatedEntitiesSeizurePM();
+                            claimsRelatedEntitiesSeizurePM.ChangeSetOp = ChangeSetOperation.Insert;
+                            claimsRelatedEntitiesSeizurePM.SeizureFactorCode = seizureItem.seizureFactorCode.ToString();
+                            claimsRelatedEntitiesSeizurePM.SeizureMethodCode = seizureItem.seizureMethodCode.ToString();
+                            claimsRelatedEntitiesSeizurePM.SeizureAmount = seizureItem.seizureAmount;
+                            claimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures.Add(claimsRelatedEntitiesSeizurePM);
+                        }
                     }
 
                     myClaimsRelatedEntityUpdateService.Update(claimsRelatedEntityPM,true);
