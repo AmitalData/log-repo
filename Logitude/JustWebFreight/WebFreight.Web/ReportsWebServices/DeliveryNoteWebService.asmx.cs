@@ -135,7 +135,7 @@ namespace WebFreight.Web.ReportsWebServices
                 deliveryNotedataprovider.ShipperReference2 = shipment.ShipperReference2;
                 deliveryNotedataprovider.ConsigneeReference2 = shipment.ConsigneeReference2;
                 deliveryNotedataprovider.ShipmentSalesman = shipment.SalesmanUserName;
-                deliveryNotedataprovider.LastFreeDate = shipment.WarehouseLegLastFreeDate;
+                deliveryNotedataprovider.LastFreeDate = shipment.WarehouseLegLastFreeDate;                
 
                 if (!string.IsNullOrEmpty(shipment.FreightLocationId))
                 {
@@ -263,6 +263,16 @@ namespace WebFreight.Web.ReportsWebServices
                     #endregion
                 }
 
+                if(!string.IsNullOrEmpty(shipment.CustomerContactId))
+                {
+                    Contact contact = commonContext.Contacts.Where(d => d.Id == shipment.CustomerContactId && d.Tenant == tenant).FirstOrDefault();
+                    if(contact != null)
+                    {
+                        deliveryNotedataprovider.CustomerContactName = contact.EnglishName;
+                        deliveryNotedataprovider.CustomerContactPhoneNumber = contact.BusinessPhone;                        
+                    }
+                }
+
                 // tenant data
                 if (tenantSettings != null)
                 {
@@ -273,6 +283,8 @@ namespace WebFreight.Web.ReportsWebServices
                 if (myPickup != null)
                 {
                     #region
+
+                    deliveryNotedataprovider.DriverName = myPickup.Driver;
 
                     ShipmentPackage myShipmentPackage = (from a in shipmentsContext.ShipmentPackages
                                                        where a.DeliveryId == myPickup.Id && a.Tenant == tenant
@@ -909,6 +921,16 @@ namespace WebFreight.Web.ReportsWebServices
                     deliveryNotedataprovider.CutOffTime = shipment.CutoffDate.Value.TimeOfDay;
                 }
 
+                if (!string.IsNullOrEmpty(shipment.CustomerContactId))
+                {
+                    Contact contact = commonContext.Contacts.Where(d => d.Id == shipment.CustomerContactId && d.Tenant == tenant).FirstOrDefault();
+                    if (contact != null)
+                    {
+                        deliveryNotedataprovider.CustomerContactName = contact.EnglishName;
+                        deliveryNotedataprovider.CustomerContactPhoneNumber = contact.BusinessPhone;
+                    }
+                }
+
                 if (!string.IsNullOrEmpty(shipment.ConsigneeId))
                 {
                     #region
@@ -1025,6 +1047,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     deliveryNotedataprovider.TruckNumber = myDelivery.TruckNumber;
                     deliveryNotedataprovider.TruckerNumber = myDelivery.CarrierNumber;
+                    deliveryNotedataprovider.DriverName = myDelivery.Driver;
 
                     if (myDelivery.ETA != null)
                     {
