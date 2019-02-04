@@ -26,20 +26,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
            _MainContext = mainContext;
         }
 
-        public void OnCreating(PaymentChequePM entityPM)
+        public  void OnCreating(PaymentChequePM entityPM)
         {
             if (entityPM.Id == null || entityPM.Id == "") entityPM.Id = IdCounterWrapperGetNumber(entityPM.Tenant); //IdCounter.GetNumber("CashBook", entityPM.Tenant);
 
           //  entityPM.SearchFields = entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.AccountNumber + "," + entityPM.AccountName + "," + entityPM.CashBookTypeName;
            
 
-            DateTime todayDateTime = GetCurrentDateTime(entityPM);
+            DateTime todayDateTime = GetCurrentDateTime();
 
             entityPM.CreateDate = todayDateTime;
             entityPM.UpdateDate = todayDateTime;
 
 
-            string myLoggedUserId = GetLogContactId(entityPM);
+            string myLoggedUserId = GetLogContactId(entityPM.Tenant);
             entityPM.UpdatedByUserId = myLoggedUserId;
 
             if (entityPM.CreatedByUserId == null)
@@ -90,9 +90,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     "PaymentCheque", Tenant);
         }
 
-        public string GetLogContactId(PaymentChequePM entityPM)
+        public virtual string GetLogContactId(int tenant)
         {
-            ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+            ContactRepository contactRep = new ContactRepository(tenant);
             string email = "";
             if (AuthenticationUtil.IsAuthenticatedUserExists())
             {
@@ -101,10 +101,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             else
             {
-                email = "system@tenant" + entityPM.Tenant + ".com";
+                email = "system@tenant" + tenant + ".com";
             }
             string myLoggedUserId = null;
-            Contact contact = contactRep.GetSingleContactByEmail(email, entityPM.Tenant);
+            Contact contact = contactRep.GetSingleContactByEmail(email, tenant);
             if (contact != null)
             {
                 myLoggedUserId = contact.Id;
@@ -113,7 +113,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return myLoggedUserId;
         }
 
-        public DateTime GetCurrentDateTime(PaymentChequePM entityPM)
+        public virtual DateTime GetCurrentDateTime()
         {
             return new DateTime();
         }
@@ -124,7 +124,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         void OnCreating(PaymentChequePM entityPM);
       
-        string GetLogContactId(PaymentChequePM entityPM);
-        DateTime GetCurrentDateTime(PaymentChequePM entityPM);
+        string GetLogContactId(int tenant);
+        DateTime GetCurrentDateTime();
     }
 }
