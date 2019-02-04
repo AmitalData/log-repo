@@ -13,8 +13,10 @@ import {DocumentsFilingExtendedPMService} from '../../../Common/Services/Extende
                 <tr style="height:1px;"> 
                     <td>
                         <div style="height:30px;">
-                            <button class="Button" (click)="EditButtonClicked()" style="width:57px;float: right;margin:4px;">Edit</button>
+
+                            <button class="Button" (click)="EditButtonClicked()" style="width:40px;float: right;margin:4px;">Edit</button>
                             <button class="Button" (click)="RemoveTasksButtonClicked()" style="width:85px;float: right;margin:4px;">Remove Tasks</button>
+                            <button class="RedButton" *ngIf="ShowRenewButtons == true"  (click)="RenewButtonClicked()" style="width:50px;float: right;margin:4px;">Renew</button>
                         </div>
                     </td>
                     
@@ -34,6 +36,7 @@ export class RemoveTasksButtonListTemplate {
     public HasSharedDocs: boolean = true;
     public _ShipmentPMService: ShipmentPMService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
+    public ShowRenewButtons: boolean = false;
     constructor(private CD: ChangeDetectorRef) {
         this._ShipmentPMService = new ShipmentPMService();
         //if (SessionLocator.PrivateLableSettings) {
@@ -45,6 +48,8 @@ export class RemoveTasksButtonListTemplate {
 
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData; 
+        this.ShowRenewButtons = (this.rowData['IsDepositionRequired'] == true);
+
         //if (SessionLocator.PrivateLableSettings) {
         //    this.ShowButtons = this.rowData['StatusName'].toLowerCase() == "in progress" ? false : true;
         //    if (SessionLocator.PrivateLableSettings) {
@@ -120,4 +125,10 @@ export class RemoveTasksButtonListTemplate {
             }
         });
     }
+
+    RenewButtonClicked() {
+
+
+    }
+
 }
