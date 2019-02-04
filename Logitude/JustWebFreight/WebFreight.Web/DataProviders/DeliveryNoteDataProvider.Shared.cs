@@ -30,7 +30,7 @@ namespace WebFreight.Web.DataProviders
         public string DeliveryAddress { get; set; }
         public string DeliveryContactName { get; set; }
         public string DeliveryContactPhone { get; set; }
-        public string DeliveryDate { get; set; }        
+        public string DeliveryDate { get; set; }
         public string DeliveryTime { get; set; }
         public DateTime? DeliveryTime_DateTime_New { get; set; }
         public string TruckNumber { get; set; }
@@ -123,10 +123,10 @@ namespace WebFreight.Web.DataProviders
 
         public string LongMaster { get; set; }
 
-        public string LastMainCarriageVesselNameAndNumber { get; set; } 
-        public string LoadingPortName { get; set; } 
+        public string LastMainCarriageVesselNameAndNumber { get; set; }
+        public string LoadingPortName { get; set; }
         public string DischargePortName { get; set; }
-        public DateTime? MainCarriageETD_DateTime { get; set; } 
+        public DateTime? MainCarriageETD_DateTime { get; set; }
         public DateTime? MainCarriageETA_DateTime { get; set; }
         public DateTime? MainCarriageATA_DateTime { get; set; }
 
@@ -158,5 +158,10 @@ namespace WebFreight.Web.DataProviders
         public string OnCarriageCarrier { get; set; }
         public string FreightLocation { get; set; }
         public DateTime? LastFreeDate { get; set; }
+
+        public string CustomerContactName { get; set; }
+        public string CustomerContactPhoneNumber { get; set; }
+        public string ShipmentNumber { get; set; }
+        public string DriverName { get; set; }
     }
 }
