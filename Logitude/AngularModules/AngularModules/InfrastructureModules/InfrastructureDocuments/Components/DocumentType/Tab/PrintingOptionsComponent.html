@@ -1,12 +1,23 @@
-﻿<table>
+
+<table>
 
 
-    <tr style="height:20px"><td colspan="4"></td></tr>
+    <tr style="height:20px">
+        <td colspan="4"></td>
+    </tr>
     <tr style="vertical-align:top;height:33px">
-        <td style="width:10px"><div></div></td>
-        <td title="'Document One Time Print Limited'" style="width:165px;"><LogLabel [ObjectFieldName]="'IsDocumentOneTimePrintLimited'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogLabel></td>
-        <td style="width:230px;text-align:left"><LogCheckBox [LogitudeForm]="myForm" [ObjectFieldName]="'IsDocumentOneTimePrintLimited'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogCheckBox></td>
-        <td><div></div></td>
+        <td style="width:10px">
+            <div></div>
+        </td>
+        <td title="'Document One Time Print Limited'" style="width:165px;">
+            <LogLabel [ObjectFieldName]="'IsDocumentOneTimePrintLimited'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogLabel>
+        </td>
+        <td style="width:230px;text-align:left">
+            <LogCheckBox [ObjectFieldName]="'IsDocumentOneTimePrintLimited'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogCheckBox>
+        </td>
+        <td>
+            <div></div>
+        </td>
     </tr>
 
 
@@ -27,24 +38,36 @@
     </tr>-->
 
     <tr style="vertical-align:top;height:30px">
-        <td style="width:10px"><div></div></td>
-        <td style="width:165px;">  <LogLabel [ObjectFieldName]="'LimitedPrintCopyId'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogLabel></td>
+        <td style="width:10px">
+            <div></div>
+        </td>
+        <td style="width:165px;">
+            <LogLabel [ObjectFieldName]="'LimitedPrintCopyId'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogLabel>
+        </td>
 
         <td style="width:230px">
             <table>
                 <tr>
-                    <td style="width:193px"><ComboBox style="width:150px" (SelectedItemChanged)="DocumentTypeCopyValueChanged($event)" [ItemsSource]="DocumentTypeCopies" [SelectedItem]="SelectedCopy" [Binding]="'Name'"></ComboBox></td>
-                    <td><div></div></td>
+                    <td style="width:193px">
+                        <ComboBox [IsDisabled]="ComboBoxIsDisabled" style="width:150px" (SelectedItemChanged)="DocumentTypeCopyValueChanged($event)" [ItemsSource]="DocumentTypeCopies" [SelectedItem]="SelectedCopy" [Binding]="'Name'"></ComboBox>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
                 </tr>
             </table>
         </td>
-     
-        <td><div></div></td>
+
+        <td>
+            <div></div>
+        </td>
 
 
     </tr>
 
 
-    <tr><td colspan="4"></td></tr>
+    <tr>
+        <td colspan="4"></td>
+    </tr>
 
 </table>

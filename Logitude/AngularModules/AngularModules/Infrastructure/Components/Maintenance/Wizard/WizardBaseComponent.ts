@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList, Output, EventEmitter, ComponentRef}  from '@angular/core';
+import {Component, ViewChildren, QueryList, Output, EventEmitter, ComponentRef}  from '@angular/core';
 import {BaseComponent} from '../../LogitudeComponents/BaseComponent';
 import {Validator} from '../../../Validators/Validator';
 import {InfraSettings} from '../../../Utilities/InfraSettings';
@@ -20,7 +20,8 @@ import {EntityResourceService} from '../../../Services/EntityResourceService';
 import {RatesTablePM} from '../../../EntityPMs/RatesTablePM';
 import {RatesTablePMService} from '../../../Services/StandardPMs/RatesTablePMService';
 import {CachedDataManager} from '../../../Utilities/CachedDataManager';
-import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
+import { ObjectsLocator } from '../../../Locators/ObjectsLocator';
+import { ObjectsUpdater } from '../../../Locators/ObjectsUpdater';
 
 @Component({
     moduleId: module.id,
@@ -488,6 +489,10 @@ export class WizardBaseComponent extends BaseComponent {
                             this.OnCreatingMoroccoTenant();
                         }
 
+                        else if (this.TenantPM.CountryCode == "IL") {
+                            this.OnCreatingIsraelTenant();
+                        }
+
                         else {
                             SessionLocator.CurrentSession.StopBusyIndicator();
                             this.SaveCompleted.emit(true);
@@ -556,6 +561,21 @@ export class WizardBaseComponent extends BaseComponent {
             }
         });
     }
+    OnCreatingIsraelTenant() {
+        this.myCommonDomainService.OnCreatingIsraelTenant().subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError) {
+                this.ShowServiceErrors(myResponse);
+            }
+
+            else {
+                ObjectsUpdater.UpdateAccountingSettingPM(myResponse.Result);             
+
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.SaveCompleted.emit(true);
+            }
+        });
+    }
+
     ShowServiceErrors(myResponse: ServiceResponse) {
         if (myResponse) {
             this.ValidationErrorsList = myResponse.ErrorsArray;
