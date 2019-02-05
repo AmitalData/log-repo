@@ -218,7 +218,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             ValidateAirlineRestriction(entityPM, myCommonContext);
             ValidateBillToCreditLimit(entityPM, myContext, myCommonContext, isNew);
-            ValidateAccountingSetting(entityPM, myContext, myCommonContext);
+            ValidateAccountingSetting(entityPM, myContext, myCommonContext, isNew);
             ValidateFullAccounting(entityPM.Tenant, entityPM.BillToId, entityPM.InvoiceCurrencyId, entityPM.InvoiceDate, isNew);
             ValidateMultiVatPercentages(entityPM, accountingSetting, allVats);
 
@@ -785,7 +785,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
-        private static void ValidateAccountingSetting(ARInvoicePM entityPM, IInvoiceContext myContext, ICommonDataContext myCommonContext)
+        private static void ValidateAccountingSetting(ARInvoicePM entityPM, IInvoiceContext myContext, ICommonDataContext myCommonContext, bool isNew)
         {
             Tenant loggedTenant = (from a in myCommonContext.Tenants.Include("AccountingSetting")
                                    where a.Id == entityPM.Tenant
@@ -807,7 +807,13 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         }
                     }
 
-                    if (entityPM.SetApproved)
+                    var isValidatingChronological = false;
+                    if(isNew && entityPM.IsAutoCredit || entityPM.SetApproved)
+                    {
+                        isValidatingChronological = true;
+                    }
+                   
+                    if (isValidatingChronological)
                     {
                         if (loggedTenant.AccountingSetting.IsChronologicalDates)
                         {
@@ -817,7 +823,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                                                && a.StatusCode != "DR"
                                                                && a.StatusCode != "VD"
                                                                && a.InvoiceNumber != a.Id
-                                                               select a).Max(d => d.InvoiceDate);
+                                                               select a).Max(d => d.ApprovedDate);
                             if (lastChronologicalDate != null)
                             {
                                 if (entityPM.InvoiceDate < lastChronologicalDate)

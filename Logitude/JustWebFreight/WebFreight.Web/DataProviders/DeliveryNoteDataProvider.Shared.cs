@@ -163,5 +163,7 @@ namespace WebFreight.Web.DataProviders
         public string CustomerContactPhoneNumber { get; set; }
         public string ShipmentNumber { get; set; }
         public string DriverName { get; set; }
+
+        public string ProjectNumber { get; set; }
     }
 }
