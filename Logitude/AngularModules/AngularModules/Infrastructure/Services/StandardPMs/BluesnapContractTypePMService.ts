@@ -16,18 +16,18 @@ import {ServiceHelper} from '../../Utilities/ServiceHelper';
 import {SessionInfo} from '../../Utilities/SessionInfo';
 import {PerformanceLogger} from '../../Utilities/PerformanceLogger';
 import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
-import { BluesnapContractPMInitService } from '../../EntityPMInitServices/BluesnapContractPMInitService';
-import {BluesnapContractPM} from '../../EntityPMs/BluesnapContractPM';
+
+import {BluesnapContractTypePM} from '../../EntityPMs/BluesnapContractTypePM';
 
 
 @Injectable()
 
-export class BluesnapContractPMService {
+export class BluesnapContractTypePMService {
  private _http: Http;
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/bluesnapcontracts';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/bluesnapcontracttypes';      
     }
 
  get(code: string) {
@@ -44,21 +44,18 @@ export class BluesnapContractPMService {
 
                    
 					
-                    var entity: BluesnapContractPM;
+                    var entity: BluesnapContractTypePM;
 					if(pm)
 					{
-                        entity = this.MapJsonToEntityPM(pm);
-                        BluesnapContractPMInitService.InitValues(entity, false);
-                        BluesnapContractPMInitService.ApplyUIPoperties(entity, false);
+                      entity = this.MapJsonToEntityPM(pm);
                     }
-
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
               
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BluesnapContract", "GetSinglePM", 'code=' + code);
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BluesnapContractType", "GetSinglePM", 'code=' + code);
 				 
                 return serviceResponse;
 
@@ -66,7 +63,7 @@ export class BluesnapContractPMService {
             });                    
     }
 
-	 insert(entityPM: BluesnapContractPM) {
+	 insert(entityPM: BluesnapContractTypePM) {
  
         var callTime = new Date();        
         return Observable.defer(() => {
@@ -79,13 +76,13 @@ export class BluesnapContractPMService {
                  
                 validator = new ClassLevelValidator();
                  
-                var errorsArray = validator.Validate("BluesnapContract", entityPM);
+                var errorsArray = validator.Validate("BluesnapContractType", entityPM);
                  
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
 				 if (errorsArray.length == 0) {
-                    var mappedEntity: BluesnapContractPM;
+                    var mappedEntity: BluesnapContractTypePM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
 				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
@@ -94,14 +91,14 @@ export class BluesnapContractPMService {
                             var pm = response.json();
 							if(pm)
 							{
-                               var mappedResult:  BluesnapContractPM;
+                               var mappedResult:  BluesnapContractTypePM;
                                mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
 							   serviceResponse.Result = mappedResult;
 							}
 							
 
                             var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BluesnapContract", "SaveChanges", "");                    
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BluesnapContractType", "SaveChanges", "");                    
 												 
                             
                             return serviceResponse;
@@ -121,7 +118,7 @@ export class BluesnapContractPMService {
             );
     }
 
-    update(entityPM: BluesnapContractPM) {
+    update(entityPM: BluesnapContractTypePM) {
 
             var callTime = new Date();         
             return Observable.defer(() => {
@@ -134,13 +131,13 @@ export class BluesnapContractPMService {
                  
                 validator = new ClassLevelValidator();
                
-                var errorsArray = validator.Validate("BluesnapContract", entityPM);
+                var errorsArray = validator.Validate("BluesnapContractType", entityPM);
                  
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
 				 if (errorsArray.length == 0) {
-                    var mappedEntity: BluesnapContractPM;
+                    var mappedEntity: BluesnapContractTypePM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
 				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
@@ -150,13 +147,13 @@ export class BluesnapContractPMService {
                             var pm = response.json();
 							if(pm)
 							{
-                               var mappedResult:  BluesnapContractPM;
+                               var mappedResult:  BluesnapContractTypePM;
                                mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
 							   serviceResponse.Result = mappedResult;
 							 }
 							 
                             var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BluesnapContract", "SaveChanges", "");                    
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BluesnapContractType", "SaveChanges", "");                    
 					                           
                             return serviceResponse;
 
@@ -178,12 +175,12 @@ export class BluesnapContractPMService {
 
    
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: BluesnapContractPM = null) {
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: BluesnapContractTypePM = null) {
 
          
         if (!entityPM) {
             
-            entityPM = new BluesnapContractPM();
+            entityPM = new BluesnapContractTypePM();
         }
 
 		var customFields: Array<string> = [];
@@ -213,7 +210,7 @@ export class BluesnapContractPMService {
             }
 			
 			 
-            entityPM.IsDirty = false;
+            
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
@@ -223,7 +220,7 @@ export class BluesnapContractPMService {
 
             entityPM.OldEntityPM = null;
         }
-
+		entityPM.IsDirty = false;
         return entityPM;
     }
 
@@ -247,9 +244,8 @@ export class BluesnapContractPMService {
     }
 
 	  public GetNewEntityPM() {		 
-		    var entityPM: BluesnapContractPM;
-			entityPM = new BluesnapContractPM();
-			entityPM.Tenant = InfraSettings.TenantPM.Id;
+		    var entityPM: BluesnapContractTypePM;
+			entityPM = new BluesnapContractTypePM();
 			return entityPM;
     }
 		 

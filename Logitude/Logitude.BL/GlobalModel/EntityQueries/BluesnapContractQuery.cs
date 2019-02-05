@@ -27,7 +27,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
         public BluesnapContractPM GetSinglePM(string Id, int tenant = 0)
         {
             BluesnapContractPM entity;
-            entity = (from a in repository.context.BluesnapContracts
+            entity = (from a in repository.context.BluesnapContracts.Include("BluesnapContractType")
                       where a.Id == Id
                       select new BluesnapContractPM()
                       {
@@ -38,6 +38,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                           ContractId = a.ContractId,
                           InActive = a.InActive,
                           Tenant = tenant,
+                          BluesnapContractTypeCode=a.BluesnapContractTypeCode,
+                          BluesnapContractTypeName=a.BluesnapContractType!=null?a.BluesnapContractType.Name:"",
                       }).FirstOrDefault();
 
             return entity;
@@ -53,7 +55,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                 {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
-                        var entitystatuses = (from a in repository.context.BluesnapContracts
+                        var entitystatuses = (from a in repository.context.BluesnapContracts.Include("BluesnapContractType")
 
                                               select new BluesnapContractPM()
                                               {
@@ -63,6 +65,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   Name = a.Name,
                                                   ContractId = a.ContractId,
                                                   InActive = a.InActive,
+                                                  BluesnapContractTypeCode = a.BluesnapContractTypeCode,
+                                                  BluesnapContractTypeName = a.BluesnapContractType != null ? a.BluesnapContractType.Name : "",
                                               });
                         foreach (var s in entitystatuses)
                         {
@@ -81,7 +85,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                 }
                 else
                 {
-                    entity = (from a in repository.context.BluesnapContracts
+                    entity = (from a in repository.context.BluesnapContracts.Include("BluesnapContractType")
                               where a.Id == Id
                               select new BluesnapContractPM()
                               {
@@ -90,6 +94,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                   Name = a.Name,
                                   ContractId = a.ContractId,
                                   InActive = a.InActive,
+                                  BluesnapContractTypeCode = a.BluesnapContractTypeCode,
+                                  BluesnapContractTypeName = a.BluesnapContractType != null ? a.BluesnapContractType.Name : "",
                               }).FirstOrDefault();
                 }
 
@@ -100,7 +106,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
         public IQueryable<BluesnapContractList> GetIQueryableEntityList(IQueryable<BluesnapContract> iQueryable)
         {
-            IQueryable<BluesnapContractList> result = from a in iQueryable
+            IQueryable<BluesnapContractList> result = from a in iQueryable.Include("BluesnapContractType")
                                                       select new BluesnapContractList()
                                                           {
                                                           Id=a.Id,
@@ -109,7 +115,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                               Name = a.Name,
                                                               ContractId = a.ContractId,
                                                               InActive = a.InActive,
-                                                          };
+                                                          BluesnapContractTypeCode = a.BluesnapContractTypeCode,
+                                                          BluesnapContractTypeName = a.BluesnapContractType != null ? a.BluesnapContractType.Name : "",
+                                                      };
             return result;
         }
     }

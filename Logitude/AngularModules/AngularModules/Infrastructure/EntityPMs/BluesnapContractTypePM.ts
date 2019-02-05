@@ -15,7 +15,7 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 
-export class BluesnapContractPM {
+export class BluesnapContractTypePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -25,11 +25,6 @@ export class BluesnapContractPM {
       }
  	 
     
-    private id: string;
-    public get Id() { return this.id; }
-    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-       
-	 
     private code: string;
     public get Code() { return this.code; }
     public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
@@ -40,38 +35,13 @@ export class BluesnapContractPM {
     public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
        
 	 
-    private contractId: string;
-    public get ContractId() { return this.contractId; }
-    public set ContractId(newValue: string) { if (this.contractId != newValue) { this.contractId = newValue; this.MarkAsDirty("ContractId"); } }
-       
-	 
     private searchFields: string;
     public get SearchFields() { return this.searchFields; }
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private inActive: boolean;
-    public get InActive() { return this.inActive; }
-    public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
-       
-	 
-    private tenant: number;
-    public get Tenant() { return this.tenant; }
-    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
-       
-	 
-    private bluesnapContractTypeCode: string;
-    public get BluesnapContractTypeCode() { return this.bluesnapContractTypeCode; }
-    public set BluesnapContractTypeCode(newValue: string) { if (this.bluesnapContractTypeCode != newValue) { this.bluesnapContractTypeCode = newValue; this.MarkAsDirty("BluesnapContractTypeCode"); } }
-       
-	 
-    private bluesnapContractTypeName: string;
-    public get BluesnapContractTypeName() { return this.bluesnapContractTypeName; }
-    public set BluesnapContractTypeName(newValue: string) { if (this.bluesnapContractTypeName != newValue) { this.bluesnapContractTypeName = newValue; this.MarkAsDirty("BluesnapContractTypeName"); } }
-       
-	 
 
-    public OldEntityPM: BluesnapContractPM;
+    public OldEntityPM: BluesnapContractTypePM;
 		
     public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
@@ -79,11 +49,11 @@ export class BluesnapContractPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BluesnapContract");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BluesnapContractType");
            
         }
     }
-    private MyClone: BluesnapContractPM;
+    private MyClone: BluesnapContractTypePM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);
