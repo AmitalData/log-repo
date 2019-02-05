@@ -1,11 +1,13 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.EntityAMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -49,6 +51,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     APILogsPM LogPM = new APILogsPM()
                     {
                         Id = IdCounter.GetNumber("APILogs", authToken.Tenant),
+                        CorrelationId = Guid.NewGuid().ToString(),
                         CreateDate = DateTime.Now,
                         CreateDateUTC = DateTime.UtcNow,
                         Direction = "O",
@@ -60,9 +63,15 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         ObjectTableId = objecttable!=null ? objecttable.Id:null,
                         EntityId = id,
                         Tenant = tenant,
+                        Subject = "Send VDC status to UNF"
+
                     };
 
-                    var msg = "Send new status to UNF " + DateTime.Now;
+                    IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+                    APILogsService apiLogsService = new APILogsService(webFreightContext, tenant);
+                    apiLogsService.Create(LogPM);
+
+                    var msg = "Send VDC status to UNF " + DateTime.Now;
                     ShipmentAdditionalCloudDataAM DataAM = new ShipmentAdditionalCloudDataAM()
                     {
                         ShipmentNumber = forwardershipmentNumber,
