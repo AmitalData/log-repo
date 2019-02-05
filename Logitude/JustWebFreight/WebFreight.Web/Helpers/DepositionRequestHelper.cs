@@ -107,7 +107,7 @@ namespace WebFreight.Web.Helpers
                 if (shipmentComputedFields != null)
                 {
                     shipmentComputedFields.IsDepositionRequired = true;
-                    shipmentComputedFields.ImporterDepositionRequestDetails = depositionRequestAM.VendorCode + "," + depositionRequestAM.VendorName;
+                    shipmentComputedFields.ImporterDepositionRequestDetails = depositionRequestAM.VendorCode + "^" + depositionRequestAM.VendorName;
                     shipmentComputedFieldsRepository.Update(shipmentComputedFields);
                     shipmentComputedFieldsRepository.SubmitChanges();
 
@@ -145,7 +145,7 @@ namespace WebFreight.Web.Helpers
                 ExpirationDate = DateTime.Now.AddDays(90),
                 Status = "I",
                 Tenant = tenant,
-                Subject = "Deposition request tasK send to cloud"
+                Subject = "Deposition request task send to cloud"
 
             };
             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);

@@ -89,6 +89,8 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (shipment != null && tenantSettings != null)
             {
+                cmrDataProvider.ProjectNumber = shipment.ProjectNumber;
+
                 //------------partners-------------------------//
                 if (shipment.ConsigneeId != null)
                 {
