@@ -590,7 +590,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 }
                 if (string.IsNullOrWhiteSpace(package.PackTypeId))
                 {
-                    package.PackTypeId = "PP";
+                    //package.PackTypeId = "PP";
                 }
                 ConsignmentPackagePM.MarksNumbers = package.SignNum;
                 ConsignmentPackagePM.Tenant = ResolvedTenant();
