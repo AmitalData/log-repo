@@ -52,12 +52,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 listPM = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
                    customResponse.SelectedBOLValue,
                    customResponse.SelectedStatusValue,
-                   customResponse.SelectedTotalInvoiceValue);
+                   customResponse.SelectedTotalInvoiceValue,
+                   customResponse.SelectedFastIndividualProcessValue);
                 if (customResponse.CourierDeclarationStatusCode == "RV")
                 {
                     var listPM2 = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
                     customResponse.SelectedStatusValue,
-                    customResponse.SelectedTotalInvoiceValue);
+                    customResponse.SelectedTotalInvoiceValue,
+                    customResponse.SelectedFastIndividualProcessValue);
                     listPM = listPM.Concat(listPM2).ToList();
                 }
             }
