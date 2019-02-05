@@ -33,6 +33,7 @@ import { DeclarationCourierStatusListService } from '../../../Customs/Services/S
 import { DeclarationMamanSpecialActionListService } from '../../../Customs/Services/StandardLists/DeclarationMamanSpecialActionListService';
 import { DeclarationMamanSpecialActionPM } from '../../../Customs/EntityPMs/DeclarationMamanSpecialActionPM';
 import { DeclarationMamanSpecialActionPMService } from '../../../Customs/Services/StandardPMs/DeclarationMamanSpecialActionPMService';
+import { DeclarationCourierStatusWebService } from '../../../Customs/Services/WebServices/DeclarationCourierStatusWebService';
 import { retry } from 'rxjs/operator/retry';
 import { forEach } from "@angular/router/src/utils/collection";
 
@@ -78,6 +79,7 @@ export class CourierWorksheetListTemplate {
     private _DeclarationMamanSpecialActionListService: DeclarationMamanSpecialActionListService = new DeclarationMamanSpecialActionListService();
     private _DeclarationMamanSpecialActionPMService: DeclarationMamanSpecialActionPMService = new DeclarationMamanSpecialActionPMService;
     private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
+    private _DeclarationCourierStatusWebService: DeclarationCourierStatusWebService = new DeclarationCourierStatusWebService();
 
     FirePreventSelect() {
         SessionLocator.CurrentSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
@@ -499,7 +501,7 @@ export class CourierWorksheetListTemplate {
         declarationCourierStatusPM.PendingRemarks = null;
         this._DeclarationCourierStatusPMService.update(declarationCourierStatusPM).subscribe((response: ServiceResponse) => {
             SessionLocator.CurrentSession.StopBusyIndicator();
-          this.RefreshData();
+            this.RefreshData();
         });
     }
 
@@ -641,5 +643,14 @@ export class CourierWorksheetListTemplate {
             confirm.Close();
         });
 
+    }
+
+    SetManualProcesscode(declarationId: string, manualProcessCode: string) {
+
+        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this._DeclarationCourierStatusWebService.GetSetManualProcesscode(declarationId, manualProcessCode).subscribe((response: ServiceResponse) => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.RefreshData();
+        });
     }
 }
