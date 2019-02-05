@@ -67,9 +67,13 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 }
 
                 temp.EnglishName = MyEntity.EnglishName;
-                temp.LocalName = MyEntity.LocalName;
                 temp.VatNumber = MyEntity.VatNumber;
                 temp.Code = MyEntity.Code;
+
+                if(!string.IsNullOrEmpty(MyEntity.LocalName))
+                {
+                    temp.LocalName = FormatHelper.ConvertFromBase64(MyEntity.LocalName);
+                }                               
 
                 PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
                 if (MyEntity.PaymentTerm != null)
@@ -124,6 +128,11 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                     address.Description = "Main Address";
                     address.Tenant = Tenant;                    
 
+                    if(!string.IsNullOrEmpty(MyEntity.MainAddress.Name))
+                    {
+                        address.Name = FormatHelper.ConvertFromBase64(MyEntity.MainAddress.Name);                        
+                    }
+
                     temp.Addresses.Add(address);
                 }
 
@@ -143,6 +152,13 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                     address.AddressTypeId = "B";
                     address.Description = "Billing Address";
                     address.Tenant = Tenant;
+
+                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.Name))
+                    {
+                        address.Name = FormatHelper.ConvertFromBase64(MyEntity.BillingAddress.Name);
+                    }
+
+
                     temp.Addresses.Add(address);
                 }
                 
