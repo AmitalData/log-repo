@@ -586,13 +586,20 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 let customFileCreditResponseData: CustomFileCreditResponseData = myServiceResponse.Result as CustomFileCreditResponseData;
                 var newDate = DateTool.GetCurrentDateTimeAsUtc();
                 var currentDate: Date = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), newDate.getHours(), newDate.getMinutes(), 0); // last of today
-                var paymentDateTime: Date = DateTool.GetDateFromDate(customFileCreditResponseData.PaymentDateTime);
+                var paymentDate: Date = DateTool.GetDateFromDate(this.PaymentDate);
 
                 if (customFileCreditResponseData.PaymentDateTime == null) {
                     customFileCreditResponseData.PaymentDateTime = currentDate;
                 }
+                var paymentDateTime: Date = DateTool.GetDateFromDate(customFileCreditResponseData.PaymentDateTime);
+
                 if (paymentDateTime <= currentDate) {
-                    this.PaymentDate = customFileCreditResponseData.PaymentDateTime;
+                    if (paymentDate > currentDate) {
+                        this.PaymentDate = paymentDate;
+                    }
+                    else {
+                        this.PaymentDate = customFileCreditResponseData.PaymentDateTime;
+                    }
                     this.FuturePaymentDateTime = null;
                     this.FuturePaymentTime = null;
                 }
@@ -2120,7 +2127,11 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     initDates() {
         //Task 36380: Update Payment Date & Time when Entering Payment screen
         if (!this.IsDisplayOnly) {
-            this.paymentPM.PaymentDate = DateTool.GetCurrentDateTimeAsUtc();
+            var currentDate: Date = DateTool.GetCurrentDateTimeAsUtc();
+            var paymentDate: Date = DateTool.GetDateFromDate(this.PaymentDate);
+            if (paymentDate <= currentDate) { 
+                this.paymentPM.PaymentDate = DateTool.GetCurrentDateTimeAsUtc();
+            }
         }
     }
 

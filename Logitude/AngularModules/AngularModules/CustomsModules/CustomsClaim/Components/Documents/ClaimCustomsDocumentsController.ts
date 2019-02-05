@@ -111,15 +111,15 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
     FillConnectedToItems() {
         var connectedItems: ConnectedToItem[] = [];
 
-        var connectedItem1 = new ConnectedToItem();
-        connectedItem1.Id = 0;
-        connectedItem1.Name = TextCodeTranslator.Translate("Customs.Claim");
+        //var connectedItem1 = new ConnectedToItem();
+        //connectedItem1.Id = 0;
+        //connectedItem1.Name = TextCodeTranslator.Translate("Customs.Claim");
 
         var connectedItem2 = new ConnectedToItem();
-        connectedItem2.Id = 1;
+        connectedItem2.Id = 0;
         connectedItem2.Name = TextCodeTranslator.Translate("Customs.ClaimsRelatedEntity");
 
-        connectedItems.push(connectedItem1);
+        //connectedItems.push(connectedItem1);
         connectedItems.push(connectedItem2);
         return connectedItems;
     }

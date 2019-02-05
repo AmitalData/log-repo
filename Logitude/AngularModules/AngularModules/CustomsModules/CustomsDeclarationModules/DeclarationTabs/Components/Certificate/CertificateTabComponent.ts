@@ -707,7 +707,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                             logWindow.WindowClosed.subscribe(($event: any) => {
                                 this.LoadConnectedItems($event);
                                 this.CD.reattach();
-                                this.RefreshEntity();
+                              //  this.RefreshEntity();
                             });
                             this.CD.detach();
                           logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
