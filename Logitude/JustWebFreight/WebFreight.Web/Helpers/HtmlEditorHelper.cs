@@ -4515,6 +4515,7 @@ namespace WebFreight.Web.Helpers
                                                 else resultValue = (insideValue != null ? insideValue.ToString() : " ");
 
                                             }
+                                            else resultValue = string.Empty;
 
                                         }
                                         else
