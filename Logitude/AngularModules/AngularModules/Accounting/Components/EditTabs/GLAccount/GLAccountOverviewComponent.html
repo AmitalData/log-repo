@@ -461,9 +461,9 @@
                                                 <div style="width: 150px;padding: 9px 5px;    font-size: 11px;">
                                                     {{ GetReferencesText(transaction) }}
                                                 </div>
-                                                <!-- <div style="width: 20px;padding: 5px 0;height: 100%;" title="{{GetIndicatorText(transaction)}}">
+                                                <div *ngIf="transaction['OpenAmount'] != 0"  style="width: 20px;padding: 5px 0;height: 100%;" title="{{GetIndicatorText(transaction)}}">
                                                     <div class="circleDraw" style="height: 7px;" [class.orangeCircle]="transaction['OpenAmount'] != CalculateOriginalAmount(transaction)"></div>
-                                                </div> -->
+                                                </div>
 
                                             </li>
                                         </ul>
