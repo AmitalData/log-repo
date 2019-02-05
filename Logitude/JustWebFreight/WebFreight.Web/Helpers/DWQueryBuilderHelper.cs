@@ -174,7 +174,7 @@ namespace WebFreight.Web.Helpers
                         {
                             DataWarehouseHelper dataWarehouseHelper = new DataWarehouseHelper();
                             var fieldName =   (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) +"." + filter.Code;
-                            WhereStmt += dataWarehouseHelper.ResolveWarehoueDateField(fieldName , filter.OperationCode, filter.TextValue.ToString(), Tenant);
+                            WhereStmt += dataWarehouseHelper.ResolveWarehoueDateField(fieldName , filter.OperationCode, filter.TextValue.ToString(), Tenant) + " " + AndOr + " ";
      
                         }
 
@@ -330,7 +330,7 @@ namespace WebFreight.Web.Helpers
             string TenantWhere = ".[Parent Tenant] = ";
             var DWSettings = new DWHSettingRepository(Tenant);
             var temp = DWSettings.GetSingleDWHSetting(Tenant);
-            if (temp.Tenant != temp.ParentTenant)
+            if (temp != null &&  temp.Tenant != temp.ParentTenant)
             {
                 TenantWhere = ".[Source Tenant] = ";
             }

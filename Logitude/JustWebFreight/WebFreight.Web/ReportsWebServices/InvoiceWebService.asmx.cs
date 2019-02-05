@@ -235,6 +235,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicedataprovider.Type = invoiceTypeCode == "CD" ? "Credit" : "Debit";
                 invoicedataprovider.MasterInternalNumber = shipment.MasterShipmentNumber != null ? shipment.MasterShipmentNumber : "";
                 invoicedataprovider.CustomsDeclarationNumber = shipment.CustomsDeclarationNumber != null ? shipment.CustomsDeclarationNumber : "";
+                invoicedataprovider.ProjectNumber = shipment.ProjectNumber != null ? shipment.ProjectNumber : "";
 
                 if (currentInvoice.IsAutoCredit)
                 {

@@ -145,7 +145,7 @@ namespace WebFreight.Web.Helpers
                 ExpirationDate = DateTime.Now.AddDays(90),
                 Status = "I",
                 Tenant = tenant,
-                Subject = "Deposition request tasK send to cloud"
+                Subject = "Deposition request task send to cloud"
 
             };
             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);

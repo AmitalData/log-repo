@@ -129,6 +129,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? ATD { get; set; }
         public DateTime? ETA { get; set; }
         public DateTime? ATA { get; set; }
+        public string ProjectNumber { get; set; }
     }
 
     public class ContainerData
