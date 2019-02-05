@@ -131,7 +131,7 @@ export class RemoveTasksButtonListTemplate {
         var newWindow = new LogitudeWindow();
         newWindow.Width = 600;
         newWindow.Height = 230;
-        newWindow.Title = "נדרש תצהיר עבור תיק עמילות" +" "+ this.rowData['ShipmentNumber'];
+        newWindow.Title = "נדרש תצהיר עבור תיק עמילות" + " " + this.rowData['ForwarderShipmentNumber'];
         var windowArgs: any = {};
         
         if (this.rowData) {
