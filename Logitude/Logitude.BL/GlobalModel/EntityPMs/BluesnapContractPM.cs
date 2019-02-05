@@ -16,5 +16,8 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string SearchFields { get; set; }
         public bool InActive { get; set; }
         public int Tenant { get; set; }
+        public string BluesnapContractTypeCode { get; set; }
+        public string BluesnapContractTypeName { get; set; }
+
     }
 }
