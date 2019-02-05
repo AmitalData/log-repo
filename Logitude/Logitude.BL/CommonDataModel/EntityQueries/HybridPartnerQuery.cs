@@ -107,6 +107,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         }
 
+        public int GetPartnerTenantById(string id)
+        {
+            int partnerTenant = (from a in repository.context.HybridPartners
+                                      where a.Id == id
+                                      select a.PartnerTenant).FirstOrDefault();
+
+            return partnerTenant;
+
+
+        }
+
         public IQueryable<HybridPartnerPM> GetHybridPartnerPMsByTenant()
         {
 

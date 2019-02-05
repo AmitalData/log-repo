@@ -1708,6 +1708,7 @@
     <Compile Include="Controllers\ShipmentsModel\ApiHelpers\ShipmentAPiHelper.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentAdditionalCloudDataController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\SharedAgentManifestController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentComputedFieldExtendedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentTestDataController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ContainerFollowUpViewsController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\HarmonizeCodeViewsController.Generated.cs" />

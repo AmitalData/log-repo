@@ -635,8 +635,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string TrailerNumber { get; set; }
 
         public bool IsDepositionRequired { get; set; }
+        public string ImporterDepositionRequestDetails { get; set; }
         
-
         public string DeclarationXmlData { get; set; }
         public bool IsImporterApprovalRequried { get; set; }
         public string ApprovedByUserName { get; set; }
@@ -716,8 +716,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? INTTRALastStatusDate { get; set; }
         public DateTime? ContainerLastStatusDate { get; set; }
 
-    
-        
+        public string ForwarderPartnerId { get; set; }
 
     }
 }
