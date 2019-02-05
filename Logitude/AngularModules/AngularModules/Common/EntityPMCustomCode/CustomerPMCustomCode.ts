@@ -5,7 +5,7 @@ export class CustomerPMCustomCode {
     public static ApplyEntityChanged(propertyName: string, entityPM: CustomerPM) {
 
         if (!SessionLocator.TenantPM.AccountingActivated) {
-            entityPM.UIProperties.SetEnabled("CreditLimitAmount", "Customer", false);
+            entityPM.UIProperties.SetVisibility("CreditLimitAmount", "Customer", false);
         }
     }
 }

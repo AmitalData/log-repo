@@ -157,6 +157,7 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
+                prealertDataProvider.ProjectNumber = shipmentpm.ProjectNumber != null ? shipmentpm.ProjectNumber : "";
                 Address customerAddress = addressRepository.GetSingleAddress(shipmentpm.CustomerAddressId, tenant);
                 prealertDataProvider.ContactDetails = DataProviders.General.GetAddress(customerAddress);
 
