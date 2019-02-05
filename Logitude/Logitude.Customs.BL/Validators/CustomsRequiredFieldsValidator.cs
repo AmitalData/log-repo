@@ -1126,15 +1126,6 @@ namespace Logitude.Customs.BL.Validators
                             requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
                         }
                     }
-                    if (info.Name == "GatewayPortCode")
-                    {
-                        if (info.GetValue(courierMaster) == null)
-                        {
-
-                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
-
-                        }
-                    }
                 }
             }
 

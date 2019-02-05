@@ -1,4 +1,3 @@
-
 declare var window: any;
 import { BehaviorSubject } from 'rxjs';
 import {Observable} from 'rxjs/Observable';
@@ -246,6 +245,14 @@ implements OnDestroy
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }
+
+        currRequestParams.CourierDeclarationStatusCode = courierDeclarationStatusCode;
+        currRequestParams.SelectedAvailableValue = this._SelectedAvailableValue;
+        currRequestParams.SelectedBOLValue = this._SelectedBOLValue;
+        currRequestParams.SelectedStatusValue = this._SelectedStatusValue;
+        currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
+        currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
+
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
             .subscribe(res => {
                 SessionLocator.CurrentSession.StopBusyIndicator();

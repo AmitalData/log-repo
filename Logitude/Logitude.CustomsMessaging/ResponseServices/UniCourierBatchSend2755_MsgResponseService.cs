@@ -74,7 +74,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (allCourierPendingReason.First(r=> r.Code == itemPM.CourierPendingReasonCode).ErrorPlace == "1")
                     {
-                        mess.AppendLine($" קיים Pending עם עצירה בתשלום הצהרה ({itemPM.DeclarationId})");
+                        mess.AppendLine($" קיים Pending " +
+                            $"עם עצירה בתשלום הצהרה ({itemPM.DeclarationId})");
                         continue;
                     }
                 }

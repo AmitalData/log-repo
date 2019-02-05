@@ -71,7 +71,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                     {
                         res.ErrorMessage = $"mySTBMessage.BaldarOpenDate is null  unable to choose what to do ??";
                         res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
-                        res.EntityID = idList.First();
+                        //leave to master res.EntityID = idList.First();
                         return res;
                     }
                     var consignmentQueryService = new ConsignmentQueryService(_CommunicationLog.Tenant);
@@ -80,7 +80,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                     {
                         res.ErrorMessage = $"myDeclarationId=GetDeclarationIdBythirdCargoID({mySTBMessage.BaldarOpenDate}) is null  unable to choose what to do ??";
                         res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
-                        res.EntityID = idList.First();
+                        //leave to master res.EntityID = idList.First();
 
                         return res;
                     }
@@ -325,23 +325,23 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                          select
                              new XElement("STBMessage",
                                         new XElement("BaldarAwb", item.CourierHAWB),
-                                    new XElement("BaldarHp", "HowCare"),
+                                    new XElement("BaldarHp", "WHoCare"),
                                     new XElement("BaldarOpenDate", "111118"),
-                                    new XElement("BaldarCode", "HowCare"),
+                                    new XElement("BaldarCode", "WHoCare"),
                                     new XElement("EventCode", "0001"),
                                     new XElement("EventTime", "2019-01-01T10:14:35.433269+02:00"),
-                                    new XElement("AirlineCode", "HowCare"),
-                                    new XElement("Fltno", "HowCare"),
-                                    new XElement("FltDate", "HowCare"),
-                                    new XElement("LandTime", "HowCare"),
+                                    new XElement("AirlineCode", "WHoCare"),
+                                    new XElement("Fltno", "WHoCare"),
+                                    new XElement("FltDate", "WHoCare"),
+                                    new XElement("LandTime", "WHoCare"),
                                     new XElement("EventQty", "1"),
-                                    new XElement("Weight", "HowCare"),
-                                    new XElement("DeclarationId", "HowCare"),
-                                    new XElement("HataraTime", "HowCare"),
-                                    new XElement("DestLineCode", "HowCare"),
-                                    new XElement("DestLineName", "HowCare"),
-                                    new XElement("DistributorHp", "HowCare"),
-                                    new XElement("DistributorName", "HowCare")
+                                    new XElement("Weight", "WHoCare"),
+                                    new XElement("DeclarationId", "WHoCare"),
+                                    new XElement("HataraTime", "WHoCare"),
+                                    new XElement("DestLineCode", "WHoCare"),
+                                    new XElement("DestLineName", "WHoCare"),
+                                    new XElement("DistributorHp", "WHoCare"),
+                                    new XElement("DistributorName", "WHoCare")
                                     )
 
                  )));
