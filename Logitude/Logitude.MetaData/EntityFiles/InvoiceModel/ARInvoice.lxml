@@ -584,7 +584,7 @@
     <TextCode Code="&quot;ARInvoice.S.ShortTitle.CustomsInvoice&quot;" DefaultText="&quot;Customs Invoice&quot;" LocalDefaultText="&quot;חשבונית מכס&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;ARInvoice.S.ShortTitle.CustomsCreditNote&quot;" DefaultText="&quot;Customs Credit Note&quot;" LocalDefaultText="&quot;הערה על אשראי מכס&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;ARInvoice.S.ShortTitle.Consolidation&quot;" DefaultText="&quot;Consolidation&quot;" LocalDefaultText="&quot;חשבונית מרכזת&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;ARInvoice.S.ShortTitle.AutoCredited&quot;" DefaultText="&quot;Auto Credited&quot;" LocalDefaultText="&quot;ביטול&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ARInvoice.S.ShortTitle.AutoCredited&quot;" DefaultText="&quot;Auto Credited&quot;" LocalDefaultText="&quot;בוטלה&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;ARInvoice.S.ShortTitle.Cancelled&quot;" DefaultText="&quot;Cancelled&quot;" LocalDefaultText="&quot;מבוטלת&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;ARInvoice.S.ShortTitle.ByInvoice&quot;" DefaultText="&quot;By Invoice&quot;" LocalDefaultText="&quot;של חשבונית&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;ARInvoice.S.ShortTitle.Constituent&quot;" DefaultText="&quot;Constituent&quot;" LocalDefaultText="&quot;תעודת אשראי&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
@@ -592,6 +592,7 @@
     <TextCode Code="&quot;ARInvoice.S.ShortTitle.CreditNote&quot;" DefaultText="&quot;Credit Note&quot;" LocalDefaultText="&quot;זיכוי&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;ARInvoice.S.ShortTitle.AutoCredit&quot;" DefaultText="&quot;Auto Credit&quot;" LocalDefaultText="&quot;ביטול&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;ARInvoice.M.MultiCurrencyMustInLocalCurrency&quot;" DefaultText="&quot;Multi currency ARInvoice should be only in Local currency&quot;" LocalDefaultText="&quot;חשבונית רב מטבעית חייבת להיות במטבע מקומי&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ARInvoice.S.ShortTitle.ByInvoiceAutoCredited&quot;" DefaultText="&quot;By Invoice&quot;" LocalDefaultText="&quot; ע&quot;י חשבונית&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;TRANSFER&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;ARInvoice.Features.Transfer&quot;" FeatureDefaultText="&quot;Transfer&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
