@@ -86,7 +86,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     string pointerLevel = null;
                     var myDocumentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(dbContext);
                     var myDocumentTypeCustomsData = myDocumentTypeCustomsDataQueryService.GetSingle(this._LogitudeDocs.DOC_ID, true, true);
-                    
+
                     CustomsDocumentsTicketPM customsDocumentsTicketPM = new CustomsDocumentsTicketPM();
                     customsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Insert;
                     customsDocumentsTicketPM.Tenant = _MyDeclarationPM.Tenant;
@@ -103,7 +103,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     }
                     myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
 
-                    
+
 
                     CustomsDocumentPointerPM customsDocumentPointerPM = new CustomsDocumentPointerPM();
                     customsDocumentPointerPM.ChangeSetOp = ChangeSetOperation.Insert;
@@ -116,23 +116,27 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     if (pointerLevel == "I")
                     {
                         customsDocumentPointerPM.Child1EntityCode = "SupplierInvoice";
-                        customsDocumentPointerPM.Child1EntityId = "1"; 
+                        customsDocumentPointerPM.Child1EntityId = "1";
                     }
                     if (pointerLevel == "P")
                     {
 
                         customsDocumentPointerPM.Child2EntityCode = "SupplierInvoiceItem";
-                        customsDocumentPointerPM.Child2EntityId = "1"; 
+                        customsDocumentPointerPM.Child2EntityId = "1";
                     }
 
                     customsDocumentPointerPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
                     myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
 
                     var myDocumentId = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
+                    CustomsDocumentPM customsDocumentPM;
+                    var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                    CustomsDocumentMetaDataValueQueryService customsDocumentMetaDataValueQuery = new CustomsDocumentMetaDataValueQueryService(_context);
+                    List<CustomsDocumentMetaDataValuePM> CustomsDocumentMetaDataValues = customsDocumentMetaDataValueQuery.GetCustomsDocumentMetaDataValuesByConnectedEntity(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
+
                     if (myDocumentId == null)
                     {
-                        var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                        CustomsDocumentPM customsDocumentPM = new CustomsDocumentPM();
+                        customsDocumentPM = new CustomsDocumentPM();
                         customsDocumentPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                         customsDocumentPM.DocumentsFilingId = this._LogitudeDocs.COM_ID;
                         customsDocumentPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
@@ -142,9 +146,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                         {
                             value.ChangeSetOp = ChangeSetOperation.Insert;
                         }
-
-                        myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
                     }
+                    else
+                    {
+                        customsDocumentPM = myDocumentId;
+                        customsDocumentPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        if (customsDocumentPM.DocumentsFilingId != this._LogitudeDocs.COM_ID) customsDocumentPM.DocumentsFilingId = this._LogitudeDocs.COM_ID;
+                        if (customsDocumentPM.DocumentTypeCode != customsDocumentsTicketPM.DocumentTypeCode) customsDocumentPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
+                        if (customsDocumentPM.CurrentCustomsDocumentsTicketId != customsDocumentsTicketPM.Id) customsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
+                    }
+                    if (CustomsDocumentMetaDataValues != null && CustomsDocumentMetaDataValues.Count() > 0 && (customsDocumentPM.CustomsDocumentMetaDataValues == null || customsDocumentPM.CustomsDocumentMetaDataValues.Count() == 0)) customsDocumentPM.CustomsDocumentMetaDataValues = CustomsDocumentMetaDataValues;
+                    myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
                 }
                 else
                 {

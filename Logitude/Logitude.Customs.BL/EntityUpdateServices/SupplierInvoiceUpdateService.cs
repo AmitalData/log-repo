@@ -33,7 +33,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.BL.TraceEvents;
-
+using Unifreight.BL.EntityPMs.UGenerated;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -233,7 +233,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             InsuranceFreightUtil util = new Utils.InsuranceFreightUtil();
             util.CalculateFreightForInvoice(entityPM, declarationPM.TaxationDateTime);
             entityPM.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(declarationPM.TaxationDateTime, entityPM.InvoiceCurrencyTypeCode, entityPM.InvoiceAmount.GetValueOrDefault(), entityPM.Tenant);
-
 
             object entityPOCO; object entityPM1; object entityParentPM;
             this.GetAncestor(out entityPOCO, out entityPM1, out entityParentPM);
@@ -439,6 +438,38 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             bool dirty = false;
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
             DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
+            bool toUpdateClassification = false;
+            string defaultClassificationCode = null;
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert && declarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 75)
+            {
+                try
+                {
+                    using (_AmitalContext = AmitalContext.GetContext(entityPM.Tenant))
+                    {
+                        bool isInvoiceItemInsertNullClassification = (from a in entityPM.SupplierInvoiceItems
+                                                                      where a.ChangeSetOp == ChangeSetOperation.Insert && a.ClassificationCode is null
+                                                                      select a).Any();
+                        if (isInvoiceItemInsertNullClassification)
+                        {
+                            defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_LOWVAL_ITEM", "NON", "NON", entityPM.Tenant);
+                            if (!string.IsNullOrWhiteSpace(defaultClassificationCode))
+                            {
+                                foreach (SupplierInvoiceItemPM item in entityPM.SupplierInvoiceItems)
+                                {
+                                    if (string.IsNullOrWhiteSpace(item.ClassificationCode)) item.ClassificationCode = defaultClassificationCode;
+                                }
+                                toUpdateClassification = true;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ex.ChangeExceptionMessage("AfterUpdating update ClassificationCode default Exception");
+                    throw;
+                }
+            }
+
             if (entityPM.ChangeSetOp == ChangeSetOperation.Delete || entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 SubmitChanges();
@@ -446,7 +477,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     supplierInvoices = invoiceRepository.GetMulti(new DeclarationKeys() { Id = entityPM.DeclarationId });
                 }
-                
+
                 isSubmitChanges = true;
                 int index = 0;
                 var my = new SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.InvoiceCounterKey };
@@ -462,6 +493,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         //update SequenceNumeric Soo the Client will have Accurate PM !!!!!!
                         entityPM.SequenceNumeric = item.SequenceNumeric;
+                        if (toUpdateClassification)
+                        {
+                            SupplierInvoiceItemRepository invoiceItemRepository = new SupplierInvoiceItemRepository(context);
+                            List<SupplierInvoiceItem> supplierInvoiceItems = invoiceItemRepository.GetMulti(new SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.InvoiceCounterKey });
+                            foreach (SupplierInvoiceItem SIitem in supplierInvoiceItems)
+                            {
+                                if (string.IsNullOrWhiteSpace(SIitem.ClassificationCode))
+                                {
+                                    SIitem.ClassificationCode = defaultClassificationCode;
+                                    invoiceItemRepository.Update(SIitem);
+                                }
+                            }
+                        }
                     }
 
                     invoiceRepository.Update(item);
@@ -1335,5 +1379,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 throw;
             }
         }
+
+        private string GetAmitalDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+            var myGDFDATAQueryService = new Unifreight.BL.EntityQueryServices.GDFDATAQueryService(_AmitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
+        }
+
     }
 }
