@@ -1320,7 +1320,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     TemperatureUnitCode = myPOCO.TemperatureUnitCode,
                     DefaultSLAId = myPOCO.DefaultSLAId,
                     StockTypeCode = myPOCO.StockTypeCode,
-                    AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
+                    AutoArchiveOnInvoice = myPOCO.AutoArchiveOnInvoice,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())

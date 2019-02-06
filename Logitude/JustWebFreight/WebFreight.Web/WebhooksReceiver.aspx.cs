@@ -46,7 +46,7 @@ namespace WebFreight.Web
                     }
                     string RecivedString = "";
 
-                    using (var reader = new StreamReader(Request.InputStream))
+                    using (var reader = new StreamReader(Request.InputStream,System.Text.Encoding.UTF8))
                     {
                         RecivedString = reader.ReadToEnd();
                     }
