@@ -86,7 +86,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 
                 if (rate == null)
                 {
-                    throw new Exception("Rate by value date Return null");
+                    throw new Exception("שער המטבע לא קיים בטבלת שערי המטבעות");
                 }
                 var totForeign = totReconciliationAmount * (decimal)rate.Rate.GetValueOrDefault();
                 JournalPM journal = new JournalPM()
