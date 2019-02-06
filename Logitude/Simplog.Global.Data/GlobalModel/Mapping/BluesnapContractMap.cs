@@ -18,6 +18,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.Name).IsRequired().HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ContractId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
+            this.Property(t => t.BluesnapContractTypeCode).IsRequired().HasMaxLength(4).IsUnicode(false);
 
             this.ToTable("BluesnapContracts");
             this.Property(t => t.Code).HasColumnName("Code");
@@ -26,6 +27,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.ContractId).HasColumnName("ContractId");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.InActive).HasColumnName("InActive");
+            this.Property(t => t.BluesnapContractTypeCode).HasColumnName("BluesnapContractTypeCode");
         }
     }
 }

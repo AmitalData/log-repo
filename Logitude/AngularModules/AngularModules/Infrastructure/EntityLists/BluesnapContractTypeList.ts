@@ -6,14 +6,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class BluesnapContractList {
-   		Id: string;
-		Code: string;
+export class BluesnapContractTypeList {
+   		Code: string;
 		Name: string;
-		ContractId: string;
 		SearchFields: string;
-		InActive: boolean;
-		BluesnapContractTypeCode: string;
-		BluesnapContractTypeName: string;
 	
 }
