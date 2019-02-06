@@ -669,13 +669,17 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         this._FreightAmount = null;
         if (Object.keys(FreightCurrenciesArray).length == 1) {
             let freightAmount = ArrayTool.Sum(this.EntityPM.SupplierInvoices, "TotalFreightInFreightCurrency");
-            let freightFix2 = Number(freightAmount).toFixed(2);
-            this._FreightAmount = this.EntityPM.SupplierInvoices[0].FreightCurrencyTypeCode + " " + freightFix2 as string;
+            if (freightAmount != 0) {
+                let freightFix2 = Number(freightAmount).toFixed(2);
+                this._FreightAmount = this.EntityPM.SupplierInvoices[0].FreightCurrencyTypeCode + " " + freightFix2 as string; 
+            }
         }
         else {
             let freightAmount = ArrayTool.Sum(this.EntityPM.SupplierInvoices, "TotalFreightInNIS");
-            let freightFix2 = Number(freightAmount).toFixed(2);
-            this._FreightAmount = "ILS " + freightFix2 as string;
+            if (freightAmount != 0) {
+                let freightFix2 = Number(freightAmount).toFixed(2);
+                this._FreightAmount = "ILS " + freightFix2 as string;
+            }
         }
         let InvoiceAmountInUSD = ArrayTool.Sum(this.EntityPM.SupplierInvoices, "InvoiceAmountInUSD");
         this._TotalInvoiceAmountInUSD = Number(InvoiceAmountInUSD).toFixed(2);
