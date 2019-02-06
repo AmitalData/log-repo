@@ -1355,6 +1355,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             TotalVAT =a.TotalVAT,
                             TotaVatableAmountForTaxReport =a.TotaVatableAmountForTaxReport,
                             SATApprovalDate = a.SATApprovalDate,
+                            IsFullAccounting = a.IsFullAccounting,
                         };
 
             return query;
@@ -1486,7 +1487,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              TotalVAT = entity.TotalVAT,
                              TotaVatableAmountForTaxReport = entity.TotaVatableAmountForTaxReport,
                              SATApprovalDate = entity.SATApprovalDate,
-
+                             IsFullAccounting = entity.IsFullAccounting,
                          };
 
             return result;
@@ -1592,6 +1593,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               TotalVAT = a.TotalVAT,
                                               TotaVatableAmountForTaxReport = a.TotaVatableAmountForTaxReport,
                                               SATApprovalDate = a.SATApprovalDate,
+                                              IsFullAccounting = a.IsFullAccounting,
                                           }).ToList();
             return invoices;
         }
@@ -1701,6 +1703,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     TotalVAT = entityPOCO.TotalVAT,
                     TotaVatableAmountForTaxReport = entityPOCO.TotaVatableAmountForTaxReport,
                     SATApprovalDate = entityPOCO.SATApprovalDate,
+                    IsFullAccounting = entityPOCO.IsFullAccounting,
                 };
 
                 ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
@@ -2013,7 +2016,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              TotalVAT = entity.TotalVAT,
                              TotaVatableAmountForTaxReport = entity.TotaVatableAmountForTaxReport,
                              SATApprovalDate = entity.SATApprovalDate,
-
+                             IsFullAccounting = entity.IsFullAccounting,
                          };
 
             return result;

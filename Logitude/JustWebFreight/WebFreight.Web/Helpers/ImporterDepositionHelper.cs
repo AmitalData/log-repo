@@ -234,16 +234,21 @@ namespace WebFreight.Web.Helpers
                 ExpirationDate = DateTime.Now.AddDays(90),
                 Status = "I",
                 Tenant = tenant,
-                Subject = "Importer Deposition Send to cloud"
-
+                Subject = "Importer Deposition",
+                Refrence = importerDepositionAM.DepositionNumber,
             };
+
+            HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(importerDepositionAM.CustomerTenant);
+            string partnerName =  hybridPartnerQuery.GetPartnerNameByPartnerTenant(importerDepositionAM.CustomerTenant);
+            LogPM.PartnerName = partnerName;
+
             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
             APILogsService apiLogsService = new APILogsService(webFreightContext, tenant);
             apiLogsService.Create(LogPM);
 
 
             var msg = "Importer Deposition Send to cloud";
-            APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionAM), null, null, "");
+            APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionAM), null, null, "");
             return LogPM.Id;
             
 

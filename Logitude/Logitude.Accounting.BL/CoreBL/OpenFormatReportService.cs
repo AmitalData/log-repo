@@ -286,17 +286,17 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     if(item.LocalAmountDebit > 0)
                     {
-                        string LocalAmountDebit =item.LocalAmountDebit.ToString();
+                        string LocalAmountDebit =Math.Abs(item.LocalAmountDebit).ToString();
                         myStringBuilder.Append("+");
-                        if (LocalAmountDebit.Length > 15) { LocalAmountDebit = LocalAmountDebit.Substring(0, 15); }
-                        myStringBuilder.Append(LocalAmountDebit.PadLeft(15, '0'));
+                        if (LocalAmountDebit.Length > 14) { LocalAmountDebit = LocalAmountDebit.Substring(0, 14); }
+                        myStringBuilder.Append(LocalAmountDebit.PadLeft(14, '0'));
                     }
                     else if(item.LocalAmountDebit <0)
                     {
-                        var LocalAmountDebit = item.LocalAmountDebit.ToString();
+                        var LocalAmountDebit = Math.Abs(item.LocalAmountDebit).ToString();
                         myStringBuilder.Append("-");
-                        if (LocalAmountDebit.Length > 15) { LocalAmountDebit= LocalAmountDebit.Substring(0, 15); }
-                        myStringBuilder.Append(LocalAmountDebit.PadLeft(15, '0'));
+                        if (LocalAmountDebit.Length > 14) { LocalAmountDebit= LocalAmountDebit.Substring(0, 14); }
+                        myStringBuilder.Append(LocalAmountDebit.PadLeft(14, '0'));
                     }
 
                   
@@ -306,20 +306,20 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     if(item.LocalAmountCredit > 0)
                     {
-                        var LocalAmountCredit = item.LocalAmountCredit.ToString();
+                        var LocalAmountCredit = Math.Abs(item.LocalAmountCredit).ToString();
 
                         myStringBuilder.Append("+");
-                        if (LocalAmountCredit.Length > 15) { LocalAmountCredit.Substring(0, 15); }
-                        myStringBuilder.Append(LocalAmountCredit.PadLeft(15, '0'));
+                        if (LocalAmountCredit.Length > 14) { LocalAmountCredit.Substring(0, 14); }
+                        myStringBuilder.Append(LocalAmountCredit.PadLeft(14, '0'));
                     }
 
                     else if (item.LocalAmountCredit < 0)
                     {
-                        var LocalAmountCredit =  item.LocalAmountCredit.ToString();
+                        var LocalAmountCredit = Math.Abs(item.LocalAmountCredit).ToString();
 
                         myStringBuilder.Append("-");
-                        if (LocalAmountCredit.Length > 15) { LocalAmountCredit.Substring(0, 15); }
-                        myStringBuilder.Append(LocalAmountCredit.PadLeft(15, '0'));
+                        if (LocalAmountCredit.Length > 14) { LocalAmountCredit.Substring(0, 14); }
+                        myStringBuilder.Append(LocalAmountCredit.PadLeft(14, '0'));
                     }
                  
                 }
@@ -329,20 +329,20 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     if (item.ForeignAmountDebit > 0)
                     {
-                        string ForeignAmountDebit = item.ForeignAmountDebit.ToString();
+                        string ForeignAmountDebit = Math.Abs(item.ForeignAmountDebit).ToString();
                         myStringBuilder.Append("+");
-                        if (ForeignAmountDebit.Length > 15) { ForeignAmountDebit = ForeignAmountDebit.Substring(0, 15); }
-                        myStringBuilder.Append(ForeignAmountDebit.PadLeft(15, '0'));
+                        if (ForeignAmountDebit.Length > 14) { ForeignAmountDebit = ForeignAmountDebit.Substring(0, 14); }
+                        myStringBuilder.Append(ForeignAmountDebit.PadLeft(14, '0'));
 
 
                     }
                     else if(item.ForeignAmountDebit< 0)
                     {
 
-                        string ForeignAmountDebit = item.ForeignAmountDebit.ToString();
+                        string ForeignAmountDebit = Math.Abs(item.ForeignAmountDebit).ToString();
                         myStringBuilder.Append("-");
-                        if (ForeignAmountDebit.Length > 15) { ForeignAmountDebit = ForeignAmountDebit.Substring(0, 15); }
-                        myStringBuilder.Append(ForeignAmountDebit.PadLeft(15, '0'));
+                        if (ForeignAmountDebit.Length > 14) { ForeignAmountDebit = ForeignAmountDebit.Substring(0, 14); }
+                        myStringBuilder.Append(ForeignAmountDebit.PadLeft(14, '0'));
 
                     }
                 }
@@ -350,20 +350,20 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     if (item.ForeignAmountCredit > 0)
                     {
-                        string ForeignAmountCredit = item.ForeignAmountCredit.ToString();
+                        string ForeignAmountCredit = Math.Abs(item.ForeignAmountCredit).ToString();
                         myStringBuilder.Append("+");
-                        if (ForeignAmountCredit.Length > 15) { ForeignAmountCredit = ForeignAmountCredit.Substring(0, 15); }
-                        myStringBuilder.Append(ForeignAmountCredit.PadLeft(15, '0'));
+                        if (ForeignAmountCredit.Length > 14) { ForeignAmountCredit = ForeignAmountCredit.Substring(0, 14); }
+                        myStringBuilder.Append(ForeignAmountCredit.PadLeft(14, '0'));
 
 
                     }
                     else if (item.ForeignAmountCredit < 0)
                     {
 
-                        string ForeignAmountCredit = item.ForeignAmountCredit.ToString();
+                        string ForeignAmountCredit = Math.Abs(item.ForeignAmountCredit).ToString();
                         myStringBuilder.Append("-");
-                        if (ForeignAmountCredit.Length > 15) { ForeignAmountCredit = ForeignAmountCredit.Substring(0, 15); }
-                        myStringBuilder.Append(ForeignAmountCredit.PadLeft(15, '0'));
+                        if (ForeignAmountCredit.Length > 14) { ForeignAmountCredit = ForeignAmountCredit.Substring(0, 14); }
+                        myStringBuilder.Append(ForeignAmountCredit.PadLeft(14, '0'));
 
                     }
                 }
@@ -739,8 +739,30 @@ namespace Logitude.Accounting.BL.CoreBL
                     item.TotalCredit = trailReportM.Select(d => d.LocalCredit).Sum();
                     if (item.OpeningBalance != null)
                     {
-                        if (item.OpeningBalance.ToString().Length > 15) { item.OpeningBalance.ToString().Substring(0, 15); }
-                        myStringBuilder.Append("a" + item.OpeningBalance.ToString().PadLeft(15, '0'));
+                        string OpeningBalance = item.OpeningBalance.ToString();
+                        if (item.OpeningBalance < 0)
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("-");
+
+                            if (OpeningBalance.Length > 14) { OpeningBalance = OpeningBalance.Substring(0, 14); }
+                            myStringBuilder.Append( OpeningBalance.PadLeft(14, '0'));
+                        }
+
+                        else if (item.OpeningBalance > 0)
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("+");
+
+                            if (OpeningBalance.Length > 14) { OpeningBalance = OpeningBalance.Substring(0, 14); }
+                            myStringBuilder.Append( OpeningBalance.PadLeft(14, '0'));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 15);
+                        }
+                      
                     }
                     else
                     {
@@ -749,8 +771,28 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     if (item.TotalDebit != null)
                     {
-                        if (item.TotalDebit.ToString().Length > 15) { item.TotalDebit.ToString().Substring(0, 15); }
-                        myStringBuilder.Append("a" + item.TotalDebit.ToString().PadLeft(15, '0'));
+                        string totalDebit = item.TotalDebit.ToString();
+                        if(item.TotalDebit < 0)
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("-");
+                            if (totalDebit.Length > 14) { totalDebit = totalDebit.Substring(0, 14); }
+                            myStringBuilder.Append( totalDebit.PadLeft(14, '0'));
+                        }
+
+                        else if(item.TotalDebit > 0)
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("+");
+                            if (totalDebit.Length > 14) { totalDebit = totalDebit.Substring(0, 14); }
+                            myStringBuilder.Append(totalDebit.PadLeft(14, '0'));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 15);
+                        }
+                       
                     }
                     else
                     {
@@ -759,8 +801,27 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     if (item.TotalCredit != null)
                     {
-                        if (item.TotalCredit.ToString().Length > 15) { item.TotalCredit.ToString().Substring(0, 15); }
-                        myStringBuilder.Append("a" + item.TotalCredit.ToString().PadLeft(15, '0'));
+                        string totalCredit = item.TotalCredit.ToString();
+
+                        if(item.TotalCredit < 0)
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("-");
+                            if (totalCredit.Length > 14) { totalCredit = totalCredit.Substring(0, 14); }
+                            myStringBuilder.Append( totalCredit.PadLeft(14, '0'));
+                        }
+                      else  if(item.TotalCredit > 0)
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("+");
+                            if (totalCredit.Length > 14) { totalCredit = totalCredit.Substring(0, 14); }
+                            myStringBuilder.Append(totalCredit.PadLeft(14, '0'));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 15);
+                        }
                     }
                     else
                     {
@@ -794,8 +855,28 @@ namespace Logitude.Accounting.BL.CoreBL
                     item.OpeningBalanceInForegnCurrency = trailReportM != null ? trailReportM.Select(d => d.ForeignOpenBalance).Sum() : null;
                     if (item.OpeningBalanceInForegnCurrency != null)
                     {
-                        if (item.OpeningBalanceInForegnCurrency.ToString().Length > 15) { item.OpeningBalanceInForegnCurrency.ToString().Substring(0, 15); }
-                        myStringBuilder.Append("a" + item.OpeningBalanceInForegnCurrency.ToString().PadLeft(15, '0'));
+                        string OpeningBalanceInForegnCurrency = item.OpeningBalanceInForegnCurrency.ToString();
+                        if(item.OpeningBalanceInForegnCurrency < 0)
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("-");
+                            if (OpeningBalanceInForegnCurrency.Length > 14) { OpeningBalanceInForegnCurrency = OpeningBalanceInForegnCurrency.Substring(0, 14); }
+                            myStringBuilder.Append(OpeningBalanceInForegnCurrency.PadLeft(14, '0'));
+                        }
+                       else  if (item.OpeningBalanceInForegnCurrency > 0)
+                       {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("+");
+                            if (OpeningBalanceInForegnCurrency.Length > 14) { OpeningBalanceInForegnCurrency = OpeningBalanceInForegnCurrency.Substring(0, 14); }
+                            myStringBuilder.Append (OpeningBalanceInForegnCurrency.PadLeft(14, '0'));
+                        }
+
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 15);
+                        }
+                      
                     }
                     else
                     {
@@ -806,8 +887,22 @@ namespace Logitude.Accounting.BL.CoreBL
                     item.TotalDebitInForeignCurrency = trailReportM != null ? trailReportM.Select(d => d.ForeignDebit).Sum() : null;
                     if (item.TotalDebitInForeignCurrency != null)
                     {
-                        if (item.TotalDebitInForeignCurrency.ToString().Length > 15) { item.TotalDebitInForeignCurrency.ToString().Substring(0, 15); }
-                        myStringBuilder.Append("a" + item.TotalDebitInForeignCurrency.ToString().PadLeft(15, '0'));
+                        string TotalDebitInForeignCurrency = item.TotalDebitInForeignCurrency.ToString();
+                        if(item.TotalDebitInForeignCurrency < 0)
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("-");
+                            if (TotalDebitInForeignCurrency.Length > 14) { TotalDebitInForeignCurrency = TotalDebitInForeignCurrency.Substring(0, 14); }
+                            myStringBuilder.Append(TotalDebitInForeignCurrency.PadLeft(14, '0'));
+                        }
+                       else if (item.TotalDebitInForeignCurrency > 0)
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("+");
+                            if (TotalDebitInForeignCurrency.Length > 14) { TotalDebitInForeignCurrency = TotalDebitInForeignCurrency.Substring(0, 14); }
+                            myStringBuilder.Append( TotalDebitInForeignCurrency.PadLeft(14, '0'));
+                        }
+
                     }
                     else
                     {
@@ -818,8 +913,29 @@ namespace Logitude.Accounting.BL.CoreBL
                     item.TotalCreditInForeignCurrency = trailReportM != null ? trailReportM.Select(d => d.ForeignCredit).Sum() : null;
                     if (item.TotalCreditInForeignCurrency != null)
                     {
-                        if (item.TotalCreditInForeignCurrency.ToString().Length > 15) { item.TotalCreditInForeignCurrency.ToString().Substring(0, 15); }
-                        myStringBuilder.Append("a" + item.TotalCreditInForeignCurrency.ToString().PadLeft(15, '0'));
+                        string TotalCreditInForeignCurrency = item.TotalCreditInForeignCurrency.ToString();
+
+                        if(item.TotalCreditInForeignCurrency < 0)
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("-");
+                            if (TotalCreditInForeignCurrency.Length > 14) { TotalCreditInForeignCurrency = TotalCreditInForeignCurrency.Substring(0, 14); }
+                            myStringBuilder.Append( TotalCreditInForeignCurrency.PadLeft(14, '0'));
+                        }
+                        else if (item.TotalCreditInForeignCurrency > 0)
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append("+");
+                            if (TotalCreditInForeignCurrency.Length > 14) { TotalCreditInForeignCurrency = TotalCreditInForeignCurrency.Substring(0, 14); }
+                            myStringBuilder.Append( TotalCreditInForeignCurrency.PadLeft(14, '0'));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("a");
+                            myStringBuilder.Append('0', 15);
+                        }
+
+                     
                     }
                     else
                     {
@@ -1152,19 +1268,19 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.CustomerVendorCode != null)
                     {
                         if (item.CustomerVendorCode.Length > 15) { item.CustomerVendorCode = item.CustomerVendorCode.Substring(0, 15); }
-                        myStringBuilder.Append("a" + item.CustomerVendorCode.PadLeft(15, '0'));
+                        myStringBuilder.Append("a" + item.CustomerVendorCode.PadLeft(15, ' '));
                     }
                     else
                     {
                         myStringBuilder.Append("a");
-                        myStringBuilder.Append('0', 15);
+                        myStringBuilder.Append(' ', 15);
                     }
 
                 }
                 else
                 {
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append('0', 15);
+                    myStringBuilder.Append(' ', 15);
                 }
 
                 myStringBuilder.Append(' ', 10);
@@ -1764,12 +1880,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.CreatedbyUser != null)
                 {
                     if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, '0'));
+                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
                 }
                 else
                 {
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append('0', 9);
+                    myStringBuilder.Append(' ', 9);
                 }
 
                 myStringBuilder.Append('0', 7);
@@ -2308,12 +2424,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.CreatedbyUser != null)
                 {
                     if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, '0'));
+                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
                 }
                 else
                 {
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append('0', 9);
+                    myStringBuilder.Append(' ', 9);
                 }
 
                 myStringBuilder.Append('0', 7);
@@ -2678,12 +2794,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.CreatedbyUser != null)
                 {
                     if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, '0'));
+                    myStringBuilder.Append("a" + item.CreatedbyUser.PadLeft(9, ' '));
                 }
                 else
                 {
                     myStringBuilder.Append("a");
-                    myStringBuilder.Append('0', 9);
+                    myStringBuilder.Append(' ', 9);
                 }
 
                 myStringBuilder.Append('0', 7);
@@ -3247,14 +3363,14 @@ namespace Logitude.Accounting.BL.CoreBL
             stringBuilder.Append("A000");
             stringBuilder.Append(' ', 4);
 
-            if (rowsCount.ToString().Length > 9)
+            if (rowsCount.ToString().Length > 15)
             {
-                rowsCount.ToString().Substring(0, 9);
-                stringBuilder.Append("a" + rowsCount.ToString().PadLeft(9, '0'));
+                rowsCount.ToString().Substring(0,15);
+                stringBuilder.Append("a" + rowsCount.ToString().PadLeft(15, '0'));
             }
             else
             {
-               stringBuilder.Append(rowsCount.ToString().PadLeft(9, '0'));
+               stringBuilder.Append(rowsCount.ToString().PadLeft(15, '0'));
             }
             if (tenantPM.VatNumber != null)
             {
@@ -3299,7 +3415,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var date = DateTime.Now;
              string dateFormat = String.Format("{0:MMddhhmm}", date);
 
-            string filePath = @"D:\OPENFRMT\" + tenantPM.VatNumber + "." + date.Year + @"\" + dateFormat;
+            string filePath = @"D:\OPENFRMT\" + tenantPM.VatNumber + "." + date.Year.ToString().Substring(2,2) + @"\" + dateFormat;
 
             if (filePath.ToString().Length > 50)
             {
@@ -3355,10 +3471,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 stringBuilder.Append(' ', 50);
             }
 
-            if (tenantPM.CompanyAddress != null)
+            if (address !=null &&  address.Address1 != null)
             {
-                if (tenantPM.CompanyAddress.Length > 50) { tenantPM.CompanyAddress = tenantPM.CompanyAddress.Substring(0, 50); }
-                stringBuilder.Append("a" + tenantPM.CompanyAddress.PadLeft(50, ' '));
+                if (address.Address1.Length > 50) { address.Address1 = address.Address1.Substring(0, 50); }
+                stringBuilder.Append("a" + address.Address1.PadLeft(50, ' '));
             }
             else
             {

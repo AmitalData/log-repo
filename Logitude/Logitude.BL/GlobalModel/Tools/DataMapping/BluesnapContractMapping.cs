@@ -11,15 +11,14 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
     {
         public static void MapEntity(BluesnapContractPM entityPM, BluesnapContract poco, bool isNewState)
         {
-            if (isNewState)
-            {
-                poco.Code = entityPM.Code;
-            }
 
+            poco.Code = entityPM.Code;
             poco.Name = entityPM.Name;
             poco.ContractId = entityPM.ContractId;
             poco.SearchFields = entityPM.Code + "," + entityPM.Name;
             poco.InActive = entityPM.InActive;
+            poco.BluesnapContractTypeCode = entityPM.BluesnapContractTypeCode;
+
         }
     }
 }

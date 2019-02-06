@@ -562,9 +562,16 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
-                this.ItemsSource.Collection.forEach((item) => {
+                this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
                     item.OnQuoteSaleCurrencyChanged();
-                })
+                });
+
+                this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
+                    if (item.IsAllIN) {
+                        item.EntityPM.IsAllIN = false;
+                        item.IsAllIN = true;
+                    }
+                });
 
                 this.ComputeTotals();
             }
@@ -584,9 +591,16 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         if (this.EntityPM.ExchangeRate != newValue) {
             this.EntityPM.ExchangeRate = AppTool.Round(newValue, 5);
 
-            this.ItemsSource.Collection.forEach((item) => {
+            this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
                 item.OnQuoteSaleCurrencyChanged();
-            })
+            });
+
+            this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
+                if (item.IsAllIN) {
+                    item.EntityPM.IsAllIN = false;
+                    item.IsAllIN = true;
+                }
+            });
 
             this.ComputeTotals();
         }
@@ -1222,7 +1236,7 @@ export class QuoteChargeItem extends BaseComponent {
                 if (iAmount < this.CostMinAmount) {
                     iAmount = this.CostMinAmount;
                     iVisible = true;
-                    iTitle = "Amount is due to Charge Min Amount";
+                    iTitle = "Amount is due to Charge Min Amount: " + this.CostMinAmount;
                 }
             }
 
@@ -1230,7 +1244,7 @@ export class QuoteChargeItem extends BaseComponent {
                 if (iAmount > this.CostMaxAmount) {
                     iAmount = this.CostMaxAmount;
                     iVisible = true;
-                    iTitle = "Amount is due to Charge Max Amount";
+                    iTitle = "Amount is due to Charge Max Amount: " + this.CostMaxAmount;
                 }
             }
         }
@@ -1255,7 +1269,7 @@ export class QuoteChargeItem extends BaseComponent {
                 if (iAmount < this.SaleMinAmount) {
                     iAmount = this.SaleMinAmount;
                     iVisible = true;
-                    iTitle = "Amount is due to Charge Min Amount";
+                    iTitle = "Amount is due to Charge Min Amount: " + this.SaleMinAmount;
                 }
             }
 
@@ -1263,7 +1277,7 @@ export class QuoteChargeItem extends BaseComponent {
                 if (iAmount > this.SaleMaxAmount) {
                     iAmount = this.SaleMaxAmount;
                     iVisible = true;
-                    iTitle = "Amount is due to Charge Max Amount";
+                    iTitle = "Amount is due to Charge Max Amount: " + this.SaleMaxAmount;
                 }
             }
         }

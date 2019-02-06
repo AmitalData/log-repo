@@ -168,7 +168,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                         //   ActivityLog.AddAcitivityLog(entityPM.Code, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
 
-                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "BluesnapContract");
+                       // TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "BluesnapContract");
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);

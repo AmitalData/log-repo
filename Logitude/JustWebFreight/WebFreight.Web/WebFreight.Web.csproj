@@ -1544,11 +1544,12 @@
     <Compile Include="Controllers\GlobalModel\Extended\BatchServicesDefinitionExtendedController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\SystemMetadataLastUpdateController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\DocumentTypeMetaDataController.cs" />
-    <Compile Include="Controllers\GlobalModel\Extended\WebhookKeysController.cs" />
+    <Compile Include="Controllers\GlobalModel\Extended\WebhookKeysExtendedController.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\AnalyzeQueueViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\ApiCredintialsViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\AWBMessagesCCSTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\BatchServicesDefinitionViewsController.Generated.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\ListControllers\BluesnapContractTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\BluesnapContractViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\PaymentChannelViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\PaymentCurrencyViewsController.Generated.cs" />
@@ -1708,6 +1709,7 @@
     <Compile Include="Controllers\ShipmentsModel\ApiHelpers\ShipmentAPiHelper.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentAdditionalCloudDataController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\SharedAgentManifestController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentComputedFieldExtendedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentTestDataController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ContainerFollowUpViewsController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\HarmonizeCodeViewsController.Generated.cs" />
@@ -2558,6 +2560,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\ApiCredintialsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\AWBMessagesCCSTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BatchServicesDefinitionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapContractTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapContractUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentChannelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentCurrencyUpdateClass.cs" />
@@ -2577,6 +2580,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\CounterDefinitionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\CustomPickListUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DirectionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DWCategoriesUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DWObjectFieldUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DWObjectTableUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\EntityStatusUpdateClass.cs" />

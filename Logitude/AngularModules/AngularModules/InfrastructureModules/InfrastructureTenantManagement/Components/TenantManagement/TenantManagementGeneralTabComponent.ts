@@ -915,10 +915,12 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
-    get BluesnapContractCode() { return this.EntityPM.BluesnapContractCode; }
-    set BluesnapContractCode(newValue: string) {
-        if (this.EntityPM.BluesnapContractCode != newValue) {
-            this.EntityPM.BluesnapContractCode = newValue;
+    get BluesnapContractId() {
+        return this.EntityPM.BluesnapContractId;
+    }
+    set BluesnapContractId(newValue: string) {
+        if (this.EntityPM.BluesnapContractId != newValue) {
+            this.EntityPM.BluesnapContractId = newValue;
         }
     }
 

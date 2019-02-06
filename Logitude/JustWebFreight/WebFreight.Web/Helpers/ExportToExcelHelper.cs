@@ -580,6 +580,8 @@ namespace WebFreight.Web.Helpers
                 DWQueryData.Filters = Filters;
             }
 
+            ///////////////////////////////////////////////////////////
+            ///
             DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(tenant);
             string MySqlString = QBHelper.GetQuerySQL(DWQueryData);
             DataTable dataTable = QBHelper.GetDWQueryData(MySqlString);

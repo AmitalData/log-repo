@@ -115,6 +115,16 @@ export class DWObjectFieldPM {
     public set LOVAdditionalColumns(newValue: string) { if (this.lOVAdditionalColumns != newValue) { this.lOVAdditionalColumns = newValue; this.MarkAsDirty("LOVAdditionalColumns"); } }
        
 	 
+    private category: string;
+    public get Category() { return this.category; }
+    public set Category(newValue: string) { if (this.category != newValue) { this.category = newValue; this.MarkAsDirty("Category"); } }
+       
+	 
+    private categoryIndex: number;
+    public get CategoryIndex() { return this.categoryIndex; }
+    public set CategoryIndex(newValue: number) { if (this.categoryIndex != newValue) { this.categoryIndex = newValue; this.MarkAsDirty("CategoryIndex"); } }
+       
+	 
 
     public OldEntityPM: DWObjectFieldPM;
 		

@@ -3372,7 +3372,7 @@ User/Pass",
         private void button39_Click(object sender, EventArgs e)
         {
             FutureOpenChequesBatch batch = new FutureOpenChequesBatch();
-            batch.SetTotalFutureOpenChequesInLocalCurrency(1);
+            batch.SetTotalFutureOpenChequesInLocalCurrency();
         }
 
         private void btnDownloadMrt_Click(object sender, EventArgs e)
@@ -3451,7 +3451,7 @@ User/Pass",
                                 SubChapterDescription = lineArray[5],
                             };
 
-                            iEntity.SearchFields = iEntity.Code + "," + iEntity.ChapterCode + "," + iEntity.SubChapterCode;
+                            iEntity.SearchFields = iEntity.Code + "," + iEntity.ChapterCode + "," + iEntity.SubChapterCode + "," + iEntity.Description;
                             iRepository.Add(iEntity);
                         }
 
@@ -3462,7 +3462,7 @@ User/Pass",
                             iEntity.ChapterDescription = lineArray[3];
                             iEntity.SubChapterCode = lineArray[4];
                             iEntity.SubChapterDescription = lineArray[5];
-                            iEntity.SearchFields = iEntity.Code + "," + iEntity.ChapterCode + "," + iEntity.SubChapterCode;
+                            iEntity.SearchFields = iEntity.Code + "," + iEntity.ChapterCode + "," + iEntity.SubChapterCode + "," + iEntity.Description;
                             iRepository.Update(iEntity);
                         }
 

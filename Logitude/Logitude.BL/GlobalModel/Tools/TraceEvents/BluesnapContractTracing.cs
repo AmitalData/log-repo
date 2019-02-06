@@ -37,7 +37,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                         Tenant = 0,
                         EventTypeCode = "CRBC",
                         UserId = loggedContact.Id,
-                        EntityId = entityPM.Code,
+                        EntityId = entityPM.Id,
                         ObjectTableName = "BluesnapContract",
                     });
                 }
@@ -49,7 +49,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                         Tenant = 0,
                         EventTypeCode = "UPBC",
                         UserId = loggedContact.Id,
-                        EntityId = entityPM.Code,
+                        EntityId = entityPM.Id,
                         ObjectTableName = "BluesnapContract",
                     });
                 }

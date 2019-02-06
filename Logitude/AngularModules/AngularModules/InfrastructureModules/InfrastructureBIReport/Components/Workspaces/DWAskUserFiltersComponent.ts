@@ -12,7 +12,7 @@ import { AppTool } from '../../../../Infrastructure/Tools';
     selector: 'DWAskUserFiltersComponent',
     moduleId: module.id,
     templateUrl: './DWAskUserFiltersComponent.html',
-    inputs: ['SelectedFiltersDataSource', 'ShowRunButton','RunReportCommand']
+    inputs: ['SelectedFiltersDataSource', 'ShowRunButton','RunReportCommand','IsDateFilter']
 })
 
 export class DWAskUserFiltersComponent implements OnInit{
@@ -32,6 +32,7 @@ export class DWAskUserFiltersComponent implements OnInit{
     public _DWSubQueryPMService: DWSubQueryPMService;
     ValidationErrorsList: any[];
     public DWQueryData: DWQueryData;
+    IsDateFilter: boolean = false;
 
     constructor() {
         this._DWQueryBuilderService = new DWQueryBuilderService();
@@ -54,30 +55,45 @@ export class DWAskUserFiltersComponent implements OnInit{
 
     RunReport(MyDWQueryData) {
         this.ValidationErrorsList = [];
-        
-        this.DWQueryData = MyDWQueryData;
-        //this.DWQueryData.Filters = this.SelectedFiltersDataSource;
-        if (this.DWQueryData.Filters) {
-            this.CheckFiltersValidationsFilters(this.SelectedFiltersDataSource[0]);
-            if (this.ValidationErrorsList.length == 0) {
-                var QueryData = new DWQueryData();
-                QueryData.Columns = this.DWQueryData.Columns;
-                QueryData.Filters = this.SelectedFiltersDataSource[0];
-                QueryData.PageIndex = 0;
-                QueryData.PageSize = 100;
-                this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
-                    if (!myResult.HasError) {
-                        //this.rowData = myResult.Result;
-                        this.RunReportComplete.emit(myResult.Result.SQLDataResult);
-                    }
-                    else {
-                        //this.StopBusyIndicator();
-                    }
 
-                    //this.LoadBIReportData();
-                });
-            }
+        if (MyDWQueryData.FirstTime == true) {
+            this.DWQueryData = MyDWQueryData.MyData;
+        }
+        else {
+            this.DWQueryData = MyDWQueryData;
         } 
+        
+        //this.DWQueryData.Filters = this.SelectedFiltersDataSource;
+        //if (this.DWQueryData.Filters) {
+            this.CheckFiltersValidationsFilters(this.SelectedFiltersDataSource[0]);
+        if (this.ValidationErrorsList.length == 0) {
+            var QueryData = new DWQueryData();
+            QueryData.Columns = this.DWQueryData.Columns;
+            QueryData.Filters = this.SelectedFiltersDataSource[0];
+            QueryData.PageIndex = 0;
+            QueryData.PageSize = 100;
+            this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
+                if (!myResult.HasError) {
+                    //this.rowData = myResult.Result;
+                    this.RunReportComplete.emit(myResult.Result.SQLDataResult);
+                }
+                else {
+                    //this.StopBusyIndicator();
+                }
+
+                //this.LoadBIReportData();
+            });
+        }
+        else {
+            if (MyDWQueryData.FirstTime == true) {
+                this.ValidationErrorsList = [];
+                this.RunReportComplete.emit("ValidationError");
+            }
+            else {
+                this.RunReportComplete.emit("ValidationError");
+            } 
+        }
+        //} 
         
     }
 
@@ -136,7 +152,9 @@ export class DWAskUserFiltersComponent implements OnInit{
 
     Msg : string = "";
     CheckFiltersValidationsFilters(MyFilter: DWObjectFieldsDetails) {
-
+        if (!MyFilter) {
+            return;
+        }
         MyFilter.FilterItems.forEach((field) => {
           
             if (field.FilterItems.length == 0) {
@@ -156,4 +174,53 @@ export class DWAskUserFiltersComponent implements OnInit{
 
 
     }
+
+    private operators: ObjectFieldOperator[];
+    public get Operators() { return this.GetFieldOperators(); }
+    public set Operators(newValue: ObjectFieldOperator[]) {
+        this.operators = newValue;
+    }
+
+    OperationValueChanged(event, Item) {
+        Item.Operation = new ObjectFieldOperator(event.Code, event.Name);
+    }
+
+    list: ObjectFieldOperator[];
+    private GetFieldOperators() {
+
+
+        this.list = [];
+      
+            this.list.push(this.beforeOp);
+            this.list.push(this.afterOp);
+            this.list.push(this.previousOp);
+            this.list.push(this.currentOp);
+            this.list.push(this.nextOp);
+  
+        return this.list;
+    }
+
+    beforeOp: ObjectFieldOperator = new ObjectFieldOperator("Before", "Before");
+    afterOp: ObjectFieldOperator = new ObjectFieldOperator("After", "After");
+    previousOp: ObjectFieldOperator = new ObjectFieldOperator("Previous", "Previous");
+    currentOp: ObjectFieldOperator = new ObjectFieldOperator("Current", "Current");
+    nextOp: ObjectFieldOperator = new ObjectFieldOperator("Next", "Next");
+
+}
+
+export class ObjectFieldOperator {
+
+    constructor(code: string, name: string) {
+        this.Code = code;
+        this.Name = name;
+    }
+
+    private code: string;
+    public get Code() { return this.code; }
+    public set Code(newValue: string) { this.code = newValue; }
+
+    private name: string;
+    public get Name() { return this.name; }
+    public set Name(newValue: string) { this.name = newValue; }
+
 }

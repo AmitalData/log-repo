@@ -91,7 +91,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     }
                     catch (Exception eee)
                     {
-
+                        LogitudeSettings.HandleLogMe($"BuildJournalEachMonth({i})"  +eee.ToString(), true, "AccLoadTest", new DateTime(2019, 5, 1));
                         //throw;
                     }
                     Thread.Sleep(10);
@@ -886,6 +886,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 catch (Exception eee)
                 {
                     //logger.ToString();
+                    ///LogitudeSettings.HandleLogMe(eee.ToString(), true, "AccLoadTest", new DateTime(2019, 5, 1));
                     bool @throw = true;
                     if (@throw)
                     {

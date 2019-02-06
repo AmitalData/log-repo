@@ -503,5 +503,10 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Transshipment1ToPortId { get; set; }
         public string Transshipment2ToPortId { get; set; }
         public string Transshipment3ToPortId { get; set; }
+
+        public bool IsDepositionRequired { get; set; }
+        public string ImporterDepositionRequestDetails { get; set; }
+        public string ForwarderPartnerId { get; set; }
+
     }
 }

@@ -375,7 +375,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                     FieldName: 'RemoveTasksButtonListTemplate',
                     DataTypeCode: 'String',
                     Display: '',
-                    Styles: { width: '160px' },
+                    Styles: { width: '200px' },
                     HtmlListComponentName: 'RemoveTasksButtonListTemplate',
                     HtmlListComponentUrl: './Shipment/Components/ListTemplates/RemoveTasksButtonListTemplate',
                     IsCustomTemplate: true,

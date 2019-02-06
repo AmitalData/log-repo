@@ -5552,8 +5552,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "BluesnapContractCode",
-					  						OldFieldName =  "BluesnapContractCode",
+					 						FieldName =  "BluesnapContractId",
+					  						OldFieldName =  "BluesnapContractId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BluesnapContract",
@@ -5572,8 +5572,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "BluesnapContractCode",
-					  						ListPropertyPath =  "BluesnapContractCode",
+					  						PMPropertyPath =  "BluesnapContractId",
+					  						ListPropertyPath =  "BluesnapContractId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -5585,7 +5585,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ValidForQuerySection1 =  "TenantManagement",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "BluesnapContractCode",
+					  						Code =  "BluesnapContractId",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -5594,7 +5594,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BluesnapContractCode",
+					  						FullFieldLable =  "BluesnapContractId",
 					  						DefaultText =  @"Contract",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -5605,7 +5605,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "BluesnapContractCode",
+					  						HelpTextCode =  "BluesnapContractId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -7855,7 +7855,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable TenantManagementObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantManagement" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature TenantManagementFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TenantManagement.Action.EraseData", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.EraseData", NameTextCodeDefaultText = "Erase Data", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TenantManagementFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TenantManagement.Action.EraseData", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.EraseData", NameTextCodeDefaultText = "Erase Data", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
  
 

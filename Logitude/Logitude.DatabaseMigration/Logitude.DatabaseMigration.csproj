@@ -642,6 +642,14 @@
     <Compile Include="Migrations\201901301051517_documentsfiling_entitynumber_20.Designer.cs">
       <DependentUpon>201901301051517_documentsfiling_entitynumber_20.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901310916356_AddIsFullAccountingToARInvoice_Maheera.cs" />
+    <Compile Include="Migrations\201901310916356_AddIsFullAccountingToARInvoice_Maheera.Designer.cs">
+      <DependentUpon>201901310916356_AddIsFullAccountingToARInvoice_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902031110327_AddHarmonizeModification.cs" />
+    <Compile Include="Migrations\201902031110327_AddHarmonizeModification.Designer.cs">
+      <DependentUpon>201902031110327_AddHarmonizeModification.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1067,6 +1075,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901301051517_documentsfiling_entitynumber_20.resx">
       <DependentUpon>201901301051517_documentsfiling_entitynumber_20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901310916356_AddIsFullAccountingToARInvoice_Maheera.resx">
+      <DependentUpon>201901310916356_AddIsFullAccountingToARInvoice_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902031110327_AddHarmonizeModification.resx">
+      <DependentUpon>201902031110327_AddHarmonizeModification.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

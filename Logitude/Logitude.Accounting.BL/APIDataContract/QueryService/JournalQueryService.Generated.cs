@@ -273,7 +273,7 @@ using Logitude.Accounting.Data;
 						var myJournalStatusTypePM = JournalStatusTypeJournalStatusTypeService.JournalStatusTypeDataMappingAndValidatin(MyEntity.JournalStatusType,Tenant,ComputingPartnerName);
 												if(myJournalStatusTypePM != null)
 						{
-							///temp.StatusCode = myJournalStatusTypePM.Code;
+						//	temp.StatusCode = myJournalStatusTypePM.Code;
 						}
 						 
 					}

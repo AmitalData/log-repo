@@ -99,6 +99,7 @@
     <Compile Include="Accounting\UniTests\JournalUpdateOnCreatingUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalUpdateOnUpdatingUnderTest.CheckVoid.cs" />
     <Compile Include="Accounting\UniTests\JournalUpdateOnUpdatingUnderTest.cs" />
+    <Compile Include="Accounting\UniTests\PaymentCheque\PaymentChequeOnCreatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\Report\LedgerTransactionBalanceServiceUnderTest.cs" />
     <Compile Include="Accounting\UniTests\CashBookOnCreatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\CashBookOnUpdatingServiceUnitTest.cs" />

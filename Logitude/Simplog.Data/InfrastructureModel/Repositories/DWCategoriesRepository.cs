@@ -50,6 +50,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return webFreightContext.DWCategories.ToList();
         }
 
+        public List<DWCategories> GetAll()
+        {
+            return webFreightContext.DWCategories.ToList();
+        }
+
 
         //public IQueryable<DWCategories> GetObjectsByTenant(int tenant)
         //{
