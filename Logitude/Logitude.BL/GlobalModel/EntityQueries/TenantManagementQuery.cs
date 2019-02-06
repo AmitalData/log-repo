@@ -105,6 +105,15 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      LastFWBCargonautSentDate = a.LastFWBCargonautSentDate,
                                                      IsDEXXConnectionEnabled = a.IsDEXXConnectionEnabled,
                                                      BluesnapContractId = a.BluesnapContractId,
+                                                     BluesnapCRMContractId = a.BluesnapCRMContractId,
+                                                     BluesnapEAWBContractId = a.BluesnapEAWBContractId,
+                                                     BluesnapEAWBSContractId = a.BluesnapEAWBSContractId,
+                                                     BluesnapOneTimeContractId = a.BluesnapOneTimeContractId,
+                                                     BluesnapContractQTY = a.BluesnapContractQTY,
+                                                     BluesnapCRMContractQTY = a.BluesnapCRMContractQTY,
+                                                     BluesnapEAWBContractQTY = a.BluesnapEAWBContractQTY,
+                                                     BluesnapEAWBSContractQTY = a.BluesnapEAWBSContractQTY,
+                                                     BluesnapOneTimeContractQTY = a.BluesnapOneTimeContractQTY,
                                                      //BluesnapContractId = a.BluesnapContract == null ? null : a.BluesnapContract.ContractId,
                                                      AWBMessagesCCSTypeCode = a.AWBMessagesCCSTypeCode,
                                                      PIMA = a.PIMA,
@@ -171,6 +180,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                             //tenant.CountryName = ten.Address != null ? (ten.Address.Country != null ? ten.Address.Country.EnglishName : null) : null;
                             tenant.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
                             tenant.DocumentShareAsDefault = ten.DocumentShareAsDefault;
+                            tenant.AutoArchiveOnInvoice = ten.AutoArchiveOnInvoice;
                         }
 
                         GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -260,7 +270,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   LastFWBCargonautSentDate = a.LastFWBCargonautSentDate,
                                                   IsDEXXConnectionEnabled = a.IsDEXXConnectionEnabled,
                                                   BluesnapContractId = a.BluesnapContractId,
-                                             //     BluesnapContractId = a.BluesnapContract == null ? null : a.BluesnapContract.ContractId,
+                                                  BluesnapCRMContractId = a.BluesnapCRMContractId,
+                                                  BluesnapEAWBContractId = a.BluesnapEAWBContractId,
+                                                  BluesnapEAWBSContractId = a.BluesnapEAWBSContractId,
+                                                  BluesnapOneTimeContractId = a.BluesnapOneTimeContractId,
+                                                  BluesnapContractQTY=a.BluesnapContractQTY,
+                                                  BluesnapCRMContractQTY=a.BluesnapCRMContractQTY,
+                                                  BluesnapEAWBContractQTY=a.BluesnapEAWBContractQTY,
+                                                  BluesnapEAWBSContractQTY=a.BluesnapEAWBSContractQTY,
+                                                  BluesnapOneTimeContractQTY=a.BluesnapOneTimeContractQTY,
+                                                  //     BluesnapContractId = a.BluesnapContract == null ? null : a.BluesnapContract.ContractId,
                                                   AWBMessagesCCSTypeCode = a.AWBMessagesCCSTypeCode,
                                                   PIMA = a.PIMA,
                                                   IsEAWBOnlyDemo = a.IsEAWBOnlyDemo,
@@ -327,6 +346,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         //tenant1.CountryName = ten.Address.Country.EnglishName;
                         tenant1.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
                         tenant1.DocumentShareAsDefault = ten.DocumentShareAsDefault;
+                        tenant1.AutoArchiveOnInvoice = ten.AutoArchiveOnInvoice;
                     }
 
                     GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -414,6 +434,15 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         LastFWBCargonautSentDate = a.LastFWBCargonautSentDate,
                         IsDEXXConnectionEnabled = a.IsDEXXConnectionEnabled,
                         BluesnapContractId = a.BluesnapContractId,
+                        BluesnapCRMContractId = a.BluesnapCRMContractId,
+                        BluesnapEAWBContractId = a.BluesnapEAWBContractId,
+                        BluesnapEAWBSContractId = a.BluesnapEAWBSContractId,
+                        BluesnapOneTimeContractId = a.BluesnapOneTimeContractId,
+                        BluesnapContractQTY = a.BluesnapContractQTY,
+                        BluesnapCRMContractQTY = a.BluesnapCRMContractQTY,
+                        BluesnapEAWBContractQTY = a.BluesnapEAWBContractQTY,
+                        BluesnapEAWBSContractQTY = a.BluesnapEAWBSContractQTY,
+                        BluesnapOneTimeContractQTY = a.BluesnapOneTimeContractQTY,
                         //BluesnapContractId = a.BluesnapContract == null ? null : a.BluesnapContract.ContractId,
                         AWBMessagesCCSTypeCode = a.AWBMessagesCCSTypeCode,
                         PIMA = a.PIMA,
@@ -536,6 +565,15 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     LastFWBCargonautSentDate = entity.LastFWBCargonautSentDate,
                     IsDEXXConnectionEnabled = entity.IsDEXXConnectionEnabled,
                     BluesnapContractId = entity.BluesnapContractId,
+                    BluesnapCRMContractId = entity.BluesnapCRMContractId,
+                    BluesnapEAWBContractId = entity.BluesnapEAWBContractId,
+                    BluesnapEAWBSContractId = entity.BluesnapEAWBSContractId,
+                    BluesnapOneTimeContractId = entity.BluesnapOneTimeContractId,
+                    BluesnapContractQTY = entity.BluesnapContractQTY,
+                    BluesnapCRMContractQTY = entity.BluesnapCRMContractQTY,
+                    BluesnapEAWBContractQTY = entity.BluesnapEAWBContractQTY,
+                    BluesnapEAWBSContractQTY = entity.BluesnapEAWBSContractQTY,
+                    BluesnapOneTimeContractQTY = entity.BluesnapOneTimeContractQTY,
                     AWBMessagesCCSTypeCode = entity.AWBMessagesCCSTypeCode,
                     PIMA = entity.PIMA,
                     LastFFRSentDate = entity.LastFFRSentDate,
@@ -652,6 +690,15 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        LastFWBCargonautSentDate = a.LastFWBCargonautSentDate,
                        IsDEXXConnectionEnabled = a.IsDEXXConnectionEnabled,
                        BluesnapContractId = a.BluesnapContractId,
+                       BluesnapCRMContractId = a.BluesnapCRMContractId,
+                       BluesnapEAWBContractId = a.BluesnapEAWBContractId,
+                       BluesnapEAWBSContractId = a.BluesnapEAWBSContractId,
+                       BluesnapOneTimeContractId = a.BluesnapOneTimeContractId,
+                       BluesnapContractQTY = a.BluesnapContractQTY,
+                       BluesnapCRMContractQTY = a.BluesnapCRMContractQTY,
+                       BluesnapEAWBContractQTY = a.BluesnapEAWBContractQTY,
+                       BluesnapEAWBSContractQTY = a.BluesnapEAWBSContractQTY,
+                       BluesnapOneTimeContractQTY = a.BluesnapOneTimeContractQTY,
                        AWBMessagesCCSTypeCode = a.AWBMessagesCCSTypeCode,
                        PIMA = a.PIMA,
                        LastFFRSentDate = a.LastFFRSentDate,
