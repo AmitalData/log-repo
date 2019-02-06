@@ -741,11 +741,22 @@ namespace AmitalCustomsWindowsService.Tester
                 DeclarationId = "",
                 username = "F_unitedf",
                 password = "Unit2019",
-                URIToken = @"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
-                URIBaldarCreateECTHRMessgae = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae",
+                //URIToken = @"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
+                //URIBaldarCreateECTHRMessgae = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae",
+
+                //URIToken = @"http://localhost:52013/api/Token",
+                //URIBaldarCreateECTHRMessgae = @"http://localhost:52013/api/MamanCreateECTHRMessgae",
+
+                URIToken = @"http://192.116.221.103/WebApp3PartySimulator/api/Token",
+                URIBaldarCreateECTHRMessgae = @"http://192.116.221.103/WebApp3PartySimulator/api/MamanCreateECTHRMessgae",
+
+
                 Tenant = 1
 
+
             });
+            
+            
             var res = service.PostIt(data);
 
             
