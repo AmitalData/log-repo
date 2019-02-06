@@ -650,6 +650,10 @@
     <Compile Include="Migrations\201902031110327_AddHarmonizeModification.Designer.cs">
       <DependentUpon>201902031110327_AddHarmonizeModification.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902060935006_AbedIncreaseShipmentCustomFieldsLength.cs" />
+    <Compile Include="Migrations\201902060935006_AbedIncreaseShipmentCustomFieldsLength.Designer.cs">
+      <DependentUpon>201902060935006_AbedIncreaseShipmentCustomFieldsLength.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201902061253026_AddCloseIfInvoiceGenerated_Rabaia.cs" />
     <Compile Include="Migrations\201902061253026_AddCloseIfInvoiceGenerated_Rabaia.Designer.cs">
       <DependentUpon>201902061253026_AddCloseIfInvoiceGenerated_Rabaia.cs</DependentUpon>
@@ -1085,6 +1089,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902031110327_AddHarmonizeModification.resx">
       <DependentUpon>201902031110327_AddHarmonizeModification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902060935006_AbedIncreaseShipmentCustomFieldsLength.resx">
+      <DependentUpon>201902060935006_AbedIncreaseShipmentCustomFieldsLength.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902061253026_AddCloseIfInvoiceGenerated_Rabaia.resx">
       <DependentUpon>201902061253026_AddCloseIfInvoiceGenerated_Rabaia.cs</DependentUpon>
