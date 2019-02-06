@@ -200,17 +200,12 @@
                         <li *ngIf="IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','5');">
                             <span>ביטול הדפסת מסמכים</span>
                         </li>
-
-
-
                         <li *ngIf="_CourierWorksheet['HighLowValue'] == 'L' && _CourierWorksheet['FastIndividualProcessCode'] != 'I'" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SetManualProcesscode(_CourierWorksheet['DeclarationId'],'I');">
                             <span>העברה לפרטני</span>
                         </li>
                         <li *ngIf="_CourierWorksheet['HighLowValue'] == 'L' && _CourierWorksheet['FastIndividualProcessCode'] == 'I'" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SetManualProcesscode(_CourierWorksheet['DeclarationId'],'F');">
                             <span>העברה למהיר</span>
                         </li>
-
-
                     </ul>
                 </div>
             </courier-filter-button>
