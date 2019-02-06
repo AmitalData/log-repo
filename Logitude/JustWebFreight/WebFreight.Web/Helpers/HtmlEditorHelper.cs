@@ -4203,22 +4203,12 @@ namespace WebFreight.Web.Helpers
                             resultValue = (newValue != null ? newValue.ToString() : " ");
                         }
 
-                        if (!string.IsNullOrWhiteSpace(resultValue))
-                        {
-                            if ((field.DataTypeCode.ToLower() == "double" || field.DataTypeCode.ToLower() == "decimal"))
-                            {
-                                resultValue = FormatNumber(resultValue, field);
-                            }
-
-                        }
+                        resultValue = ResolveFieldValue(resultValue, field);
                     }
 
                 }
-                else
-                {
-                    resultValue = (value != null ? value.ToString() : " ");
-                }
-
+                else resultValue = " ";
+      
 
                 if (!string.IsNullOrEmpty(resultValue) && !CheckIfFieldHaveValueHtml(propertyName) && ReplaceHtmlStringWithTageHtml)
                 {
@@ -4536,11 +4526,11 @@ namespace WebFreight.Web.Helpers
                                                 }
 
                                                 else resultValue = insideValue.ToString();
-
-
                                             }
                                             else resultValue = string.Empty;
 
+
+                                            resultValue = ResolveFieldValue(resultValue, insideObjectField);
                                         }
                                         else
                                         {
@@ -4636,6 +4626,23 @@ namespace WebFreight.Web.Helpers
             }
 
             if (resultValue == "") resultValue = " ";
+            return resultValue;
+        }
+
+        private string ResolveFieldValue(string resultValue, ObjectField field)
+        {
+            if (field != null && !string.IsNullOrEmpty(resultValue))
+            {
+                if ((field.DataTypeCode.ToLower() == "double" || field.DataTypeCode.ToLower() == "decimal"))
+                {
+                    resultValue = FormatNumber(resultValue, field);
+                }
+                else if (field.DataTypeCode.ToLower() == "boolean")
+                {
+                    resultValue = resultValue.ToLower() == "false" ? "No" : "Yes";
+                }
+            }
+
             return resultValue;
         }
 

@@ -187,12 +187,12 @@ namespace Logitude.Server.Tools.Helpers
                
             }
 
-			number = ResolveCounterPrefixVariables(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
+			number = GetCounterLastNumberWithPrefixSuffix(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
 
 			return number;
 		}
 
-		private static string ResolveCounterPrefixVariables(Counter counter, CounterDefinition counterDef, int tenant, string counterLastNumberValue, Dictionary<string, string> additionalParameters)
+		private static string GetCounterLastNumberWithPrefixSuffix(Counter counter, CounterDefinition counterDef, int tenant, string counterLastNumberValue, Dictionary<string, string> additionalParameters)
 		{
 			string counterPrefix = !string.IsNullOrEmpty(counterDef.Prefix) ? counterDef.Prefix : "";
 			string counterSuffix = !string.IsNullOrEmpty(counterDef.Suffix) ? counterDef.Suffix : "";
@@ -203,7 +203,21 @@ namespace Logitude.Server.Tools.Helpers
 			//number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value : counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value);
 
 			//[MM],[YY] or [YYYY],[B]
+			ResolveCounterPrefixSuffixVariables(tenant, additionalParameters, ref counterPrefix, ref counterSuffix);
+			//YYYShipEEE (15 - 9) + 3 
+			if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0 && (counterPrefix + counterLastNumberValue + counterSuffix).Length < counterDef.CounterSize.Value)
+			{
+				int sizeOfStartNumber = (counterDef.CounterSize.Value - (counterPrefix + counterSuffix).Length);
+				counterLastNumberValue = counterLastNumberValue.ToString().PadLeft(sizeOfStartNumber, '0');
+			}
 
+			counterLastNumberValue = counterPrefix + counterLastNumberValue + counterSuffix;
+
+			return counterLastNumberValue;
+		}
+
+		private static void ResolveCounterPrefixSuffixVariables(int tenant, Dictionary<string, string> additionalParameters, ref string counterPrefix, ref string counterSuffix)
+		{
 			DateTime date = TenantServerConfigration.GetCurrentDateTime(tenant);
 			string MM = date.ToString("MM");
 			string YY = date.ToString("yy");
@@ -222,58 +236,9 @@ namespace Logitude.Server.Tools.Helpers
 				foreach (var k in additionalParameters.Keys)
 					counterSuffix = counterSuffix.Replace(k, additionalParameters[k]);
 			}
-			//YYYShipEEE (15 - 9) + 3 
-			if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0 && (counterPrefix + counterLastNumberValue + counterSuffix).Length < counterDef.CounterSize.Value)
-			{
-				int sizeOfStartNumber = (counterDef.CounterSize.Value - (counterPrefix + counterSuffix).Length);
-				counterLastNumberValue = counterLastNumberValue.ToString().PadLeft(sizeOfStartNumber, '0');
-			}
-
-			counterLastNumberValue = counterPrefix + counterLastNumberValue + counterSuffix;
-			//(counterDef.Prefix != null ? counterDef.Prefix + counterLastNumberValue : counterDef.Prefix + counterLastNumberValue);
-																							//}
-																							//else if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0)
-																							//{
-																							//	counterLastNumberValue = counterLastNumberValue.ToString().PadLeft(counterDef.CounterSize.Value, '0');
-																							//}
-
-
-
-			//if (!string.IsNullOrEmpty(counterPrefix))
-			//{
-			//	//number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value : counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value);
-
-			//	//[MM],[YY] or [YYYY],[B]
-
-			//	DateTime date = TenantServerConfigration.GetCurrentDateTime(tenant);
-			//	string MM = date.ToString("MM");
-			//	string YY = date.ToString("yy");
-			//	string YYYY = date.ToString("yyyy");
-
-			//	counterPrefix = counterPrefix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
-			//	if (additionalParameters != null)
-			//	{
-			//		foreach (var k in additionalParameters.Keys)
-			//			counterPrefix = counterPrefix.Replace(k, additionalParameters[k]);
-			//	}
-
-			//	if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0 && (counterPrefix + counterLastNumberValue).Length < counterDef.CounterSize.Value)
-			//	{
-			//		int sizeOfPrefix = (counterDef.CounterSize.Value - (counterPrefix + counterLastNumberValue).Length + counterPrefix.Length);
-			//		counterPrefix = counterPrefix.ToString().PadRight(sizeOfPrefix, '0');
-			//	}
-
-			//	counterLastNumberValue = counterPrefix + counterLastNumberValue;//(counterDef.Prefix != null ? counterDef.Prefix + counterLastNumberValue : counterDef.Prefix + counterLastNumberValue);
-			//}
-			//else if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0)
-			//{
-			//	counterLastNumberValue = counterLastNumberValue.ToString().PadLeft(counterDef.CounterSize.Value, '0');
-			//}
-
-			return counterLastNumberValue;
 		}
 
-        public static string GetCounterPrefix(int tenant, string counterCode, string parameter1, string parameter2)
+		public static string GetCounterPrefix(int tenant, string counterCode, string parameter1, string parameter2, Dictionary<string, string> additionalParameters = null)
         {
             //ObjectTabelRepository tablesRepository = new ObjectTabelRepository();
             //ObjectTablePM table = tablesRepository.GetObjectTableByCode(objectTableName, tenant);
@@ -286,10 +251,14 @@ namespace Logitude.Server.Tools.Helpers
 
             List<CounterDefinition> tableCounters = counterDefinitionRep.GetCounterDefinitionsByCounterId(counterId, tenant).ToList();
             CounterDefinition counterDef = tableCounters.Where(c => c.Parameter1 == parameter1 && c.Parameter2 == parameter2).FirstOrDefault();
-             
 
+			string counterPrefix = !string.IsNullOrEmpty(counterDef.Prefix) ? counterDef.Prefix : "";
+			string counterSuffix = !string.IsNullOrEmpty(counterDef.Suffix) ? counterDef.Suffix : "";
 
-            return counterDef.Prefix;
+			ResolveCounterPrefixSuffixVariables(tenant, additionalParameters, ref counterPrefix, ref counterSuffix);
+			//ResolveCounterPrefixVariables(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
+
+			return counterPrefix;
         }
 
 		public static string GetConnection(int tenant)

@@ -178,6 +178,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     gLAccountEntity.DisplayNumber = entity.GLAccount.DisplayNumber;
                                 }
 
+                                //InternlNumber
+                                if (string.IsNullOrEmpty(entity.GLAccount.InternalNumber))
+                                {
+                                    gLAccountEntity.InternalNumber = CodeCounter.GetNumber("GLAccount", authToken.Tenant).ToString();
+                                }
+                                else
+                                {
+                                    gLAccountEntity.InternalNumber = entity.GLAccount.InternalNumber;
+                                }
+                                
                                 //EnglishName
                                 if (string.IsNullOrEmpty(entity.GLAccount.EnglishName))
                                 {

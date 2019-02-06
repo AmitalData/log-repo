@@ -1593,6 +1593,84 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetOnCreatingIsraelTenant()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                AccountingSettingPM myResult = null;
+
+                ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
+
+                AccountingSettingRepository iAccountingSettingRepository = new AccountingSettingRepository(myContext);
+                AccountingSetting iAccountingSetting = iAccountingSettingRepository.GetSingleAccountSetting(tenant);
+                if (iAccountingSetting != null)
+                {
+                    iAccountingSetting.AllowVoidAPI = false;
+                    iAccountingSetting.AllowVoidAPP = false;
+                    iAccountingSetting.AllowVoidARI = false;
+                    iAccountingSetting.AllowVoidARP = false;
+                    iAccountingSetting.AllowManualInvoiceNumber = false;
+                    iAccountingSetting.IsChronologicalDates = true;
+                    iAccountingSetting.IsVatNumberMandatoryInAP = true;
+                    iAccountingSetting.IsVatNumberMandatoryInAR = true;
+                    iAccountingSettingRepository.Update(iAccountingSetting);
+                    iAccountingSettingRepository.SubmitChanges();
+
+                    AccountingSettingQuery accountingSettingQuery = new AccountingSettingQuery(iAccountingSettingRepository);
+                    myResult = accountingSettingQuery.GetSinglePM(tenant);
+                }
+
+                List<string> iCodes = new List<string>();
+                iCodes.Add("999S");
+                iCodes.Add("999C");
+                iCodes.Add("999M");
+                iCodes.Add("999CI");
+                iCodes.Add("999MP");
+                iCodes.Add("999P");
+                DocumentTypeRepository iDocumentTypeRepository = new DocumentTypeRepository(myContext);
+                List<DocumentType> iDocumentTypes = iDocumentTypeRepository.GetDocumentTypesByCodeLists(iCodes, tenant);
+                if (iDocumentTypes.Count > 0)
+                {
+                    foreach (DocumentType iDocumentType in iDocumentTypes)
+                    {
+                        List<DocumentTypeCopy> iDocumentTypeCopies = (from d in myContext.DocumentTypeCopies
+                                                                      where d.Tenant == tenant && d.DocumentTypeId == iDocumentType.Id
+                                                                      select d).ToList();
+
+                        if (iDocumentTypeCopies.Count > 0)
+                        {
+                            DocumentTypeCopy iDocumentTypeCopy = iDocumentTypeCopies.Where(d => d.Name.ToLower() == "original").FirstOrDefault();
+                            if (iDocumentTypeCopy == null)
+                            {
+                                iDocumentTypeCopy = iDocumentTypeCopies.Where(d => d.Code.ToLower() == iDocumentType.Code.ToLower()).FirstOrDefault();
+                            }
+
+
+                            if (iDocumentTypeCopy != null)
+                            {
+                                iDocumentType.LimitedPrintCopyId = iDocumentTypeCopy.Id;
+                                iDocumentType.IsDocumentOneTimePrintLimited = true;
+                                iDocumentTypeRepository.Update(iDocumentType);
+                            }
+                        }
+                    }
+
+                    iDocumentTypeRepository.SubmitChanges();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetNoneZeroTenantTranslation(string ComputingPartnerId, string ObjectTableId, string Code)
         {
             try
