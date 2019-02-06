@@ -184,7 +184,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     if (_MyDeclarationPM.IsCourierDeclaration)
                     {
-                        if (customResponse.Response.Status.NameCode.Value == "13")
+                        if (customResponse.Response != null && customResponse.Response.Status != null && customResponse.Response.Status.NameCode.Value == "13")
                         {
                             // Clear Fields
                             _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
