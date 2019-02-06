@@ -250,6 +250,27 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         private string _CUSTOMERID;
 
 
+        /// <summary>
+        /// There are no comments for HASCHANGED in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string HASCHANGED
+        {
+            get
+            {
+                return _HASCHANGED;
+            }
+            set
+            {
+                if (_HASCHANGED != value)
+                {
+                    _HASCHANGED = value;
+                    OnPropertyChanged("HASCHANGED");
+                }
+            }
+        }
+        private string _HASCHANGED;
+
         #endregion
 
         #region INotifyPropertyChanged Members

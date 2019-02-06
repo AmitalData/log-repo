@@ -1,6 +1,6 @@
 ﻿//OpenAccess please define!!! 
 //logitude please undefine!!!  
-//#define reserveword
+#define reserveword
 
 
 using Simplog.Server.Infrastructure;
@@ -226,9 +226,9 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.FAILED)
                     .HasColumnType("int");
 
-#endregion
+            #endregion
 
-#region CCUACCSUP
+            #region CCUACCSUP
 
             modelBuilder.Entity<CCUACCSUP>()
                 .HasKey(p => new { p.FILENO, p.LINENO })
@@ -304,9 +304,9 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.COMMISSIONPERCENT)
                     .HasColumnName(@"COMMISSION_PERCENT")
                     .HasColumnType("double");
-     #endregion
+            #endregion
 
-#region CCUMSHGR
+            #region CCUMSHGR
 
             modelBuilder.Entity<CCUMSHGR>()
                 .HasKey(p => new { p.FILENO, p.LINENO })
@@ -491,9 +491,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(35)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CCUPAYHAND
+            #region CCUPAYHAND
 
             modelBuilder.Entity<CCUPAYHAND>()
                 .HasKey(p => new { p.FILENO })
@@ -594,9 +594,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(15)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CCUSUPITEM
+            #region CCUSUPITEM
 
             modelBuilder.Entity<CCUSUPITEM>()
                 .HasKey(p => new { p.ACCLINENO, p.FILENO, p.LINENO })
@@ -834,9 +834,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(2)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region GDFDATA
+            #region GDFDATA
 
             modelBuilder.Entity<GDFDATA>()
                 .HasKey(p => new { p.BRANCHID, p.CARDID, p.DEFID, p.DISTRID })
@@ -880,9 +880,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"DEF_DATA")
                     .HasColumnType("long");
 
-#endregion
+            #endregion
 
-#region CCUCRREQ
+            #region CCUCRREQ
 
             modelBuilder.Entity<CCUCRREQ>()
                 .HasKey(p => new { p.ACCLINENO, p.ENTNAME, p.FILENO, p.ITEMLINE, p.LINENO })
@@ -990,9 +990,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"REQUEST_NO")
                     .HasMaxLength(50)
                     .HasColumnType("varchar2");
-#endregion
+            #endregion
 
-#region GTRTRAN
+            #region GTRTRAN
 
             modelBuilder.Entity<GTRTRAN>()
                 .HasKey(p => new { p.LOCALCODE, p.PARTNERCODE, p.PARTNERID, p.TABLEID })
@@ -1032,9 +1032,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region GRTRATE
+            #region GRTRATE
 
             modelBuilder.Entity<GRTRATE>()
                 .HasKey(p => new { p.COINID, p.CURRTABLECODE, p.RATEDATE, p.RATEID })
@@ -1071,9 +1071,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CCUCUSTITEM
+            #region CCUCUSTITEM
 
             modelBuilder.Entity<CCUCUSTITEM>()
                 .HasKey(p => new { p.FILENO, p.LINENO })
@@ -1307,7 +1307,9 @@ namespace Unifreight.Data.AmitalModel
             #region CCUQUELOCK
             ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
             modelBuilder.Entity<CCUQUELOCK>()
-                .HasKey(p => new { p.ENTNAME,
+                .HasKey(p => new
+                {
+                    p.ENTNAME,
                     ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
                     ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
                     p.FILE_NO
@@ -1337,9 +1339,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CCUPAYLINEF
+            #region CCUPAYLINEF
 
             modelBuilder.Entity<CCUPAYLINEF>()
                 .HasKey(p => new { p.FILENO, p.LINENO })
@@ -1421,9 +1423,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(2)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CCUTAX
+            #region CCUTAX
 
             modelBuilder.Entity<CCUTAX>()
                 .HasKey(p => new { p.FILENO, p.LINENO })
@@ -1506,9 +1508,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(3)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CCUFILEM
+            #region CCUFILEM
 
             modelBuilder.Entity<CCUFILEM>()
                 .HasKey(p => new { p.FILENO })
@@ -1870,9 +1872,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(35)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region GTBMANDT
+            #region GTBMANDT
 
             modelBuilder.Entity<GTBMANDT>()
                 .HasKey(p => new { p.CLIENTCODE, p.ENTITY, p.FIELDNAME, p.FORMNAME })
@@ -1915,9 +1917,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region GNDCARD
+            #region GNDCARD
 
             modelBuilder.Entity<GNDCARD>()
                 .HasKey(p => new { p.CARDID })
@@ -2049,9 +2051,9 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.REMARKS)
                     .HasColumnType("clob");
 
-#endregion
+            #endregion
 
-#region CTBPACKTYPE
+            #region CTBPACKTYPE
 
             modelBuilder.Entity<CTBPACKTYPE>()
                 .HasKey(p => new { p.PACKTYPEID })
@@ -2090,9 +2092,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region GAQFILEDATA
+            #region GAQFILEDATA
 
             modelBuilder.Entity<GAQFILEDATA>()
                 .HasKey(p => new { p.APPQID, p.ENTNAME, p.FIELDID, p.PATH, p.PRIMARYNUM })
@@ -2137,9 +2139,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1000)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CTBBONDED
+            #region CTBBONDED
 
             modelBuilder.Entity<CTBBONDED>()
                 .HasKey(p => new { p.WAREHOUSEID })
@@ -2188,9 +2190,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CTBCOUNTRY
+            #region CTBCOUNTRY
 
             modelBuilder.Entity<CTBCOUNTRY>()
                 .HasKey(p => new { p.COUNTRYID })
@@ -2239,9 +2241,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CTBIDNTP
+            #region CTBIDNTP
 
             modelBuilder.Entity<CTBIDNTP>()
                 .HasKey(p => new { p.IDENTIFITYPE })
@@ -2280,9 +2282,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CTBIMPORT
+            #region CTBIMPORT
 
             modelBuilder.Entity<CTBIMPORT>()
                 .HasKey(p => new { p.IMPORTERID })
@@ -2320,9 +2322,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(100)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CTBMISHGUR
+            #region CTBMISHGUR
 
             modelBuilder.Entity<CTBMISHGUR>()
                 .HasKey(p => new { p.SUGMISHGUR })
@@ -2356,9 +2358,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CTBRESHTYPE
+            #region CTBRESHTYPE
 
             modelBuilder.Entity<CTBRESHTYPE>()
                 .HasKey(p => new { p.RESHIMONTYPE })
@@ -2397,9 +2399,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CTBRGOWN
+            #region CTBRGOWN
 
             modelBuilder.Entity<CTBRGOWN>()
                 .HasKey(p => new { p.RIGHTID })
@@ -2432,9 +2434,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(70)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CTBSTORAGE
+            #region CTBSTORAGE
 
             modelBuilder.Entity<CTBSTORAGE>()
                 .HasKey(p => new { p.STORAGESITE })
@@ -2468,9 +2470,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CTBTRANSP
+            #region CTBTRANSP
 
             modelBuilder.Entity<CTBTRANSP>()
                 .HasKey(p => new { p.TRANSPTYPE })
@@ -2504,9 +2506,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(70)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CTBUNLOAD
+            #region CTBUNLOAD
 
             modelBuilder.Entity<CTBUNLOAD>()
                 .HasKey(p => new { p.ULPORTID })
@@ -2545,9 +2547,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(10)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region ATBPTIL
+            #region ATBPTIL
 
             modelBuilder.Entity<ATBPTIL>()
                 .HasKey(p => new { p.BRANID })
@@ -2596,9 +2598,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(200)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CTBLOAD
+            #region CTBLOAD
 
             modelBuilder.Entity<CTBLOAD>()
                 .HasKey(p => new { p.LPORTID })
@@ -2647,9 +2649,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region GNDADR
+            #region GNDADR
 
             modelBuilder.Entity<GNDADR>()
                 .HasKey(p => new { p.CARDID, p.LINE })
@@ -2767,9 +2769,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(256)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CTBPART
+            #region CTBPART
 
             modelBuilder.Entity<CTBPART>()
                 .HasKey(p => new { p.PARTIALITYID })
@@ -2803,9 +2805,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(70)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CTBPKDT
+            #region CTBPKDT
 
             modelBuilder.Entity<CTBPKDT>()
                 .HasKey(p => new { p.PACKDETAIL })
@@ -2839,9 +2841,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(70)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CTBAPPROV
+            #region CTBAPPROV
 
             modelBuilder.Entity<CTBAPPROV>()
                 .HasKey(p => new { p.APPROVCODEID })
@@ -2876,9 +2878,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(70)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CTBAPPROVTYPE
+            #region CTBAPPROVTYPE
 
             modelBuilder.Entity<CTBAPPROVTYPE>()
                 .HasKey(p => new { p.APPROVTYPEID })
@@ -2923,9 +2925,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region GTBREQCERT
+            #region GTBREQCERT
 
             modelBuilder.Entity<GTBREQCERT>()
                 .HasKey(p => new { p.ENTITY, p.REQCERT })
@@ -2966,9 +2968,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(30)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CCUTRANSPVAL
+            #region CCUTRANSPVAL
 
             modelBuilder.Entity<CCUTRANSPVAL>()
                 .HasKey(p => new { p.FILENO, p.LINENO })
@@ -3005,9 +3007,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(3)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CTBCURRENCY
+            #region CTBCURRENCY
 
             modelBuilder.Entity<CTBCURRENCY>()
                 .HasKey(p => new { p.CURRENCYID })
@@ -3052,9 +3054,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CTBINCOTERM
+            #region CTBINCOTERM
 
             modelBuilder.Entity<CTBINCOTERM>()
                 .HasKey(p => new { p.PTERMID })
@@ -3115,9 +3117,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CTBTARIFF
+            #region CTBTARIFF
 
             modelBuilder.Entity<CTBTARIFF>()
                 .HasKey(p => new { p.TARIFFID })
@@ -3161,9 +3163,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CCUMESSAGE
+            #region CCUMESSAGE
 
             modelBuilder.Entity<CCUMESSAGE>()
                 .HasKey(p => new { p.FILENO, p.LINENO })
@@ -3234,9 +3236,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"MESSAGE_TXT")
                     .HasColumnType("clob");
 
-#endregion
+            #endregion
 
-#region CTBERROR
+            #region CTBERROR
 
             modelBuilder.Entity<CTBERROR>()
                 .HasKey(p => new { p.ERRORCODE })
@@ -3276,9 +3278,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(7)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CCUCARL
+            #region CCUCARL
 
             modelBuilder.Entity<CCUCARL>()
                 .HasKey(p => new { p.COUNTER, p.FILENO, p.LINENO })
@@ -3376,9 +3378,9 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.HYBRID)
                     .HasColumnType("int");
 
-#endregion
+            #endregion
 
-#region CTBMEMIRTYPE
+            #region CTBMEMIRTYPE
 
             modelBuilder.Entity<CTBMEMIRTYPE>()
                 .HasKey(p => new { p.MEMIRTYPE })
@@ -3411,9 +3413,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(70)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CCUTSRUFOT
+            #region CCUTSRUFOT
 
             modelBuilder.Entity<CCUTSRUFOT>()
                 .HasKey(p => new { p.FILENO, p.LINENO })
@@ -3445,9 +3447,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(10)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CTBTSRUFTYPE
+            #region CTBTSRUFTYPE
 
             modelBuilder.Entity<CTBTSRUFTYPE>()
                 .HasKey(p => new { p.TSRUFAID })
@@ -3486,9 +3488,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CTBTAXTYPE
+            #region CTBTAXTYPE
 
             modelBuilder.Entity<CTBTAXTYPE>()
                 .HasKey(p => new { p.TAXTYPE })
@@ -3523,9 +3525,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(70)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region ITBPCKTY
+            #region ITBPCKTY
 
             modelBuilder.Entity<ITBPCKTY>()
                 .HasKey(p => new { p.PACKTYPEID })
@@ -3597,9 +3599,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"DEF_VOLUME")
                     .HasColumnType("double");
 
-#endregion
+            #endregion
 
-#region GDMFILING
+            #region GDMFILING
 
             modelBuilder.Entity<GDMFILING>()
                 .HasKey(p => new { p.COMID })
@@ -3861,9 +3863,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region GDMFLDRTR
+            #region GDMFLDRTR
 
             modelBuilder.Entity<GDMFLDRTR>()
                 .HasKey(p => new { p.FOLDERCODE })
@@ -3984,9 +3986,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region GDMFILEVER
+            #region GDMFILEVER
 
             modelBuilder.Entity<GDMFILEVER>()
                 .HasKey(p => new { p.COMID, p.VERSION })
@@ -4065,9 +4067,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(40)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region YCULTASK
+            #region YCULTASK
 
             modelBuilder.Entity<YCULTASK>()
                 .HasKey(p => new { p.TASKID })
@@ -4134,9 +4136,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(15)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region YTBCUSTTB
+            #region YTBCUSTTB
 
             modelBuilder.Entity<YTBCUSTTB>()
                 .HasKey(p => new { p.CUSTTB })
@@ -4183,9 +4185,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(15)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CTBCUSTSUP
+            #region CTBCUSTSUP
 
             modelBuilder.Entity<CTBCUSTSUP>()
                 .HasKey(p => new { p.SUPPLIERID })
@@ -4287,9 +4289,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region GTBITEM
+            #region GTBITEM
 
             modelBuilder.Entity<GTBITEM>()
                 .HasKey(p => new { p.ITEMID, p.PARTNERID })
@@ -4423,9 +4425,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(4)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CCUCAR
+            #region CCUCAR
 
             modelBuilder.Entity<CCUCAR>()
                 .HasKey(p => new { p.FILENO, p.LINENO })
@@ -4464,9 +4466,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"MADAD_DEDUCT")
                     .HasColumnType("decimal");
 
-#endregion
+            #endregion
 
-#region CCUCARSC
+            #region CCUCARSC
 
             modelBuilder.Entity<CCUCARSC>()
                 .HasKey(p => new { p.COUNTER, p.FILENO, p.LINENO })
@@ -4535,9 +4537,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(2)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CFIGOODDESC
+            #region CFIGOODDESC
 
             modelBuilder.Entity<CFIGOODDESC>()
                 .HasKey(p => new { p.FILENO })
@@ -4560,9 +4562,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(15)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CCUSIGNUM
+            #region CCUSIGNUM
 
             modelBuilder.Entity<CCUSIGNUM>()
                 .HasKey(p => new { p.FILENO, p.LINENOMSHGR, p.LINENOSIGN })
@@ -4592,9 +4594,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(30)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region CFIMSVLINE
+            #region CFIMSVLINE
 
             modelBuilder.Entity<CFIMSVLINE>()
                 .HasKey(p => new { p.COMID, p.FILENO, p.LINENUM, p.PAGENUM })
@@ -4747,10 +4749,15 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"CUSTOMER_ID")
                     .HasMaxLength(15)
                     .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVDOC>()
+    .Property(p => p.HASCHANGED)
+        .HasColumnName(@"HAS_CHANGED")
+        .HasMaxLength(1)
+        .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region GTBDOC
+            #region GTBDOC
 
             modelBuilder.Entity<GTBDOC>()
                 .HasKey(p => new { p.DOCID })
@@ -4823,9 +4830,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region GDMENTITY
+            #region GDMENTITY
 
             modelBuilder.Entity<GDMENTITY>()
                 .HasKey(p => new { p.COMID, p.PRIMARYID, p.PRIMARYNUM })
@@ -4853,9 +4860,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region GDMREF
+            #region GDMREF
 
             modelBuilder.Entity<GDMREF>()
                 .HasKey(p => new { p.COMID, p.REFERENCE, p.REFID })
@@ -4890,9 +4897,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region GAQDOC
+            #region GAQDOC
 
             modelBuilder.Entity<GAQDOC>()
                 .HasKey(p => new { p.APPQID, p.DOCID, p.FOLDERCODE })
@@ -4920,9 +4927,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CFIMSVFILE
+            #region CFIMSVFILE
 
             modelBuilder.Entity<CFIMSVFILE>()
                 .HasKey(p => new { p.FILENO })
@@ -4939,9 +4946,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(256)
                     .HasColumnType("varchar2");
 
-#endregion
+            #endregion
 
-#region CFIMSVPAGE
+            #region CFIMSVPAGE
 
             modelBuilder.Entity<CFIMSVPAGE>()
                 .HasKey(p => new { p.COMID, p.FILENO, p.PAGENUM })
@@ -4989,9 +4996,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"HEIGHT_DATA")
                     .HasColumnType("int");
 
-#endregion
+            #endregion
 
-#region GTBITMCN
+            #region GTBITMCN
 
             modelBuilder.Entity<GTBITMCN>()
                 .HasKey(p => new { p.ITEM2ID, p.ITEMID, p.PARTNER2ID, p.PARTNERID })
@@ -5026,9 +5033,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
                     .HasColumnType("char");
 
-#endregion
+            #endregion
 
-#region GITITEM
+            #region GITITEM
 
             modelBuilder.Entity<GITITEM>()
                 .HasKey(p => new { p.COUNTER })
@@ -5151,7 +5158,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
                     .HasColumnType("int64");
 
-#endregion
+            #endregion
 
             #region CFIPACK
 
