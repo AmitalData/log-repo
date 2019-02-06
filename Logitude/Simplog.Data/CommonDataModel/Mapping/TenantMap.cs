@@ -69,6 +69,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.StorageEncryptionKey).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.TemperatureUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.DefaultSLAId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.AutoArchiveOnInvoice).IsRequired();
+
 
             this.ToTable("Tenants");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -119,7 +121,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.TemperatureUnitCode).HasColumnName("TemperatureUnitCode");
             this.Property(t => t.DefaultSLAId).HasColumnName("DefaultSLAId");
             this.Property(t => t.StockTypeCode).HasColumnName("StockTypeCode");
-            
+            this.Property(t => t.AutoArchiveOnInvoice).HasColumnName("AutoArchiveOnInvoice");
+
+
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

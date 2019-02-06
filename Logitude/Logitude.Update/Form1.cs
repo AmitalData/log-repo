@@ -3377,7 +3377,26 @@ User/Pass",
 
         private void btnDownloadMrt_Click(object sender, EventArgs e)
         {
-            //string connectionString = "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+            //if (contact != null)
+            //{
+
+               var logitudeUser = (from a in commonDataContext.Users
+                                where a.Id == "1-149534"
+                                   select a).FirstOrDefault();
+
+            //    if (logitudeUser != null)
+            //    {
+            //        if (logitudeUser.Tenant == 0)
+            //        {
+            //            distributor = logitudeUser.IsDistributor;
+            //            customerCare = !logitudeUser.IsDistributor;
+
+            //        }
+            //    }
+
+            //}
+            //string connectionString = "LogitudeMain_PreR1,logitudemanager,!LO009008,logitudetest.database.windows.net";// "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
             //DbConnection Logitudeconnection = DatabaseInitializer.GetConnection(connectionString);
             //CommonDataContext Logitudecontext = new CommonDataContext(Logitudeconnection);
             //DocumentTypeTemplate template = (from a in Logitudecontext.DocumentTypeTemplates

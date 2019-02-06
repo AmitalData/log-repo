@@ -128,6 +128,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                 {
                     tenant.Company = entityPM.Name;
                     tenant.DocumentShareAsDefault = entityPM.DocumentShareAsDefault;
+                    tenant.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;
                     if (!entityPM.ManagesRegisteredAgent)
                     {
                         tenant.RegulatedAgentRegimeActivated = false;

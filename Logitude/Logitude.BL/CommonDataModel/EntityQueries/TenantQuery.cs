@@ -143,6 +143,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 TenantVATManagement = a.TenantVATManagement,
                                                 TemperatureUnitCode = a.TemperatureUnitCode,
                                                 DefaultSLAId = a.DefaultSLAId,
+                                                AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -294,6 +295,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         TemperatureUnitCode = tt.TemperatureUnitCode,
                         DefaultSLAId = tt.DefaultSLAId,
                         StockTypeCode = tt.StockTypeCode,
+                        AutoArchiveOnInvoice = tt.AutoArchiveOnInvoice
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -451,6 +453,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     TemperatureUnitCode = tt.TemperatureUnitCode,
                     DefaultSLAId = tt.DefaultSLAId,
                     StockTypeCode = tt.StockTypeCode,
+                    AutoArchiveOnInvoice = tt.AutoArchiveOnInvoice
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -590,6 +593,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            TemperatureUnitCode = a.TemperatureUnitCode,
                                            DefaultSLAId = a.DefaultSLAId,
                                            StockTypeCode = a.StockTypeCode,
+                                           AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -728,6 +732,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        TemperatureUnitCode = a.TemperatureUnitCode,
                                        DefaultSLAId = a.DefaultSLAId,
                                        StockTypeCode = a.StockTypeCode,
+                                       AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -870,6 +875,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                TemperatureUnitCode = a.TemperatureUnitCode,
                                                DefaultSLAId = a.DefaultSLAId,
                                                StockTypeCode = a.StockTypeCode,
+                                               AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1011,6 +1017,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            TemperatureUnitCode = a.TemperatureUnitCode,
                                            DefaultSLAId = a.DefaultSLAId,
                                            StockTypeCode = a.StockTypeCode,
+                                           AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1144,6 +1151,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        TemperatureUnitCode = a.TemperatureUnitCode,
                                        DefaultSLAId = a.DefaultSLAId,
                                        StockTypeCode = a.StockTypeCode,
+                                       AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1312,6 +1320,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     TemperatureUnitCode = myPOCO.TemperatureUnitCode,
                     DefaultSLAId = myPOCO.DefaultSLAId,
                     StockTypeCode = myPOCO.StockTypeCode,
+                    AutoArchiveOnInvoice = a.AutoArchiveOnInvoice
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())

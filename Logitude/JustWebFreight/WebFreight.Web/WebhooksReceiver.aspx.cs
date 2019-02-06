@@ -87,7 +87,8 @@ namespace WebFreight.Web
                 ConnectedToEntity = false,
                 ConnectedToTenant = true,
                 FileSize = xmlfileText.Length,
-                Tenant = MyWebHookKey.Tenant
+                Tenant = MyWebHookKey.Tenant,
+                Subject = MyWebHookKey.Description,
             };
 
             analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
