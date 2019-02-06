@@ -180,6 +180,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                             //tenant.CountryName = ten.Address != null ? (ten.Address.Country != null ? ten.Address.Country.EnglishName : null) : null;
                             tenant.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
                             tenant.DocumentShareAsDefault = ten.DocumentShareAsDefault;
+                            tenant.AutoArchiveOnInvoice = ten.AutoArchiveOnInvoice;
                         }
 
                         GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -345,6 +346,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         //tenant1.CountryName = ten.Address.Country.EnglishName;
                         tenant1.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
                         tenant1.DocumentShareAsDefault = ten.DocumentShareAsDefault;
+                        tenant1.AutoArchiveOnInvoice = ten.AutoArchiveOnInvoice;
                     }
 
                     GlobalTenantRepository globalTenRep = new GlobalTenantRepository();

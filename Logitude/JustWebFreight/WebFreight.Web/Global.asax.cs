@@ -165,9 +165,9 @@ namespace WebFreight.Web
                 ////LogitudeSettings.DropboxAppKey = setting.DropboxAppKey;
                 ////LogitudeSettings.DropboxAppSecret = setting.DropboxAppSecret;
                 
-                aTimer.Elapsed += new ElapsedEventHandler(OnSettingsCheckTimedEvent);
-                aTimer.Interval = 60000;
-                aTimer.Enabled = true;
+                //aTimer.Elapsed += new ElapsedEventHandler(OnSettingsCheckTimedEvent);
+                //aTimer.Interval = 60000;
+                //aTimer.Enabled = true;
 
             }
 
