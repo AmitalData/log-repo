@@ -650,6 +650,10 @@
     <Compile Include="Migrations\201902031110327_AddHarmonizeModification.Designer.cs">
       <DependentUpon>201902031110327_AddHarmonizeModification.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902061253026_AddCloseIfInvoiceGenerated_Rabaia.cs" />
+    <Compile Include="Migrations\201902061253026_AddCloseIfInvoiceGenerated_Rabaia.Designer.cs">
+      <DependentUpon>201902061253026_AddCloseIfInvoiceGenerated_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1081,6 +1085,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902031110327_AddHarmonizeModification.resx">
       <DependentUpon>201902031110327_AddHarmonizeModification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902061253026_AddCloseIfInvoiceGenerated_Rabaia.resx">
+      <DependentUpon>201902061253026_AddCloseIfInvoiceGenerated_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
