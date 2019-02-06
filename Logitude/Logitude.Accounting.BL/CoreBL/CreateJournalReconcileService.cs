@@ -4,6 +4,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
@@ -64,13 +65,31 @@ namespace Logitude.Accounting.BL.CoreBL
                 var ratesTableQuery = new RatesTableQuery(ratesTablesRepository);
 
                 var myAccountingEntityDetails = new AccountingEntityDetails();
-                var myAccEntityReconciliation10=  myAccountingEntityDetails.GetAll().First(r => r.EnglishName == "Reconciliation");
-
-                
-                var rate = ratesTableQuery.GetLastRateByValueDate(tenant, theCurrencyId, accountingCurrencyId,
+                var myAccEntityReconciliation10=  myAccountingEntityDetails.GetAll().FirstOrDefault(r => r.EnglishName ==
+                //"Reconciliation"
+                "Adjustment"
+                );
+                if (myAccEntityReconciliation10== null)
+                {
+                    throw new Exception("was Reconciliation then change to Adjustment (and now to what ?? - yaron said it will not change ever !!)");
+                }
+                RatesTablePM rate = null;
+                if (theCurrencyId== accountingCurrencyId)
+                {
+                    rate = new RatesTablePM() { Rate = 1 };
+                }
+                else
+                {
+                    rate = ratesTableQuery.GetLastRateByValueDate(tenant, theCurrencyId, accountingCurrencyId,
                     //@now  
                     AccountDate //Ohad :By aAccounting date
                     );
+                }
+                
+                if (rate == null)
+                {
+                    throw new Exception("Rate by value date Return null");
+                }
                 var totForeign = totReconciliationAmount * (decimal)rate.Rate.GetValueOrDefault();
                 JournalPM journal = new JournalPM()
                 {
