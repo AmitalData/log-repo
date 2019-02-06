@@ -279,7 +279,7 @@ import { NotificationExtendedListService } from './Services/ExtendedLists/Notifi
 import { SupplierInvoiceItemsTaxExtendedListService } from './Services/ExtendedLists/SupplierInvoiceItemsTaxExtendedListService';
 import { SignStationExtendedListService } from './Services/ExtendedLists/SignStationExtendedListService';
 import { DeclarationCourierStatusExtendedListService } from './Services/ExtendedLists/DeclarationCourierStatusExtendedListService';
-
+import { RecallClientsForCutoms } from '../CustomsModules/CustomsGeneralRequests/Components/RecallClientsForCutoms';
 //#endregion
 
 //#region ExtendedPMs
@@ -614,7 +614,7 @@ export class ModuleProviders {
             case "SupplierInvoiceItemsTaxExtendedListService": { myResult = new SupplierInvoiceItemsTaxExtendedListService(); break; }
             case "SignStationExtendedListService": { myResult = new SignStationExtendedListService(); break; }
             case "DeclarationCourierStatusExtendedListService": { myResult = new DeclarationCourierStatusExtendedListService(); break; }
-            //case "SupplierInvoiceItemsExtendedList": { myResult = new SupplierInvoiceItemsExtendedList(); break; } 
+            case "RecallClientsForCutoms": { myResult = new RecallClientsForCutoms(); break; } 
             //#endregion
 
             //#region ExtendedPMs
