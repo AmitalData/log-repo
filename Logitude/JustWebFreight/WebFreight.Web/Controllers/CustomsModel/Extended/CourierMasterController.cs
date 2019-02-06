@@ -123,9 +123,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCB1170_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null,
-                    //requestParamsData.CourierMasterId, requestParamsData.HAWB, requestParamsData.CourierDeclarationStatusCode, requestParamsData.Declarations);
-                    requestParamsData);
+                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
 
                 return Request.CreateResponse(HttpStatusCode.OK, sts);
             }

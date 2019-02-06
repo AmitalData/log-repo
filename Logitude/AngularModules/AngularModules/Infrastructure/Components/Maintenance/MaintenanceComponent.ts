@@ -12,7 +12,6 @@ import { AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 //import {CustomsSettingExtendedListService} from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
-//import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 
 @Component({
     moduleId: module.id,
@@ -1162,14 +1161,10 @@ export class MaintenanceComponent {
                     confirmWindow.WindowClosed.subscribe((event: any) => {
                         if (confirmWindow.Yes) {
 
-                            var servicelink = '../../../CustomsModules/CustomsGeneralRequests/Components/RecallClientsForCutoms';
+                            var servicelink = './Customs/CustomsGeneralRequests/Components/RecallClientsForCutoms';
                             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
                                 service.SendRecallMessageToServer();
                             });
-
-                            // this will cause the customs to build every time......mohammad
-                            //let _RecallClientsForCutoms: RecallClientsForCutoms = new RecallClientsForCutoms();
-                            //_RecallClientsForCutoms.SendRecallMessageToServer();
                         }
                     });
                     break;
