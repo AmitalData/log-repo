@@ -60,6 +60,16 @@ export class BluesnapContractPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
+    private bluesnapContractTypeCode: string;
+    public get BluesnapContractTypeCode() { return this.bluesnapContractTypeCode; }
+    public set BluesnapContractTypeCode(newValue: string) { if (this.bluesnapContractTypeCode != newValue) { this.bluesnapContractTypeCode = newValue; this.MarkAsDirty("BluesnapContractTypeCode"); } }
+       
+	 
+    private bluesnapContractTypeName: string;
+    public get BluesnapContractTypeName() { return this.bluesnapContractTypeName; }
+    public set BluesnapContractTypeName(newValue: string) { if (this.bluesnapContractTypeName != newValue) { this.bluesnapContractTypeName = newValue; this.MarkAsDirty("BluesnapContractTypeName"); } }
+       
+	 
 
     public OldEntityPM: BluesnapContractPM;
 		

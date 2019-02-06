@@ -356,6 +356,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string DefaultSLAId { get; set; }
         public string StockTypeCode { get; set; }
 
+        public bool AutoArchiveOnInvoice { get; set; }
+
 
     }
 }
