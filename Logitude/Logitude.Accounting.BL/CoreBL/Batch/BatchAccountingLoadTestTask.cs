@@ -49,7 +49,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                         break;
                     case "CreateCustomers":///, Name: "Create Suppliers " });
                         {
-                            dummyTenantProviderArg.CreateVendors = parameterArgs.Amount;
+                            dummyTenantProviderArg.CreateCustomers = parameterArgs.Amount;
                             g.Amount2addMore = true;
                             g.GenrateGLAccount(dummyTenantProviderArg, accountingContext, chartOfAccountProvider, displayNumberProvider, null, parameterArgs.Tenant);
                         }
