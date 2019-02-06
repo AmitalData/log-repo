@@ -1393,16 +1393,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
-        private static void DelDeclarationStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId, string eventCode)
+        public static void DelDeclarationStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId, string eventCode)
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(loggingUserId)) loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
                 var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                 {
                     Tenant = dirtyDeclarationPM.Tenant,
                     objectTableName = "Customs.Declaration",
                     EventCode = eventCode,
-                    notes = "Delete FU Status " + eventCode + " in unifreight ",
+                    //notes = "Delete FU Status " + eventCode + " in unifreight ",
+                    notes = "DO_NOT_RAISE_EVENT",
                     CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
                     EntityId = dirtyDeclarationPM.Id,
                     UserId = loggingUserId,
@@ -1416,8 +1418,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         xml_status = "del",
                         status_id = eventCode,
                         status_DateTime = DateTime.Now,
-                        //status_place = "DFP",
-                        //status_save = "no_fail",
                         comments = "",
                     }
                 };

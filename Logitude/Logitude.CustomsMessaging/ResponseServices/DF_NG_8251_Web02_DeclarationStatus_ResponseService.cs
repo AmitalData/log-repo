@@ -216,6 +216,38 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         declarationPM.CourierCustomStatusCode = "2";
                                         courierStatusUpdated = true;
                                         break;
+                                    case "13":
+                                        if (declarationPM.PaymentDate.HasValue)
+                                        {
+                                            declarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
+                                            declarationPM.PaymentDate = null;
+                                            declarationPM.PaymentOrderNumber = null;
+                                            declarationPM.PaymentStatusCode = null;
+                                            declarationPM.CourierCustomStatusCode = null;
+                                            declarationPM.CourierSuspentionCode = null;
+                                            declarationPM.CourierSuspentionReasonCode = null;
+
+                                            //Delete 
+                                            var mydeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
+                                            var declarationPaymentPM = mydeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
+                                            if (declarationPaymentPM != null)
+                                            {
+                                                declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Delete;
+                                                if (declarationPaymentPM.DeclarationPaymentMethods.Any())
+                                                {
+                                                    foreach (var item in declarationPaymentPM.DeclarationPaymentMethods)
+                                                    {
+                                                        item.ChangeSetOp = ChangeSetOperation.Delete;
+                                                    }
+                                                }
+                                                DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
+                                                declarationPaymentUpdateService.Update(declarationPaymentPM, true);
+                                            }
+                                            courierStatusUpdated = true;
+                                        }
+                                        break;
+
+
                                 }
                             }
 
