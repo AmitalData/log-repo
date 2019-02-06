@@ -900,6 +900,10 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
 
     public SelectionCompleted: EventEmitter<any> = new EventEmitter();
     public GetCustomsInterfaceSettingsDocumentTypesCompleted: EventEmitter<any> = new EventEmitter();
+
+    SetDefaultConnectedEntityNumber(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any) {
+
+    }
     
 }
 
