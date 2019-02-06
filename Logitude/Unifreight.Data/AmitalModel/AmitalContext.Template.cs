@@ -4677,6 +4677,20 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CFIMSVLINE>()
                 .Property(p => p.STATUS)
                     .HasColumnType("int");
+            modelBuilder.Entity<CFIMSVLINE>()
+    .Property(p => p.TAXEXEMPT)
+        .HasColumnName(@"TAX_EXEMPT")
+        .HasMaxLength(15)
+        .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVLINE>()
+                .Property(p => p.INVOICEQUANTITY)
+                    .HasColumnName(@"INVOICE_QUANTITY")
+                    .HasColumnType("double");
+            modelBuilder.Entity<CFIMSVLINE>()
+                .Property(p => p.INVOICEQUANTITYTYPE)
+                    .HasColumnName(@"INVOICE_QUANTITY_TYPE")
+                    .HasMaxLength(3)
+                    .HasColumnType("varchar2");
 
             #endregion
 
@@ -5241,6 +5255,151 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+            #region VRELEASE2ENTRY
+
+            modelBuilder.Entity<VRELEASE2ENTRY>()
+                .HasKey(p => new { p.CUFILENO, p.ENTRYCAFILENO })
+                .ToTable("V_RELEASE2ENTRY", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<VRELEASE2ENTRY>()
+                .Property(p => p.CUFILENO)
+                    .HasColumnName(@"CU_FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<VRELEASE2ENTRY>()
+                .Property(p => p.CUSTOMFILENO)
+                    .HasColumnName(@"CUSTOM_FILE_NO")
+                    .HasMaxLength(11)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<VRELEASE2ENTRY>()
+                .Property(p => p.CAFILENO)
+                    .HasColumnName(@"CA_FILE_NO")
+                    .HasMaxLength(11)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<VRELEASE2ENTRY>()
+                .Property(p => p.RELEASEFILENO)
+                    .HasColumnName(@"RELEASE_FILE_NO")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<VRELEASE2ENTRY>()
+                .Property(p => p.ENTRYFILENO)
+                    .HasColumnName(@"ENTRY_FILE_NO")
+                    .HasColumnType("int");
+            modelBuilder.Entity<VRELEASE2ENTRY>()
+                .Property(p => p.ENTRYCAFILENO)
+                    .HasColumnName(@"ENTRY_CA_FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int64");
+
+            #endregion
+
+            #region YTBTABLE
+
+            modelBuilder.Entity<YTBTABLE>()
+                .HasKey(p => new { p.CUSTTB, p.TBCODE })
+                .ToTable("YTBTABLE", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<YTBTABLE>()
+                .Property(p => p.CUSTTB)
+                    .HasColumnName(@"CUST_TB")
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<YTBTABLE>()
+                .Property(p => p.TBCODE)
+                    .HasColumnName(@"TB_CODE")
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<YTBTABLE>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(512)
+                    .HasColumnType("nvarchar2");
+            modelBuilder.Entity<YTBTABLE>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(512)
+                    .HasColumnType("nvarchar2");
+            modelBuilder.Entity<YTBTABLE>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(512)
+                    .HasColumnType("nvarchar2");
+            modelBuilder.Entity<YTBTABLE>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<YTBTABLE>()
+                .Property(p => p.IIGUPDTDATE)
+                    .HasColumnName(@"IIG_UPDT_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<YTBTABLE>()
+                .Property(p => p.TBCODENUM)
+                    .HasColumnName(@"TB_CODE_NUM")
+                    .HasColumnType("int64");
+
+            #endregion
+
+            #region CFIMSVREM
+
+            modelBuilder.Entity<CFIMSVREM>()
+                .HasKey(p => new { p.COMID, p.FILENO, p.HEIGHT, p.LEFT, p.PAGENUM, p.REMARK, p.TOP, p.WIDTH })
+                .ToTable("CFIMSVREM", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CFIMSVREM>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int64");
+            modelBuilder.Entity<CFIMSVREM>()
+                .Property(p => p.COMID)
+                    .HasColumnName(@"COM_ID")
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVREM>()
+                .Property(p => p.PAGENUM)
+                    .HasColumnName(@"PAGE_NUM")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CFIMSVREM>()
+                .Property(p => p.TOP)
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CFIMSVREM>()
+                .Property(p => p.LEFT)
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CFIMSVREM>()
+                .Property(p => p.HEIGHT)
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CFIMSVREM>()
+                .Property(p => p.WIDTH)
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CFIMSVREM>()
+                .Property(p => p.REMARK)
+                    .IsRequired()
+                    .HasMaxLength(512)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
+
             #region Disabled conventions
 
 
@@ -5613,5 +5772,20 @@ namespace Unifreight.Data.AmitalModel
         /// There are no comments for CCUSUPITEMSI in the schema.
         /// </summary>
         public DbSet<CCUSUPITEMSI> CCUSUPITEMSIs { get; set; }
+
+        /// <summary>
+        /// There are no comments for VRELEASE2ENTRY in the schema.
+        /// </summary>
+        public DbSet<VRELEASE2ENTRY> VRELEASE2ENTRIES { get; set; }
+
+        /// <summary>
+        /// There are no comments for YTBTABLE in the schema.
+        /// </summary>
+        public DbSet<YTBTABLE> YTBTABLEs { get; set; }
+
+        /// <summary>
+        /// There are no comments for CFIMSVREM in the schema.
+        /// </summary>
+        public DbSet<CFIMSVREM> CFIMSVREMs { get; set; }
     }
 }
