@@ -74,17 +74,15 @@ namespace Logitude.Accounting.BL.CoreBL
                     throw new Exception("was Reconciliation then change to Adjustment (and now to what ?? - yaron said it will not change ever !!)");
                 }
                 RatesTablePM rate = null;
-                if (theCurrencyId== accountingCurrencyId)
+                rate = ratesTableQuery.GetLastRateByValueDate(tenant, theCurrencyId, accountingCurrencyId,
+                   //@now  
+                   AccountDate //Ohad :By aAccounting date
+                   );
+                if (rate == null && theCurrencyId == accountingCurrencyId)
                 {
-                    rate = new RatesTablePM() { Rate = 1 };
+                    rate = new RatesTablePM() { Rate = 1 };/// ON THE HOUSE !?!?!?
                 }
-                else
-                {
-                    rate = ratesTableQuery.GetLastRateByValueDate(tenant, theCurrencyId, accountingCurrencyId,
-                    //@now  
-                    AccountDate //Ohad :By aAccounting date
-                    );
-                }
+                
                 
                 if (rate == null)
                 {
