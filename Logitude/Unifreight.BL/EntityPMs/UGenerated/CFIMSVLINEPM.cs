@@ -39,5 +39,11 @@ namespace Unifreight.BL.EntityPMs
 
         public int? STATUS { get; set; }
 
+        public string TAXEXEMPT { get; set; }
+
+        public double? INVOICEQUANTITY { get; set; }
+
+        public string INVOICEQUANTITYTYPE { get; set; }
+
     }
 }

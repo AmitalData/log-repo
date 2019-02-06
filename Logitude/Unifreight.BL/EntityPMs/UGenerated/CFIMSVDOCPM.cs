@@ -29,5 +29,7 @@ namespace Unifreight.BL.EntityPMs
 
         public string CUSTOMERID { get; set; }
 
+        public string HASCHANGED { get; set; }
+
     }
 }
