@@ -142,6 +142,7 @@
     <Compile Include="EntityKeys\TreatmentWayKeys.cs" />
     <Compile Include="EntityKeys\UIMessageAdditionalKeys.cs" />
     <Compile Include="EntityKeys\UIMessageKeys.cs" />
+    <Compile Include="EntityKeys\UpdateCodeKeys.cs" />
     <Compile Include="EntityListQueryServices\AcceptanceStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ActionCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AgentTalkBackTypeListQueryService.cs" />
@@ -222,6 +223,7 @@
     <Compile Include="EntityListQueryServices\Generated\TreatmentWayListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UIMessageAdditionalListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UIMessageListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\UpdateCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\MamanSpecialActionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MamanSpecialActionStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MamanStatusListQueryService.cs" />
@@ -238,6 +240,7 @@
     <Compile Include="EntityListQueryServices\TreatmentWayListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UIMessageAdditionalListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UIMessageListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\UpdateCodeListQueryService.cs" />
     <Compile Include="EntityLists\Generated\AcceptanceStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ActionCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AgentTalkBackTypeList.Generated.cs" />
@@ -286,6 +289,7 @@
     <Compile Include="EntityLists\Generated\TreatmentWayList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UIMessageAdditionalList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UIMessageList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\UpdateCodeList.Generated.cs" />
     <Compile Include="EntityMapping\AcceptanceStatusMap.cs" />
     <Compile Include="EntityMapping\ActionCodeMap.cs" />
     <Compile Include="EntityMapping\AgentTalkBackTypeMap.cs" />
@@ -334,6 +338,7 @@
     <Compile Include="EntityMapping\TreatmentWayMap.cs" />
     <Compile Include="EntityMapping\UIMessageAdditionalMap.cs" />
     <Compile Include="EntityMapping\UIMessageMap.cs" />
+    <Compile Include="EntityMapping\UpdateCodeMap.cs" />
     <Compile Include="EntityPOCOs\AcceptanceStatus.cs" />
     <Compile Include="EntityPOCOs\ActionCode.cs" />
     <Compile Include="EntityPOCOs\AgentTalkBackType.cs" />
@@ -382,6 +387,7 @@
     <Compile Include="EntityPOCOs\TreatmentWay.cs" />
     <Compile Include="EntityPOCOs\UIMessage.cs" />
     <Compile Include="EntityPOCOs\UIMessageAdditional.cs" />
+    <Compile Include="EntityPOCOs\UpdateCode.cs" />
     <Compile Include="Repsitories\AcceptanceStatusRepository.cs" />
     <Compile Include="Repsitories\ActionCodeRepository.cs" />
     <Compile Include="Repsitories\AgentTalkBackTypeRepository.cs" />
@@ -462,6 +468,7 @@
     <Compile Include="Repsitories\Generated\TreatmentWayRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UIMessageAdditionalRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UIMessageRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\UpdateCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\MamanSpecialActionRepository.cs" />
     <Compile Include="Repsitories\MamanSpecialActionStatusRepository.cs" />
     <Compile Include="Repsitories\MamanStatusRepository.cs" />
@@ -478,6 +485,7 @@
     <Compile Include="Repsitories\TreatmentWayRepository.cs" />
     <Compile Include="Repsitories\UIMessageAdditionalRepository.cs" />
     <Compile Include="Repsitories\UIMessageRepository.cs" />
+    <Compile Include="Repsitories\UpdateCodeRepository.cs" />
     <Compile Include="Utils\FreelancerCustomersUtil.cs" />
     <None Include="CustomContext.Views.cs" />
     <Compile Include="CustomFilters\DeclarationCustomFilters.cs" />

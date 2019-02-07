@@ -364,6 +364,7 @@
     <Compile Include="EntityPMs\Generated\UIMessageAdditionalPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\UIMessagePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\UnloadingSiteTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\UpdateCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ValidCustomsItemPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\VehicleManufacturerPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\VehicleOwnerPM.Generated.cs" />

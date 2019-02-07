@@ -186,6 +186,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\TransferCargoMethodTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TreatmentWayDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\UIMessageDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\UpdateCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\VendorTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AcceptanceStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ActionCodeStruct.Generated.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="CloseTables\EnumGenerated\TransferCargoMethodTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TreatmentWayStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\UIMessageStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\UpdateCodeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\VendorTypeStruct.Generated.cs" />
     <Compile Include="EntityDataMappings\AcceptanceStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccumalationStateDataMapping.cs" />
@@ -668,6 +670,7 @@
     <Compile Include="EntityDataMappings\Generated\UIMessageAdditionalDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\UIMessageDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\UnloadingSiteTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\UpdateCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ValidCustomsItemDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\VehicleDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\VehicleManufacturerDataMapping.Generated.cs" />
@@ -806,6 +809,7 @@
     <Compile Include="EntityDataMappings\UIMessageAdditionalDataMapping.cs" />
     <Compile Include="EntityDataMappings\UIMessageDataMapping.cs" />
     <Compile Include="EntityDataMappings\UnloadingSiteTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\UpdateCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ValidCustomsItemDataMapping.cs" />
     <Compile Include="EntityDataMappings\VehicleDataMapping.cs" />
     <Compile Include="EntityDataMappings\VehicleManufacturerDataMapping.cs" />
@@ -900,6 +904,7 @@
     <Compile Include="EntityQueryServices\Generated\TreatmentWayQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\UIMessageAdditionalQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\UIMessageQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\UpdateCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\MeasurmentUnitQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceFreightAmountQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceItemVehicleAddQueryService.cs" />
@@ -1303,6 +1308,7 @@
     <Compile Include="EntityUpdateServices\Generated\TreatmentWayUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\UIMessageAdditionalUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\UIMessageUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\UpdateCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\LogChangesService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCargoSplitUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemVehicleAddUpdateService.cs" />

@@ -604,6 +604,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new UnloadingSiteTypeMap());
 	
+            modelBuilder.Configurations.Add(new UpdateCodeMap());
+	
             modelBuilder.Configurations.Add(new ValidCustomsItemMap());
 	
             modelBuilder.Configurations.Add(new VehicleMap());
@@ -2678,6 +2680,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<UnloadingSiteType> UnloadingSiteType 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<UpdateCode> UpdateCodes 
 	 {
 	      get; set;
 	 

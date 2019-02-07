@@ -212,6 +212,10 @@
     <Compile Include="Migrations\201902070823513_AddMigrationGatepassReturnCode.Designer.cs">
       <DependentUpon>201902070823513_AddMigrationGatepassReturnCode.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902070855195_AddMigrationUpdateCode.cs" />
+    <Compile Include="Migrations\201902070855195_AddMigrationUpdateCode.Designer.cs">
+      <DependentUpon>201902070855195_AddMigrationUpdateCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -353,6 +357,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902070823513_AddMigrationGatepassReturnCode.resx">
       <DependentUpon>201902070823513_AddMigrationGatepassReturnCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902070855195_AddMigrationUpdateCode.resx">
+      <DependentUpon>201902070855195_AddMigrationUpdateCode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

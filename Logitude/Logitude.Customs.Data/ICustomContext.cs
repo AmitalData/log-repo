@@ -285,6 +285,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<UIMessage> UIMessages { get; }
 		 IDbSet<UIMessageAdditional> UIMessageAdditionals { get; }
 		 IDbSet<UnloadingSiteType> UnloadingSiteType { get; }
+		 IDbSet<UpdateCode> UpdateCodes { get; }
 		 IDbSet<ValidCustomsItem> ValidCustomsItems { get; }
 		 IDbSet<Vehicle> Vehicles { get; }
 		 IDbSet<VehicleManufacturer> VehicleManufacturers { get; }
