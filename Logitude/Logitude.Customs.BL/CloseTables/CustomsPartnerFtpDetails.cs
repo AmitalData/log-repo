@@ -1,4 +1,7 @@
-﻿using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
+﻿using Logitude.Customs.BL.Messaging;
+using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
+using Logitude.Customs.BL.Messaging.ILOVS;
+using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Server.Tools.Utils;
 using System;
 using System.Collections.Generic;
@@ -210,6 +213,36 @@ namespace Logitude.Customs.BL.CloseTables
                     break;
             }
         }
+
+        public IWebAPIMessage2MamanAnalyzer GetResponseService(/*Courier2MamanCommSettings courier2MamanCommSettings*/string MessageCode)
+        {
+            IWebAPIMessage2MamanAnalyzer analyzer = null;
+            switch (/*courier2MamanCommSettings.*/MessageCode)
+            {
+                case CustomsPartnerFtpDetails.InterfaceName_ECTHR:
+                    {
+                        analyzer = new CourierGWMessageECTHRDataMamanResponseService();
+                    }
+                    break;
+                case CustomsPartnerFtpDetails.InterfaceName_ECSPCL:
+                    {
+                        analyzer = new CourierGWMessageECSpclMamanResponseService();
+                    }
+                    break;
+                case CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR:
+                    {
+                        analyzer = new CourierOVSECTHMessageResponseService();
+                    }
+                    break;
+                default:
+                    throw new Exception("Please register  ");
+                    break;
+            }
+
+            return analyzer;
+        }
+
+
     }
     public enum AnalyzeQueueServiceEnum
     {
