@@ -125,7 +125,7 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
                 Tenant = Convert.ToInt32(tenant),
                 Id = IdCounter.GetNumber("Document", tenant),
                 HasFile = true,
-                Folder = CustomsPartnerFtpDetails.PartnerCode_Mamam.ToLower(),
+                Folder = /*CustomsPartnerFtpDetails.PartnerCode_Mamam*/PartnerCode.ToLower(),
             };
 
             documentRepository.Add(document);
@@ -137,7 +137,7 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
                 Id = IdCounter.GetNumber("CommunicationLog", tenant),
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 LastStatusDateUTC = DateTime.UtcNow,
-                To = CustomsPartnerFtpDetails.PartnerCode_Mamam,
+                To = /*CustomsPartnerFtpDetails.PartnerCode_Mamam*/PartnerCode,
                 InOut = "O",
                 EntityId = declarationId,
                 ObjectTableId = objectTableId,

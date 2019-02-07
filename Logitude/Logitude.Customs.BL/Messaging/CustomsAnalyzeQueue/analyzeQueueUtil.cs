@@ -65,7 +65,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             {
 
                 //ProccessReceivedMessage();
-
+                fileName = fileName ?? "";
                 fileName = fileName.Split('/')[fileName.Split('/').Length - 1].ToLower();
                 var analyzeQueueReposiory = new AnalyzeQueueRepository();
 
@@ -176,9 +176,12 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 Id = IdCounter.GetNumber("CommunicationLog", tenant),
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 LastStatusDateUTC = DateTime.UtcNow,
-                //To = ,
-                From = CustomsPartnerFtpDetails.PartnerCode_Mamam + "," + CustomsPartnerFtpDetails.InterfaceName_ECSTB,
-                InOut = "O",
+                To = def.Partner,
+                From =
+                //CustomsPartnerFtpDetails.PartnerCode_Mamam + "," + CustomsPartnerFtpDetails.InterfaceName_ECSTB,
+                def.Partner,//+","+ def.Code
+
+                InOut = def.TypeCode[0].ToString(), //"O",
                 //EntityId = declarationId,
                 //ObjectTableId = objectTableId,
                 Subject = defInterfaceDetail.Subject,
@@ -192,6 +195,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 LogSettings = /*settingsData*/Communicationsettings,
                 //QueueName = def.QueueName //SBQueueNames.SendWEBAPIMessage2MamanQ.ToString() ///using  by SendWEBAPIMessage2MamanWR
             };
+
             analyzeResultModel = analyzeResultModel ?? new AnalyzeResultModel();
             if (!string.IsNullOrWhiteSpace(analyzeResultModel.EntityID) &&
                     !string.IsNullOrWhiteSpace(analyzeResultModel.ObjectTableID))
