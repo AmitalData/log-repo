@@ -35,6 +35,7 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.Def.Messaging.Customs;
+using System.Xml.Linq;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
