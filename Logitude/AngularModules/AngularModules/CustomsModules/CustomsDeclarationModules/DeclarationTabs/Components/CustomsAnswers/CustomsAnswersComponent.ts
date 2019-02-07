@@ -59,6 +59,17 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     AllCount: string = "";
     SystemMessageDescribtion: string;
     IsCourierDeclaration: boolean = false;
+    
+    public get DepositionStatusCode(): string {
+        if (this.EntityPM == null) return null; 
+        return this.EntityPM.DepositionStatusCode;
+    }
+    
+    DepositionStatusCodeIcon: string = "";
+    IsDepositionStatusCodeButton: boolean = false;
+    IsDepositionStatusCodeSendDigital: boolean = false;
+    DepositionStatusCodeText: string = "";
+
     //Services
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
     private declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService;
@@ -86,6 +97,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                         this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
                             this.EntityPM = this.entityArgs.EntityPM;
                             this.IsCourierDeclaration = this.EntityPM.IsCourierDeclaration;
+                            //this.DepositionStatusCode = this.EntityPM.DepositionStatusCode;
                             this.ObjectTableName = this.entityArgs.ObjectTableName;
                             this.Listen();
                             this.ReloadDeclarationErrors();
@@ -105,6 +117,8 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                             this.textcode_DenialReason = TextCodeTranslator.Translate("Customs.CustomsCollateral.O.DenialReason");
                             this.textcode_ApprovalReason = TextCodeTranslator.Translate("Customs.CustomsCollateral.O.ApprovalReason");
 
+                            this.GetDepositionDefaults(this.EntityPM.CustomerCode);
+                            //this.DepositionStatusCodeIcon = "./Images/Buttons/EditWithGreenTick.png";
                             //#enderegion
                         });
                     });
@@ -1049,6 +1063,41 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             this.LoadConstriantsList(this.errorsForDeclaration);
         }
 
+    }
+
+    private GetDepositionDefaults(CustomerCode: string) {
+        var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+        myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_BOX_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
+            .subscribe(response => {
+                this.IsDepositionStatusCodeButton = false;
+                this.IsDepositionStatusCodeSendDigital = false;
+                //this.DepositionStatusCodeIcon = "./Images/LogBox/DSV/U_LOGBOX.png";
+                this.DepositionStatusCodeIcon = "LOGBOX";
+                if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
+                    this.IsDepositionStatusCodeButton = true;
+                }
+                myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_LBL_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
+                    .subscribe(res => {
+                        if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
+                            this.IsDepositionStatusCodeButton = true;
+                            this.IsDepositionStatusCodeSendDigital = true;
+                        }
+                        if (this.IsDepositionStatusCodeSendDigital) {
+                            this.DepositionStatusCodeText = "נשלחה משימה ליבואן בדיגיטל";
+                            this.DepositionStatusCodeIcon = "DEFAULT";
+                        }
+                        else {
+                            this.DepositionStatusCodeText = "נשלחה משימה ליבואן בלוגבוקס";
+                        }
+                        //myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_PRV_LBL_LOG", "NON", "NON", SessionLocator.Tenant)
+                          //  .subscribe(res => {
+                            //    if (!res.HasError && res.Result != null) {
+                                    //this.DepositionStatusCodeIcon = "./Images/LogBox/DSV/Tab_Logo_Original.png";
+                              //      this.DepositionStatusCodeIcon = "DEFAULT";
+                                //}
+                            //});
+                    });
+            });
     }
     //#endregion
 }
