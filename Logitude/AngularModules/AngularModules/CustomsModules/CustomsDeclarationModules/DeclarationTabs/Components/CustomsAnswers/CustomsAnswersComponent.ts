@@ -33,6 +33,7 @@ import {DeclarationMessagesService} from '../../../../../Customs/Services/WebSer
 import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
+import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 @Component({
     moduleId: module.id,
     templateUrl: './CustomsAnswersComponent.html',

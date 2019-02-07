@@ -795,7 +795,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 				entityPOCO.IsClose = entityPM.IsClose;
 			}
-
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositionStatusCode))
             {
 				entityPOCO.DepositionStatusCode = entityPM.DepositionStatusCode;
@@ -1317,7 +1317,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsClose = entityPOCO.IsClose;
             }
 
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DepositionStatusCode))
             {
 					entityPM.DepositionStatusCode = entityPOCO.DepositionStatusCode;
@@ -1834,7 +1833,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.IsClose = entityPM.IsClose;
             }
 			
-
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositionStatusCode))
             {
                 oldEntityPM.DepositionStatusCode = entityPM.DepositionStatusCode;
