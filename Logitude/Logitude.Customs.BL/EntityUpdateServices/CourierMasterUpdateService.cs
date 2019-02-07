@@ -23,6 +23,8 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.BL.EntityPMs;
+using Logitude.Customs.BL.BL;
+using Devart.Data.Oracle;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -155,13 +157,29 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     if (declarations != null)
                     {
                         DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                        DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(entityPM.Tenant);
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                         foreach (var declarationId in declarations)
                         {
                             declarationQueryService.LoadSupplierInvoicesWithItems = false;
                             var myDBEntity = declarationQueryService.GetSingle(declarationId, false, false);
-                            DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(myDBEntity);
-                            declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
+                            DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationId, false, false);
+                            string dboccCourierManifestStatusCode = myDeclarationCourierStatusPM.CourierManifestStatusCode;
+                            if (myDeclarationCourierStatusPM != null)
+                            {
+                                CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(myDBEntity);
+                                calculateDeclarationCourierStatus.CalcCourierManifestStatusCode(myDeclarationCourierStatusPM);
+                                if (myDeclarationCourierStatusPM.CourierManifestStatusCode != "M")
+                                {
+
+                                    myDeclarationCourierStatusPM.CourierManifestStatusCode = "R";
+                                }
+                                if (dboccCourierManifestStatusCode != myDeclarationCourierStatusPM.CourierManifestStatusCode)
+                                {
+                                    myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                                    declarationCourierStatusUpdateService.Update(myDeclarationCourierStatusPM, true);
+                                }
+                            }
                         }
                     }
                 }
@@ -169,6 +187,64 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             base.OnUpdating(entityPM, entityPOCO);
         }
+        //  private void SetDeclarationChanged(int Tenant ,string couriermaterid , string COURIERMANIFESTSTATUSCODE)
+        //{
+
+            
+            
+        //    string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+        //    string strConnString = GetConnection(Tenant);
+        //    if (dbms == "oracle")
+        //    {
+        //        using (OracleConnection con = new OracleConnection(strConnString))
+        //        {
+        //            string cmd = "Update DECLARATIONCOURIERSTATUSES set " +
+        //                "COURIERMANIFESTSTATUSCODE= '" + COURIERMANIFESTSTATUSCODE + "' ";
+        //            cmd = cmd + " where Id=" + "'" + couriermaterid + "'";
+
+        //            OracleCommand sqlCommand = new OracleCommand(cmd, con);
+
+        //            con.Open();
+        //            sqlCommand.ExecuteNonQuery();
+        //            con.Close();
+        //        }
+
+        //    }
+        //    else
+        //    {
+        //        using (SqlConnection cn = new SqlConnection(strConnString))
+        //        {
+        //            string cmd = "Update Customs.Declarations set IsChanged = 1";
+        //            cmd = cmd + " where Id=" + "'" + entityPM.DeclarationId + "'";
+
+        //            SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+        //            cn.Open();
+        //            sqlCommand.ExecuteNonQuery();
+        //            cn.Close();
+        //        }
+        //    }
+        //}
+
+
+        //private static string GetConnection(int tenant)
+        //{
+        //    GlobalDB currentDb;
+
+        //    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+        //    {
+        //        currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
+        //        scope.Complete();
+        //    }
+
+        //    string dbConnectionInfo = currentDb.DBConnection;
+
+        //    DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+        //    WebFreightContext context = new WebFreightContext(connection);
+
+        //    return context.Database.Connection.ConnectionString;
+        //}
+
 
         private CourierMasterPM GetDBEntity(string dirtyCourierMasterId, int tenant)
         {

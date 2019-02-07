@@ -14,11 +14,13 @@ namespace Logitude.Customs.BL.CloseTables
     {
         public const string InterfaceName_SubManifest = "SUBMANIFEST";
         public const string InterfaceName_ECTHR = "ECTHR";//EC = E-Commerce
+        public const string InterfaceName_ECOVSTHR = "ECOVSTHR";//EC = E-Commerce
         public const string InterfaceName_ECSPCL = "ECSPCL";//EC = E-Commerce
         public const string InterfaceName_ECSTB = "ECSTB";//EC = E-Commerce
         public const string InterfaceName_ECSTB_Splited = "ECSTB+P";//EC = E-Commerce
         public const string InterfaceName_Ftp2Maman2470 = "ECM2470";//EC = E-Commerce 2 maman 2470
         public const string PartnerCode_Mamam = "MAMAN";
+        public const string PartnerCode_ILOVS = "ILOVS";
         public const string TypeCode_Out = "OUT";
         public const string TypeCode_In = "IN";
 
@@ -42,6 +44,15 @@ namespace Logitude.Customs.BL.CloseTables
                 Name = "ש.מ.ב לממן",
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_Mamam,
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
+            }
+            ,
+            new InterfaceDetails()
+            {
+                Code = InterfaceName_ECOVSTHR,
+                Name = "ש.מ.ב לאוברסיז",
+                TypeCode = TypeCode_Out,
+                Partner = PartnerCode_ILOVS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
             }
 
@@ -163,6 +174,7 @@ namespace Logitude.Customs.BL.CloseTables
             var all = new List<KeyValuePair<string, string>>();
             all.Add(new KeyValuePair<string, string>("", ""));
             all.Add(new KeyValuePair<string, string>(PartnerCode_Mamam, "Mamam"));
+            all.Add(new KeyValuePair<string, string>(PartnerCode_ILOVS, "Overseas"));
             return all;
         }
 

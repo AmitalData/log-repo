@@ -220,6 +220,9 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             this.UpperHeight = { 'height': '30px' };
         }
         this.RelatedEntityLable = this.iCustomsDocumentsController.GetRelatedEntityLabel();
+        if (this.ParentEntityCode == "Claim" && AppTool.IsNullOrEmpty(this.DisplayConnectedEntityNumber)) {
+            this.SetDefaultConnectedEntityNumber();
+        }
         this.RefereshConnectedInvoices();
 
         if (this.CustomsDocumentsTicket != null) {
@@ -765,6 +768,10 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         //    this.ConnectedToItems.push(new ConnectedToItem() { Id = 0, Name = TextCodeTranslator.Translate("Customs.CustomsCollateral") });
         // }
 
+    }
+
+    SetDefaultConnectedEntityNumber() {
+        this.iCustomsDocumentsController.SetDefaultConnectedEntityNumber(this.CustomsDocumentsTicket, this.EntityPM);
     }
 
     ConnectedItemSelectionChanged(index: number) {

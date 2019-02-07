@@ -104,6 +104,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\DeclarationMamanSpecialAction.lxml" />
+    <None Include="EntityFiles\GatepassReturnCode.lxml" />
     <None Include="EntityFiles\MamanSpecialAction.lxml" />
     <None Include="EntityFiles\MamanSpecialActionStatus.lxml" />
     <None Include="EntityFiles\MamanStatus.lxml" />
@@ -120,6 +121,7 @@
     <None Include="EntityFiles\SeizureFactorType.lxml" />
     <None Include="EntityFiles\SeizureMethodType.lxml" />
     <None Include="EntityFiles\TPGFileType.lxml" />
+    <None Include="EntityFiles\TransferCargoMethodType.lxml" />
     <None Include="EntityFiles\TreatmentWay.lxml" />
     <None Include="EntityFiles\CargoSplitRequestStatus.lxml" />
     <None Include="EntityFiles\DecCargoSplitCon.lxml" />
@@ -415,6 +417,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\UnloadingSiteType.lxml" />
+    <None Include="EntityFiles\UpdateCode.lxml" />
     <None Include="EntityFiles\ValidCustomsItem.lxml" />
     <None Include="EntityFiles\Vehicle.lxml" />
     <None Include="EntityFiles\VehicleManufacturer.lxml" />
