@@ -640,7 +640,6 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     //#endregion
 
-
     //#region Aging Details
     chartId: string = "";
 
@@ -800,7 +799,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
             // Labels
             var label = element.PeriodName.replace("b4", "Before"); // replace 'b4' with 'Before'
-            label = label.startsWith("Before") ? label.replace("/20", "/") : label; // minimize year in 'Before' Column
+            label = label.replace("/20", "/"); // minimize year in 'Before' Column
             this.barChartLabels[i] = label;
 
             // Data
