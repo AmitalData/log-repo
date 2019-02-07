@@ -109,6 +109,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.TemperatureUnitCode = entityPM.TemperatureUnitCode;
             poco.DefaultSLAId = entityPM.DefaultSLAId;
             poco.StockTypeCode = entityPM.StockTypeCode;
+            poco.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;
             // poco.StorageEncryptionKey = entityPM.StorageEncryptionKey;
             BuildSearchFields(entityPM, poco);
         }

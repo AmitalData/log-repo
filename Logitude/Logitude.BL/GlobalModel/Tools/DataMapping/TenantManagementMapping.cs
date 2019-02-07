@@ -58,6 +58,15 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.IsCargonautEnabled = entityPM.IsCargonautEnabled;
             entityPOCO.IsDEXXConnectionEnabled = entityPM.IsDEXXConnectionEnabled;
             entityPOCO.BluesnapContractId = entityPM.BluesnapContractId;
+            entityPOCO.BluesnapCRMContractId = entityPM.BluesnapCRMContractId;
+            entityPOCO.BluesnapEAWBContractId = entityPM.BluesnapEAWBContractId;
+            entityPOCO.BluesnapEAWBSContractId = entityPM.BluesnapEAWBSContractId;
+            entityPOCO.BluesnapOneTimeContractId = entityPM.BluesnapOneTimeContractId;
+            entityPOCO.BluesnapContractQTY = entityPM.BluesnapContractQTY;
+            entityPOCO.BluesnapCRMContractQTY = entityPM.BluesnapCRMContractQTY;
+            entityPOCO.BluesnapEAWBContractQTY = entityPM.BluesnapEAWBContractQTY;
+            entityPOCO.BluesnapEAWBSContractQTY = entityPM.BluesnapEAWBSContractQTY;
+            entityPOCO.BluesnapOneTimeContractQTY = entityPM.BluesnapOneTimeContractQTY;            
             entityPOCO.GlobalTenant.TTY = entityPM.TTY;
             entityPOCO.GlobalTenant.IsActive = entityPM.IsActive;
             entityPOCO.GlobalTenant.CompanyName = entityPM.Name;
@@ -128,6 +137,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                 {
                     tenant.Company = entityPM.Name;
                     tenant.DocumentShareAsDefault = entityPM.DocumentShareAsDefault;
+                    tenant.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;
                     if (!entityPM.ManagesRegisteredAgent)
                     {
                         tenant.RegulatedAgentRegimeActivated = false;

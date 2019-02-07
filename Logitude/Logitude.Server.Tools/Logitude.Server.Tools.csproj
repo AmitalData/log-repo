@@ -247,6 +247,8 @@
     <Compile Include="ExternalServices\SignManager.cs" />
     <Compile Include="ExternalServices\UnifreightFillingService.cs" />
     <Compile Include="FTP\FTPService.cs" />
+    <Compile Include="FTP\FTPServiceExceptionThrower.cs" />
+    <Compile Include="FTP\FTPServiceResponse.cs" />
     <Compile Include="FTP\SFTPService.cs" />
     <Compile Include="Helpers\AesFunction.cs" />
     <Compile Include="Helpers\AmitalConvertUtil.cs" />

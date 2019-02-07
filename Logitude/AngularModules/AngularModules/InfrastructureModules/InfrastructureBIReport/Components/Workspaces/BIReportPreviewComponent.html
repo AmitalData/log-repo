@@ -33,6 +33,7 @@
                 <td></td>
             </tr>
 
+            <!-- Filters -->
             <tr *ngIf="SelectedFiltersDataSource" style="height: 1px;">
                 <td>
                     <table class="BodyBackground">
@@ -58,10 +59,15 @@
                 </td>
             </tr>
 
-            <!-- Filters -->
+
             <tr style="height: 1px;">
-                <td>
+                <td style="display:block;border-bottom:1px solid gray;height:30px;background-color:#D1D6D8">
                     <table>
+                        <tr style="height: 2px;">
+                            <td colspan="9">
+                                <div></div>
+                            </td>
+                        </tr>
                         <tr>
                             <td style="width: 10px;">
                                 <div></div>
@@ -96,7 +102,7 @@
                             <td style="float:right;width:300px; ">
                                 <table>
                                     <tr>
-                                        <td style="width: 15px;vertical-align:middle;">
+                                        <td style="width: 15px;">
                                             <img src="./Images/Columns.png" (click)="onBIReportColumnsClick()" title="Show/Hide/Reorder Column(s)" style="cursor: pointer; height:18px;" [className]="'LeftCenter'"/>
                                         </td>
 
@@ -133,14 +139,18 @@
                                     </tr>
                                 </table>
                             </td>
+
+                            <td style="width: 10px;">
+                                <div></div>
+                            </td>
+
+                        </tr>
+                        <tr style="height: 2px;">
+                            <td colspan="9">
+                                <div></div>
+                            </td>
                         </tr>
                     </table>
-                </td>
-            </tr>
-
-            <tr style="height: 10px;">
-                <td>
-                    <div> </div>
                 </td>
             </tr>
 

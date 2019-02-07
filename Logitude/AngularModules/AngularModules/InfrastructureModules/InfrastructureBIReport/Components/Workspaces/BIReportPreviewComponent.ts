@@ -468,8 +468,8 @@ export class BIReportPreviewComponent implements OnInit {
         if (!this.IsNewEntity) {
             var windowTitle = "Show/Hide/Reorder Column(s)";
             var logWindow = new LogitudeWindow();
-            logWindow.Width = 350;
-            logWindow.Height = 400;
+            logWindow.Width = 500;
+            logWindow.Height = 600;
             logWindow.Title = windowTitle;
             var windowArgs: any = {};
             windowArgs.father = this;

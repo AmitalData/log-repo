@@ -73,6 +73,15 @@ export class TenantManagementList {
 		LastFWBCargonautSentDate: Date;
 		LastFHLCargonautSentDate: Date;
 		BluesnapContractId: string;
+		BluesnapCRMContractId: string;
+		BluesnapEAWBContractId: string;
+		BluesnapEAWBSContractId: string;
+		BluesnapOneTimeContractId: string;
+		BluesnapContractQTY: number;
+		BluesnapCRMContractQTY: number;
+		BluesnapEAWBContractQTY: number;
+		BluesnapEAWBSContractQTY: number;
+		BluesnapOneTimeContractQTY: number;
 		AWBMessagesCCSTypeCode: string;
 		PIMA: string;
 		IsEAWBOnlyDemo: boolean;
