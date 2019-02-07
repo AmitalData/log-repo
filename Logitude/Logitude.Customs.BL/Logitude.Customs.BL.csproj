@@ -182,6 +182,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\SplitOrMergeReasonDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TermsOfSaleTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TPGFileTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\TransferCargoMethodTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TreatmentWayDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\UIMessageDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\VendorTypeDetails.Generated.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="CloseTables\EnumGenerated\SplitOrMergeReasonStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TermsOfSaleTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TPGFileTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\TransferCargoMethodTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TreatmentWayStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\UIMessageStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\VendorTypeStruct.Generated.cs" />
@@ -657,6 +659,7 @@
     <Compile Include="EntityDataMappings\Generated\TPGFileTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TradeAgreementDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TradeLevyExamptTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TransferCargoMethodTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TreatmentWayDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\UIMessageAdditionalDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\UIMessageDataMapping.Generated.cs" />
@@ -794,6 +797,7 @@
     <Compile Include="EntityDataMappings\TPGFileTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TradeAgreementDataMapping.cs" />
     <Compile Include="EntityDataMappings\TradeLevyExamptTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TransferCargoMethodTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TreatmentWayDataMapping.cs" />
     <Compile Include="EntityDataMappings\UIMessageAdditionalDataMapping.cs" />
     <Compile Include="EntityDataMappings\UIMessageDataMapping.cs" />
@@ -887,6 +891,7 @@
     <Compile Include="EntityQueryServices\Generated\SplitOrMergeReasonQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\StorageStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TPGFileTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TransferCargoMethodTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TreatmentWayQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\UIMessageAdditionalQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\UIMessageQueryService.Generated.cs" />
@@ -1288,6 +1293,7 @@
     <Compile Include="EntityUpdateServices\Generated\SplitOrMergeReasonUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\StorageStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TPGFileTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TransferCargoMethodTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TreatmentWayUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\UIMessageAdditionalUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\UIMessageUpdateService.Generated.cs" />

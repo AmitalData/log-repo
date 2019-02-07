@@ -137,6 +137,7 @@
     <Compile Include="EntityKeys\SeizureMethodTypeKeys.cs" />
     <Compile Include="EntityKeys\SplitOrMergeReasonKeys.cs" />
     <Compile Include="EntityKeys\TPGFileTypeKeys.cs" />
+    <Compile Include="EntityKeys\TransferCargoMethodTypeKeys.cs" />
     <Compile Include="EntityKeys\TreatmentWayKeys.cs" />
     <Compile Include="EntityKeys\UIMessageAdditionalKeys.cs" />
     <Compile Include="EntityKeys\UIMessageKeys.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="EntityListQueryServices\Generated\SeizureMethodTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SplitOrMergeReasonListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TPGFileTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\TransferCargoMethodTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TreatmentWayListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UIMessageAdditionalListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UIMessageListQueryService.Generated.cs" />
@@ -229,6 +231,7 @@
     <Compile Include="EntityListQueryServices\SeizureMethodTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SplitOrMergeReasonListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TPGFileTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\TransferCargoMethodTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TreatmentWayListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UIMessageAdditionalListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UIMessageListQueryService.cs" />
@@ -275,6 +278,7 @@
     <Compile Include="EntityLists\Generated\SeizureMethodTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SplitOrMergeReasonList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TPGFileTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\TransferCargoMethodTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TreatmentWayList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UIMessageAdditionalList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UIMessageList.Generated.cs" />
@@ -321,6 +325,7 @@
     <Compile Include="EntityMapping\SeizureMethodTypeMap.cs" />
     <Compile Include="EntityMapping\SplitOrMergeReasonMap.cs" />
     <Compile Include="EntityMapping\TPGFileTypeMap.cs" />
+    <Compile Include="EntityMapping\TransferCargoMethodTypeMap.cs" />
     <Compile Include="EntityMapping\TreatmentWayMap.cs" />
     <Compile Include="EntityMapping\UIMessageAdditionalMap.cs" />
     <Compile Include="EntityMapping\UIMessageMap.cs" />
@@ -367,6 +372,7 @@
     <Compile Include="EntityPOCOs\SeizureMethodType.cs" />
     <Compile Include="EntityPOCOs\SplitOrMergeReason.cs" />
     <Compile Include="EntityPOCOs\TPGFileType.cs" />
+    <Compile Include="EntityPOCOs\TransferCargoMethodType.cs" />
     <Compile Include="EntityPOCOs\TreatmentWay.cs" />
     <Compile Include="EntityPOCOs\UIMessage.cs" />
     <Compile Include="EntityPOCOs\UIMessageAdditional.cs" />
@@ -444,6 +450,7 @@
     <Compile Include="Repsitories\Generated\SeizureMethodTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SplitOrMergeReasonRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TPGFileTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\TransferCargoMethodTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TreatmentWayRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UIMessageAdditionalRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UIMessageRepository.Generated.cs" />
@@ -459,6 +466,7 @@
     <Compile Include="Repsitories\SeizureMethodTypeRepository.cs" />
     <Compile Include="Repsitories\SplitOrMergeReasonRepository.cs" />
     <Compile Include="Repsitories\TPGFileTypeRepository.cs" />
+    <Compile Include="Repsitories\TransferCargoMethodTypeRepository.cs" />
     <Compile Include="Repsitories\TreatmentWayRepository.cs" />
     <Compile Include="Repsitories\UIMessageAdditionalRepository.cs" />
     <Compile Include="Repsitories\UIMessageRepository.cs" />

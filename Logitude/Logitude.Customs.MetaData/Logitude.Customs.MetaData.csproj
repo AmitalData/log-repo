@@ -120,6 +120,7 @@
     <None Include="EntityFiles\SeizureFactorType.lxml" />
     <None Include="EntityFiles\SeizureMethodType.lxml" />
     <None Include="EntityFiles\TPGFileType.lxml" />
+    <None Include="EntityFiles\TransferCargoMethodType.lxml" />
     <None Include="EntityFiles\TreatmentWay.lxml" />
     <None Include="EntityFiles\CargoSplitRequestStatus.lxml" />
     <None Include="EntityFiles\DecCargoSplitCon.lxml" />

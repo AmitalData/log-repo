@@ -204,6 +204,10 @@
     <Compile Include="Migrations\201901291242145_AddMigrationCourierFast.Designer.cs">
       <DependentUpon>201901291242145_AddMigrationCourierFast.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902070727166_AddMigrationTransferCargoMethod.cs" />
+    <Compile Include="Migrations\201902070727166_AddMigrationTransferCargoMethod.Designer.cs">
+      <DependentUpon>201902070727166_AddMigrationTransferCargoMethod.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -339,6 +343,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901291242145_AddMigrationCourierFast.resx">
       <DependentUpon>201901291242145_AddMigrationCourierFast.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902070727166_AddMigrationTransferCargoMethod.resx">
+      <DependentUpon>201902070727166_AddMigrationTransferCargoMethod.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

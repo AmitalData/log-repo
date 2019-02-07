@@ -358,6 +358,7 @@
     <Compile Include="EntityPMs\Generated\TPGFileTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TradeAgreementPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TradeLevyExamptTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TransferCargoMethodTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TreatmentWayPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\UIMessageAdditionalPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\UIMessagePM.Generated.cs" />
