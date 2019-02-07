@@ -1066,6 +1066,52 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
     }
 
+
+    DepositionStatusbuttonclicked(event) {
+
+        //if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && this.EntityPM.DepositionStatusCode != "L") {
+        this.EntityPM.DepositionStatusCode = "L";
+        this.SaveEntityChanges(null);
+        event.stopPropagation();
+        return;
+        //}
+    }
+    SaveEntityChanges(args: any): any {
+        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+            this.declarationPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+
+                if (myResponse.HasError) {
+                    //this.ValidationErrorsList = myResponse.ErrorsArray;
+                }
+
+                else {
+                    this.EntityPM = myResponse.Result;
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+
+                        var myErrors: string[] = [];
+                        myErrors.push("this.EntityPM.Id is null");
+                        //this.ValidationErrorsList = myErrors;
+                    }
+                    else {
+                        if (args == null) {
+                            //this.CancelButtonClicked();
+                        } else {
+
+                            //this.SendButtonClicked();
+                        }
+
+                    }
+                }
+
+
+            });
+
+        }
+    }
+
+
     private GetDepositionDefaults(CustomerCode: string) {
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_BOX_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
