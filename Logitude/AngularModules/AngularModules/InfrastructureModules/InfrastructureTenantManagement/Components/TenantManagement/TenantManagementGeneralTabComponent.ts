@@ -19,7 +19,7 @@ import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings'
 import {GlobalDomainService} from '../../../../Common/Services/GlobalDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {TenantManagementList} from '../../../../Infrastructure/EntityLists/TenantManagementList';
-
+import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 @Component({
     moduleId: module.id,
     selector: 'TenantManagementGeneralTabComponent',
@@ -31,12 +31,37 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     public ObjectTableName: string = "TenantManagement";
     public EntityPM: TenantManagementPM;
     private iGlobalDomainService: GlobalDomainService;
+    public BluesnapContractIdFilterItems: ApiQueryFilters;
+    public BluesnapEAWBContractIdFilterItems: ApiQueryFilters;
+    public BluesnapEAWBSContractIdFilterItems: ApiQueryFilters;
+    public BluesnapOneTimeContractIdFilterItems: ApiQueryFilters;
+    public BluesnapCRMContractIdFilterItems: ApiQueryFilters;
+
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
         this.iGlobalDomainService = new GlobalDomainService();
         this.LoadParentTenants();
         this.Listen();
+
+        this.BluesnapContractIdFilterItems = new ApiQueryFilters();
+        this.BluesnapContractIdFilterItems.addAdditionalFilter("BluesnapContractTypeCode", "BA", null, null, "Equals", false, false, false, "string", false, true);
+
+        this.BluesnapCRMContractIdFilterItems = new ApiQueryFilters();
+        this.BluesnapCRMContractIdFilterItems.addAdditionalFilter("BluesnapContractTypeCode", "CRM", null, null, "Equals", false, false, false, "string", false, true);
+
+        this.BluesnapEAWBContractIdFilterItems = new ApiQueryFilters();
+        this.BluesnapEAWBContractIdFilterItems.addAdditionalFilter("BluesnapContractTypeCode", "EAWB", null, null, "Equals", false, false, false, "string", false, true);
+
+
+        this.BluesnapEAWBSContractIdFilterItems = new ApiQueryFilters();
+        this.BluesnapEAWBSContractIdFilterItems.addAdditionalFilter("BluesnapContractTypeCode", "EABS", null, null, "Equals", false, false, false, "string", false, true);
+
+
+        this.BluesnapOneTimeContractIdFilterItems = new ApiQueryFilters();
+        this.BluesnapOneTimeContractIdFilterItems.addAdditionalFilter("BluesnapContractTypeCode", "OT", null, null, "Equals", false, false, false, "string", false, true);
+
+
     }
 
     private SessionEvent: any = null;
@@ -647,6 +672,48 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
+
+    get BluesnapContractQTYs() { return this.EntityPM.BluesnapContractQTY; }
+    set BluesnapContractQTYs(newValue: number) {
+        if (this.EntityPM.BluesnapContractQTY != newValue) {
+            this.EntityPM.BluesnapContractQTY = newValue;
+        }
+    }
+
+
+    get BluesnapCRMContractQTYs() { return this.EntityPM.BluesnapCRMContractQTY; }
+    set BluesnapCRMContractQTYs(newValue: number) {
+        if (this.EntityPM.BluesnapCRMContractQTY != newValue) {
+            this.EntityPM.BluesnapCRMContractQTY = newValue;
+        }
+    }
+
+
+    get BluesnapEAWBContractQTYs() { return this.EntityPM.BluesnapEAWBContractQTY; }
+    set BluesnapEAWBContractQTYs(newValue: number) {
+        if (this.EntityPM.BluesnapEAWBContractQTY != newValue) {
+            this.EntityPM.BluesnapEAWBContractQTY = newValue;
+        }
+    }
+
+
+    get BluesnapEAWBSContractQTYs() { return this.EntityPM.BluesnapEAWBSContractQTY; }
+    set BluesnapEAWBSContractQTYs(newValue: number) {
+        if (this.EntityPM.BluesnapEAWBSContractQTY != newValue) {
+            this.EntityPM.BluesnapEAWBSContractQTY = newValue;
+        }
+    }
+
+
+    get BluesnapOneTimeContractQTYs() { return this.EntityPM.BluesnapOneTimeContractQTY; }
+    set BluesnapOneTimeContractQTYs(newValue: number) {
+        if (this.EntityPM.BluesnapOneTimeContractQTY != newValue) {
+            this.EntityPM.BluesnapOneTimeContractQTY = newValue;
+        }
+    }
+
+    
+
     get PackageCode() { return this.EntityPM.PackageCode; }
     set PackageCode(newValue: string) {
         if (this.EntityPM.PackageCode != newValue) {
@@ -921,6 +988,51 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     set BluesnapContractId(newValue: string) {
         if (this.EntityPM.BluesnapContractId != newValue) {
             this.EntityPM.BluesnapContractId = newValue;
+        }
+    }
+
+
+
+    get BluesnapCRMContractId() {
+        return this.EntityPM.BluesnapCRMContractId;
+    }
+    set BluesnapCRMContractId(newValue: string) {
+        if (this.EntityPM.BluesnapCRMContractId != newValue) {
+            this.EntityPM.BluesnapCRMContractId = newValue;
+        }
+    }
+
+
+
+
+    get BluesnapEAWBContractId() {
+        return this.EntityPM.BluesnapEAWBContractId;
+    }
+    set BluesnapEAWBContractId(newValue: string) {
+        if (this.EntityPM.BluesnapEAWBContractId != newValue) {
+            this.EntityPM.BluesnapEAWBContractId = newValue;
+        }
+    }
+
+
+
+    get BluesnapEAWBSContractId() {
+        return this.EntityPM.BluesnapEAWBSContractId;
+    }
+    set BluesnapEAWBSContractId(newValue: string) {
+        if (this.EntityPM.BluesnapEAWBSContractId != newValue) {
+            this.EntityPM.BluesnapEAWBSContractId = newValue;
+        }
+    }
+
+
+
+    get BluesnapOneTimeContractId() {
+        return this.EntityPM.BluesnapOneTimeContractId;
+    }
+    set BluesnapOneTimeContractId(newValue: string) {
+        if (this.EntityPM.BluesnapOneTimeContractId != newValue) {
+            this.EntityPM.BluesnapOneTimeContractId = newValue;
         }
     }
 
