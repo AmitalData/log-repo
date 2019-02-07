@@ -907,6 +907,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<TransferCargoMethodType> TransferCargoMethodType { get; set; }
         public IDbSet<GatepassReturnCode> GatepassReturnCode { get; set; }
         public IDbSet<UpdateCode> UpdateCode { get; set; }
+        public IDbSet<GatepassRequest> GatepassRequest { get; set; }
 
         #endregion
 
@@ -3915,6 +3916,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TransferCargoMethodTypeMap());
             modelBuilder.Configurations.Add(new GatepassReturnCodeMap());
             modelBuilder.Configurations.Add(new UpdateCodeMap());
+            modelBuilder.Configurations.Add(new GatepassRequestMap());
 
             #endregion
 

@@ -169,6 +169,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<FaultInspectionType> FaultInspectionTypes { get; }
 		 IDbSet<FreightPaymentMethod> FreightPaymentMethods { get; }
 		 IDbSet<FuelType> FuelTypes { get; }
+		 IDbSet<GatepassRequest> GatepassRequests { get; }
 		 IDbSet<GatepassReturnCode> GatepassReturnCodes { get; }
 		 IDbSet<Gender> Genders { get; }
 		 IDbSet<GovernmentProcedureType> GovernmentProcedureTypes { get; }
