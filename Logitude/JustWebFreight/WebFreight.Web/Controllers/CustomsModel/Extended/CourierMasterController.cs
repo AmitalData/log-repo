@@ -20,6 +20,7 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.Customs.BL.Messaging.Maman;
+using Logitude.Customs.BL.Messaging.ILOVS;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -447,6 +448,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
 
         }
+        static bool send2Maman= false;
         public HttpResponseMessage GetSendECTHRDataMaman(string declarationId)
         {
             try
@@ -454,9 +456,18 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
-                var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
-                var response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
+                string response = "";
+                if (send2Maman)
+                {
+                    var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
+                    response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
+                }
+                else
+                {
+                    var courierGWMessageECTHRDataMamanService = new CourierOVSECTHMessageRequestService();
+                    response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
+                }
+                send2Maman = !send2Maman;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)

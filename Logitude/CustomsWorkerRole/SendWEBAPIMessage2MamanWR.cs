@@ -34,6 +34,8 @@ using System.Net.Http;
 using Logitude.Customs.BL.Messaging.Maman;
 using Microsoft.Practices.Unity;
 using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.Messaging;
+using Logitude.Customs.BL.Messaging.ILOVS;
 
 namespace CustomsWorkerRole
 {
@@ -295,29 +297,13 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 //                var myWebAPICourierHawbMamanService = new WebAPICourierGWMessageECTHRDataMamanService();
                 //myWebAPICourierHawbMamanService.AnalyzeResponse(courier2MamanCommSettings, responeGWMessageECTHRData);
 
-                IWebAPIMessage2MamanAnalyzer analyzer = null;
-                switch (courier2MamanCommSettings.MessageCode)
-                {
-                    case CustomsPartnerFtpDetails.InterfaceName_ECTHR:
-                        {
-                            analyzer = new CourierGWMessageECTHRDataMamanResponseService();
-                        }
-                        break;
-                    case CustomsPartnerFtpDetails.InterfaceName_ECSPCL:
-                        {
-                            analyzer = new CourierGWMessageECSpclMamanResponseService();
-                        }
-                        break;
-                    default:
-                        throw new Exception("Please register  ");
-                        break;
-                }
-
+                var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
+                IWebAPIMessage2MamanAnalyzer analyzer = customsPartnerFtpDetails.GetResponseService(courier2MamanCommSettings.MessageCode);
 
                 analyzer.AnalyzeResponse(courier2MamanCommSettings, webAPIResultString);
-                
 
-                
+
+
 
 
 
@@ -341,9 +327,8 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             return true;
         }
 
-        
+       
 
-      
 
     }
 

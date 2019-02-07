@@ -25,14 +25,14 @@ using System.Threading.Tasks;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 
-namespace Logitude.Customs.BL.Messaging.Maman
+namespace Logitude.Customs.BL.Messaging/*.Maman*/
 {
-    public   class WebAPISendMessage2MamanService
+    public   class WebAPISendMessage2MasofService
     {
         //private string _communicationSubject = "שידור מסר  פעולות מיוחדות לממן";
        
         
-        public void BuildCommunicationLog(byte[] bytearray, int tenant, string declarationId, string InterfaceName)///using  by SendWEBAPIMessage2MamanWRWR
+        public void BuildCommunicationLog(byte[] bytearray, int tenant, string declarationId, string InterfaceName,string PartnerCode)///using  by SendWEBAPIMessage2MamanWRWR
         {
             ObjectTableRepository repo = new ObjectTableRepository(tenant);
             var objectTableId = repo.GetObjectTableIdByName("Customs.Declaration"/*"Customs.CourierMaster"*/);
@@ -42,12 +42,23 @@ namespace Logitude.Customs.BL.Messaging.Maman
             DocumentRepository documentRepository = new DocumentRepository(commonContext);
             var amitalContext = AmitalContext.GetContext(tenant);
             var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-            var def =myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false,true);
 
-            bool sendMamanWEBAPIIsOn = def.DEFDATA /*DefaultValue*/ == "Y";
-            if (!sendMamanWEBAPIIsOn)
+            switch (PartnerCode)
             {
-                throw new Exception("WebAPISendMessage2MamanService()->!sendMamanWEBAPIIsOn");
+                case CustomsPartnerFtpDetails.PartnerCode_Mamam:
+                    {
+                        var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
+
+                        bool sendMamanWEBAPIIsOn = def.DEFDATA /*DefaultValue*/ == "Y";
+                        if (!sendMamanWEBAPIIsOn)
+                        {
+                            throw new Exception("WebAPISendMessage2MamanService()->!sendMamanWEBAPIIsOn");
+                        }
+
+                    }
+                    break;
+                default:
+                    break;
             }
 
             var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
@@ -55,8 +66,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
             var defDefault=ProxyUtil.JsonConvertDeserializeTyped<InterfaceDetails>(defDefaultJSON);
 
             var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
-            var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, InterfaceName /*CustomsPartnerFtpDetails.InterfaceName_ECSPCL*/, 
-                CustomsPartnerFtpDetails.PartnerCode_Mamam, 
+            var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, InterfaceName /*CustomsPartnerFtpDetails.InterfaceName_ECSPCL*/,
+                PartnerCode/*CustomsPartnerFtpDetails.PartnerCode_Mamam*/, 
                 CustomsPartnerFtpDetails.TypeCode_Out);
 
 

@@ -1662,6 +1662,8 @@
     <Compile Include="Messaging\Customs\CustomsStateMachineProcess.cs" />
     <Compile Include="Messaging\Customs\SendSheetSignModel.cs" />
     <Compile Include="Messaging\Customs\SignQueue.cs" />
+    <Compile Include="Messaging\ILOVS\CourierOVSECTHMessageRequestService.cs" />
+    <Compile Include="Messaging\ILOVS\CourierOVSECTHMessageResponseService.cs" />
     <Compile Include="Messaging\L2U\CustomFile\CustomCertificatesService.cs" />
     <Compile Include="Messaging\L2U\CustomFile\CustomFileCreditService.cs" />
     <Compile Include="Messaging\L2U\CustomFile\CustomFileCreditService.Model.cs" />
@@ -1709,7 +1711,7 @@
     <Compile Include="Messaging\Maman\CourierMasterMamanService.cs" />
     <Compile Include="Messaging\Maman\FTPOutMaman2470ReleaseGoodService.cs" />
     <Compile Include="Messaging\Maman\FTPOutMamanSubManifestService.cs" />
-    <Compile Include="Messaging\Maman\WebAPISendMessage2MamanService.cs" />
+    <Compile Include="Messaging\Maman\WebAPISendMessage2MasofService.cs" />
     <Compile Include="Messaging\Maman\CourierGWMessageECSpclMamanResponseService.cs" />
     <Compile Include="Messaging\Maman\CourierGWMessageECTHRDataMamanResponseService.cs" />
     <Compile Include="Messaging\U2L\CellFile\CellFileUpsertService.cs" />

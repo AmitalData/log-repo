@@ -1,4 +1,4 @@
-﻿import { INF_MSG_GenericResponseData } from './INF_MSG_GenericResponseData';
+import { INF_MSG_GenericResponseData } from './INF_MSG_GenericResponseData';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 
 export class WarehouseBlockBalanceResponseData extends INF_MSG_GenericResponseData {
@@ -16,6 +16,12 @@ export class WarehouseBlockBalanceResponseData extends INF_MSG_GenericResponseDa
     public LogicalPackagesQuantityBalance: string;
     public PhysicalPackagesQuantityBalance: string;
     public Value: string;
+    public StorageEntryPortChargeBalance: string;
+    public StorageEntryPortChargeCurrencyType: string;
+    public StorageEntryTransportBalance: string;
+    public StorageEntryTransportCurrencyType: string;
+    public StorageEntryInsuranceBalance: string;
+    public StorageEntryInsuranceCurrencyType: string;
     public BlockSpecialActivitiesList: Array<BlockSpecialActivities>;
     public ActionList: Array<ActionActivities>;
     public StorageActionList: Array<StorageAction>;
@@ -45,6 +51,7 @@ export class StorageAction {
     public StorageActionPackagesQuantity: string;
     public PackagesQuantityAfterStorageAction: string;
     public StorageReferenceType: string;
+    public CargoMovementReference: string;
     public PackingDetailsList: Array<PackingDetails>;
     public PackingDetailsListObs: ObservableCollection;
     public StorageUnloadingExceptiontype: string;
