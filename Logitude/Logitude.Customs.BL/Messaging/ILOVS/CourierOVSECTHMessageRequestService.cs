@@ -121,10 +121,10 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 //DestLineDesc = "כללי",// - שינוי בשדה יעד המטען שליחה של "כללי" כברירת מחדל במקום 1
                 //BaldarMessageTime = DateTime.Now,
                 //DestLineCode = "9999999999",
-                DeclarationNumber = this._DeclarationPM.DeclarationNumber,
+                DeclarationNumber = this._DeclarationPM.DeclarationNumber??"",
                 //CustomIkuv = this._DeclarationPM.CourierSuspentionReasonCode,
                 //Task 46455
-                CustomsSuspention = this._DeclarationPM.CourierSuspentionCode,
+                CustomsSuspention = this._DeclarationPM.CourierSuspentionCode??"",
                 Preclearence = this._DeclarationPM.CourierCustomStatusCode== "1"  /*released*/,
 
 

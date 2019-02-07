@@ -34,6 +34,7 @@ using System.Net.Http;
 using Logitude.Customs.BL.Messaging.Maman;
 using Microsoft.Practices.Unity;
 using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.Messaging;
 
 namespace CustomsWorkerRole
 {
