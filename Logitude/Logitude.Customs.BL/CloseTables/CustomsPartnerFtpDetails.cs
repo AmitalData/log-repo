@@ -18,6 +18,7 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_SubManifest = "SUBMANIFEST";
         public const string InterfaceName_ECTHR = "ECTHR";//EC = E-Commerce
         public const string InterfaceName_ECOVSTHR = "ECOVSTHR";//EC = E-Commerce
+        public const string InterfaceName_ECOVSTHR_Response = "ECOVSTHR+RS";//EC = E-Commerce
         public const string InterfaceName_ECSPCL = "ECSPCL";//EC = E-Commerce
         public const string InterfaceName_ECSTB = "ECSTB";//EC = E-Commerce
         public const string InterfaceName_ECSTB_Splited = "ECSTB+P";//EC = E-Commerce
@@ -105,6 +106,21 @@ namespace Logitude.Customs.BL.CloseTables
                 
             },
             
+            new InterfaceDetails()
+            {
+
+
+                Code = InterfaceName_ECOVSTHR_Response,
+                Name = "ש.מ.ב מאוברסיז",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_ILOVS,
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
+
+
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.OVSHAWBService,
+                Subject="ש.מ.ב מאוברסיז",
+                ServerInternalDef= true
+            },
 
             };
             ///
@@ -249,6 +265,7 @@ namespace Logitude.Customs.BL.CloseTables
         none,
         MamanStatusAvailabilitySpliterService,
         MamanStatusAvailabilityService,
+        OVSHAWBService,
     }
     public class InterfaceDetails
     {

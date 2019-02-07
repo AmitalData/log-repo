@@ -5,6 +5,7 @@ using Logitude.BL.Helpers;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
 using Logitude.Customs.Data;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -34,7 +35,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
 
 
         //public void AnalyzeResponse(Courier2MamanCommSettings settings, GWMessageECTHRData  courierOVSHAWBResponse)
-        public void AnalyzeResponse(Courier2MamanCommSettings settings, string webAPIResultString)
+        public void AnalyzeQResponse(Courier2MamanCommSettings settings, string webAPIResultString)
 
         {
 
@@ -75,6 +76,25 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             }
         }
 
+        public void AnalyzeResponse(Courier2MamanCommSettings settings, string webAPIResultString)
+        {
+            var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
+            var def =customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR_Response);
+            var commSetting = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
+            var analyzeQueueUtil = new AnalyzeQueueUtil();
+            var new_analyze = analyzeQueueUtil
+               .SaveMessageToAnalyzeQueue("", Encoding.UTF8.GetBytes(webAPIResultString), settings.Tenant,
+               commSetting, def,
+               new AnalyzeResultModel()
+               {
+                   EntityID = settings.DeclarationId,
+                   ObjectTableID = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+
+               });
+
+            LogMessagingUtil.Instance.AppendLine($"new_analyze  CommunicationLogId = {new_analyze.CommunicationLogId}");
+
+        }
     }
 
 

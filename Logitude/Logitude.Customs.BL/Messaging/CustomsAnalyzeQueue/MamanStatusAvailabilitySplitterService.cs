@@ -100,10 +100,10 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             };
 
             listSTBMessage.ForEach(currSTBMessage =>
-            {
+            {                
                 var analyzeQueueUtil = new AnalyzeQueueUtil();
                 var new_analyze = analyzeQueueUtil
-                   .SaveMessageToAnalyzeQueue(this._AnalyzeQueue.FileName, Encoding.UTF8.GetBytes(currSTBMessage), this._CommunicationLog.Tenant, defInterfaceName_ECSTS_Splited, res);
+                   .SaveMessageToAnalyzeQueue(this._AnalyzeQueue.FileName, Encoding.UTF8.GetBytes(currSTBMessage), this._CommunicationLog.Tenant, "",defInterfaceName_ECSTS_Splited, res);
 
                 LogMessagingUtil.Instance.AppendLine($"new_analyze  CommunicationLogId = {new_analyze.CommunicationLogId}");
             });

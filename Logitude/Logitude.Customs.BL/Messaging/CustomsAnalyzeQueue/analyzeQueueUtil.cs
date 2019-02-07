@@ -56,7 +56,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
     public class AnalyzeQueueUtil
     {
 
-        public AnalyzeQueue SaveMessageToAnalyzeQueue(string fileName, byte[] messageData, int tenant, InterfaceDetails defInterfaceDetail
+        public AnalyzeQueue SaveMessageToAnalyzeQueue(string fileName, byte[] messageData, int tenant, string Communicationsettings, InterfaceDetails defInterfaceDetail
             ,AnalyzeResultModel analyzeResultModel=null)
         {
             AnalyzeQueue analyzeQueue = null;
@@ -85,7 +85,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                     FileSize = System.Text.Encoding.UTF8.GetBytes(" ").Length,
                     FileName = fileName,
 
-                    CommunicationLogId = BuildCommunicationLog(messageData, tenant, defInterfaceDetail, analyzeResultModel)
+                    CommunicationLogId = BuildCommunicationLog(messageData, tenant, defInterfaceDetail, Communicationsettings,analyzeResultModel)
                 };
 
                 analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
@@ -97,9 +97,29 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             return analyzeQueue;
         }
 
+        public string GetCommSetting(int tenant ,string defInterfaceDetailCode,string loggedContactId ,Courier2MamanCommSettings settings)
+        {
+            
+            if (string.IsNullOrWhiteSpace( loggedContactId ))
+            {
+                ContactRepository contactRepository = new ContactRepository(tenant);
+                Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(tenant), tenant);
 
+                loggedContactId = loggedContact.Id;
+            }
+            settings = settings ?? new Courier2MamanCommSettings()
+            {
+                MessageCode = defInterfaceDetailCode,
+                Tenant = tenant,
+                LoggedContactId = loggedContactId
+            };
+            var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
+            return settingsData;
+        }
 
-        public string BuildCommunicationLog(byte[] bytearray, int tenant, InterfaceDetails defInterfaceDetail, AnalyzeResultModel analyzeResultModel=null)///using  by SendWEBAPIMessage2MamanWRWR
+        public string BuildCommunicationLog(byte[] bytearray, int tenant, InterfaceDetails defInterfaceDetail,
+            string Communicationsettings,
+            AnalyzeResultModel analyzeResultModel=null)///using  by SendWEBAPIMessage2MamanWRWR
         {
 
 
@@ -112,7 +132,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
 
 
-
+            
 
             ContactRepository contactRepository = new ContactRepository(tenant);
             Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(tenant), tenant);
@@ -122,14 +142,19 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 loggedContactId = loggedContact.Id;
             }
 
-            //.PostIt("", "F_unitedf", "Unit2019", data);
-            var settings = new Courier2MamanCommSettings()
+            if (String.IsNullOrWhiteSpace(Communicationsettings))
             {
-                MessageCode = defInterfaceDetail.Code,
-                Tenant = tenant,
-                LoggedContactId = loggedContactId
-            };
-            var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
+                Communicationsettings = GetCommSetting(tenant, defInterfaceDetail.Code, loggedContactId, null);
+            }
+
+            //.PostIt("", "F_unitedf", "Unit2019", data);
+            //settings = settings ?? new Courier2MamanCommSettings()
+            //{
+            //    MessageCode = defInterfaceDetail.Code,
+            //    Tenant = tenant,
+            //    LoggedContactId = loggedContactId
+            //};
+            //var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
 
             Document document = new Document()
             {
@@ -164,7 +189,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 DocumentId = document.Id,
                 CreateDateUTC = DateTime.UtcNow,
                 CreatedByUserId = loggedContactId,
-                LogSettings = settingsData,
+                LogSettings = /*settingsData*/Communicationsettings,
                 //QueueName = def.QueueName //SBQueueNames.SendWEBAPIMessage2MamanQ.ToString() ///using  by SendWEBAPIMessage2MamanWR
             };
             analyzeResultModel = analyzeResultModel ?? new AnalyzeResultModel();
