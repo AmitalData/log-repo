@@ -11,7 +11,7 @@
 
 //OpenAccess please define!!! 
 //logitude please undefine!!!  
-#define reserveword
+//#define reserveword
 
 
 using System;
