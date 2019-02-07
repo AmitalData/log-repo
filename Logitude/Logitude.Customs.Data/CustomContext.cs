@@ -372,6 +372,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new FuelTypeMap());
 	
+            modelBuilder.Configurations.Add(new GatepassReturnCodeMap());
+	
             modelBuilder.Configurations.Add(new GenderMap());
 	
             modelBuilder.Configurations.Add(new GovernmentProcedureTypeMap());
@@ -1980,6 +1982,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<FuelType> FuelTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<GatepassReturnCode> GatepassReturnCodes 
 	 {
 	      get; set;
 	 
