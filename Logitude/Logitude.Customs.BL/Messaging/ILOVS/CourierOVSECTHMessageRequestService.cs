@@ -63,7 +63,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  
             }
-            return "המסר נבנה בהצלחה וישלח בתהליך רקע";
+            return "המסר נבנה בהצלחה וישלח בתהליך רקעOVS ";
         }
 
         private CourierOVSHAWBRequest CreateCourierOVSHawbMessage()
@@ -124,7 +124,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 DeclarationNumber = this._DeclarationPM.DeclarationNumber,
                 //CustomIkuv = this._DeclarationPM.CourierSuspentionReasonCode,
                 //Task 46455
-                CustomsSuspention = "ask odi/anat CustomsSuspentionCode.Declaration from where to take ",
+                CustomsSuspention = this._DeclarationPM.CourierSuspentionCode,
                 Preclearence = this._DeclarationPM.CourierCustomStatusCode== "1"  /*released*/,
 
 
