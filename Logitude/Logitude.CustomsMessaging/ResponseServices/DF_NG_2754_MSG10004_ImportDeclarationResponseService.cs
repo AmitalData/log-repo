@@ -788,6 +788,34 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (_MyDeclarationPM.DepositionStatusCode == "R") _MyDeclarationPM.DepositionStatusCode = null;
         }
 
+        private void UpdateDepositionStatusCode()
+        {
+            if (_MyDeclarationError != null && _MyDeclarationError.Entitites != null && _MyDeclarationError.Entitites.Count > 0)
+            {
+                //Go over all the 'Entity'
+                foreach (var entity in _MyDeclarationError.Entitites)
+                {
+                    if (entity.FieldErrors != null)
+                    {
+                        //Go over all the 'FieldErrors'
+                        foreach (var fieldErrors in entity.FieldErrors)
+                        {
+                            //Get all 'FieldErrors' for the 'FieldError'
+                            List<field> fieldList = (from a in entity.FieldErrors
+                                                     where (a.Code == "4589")
+                                                     select a).ToList();
+                            if (fieldList.Count > 0)
+                            {
+                                if (string.IsNullOrWhiteSpace(_MyDeclarationPM.DepositionStatusCode)) _MyDeclarationPM.DepositionStatusCode = "R";
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+            if (_MyDeclarationPM.DepositionStatusCode == "R") _MyDeclarationPM.DepositionStatusCode = null;
+        }
+
         public void SendDeclarationPrint(DeclarationPM declarationPM, SendRequestVIA RequestVIA, GenericRequestParams requestParams) // moran 28.1.15 - Task 10005
         {
 
