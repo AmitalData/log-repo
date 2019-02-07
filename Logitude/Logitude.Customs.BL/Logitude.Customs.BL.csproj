@@ -1647,6 +1647,7 @@
     <Compile Include="Messaging\CustomsAnalyzeQueue\CustomAnalyzerQueueBase.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilityService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilitySplitterService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\OVSHAWBService.cs" />
     <Compile Include="Messaging\Customs\ClientProgressBarIndicatorService.cs" />
     <Compile Include="Messaging\Customs\CustomsRequestsSheetDomainModelUtil.cs" />
     <Compile Include="Messaging\Customs\CustomsRequestsSheetPostUpdateService.cs" />

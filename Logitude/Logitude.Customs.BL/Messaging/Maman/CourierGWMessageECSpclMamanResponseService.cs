@@ -36,7 +36,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
 
 
-        public void AnalyzeResponse(Courier2MamanCommSettings settings, string webAPIResultString)
+        public void AnalyzeResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
         {
 
 

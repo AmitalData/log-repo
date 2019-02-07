@@ -35,7 +35,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
 
 
         //public void AnalyzeResponse(Courier2MamanCommSettings settings, GWMessageECTHRData  courierOVSHAWBResponse)
-        public void AnalyzeQResponse(Courier2MamanCommSettings settings, string webAPIResultString)
+        public void AnalyzeQResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
 
         {
 
@@ -76,7 +76,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             }
         }
 
-        public void AnalyzeResponse(Courier2MamanCommSettings settings, string webAPIResultString)
+        public void AnalyzeResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
         {
             var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
             var def =customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR_Response);

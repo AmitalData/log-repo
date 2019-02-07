@@ -102,7 +102,7 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
             }
 
             //.PostIt("", "F_unitedf", "Unit2019", data);
-            var settings = new Courier2MamanCommSettings()
+            var settings = new CourierWEBAPICommSettings()
             {
                 MessageCode = InterfaceName,
                 URIBaldarCreateECTHRMessgae = dtoWebApiDefinition.WEBAPIURL,/// @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae ",
@@ -196,11 +196,11 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
 
     public interface IWebAPIMessage2MamanAnalyzer
     {
-        void AnalyzeResponse(Courier2MamanCommSettings settings, string webAPIResultString);
+        void AnalyzeResponse(CourierWEBAPICommSettings settings, string webAPIResultString);
     }
 
 
-    public class Courier2MamanCommSettings
+    public class CourierWEBAPICommSettings
     {
 
 

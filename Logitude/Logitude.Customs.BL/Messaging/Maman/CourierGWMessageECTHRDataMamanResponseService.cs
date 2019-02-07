@@ -182,7 +182,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
 #endif
         //public void AnalyzeResponse(Courier2MamanCommSettings settings, GWMessageECTHRData  responeGWMessageECTHRData)
-        public void AnalyzeResponse(Courier2MamanCommSettings settings, string webAPIResultString)
+        public void AnalyzeResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
         
         {
             

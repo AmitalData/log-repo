@@ -280,7 +280,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                     throw new Exception("string.IsNullOrEmpty(waitingCommLog.LogSettings)");
                 }
                 var dataJson = System.Text.Encoding.UTF8.GetString(filedata.ToArray());
-                var courier2MamanCommSettings = JsonConvert.DeserializeObject<Courier2MamanCommSettings>(_WaitingCommLog.LogSettings);
+                var courier2MamanCommSettings = JsonConvert.DeserializeObject<CourierWEBAPICommSettings>(_WaitingCommLog.LogSettings);
                 if (courier2MamanCommSettings == null)
                 {
                     throw new Exception("(courierHawbMamanCommunicationLogSettings == null)");
@@ -338,9 +338,9 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         const string BEARER_TOKEN = "Bearer";
         const string agent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";
         //StringBuilder _StringBuilder = new StringBuilder();
-        private Courier2MamanCommSettings _CourierHawbMamanCommunicationLogSettings;
+        private CourierWEBAPICommSettings _CourierHawbMamanCommunicationLogSettings;
 
-        public WebAPI2BearerMamanMessage(Courier2MamanCommSettings courierHawbMamanCommunicationLogSettings)
+        public WebAPI2BearerMamanMessage(CourierWEBAPICommSettings courierHawbMamanCommunicationLogSettings)
         {
             this._CourierHawbMamanCommunicationLogSettings = courierHawbMamanCommunicationLogSettings;
         }

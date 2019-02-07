@@ -224,6 +224,8 @@ namespace Logitude.Customs.BL.CloseTables
                 case AnalyzeQueueServiceEnum.MamanStatusAvailabilityService:
                     return new MamanStatusAvailabilityService(@interface);
                     break;
+                case AnalyzeQueueServiceEnum.OVSHAWBService:
+                    return new OVSHAWBService(@interface);
                 default:
                     throw new Exception("No analyze service define " + @interface.Code);
                     break;

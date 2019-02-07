@@ -737,7 +737,7 @@ namespace AmitalCustomsWindowsService.Tester
             var wr = new SendWEBAPIMessage2MamanWR();
             string data =
                 @"{""BaldarCode"":""2026"",""BaldarAwb"":""baldarAWb35"",""AirlineAwbPref"":""001"",""Master"":22222211,""Awb8"":88888888,""HawbExtnd"":""abcd1234 update"",""AirlineCode"":""1X"",""FltNo"":null,""FltDate"":null,""LandTime"":null,""DecNoOfPackags"":1,""DecWeight"":100.1,""DolarValue"":200.12345,""StoreTypeReq"":""67"",""Description"":""Description1 - 2026 update"",""CustomerName"":""Miriam"",""CustomerAddress"":""Ein Gedi"",""CustomerPhone"":""026765544"",""DestLineDesc"":""DestLineDesc"",""BaldarMessageTime"":""2018 - 10 - 16T17: 38:33.1365366 + 03:00"",""BaldarHp"":""2323231"",""OpenBaldarAwbDate"":""2018 - 10 - 15T17: 38:33.1365366 + 03:00"",""ResponseStatusCode"":null,""ResponseStatusMsg"":null}";
-            var service = new WebAPI2BearerMamanMessage(new Courier2MamanCommSettings()
+            var service = new WebAPI2BearerMamanMessage(new CourierWEBAPICommSettings()
             {
                 DeclarationId = "",
                 username = "F_unitedf",
@@ -782,7 +782,7 @@ namespace AmitalCustomsWindowsService.Tester
   ""SpLabel5"": ""sample string 9"",
   ""SpSpclCode"": ""sample string 10""
 }";
-            var service = new WebAPI2BearerMamanMessage(new Courier2MamanCommSettings()
+            var service = new WebAPI2BearerMamanMessage(new CourierWEBAPICommSettings()
             {
                 DeclarationId = "",
                 username = "F_unitedf",

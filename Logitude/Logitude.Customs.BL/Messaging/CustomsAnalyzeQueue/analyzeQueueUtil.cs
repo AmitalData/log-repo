@@ -97,7 +97,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             return analyzeQueue;
         }
 
-        public string GetCommSetting(int tenant ,string defInterfaceDetailCode,string loggedContactId ,Courier2MamanCommSettings settings)
+        public string GetCommSetting(int tenant ,string defInterfaceDetailCode,string loggedContactId ,CourierWEBAPICommSettings settings)
         {
             
             if (string.IsNullOrWhiteSpace( loggedContactId ))
@@ -107,7 +107,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
                 loggedContactId = loggedContact.Id;
             }
-            settings = settings ?? new Courier2MamanCommSettings()
+            settings = settings ?? new CourierWEBAPICommSettings()
             {
                 MessageCode = defInterfaceDetailCode,
                 Tenant = tenant,
