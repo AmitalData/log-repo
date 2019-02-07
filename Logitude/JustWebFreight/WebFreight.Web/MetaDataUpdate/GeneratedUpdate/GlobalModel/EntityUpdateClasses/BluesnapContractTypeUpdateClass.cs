@@ -92,9 +92,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Name",
+			      				    LovDisplayMemberPath =  "Name",
+			      				    LovDisplayMemberPathLocal =  "Name",
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  true,
-			      				    IsClosed =  false,
+			      				    IsClosed =  true,
 			      				    CacheOnClient =  true,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
@@ -103,6 +105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
+			      				    SortingByObjectField =  "Name",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
@@ -112,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Bluesnap Contract Type",
-			      				    Code =  "3da7",
+			      				    Code =  "f99b",
 			      				    Name =  "BluesnapContractType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -145,6 +148,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -165,6 +169,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "BluesnapContractType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						Code =  "Code",
@@ -178,6 +183,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
 					  						DefaultText =  @"Code",
+					  						ListFieldLable =  "CodeListLable",
+					  						ListLableDefaultText =  @"Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -204,11 +211,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  true,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
@@ -224,6 +232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "BluesnapContractType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						Code =  "Name",
@@ -265,6 +274,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -327,12 +337,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable BluesnapContractTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BluesnapContractType" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature BluesnapContractTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = BluesnapContractTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContractType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BluesnapContractTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = BluesnapContractTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContractType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BluesnapContractTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = BluesnapContractTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContractType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BluesnapContractTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = BluesnapContractTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContractType.Features.PackageFeature", NameTextCodeDefaultText = "BluesnapContractType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+	    {     
 	    
 		}
 
@@ -386,7 +391,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    
 }
 
-    
+
+	    public void FillBluesnapContractType()
+        { 
+            var repo = new BluesnapContractTypeRepository(0);
+            var dic =repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
+            new FillCloseTables().FillCloseTable<
+                                BluesnapContractType,
+                                Logitude.BL.GlobalModel.BluesnapContractTypeDetails,
+                                BluesnapContractTypeRepository>(repo, dic);
+        }
+
+	    
 
    }
     
