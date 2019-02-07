@@ -568,7 +568,7 @@ namespace WebFreight.Web.InfrastructureModel
 
                                     if (!string.IsNullOrEmpty(countryCode))
                                     {
-                                        countryId = countryRepository.GetCountryIdByCode(countryCode, tenant);
+                                        countryId = countryRepository.GetCountryIdByCode(countryCode, tenant);                                        
                                     }
                                 }
                                 #endregion
@@ -614,6 +614,59 @@ namespace WebFreight.Web.InfrastructureModel
                                 tenantRepository.Update(tenantPoco);
                                 tenantRepository.SubmitChanges();
 
+                                if (countryCode == "IL")
+                                {
+                                    AccountingSetting iAccountingSetting = accountingSettingsRepository.GetSingleAccountSetting(tenant);
+                                    if (iAccountingSetting != null)
+                                    {
+                                        iAccountingSetting.AllowVoidAPI = false;
+                                        iAccountingSetting.AllowVoidAPP = false;
+                                        iAccountingSetting.AllowVoidARI = false;
+                                        iAccountingSetting.AllowVoidARP = false;
+                                        iAccountingSetting.AllowManualInvoiceNumber = false;
+                                        iAccountingSetting.IsChronologicalDates = true;
+                                        iAccountingSetting.IsVatNumberMandatoryInAP = true;
+                                        iAccountingSetting.IsVatNumberMandatoryInAR = true;
+                                        accountingSettingsRepository.Update(iAccountingSetting);
+                                        accountingSettingsRepository.SubmitChanges();
+                                    }
+
+                                    List<string> iCodes = new List<string>();
+                                    iCodes.Add("999S");
+                                    iCodes.Add("999C");
+                                    iCodes.Add("999M");
+                                    iCodes.Add("999CI");
+                                    iCodes.Add("999MP");
+                                    iCodes.Add("999P");
+                                    List<DocumentType> iDocumentTypes = documentTypeRepository.GetDocumentTypesByCodeLists(iCodes, tenant);
+                                    if (iDocumentTypes.Count > 0)
+                                    {
+                                        foreach (DocumentType iDocumentType in iDocumentTypes)
+                                        {
+                                            List<DocumentTypeCopy> iDocumentTypeCopies = (from d in documentTypeRepository.context.DocumentTypeCopies
+                                                                                          where d.Tenant == tenant && d.DocumentTypeId == iDocumentType.Id
+                                                                                          select d).ToList();
+
+                                            if (iDocumentTypeCopies.Count > 0)
+                                            {
+                                                DocumentTypeCopy iDocumentTypeCopy = iDocumentTypeCopies.Where(d => d.Name.ToLower() == "original").FirstOrDefault();
+                                                if (iDocumentTypeCopy == null)
+                                                {
+                                                    iDocumentTypeCopy = iDocumentTypeCopies.Where(d => d.Code.ToLower() == iDocumentType.Code.ToLower()).FirstOrDefault();
+                                                }
+
+                                                if (iDocumentTypeCopy != null)
+                                                {
+                                                    iDocumentType.LimitedPrintCopyId = iDocumentTypeCopy.Id;
+                                                    iDocumentType.IsDocumentOneTimePrintLimited = true;
+                                                    documentTypeRepository.Update(iDocumentType);
+                                                }
+                                            }
+                                        }
+
+                                        documentTypeRepository.SubmitChanges();
+                                    }
+                                }
                             }                                                      
                         }
                         #endregion
@@ -905,7 +958,6 @@ namespace WebFreight.Web.InfrastructureModel
                     IsChronologicalDates = tenantZeroAccoutingSettings.IsChronologicalDates,
                     IsVatNumberMandatoryInAP = tenantZeroAccoutingSettings.IsVatNumberMandatoryInAP,
                     IsVatNumberMandatoryInAR = tenantZeroAccoutingSettings.IsVatNumberMandatoryInAR,
-
                 };
 
                 theAccountingSettingsRepository.Add(settings);

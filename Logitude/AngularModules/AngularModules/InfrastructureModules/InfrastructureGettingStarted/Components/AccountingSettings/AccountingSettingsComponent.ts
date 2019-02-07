@@ -137,6 +137,18 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.UIProperties.SetEnabled("IsAPInvoicesTransferEnabled", this.ObjectTableName, isAPInvoicesTransferEnabled);
             this.UIProperties.SetEnabled("IsARPaymentsTransferEnabled", this.ObjectTableName, isARPaymentsTransferEnabled);
             //this.UIProperties.SetEnabled("IsSingleTaxPerInvoice", this.ObjectTableName, isSingleTaxPerInvoiceEnabled);
+
+
+            if (SessionLocator.TenantPM.CountryCode == "IL" && SessionLocator.LoggedUserPM.IsCustomerCare == false) {
+                this.UIProperties.SetEnabled("AllowVoidARI", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("AllowVoidARP", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("IsVatNumberMandatoryInAR", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("AllowManualInvoiceNumber", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("IsChronologicalDates", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("AllowVoidAPI", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("AllowVoidAPP", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("IsVatNumberMandatoryInAP", this.ObjectTableName, false)
+            }
         }
 
         this.SetUIProperties_RegistryDate();

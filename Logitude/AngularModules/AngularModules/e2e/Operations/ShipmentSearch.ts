@@ -13,56 +13,24 @@ export class ShipmentSearch {
     this.Helper = new FieldsHelper();
     this.operationTab = new GeneralFunctions();
   }
-  QuickSearch() {
+  // QuickSearch() {
 
-    this.operationTab.GoToMainMenu('General.MH.Operations');
-    var shipmentsTab = this.Helper.WaitByCssAndClick_SelectItemFromList('.PagesMenu', 1);
+  //   this.operationTab.GoToMainMenu('General.MH.Operations');
+  //   var shipmentsTab = this.Helper.WaitByCssAndClick_SelectItemFromList('.PagesMenu', 1);
 
-    this.UseSearchBox('searchFeildId','1000');
-    // this.LeaveEntity('.BackBottonBody', 'Operations');
-    // this.EnterViews();
-    // this.EditShipmentFromList();
-    // this.LeaveEntity('.BackBottonBody', 'Shipments');
-    // this.SearchInViews();
+  //   this.UseSearchBox('searchFeildId','1000');
+  //   // this.LeaveEntity('.BackBottonBody', 'Operations');
+  //   // this.EnterViews();
+  //   // this.EditShipmentFromList();
+  //   // this.LeaveEntity('.BackBottonBody', 'Shipments');
+  //   // this.SearchInViews();
 
-  }
+  // }
      
-  UseSearchBox(searchFeildId:string,searchByRef:string) {
-    
-     this.Helper.WaitByIdAndFill(searchFeildId,searchByRef);
-     this.Helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem',0);
+  // UseSearchBox(searchFeildId:string,searchByRef:string) {
 
-  }
-  
-
-
-
-  LeaveEntity(className: string, Text: string) {
-    this.Helper.ButtonClickByCss(className, Text);
-    browser.driver.sleep(5000);
-  }
-  EnterViews() {
-    this.Helper.ButtonClickByCss('.QueryLink', 'Shipments');
-    browser.driver.sleep(5000);
-  }
-  EditShipmentFromList() {
-    this.Helper.ButtonClick('LogGrid_0_0row2');
-    browser.driver.sleep(1000);
-  }
-  SearchInViews() {
-    this.Helper.SetTextFieldValue('1117', 'SearchFieldsId_0_0');
-    // element(by.id('SearchFieldsId_0_5')).sendKeys('1117');
-    browser.driver.sleep(3000);
-
-    element(by.cssContainingText('.TextTrimming', '1117')).click();
-    browser.driver.sleep(3000);
-    var result = element.all(by.css('.ShortTitleDiv'));
-
-    expect(result.get(1).getText()).toBe('1117');
-
-  }
-
-
-
+  //    this.Helper.WaitByIdAndFill(searchFeildId,searchByRef);
+  //    this.Helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem',0);
+  // }
 }
 

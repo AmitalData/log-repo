@@ -17,6 +17,8 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             poco.ContractId = entityPM.ContractId;
             poco.SearchFields = entityPM.Code + "," + entityPM.Name;
             poco.InActive = entityPM.InActive;
+            poco.BluesnapContractTypeCode = entityPM.BluesnapContractTypeCode;
+
         }
     }
 }

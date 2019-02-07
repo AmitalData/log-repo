@@ -13,5 +13,7 @@ export class BluesnapContractList {
 		ContractId: string;
 		SearchFields: string;
 		InActive: boolean;
+		BluesnapContractTypeCode: string;
+		BluesnapContractTypeName: string;
 	
 }

@@ -45,7 +45,8 @@ namespace Simplog.Global.Data.GlobalModel
         IDbSet<CaptchaKey> CaptchaKeys { get; }
         IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; }
         IDbSet<WebhookKeys> WebhookKeys { get; }
-        
+        IDbSet<BluesnapContractType> BluesnapContractTypes { get; }
+
 
         string GetCurrentConnection();
         void SetAsModified(object entity);

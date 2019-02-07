@@ -20,7 +20,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     {
 
 	    
-	[XmlAttribute]
     public string Id { get; set; }
     
     public ARInvoiceType InvoiceType { get; set; }

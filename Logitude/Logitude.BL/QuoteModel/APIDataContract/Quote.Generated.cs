@@ -20,7 +20,6 @@ namespace Logitude.BL.QuoteModel.APIDataContract.ApiV1
     {
 
 	    
-	[XmlAttribute]
     public string Id { get; set; }
     
     public DateTime? AcceptedDate { get; set; }
