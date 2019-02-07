@@ -15,16 +15,16 @@ using System.Threading.Tasks;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 
-namespace Logitude.Customs.BL.Messaging.Maman
+namespace Logitude.Customs.BL.Messaging.ILOVS
 {
-    public class CourierGWMessageECTHRDataMamanRequestService
+    public class CourierOVSECTHMessageRequestService
     {
         private DeclarationPM _DeclarationPM;
         private CourierMasterPM _CourierMasterPM;
 
         public string BuildQueueSendWebAPI(string declarationId, int tenant, CourierMasterPM courierMasterPM = null)
         {
-            
+
             var context = CustomContext.GetContext(tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
             var myCourierMasterQueryService = new CourierMasterQueryService(context);
@@ -47,7 +47,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 throw new Exception($"CourierMaster Is null  .GetByDeclarationId({declarationId}, tenant)");
             }
 
-            GWMessageECTHRData myGWMessageECTHRData = CreateCourierHawbMamanMessage();
+            CourierOVSHAWBRequest myGWMessageECTHRData = CreateCourierOVSHawbMessage();
             string messageToMaman = "";
             messageToMaman = ProxyUtil.JsonConvertSerialize(myGWMessageECTHRData);
             using (var scop = TransactionFactory.GetTransaction())
@@ -55,11 +55,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 byte[] bytearray = Encoding.UTF8.GetBytes(messageToMaman);
 
 
-                //var myWebAPICourierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanResponseService();
-                //myWebAPICourierGWMessageECTHRDataMamanService.BuildCommunicationLog(bytearray, tenant, declarationId);
+                
 
                 var webAPISendMessage2MamanService = new WebAPISendMessage2MasofService();
-                webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECTHR, CustomsPartnerFtpDetails.PartnerCode_Mamam);
+                webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR, CustomsPartnerFtpDetails.PartnerCode_ILOVS);
 
                 scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  
@@ -67,7 +66,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             return "המסר נבנה בהצלחה וישלח בתהליך רקע";
         }
 
-        private GWMessageECTHRData CreateCourierHawbMamanMessage()
+        private CourierOVSHAWBRequest CreateCourierOVSHawbMessage()
         {
             var ConsignmentPackageQualifierCode2 = _DeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages)
                 .Where(r1 => r1.PackageMeasureQualifierCode == "2")
@@ -87,54 +86,56 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 DolarValue = _DeclarationPM.SupplierInvoices.Sum(r => r.InvoiceAmountInUSD.GetValueOrDefault());
             }
 
-            string defBaldarCodeValue = GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _DeclarationPM.Tenant);
+            //string defBaldarCodeValue = GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _DeclarationPM.Tenant);
             var rep = new CustomsAirlineRepository(_CourierMasterPM.Tenant);
             var customsAirline = rep.GetSingle(_CourierMasterPM.AirlineId, _CourierMasterPM.Tenant);
 
-            var courierHawbMamanModel = new GWMessageECTHRData()
+            var courierHawbMamanModel = new CourierOVSHAWBRequest()
             {
-                BaldarCode = defBaldarCodeValue,//"לקחת מדיפולט קוד משלח בלדר",
-                BaldarAwb = _DeclarationPM.CourierHAWB??"",
-                //AirlineAwbPref = _CourierMasterPM.AirlineId,//יש לשלוח את Airline PRFIX)- 114
-                AirlineAwbPref = _CourierMasterPM.AirlinePrefix??"",//יש לשלוח את Airline PRFIX)- 114
 
-                Master = CInt(_CourierMasterPM.MAWB),
-                Awb8 = CInt(_CourierMasterPM.ShortHAWB),
-                HawbExtnd = _CourierMasterPM.HAWB??"",
-                AirlineCode = customsAirline.AirlineCode??"",
-                FltNo = CInt(_CourierMasterPM.FlightNumber),
-                //FltDate = _CourierMasterPM.DepartureDate.GetValueOrDefault().Date,// fltdate is not nullable ??
-                LandTime = _CourierMasterPM.EstimatedArrivalDate,// LandTime is not nullable ??
-                DecNoOfPackags = DecNoOfPackags,
-                DecWeight = DecWeight,
-                DolarValue = DolarValue,
-                StoreTypeReq = "67",//לפי טבלה B1                יש לשלוח תמיד 67
-                Description = _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription??"",
-                CustomerName = _DeclarationPM.ImporterName??"",
-                CustomerAddress = _DeclarationPM.ImporterAddress??"",
-                CustomerPhone = _DeclarationPM.CasualImporterTel??"",
-//                DestLineDesc = "1",//יש לנהל קו הפרדה פר לקוח                יעד הפצה של חברת ההפצה לצורך בניית ממשקים
-                DestLineDesc = "כללי",// - שינוי בשדה יעד המטען שליחה של "כללי" כברירת מחדל במקום 1
-                BaldarMessageTime = DateTime.Now,
-                BaldarHp = _DeclarationPM.AgentId??"",
-                OpenBaldarAwbDate = GetOpenBaldarAwbDate(this._DeclarationPM),// _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().ThirdCargoID.GetValueOrDefault(),///ThirdCargoID.Consignment
+                //BaldarCode = defBaldarCodeValue,//"לקחת מדיפולט קוד משלח בלדר",
+                CourierCompanyVat = _DeclarationPM.AgentId ?? "",
+                CourierHawbNumber = _DeclarationPM.CourierHAWB ?? "",
+                CourierHawbDate = GetOpenBaldarAwbDate(this._DeclarationPM),
+                MawbPrefix = _CourierMasterPM.AirlinePrefix ?? "",//יש לשלוח את Airline PRFIX)- 114
+                Mawb = CInt(_CourierMasterPM.MAWB),
+                //Awb8 = CInt(_CourierMasterPM.ShortHAWB),
+                Hawb = _CourierMasterPM.HAWB ?? "",
+                //AirlineCode = customsAirline.AirlineCode ?? "",
+                FlightNumber = CInt(_CourierMasterPM.FlightNumber),
+                EstimatedArrivalDate = _CourierMasterPM.EstimatedArrivalDate,// LandTime is not nullable ??
+                PackageQuantity = DecNoOfPackags,
+                Weight = DecWeight,
+                GoodValueInUSD = DolarValue,
 
-                //Task 46455:
-                DestLineCode = "9999999999",
-                DeclarationId = this._DeclarationPM.DeclarationNumber,
-                CustomIkuv = this._DeclarationPM.CourierSuspentionReasonCode,
+                //StoreTypeReq = "67",//לפי טבלה B1                יש לשלוח תמיד 67
+                Description = _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription ?? "",
+                ImporterName = _DeclarationPM.ImporterName ?? "",
+                ImporterAddress = _DeclarationPM.ImporterAddress ?? "",
+                //CustomerPhone = _DeclarationPM.CasualImporterTel ?? "",
+                //                DestLineDesc = "1",//יש לנהל קו הפרדה פר לקוח                יעד הפצה של חברת ההפצה לצורך בניית ממשקים
+                DistributionLine = "",
+                DistributionCompanyVat = "",
+
+
+                //DestLineDesc = "כללי",// - שינוי בשדה יעד המטען שליחה של "כללי" כברירת מחדל במקום 1
+                //BaldarMessageTime = DateTime.Now,
+                //DestLineCode = "9999999999",
+                DeclarationNumber = this._DeclarationPM.DeclarationNumber,
+                //CustomIkuv = this._DeclarationPM.CourierSuspentionReasonCode,
                 //Task 46455
-
+                CustomsSuspention = "ask odi/anat CustomsSuspentionCode.Declaration from where to take ",
+                Preclearence = this._DeclarationPM.CourierCustomStatusCode== "1"  /*released*/,
 
 
 
 
             };
 
-            if (_CourierMasterPM.DepartureDate.HasValue)
-            {
-                courierHawbMamanModel.FltDate = _CourierMasterPM.DepartureDate.GetValueOrDefault().Date;// fltdate is not nullable ??
-            }
+            //if (_CourierMasterPM.DepartureDate.HasValue)
+            //{
+            //    courierHawbMamanModel.FltDate = _CourierMasterPM.DepartureDate.GetValueOrDefault().Date;// fltdate is not nullable ??
+            //}
             return courierHawbMamanModel;
         }
         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
@@ -156,12 +157,13 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         public static DateTime GetOpenBaldarAwbDate(DeclarationPM _DeclarationPM)
         {
-            var myConsignmentPM=_DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First();
+            var myConsignmentPM = _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First();
             if (myConsignmentPM == null)
             {
                 return DateTime.MinValue;
             }
-            if (string.IsNullOrWhiteSpace(myConsignmentPM.ThirdCargoID)){
+            if (string.IsNullOrWhiteSpace(myConsignmentPM.ThirdCargoID))
+            {
                 return DateTime.MinValue;
             }
             DateTime d = DateTime.MinValue;
@@ -177,7 +179,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
         {
             string_Maybe_mAWB = string_Maybe_mAWB ?? "";
             var list = string_Maybe_mAWB.Split('-').ToList();
-            string_Maybe_mAWB = list.LastOrDefault()??"";
+            string_Maybe_mAWB = list.LastOrDefault() ?? "";
 
             int res = 0;
             int.TryParse(string_Maybe_mAWB, out res);
@@ -186,52 +188,68 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
 
 
-        
+
     }
-    public class GWMessageECTHRData
+    public class CourierOVSHAWBRequest
     {
 
-        // not from  https://docs.google.com/document/d/1cjjeORaFsWMS32LhIxmEqNza3q7s7ZAr_PQVQOlwupw/edit#
-        //from https://maman.wsfreeze.co.il/WebAPIExt/Help/Api/POST-api-baldar-CreateECTHRMessgae
-        public string BaldarCode { get; set; }
-        public string BaldarAwb { get; set; }
+        //https://docs.google.com/document/d/1bFMdrDnByDpvLcvE9H5eOfCAzbVdeoUypbzhwxbr0Po/edit#
+        //public string BaldarCode { get; set; }
+        public string CourierCompanyVat { get; set; }
+        public string CourierHawbNumber { get; set; }
+        public DateTime CourierHawbDate { get; set; }
+        public string MawbPrefix { get; set; }
 
-        public string AirlineAwbPref { get; set; }
 
-        
-        public int Master { get; set; }
-        public int Awb8 { get; set; }
+        public int Mawb { get; set; }
+        //public int Awb8 { get; set; }
 
-        public string HawbExtnd { get; set; }
-        public string AirlineCode { get; set; }
-        public int FltNo { get; set; }
+        public string Hawb { get; set; }
+        //public string AirlineCode { get; set; }
+        public int FlightNumber { get; set; }
         public DateTime? FltDate { get; set; }
-        public DateTime? LandTime { get; set; }
-        public int DecNoOfPackags { get; set; }
-        public decimal DecWeight { get; set; }
-        public decimal DolarValue { get; set; }
-        public string StoreTypeReq { get; set; }
+        public DateTime? EstimatedArrivalDate { get; set; }
+        public int PackageQuantity { get; set; }
+        public decimal Weight { get; set; }
+        public decimal GoodValueInUSD { get; set; }
+        //public string StoreTypeReq { get; set; }
         public string Description { get; set; }
-        public string CustomerName { get; set; }
-        public string CustomerAddress { get; set; }
-        public string CustomerPhone { get; set; }
-        public string DestLineDesc { get; set; }
+        public string ImporterName { get; set; }
+        public string ImporterAddress { get; set; }
+        //public string CustomerPhone { get; set; }
+        public string DistributionLine { get; set; }
+        public string DistributionCompanyVat { get; set; }
+
+        //public string DestLineDesc { get; set; }
         //task 46455:
-        public string DestLineCode { get; set; }
+        //public string DestLineCode { get; set; }
         public string DistributorHP { get; set; }
         public string DistributorName { get; set; }
-        public string DeclarationId { get; set; }
-        public string CustomIkuv { get; set; }
+        public string DeclarationNumber { get; set; }
+        public string CustomsSuspention { get; set; }
+        public bool Preclearence { get; set; }
+        
+        //public string CustomIkuv { get; set; }
         //TAsk 46455.
 
-        public DateTime BaldarMessageTime { get; set; }
-        public string BaldarHp { get; set; }
-        public DateTime OpenBaldarAwbDate { get; set; }
-
-        public int ResponseStatusCode { get; set; }
-        public string ResponseStatusMsg { get; set; }
+        //public DateTime BaldarMessageTime { get; set; }
+        
         
 
+        //public int ResponseStatusCode { get; set; }
+        //public string ResponseStatusMsg { get; set; }
+
+
+
+    }
+
+    public class CourierOVSHAWBResponse
+    {
+        public string CourierCompanyVat { get; set; }
+        public string CourierHawbNumber { get; set; }
+        public string StatusCode { get; set; }//1-    תקין//2 -    שגוי
+        public string ErrorCode { get; set; }
+        public string ErrorDescription { get; set; }
 
     }
 }
