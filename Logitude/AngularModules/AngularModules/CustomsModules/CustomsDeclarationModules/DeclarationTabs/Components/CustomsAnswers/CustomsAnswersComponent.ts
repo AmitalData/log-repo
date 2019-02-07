@@ -1090,6 +1090,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                         else {
                             this.DepositionStatusCodeText = "נשלחה משימה ליבואן בלוגבוקס";
                         }
+
                         //myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_PRV_LBL_LOG", "NON", "NON", SessionLocator.Tenant)
                           //  .subscribe(res => {
                             //    if (!res.HasError && res.Result != null) {
