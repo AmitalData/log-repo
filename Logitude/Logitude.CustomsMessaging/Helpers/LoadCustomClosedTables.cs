@@ -914,6 +914,12 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(transferCargoMethodType, transferCargoMethodTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(transferCargoMethodType);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData gatepassReturnCode = closedSystemTables.Where(d => d.id == "1589").FirstOrDefault();
+            ObjectTable gatepassReturnCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.GatepassReturnCode", 0, false);
+            InsertClosedTableRecord(gatepassReturnCode, gatepassReturnCodeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(gatepassReturnCode);
+
+
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);
             //InsertClosedTableRecord(collateralAnswerStatusTable, collateralAnswerStatusObjectTable, customsClosedTables, customsClosedTableRepository);
