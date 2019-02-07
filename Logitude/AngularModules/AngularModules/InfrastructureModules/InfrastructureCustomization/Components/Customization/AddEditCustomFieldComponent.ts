@@ -424,8 +424,8 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.ValidationErrorsList.push("LookUp table is Required");
         }
 
-        if ((this.objectField.DataTypeCode == "Text" || this.objectField.DataTypeCode == "nText") && this.objectField.MaxLength > 250) {
-            this.ValidationErrorsList.push("Maximum length of the text is 250");
+        if ((this.objectField.DataTypeCode == "Text" || this.objectField.DataTypeCode == "nText") && this.objectField.MaxLength > 2000) {
+            this.ValidationErrorsList.push("Maximum length of the text is 2000");
         }
 
         if (this.ValidationErrorsList.length == 0) {
