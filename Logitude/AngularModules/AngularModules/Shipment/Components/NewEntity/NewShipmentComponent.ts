@@ -49,7 +49,6 @@ import {EntityListService} from '../../../Infrastructure/Services/EntityListServ
 
 export class NewShipmentComponent extends BaseComponent implements OnInit {
     public TenantPM: TenantPM;
-//test commit
     public EntityPM: ShipmentPM;
     public DataContext = this;
     public ObjectTableName: string = "Shipment";
