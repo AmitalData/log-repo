@@ -35,6 +35,7 @@ using Logitude.Customs.BL.Messaging.Maman;
 using Microsoft.Practices.Unity;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.Messaging;
+using Logitude.Customs.BL.Messaging.ILOVS;
 
 namespace CustomsWorkerRole
 {
@@ -307,6 +308,11 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                     case CustomsPartnerFtpDetails.InterfaceName_ECSPCL:
                         {
                             analyzer = new CourierGWMessageECSpclMamanResponseService();
+                        }
+                        break;
+                    case CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR:
+                        {
+                            analyzer = new CourierOVSECTHMessageResponseService();
                         }
                         break;
                     default:
