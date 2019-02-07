@@ -113,6 +113,7 @@
     <Compile Include="AmitalModel\EntityKeys\CFIMSVFILEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIMSVLINEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIMSVPAGEKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CFIMSVREMKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIPACKKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBAPPROVKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBAPPROVTYPEKeys.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="AmitalModel\EntityKeys\CTBUNLOADKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\ITBPCKTYKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\YCULTASKKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\YTBTABLEKeys.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ATBPTIL.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUACCSUP.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCAR.cs" />
@@ -180,6 +182,7 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVDOC.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVFILE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVPAGE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVREM.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIPACK.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBAPPROV.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBAPPROVTYPE.cs" />
@@ -226,9 +229,11 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBREQCERT.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTRTRAN.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ITBPCKTY.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.VRELEASE2ENTRY.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.YCULPROCESS.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.YCULTASK.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.YTBCUSTTB.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.YTBTABLE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\Class1.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCARSC.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVLINE.cs" />
@@ -258,6 +263,7 @@
     <Compile Include="AmitalModel\Repsitories\CFIMSVFILERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIMSVLINERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIMSVPAGERepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CFIMSVREMRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIPACKRepository.cs.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBAPPROVRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBAPPROVTYPERepository.cs" />
@@ -302,7 +308,9 @@
     <Compile Include="AmitalModel\Repsitories\GTBREQCERTRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTRTRANRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\ITBPCKTYRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\VRELEASE2ENTRYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\YCULTASKRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\YTBTABLERepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

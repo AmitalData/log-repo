@@ -372,6 +372,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new FuelTypeMap());
 	
+            modelBuilder.Configurations.Add(new GatepassReturnCodeMap());
+	
             modelBuilder.Configurations.Add(new GenderMap());
 	
             modelBuilder.Configurations.Add(new GovernmentProcedureTypeMap());
@@ -592,6 +594,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new TradeLevyExamptTypeMap());
 	
+            modelBuilder.Configurations.Add(new TransferCargoMethodTypeMap());
+	
             modelBuilder.Configurations.Add(new TreatmentWayMap());
 	
             modelBuilder.Configurations.Add(new UIMessageMap());
@@ -599,6 +603,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new UIMessageAdditionalMap());
 	
             modelBuilder.Configurations.Add(new UnloadingSiteTypeMap());
+	
+            modelBuilder.Configurations.Add(new UpdateCodeMap());
 	
             modelBuilder.Configurations.Add(new ValidCustomsItemMap());
 	
@@ -1983,6 +1989,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<GatepassReturnCode> GatepassReturnCodes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<Gender> Genders 
 	 {
 	      get; set;
@@ -2643,6 +2655,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<TransferCargoMethodType> TransferCargoMethodTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<TreatmentWay> TreatmentWays 
 	 {
 	      get; set;
@@ -2662,6 +2680,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<UnloadingSiteType> UnloadingSiteType 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<UpdateCode> UpdateCodes 
 	 {
 	      get; set;
 	 

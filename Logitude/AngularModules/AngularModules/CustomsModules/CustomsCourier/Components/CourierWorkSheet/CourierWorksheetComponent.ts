@@ -416,48 +416,48 @@ implements OnDestroy
         //this.SendALLCorrectDec_OLD(courierDeclarationStatusCode);
     }
 
-    SendALLCorrectDec_OLD(courierDeclarationStatusCode: string) {
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
-        if (courierDeclarationStatusCode == "M") {
-            if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
-                var currRequestParams = new SendALLCorrectRequestParams();
-                currRequestParams.LoggingEnabled = true;
-                currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-                currRequestParams.Tenant = SessionLocator.Tenant;
-                currRequestParams.CourierMasterId = this.entityPM.Id;
-                currRequestParams.HAWB = this.entityPM.HAWB;
-                currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+    //SendALLCorrectDec_OLD(courierDeclarationStatusCode: string) {
+    //    SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+    //    if (courierDeclarationStatusCode == "M") {
+    //        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+    //            var currRequestParams = new SendALLCorrectRequestParams();
+    //            currRequestParams.LoggingEnabled = true;
+    //            currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+    //            currRequestParams.Tenant = SessionLocator.Tenant;
+    //            currRequestParams.CourierMasterId = this.entityPM.Id;
+    //            currRequestParams.HAWB = this.entityPM.HAWB;
+    //            currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
 
-                currRequestParams.SelectedAvailableValue = this._SelectedAvailableValue;
-                currRequestParams.SelectedBOLValue = this._SelectedBOLValue;
-                currRequestParams.SelectedStatusValue = this._SelectedStatusValue;
-                currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
-                currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
+    //            currRequestParams.SelectedAvailableValue = this._SelectedAvailableValue;
+    //            currRequestParams.SelectedBOLValue = this._SelectedBOLValue;
+    //            currRequestParams.SelectedStatusValue = this._SelectedStatusValue;
+    //            currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
+    //            currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
 
-                this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
-                    .subscribe(res => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        var myMessageWindow = new MessageWindow();
-                        myMessageWindow.Show(res.Result);
-                        myMessageWindow.WindowClosed.subscribe(s => {
-                            this.RefreshButtonClicked();
-                        });
-                    });
-            }
-        }
-        else {
-            this._CourierMasterService.GetSendALLCorrectDec(this.entityPM.Id, this.entityPM.HAWB, courierDeclarationStatusCode)
-                .subscribe(res => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    var myMessageWindow = new MessageWindow();
-                    myMessageWindow.Show(res.Result);
-                    myMessageWindow.WindowClosed.subscribe(s => {
-                        this.RefreshButtonClicked();
-                    });
-                });
-        }
+    //            this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
+    //                .subscribe(res => {
+    //                    SessionLocator.CurrentSession.StopBusyIndicator();
+    //                    var myMessageWindow = new MessageWindow();
+    //                    myMessageWindow.Show(res.Result);
+    //                    myMessageWindow.WindowClosed.subscribe(s => {
+    //                        this.RefreshButtonClicked();
+    //                    });
+    //                });
+    //        }
+    //    }
+    //    else {
+    //        this._CourierMasterService.GetSendALLCorrectDec(this.entityPM.Id, this.entityPM.HAWB, courierDeclarationStatusCode)
+    //            .subscribe(res => {
+    //                SessionLocator.CurrentSession.StopBusyIndicator();
+    //                var myMessageWindow = new MessageWindow();
+    //                myMessageWindow.Show(res.Result);
+    //                myMessageWindow.WindowClosed.subscribe(s => {
+    //                    this.RefreshButtonClicked();
+    //                });
+    //            });
+    //    }
 
-    }
+    //}
 
     SendALLSVG() {
 

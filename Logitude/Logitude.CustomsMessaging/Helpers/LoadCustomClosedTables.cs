@@ -909,17 +909,25 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(refundCustomerActivityType, refundCustomerActivityTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(refundCustomerActivityType);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData transferCargoMethodType = closedSystemTables.Where(d => d.id == "42").FirstOrDefault();
+            ObjectTable transferCargoMethodTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.TransferCargoMethodType", 0, false);
+            InsertClosedTableRecord(transferCargoMethodType, transferCargoMethodTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(transferCargoMethodType);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData gatepassReturnCode = closedSystemTables.Where(d => d.id == "1589").FirstOrDefault();
+            ObjectTable gatepassReturnCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.GatepassReturnCode", 0, false);
+            InsertClosedTableRecord(gatepassReturnCode, gatepassReturnCodeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(gatepassReturnCode);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData updateCode = closedSystemTables.Where(d => d.id == "1564").FirstOrDefault();
+            ObjectTable updateCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.UpdateCode", 0, false);
+            InsertClosedTableRecord(updateCode, updateCodeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(updateCode);
+
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);
             //InsertClosedTableRecord(collateralAnswerStatusTable, collateralAnswerStatusObjectTable, customsClosedTables, customsClosedTableRepository);
             //addedClosedTables.Add(collateralAnswerStatusTable);
-
-
-            // merge up 
-            //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData refundCustomerActivityType = closedSystemTables.Where(d => d.id == "1248").FirstOrDefault();
-            //ObjectTable refundCustomerActivityTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.RefundCustomerActivityType", 0, false);
-            //InsertClosedTableRecord(refundCustomerActivityType, refundCustomerActivityTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            //addedClosedTables.Add(refundCustomerActivityType);
 
             //var newclosedSystemTables = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData>(closedSystemTables); 
             var justAdded = new List<string>();

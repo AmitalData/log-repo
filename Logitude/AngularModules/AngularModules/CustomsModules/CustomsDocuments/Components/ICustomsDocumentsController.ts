@@ -19,6 +19,7 @@ export interface ICustomsDocumentsController{
     SelectionCompleted: EventEmitter<any>;
     GetAddEditDocumentsEntitySpecialCondition();
     GetCustomsInterfaceSettingsDocumentTypes(entityPM: any);
-  GetCustomsInterfaceSettingsDocumentTypesCompleted: EventEmitter<any>;
-  GetRefreshFrom();
+    GetCustomsInterfaceSettingsDocumentTypesCompleted: EventEmitter<any>;
+    GetRefreshFrom();
+    SetDefaultConnectedEntityNumber(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any);
 } 

@@ -32,6 +32,9 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.SUGGESTI = entityPM.SUGGESTI;
             entityPOCO.SUGGESTDET1 = entityPM.SUGGESTDET;
             entityPOCO.STATUS = entityPM.STATUS;
+            entityPOCO.TAXEXEMPT = entityPM.TAXEXEMPT;
+            entityPOCO.INVOICEQUANTITY = entityPM.INVOICEQUANTITY;
+            entityPOCO.INVOICEQUANTITYTYPE = entityPM.INVOICEQUANTITYTYPE;
         }
 
         public void POCOToPM(CFIMSVLINEPM entityPM, CFIMSVLINE entityPOCO)
@@ -51,6 +54,9 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.SUGGESTI = entityPOCO.SUGGESTI;
             entityPM.SUGGESTDET = entityPOCO.SUGGESTDET1;
             entityPM.STATUS = entityPOCO.STATUS;
+            entityPM.TAXEXEMPT = entityPOCO.TAXEXEMPT;
+            entityPM.INVOICEQUANTITY = entityPOCO.INVOICEQUANTITY;
+            entityPM.INVOICEQUANTITYTYPE = entityPOCO.INVOICEQUANTITYTYPE;
         }
 
         public void CustomPMToPOCO(CFIMSVLINEPM entityPM, CFIMSVLINE entityPOCO)

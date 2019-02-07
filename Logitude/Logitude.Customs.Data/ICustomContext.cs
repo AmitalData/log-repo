@@ -169,6 +169,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<FaultInspectionType> FaultInspectionTypes { get; }
 		 IDbSet<FreightPaymentMethod> FreightPaymentMethods { get; }
 		 IDbSet<FuelType> FuelTypes { get; }
+		 IDbSet<GatepassReturnCode> GatepassReturnCodes { get; }
 		 IDbSet<Gender> Genders { get; }
 		 IDbSet<GovernmentProcedureType> GovernmentProcedureTypes { get; }
 		 IDbSet<Guarantee> Guarantees { get; }
@@ -279,10 +280,12 @@ namespace Logitude.Customs.Data
 		 IDbSet<TPGFileType> TPGFileTypes { get; }
 		 IDbSet<TradeAgreement> TradeAgreements { get; }
 		 IDbSet<TradeLevyExamptType> TradeLevyExamptTypes { get; }
+		 IDbSet<TransferCargoMethodType> TransferCargoMethodTypes { get; }
 		 IDbSet<TreatmentWay> TreatmentWays { get; }
 		 IDbSet<UIMessage> UIMessages { get; }
 		 IDbSet<UIMessageAdditional> UIMessageAdditionals { get; }
 		 IDbSet<UnloadingSiteType> UnloadingSiteType { get; }
+		 IDbSet<UpdateCode> UpdateCodes { get; }
 		 IDbSet<ValidCustomsItem> ValidCustomsItems { get; }
 		 IDbSet<Vehicle> Vehicles { get; }
 		 IDbSet<VehicleManufacturer> VehicleManufacturers { get; }

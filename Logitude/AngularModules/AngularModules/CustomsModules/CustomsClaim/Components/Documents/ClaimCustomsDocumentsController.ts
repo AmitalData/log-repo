@@ -249,5 +249,29 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
   }
     public SelectionCompleted: EventEmitter<any> = new EventEmitter();
     public GetCustomsInterfaceSettingsDocumentTypesCompleted: EventEmitter<any> = new EventEmitter();
+
+    public SetDefaultConnectedEntityNumber(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any) {
+        if (this.claimPM.ClaimsRelatedEntities == null || this.claimPM.ClaimsRelatedEntities.length == 0) {
+            return;
+        }
+
+        var connectedClaimRelatedEntities: string = this.claimPM.ClaimsRelatedEntities[0].EntityCounterKey.toString();
+        customsDocumentsTicket.ConnectedCREsSequences = connectedClaimRelatedEntities;
+
+        var exists = customsDocumentsTicket.CustomsDocumentPointers.filter(d => d.Child1EntityId == connectedClaimRelatedEntities + "")[0];
+        if (!exists) {
+            var newPointer: CustomsDocumentPointerPM = new CustomsDocumentPointerPM(customsDocumentsTicket)
+            newPointer.Tenant = SessionLocator.Tenant;
+            newPointer.ParentEntityId = this.claimPM.Id;
+            newPointer.ParentEntityCode = "Claim";
+            newPointer.Child1EntityCode = "ClaimsRelatedEntity";
+            newPointer.Child2EntityCode = null;
+            newPointer.Child3EntityCode = null;
+            newPointer.Child1EntityId = connectedClaimRelatedEntities + "";
+            newPointer.Child2EntityId = null;
+            newPointer.Child3EntityId = null;
+            customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);
+        }
+    }
 }
 

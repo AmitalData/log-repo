@@ -335,6 +335,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         }
         private string _SUGGESTDET1;
 
+
         /// <summary>
         /// There are no comments for STATUS in the schema.
         /// </summary>
@@ -356,6 +357,73 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         }
         private global::System.Nullable<int> _STATUS;
 
+
+        /// <summary>
+        /// There are no comments for TAXEXEMPT in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string TAXEXEMPT
+        {
+            get
+            {
+                return _TAXEXEMPT;
+            }
+            set
+            {
+                if (_TAXEXEMPT != value)
+                {
+                    _TAXEXEMPT = value;
+                    OnPropertyChanged("TAXEXEMPT");
+                }
+            }
+        }
+        private string _TAXEXEMPT;
+
+
+        /// <summary>
+        /// There are no comments for INVOICEQUANTITY in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual global::System.Nullable<double> INVOICEQUANTITY
+        {
+            get
+            {
+                return _INVOICEQUANTITY;
+            }
+            set
+            {
+                if (_INVOICEQUANTITY != value)
+                {
+                    _INVOICEQUANTITY = value;
+                    OnPropertyChanged("INVOICEQUANTITY");
+                }
+            }
+        }
+        private global::System.Nullable<double> _INVOICEQUANTITY;
+
+
+        /// <summary>
+        /// There are no comments for INVOICEQUANTITYTYPE in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string INVOICEQUANTITYTYPE
+        {
+            get
+            {
+                return _INVOICEQUANTITYTYPE;
+            }
+            set
+            {
+                if (_INVOICEQUANTITYTYPE != value)
+                {
+                    _INVOICEQUANTITYTYPE = value;
+                    OnPropertyChanged("INVOICEQUANTITYTYPE");
+                }
+            }
+        }
+        private string _INVOICEQUANTITYTYPE;
+
+
         #endregion
 
         #region INotifyPropertyChanged Members
@@ -371,6 +439,5 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
 
         #endregion
     }
-
 
 }
