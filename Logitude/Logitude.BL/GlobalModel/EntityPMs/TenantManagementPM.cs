@@ -154,6 +154,18 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string BluesnapContractId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string BluesnapCRMContractId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string BluesnapEAWBContractId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string BluesnapEAWBSContractId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string BluesnapOneTimeContractId { get; set; }
+
+
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string AWBMessagesCCSTypeCode { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -178,6 +190,11 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public bool IsTrial { get; set; }
         public int NumberOfUsers { get; set; }
         public bool IsCargonautEnabled { get; set; }
+        public int BluesnapContractQTY { get; set; }
+        public int BluesnapCRMContractQTY { get; set; }
+        public int BluesnapEAWBContractQTY { get; set; }
+        public int BluesnapEAWBSContractQTY { get; set; }
+        public int BluesnapOneTimeContractQTY { get; set; }
         public bool IsDEXXConnectionEnabled { get; set; }
         public DateTime? LastFWBCargonautSentDate { get; set; }
         public DateTime? LastFHLCargonautSentDate { get; set; }

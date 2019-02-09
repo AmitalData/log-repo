@@ -45,17 +45,14 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     throw new Exception("Total ReconciliationAmount is zero");
                 }
+                if (ReconciliationLines.Select(r => r.CurrencyId).Distinct().Count()>1)
+                {
+                    throw new Exception("לא אופיין התאמת תנועות  ליוצר ממטבע אחד");
+                }
                 DateTime @now = TenantServerConfigration.GetCurrentDateTime(tenant);
                 var qs = new GLAccountQueryService(_AccountingContext);
                 var glPM = qs.GetSingle(TheAccountId, false, false);
-                if (glPM.ReconcileMethodCode == ((int)Logitude.Accounting.Def.EntityPMs.ReconcileMethodPM.ReconcileMethodEnum.LocalCurrency).ToString())
-                {
-
-                }
-                else
-                {
-
-                }
+                
                 TenantQuery tenantQuery = new TenantQuery(tenant);
                 TenantPM tPM = tenantQuery.GetSinglePM(tenant);
                 string accountingCurrencyId = tPM.CurrencyId;
@@ -73,6 +70,39 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     throw new Exception("was Reconciliation then change to Adjustment (and now to what ?? - yaron said it will not change ever !!)");
                 }
+
+                String theJournalLineCurrencyId = "";
+                if (glPM.ReconcileMethodCode == ((int)Logitude.Accounting.Def.EntityPMs.ReconcileMethodPM.ReconcileMethodEnum.LocalCurrency).ToString())
+                {
+                    if (glPM.IsMultiCurrency.GetValueOrDefault())
+                    {
+                        theJournalLineCurrencyId = glPM.CurrencyId;//ohad: ACCOUNT -MULT I CURRENCY + RECONCILE = 0 (LOCAL )  ==>> JOURNAL CURRENCY == NIS  
+                    }
+                    else if (!String.IsNullOrWhiteSpace(glPM.CurrencyId))
+                    {
+                        theJournalLineCurrencyId = glPM.CurrencyId;//ohad : ACCOUNT -CURRENCY = NISS + RECONCILE = 0 (LOCAL )  ==>> JOURNAL CURRENCY == NIS
+
+                    }
+                    else
+                    {
+                        theJournalLineCurrencyId = accountingCurrencyId;
+                    }
+                }
+                else
+                {
+                    
+                    if (!String.IsNullOrWhiteSpace(glPM.CurrencyId))
+                    {
+                        theJournalLineCurrencyId = glPM.CurrencyId;//ohad : ACCOUNT -CURRENCY = NISS + RECONCILE = 0 (LOCAL )  ==>> JOURNAL CURRENCY == NIS
+
+                    }
+                    else
+                    {
+                        theJournalLineCurrencyId = accountingCurrencyId;
+                    }
+
+                }
+                theCurrencyId = theJournalLineCurrencyId;
                 RatesTablePM rate = null;
                 rate = ratesTableQuery.GetLastRateByValueDate(tenant, theCurrencyId, accountingCurrencyId,
                    //@now  
@@ -86,7 +116,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 
                 if (rate == null)
                 {
-                    throw new Exception("Rate by value date Return null");
+                    throw new Exception("שער המטבע לא קיים בטבלת שערי המטבעות");
                 }
                 var totForeign = totReconciliationAmount * (decimal)rate.Rate.GetValueOrDefault();
                 JournalPM journal = new JournalPM()

@@ -168,6 +168,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
             //     item.DisplayName = item.Name == "WarehouseEntry" ? "CrossDockEntry" : "CrossDockRelease";
             // }
             // else item.DisplayName = item.Name;
+
         });
 
         this.SelectedObjectTable = window.ObjectTables.filter((d: any) => d.Id == this.EntityPM.ObjectTableId)[0];

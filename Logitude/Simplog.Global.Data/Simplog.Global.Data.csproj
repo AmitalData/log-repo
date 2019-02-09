@@ -309,6 +309,10 @@
     <Compile Include="Migrations\201902050840538_add_BluesnapContractTypeField_On_BluesnapContracts_Khalid.Designer.cs">
       <DependentUpon>201902050840538_add_BluesnapContractTypeField_On_BluesnapContracts_Khalid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902061226264_TenantManagement_9NewFields_Khalid.cs" />
+    <Compile Include="Migrations\201902061226264_TenantManagement_9NewFields_Khalid.Designer.cs">
+      <DependentUpon>201902061226264_TenantManagement_9NewFields_Khalid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -396,6 +400,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902050840538_add_BluesnapContractTypeField_On_BluesnapContracts_Khalid.resx">
       <DependentUpon>201902050840538_add_BluesnapContractTypeField_On_BluesnapContracts_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902061226264_TenantManagement_9NewFields_Khalid.resx">
+      <DependentUpon>201902061226264_TenantManagement_9NewFields_Khalid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
