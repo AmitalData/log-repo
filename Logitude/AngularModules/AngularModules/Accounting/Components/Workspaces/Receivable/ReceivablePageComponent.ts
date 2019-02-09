@@ -497,7 +497,8 @@ export class ReceivablePageComponent {
             this.barChartData[0].data[i] = value.toString();
 
             // Labels
-            var label = element.PeriodName.replace("b4", "Before"); // replace 'b4' with 'Before'
+            var label = element.PeriodName.replace("b4", !SessionLocator.LoggedUserPM.DontShowLocal ? "עד" : "Before"); // replace 'b4' with 'Before'
+            // var label = element.PeriodName.replace("b4", "Before"); // replace 'b4' with 'Before'
             label = label.startsWith("Before") ? label.replace("/20", "/") : label; // minimize year in 'Before' Column
             this.barChartLabels[i] = label;
 
