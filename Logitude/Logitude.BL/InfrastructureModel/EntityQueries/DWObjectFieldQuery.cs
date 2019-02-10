@@ -112,7 +112,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public List<DWObjectFieldPM> GetDWObjectFieldWithChildrenFieldsPMsByDWObjectTabelAndTenant(int tenant, string dwotCode)
         {
             var TempList = (from a in repository.webFreightContext.DWObjectFields
-                            where a.Tenant == tenant && a.DWObjectTableCode == dwotCode
+                            where a.Tenant == tenant && a.DWObjectTableCode == dwotCode && a.DisplayInQueryBuilder == true
                             select new DWObjectFieldPM()
                             {
                                 Id = a.Id,
@@ -141,7 +141,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             foreach (var item in Parents)
             {
                 var TempInnerList = (from a in repository.webFreightContext.DWObjectFields
-                                     where a.Tenant == tenant && a.DWObjectTableCode == item.DimensionTableCode
+                                     where a.Tenant == tenant && a.DWObjectTableCode == item.DimensionTableCode && a.DisplayInQueryBuilder == true
                                      select new DWObjectFieldPM()
                                      {
                                          Id = a.Id,

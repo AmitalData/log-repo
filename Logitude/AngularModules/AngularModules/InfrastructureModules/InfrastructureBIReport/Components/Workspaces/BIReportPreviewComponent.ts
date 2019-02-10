@@ -280,6 +280,7 @@ export class BIReportPreviewComponent implements OnInit {
         windowArgs.queryId = this.DWQueryId;
         windowArgs.reportId = this.EntityPM.Id;
         windowArgs.reportName = this.EntityPM.Name;
+        windowArgs.BIReportXMLData = this.BIReportXMLData; 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 500;
         logitudeWindow.Height = 200;
@@ -361,7 +362,10 @@ export class BIReportPreviewComponent implements OnInit {
         result.BIReportId = this.EntityId;
         result.BIReportPM = this.EntityPM;
         result.BITabularViewSettings.Columns = [];
+        result.DWQueryData = this.BIReportXMLData.DWQueryData;
+
         var newColumn = new Column();
+        var sortsList = [];
 
         this.BIReportXMLData.DWQueryData.Columns.forEach(item => {
             newColumn = new Column();
@@ -381,10 +385,24 @@ export class BIReportPreviewComponent implements OnInit {
                 if (sortItem != null) {
                     newColumn.SortDirction = sortItem["sort"];
                     newColumn.SortOrder = sorting.indexOf(sortItem);
+
+                    sortsList.push({
+                        colId: item.DisplayName,
+                        sort: newColumn.SortDirction,
+                        order: newColumn.SortOrder
+                    });
                 }
             }
             result.BITabularViewSettings.Columns.push(newColumn);
         });
+
+        if (sortsList != null && sortsList.length > 0) {
+            this.BIReportXMLData.DWQueryData.ColumnsSort = ""; 
+            sortsList.sort((a, b) => { return (a.order === b.order) ? 0 : (a.order < b.order) ? -1 : 1 }).forEach(item => {
+                result.DWQueryData.ColumnsSort += item.colId + " " + item.sort + ",";
+            });
+            result.DWQueryData.ColumnsSort = result.DWQueryData.ColumnsSort.replace(/,\s*$/, "");
+        }
 
         this._InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe(myResult => {
             if (!myResult.HasError) {

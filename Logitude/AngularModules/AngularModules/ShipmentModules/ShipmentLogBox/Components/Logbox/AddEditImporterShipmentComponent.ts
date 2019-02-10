@@ -1,4 +1,4 @@
-﻿import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
+import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
 import {TransportsFilter} from '../../../../Controls/TransportsFilter';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';

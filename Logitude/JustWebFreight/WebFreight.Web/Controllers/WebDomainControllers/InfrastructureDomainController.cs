@@ -1703,14 +1703,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     QueryData.BIReportPM = entityPM;
                     QueryData.BIReportId = entityPM.Id;
+                    var sortingList = new List <Column> (); 
 
                     if (!string.IsNullOrEmpty(entityPM.AGGridOptionsXML))
                     {
                         var bITabularViewSettings = LogitudeXmlSerializer.DeserializeObject<BITabularViewSettings>(entityPM.AGGridOptionsXML);
                         if(bITabularViewSettings!= null && Columns != null)
                         {
-                            foreach(var item in bITabularViewSettings.Columns.ToList())
+                            foreach(Column item in bITabularViewSettings.Columns.ToList())
                             {
+                                if (item.SortDirction != null)
+                                {
+                                    sortingList.Add(item);
+                                }
+                                
                                 var queryColumn = Columns.Where(a => a.DisplayName.Replace("[", "").Replace("]", "") == item.Code).FirstOrDefault();
                                 if (queryColumn == null)
                                 {
@@ -1720,7 +1726,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             }
                         }
 
-                        foreach(var item in Columns)
+                        if(sortingList != null && sortingList.Count() > 0)
+                        {
+                            foreach (Column item in sortingList.OrderBy(o => o.SortOrder).ToList())
+                            {
+                                QueryData.DWQueryData.ColumnsSort += "["+item.Code +"]"+ " " + item.SortDirction + ",";
+                            }
+                            QueryData.DWQueryData.ColumnsSort = QueryData.DWQueryData.ColumnsSort.TrimEnd(',');
+
+                        }
+
+                        foreach (var item in Columns)
                         {
                             var queryColumn = bITabularViewSettings.Columns.Where(a => a.Code == item.DisplayName.Replace("[", "").Replace("]", "")).FirstOrDefault();
                             if (queryColumn == null)

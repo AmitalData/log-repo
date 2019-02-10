@@ -741,11 +741,12 @@ export class InfrastructureDomainService {
             if (errorsArray.length == 0) {
                 var mappedEntity: BIReportPM;
                 mappedEntity = this.MapJsonToEntityPM(QueryData.BIReportPM, false);
+                var temp = this.deepClone(QueryData.DWQueryData);
                 QueryData.BIReportPM = mappedEntity;
-                var temp = this.deepClone(QueryData);
-
+                QueryData.DWQueryData = temp;
+                var temp2 = this.deepClone(QueryData);
                 /////////////////////////////////////////////////////
-                return this._http.put(this._apiUrl + "/PutBIReport", JSON.stringify(temp),
+                return this._http.put(this._apiUrl + "/PutBIReport", JSON.stringify(temp2),
                     { headers: authHeader }).map((res) => {
                         var pm = res.json();
                         var entity: BIReportXMLData = new BIReportXMLData();
