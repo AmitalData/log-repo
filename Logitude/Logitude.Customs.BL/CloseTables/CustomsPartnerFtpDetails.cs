@@ -20,6 +20,8 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_ECOVSTHR = "ECOVSTHR";//EC = E-Commerce
         public const string InterfaceName_ECOVSTHR_Response = "ECOVSTHR+RS";//EC = E-Commerce
         public const string InterfaceName_ECSPCL = "ECSPCL";//EC = E-Commerce
+        public const string InterfaceName_ECOVSSPCL_REQUEST = "ECOVSSPCL+RQ";//EC = E-Commerce
+        public const string InterfaceName_ECOVSSPCL_RESPONE = "ECOVSSPCL+RS";//EC = E-Commerce
         public const string InterfaceName_ECSTB = "ECSTB";//EC = E-Commerce
         public const string InterfaceName_ECSTB_Splited = "ECSTB+P";//EC = E-Commerce
         public const string InterfaceName_Ftp2Maman2470 = "ECM2470";//EC = E-Commerce 2 maman 2470
@@ -57,7 +59,9 @@ namespace Logitude.Customs.BL.CloseTables
                 Name = "ש.מ.ב לאוברסיז",
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_ILOVS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
+                ResponseViaAnalayzeQ=true
+
             }
 
             , new InterfaceDetails()
@@ -104,8 +108,8 @@ namespace Logitude.Customs.BL.CloseTables
                 //AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilityService,
                 Subject="2470 to Maman",
                 
-            },
-            
+            }
+            ,
             new InterfaceDetails()
             {
 
@@ -120,6 +124,29 @@ namespace Logitude.Customs.BL.CloseTables
                 AnalyzeQueueService= AnalyzeQueueServiceEnum.OVSHAWBService,
                 Subject="ש.מ.ב מאוברסיז",
                 ServerInternalDef= true
+            },
+
+             new InterfaceDetails()
+            {
+                Code = InterfaceName_ECOVSSPCL_REQUEST,
+                Name = "פעולות מיוחדות לאוברסיז",
+                TypeCode = TypeCode_Out,
+                Partner = PartnerCode_ILOVS,
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
+            }
+             ,
+             new InterfaceDetails()
+            {
+                Code = InterfaceName_ECOVSSPCL_RESPONE,
+                Name = "פעולות מיוחדות מאוברסיז",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_ILOVS,
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
+
+                 AnalyzeQueueService = AnalyzeQueueServiceEnum.OVSSpecialActionService,
+                Subject= "פעולות מיוחדות מאוברסיז",
+                ServerInternalDef= true
+
             },
 
             };
@@ -219,14 +246,18 @@ namespace Logitude.Customs.BL.CloseTables
             switch (@interface.AnalyzeQueueService)
             {
                 case AnalyzeQueueServiceEnum.MamanStatusAvailabilitySpliterService:
-                    return new MamanStatusAvailabilitySplitterService(@interface);
+                    return new MamanStatusAvailabilitySplitterQService(@interface);
                     break;
                 case AnalyzeQueueServiceEnum.MamanStatusAvailabilityService:
-                    return new MamanStatusAvailabilityService(@interface);
+                    return new MamanStatusAvailabilityQService(@interface);
                     break;
                 case AnalyzeQueueServiceEnum.OVSHAWBService:
-                    return new OVSHAWBService(@interface);
+                    return new CourierOVSHAWBQService(@interface);
+                case AnalyzeQueueServiceEnum.OVSSpecialActionService:
+                    return new CourierOVSHAWBQService(@interface);
+
                 default:
+
                     throw new Exception("No analyze service define " + @interface.Code);
                     break;
             }
@@ -235,6 +266,7 @@ namespace Logitude.Customs.BL.CloseTables
         public IWebAPIMessage2MamanAnalyzer GetResponseService(/*Courier2MamanCommSettings courier2MamanCommSettings*/string MessageCode)
         {
             IWebAPIMessage2MamanAnalyzer analyzer = null;
+
             switch (/*courier2MamanCommSettings.*/MessageCode)
             {
                 case CustomsPartnerFtpDetails.InterfaceName_ECTHR:
@@ -268,6 +300,7 @@ namespace Logitude.Customs.BL.CloseTables
         MamanStatusAvailabilitySpliterService,
         MamanStatusAvailabilityService,
         OVSHAWBService,
+        OVSSpecialActionService,
     }
     public class InterfaceDetails
     {
@@ -281,6 +314,7 @@ namespace Logitude.Customs.BL.CloseTables
         public AnalyzeQueueServiceEnum AnalyzeQueueService { get; internal set; }
         public string Subject { get; internal set; }
         public bool ServerInternalDef { get; set; }
+        public bool ResponseViaAnalayzeQ { get; internal set; }
     }
 
 

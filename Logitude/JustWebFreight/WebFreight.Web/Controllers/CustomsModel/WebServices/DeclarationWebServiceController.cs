@@ -37,6 +37,7 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.Models;
 using Logitude.Customs.BL.Messaging.Maman;
+using Logitude.Customs.BL.Messaging;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -1639,14 +1640,25 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
-
+        static bool toMaman = false;
         //DeclarationMamanSpecialAction
         public HttpResponseMessage GetDeclarationMamanSpecialAction(string declarationId, int tenant, string actionCode, string mamanSpecialActionCode)
         {
             try
             {
                 ICustomContext myContext = CustomContext.GetContext(tenant);
-                CourierGWMessageECSpclMamanRequestService courierGWMessageECSpclMamanRequestService = new CourierGWMessageECSpclMamanRequestService();
+                ICourierGWMessageECSpcRequestService courierGWMessageECSpclRequestService = null;
+                if (toMaman)
+                {
+                    courierGWMessageECSpclRequestService =new CourierGWMessageECSpclMamanRequestService();
+                }
+                else
+                {
+                    courierGWMessageECSpclRequestService = new Logitude.Customs.BL.Messaging.ILOVS.CourierOVSSpecialActionRequestService();
+
+                }
+                toMaman = !toMaman;
+
                 MamanActionCodeUpdateOrCancel mamanActionCode = MamanActionCodeUpdateOrCancel.Upsert;
                 MamanSpecialCode mamanSpecialCode = MamanSpecialCode.ReceivingDelayCertificate_DelayIt;
                 if (actionCode == "C")
@@ -1666,7 +1678,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         break;
                 }
 
-                string actionResultString = courierGWMessageECSpclMamanRequestService.BuildQueueSendWebAPI(declarationId, tenant, mamanActionCode, mamanSpecialCode);
+                string actionResultString = courierGWMessageECSpclRequestService.BuildQueueSendWebAPI(declarationId, tenant, mamanActionCode, mamanSpecialCode);
                 return Request.CreateResponse(HttpStatusCode.OK, actionResultString);
 
             }

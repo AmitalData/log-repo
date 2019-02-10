@@ -1,4 +1,5 @@
-﻿#define waitTillMiritWillCreateDBAndScreen
+﻿
+
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
@@ -11,22 +12,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.Customs.BL.Messaging.Maman
+namespace Logitude.Customs.BL.Messaging.ILOVS
 {
-    
-   
 
-
-    public class CourierGWMessageECSpclMamanRequestService : ICourierGWMessageECSpcRequestService
+    public class CourierOVSSpecialActionRequestService: ICourierGWMessageECSpcRequestService
     {
         private DeclarationPM _DeclarationPM;
         private CourierMasterPM _CourierMasterPM;
-        
+
 
         public static string TestSend()
         {
-            var courierGWMessageECSpclMamanRequestService =new CourierGWMessageECSpclMamanRequestService();
-            string actionResultString =courierGWMessageECSpclMamanRequestService.BuildQueueSendWebAPI("1-115843", 1, MamanActionCodeUpdateOrCancel.Upsert, MamanSpecialCode.StickerPrinting );
+            var OVSSpecialActionRequestService = new CourierOVSSpecialActionRequestService();
+            string actionResultString = OVSSpecialActionRequestService.BuildQueueSendWebAPI("1-115843", 1, MamanActionCodeUpdateOrCancel.Upsert, MamanSpecialCode.StickerPrinting);
             return actionResultString;
         }
 
@@ -50,15 +48,13 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 throw new Exception($"Declaration Is not CourierDeclaration  declarationId={declarationId}");
             }
 
-#if waitTillMiritWillCreateDBAndScreen
 
             //בעת שליחת המסר תבוצע שליפה של טבלת DeclarationMamanSpecialAction לפי מפתח הצהרה + קוד פעולה מיוחדת, והנתונים יישלחו לפי קוד פעולה שהמשתמש בחר + נתונים מ DB של הצהרה + DeclarationMamanSpecialAction
             var declarationMamanSpecialActionQueryService = new DeclarationMamanSpecialActionQueryService(context);
-            var pmDeclarationMamanSpecialAction =declarationMamanSpecialActionQueryService.GetSingle(declarationId,  ((int)mamanSpecialCode).ToString(),false,false);
+            var pmDeclarationMamanSpecialAction = declarationMamanSpecialActionQueryService.GetSingle(declarationId, ((int)mamanSpecialCode).ToString(), false, false);
 
-#endif
 
-            ECSpclMamanMessage myECSpclMamanData = CreateCourierECSpclMamanMessage(pmDeclarationMamanSpecialAction, mamanActionCode, mamanSpecialCode);
+            OVSECSpclRequest myECSpclMamanData = CreateCourierECSpclMamanMessage(pmDeclarationMamanSpecialAction, mamanActionCode, mamanSpecialCode);
             string messageToMaman = "";
             messageToMaman = ProxyUtil.JsonConvertSerialize(myECSpclMamanData);
             using (var scop = TransactionFactory.GetTransaction())
@@ -70,7 +66,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 //myWebAPICourierGWMessageECTHRDataMamanService.BuildCommunicationLog(bytearray, tenant, declarationId);
 
                 var webAPISendMessage2MamanService = new WebAPISendMessage2MasofService();
-                webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECSPCL, CustomsPartnerFtpDetails.PartnerCode_Mamam);
+                webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECOVSSPCL_REQUEST, CustomsPartnerFtpDetails.PartnerCode_ILOVS);
 
                 scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  
@@ -78,7 +74,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             return "המסר נבנה בהצלחה וישלח בתהליך רקע";
         }
 
-        private ECSpclMamanMessage CreateCourierECSpclMamanMessage(
+        private OVSECSpclRequest CreateCourierECSpclMamanMessage(
             DeclarationMamanSpecialActionPM pmDeclarationMamanSpecialAction,
             MamanActionCodeUpdateOrCancel mamanActionCode,
             MamanSpecialCode mamanSpecialCode)
@@ -92,7 +88,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 case MamanActionCodeUpdateOrCancel.Cancel:
                     mamanActionCodeUpdateOrCancel = "C";
                     break;
-                
+
             }
             string mamanSpecialActionCode = "";
             switch (mamanSpecialCode)
@@ -100,48 +96,44 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 case MamanSpecialCode.ReceivingDelayCertificate_DelayIt:
                     mamanSpecialActionCode = "2";
                     break;
-                case MamanSpecialCode.StickerPrinting :
+                case MamanSpecialCode.StickerPrinting:
                     mamanSpecialActionCode = "4";
                     break;
                 case MamanSpecialCode.PrintDocuments:
                     mamanSpecialActionCode = "5";
                     break;
-             
+
             }
-            return new ECSpclMamanMessage()
+            return new OVSECSpclRequest()
             {
-                ActionCode = mamanActionCodeUpdateOrCancel,
-                BaldarAwb = _DeclarationPM.CourierHAWB ?? "",
-                BaldarHp = _DeclarationPM.AgentId ?? "",
-                OpenBaldarAwbDate = CourierGWMessageECTHRDataMamanRequestService.GetOpenBaldarAwbDate(this._DeclarationPM),
-                SpSpclCode = mamanSpecialActionCode ?? "",
-                SpLabel1 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText1 ?? "" : "",
-                SpLabel2 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText2 ?? "" : "",
-                SpLabel3 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText3 ?? "" : "",
-                SpLabel4 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText4 ?? "" : "",
-                SpLabel5 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText5 ?? "" : "",
+                MessageType = mamanActionCodeUpdateOrCancel,
+                CourierCompanyVat = _DeclarationPM.CourierHAWB ?? "",
+                CourierHawbNumber = _DeclarationPM.AgentId ?? "",
+                CourierHawbDate = Maman.CourierGWMessageECTHRDataMamanRequestService.GetOpenBaldarAwbDate(this._DeclarationPM),
+                SpecialActionCode = mamanSpecialActionCode ?? "",
+                LabelText1 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText1 ?? "" : "",
+                LabelText2 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText2 ?? "" : "",
+                LabelText3 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText3 ?? "" : "",
+                LabelText4 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText4 ?? "" : "",
+                LabelText5 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText5 ?? "" : "",
 
 
             };
         }
     }
-    public class ECSpclMamanMessage
+    public class OVSECSpclRequest
     {
-        public string ActionCode { get; set; }
-        public string BaldarAwb { get; set; }
-        public string BaldarHp { get; set; }
-        public DateTime OpenBaldarAwbDate { get; set; }
-        public string SpSpclCode { get; set; }
-        
-        public string SpLabel1 { get; set; }
-        public string SpLabel2 { get; set; }
-        public string SpLabel3 { get; set; }
-        public string SpLabel4 { get; set; }
-        public string SpLabel5 { get; set; }
+        public string MessageType { get; set; }
+        public string CourierCompanyVat { get; set; }
+        public string CourierHawbNumber { get; set; }
+        public DateTime CourierHawbDate { get; set; }
+        public string SpecialActionCode { get; set; }
 
+        public string LabelText1 { get; set; }
+        public string LabelText2 { get; set; }
+        public string LabelText3 { get; set; }
+        public string LabelText4 { get; set; }
+        public string LabelText5 { get; set; }
 
-
-        public int ResponseStatusCode { get; set; }
-        public string ResponseStatusMsg { get; set; }
     }
 }

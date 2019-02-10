@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 {
-    public class OVSHAWBService : CustomAnalyzerQueueBase
+    public class CourierOVSHAWBQService : CustomAnalyzerQueueBase
     {
-        public OVSHAWBService(InterfaceDetails MyInterfaceDetails)
+        public CourierOVSHAWBQService(InterfaceDetails MyInterfaceDetails)
             : base(MyInterfaceDetails)
         {
 

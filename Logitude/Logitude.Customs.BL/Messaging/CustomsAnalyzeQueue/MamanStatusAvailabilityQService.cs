@@ -22,11 +22,11 @@ using System.Xml.Linq;
 
 namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 {
-    public class MamanStatusAvailabilityService : CustomAnalyzerQueueBase
+    public class MamanStatusAvailabilityQService : CustomAnalyzerQueueBase
     {
         private DeclarationPM _DeclarationPM;
 
-        public MamanStatusAvailabilityService(InterfaceDetails MyInterfaceDetails)
+        public MamanStatusAvailabilityQService(InterfaceDetails MyInterfaceDetails)
             : base(MyInterfaceDetails)
         {
 

@@ -1645,9 +1645,11 @@
     <Compile Include="Messaging\Amital\UServerCommunicationService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\AnalyzeQueueUtil.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CustomAnalyzerQueueBase.cs" />
-    <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilityService.cs" />
-    <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilitySplitterService.cs" />
-    <Compile Include="Messaging\CustomsAnalyzeQueue\OVSHAWBService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilityQService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilitySplitterQService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSHAWBQService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSSpecialActionQService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\SetInAnalyzeQResponseService.cs" />
     <Compile Include="Messaging\Customs\ClientProgressBarIndicatorService.cs" />
     <Compile Include="Messaging\Customs\CustomsRequestsSheetDomainModelUtil.cs" />
     <Compile Include="Messaging\Customs\CustomsRequestsSheetPostUpdateService.cs" />
@@ -1665,6 +1667,7 @@
     <Compile Include="Messaging\Customs\SignQueue.cs" />
     <Compile Include="Messaging\ILOVS\CourierOVSECTHMessageRequestService.cs" />
     <Compile Include="Messaging\ILOVS\CourierOVSECTHMessageResponseService.cs" />
+    <Compile Include="Messaging\ILOVS\CourierOVSSpecialActionRequestService.cs" />
     <Compile Include="Messaging\L2U\CustomFile\CustomCertificatesService.cs" />
     <Compile Include="Messaging\L2U\CustomFile\CustomFileCreditService.cs" />
     <Compile Include="Messaging\L2U\CustomFile\CustomFileCreditService.Model.cs" />
@@ -1712,6 +1715,7 @@
     <Compile Include="Messaging\Maman\CourierMasterMamanService.cs" />
     <Compile Include="Messaging\Maman\FTPOutMaman2470ReleaseGoodService.cs" />
     <Compile Include="Messaging\Maman\FTPOutMamanSubManifestService.cs" />
+    <Compile Include="Messaging\Maman\ICourierGWMessageECSpcRequestService.cs" />
     <Compile Include="Messaging\Maman\WebAPISendMessage2MasofService.cs" />
     <Compile Include="Messaging\Maman\CourierGWMessageECSpclMamanResponseService.cs" />
     <Compile Include="Messaging\Maman\CourierGWMessageECTHRDataMamanResponseService.cs" />

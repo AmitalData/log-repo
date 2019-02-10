@@ -36,6 +36,7 @@ using Microsoft.Practices.Unity;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.Messaging;
 using Logitude.Customs.BL.Messaging.ILOVS;
+using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
 
 namespace CustomsWorkerRole
 {
@@ -297,14 +298,22 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 //                var myWebAPICourierHawbMamanService = new WebAPICourierGWMessageECTHRDataMamanService();
                 //myWebAPICourierHawbMamanService.AnalyzeResponse(courier2MamanCommSettings, responeGWMessageECTHRData);
 
+                IWebAPIMessage2MamanAnalyzer analyzer = null;
                 var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
-                IWebAPIMessage2MamanAnalyzer analyzer = customsPartnerFtpDetails.GetResponseService(courier2MamanCommSettings.MessageCode);
+
+                
+                var @intrface = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == courier2MamanCommSettings.MessageCode);
+                if (@intrface.ResponseViaAnalayzeQ)
+                {
+                    courier2MamanCommSettings.RequestQMessage = dataJson;
+                    analyzer = new SetInAnalyzeQResponseService();
+                }
+                else
+                {
+                    analyzer = customsPartnerFtpDetails.GetResponseService(courier2MamanCommSettings.MessageCode);
+                }
 
                 analyzer.AnalyzeResponse(courier2MamanCommSettings, webAPIResultString);
-
-
-
-
 
 
 
