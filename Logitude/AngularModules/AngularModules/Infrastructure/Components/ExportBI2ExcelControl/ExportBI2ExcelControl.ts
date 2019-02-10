@@ -9,6 +9,7 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { AmitalGatewayUtil } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { BIReportXMLData} from '../../../Infrastructure/Services/InfrastructureDomainService';
 
 @Component({
     moduleId: module.id,
@@ -32,12 +33,15 @@ export class ExportBI2ExcelControl {
     queryId: string;
     reportId: string;
     userid: string;
+    BIReportXMLData: BIReportXMLData = null;
+
     SetWindowArgs(args: any) {
         var myService: WebFreightDomainService = new WebFreightDomainService();
         this.queryId = args.queryId;
         this.reportId = args.reportId;
         this.queryName = args.reportName;
-        myService.GetExportBIReportToExcel(this.queryId, this.reportId).subscribe((myResponse: ServiceResponse) => {
+        this.BIReportXMLData = args.BIReportXMLData;
+        myService.GetExportBIReportToExcel(this.BIReportXMLData).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 if (myResponse.Result == "Faild") {
                     this.btnRetryVisibile = true;
@@ -72,7 +76,7 @@ export class ExportBI2ExcelControl {
         this.busyExportingVisibile = true;
         this.btnSaveToFileVisibile = false;
         var myService: WebFreightDomainService = new WebFreightDomainService();
-        myService.GetExportBIReportToExcel(this.queryId, this.reportId).subscribe((myResponse: ServiceResponse) => {
+        myService.GetExportBIReportToExcel(this.BIReportXMLData).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 if (myResponse.Result == "Faild") {
                     this.btnRetryVisibile = true;

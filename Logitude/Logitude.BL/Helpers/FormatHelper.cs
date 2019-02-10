@@ -233,7 +233,7 @@ namespace Logitude.BL.Helpers
             string myResult;
             if (myString.Contains("Base64Encode"))
             {
-                string value = myString.Substring(13);
+                string value = myString.Substring(12);
                 value = value.Trim();
 
                 var base64EncodedBytes = System.Convert.FromBase64String(value);
