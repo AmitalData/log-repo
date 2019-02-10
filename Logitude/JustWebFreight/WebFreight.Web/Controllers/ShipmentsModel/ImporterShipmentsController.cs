@@ -912,7 +912,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 entityPM.IsOperationalClosed = true;
             }
-            if (entityPM.CustomsClearanceDate != null && entityAM.CustomsClearanceDate == null && entityAM.HasException == true)
+            if (entityPM.CustomsClearanceDate == null && entityAM.CustomsClearanceDate != null && entityAM.HasException == true)
             {
 
                 entityPM.HasException = false;
