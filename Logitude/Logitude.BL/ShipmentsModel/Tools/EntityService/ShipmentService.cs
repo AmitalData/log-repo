@@ -2473,10 +2473,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     entityComputedFields.IsMissingDocuments = true;
                 }
+
+
                 if (entityPM.CustomsClearanceDate != null)
                 {
                     entityComputedFields.IsDigitalSignRequired = false;
                 }
+
+                if (entityPM.IsDepositionCloseTask)
+                {
+                    entityComputedFields.IsDepositionRequired = false;
+                }
+
+
                 entityComputedFields.LastDocumentDateTime = null;// new DateTime(1900, 1, 1);
                 shipmentComputedFieldsRepository.Add(entityComputedFields);
 
@@ -2710,32 +2719,46 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                 entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.Id, entityPM.Tenant);
-                if (entityPM.IsOperationalClosed)
-                {
-                    entityComputedFields.IsMissingDocuments = false;
-                    entityComputedFields.IsRequestedDocuments = false;
-                    entityComputedFields.IsDigitalSignRequired = false;
-                    entityComputedFields.MissingDocumentsCount = 0;
-                    entityComputedFields.MissingDocumentsNames = "";
-                }
 
-                else
+
+                if (entityComputedFields != null)
                 {
-                    var OTId = objectTableRepository.GetObjectTableIdByName("Shipment");
-                    entityComputedFields.MissingDocumentsCount = documentsFilingQuery.GetMissingDocCountForEntity(entityPM.Id, OTId, tenant, entityPM.IsOperationalClosed);
-                    entityComputedFields.MissingDocumentsNames = documentsFilingQuery.GetMissingDocsNamesForEntity(entityPM.Id, OTId, tenant, entityPM.IsOperationalClosed);
-                    if (entityComputedFields.MissingDocumentsCount == 0)
+
+                    if (entityPM.IsDepositionCloseTask)
+                    {
+                        entityComputedFields.IsDepositionRequired = false;
+                    }
+
+                    if (entityPM.IsOperationalClosed)
                     {
                         entityComputedFields.IsMissingDocuments = false;
+                        entityComputedFields.IsRequestedDocuments = false;
+                        entityComputedFields.IsDigitalSignRequired = false;
+                        entityComputedFields.MissingDocumentsCount = 0;
+                        entityComputedFields.MissingDocumentsNames = "";
+
                     }
 
                     else
                     {
-                        entityComputedFields.IsMissingDocuments = true;
+                        var OTId = objectTableRepository.GetObjectTableIdByName("Shipment");
+                        entityComputedFields.MissingDocumentsCount = documentsFilingQuery.GetMissingDocCountForEntity(entityPM.Id, OTId, tenant, entityPM.IsOperationalClosed);
+                        entityComputedFields.MissingDocumentsNames = documentsFilingQuery.GetMissingDocsNamesForEntity(entityPM.Id, OTId, tenant, entityPM.IsOperationalClosed);
+                        if (entityComputedFields.MissingDocumentsCount == 0)
+                        {
+                            entityComputedFields.IsMissingDocuments = false;
+                        }
+
+                        else
+                        {
+                            entityComputedFields.IsMissingDocuments = true;
+                        }
                     }
+
+                    shipmentComputedFieldsRepository.Update(entityComputedFields);
                 }
 
-                shipmentComputedFieldsRepository.Update(entityComputedFields);
+           
 
                 if (entityPM.IsHybrid || loggedTenant.IsDocumentsArchive)
                 {

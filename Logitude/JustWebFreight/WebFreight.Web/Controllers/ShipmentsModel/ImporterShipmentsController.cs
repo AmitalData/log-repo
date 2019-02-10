@@ -563,6 +563,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
             }
 
+
+            if (entityAM.CustomsClearanceDate != null)
+            {
+                entityPM.IsDepositionCloseTask = true;
+            }
+
             entityPM.Tenant = entityAM.ImporterTenant;
             entityPM.GrossWeightUnitCode = "KG";
             entityPM.DimensionsUnitCode = "Cm";
@@ -902,7 +908,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
             entityPM.IsImporterApprovalRequired = entityAM.IsImporterApprovalRequired;
             
-            if (currentTenant.AutoArchiveOnInvoice == true && entityAM.StatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityAM.IsOperationalClosed == false)
+            if (currentTenant.AutoArchiveOnInvoice == true && entityAM.OriginalStatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityPM.IsOperationalClosed == false)
             {
                 entityPM.IsOperationalClosed = true;
             }

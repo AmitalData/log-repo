@@ -2307,7 +2307,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public bool IsRequestedDocuments { get; set; }
         public bool IsDigitalSignRequired { get; set; }
-      
+        public bool IsDepositionCloseTask { get; set; }
 
     }
 }

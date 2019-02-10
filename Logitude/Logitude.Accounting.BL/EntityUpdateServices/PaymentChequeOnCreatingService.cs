@@ -9,6 +9,7 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
           //  entityPM.SearchFields = entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.AccountNumber + "," + entityPM.AccountName + "," + entityPM.CashBookTypeName;
            
 
-            DateTime todayDateTime = GetCurrentDateTime();
+            DateTime todayDateTime = GetCurrentDateTime(entityPM.Tenant);
 
             entityPM.CreateDate = todayDateTime;
             entityPM.UpdateDate = todayDateTime;
@@ -51,16 +52,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.PaymentChequeStatusCode = "1";
             entityPM.UniqueField = entityPM.Id;
             //ValidateEntity(entityPM);
-            TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
-            TenantPM currentTenant = tenantQuery.GetSinglePM(entityPM.Tenant);
-            BankAccountQueryService bankQuery = new BankAccountQueryService(entityPM.Tenant);
-            BankAccountPM bank = bankQuery.GetSingle(entityPM.BankAccountId, false, true);
-            if (currentTenant.CurrencyId == bank.GLAccountCurrencyId)
-            {
+            //TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
+            //TenantQuery tenantQuery = new TenantQuery(tenantRepository);
+            //TenantPM currentTenant = tenantQuery.GetSinglePM(entityPM.Tenant);
+            //BankAccountQueryService bankQuery = new BankAccountQueryService(entityPM.Tenant);
+            //BankAccountPM bank = bankQuery.GetSingle(entityPM.BankAccountId, false, true);
+            //if (currentTenant.CurrencyId == bank.GLAccountCurrencyId)
+            //{
 
-                entityPM.ExchangeRate = 1;
-                entityPM.ForeignAmount = entityPM.LocalAmount;
-            }
+            //    entityPM.ExchangeRate = 1;
+            //    entityPM.ForeignAmount = entityPM.LocalAmount;
+            //}
             if (!string.IsNullOrEmpty(entityPM.Notes))
             {
                 PaymentChequeLinePM paymentChequeLine = new PaymentChequeLinePM()
@@ -84,10 +86,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     "PaymentCheque", Tenant);
         }
 
-        public virtual int CodeCounterWrapperGetNumber(int Tenant)
+        public virtual string CodeCounterWrapperGetNumber(int Tenant)
         {
             return (new CodeCounterWrapper(false)).GetNumber(
-                    "PaymentCheque", Tenant);
+                    "PaymentCheque", Tenant).ToString();
         }
 
         public virtual string GetLogContactId(int tenant)
@@ -113,9 +115,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return myLoggedUserId;
         }
 
-        public virtual DateTime GetCurrentDateTime()
+        public virtual DateTime GetCurrentDateTime(int tenant)
         {
-            return new DateTime();
+            return TenantServerConfigration.GetCurrentDateTime(tenant);
         }
     }
 
@@ -125,6 +127,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         void OnCreating(PaymentChequePM entityPM);
       
         string GetLogContactId(int tenant);
-        DateTime GetCurrentDateTime();
+        DateTime GetCurrentDateTime(int tenant);
     }
 }

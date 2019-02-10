@@ -50,7 +50,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                         //Category1 = a.Category1,
                         //Category2 = a.Category2,
-                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                        LOVAdditionalColumns = a.LOVAdditionalColumns,
+                        HideTree = a.HideTree,
                     }).FirstOrDefault();
         }
 
@@ -77,7 +78,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                         //Category1 = a.Category1,
                         //Category2 = a.Category2,
-                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                        LOVAdditionalColumns = a.LOVAdditionalColumns,
+                        HideTree = a.HideTree,
                     }
                   );
         }
@@ -104,7 +106,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                         //Category1 = a.Category1,
                         //Category2 = a.Category2,
-                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                        LOVAdditionalColumns = a.LOVAdditionalColumns,
+                        HideTree = a.HideTree,
                     }
                   );
         }
@@ -132,7 +135,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                 DisplayName = a.Name,
                                 //Category1 = a.Category1,
                                 //Category2 = a.Category2,
-                                LOVAdditionalColumns = a.LOVAdditionalColumns
+                                LOVAdditionalColumns = a.LOVAdditionalColumns,
+                                HideTree = a.HideTree,
 
                             }
                   );
@@ -161,7 +165,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          DisplayName = item.Name + " " + a.Name,
                                          //Category1 = a.Category1,
                                          //Category2 = a.Category2,
-                                         LOVAdditionalColumns = a.LOVAdditionalColumns
+                                         LOVAdditionalColumns = a.LOVAdditionalColumns,
+                                         HideTree = a.HideTree,
                                      }
                   ).ToList();
                 FinalList = FinalList.Concat(TempInnerList).ToList();
@@ -189,7 +194,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                         //Category1 = a.Category1,
                         //Category2 = a.Category2,
-                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                        LOVAdditionalColumns = a.LOVAdditionalColumns,
+                        HideTree = a.HideTree,
                     }).FirstOrDefault();
         }
 
@@ -215,7 +221,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                         //Category1 = a.Category1,
                         //Category2 = a.Category2,
-                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                        LOVAdditionalColumns = a.LOVAdditionalColumns,
+                        HideTree = a.HideTree,
                     });
         }
 
@@ -239,7 +246,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                                                        //Category1 = a.Category1,
                                                        //Category2 = a.Category2,
-                                                       LOVAdditionalColumns = a.LOVAdditionalColumns
+                                                       LOVAdditionalColumns = a.LOVAdditionalColumns,
+                                                       HideTree = a.HideTree,
                                                    };
 
             return result;
@@ -274,7 +282,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                         //Category1 = a.Category1,
                         //Category2 = a.Category2,
-                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                        LOVAdditionalColumns = a.LOVAdditionalColumns,
+                        HideTree = a.HideTree,
                     }).FirstOrDefault();
         }
 
@@ -305,7 +314,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                         //Category1 = a.Category1,
                         //Category2 = a.Category2,
-                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                        LOVAdditionalColumns = a.LOVAdditionalColumns,
+                        HideTree = a.HideTree,
                     }).FirstOrDefault();
         }
 
@@ -335,7 +345,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         //Category2 = a.Category2,
                         LOVAdditionalColumns = a.LOVAdditionalColumns,
                         Category = aa.DWCategoryCode,
-                        CategoryIndex = b.Index
+                        CategoryIndex = b.Index,
+                        HideTree = a.HideTree,
                     }
                   );
         }

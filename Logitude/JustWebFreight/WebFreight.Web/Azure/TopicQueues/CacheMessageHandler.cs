@@ -33,10 +33,26 @@ namespace WebFreight.Web.TopicQueues
                     if (message != null)
                     {
                         string Key = message.Properties["Key"].ToString();
-                        CacheManager.CacheWrapper.Remove(Key);
+
+                        if (Key.Contains("$"))
+                        {
+                            string[] iKeys = Key.Split('$');
+
+                            foreach(string iKey in iKeys)
+                            {
+                                CacheManager.CacheWrapper.Remove(iKey);
+                            }
+                        }
+
+                        else
+                        {
+                            CacheManager.CacheWrapper.Remove(Key);
+                        }
+
                         message.Complete();
                     }
                 }
+
                 catch { }
             }
         }
