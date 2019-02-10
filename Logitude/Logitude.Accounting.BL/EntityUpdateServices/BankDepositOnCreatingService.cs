@@ -79,7 +79,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             
             // 1- Creating a New Journal
             JournalPM newJournal = new JournalPM();
-            InitJournal(entityPM, ref newJournal);
+            InitJournal(entityPM,  newJournal);
 
             // 2- Get cashbook and Validate
             CashBookPM cashBook = cashBookQueryService.GetSingle(entityPM.CashBookId, true, false);
@@ -121,13 +121,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
         
-        void InitJournal(BankDepositPM entityPM, ref JournalPM newJournal)
+        public void InitJournal(BankDepositPM entityPM, JournalPM newJournal)
         {
             newJournal.ChangeSetOp = ChangeSetOperation.Insert;
             newJournal.Tenant = entityPM.Tenant;
-            newJournal.CreateDate = DateTime.Now;
+            newJournal.CreateDate = GetCurrentDateTime(entityPM.Tenant);
             newJournal.CreatedByUserId = entityPM.CreatedByUserId;
-            newJournal.UpdateDate = DateTime.Now;
+            newJournal.UpdateDate = GetCurrentDateTime(entityPM.Tenant);
             newJournal.UpdatedByUserId = entityPM.UpdatedByUserId;
             newJournal.AccountingDate = entityPM.AccountingDate;
             newJournal.TypeCode = "0"; //Manual
