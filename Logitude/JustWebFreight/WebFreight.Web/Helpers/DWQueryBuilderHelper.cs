@@ -311,10 +311,15 @@ namespace WebFreight.Web.Helpers
 
             }
             var OrderByString = "" + Fact + ".Id_Number";
+            
             //var HasAggregate = false;
             if (DWQueryParam.Columns.Where(a => a.IsMeasurement).Count() > 0)
             {
                 OrderByString = "max(" + Fact + ".Id_Number)";
+            }
+            if (!string.IsNullOrEmpty(DWQueryParam.ColumnsSort))
+            {
+                OrderByString = DWQueryParam.ColumnsSort;
             }
             string PagingString = " ORDER BY " + OrderByString + " OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY";
             string FinalQuery = "";
@@ -349,6 +354,10 @@ namespace WebFreight.Web.Helpers
             if (DWQueryParam.PageSize != 0)
             {
                 FinalQuery = FinalQuery + PagingString;
+            }
+            else
+            {
+                FinalQuery = FinalQuery + " ORDER BY " + DWQueryParam.ColumnsSort;
             }
             
             return FinalQuery;

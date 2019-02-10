@@ -258,5 +258,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public bool ShowLocalNameInLOV { get; set; }
+
+        [DataMember]
+        public string UserRoles { get; set; }
     }
 }
