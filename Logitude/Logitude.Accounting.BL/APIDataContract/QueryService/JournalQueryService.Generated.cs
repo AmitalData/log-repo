@@ -90,61 +90,49 @@ using Logitude.Accounting.Data;
 					   					   temp.VoidedByUser = UserService1.GetUserById(MyEntityPM.VoidedByUserId,Tenant); 
 			       
 					   				   }
-				   			  
-				   if(MyEntityPM.OriginalJournalId != null)
-				   {
-					   JournalQueryService JournalService2 = new JournalQueryService(Tenant);
-					   					   temp.OriginalJournal = JournalService2.GetJournalById(MyEntityPM.OriginalJournalId,Tenant); 
-			       
-					   				   }
-				   			  
+				   
+				   temp.OriginalJournal = MyEntityPM.OriginalJournalId;			  
 				   if(MyEntityPM.ApprovedByUserId != null)
 				   {
-					   UserQueryService UserService3 = new UserQueryService(Tenant);
-					   					   temp.ApprovedByUser = UserService3.GetUserById(MyEntityPM.ApprovedByUserId,Tenant); 
+					   UserQueryService UserService2 = new UserQueryService(Tenant);
+					   					   temp.ApprovedByUser = UserService2.GetUserById(MyEntityPM.ApprovedByUserId,Tenant); 
 			       
 					   				   }
-				   			  
-				   if(MyEntityPM.VoidedByJournalId != null)
-				   {
-					   JournalQueryService JournalService4 = new JournalQueryService(Tenant);
-					   					   temp.VoidedByJournal = JournalService4.GetJournalById(MyEntityPM.VoidedByJournalId,Tenant); 
-			       
-					   				   }
-				   			  
+				   
+				   temp.VoidedByJournal = MyEntityPM.VoidedByJournalId;			  
 				   if(MyEntityPM.CreatedByUserId != null)
 				   {
-					   UserQueryService UserService5 = new UserQueryService(Tenant);
-					   					   temp.CreatedByUser = UserService5.GetUserById(MyEntityPM.CreatedByUserId,Tenant); 
+					   UserQueryService UserService3 = new UserQueryService(Tenant);
+					   					   temp.CreatedByUser = UserService3.GetUserById(MyEntityPM.CreatedByUserId,Tenant); 
 			       
 					   				   }
 				   			  
 				   if(MyEntityPM.TypeCode != null)
 				   {
-					   JournalTypeQueryService JournalTypeService6 = new JournalTypeQueryService(Tenant);
-					   					   temp.JournalType = JournalTypeService6.GetJournalTypeByCode(MyEntityPM.TypeCode,Tenant); 
+					   JournalTypeQueryService JournalTypeService4 = new JournalTypeQueryService(Tenant);
+					   					   temp.JournalType = JournalTypeService4.GetJournalTypeByCode(MyEntityPM.TypeCode,Tenant); 
 			       
 					   				   }
 				   			  
 				   if(MyEntityPM.StatusCode != null)
 				   {
-					   JournalStatusTypeQueryService JournalStatusTypeService7 = new JournalStatusTypeQueryService(Tenant);
-					   					   temp.JournalStatusType = JournalStatusTypeService7.GetJournalStatusTypeByCode(MyEntityPM.StatusCode,Tenant); 
+					   JournalStatusTypeQueryService JournalStatusTypeService5 = new JournalStatusTypeQueryService(Tenant);
+					   					   temp.JournalStatusType = JournalStatusTypeService5.GetJournalStatusTypeByCode(MyEntityPM.StatusCode,Tenant); 
 			       
 					   				   }
 				   			  
 				   if(MyEntityPM.AccountingEntityCode != null)
 				   {
-					   AccountingEntityQueryService AccountingEntityService8 = new AccountingEntityQueryService(Tenant);
-					   					   temp.AccountingEntity = AccountingEntityService8.GetAccountingEntityByCode(MyEntityPM.AccountingEntityCode,Tenant); 
+					   AccountingEntityQueryService AccountingEntityService6 = new AccountingEntityQueryService(Tenant);
+					   					   temp.AccountingEntity = AccountingEntityService6.GetAccountingEntityByCode(MyEntityPM.AccountingEntityCode,Tenant); 
 			       
 					   				   }
 				   
 				   temp.AccountingEntityId = MyEntityPM.AccountingEntityId;
 				if(MyEntityPM.JournalLines != null && MyEntityPM.JournalLines.Count > 0)
 				{
-					 JournalLineQueryService JournalLineService9 = new JournalLineQueryService(Tenant);
-					 temp.JournalLines = JournalLineService9.JournalLineCustomDataMapping(MyEntityPM,MyEntityPM.JournalLines,Tenant);
+					 JournalLineQueryService JournalLineService7 = new JournalLineQueryService(Tenant);
+					 temp.JournalLines = JournalLineService7.JournalLineCustomDataMapping(MyEntityPM,MyEntityPM.JournalLines,Tenant);
 				}
 
 							 					
@@ -214,18 +202,7 @@ using Logitude.Accounting.Data;
 					}
 			
 					
-					JournalQueryService OriginalJournalJournalService = new JournalQueryService(Tenant);
-					if(MyEntity.OriginalJournal != null)
-					{
-						var myOriginalJournalPM = OriginalJournalJournalService.JournalDataMappingAndValidatin(MyEntity.OriginalJournal,Tenant,ComputingPartnerName);
-												if(myOriginalJournalPM != null)
-						{
-							temp.OriginalJournalId = myOriginalJournalPM.Id;
-						}
-						 
-					}
-			
-					
+					temp.OriginalJournalId = MyEntity.OriginalJournal;
 					UserQueryService ApprovedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.ApprovedByUser != null)
 					{
@@ -238,18 +215,7 @@ using Logitude.Accounting.Data;
 					}
 			
 					
-					JournalQueryService VoidedByJournalJournalService = new JournalQueryService(Tenant);
-					if(MyEntity.VoidedByJournal != null)
-					{
-						var myVoidedByJournalPM = VoidedByJournalJournalService.JournalDataMappingAndValidatin(MyEntity.VoidedByJournal,Tenant,ComputingPartnerName);
-												if(myVoidedByJournalPM != null)
-						{
-							temp.VoidedByJournalId = myVoidedByJournalPM.Id;
-						}
-						 
-					}
-			
-					
+					temp.VoidedByJournalId = MyEntity.VoidedByJournal;
 					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.CreatedByUser != null)
 					{
@@ -301,8 +267,8 @@ using Logitude.Accounting.Data;
 					temp.AccountingEntityId = MyEntity.AccountingEntityId;
 					if(MyEntity.JournalLines != null && MyEntity.JournalLines.Count > 0)
 					{
-						JournalLineQueryService JournalLineService9 = new JournalLineQueryService(Tenant);
-						temp.JournalLines = JournalLineService9.JournalLineCustomDataMappingAndValidatin(MyEntity,MyEntity.JournalLines,Tenant,ComputingPartnerName);
+						JournalLineQueryService JournalLineService7 = new JournalLineQueryService(Tenant);
+						temp.JournalLines = JournalLineService7.JournalLineCustomDataMappingAndValidatin(MyEntity,MyEntity.JournalLines,Tenant,ComputingPartnerName);
 					}
 
 								 					   

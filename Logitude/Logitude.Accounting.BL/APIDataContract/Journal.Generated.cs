@@ -51,11 +51,11 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     
     public User VoidedByUser { get; set; }
     
-    public Journal OriginalJournal { get; set; }
+    public string OriginalJournal { get; set; }
     
     public User ApprovedByUser { get; set; }
     
-    public Journal VoidedByJournal { get; set; }
+    public string VoidedByJournal { get; set; }
     
     public User CreatedByUser { get; set; }
     
