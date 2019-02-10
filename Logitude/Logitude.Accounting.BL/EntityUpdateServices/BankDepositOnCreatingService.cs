@@ -87,7 +87,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 //showlocal
                 bool showLocal = false;
-                ContactPM user = GetLoggedContact(entityPM.Tenant);
+                ContactPM user = LoggedContactResolver.GetLoggedContact(tenant);//GetLoggedContact(entityPM.Tenant);
                 if (user != null)
                     showLocal = !user.DontShowLocal;
 

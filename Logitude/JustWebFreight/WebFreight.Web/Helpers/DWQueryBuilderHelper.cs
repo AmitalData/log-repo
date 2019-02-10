@@ -174,7 +174,7 @@ namespace WebFreight.Web.Helpers
                         {
                             DataWarehouseHelper dataWarehouseHelper = new DataWarehouseHelper();
                             var fieldName =   (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? filter.ParentDimTabelName : filter.DWObjectTableCode) +"." + filter.Code;
-                            WhereStmt += dataWarehouseHelper.ResolveWarehoueDateField(fieldName , filter.OperationCode, filter.TextValue.ToString(), Tenant);
+                            WhereStmt += dataWarehouseHelper.ResolveWarehoueDateField(fieldName , filter.OperationCode, filter.TextValue.ToString(), Tenant) + " " + AndOr + " ";
      
                         }
 
@@ -311,10 +311,15 @@ namespace WebFreight.Web.Helpers
 
             }
             var OrderByString = "" + Fact + ".Id_Number";
+            
             //var HasAggregate = false;
             if (DWQueryParam.Columns.Where(a => a.IsMeasurement).Count() > 0)
             {
                 OrderByString = "max(" + Fact + ".Id_Number)";
+            }
+            if (!string.IsNullOrEmpty(DWQueryParam.ColumnsSort))
+            {
+                OrderByString = DWQueryParam.ColumnsSort;
             }
             string PagingString = " ORDER BY " + OrderByString + " OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY";
             string FinalQuery = "";
@@ -330,7 +335,7 @@ namespace WebFreight.Web.Helpers
             string TenantWhere = ".[Parent Tenant] = ";
             var DWSettings = new DWHSettingRepository(Tenant);
             var temp = DWSettings.GetSingleDWHSetting(Tenant);
-            if (temp.Tenant != temp.ParentTenant)
+            if (temp != null &&  temp.Tenant != temp.ParentTenant)
             {
                 TenantWhere = ".[Source Tenant] = ";
             }
@@ -349,6 +354,10 @@ namespace WebFreight.Web.Helpers
             if (DWQueryParam.PageSize != 0)
             {
                 FinalQuery = FinalQuery + PagingString;
+            }
+            else
+            {
+                FinalQuery = FinalQuery + " ORDER BY " + DWQueryParam.ColumnsSort;
             }
             
             return FinalQuery;

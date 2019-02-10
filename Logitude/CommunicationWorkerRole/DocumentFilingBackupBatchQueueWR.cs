@@ -63,8 +63,10 @@ namespace CommunicationWorkerRole
                                 {
                                     try
                                     {
-                                        DocumentsFilingBackupHelper.UploadDocumentToFTP(DocumentFilingId,Tenant);
-                                        if (documentsBatch != null)
+										string p_message = "";
+										DocumentsFilingBackupHelper.UploadDocumentToFTP(DocumentFilingId,Tenant, out p_message);
+										//documentsBatch.Logs += Environment.NewLine + DateTime.Now.ToString() + " : " + p_message;
+										if (documentsBatch != null)
                                         {
                                             documentsBatch.TotalSucceeded += 1;
                                             documentFilingBackupBatchRepository.Update(documentsBatch);

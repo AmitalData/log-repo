@@ -91,7 +91,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     }
                     catch (Exception eee)
                     {
-
+                        LogitudeSettings.HandleLogMe($"BuildJournalEachMonth({i})"  +eee.ToString(), true, "AccLoadTest", new DateTime(2019, 5, 1));
                         //throw;
                     }
                     Thread.Sleep(10);
@@ -382,7 +382,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR(ChartOfAccountsTypeEnum.Revenues.ToIntString(), false, iRevenues, fullAccountingSetting.Tenant),
 
                 }, false);
-                if (iRevenues % 5000 == 0)
+                if (iRevenues % 100 == 0)
                 {
                     accountingContext.SaveChanges();
                 }
@@ -432,7 +432,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR(ChartOfAccountsTypeEnum.Expenses.ToIntString(), false, iExpenses, fullAccountingSetting.Tenant),
 
                 }, false);
-                if (iExpenses % 5000 == 0)
+                if (iExpenses % 100 == 0)
                 {
                     accountingContext.SaveChanges();
                 }
@@ -458,34 +458,35 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             }
             while (tot++ < times)
             {
-                int iClient = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + GLAccountTypeEnum.Client.ToIntString(), fullAccountingSetting.Tenant);
-                us.Update(new Def.EntityPMs.GLAccountPM()
+                using (var scope = TransactionFactory.GetNewTransaction())
                 {
-                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                    Tenant = fullAccountingSetting.Tenant,
-                    AccountTypeCode = GLAccountTypeEnum.Client.ToIntString(),
-                    ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.Customers.ToIntString(),
-                    ChartOfAccountsId = chartOfAccountProvider.GetChartOfAccountsId(fullAccountingSetting.Tenant, ChartOfAccountsTypeEnum.Customers),
-                    ControlAccountId = fullAccountingSetting.CustomerControlAccountId,
-                    LocalName = "לקוחות" + " " + iClient.ToString(),
-                    EnglishName = "Customer" + " " + iClient.ToString(),
-                    IsMultiCurrency = true,
-                    IsControlAccount = false,
-                    RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString(),
-                    DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR(ChartOfAccountsTypeEnum.Customers.ToIntString(), false, iClient, fullAccountingSetting.Tenant),
+
+                    int iClient = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + GLAccountTypeEnum.Client.ToIntString(), fullAccountingSetting.Tenant);
+                    us.Update(new Def.EntityPMs.GLAccountPM()
+                    {
+                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                        Tenant = fullAccountingSetting.Tenant,
+                        AccountTypeCode = GLAccountTypeEnum.Client.ToIntString(),
+                        ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.Customers.ToIntString(),
+                        ChartOfAccountsId = chartOfAccountProvider.GetChartOfAccountsId(fullAccountingSetting.Tenant, ChartOfAccountsTypeEnum.Customers),
+                        ControlAccountId = fullAccountingSetting.CustomerControlAccountId,
+                        LocalName = "לקוחות" + " " + iClient.ToString(),
+                        EnglishName = "Customer" + " " + iClient.ToString(),
+                        IsMultiCurrency = true,
+                        IsControlAccount = false,
+                        RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString(),
+                        DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR(ChartOfAccountsTypeEnum.Customers.ToIntString(), false, iClient, fullAccountingSetting.Tenant),
 
 
-                    // = FullAccountingSetting.CustomerControlAccountName + " " + i.ToString(),
-                    //AccountTypeCode 
+                        // = FullAccountingSetting.CustomerControlAccountName + " " + i.ToString(),
+                        //AccountTypeCode 
 
-                }, false);
-                if (iClient % 500 == 0)
-                {
-                    accountingContext.SaveChanges();
-
+                    }, true);
+                    scope.Complete();
                 }
+                
             }
-            accountingContext.SaveChanges();
+            
         }
 
         bool amount2addMore = false;
@@ -519,31 +520,34 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             {
 
                 int iVendors = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Vendors.ToIntString(), fullAccountingSetting.Tenant);
-
-
-                us.Update(new Def.EntityPMs.GLAccountPM()
+                using (var scope = TransactionFactory.GetNewTransaction())
                 {
-                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                    Tenant = fullAccountingSetting.Tenant,
-                    AccountTypeCode = GLAccountTypeEnum.Vendor.ToIntString(),
-                    ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.Vendors.ToIntString(),
-                    ChartOfAccountsId = chartOfAccountProvider.GetChartOfAccountsId(fullAccountingSetting.Tenant, ChartOfAccountsTypeEnum.Vendors),
-                    ControlAccountId = fullAccountingSetting.CustomerControlAccountId,
-                    LocalName = "ספקים" + " " + iVendors.ToString(),
-                    EnglishName = "Vendors" + " " + iVendors.ToString(),
-                    IsMultiCurrency = true,
-                    IsControlAccount = false,
-                    RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString(),
-                    DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR(ChartOfAccountsTypeEnum.Vendors.ToIntString(), false, iVendors, fullAccountingSetting.Tenant),
+
+                    us.Update(new Def.EntityPMs.GLAccountPM()
+                    {
+                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                        Tenant = fullAccountingSetting.Tenant,
+                        AccountTypeCode = GLAccountTypeEnum.Vendor.ToIntString(),
+                        ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.Vendors.ToIntString(),
+                        ChartOfAccountsId = chartOfAccountProvider.GetChartOfAccountsId(fullAccountingSetting.Tenant, ChartOfAccountsTypeEnum.Vendors),
+                        ControlAccountId = fullAccountingSetting.CustomerControlAccountId,
+                        LocalName = "ספקים" + " " + iVendors.ToString(),
+                        EnglishName = "Vendors" + " " + iVendors.ToString(),
+                        IsMultiCurrency = true,
+                        IsControlAccount = false,
+                        RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString(),
+                        DisplayNumber = displayNumberProvider.GetDisplayNumber15CHAR(ChartOfAccountsTypeEnum.Vendors.ToIntString(), false, iVendors, fullAccountingSetting.Tenant),
 
 
-                    // = FullAccountingSetting.CustomerControlAccountName + " " + i.ToString(),
-                    //AccountTypeCode 
+                        // = FullAccountingSetting.CustomerControlAccountName + " " + i.ToString(),
+                        //AccountTypeCode 
 
-                }, false);
-                if (iVendors % 5000 == 0)
-                {
-                    accountingContext.SaveChanges();
+                    }, true);
+                    //if (iVendors % 100 == 0)
+                    //{
+                    //    accountingContext.SaveChanges();
+                    //}
+                    scope.Complete();
                 }
             }
             accountingContext.SaveChanges();
@@ -886,6 +890,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 catch (Exception eee)
                 {
                     //logger.ToString();
+                    ///LogitudeSettings.HandleLogMe(eee.ToString(), true, "AccLoadTest", new DateTime(2019, 5, 1));
                     bool @throw = true;
                     if (@throw)
                     {

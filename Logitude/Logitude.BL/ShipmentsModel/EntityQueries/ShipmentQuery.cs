@@ -11051,6 +11051,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ProjectNumber = f.ProjectNumber,
                                ContainerLastStatusDate = f.ContainerLastStatusDate,
                                IsDepositionRequired = f.IsDepositionRequired,
+                               ImporterDepositionRequestDetails = f.ImporterDepositionRequestDetails,
+                               ForwarderPartnerId = f.ForwarderPartnerId,
+
                            };
             return myResult;
         }

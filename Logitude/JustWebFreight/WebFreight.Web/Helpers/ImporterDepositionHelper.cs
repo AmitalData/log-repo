@@ -203,14 +203,16 @@ namespace WebFreight.Web.Helpers
             {
                 if (customsShipperPM.ValidityStartDate != validityStartDate || customsShipperPM.ValidityEndDate != validityEndDate)
                 {
-                    DateTime currentDate = DateTime.Now.Date;
-                    if (currentDate >= validityStartDate.Value.Date && currentDate < validityEndDate.Value.Date)
-                    {
-                        customsShipperPM.ValidityStartDate = validityStartDate;
-                        customsShipperPM.ValidityEndDate = validityEndDate;
-                        customsShipperPM.IsChange = true;
-                    }
-                  
+                    customsShipperPM.ValidityStartDate = validityStartDate;
+                    customsShipperPM.ValidityEndDate = validityEndDate;
+                    customsShipperPM.IsChange = true;
+
+                    //DateTime currentDate = DateTime.Now.Date;
+                    //if (currentDate >= validityStartDate.Value.Date && currentDate < validityEndDate.Value.Date)
+                    //{
+
+                    //}
+
                 }
             }
         }
@@ -248,7 +250,7 @@ namespace WebFreight.Web.Helpers
 
 
             var msg = "Importer Deposition Send to cloud";
-            APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionAM), null, null, "");
+            APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionAM), null, null, "");
             return LogPM.Id;
             
 

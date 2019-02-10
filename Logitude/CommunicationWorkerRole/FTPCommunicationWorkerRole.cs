@@ -238,8 +238,20 @@ namespace CommunicationWorkerRole
 
                 }
             }
+			catch (FTPServiceException exc)
+			{
+				cl.Retries++;
+				cl.ExceptionMessage = exc.Message;
+				SetNextTryDateTime(cl);
+				if (context != null)
+				{
+					communicationLogRep.Update(cl);
+					communicationLogRep.SubmitChanges();
+				}
 
-            catch (Exception exc)
+				throw;
+			}
+			catch (Exception exc)
             {
                 ExceptionHandler.HandleException(exc, DateTime.Now, tenant, "", "WorkerRole", "", null);
 
@@ -295,8 +307,11 @@ namespace CommunicationWorkerRole
                         string hostIP = @"ftp://" + settingsData.host;
                         string fileName = (!string.IsNullOrEmpty(settingsData.filename) ? settingsData.filename : document.Id) + "." + document.Extension;
                         FTPService ftpService = new FTPService(hostIP, settingsData.username, settingsData.password);
-                        ftpService.Upload(fileName, settingsData.folder, filedata);
-                    }
+						string p_message = "";
+						ftpService.Upload(fileName, settingsData.folder, filedata, out p_message);
+						waitingCommLog.Logs += Environment.NewLine + DateTime.Now.ToString() + " : " + p_message;
+
+					}
                 }
 
                 waitingCommLog.CommunicationStatusTypeCode = "D";
