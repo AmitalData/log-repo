@@ -133,6 +133,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 UserTracing.Trace(entityPM, Poco, isNewEntity);
             }
 
+            entityPm.UserRoles = this.ComputeUserRoles();
             CheckDocumentFilingInbox(entityPm, Poco);
             UserMapping.MapEntity(entityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
@@ -186,8 +187,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
-
-
+        
         public void Update(UserPM entityPM, bool mapComposition = false)
         {
             if (mapComposition)
@@ -495,6 +495,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 UserTracing.Trace(entityPM, Poco, isNewEntity);
             }
 
+            entityPm.UserRoles = this.ComputeUserRoles();
             CheckDocumentFilingInbox(entityPM, Poco);
             ContactService service = new ContactService(objectContext, entityPM.Tenant);
             MapUserToContact(entityPM, contact);
@@ -979,10 +980,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     throw new Exception("המשתמש הינו פרילנסר, יש לבחור רק תקפיד המוגדר כפרילנסר"); // ("Must choose a freelancer role!");
                 }
             }
-
         }
-
-
+        
         private bool CheckUserId(UserPM entityPM, User entityPoco)
         {
             bool exists = false;
@@ -1031,6 +1030,49 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     throw new Exception("Inbox field already exists");
                 }
             }
+        }
+
+        private string ComputeUserRoles()
+        {
+            string myResult = "";
+
+            ContactTenant contacttenant = (from a in this.objectContext.ContactTenants
+                                           where a.ContactId == entityPm.Id && a.TenantId == tenant
+                                           select a).FirstOrDefault();
+
+            if (contacttenant == null)
+            {
+                contacttenant = (from a in this.objectContext.ContactTenants
+                                 where a.ContactId == entityPm.Id && a.TenantId == 0
+                                 select a).FirstOrDefault();
+            }
+
+            if (contacttenant != null)
+            {
+                List<ContactTenantRole> contactTenantRoles = (from a in this.objectContext.ContactTenantRoles
+                                                              where a.ContactTenantId == contacttenant.Id && a.Tenant == tenant
+                                                              select a).ToList();
+                
+                foreach (ContactTenantRole contacttenantrole in contactTenantRoles)
+                {
+                    Role role = this.objectContext.Roles.Where(a => a.Id == contacttenantrole.RoleId && (a.Tenant == tenant || a.Tenant == 0)).FirstOrDefault();
+                    
+                    if(role != null)
+                    {
+                        if (string.IsNullOrEmpty(myResult))
+                        {
+                            myResult = role.Name;
+                        }
+
+                        else
+                        {
+                            myResult = myResult + ", " + role.Name;
+                        }
+                    }
+                }
+            }
+            
+            return myResult;
         }
     }
 }

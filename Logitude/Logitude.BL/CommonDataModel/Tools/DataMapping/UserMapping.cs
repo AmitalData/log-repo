@@ -45,6 +45,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             user.ShowLogBoxToolTip = userPm.ShowLogBoxToolTip;
             user.ShowInboxToolTip = userPm.ShowInboxToolTip;
             user.ShowLocalNameInLOV = userPm.ShowLocalNameInLOV;
+            user.UserRoles = userPm.UserRoles;
             BuildSearchFields(userPm, user);
         }
 
