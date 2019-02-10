@@ -43,7 +43,8 @@ import {TraceEventPMService} from './Services/StandardPMs/TraceEventPMService';
 import {APILogsListService} from './Services/StandardLists/APILogsListService';
 import {APILogsPMService} from './Services/StandardPMs/APILogsPMService';
 import { EmailAlertSettingPMService } from './Services/ExtendedPMs/EmailAlertSettingPMService';
-import {BluesnapContractListService} from './Services/StandardLists/BluesnapContractListService';
+import { BluesnapContractListService } from './Services/StandardLists/BluesnapContractListService';
+import { BluesnapContractTypeListService } from './Services/StandardLists/BluesnapContractTypeListService';
 import {BusinessHourListService} from './Services/StandardLists/BusinessHourListService';
 import {TenantTypeListService} from './Services/StandardLists/TenantTypeListService';
 import {PaymentChannelListService} from './Services/StandardLists/PaymentChannelListService';
@@ -138,6 +139,7 @@ export class ModuleProviders {
             case "APILogsPMService": { myResult = new APILogsPMService(); break; }
             case "EmailAlertSettingPMService": { myResult = new EmailAlertSettingPMService(); break; }
             case "BluesnapContractListService": { myResult = new BluesnapContractListService(); break; }
+            case "BluesnapContractTypeListService": { myResult = new BluesnapContractTypeListService(); break; }                
             case "BluesnapContractPMService": { myResult = new BluesnapContractPMService(); break; }                
             case "TenantTypeListService": { myResult = new TenantTypeListService(); break; }   
             case "BusinessHourListService": { myResult = new BusinessHourListService(); break; }

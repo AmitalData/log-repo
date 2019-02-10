@@ -342,6 +342,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
+
+            entityPM.IsControlAccount = entityPM.IsControlAccount ?? false;//Task 47485: GLAccount - Update Service - Set Null fields as 0 (False)
+            entityPM.IsMultiCurrency = entityPM.IsMultiCurrency ?? false;//Task 47485: GLAccount - Update Service - Set Null fields as 0 (False)
+
             if (entityPM.AccountTypeCode == "5") // File
             {
                 string application = "";

@@ -1,4 +1,4 @@
-import {Component, ChangeDetectorRef} from '@angular/core';
+﻿import {Component, ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
@@ -13,8 +13,10 @@ import {DocumentsFilingExtendedPMService} from '../../../Common/Services/Extende
                 <tr style="height:1px;"> 
                     <td>
                         <div style="height:30px;">
-                            <button class="Button" (click)="EditButtonClicked()" style="width:57px;float: right;margin:4px;">Edit</button>
+
+                            <button class="Button" (click)="EditButtonClicked()" style="width:40px;float: right;margin:4px;">Edit</button>
                             <button class="Button" (click)="RemoveTasksButtonClicked()" style="width:85px;float: right;margin:4px;">Remove Tasks</button>
+                            <button class="RedButton" *ngIf="ShowRenewButtons == true"  (click)="RenewButtonClicked()" style="width:50px;float: right;margin:4px;">Renew</button>
                         </div>
                     </td>
                     
@@ -34,6 +36,7 @@ export class RemoveTasksButtonListTemplate {
     public HasSharedDocs: boolean = true;
     public _ShipmentPMService: ShipmentPMService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
+    public ShowRenewButtons: boolean = false;
     constructor(private CD: ChangeDetectorRef) {
         this._ShipmentPMService = new ShipmentPMService();
         //if (SessionLocator.PrivateLableSettings) {
@@ -45,6 +48,9 @@ export class RemoveTasksButtonListTemplate {
 
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData; 
+        this.ShowRenewButtons = (this.rowData['IsDepositionRequired'] == true);
+        
+        
         //if (SessionLocator.PrivateLableSettings) {
         //    this.ShowButtons = this.rowData['StatusName'].toLowerCase() == "in progress" ? false : true;
         //    if (SessionLocator.PrivateLableSettings) {
@@ -120,4 +126,33 @@ export class RemoveTasksButtonListTemplate {
             }
         });
     }
+
+    RenewButtonClicked() {
+        var newWindow = new LogitudeWindow();
+        newWindow.Width = 600;
+        newWindow.Height = 230;
+        newWindow.Title = "נדרש תצהיר עבור תיק עמילות" + " " + this.rowData['ForwarderShipmentNumber'];
+        var windowArgs: any = {};
+        
+        if (this.rowData) {
+            windowArgs.ShipmentId = this.rowData['Id'];
+            windowArgs.ImporterDepositionRequestDetails = this.rowData['ImporterDepositionRequestDetails'];
+            windowArgs.ForwarderShipmentNumber = this.rowData['ForwarderShipmentNumber'];
+            windowArgs.DirectionId = this.rowData['DirectionId'];
+            windowArgs.ForwarderPartnerId = this.rowData['ForwarderPartnerId'];
+            
+        }
+        //windowArgs.EntityPm = myResult.Result
+        newWindow.WindowArgs = windowArgs;
+        newWindow.RTL = true;
+        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DepositionRequestComponent');
+        newWindow.WindowClosed.subscribe(($event: any) => {
+            SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+            if ($event == "DepositionRequest") {
+                SessionLocator.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
+            }
+        });
+
+    }
+
 }

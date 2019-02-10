@@ -58,7 +58,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.InitializeServices();
-            this.GetClosedMonth();
+           
         });
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
@@ -98,7 +98,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     private accountingPeriod:any;
     private GetClosedMonth() {
         var periodTypeCode = "1" // 1-Regular
-        this.myAccountingPeriodListService.getByYear(new Date().getFullYear(), periodTypeCode).subscribe((myResponse: ServiceResponse) => {
+        this.myAccountingPeriodListService.getByYear(this.InvoiceDate.getFullYear(), periodTypeCode).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.accountingPeriod = myResponse.Result;
@@ -139,6 +139,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         //}
         this.EntityPM.Description = myDescription;
         this.EntityPM.IsGeneralInvoice = true;
+        this.EntityPM.IsFullAccounting = true;
         this.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
         this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
         this.EntityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
@@ -497,6 +498,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             InvoiceTool.ComputeARInvoiceDueDate(this.EntityPM);
             this.ComputeRelativeRateDate();
             this.LoadData();
+            this.GetClosedMonth();
         }
     }
 
@@ -674,17 +676,8 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         this.errors = [];
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-        if (this.accountingPeriod) {
-            if (this.InvoiceDate != null) {
-                var month = this.InvoiceDate.getMonth() + 1;
-                if (month > this.accountingPeriod.OpenMonth || month < this.accountingPeriod.ClosedMonth) {
-                    this.errors.push("Closed Month");
-                }
-            }
-        }
-        else {
-            this.errors.push("Closed Month");
-        }
+        var isValid = this.IsMonthOpenForAccountingDate();
+        if (!isValid) this.errors.push(TextCodeTranslator.Translate("AccountingPeriods.O.ClosedMonth")); // closed month
 
         if (this.glaccount != null && this.glaccount.IsMultiCurrency == false && this.InvoiceCurrencyId != this.glaccount.CurrencyId) {
             this.errors.push(TextCodeTranslator.Translate("ARInvoice.M.NewGeneralInvoiceErrorMsg2"));
@@ -741,7 +734,38 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
 
         this.ValidationErrorsList = this.errors;
     }
+    IsMonthOpenForAccountingDate() {
+        var valid = true;
+        if (this.accountingPeriod == null) {
+            valid = false;
+            //errorsList.Add(transText);
+        }
+        else {
+            var accountingDateMonth = this.EntityPM.InvoiceDate.getMonth() + 1;
 
+            if (accountingDateMonth > this.accountingPeriod.ClosedMonth) {
+                //Valid ... AccountingDateMonth must be greater than close Mounth
+            }
+            else {
+                //Not Valid ... AccountingDateMonth must be greater than close Mounth
+                //not valid  8>=8 
+                //not valid  0>=1 - Must Open mounth before work on year !!
+                valid = false;
+                //errorsList.Add(transText); //ClosedMonth Must B
+            }
+            if (accountingDateMonth == this.accountingPeriod.OpenMonth) {
+                //valid ... accountingDateMonth can be  equal to OpenMonth
+            }
+            else if (accountingDateMonth < this.accountingPeriod.OpenMonth) {
+                //valid ... accountingDateMonth can be  less than OpenMonth
+            }
+            else {
+                valid = false;
+                //errorsList.Add(transText);
+            }
+        }
+        return valid;
+    }
     OnEntityValid() {
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         this.InitializeComponent();

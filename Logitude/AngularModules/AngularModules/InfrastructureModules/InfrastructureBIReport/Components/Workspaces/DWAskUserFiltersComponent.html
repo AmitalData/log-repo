@@ -94,17 +94,20 @@
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
         </td>
     </tr>
-    <tr>
+    <tr *ngIf="IsDateFilter == false">
         <td>
             <div *ngFor="let item of SelectedFiltersDataSource; let i=index;">
-                <div style="float:left;margin-left:15px;" *ngIf="item && item.FilterType == 'Ask User' && (!item.IsGroup)">
+                <div style="float:left;margin-left:15px;width: 300px;" *ngIf="item && item.FilterType == 'Ask User' && (!item.IsGroup) && (item.ParentDataTypeCode != 'DateTime' && item.ParentDataTypeCode != 'Date')">
                     <div>
                         <table style="height:30px;">
                             <tr style="height:30px;" class="MyFilterItem">
-                                <td *ngIf="item.IsMandatoryFilter == true" style="height: 22px;width:16px;">
+                                <td *ngIf="item.IsMandatoryFilter == true" style="height: 22px;">
                                     <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
                                 </td>
-                                <td>
+                                <td *ngIf="!item.IsMandatoryFilter" style="height: 22px;">
+                                    <div style="width: 7px; height: 7px; background: transparent; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                </td>
+                                <td style="width: 106px;max-width:106px;" class="TextTrimming" [title]="item.DisplayName.replace('[', '').replace(']','')">
                                     <span>{{item.DisplayName.replace('[', '').replace(']','')}}</span>
                                 </td>
                                 <td style="width:7px;">
@@ -227,29 +230,68 @@
         </td>
 
     </tr>
-    <!--<tr *ngIf="ShowRunButton == true">
+    <tr>
         <td>
-            <table  style="height: 22px;">
-                <tr>
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
-                    <td style="width: 57px;">
-                        <button class="GreenButton" (click)="TestButtonClicked()">Run Report</button>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
+            <table>
+                <tr *ngFor="let item of SelectedFiltersDataSource; let i=index;">
+                    <td style="float:left;margin-left:15px;" *ngIf="item && item.FilterType == 'Ask User' && (!item.IsGroup) && (item.ParentDataTypeCode == 'DateTime' || item.ParentDataTypeCode == 'Date')">
+                        <div>
+                            <table style="height:30px;">
+                                <tr style="height:30px;" class="MyFilterItem">
+                                    <td *ngIf="item.IsMandatoryFilter == true" style="height: 22px;">
+                                        <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                    </td>
+                                    <td *ngIf="!item.IsMandatoryFilter" style="height: 22px;">
+                                        <div style="width: 7px; height: 7px; background: transparent; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                    </td>
+                                    <td style="width: 106px;max-width:106px;" class="TextTrimming" [title]="item.DisplayName.replace('[', '').replace(']','')">
+                                        <span>{{item.DisplayName.replace('[', '').replace(']','')}}</span>
+                                    </td>
+                                    <td style="width:7px;">
+                                        <div style="width:7px;"></div>
+                                    </td>
+                                    <td style="width: 106px;max-width:106px;" class="TextTrimming" [title]="item.DisplayName.replace('[', '').replace(']','')">
+                                        <!--<span>{{item.Operation.Name}}</span>-->
+                                        <ComboBox style="width:130px;" [ItemsSource]="Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="OperationValueChanged($event,item)"></ComboBox>
+                                    </td>
+                                    <td style="width:7px;">
+                                        <div style="width:7px;"></div>
+                                    </td>
+                                    <td [ngSwitch]="item.ParentDataTypeCode">
+
+                                        <!--Date-->
+                                        <div *ngSwitchCase="'DateTime' || 'Date'">
+
+                                            <div style="width:180px;">
+
+                                                <DWDate [ObjectFieldName]="item.Code"
+                                                        [DataContext]="item"
+                                                        [Operation]="item.Operation.Code"
+                                                        (ValueChanged)="item.onTextChange($event)"
+                                                        [SelectedValue]="item.TextValue">
+                                                </DWDate>
+
+                                            </div>
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+                            <!-------------------------->
+
+                            <DWAskUserFiltersComponent [SelectedFiltersDataSource]="item.FilterItems" [IsDateFilter]="true"></DWAskUserFiltersComponent>
+
+                        </div>
+
+                    </td> 
+
                 </tr>
             </table>
         </td>
-        <td>
-            <div></div>
-        </td>
-    </tr>-->
+
+    </tr>
+     
 
 </table>
 

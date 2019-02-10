@@ -1,27 +1,42 @@
 import { Component, Input, OnInit, ChangeDetectorRef, OnDestroy, Directive, Output, EventEmitter } from '@angular/core';
-import { DWObjectFieldsDetails } from '../../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent'; 
+import { DWObjectFieldsDetails } from '../../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent';
 import { DWObjectTablePMService } from '../../../../Infrastructure/Services/StandardPMs/DWObjectTablePMService';
 import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
- 
+//import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
+declare var window: any;
+
 
 @Component({
     selector: 'DWQueryBuilderFilters',
     moduleId: module.id,
     templateUrl: './DWQueryBuilderFiltersComponent.html',
-    inputs: ['SelectedFiltersDataSource', 'DataContext','SelectedFiltersDataSourceChanged']
+    inputs: ['SelectedFiltersDataSource', 'DataContext', 'SelectedFiltersDataSourceChanged']
 })
 
-export class DWQueryBuilderFiltersComponent implements OnInit{
+export class DWQueryBuilderFiltersComponent implements OnInit {
 
     SelectedFiltersDataSource: DWObjectFieldsDetails[] = [];
-    AllFieldsWithChildrenDataSource: DWObjectFieldsDetails[];
+    //allFieldsWithChildrenDataSource: DWObjectFieldsDetails[] = [];
     public AndOrOps = ["And", "Or"];
     public Types = ["Fixed Filter", "Ask User"];
     DataContext: any;
     public _DWObjectTablePMService: DWObjectTablePMService;
     public _DWObjectFieldPMService: DWObjectFieldExtendedPMService;
     public SelectedFiltersDataSourceChanged: EventEmitter<any>;
-    constructor() {
+    //@Output() DataSourceChanged: EventEmitter<any> = new EventEmitter();
+    //public _DWQueryBuilderHelper: DWQueryBuilderHelper;
+    //get AllFieldsWithChildrenDataSource() { return this.allFieldsWithChildrenDataSource; }
+    //set AllFieldsWithChildrenDataSource(value: any[]) {
+    //    if (value && this.allFieldsWithChildrenDataSource != value) { 
+    //        this.allFieldsWithChildrenDataSource = value;
+    //        this.cd.detectChanges();
+    //    }
+    //}
+    
+
+    constructor(private cd: ChangeDetectorRef) {
+        //this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
+        var ObsList = [];
         
     }
 
@@ -29,23 +44,35 @@ export class DWQueryBuilderFiltersComponent implements OnInit{
         var ObsList = [];
         this._DWObjectTablePMService = new DWObjectTablePMService();
         this._DWObjectFieldPMService = new DWObjectFieldExtendedPMService();
-        this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
-            this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(myResult.Result.Code).subscribe(Result => {
-                if (!Result.HasError) {
-                    Result.Result.forEach((field) => {
-                        if (field.DisplayInQueryBuilder == true) {
-                            var view = new DWObjectFieldsDetails(field, this.DataContext);
-                            view.DisplayName = field.DisplayName;
-                            view.ParentDataTypeCode = field.DataTypeCode;
-                            ObsList.push(view); 
-                        }
-                    });
-                    //this.DataSource = this.ObsList;
-                    this.AllFieldsWithChildrenDataSource = ObsList;
-                }
+        //window.FactFields.forEach((field) => {
+        //    if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) {
+        //        var view = new DWObjectFieldsDetails(field, this.DataContext);
+        //        view.ParentDataTypeCode = field.DataTypeCode;
 
-            });
-        });
+        //        ObsList.push(view);
+        //    }
+        //});
+        //this.AllFieldsWithChildrenDataSource = ObsList;
+        //this.DataSourceChanged.emit(ObsList);
+        //this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
+        //    this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(myResult.Result.Code).subscribe(Result => {
+        //        if (!Result.HasError) {
+        //            Result.Result.forEach((field) => {
+        //                if (field.DisplayInQueryBuilder == true) {
+        //                    var view = new DWObjectFieldsDetails(field, this.DataContext);
+        //                    view.DisplayName = field.DisplayName;
+        //                    view.ParentDataTypeCode = field.DataTypeCode;
+        //                    ObsList.push(view); 
+        //                }
+        //            });
+        //            //this.DataSource = this.ObsList;
+        //            this.AllFieldsWithChildrenDataSource = ObsList;
+        //        }
+
+        //    });
+        //});
+
+       
 
         if (this.SelectedFiltersDataSourceChanged) {
             this.SelectedFiltersDataSourceChanged.subscribe((res) => {
@@ -57,7 +84,7 @@ export class DWQueryBuilderFiltersComponent implements OnInit{
 
     AddFilterToGroup(item) {
         var DWObjectField = new DWObjectFieldsDetails(null, item.MyParentClass);
-        DWObjectField.IndexOrder = this.SelectedFiltersDataSource.length; 
+        DWObjectField.IndexOrder = this.SelectedFiltersDataSource.length;
         var tempData = item.FilterItems;
         tempData.push(DWObjectField);
         item.FilterItems = tempData;

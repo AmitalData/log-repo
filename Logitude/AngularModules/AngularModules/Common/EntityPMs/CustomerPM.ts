@@ -35,6 +35,7 @@ import {CustomerForwarderByProductPM} from './CustomerForwarderByProductPM';
 import {CustomerMediatorByProductPM} from './CustomerMediatorByProductPM';
 
 import {CardExternalCodeByCurrencyPM} from './CardExternalCodeByCurrencyPM';
+import {CustomerPMCustomCode} from '../EntityPMCustomCode/CustomerPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -1338,6 +1339,7 @@ export class CustomerPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
+            CustomerPMCustomCode.ApplyEntityChanged(propertyName, this);
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customer");
            
         }

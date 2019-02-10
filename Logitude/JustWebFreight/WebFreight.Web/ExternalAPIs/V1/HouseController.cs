@@ -39,12 +39,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                bool exist = SecurityUtility.CheckFeature("General", "EXTERNALAPIS", tenant);
-                if (!exist)
-                {
 
-                }
-                HouseQueryService Service = new HouseQueryService(tenant);
+				SecurityUtility.AuthenticateAPICall(tenant);
+
+				HouseQueryService Service = new HouseQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetHouseById(id, tenant);
                 //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
@@ -64,13 +62,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                bool exist = SecurityUtility.CheckFeature("General", "EXTERNALAPIS", tenant);
-                if (!exist)
-                {
 
-                }
+				SecurityUtility.AuthenticateAPICall(tenant);
 
-                HouseQueryService Service = new HouseQueryService(tenant);
+				HouseQueryService Service = new HouseQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetHouseByShipmentNumber(number, tenant);
                 //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
@@ -92,7 +87,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
+
+					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+
+					ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
                     string computingPartnerCode = "";
                     if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                     {
@@ -108,10 +106,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 throw new ApplicationException("Receivable Charges Type is required");
                             }
 
-                            if (item.Measurement == null)
-                            {
-                                throw new ApplicationException("Receivable Measurement is required");
-                            }
+                            //if (item.Measurement == null)
+                            //{
+                            //    throw new ApplicationException("Receivable Measurement is required");
+                            //}
 
                             if (item.Currency == null)
                             {
@@ -129,10 +127,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 throw new ApplicationException("Payable Charges Type is required");
                             }
 
-                            if (item.Measurement == null)
-                            {
-                                throw new ApplicationException("Payable Measurement is required");
-                            }
+                            //if (item.Measurement == null)
+                            //{
+                            //    throw new ApplicationException("Payable Measurement is required");
+                            //}
 
                             if (item.Currency == null)
                             {
@@ -329,6 +327,37 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         item.VatTypeId = chargesType.VatTypeId;
                         item.IATACodeId = chargesType.IATACodeId;
                         item.IsExpense = chargesType.IsExpense;
+
+                        if (string.IsNullOrEmpty(item.MeasurementId))
+                        {
+                            if (MethodHelper.IsLCLEntity(temp.TransportModeId, temp.ShipmentTypeId))
+                            {
+                                if (!string.IsNullOrEmpty(chargesType.MeasurementId))
+                                {
+                                    item.MeasurementId = chargesType.MeasurementId;
+                                }
+                                else
+                                {
+                                    throw new ApplicationException("Receivable Measurement is required");
+                                }
+                            }
+
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(chargesType.ContainerMeasurementId))
+                                {
+                                    item.MeasurementId = chargesType.ContainerMeasurementId;
+                                }
+                                else if (!string.IsNullOrEmpty(chargesType.MeasurementId))
+                                {
+                                    item.MeasurementId = chargesType.MeasurementId;
+                                }
+                                else
+                                {
+                                    throw new ApplicationException("Receivable Measurement is required");
+                                }
+                            }
+                        }
 
                         if (string.IsNullOrEmpty(item.PrepaidCollectId))
                         {
@@ -561,6 +590,37 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         item.DueTypeCode = chargesType.DueTypeCode;
                         item.VatTypeId = chargesType.VatTypeId;
                         item.IATACodeId = chargesType.IATACodeId;
+
+                        if (string.IsNullOrEmpty(item.MeasurementId))
+                        {
+                            if (MethodHelper.IsLCLEntity(temp.TransportModeId, temp.ShipmentTypeId))
+                            {
+                                if (!string.IsNullOrEmpty(chargesType.MeasurementId))
+                                {
+                                    item.MeasurementId = chargesType.MeasurementId;
+                                }
+                                else
+                                {
+                                    throw new ApplicationException("Payable Measurement is required");
+                                }
+                            }
+
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(chargesType.ContainerMeasurementId))
+                                {
+                                    item.MeasurementId = chargesType.ContainerMeasurementId;
+                                }
+                                else if (!string.IsNullOrEmpty(chargesType.MeasurementId))
+                                {
+                                    item.MeasurementId = chargesType.MeasurementId;
+                                }
+                                else
+                                {
+                                    throw new ApplicationException("Payable Measurement is required");
+                                }
+                            }
+                        }
 
                         if (string.IsNullOrEmpty(item.PrepaidCollectId))
                         {

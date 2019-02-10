@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.Data.EntityPOCOs;
+﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -18,14 +19,14 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
-   public partial class TaxDeductionReportUpdateService
+    public partial class TaxDeductionReportUpdateService
     {
 
 
         protected override void OnCreating(TaxDeductionReportPM entityPM, EntityPM entityParentPM)
         {
             entityPM.CreateDate = DateTime.Now;
-     
+
             entityPM.UpdateDate = DateTime.Now;
             entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
             entityPM.StatusTypeCode = "1";
@@ -39,7 +40,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void Trace(TaxDeductionReportPM entityPM, TaxDeductionReport entityPOCO, string changesXml)
         {
-            ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
+           ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 //create trace event with created type.
@@ -57,19 +58,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else
             {
-               
-                    EventTracerArgs eventTracerArgs = new EventTracerArgs()
-                    {
-                        EntityId = entityPM.Id,
-                        Tenant = entityPM.Tenant,
-                        UserId = loggedContact.Id,
-                        ObjectTableName = "TaxDeductionReport",
-                        IsAddedManually = false,
-                        EventTypeCode = "UPEV",
-                        Notes = "",
-                    };
-                    EventTracer.CreateTraceEvent(eventTracerArgs);
-                
+
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "TaxDeductionReport",
+                    IsAddedManually = false,
+                    EventTypeCode = "UPEV",
+                    Notes = "",
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+
             }
 
             base.Trace(entityPM, entityPOCO, changesXml);
@@ -93,5 +94,25 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return loggedcontact;
         }
 
+
+        protected override void AfterUpdating(TaxDeductionReportPM entityPM, EntityPM entityParentPM)
+        {
+            base.AfterUpdating(entityPM, entityParentPM);
+
+
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                entityPM.StatusTypeCode = "2";
+                entityPM.ChangeSetOp = ChangeSetOperation.Update;
+                this.Update(entityPM, true);
+
+                TaxDeductionReportService.Create856FileInBatch(entityPM.Id, entityPM.Tenant);
+
+                
+            }
+
+        }
     }
+
 }

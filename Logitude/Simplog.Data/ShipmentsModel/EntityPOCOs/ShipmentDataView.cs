@@ -548,7 +548,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? LocalCustomsTransmissionsStatusDate { get; set; }
         #endregion
 
-
         public string IssuingCarrierAgentId { get; set; }
         public string IncotermCode { get; set; }
         public bool IncludesCustoms { get; set; }
@@ -565,11 +564,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? TEU { get; set; }
 
         public string MainCarriageFromCity { get; set; }
-        public string MainCarriageFromState { get; set; }
         public string MainCarriageFromCountryCode { get; set; }
 
         public string MainCarriageToCity { get; set; }
-        public string MainCarriageToState { get; set; }
         public string MainCarriageToCountryCode { get; set; }        
 
         public double? ProfitExchangeRate { get; set; }
@@ -634,7 +631,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool IsDigitalSignRequired { get; set; }
         public string TrailerNumber { get; set; }
 
-
+        public bool IsDepositionRequired { get; set; }
+        public string ImporterDepositionRequestDetails { get; set; }
+        
         public string DeclarationXmlData { get; set; }
         public bool IsImporterApprovalRequried { get; set; }
         public string ApprovedByUserName { get; set; }
@@ -714,5 +713,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? INTTRALastStatusDate { get; set; }
         public DateTime? ContainerLastStatusDate { get; set; }
 
+        public string ForwarderPartnerId { get; set; }
+
+        public string From { get; set; }
+        public string To { get; set; }
+        public string Origin { get; set; }
     }
 }

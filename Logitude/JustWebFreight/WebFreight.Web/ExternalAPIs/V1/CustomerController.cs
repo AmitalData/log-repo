@@ -39,7 +39,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                CustomerQueryService Service = new CustomerQueryService(tenant);
+				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+				CustomerQueryService Service = new CustomerQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetCustomerById(id, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
@@ -62,8 +63,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
-
-                    ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
+					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+					ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
                     CardRepository cardRepository = new CardRepository(MyContext);
 
                     string computingPartnerCode = "";
@@ -178,6 +179,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     gLAccountEntity.DisplayNumber = entity.GLAccount.DisplayNumber;
                                 }
 
+                                //InternlNumber
+                                if (string.IsNullOrEmpty(entity.GLAccount.InternalNumber))
+                                {
+                                    gLAccountEntity.InternalNumber = CodeCounter.GetNumber("GLAccount", authToken.Tenant).ToString();
+                                }
+                                else
+                                {
+                                    gLAccountEntity.InternalNumber = entity.GLAccount.InternalNumber;
+                                }
+                                
                                 //EnglishName
                                 if (string.IsNullOrEmpty(entity.GLAccount.EnglishName))
                                 {

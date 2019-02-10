@@ -73,6 +73,8 @@ using Logitude.Infrastructure.Data.Repsitories;
 using System.IO;
 using WebFreight.Web.App_Code.AngularJS_App_Code.Global;
 using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.EntityListQueryServices;
+using Logitude.Infrastructure.Data.EntityLists;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -1701,14 +1703,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     QueryData.BIReportPM = entityPM;
                     QueryData.BIReportId = entityPM.Id;
+                    var sortingList = new List <Column> (); 
 
                     if (!string.IsNullOrEmpty(entityPM.AGGridOptionsXML))
                     {
                         var bITabularViewSettings = LogitudeXmlSerializer.DeserializeObject<BITabularViewSettings>(entityPM.AGGridOptionsXML);
                         if(bITabularViewSettings!= null && Columns != null)
                         {
-                            foreach(var item in bITabularViewSettings.Columns.ToList())
+                            foreach(Column item in bITabularViewSettings.Columns.ToList())
                             {
+                                if (item.SortDirction != null)
+                                {
+                                    sortingList.Add(item);
+                                }
+                                
                                 var queryColumn = Columns.Where(a => a.DisplayName.Replace("[", "").Replace("]", "") == item.Code).FirstOrDefault();
                                 if (queryColumn == null)
                                 {
@@ -1718,7 +1726,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             }
                         }
 
-                        foreach(var item in Columns)
+                        if(sortingList != null && sortingList.Count() > 0)
+                        {
+                            foreach (Column item in sortingList.OrderBy(o => o.SortOrder).ToList())
+                            {
+                                QueryData.DWQueryData.ColumnsSort += "["+item.Code +"]"+ " " + item.SortDirction + ",";
+                            }
+                            QueryData.DWQueryData.ColumnsSort = QueryData.DWQueryData.ColumnsSort.TrimEnd(',');
+
+                        }
+
+                        foreach (var item in Columns)
                         {
                             var queryColumn = bITabularViewSettings.Columns.Where(a => a.Code == item.DisplayName.Replace("[", "").Replace("]", "")).FirstOrDefault();
                             if (queryColumn == null)
@@ -1823,6 +1841,37 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, QueryData_Updated);
             }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetFeatureToggles()
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
+                    string loggedUserEmail = authToken.Email;
+
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+
+                    IInfrastructureContext context = InfrastructureContext.GetContext(0);
+                    FeatureToggleRepository repository = new FeatureToggleRepository(context);
+                    FeatureToggleListQueryService listQueryService = new FeatureToggleListQueryService(context);
+
+                    IQueryable<FeatureToggle> featureToggles = repository.GetAll(0);
+                    IQueryable<FeatureToggleList> myResult = listQueryService.GetIqueryableList(featureToggles);
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                }
+            }
+
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));

@@ -129,7 +129,7 @@ export class BIReportPreviewComponent implements OnInit {
                             sortable: true,
                             width: columns[i].Width,
                             resizable: true,
-                            cellRenderer: this.DateCellRenderer,
+                            //cellRenderer: this.DateCellRenderer,
                             cellClass: columns[i].DataTypeCode,
                             //filter: 'agTextColumnFilter',
                             pivotIndex: columns[i].Index,
@@ -158,19 +158,22 @@ export class BIReportPreviewComponent implements OnInit {
     }
     public BuildRows(arg: BIReportXMLData) {
         this.rowData = [];
-        this.StopBusyIndicator();
-        this._DWQueryBuilderService.GetNewDWQueryData(arg.DWQueryData).subscribe(myResult => {
-            if (!myResult.HasError) {
-                this.rowData = myResult.Result.SQLDataResult;
-                this.timerToken = setTimeout(() => this.UpdateAGGrid(arg), 500);
-                this.StopBusyIndicator();
-            }
-            else {
-                this.StopBusyIndicator();
-            }
+        this.StartBusyIndicator();
+        this.RunReportCommand.emit({ MyData: arg.DWQueryData,FirstTime : true });
 
-            //this.LoadBIReportData();
-        });
+       
+        //this._DWQueryBuilderService.GetNewDWQueryData(arg.DWQueryData).subscribe(myResult => {
+        //    if (!myResult.HasError) {
+        //        this.rowData = myResult.Result.SQLDataResult;
+        //        this.timerToken = setTimeout(() => this.UpdateAGGrid(arg), 500);
+        //        this.StopBusyIndicator();
+        //    }
+        //    else {
+        //        this.StopBusyIndicator();
+        //    }
+
+        //    //this.LoadBIReportData();
+        //});
         //this.RunReportCommand.emit(arg.DWQueryData);
 
         //if (arg.DWQueryData != null && arg.DWQueryData.SubQueryData != null && arg.DWQueryData.SubQueryData.SQLString != null) {
@@ -277,6 +280,7 @@ export class BIReportPreviewComponent implements OnInit {
         windowArgs.queryId = this.DWQueryId;
         windowArgs.reportId = this.EntityPM.Id;
         windowArgs.reportName = this.EntityPM.Name;
+        windowArgs.BIReportXMLData = this.BIReportXMLData; 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 500;
         logitudeWindow.Height = 200;
@@ -358,7 +362,10 @@ export class BIReportPreviewComponent implements OnInit {
         result.BIReportId = this.EntityId;
         result.BIReportPM = this.EntityPM;
         result.BITabularViewSettings.Columns = [];
+        result.DWQueryData = this.BIReportXMLData.DWQueryData;
+
         var newColumn = new Column();
+        var sortsList = [];
 
         this.BIReportXMLData.DWQueryData.Columns.forEach(item => {
             newColumn = new Column();
@@ -378,10 +385,24 @@ export class BIReportPreviewComponent implements OnInit {
                 if (sortItem != null) {
                     newColumn.SortDirction = sortItem["sort"];
                     newColumn.SortOrder = sorting.indexOf(sortItem);
+
+                    sortsList.push({
+                        colId: item.DisplayName,
+                        sort: newColumn.SortDirction,
+                        order: newColumn.SortOrder
+                    });
                 }
             }
             result.BITabularViewSettings.Columns.push(newColumn);
         });
+
+        if (sortsList != null && sortsList.length > 0) {
+            this.BIReportXMLData.DWQueryData.ColumnsSort = ""; 
+            sortsList.sort((a, b) => { return (a.order === b.order) ? 0 : (a.order < b.order) ? -1 : 1 }).forEach(item => {
+                result.DWQueryData.ColumnsSort += item.colId + " " + item.sort + ",";
+            });
+            result.DWQueryData.ColumnsSort = result.DWQueryData.ColumnsSort.replace(/,\s*$/, "");
+        }
 
         this._InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe(myResult => {
             if (!myResult.HasError) {
@@ -422,7 +443,6 @@ export class BIReportPreviewComponent implements OnInit {
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 if (s != null  ||( d != null && d != "cancel")) {
-                    this.DWQueryId = s.ID;
                     this.LoadBIReportData();
                 }
             });
@@ -445,11 +465,18 @@ export class BIReportPreviewComponent implements OnInit {
         }
     }
     RunReportButtonClicked() {
-        this.RunReportCommand.emit(this.DWQueryData);
+        this.RunReportCommand.emit(this.BIReportXMLData.DWQueryData);//this.DWQueryData);
     }
     OnRunReportComplete(MyData) {
-        this.rowData = MyData;
-        this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML), 500);
+        if (MyData == "ValidationError") {
+            this.StopBusyIndicator();
+        }
+        else {
+            this.rowData = MyData;
+            this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML), 500);
+            this.StopBusyIndicator();
+        }
+       
         this.StopBusyIndicator();
     }
     CountClicked() {
@@ -459,8 +486,8 @@ export class BIReportPreviewComponent implements OnInit {
         if (!this.IsNewEntity) {
             var windowTitle = "Show/Hide/Reorder Column(s)";
             var logWindow = new LogitudeWindow();
-            logWindow.Width = 350;
-            logWindow.Height = 400;
+            logWindow.Width = 500;
+            logWindow.Height = 600;
             logWindow.Title = windowTitle;
             var windowArgs: any = {};
             windowArgs.father = this;

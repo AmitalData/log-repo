@@ -7,6 +7,7 @@ namespace WebFreight.Web.DataProviders
 {
     public class InvoiceDataProvider : BaseDataProvider
     {
+        public string ProjectNumber { get; set; }
         public string TenantStateCode { get; set; }
         public string BranchSignature { get; set; }
         public string PackageDetails { get; set; }

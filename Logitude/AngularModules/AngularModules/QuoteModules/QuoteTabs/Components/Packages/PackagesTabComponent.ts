@@ -464,21 +464,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.MeasurmentsButtonToolTip = TextCodeTranslator.Translate("Quote.B.Details.HideMeasurmentsSettings");
         }
     }
-    NumericButtonClicked(isIncreas: boolean) {
-        if (this.IsEditingEnabled) {
-            if (isIncreas) {
-                if (this.Ratio < 10) {
-                    this.Ratio += 1;
-                }
-            }
-
-            else {
-                if (this.Ratio > 1) {
-                    this.Ratio -= 1;
-                }
-            }
-        }
-    }
 
     get GrossWeightUnitCode() { return this.EntityPM.GrossWeightUnitCode; }
     set GrossWeightUnitCode(newValue: string) {

@@ -166,9 +166,9 @@ namespace WebFreight.Web
                 ////LogitudeSettings.DropboxAppKey = setting.DropboxAppKey;
                 ////LogitudeSettings.DropboxAppSecret = setting.DropboxAppSecret;
                 
-                aTimer.Elapsed += new ElapsedEventHandler(OnSettingsCheckTimedEvent);
-                aTimer.Interval = 60000;
-                aTimer.Enabled = true;
+                //aTimer.Elapsed += new ElapsedEventHandler(OnSettingsCheckTimedEvent);
+                //aTimer.Interval = 60000;
+                //aTimer.Enabled = true;
 
             }
 
@@ -245,8 +245,7 @@ namespace WebFreight.Web
             //GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
 
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
-            json.SerializerSettings.PreserveReferencesHandling =
-                Newtonsoft.Json.PreserveReferencesHandling.Objects;
+			json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
 
 
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.UseXmlSerializer = true;

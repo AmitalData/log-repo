@@ -50,6 +50,11 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 ValidateConcurrencyGUID(entityPM, entityPoco);
             }
 
+            if (entityPM.Ratio > 10 || entityPM.Ratio < 1)
+            {
+                throw new ApplicationException("Ratio must be between 1-10");
+            }
+
             ValidateAirlineRestriction(entityPM);
             ValidateMultiVatPercentages(entityPM, myCommonContext);
         }
