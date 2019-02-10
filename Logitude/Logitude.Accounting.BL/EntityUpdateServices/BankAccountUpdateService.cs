@@ -26,6 +26,7 @@ using Logitude.BL.Security;
 using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -46,101 +47,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void Trace(BankAccountPM entityPM, BankAccount entityPOCO, string changesXml)
         {
-            ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-                //create trace event with created type.
-                EventTracerArgs eventTracerArgs = new EventTracerArgs()
-                {
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
-                    ObjectTableName = "BankAccount",
-                    IsAddedManually = false,
-                    EventTypeCode = "CREV",
-
-                };
-                EventTracer.CreateTraceEvent(eventTracerArgs);
-            }
-            else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
-            {
-                //create trace event with updated type.
-                string myEventNotes = "";
-
-                if (entityPM.LocalName != entityPOCO.LocalName && (!String.IsNullOrEmpty(entityPM.LocalName) || !String.IsNullOrEmpty(entityPOCO.LocalName)))
-                {
-                    //myEventNotes = "Previous Local Name: " + (entityPOCO.LocalName == null ? "" : entityPOCO.LocalName);
-                    //myEventNotes += " Local Name Changed" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + entityPOCO.LocalName 
-                    //                              + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + entityPM.LocalName + ". ";
-                    myEventNotes += GetOldNewEventNote("Local Name", entityPOCO.LocalName, EntityPM.LocalName);
-                    
-                }
-                if (entityPM.EnglishName != entityPOCO.EnglishName && (!String.IsNullOrEmpty(entityPM.EnglishName) || !String.IsNullOrEmpty(entityPOCO.EnglishName)))
-                {
-                    //myEventNotes += " English Name Changed" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + entityPOCO.EnglishName
-                    //                              + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + entityPM.EnglishName + ". ";
-                    myEventNotes += GetOldNewEventNote("English Name", entityPOCO.EnglishName, EntityPM.EnglishName);
-
-                }
-
-                if (entityPM.BranchNumber != entityPOCO.BranchNumber && (!String.IsNullOrEmpty(entityPM.BranchNumber) || !String.IsNullOrEmpty(entityPOCO.BranchNumber)))
-                {
-                    myEventNotes += GetOldNewEventNote("Branch Number", entityPOCO.BranchNumber, EntityPM.BranchNumber);
-
-                }
-
-                if (entityPM.AccountNumber != entityPOCO.AccountNumber && (!String.IsNullOrEmpty(entityPM.AccountNumber) || !String.IsNullOrEmpty(entityPOCO.AccountNumber)))
-                {
-                    myEventNotes += GetOldNewEventNote("Account Number", entityPOCO.AccountNumber, EntityPM.AccountNumber);
-
-                }
-                if (entityPM.Inactive != entityPOCO.Inactive)
-                {
-                    if (entityPM.Inactive == true)
-                    {
-                        EventTracerArgs eventTracerArgs0 = new EventTracerArgs()
-                        {
-                            EntityId = entityPM.Id,
-                            Tenant = entityPM.Tenant,
-                            UserId = loggedContact.Id,
-                            ObjectTableName = "BankAccount",
-                            IsAddedManually = false,
-                            EventTypeCode = "DCTV",
-                            Notes = myEventNotes,
-
-                        };
-                        EventTracer.CreateTraceEvent(eventTracerArgs0);
-                    }
-                    else
-                    {
-                        EventTracerArgs eventTracerArgs1 = new EventTracerArgs()
-                        {
-                            EntityId = entityPM.Id,
-                            Tenant = entityPM.Tenant,
-                            UserId = loggedContact.Id,
-                            ObjectTableName = "BankAccount",
-                            IsAddedManually = false,
-                            EventTypeCode = "ACTV",
-                            Notes = myEventNotes,
-
-                        };
-                        EventTracer.CreateTraceEvent(eventTracerArgs1);
-                    }
-
-                }
-                EventTracerArgs eventTracerArgs = new EventTracerArgs()
-                {
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
-                    ObjectTableName = "BankAccount",
-                    IsAddedManually = false,
-                    EventTypeCode = "CUPD",
-                    Notes = myEventNotes,
-
-                };
-                EventTracer.CreateTraceEvent(eventTracerArgs);
-            }
+            BankAccountTraceEventService traceEventService = new BankAccountTraceEventService(MainContext as IAccountingContext);
+            traceEventService.Trace(entityPM, entityPOCO, changesXml);
+            List<TraceEventResponse> responses = traceEventService.TraceEventResponses;//for later user.
+            traceEventService.InsertTraceEvents();
             base.Trace(entityPM, entityPOCO, changesXml);
         }
 
