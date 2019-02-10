@@ -28,6 +28,7 @@ import {CommonDomainService} from '../../../Common/Services/CommonDomainService'
 import {VatTypePercentagePM} from '../../../Common/EntityPMs/VatTypePercentagePM';
 import {VATTypesGroupPM} from '../../../Common/EntityPMs/VATTypesGroupPM';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
+import { DecimalFormatter } from '../../../Infrastructure/Utilities/DecimalFormatter';
 
 @Component({
     selector: 'LCLChargesComponent',
@@ -1236,7 +1237,15 @@ export class QuoteChargeItem extends BaseComponent {
                 if (iAmount < this.CostMinAmount) {
                     iAmount = this.CostMinAmount;
                     iVisible = true;
-                    iTitle = "Amount is due to Charge Min Amount: " + this.CostMinAmount;
+
+                    iTitle = "Amount is due to Charge Min Amount";
+                    iTitle += "\n";
+                    iTitle += "Cost Min Amount: " + DecimalFormatter.format(this.CostMinAmount, 3);
+
+                    if (this.CostMaxAmount != null) {
+                        iTitle += "\n";
+                        iTitle += "Cost Max Amount: " + DecimalFormatter.format(this.CostMaxAmount, 3);
+                    }
                 }
             }
 
@@ -1244,7 +1253,16 @@ export class QuoteChargeItem extends BaseComponent {
                 if (iAmount > this.CostMaxAmount) {
                     iAmount = this.CostMaxAmount;
                     iVisible = true;
-                    iTitle = "Amount is due to Charge Max Amount: " + this.CostMaxAmount;
+
+                    iTitle = "Amount is due to Charge Max Amount";
+
+                    if (this.CostMinAmount != null) {
+                        iTitle += "\n";
+                        iTitle += "Cost Min Amount: " + DecimalFormatter.format(this.CostMinAmount, 3);
+                    }
+
+                    iTitle += "\n";
+                    iTitle += "Cost Max Amount: " + DecimalFormatter.format(this.CostMaxAmount, 3);
                 }
             }
         }
@@ -1269,7 +1287,14 @@ export class QuoteChargeItem extends BaseComponent {
                 if (iAmount < this.SaleMinAmount) {
                     iAmount = this.SaleMinAmount;
                     iVisible = true;
-                    iTitle = "Amount is due to Charge Min Amount: " + this.SaleMinAmount;
+                    iTitle = "Amount is due to Charge Min Amount";
+                    iTitle += "\n";
+                    iTitle += "Sale Min Amount: " + DecimalFormatter.format(this.SaleMinAmount, 3);
+
+                    if (this.SaleMaxAmount != null) {
+                        iTitle += "\n";
+                        iTitle += "Sale Max Amount: " + DecimalFormatter.format(this.SaleMaxAmount, 3);
+                    }
                 }
             }
 
@@ -1277,7 +1302,15 @@ export class QuoteChargeItem extends BaseComponent {
                 if (iAmount > this.SaleMaxAmount) {
                     iAmount = this.SaleMaxAmount;
                     iVisible = true;
-                    iTitle = "Amount is due to Charge Max Amount: " + this.SaleMaxAmount;
+                    iTitle = "Amount is due to Charge Max Amount";
+
+                    if (this.SaleMinAmount != null) {
+                        iTitle += "\n";
+                        iTitle += "Sale Min Amount: " + DecimalFormatter.format(this.SaleMinAmount, 3);
+                    }
+
+                    iTitle += "\n";
+                    iTitle += "Sale Max Amount: " + DecimalFormatter.format(this.SaleMaxAmount, 3);
                 }
             }
         }
