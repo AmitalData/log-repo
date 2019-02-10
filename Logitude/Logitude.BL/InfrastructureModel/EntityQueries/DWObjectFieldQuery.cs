@@ -104,7 +104,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                         //Category1 = a.Category1,
                         //Category2 = a.Category2,
-                        LOVAdditionalColumns = a.LOVAdditionalColumns
+                        LOVAdditionalColumns = a.LOVAdditionalColumns, 
                     }
                   );
         }

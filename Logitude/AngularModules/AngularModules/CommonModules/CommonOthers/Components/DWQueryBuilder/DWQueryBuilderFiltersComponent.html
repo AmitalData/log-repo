@@ -264,7 +264,7 @@
                                 <img class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer;" (click)="onDeleteFilterClick(item)" />
                             </td>
                             <td style="width:150px;">
-                                <ComboBox style="width:130px;" [ItemsSource]="item.MyParentClass.AllFieldsWithChildrenDataSource" [SelectedItem]="item" [Binding]="'DisplayName'" (SelectedItemChanged)="item.FieldValueChanged($event)"></ComboBox>
+                                <ComboBox style="width:130px;"  [ItemsSource]="item.MyParentClass.AllFieldsWithChildrenDataSource" [SelectedItem]="item" [Binding]="'DisplayName'" (SelectedItemChanged)="item.FieldValueChanged($event)"></ComboBox>
                             </td>
                             <td style="width:7px;">
                                 <div style="width:7px;"></div>

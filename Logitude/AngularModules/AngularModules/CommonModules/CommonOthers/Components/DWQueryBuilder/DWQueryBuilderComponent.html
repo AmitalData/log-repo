@@ -71,6 +71,7 @@
     }
 
     .LinkBtn {
+        display:none;
         text-decoration: underline;
         float: left;
         color: blue;
@@ -218,6 +219,17 @@
         user-select: none; /* Non-prefixed version, currently
                                       not supported by any browser */
     }
+    .OutterLink{
+
+    }
+        .OutterLink:hover .LinkBtn {
+            display: block;
+            text-decoration: underline;
+            float: left;
+            color: blue;
+            font-size: 11px;
+            text-indent: 3px;
+        }
 </style>
 
     <table>
@@ -288,22 +300,22 @@
                                                                                                             </td>
 
 
-                                                                                                            <td class="ListBoxItem" colspan="2" [class.SelectedListBoxItem]="SelectedItem == item" (click)="SetSelectedItem(item)" (mouseover)="item.OnMouseOver($event)" (mouseout)="item.OnMouseOut($event)" *ngIf="item" style="width:100px;height:24px">
+                                                                                                            <td class="ListBoxItem" colspan="2" [class.SelectedListBoxItem]="SelectedItem == item" (click)="SetSelectedItem(item)" *ngIf="item" style="width:100px;height:24px">
                                                                                                                 <table>
-                                                                                                                    <tr>
+                                                                                                                    <tr class="OutterLink">
                                                                                                                         <td style="width:70%;">
                                                                                                                             <p style="display:inline-block;">{{item.Name}}</p>
                                                                                                                         </td>
                                                                                                                         <td *ngIf="item" style="width:5%;"></td>
-                                                                                                                        <td *ngIf="item && item.ShowBtns == true" style="width:10%;">
+                                                                                                                        <td class="LinkBtn" style="width:10%;">
                                                                                                                             <span class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span>
                                                                                                                         </td>
                                                                                                                         <td *ngIf="item " style="width:1%;"></td>
-                                                                                                                        <td *ngIf="item && item.ShowBtns == true" style="width:10%;">
+                                                                                                                        <td class="LinkBtn" style="width:10%;">
                                                                                                                             <span class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span>
                                                                                                                         </td>
                                                                                                                         <td *ngIf="item" style="width:4%;"></td>
-                                                                                                                        <td *ngIf="item && item.HasTree" style="width:30%;"></td>
+                                                                                                                        <!--<td *ngIf="item &&  item.HasTree" style="width:30%;"></td>-->
                                                                                                                     </tr>
                                                                                                                 </table>
 
@@ -336,18 +348,18 @@
 
                                                                                                                                     </td>
 
-                                                                                                                                    <td class="ListBoxItem" colspan="2" [class.SelectedListBoxItem]="SelectedItem == item" (click)="SetSelectedItem(item)" (mouseover)="item.OnMouseOver($event)" (mouseout)="item.OnMouseOut($event)" *ngIf="item" style="width:100px;height:24px">
+                                                                                                                                    <td class="ListBoxItem" colspan="2" [class.SelectedListBoxItem]="SelectedItem == item" (click)="SetSelectedItem(item)"  *ngIf="item" style="width:100px;height:24px">
                                                                                                                                         <table>
-                                                                                                                                            <tr>
+                                                                                                                                            <tr class="OutterLink">
                                                                                                                                                 <td style="width:70%;">
                                                                                                                                                     <p style="display:inline-block;">{{item.Name}}</p>
                                                                                                                                                 </td>
                                                                                                                                                 <td *ngIf="item &&  !item.HasTree" style="width:5%;"></td>
-                                                                                                                                                <td *ngIf="item &&  !item.HasTree && item.ShowBtns == true" style="width:10%;">
+                                                                                                                                                <td class="LinkBtn" style="width:10%;">
                                                                                                                                                     <span class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span>
                                                                                                                                                 </td>
                                                                                                                                                 <td *ngIf="item &&  !item.HasTree" style="width:1%;"></td>
-                                                                                                                                                <td *ngIf="item &&  !item.HasTree && item.ShowBtns == true" style="width:10%;">
+                                                                                                                                                <td class="LinkBtn" style="width:10%;">
                                                                                                                                                     <span class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span>
                                                                                                                                                 </td>
                                                                                                                                                 <td *ngIf="item &&  !item.HasTree" style="width:4%;"></td>
@@ -497,6 +509,7 @@
                                                                     </div>
 
                                                                 </div>
+                                                                
                                                             </div>
                                                             <!--<table class="BodyBackground">
                                                 <tr>
@@ -544,19 +557,20 @@
                                                                                         <td>
                                                                                             <div class="EmailBoxMultiLinesText" style="white-space: normal;">
                                                                                                 <!--<div class="GroupItem">
-                                                                                    <div class="OperatorItem">
-                                                                                        <div class="Operator">
-                                                                                            <ComboBox *ngIf="SelectedFiltersDataSource[0]" (SelectedItemChanged)="SelectedFiltersDataSource[0].AndOrOpsChanged($event)" [ItemsSource]="AndOrOps" [SelectedItem]="SelectedFiltersDataSource[0].AndOr"></ComboBox>
-                                                                                        </div>-->
+                        <div class="OperatorItem">
+                            <div class="Operator">
+                                <ComboBox *ngIf="SelectedFiltersDataSource[0]" (SelectedItemChanged)="SelectedFiltersDataSource[0].AndOrOpsChanged($event)" [ItemsSource]="AndOrOps" [SelectedItem]="SelectedFiltersDataSource[0].AndOr"></ComboBox>
+                            </div>-->
                                                                                                 <DWQueryBuilderFilters [SelectedFiltersDataSource]="SelectedFiltersDataSource" [DataContext]="DataContext" [SelectedFiltersDataSourceChanged]="SelectedFiltersDataSourceChanged"></DWQueryBuilderFilters>
                                                                                                 <!--</div>
-                                                                                </div>-->
+                        </div>-->
 
                                                                                             </div>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>
                                                                             </div>
+                                                                            <BusyIndicator [Text]="FiltersBusyIndicatorText" [IsBusy]="FiltersShowBusyIndicator"></BusyIndicator>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
