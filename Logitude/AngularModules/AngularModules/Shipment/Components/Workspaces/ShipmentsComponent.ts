@@ -13,6 +13,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+declare var window: any;
 
 @Component({
     moduleId: module.id,
@@ -24,6 +25,7 @@ export class ShipmentsComponent {
     @Output() ReloadUserQueries = new EventEmitter();
     public IsCloudDeployment: boolean = false;
     private myShipmentDomainService: ShipmentDomainService;
+    public TestToggleIsVisible: boolean = false;
     constructor() {
         this.myShipmentDomainService = new ShipmentDomainService();
 
@@ -33,6 +35,11 @@ export class ShipmentsComponent {
                     this.IsCloudDeployment = true;
                 }
             }
+        }
+
+        var FeatureToggle = window.FeatureToggles.filter(d => d.ToggleCode == "TST" && d.TenantNumber == SessionLocator.Tenant)[0];
+        if (FeatureToggle) {
+            this.TestToggleIsVisible = true;
         }
     }
 

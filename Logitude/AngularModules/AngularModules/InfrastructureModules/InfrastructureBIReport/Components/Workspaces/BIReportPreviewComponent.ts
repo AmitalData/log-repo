@@ -465,7 +465,7 @@ export class BIReportPreviewComponent implements OnInit {
         }
     }
     RunReportButtonClicked() {
-        this.RunReportCommand.emit(this.DWQueryData);
+        this.RunReportCommand.emit(this.BIReportXMLData.DWQueryData);//this.DWQueryData);
     }
     OnRunReportComplete(MyData) {
         if (MyData == "ValidationError") {

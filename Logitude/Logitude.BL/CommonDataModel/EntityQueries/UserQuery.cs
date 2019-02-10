@@ -92,7 +92,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   DocumentFilingInbox = a.DocumentFilingInbox,
                                   ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                   ShowInboxToolTip = a.ShowInboxToolTip,
-                                  ShowLocalNameInLOV=a.ShowLocalNameInLOV,
+                                  ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                  UserRoles = a.UserRoles,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -176,6 +177,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                              UserRoles = a.UserRoles,
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -261,6 +263,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                      UserRoles = a.UserRoles,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -343,6 +346,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                  UserRoles = a.UserRoles,
                               }).FirstOrDefault();
                     if (entity != null)
                     {
@@ -412,6 +416,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                              UserRoles = a.UserRoles,
                           }).FirstOrDefault();
                 if (entity != null)
                 {
@@ -496,6 +501,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                      UserRoles = a.UserRoles,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -580,6 +586,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                  UserRoles = a.UserRoles,
                               }).FirstOrDefault();
                     if (entity != null)
                     {
@@ -650,6 +657,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                              UserRoles = a.UserRoles,
                           }).FirstOrDefault();
                 if (entity != null)
                 {
@@ -719,7 +727,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       IsProductRestricted = a.IsProductRestricted,
                                       ProductTypeCode = a.ProductTypeCode,
                                       ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
-
                                       IsDistributor = a.IsDistributor,
                                       DistributorCode = a.DistributorCode,
                                       IsCustomerCare = a.Tenant == 0 && !a.IsDistributor,
@@ -734,6 +741,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                      UserRoles = a.UserRoles,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -815,11 +823,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                  UserRoles = a.UserRoles,
                               }).FirstOrDefault();
 
                     if (entity != null)
                     {
-
                         entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
                         UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
                         UserLastLoginQuery query = new UserLastLoginQuery(rep);
@@ -886,6 +894,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                              UserRoles = a.UserRoles,
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -962,8 +971,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                            ShowInboxToolTip = a.ShowInboxToolTip,
                                            ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                           UserRoles = a.UserRoles,
                                        };
-
             return users;
         }
 
@@ -1011,7 +1020,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             IsProductRestricted = a.IsProductRestricted,
                             ProductTypeCode = a.ProductTypeCode,
                             ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
-
                             IsDistributor = a.IsDistributor,
                             DistributorCode = a.DistributorCode,
                             IsCustomerCare = a.Tenant == 0 && !a.IsDistributor,
@@ -1026,7 +1034,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                             ShowInboxToolTip = a.ShowInboxToolTip,
                             ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                            UserRoles = a.UserRoles,
                         };
+
             IQueryable<UserPM> query2 = null;
             if (!string.IsNullOrEmpty(email))
             {
@@ -1094,6 +1104,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsTwoFactorAuthenticationEnabled = user.IsTwoFactorAuthenticationEnabled,
                                               DocumentFilingInbox = user.DocumentFilingInbox,
                                               ShowLocalNameInLOV = user.ShowLocalNameInLOV,
+                                              UserRoles = user.UserRoles,
                                           };
 
             //int tenant = 0;
@@ -1311,7 +1322,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               DocumentFilingInbox = a.DocumentFilingInbox,
                               ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                              UserRoles = a.UserRoles,
                           }).FirstOrDefault();
+
                 if (entity != null)
                 {
                     UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
