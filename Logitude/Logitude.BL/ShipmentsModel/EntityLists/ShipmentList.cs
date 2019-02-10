@@ -268,11 +268,9 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public double? OrderChargeableWeight { get; set; }
 
         public string MainCarriageFromCity { get; set; }
-        public string MainCarriageFromState { get; set; }
         public string MainCarriageFromCountryCode { get; set; }
 
         public string MainCarriageToCity { get; set; }
-        public string MainCarriageToState { get; set; }
         public string MainCarriageToCountryCode { get; set; }
 
         public double? ProfitExchangeRate { get; set; }
@@ -479,6 +477,10 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool SIHasAttachList { get; set; }
         public bool INTTRAIsFreighted { get; set; }
         public string INTTRADocumentTypeCode { get; set; }
+
+        public string From { get; set; }
+        public string To { get; set; }
+        public string Origin { get; set; }
 
         public string LastFinalDestination { get; set; }
         public DateTime? FirstPickupETD { get; set; }
