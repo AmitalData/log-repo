@@ -26,19 +26,24 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(PaymentChequePM entityPM, PaymentCheque entityPOCO)
         {
-            AddPOCOPropertyName(POCOPropertyNames.Id);
-            AddPOCOPropertyName(POCOPropertyNames.Tenant);
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
-            {
-                entityPOCO.Id = entityPM.Id;
-                entityPOCO.Tenant = entityPM.Tenant;
-            }
 
-           
 
-            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
-            BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);
-            entityPOCO.SearchFields = entityPM.SearchFields;
+            PaymentChequeCustomDataMapping paymentChequeCustomDataMapping = new PaymentChequeCustomDataMapping();
+            paymentChequeCustomDataMapping.PMToPOCO(entityPM, entityPOCO, this.CustomMappedPOCOProperties);
+
+            //    AddPOCOPropertyName(POCOPropertyNames.Id);
+            //    AddPOCOPropertyName(POCOPropertyNames.Tenant);
+            //    if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            //    {
+            //        entityPOCO.Id = entityPM.Id;
+            //        entityPOCO.Tenant = entityPM.Tenant;
+            //    }
+
+
+
+            //    this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
+            //    BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);
+            //    entityPOCO.SearchFields = entityPM.SearchFields;
 
         }
         private static void BuildSearchFields(PaymentChequePM entityPM, PaymentCheque poco, bool isNewEntity)

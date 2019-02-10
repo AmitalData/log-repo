@@ -140,7 +140,14 @@ using Logitude.Accounting.Data;
 			       
 					   				   }
 				   
-				   temp.AccountingEntityId = MyEntityPM.AccountingEntityId;					
+				   temp.AccountingEntityId = MyEntityPM.AccountingEntityId;
+				if(MyEntityPM.JournalLines != null && MyEntityPM.JournalLines.Count > 0)
+				{
+					 JournalLineQueryService JournalLineService9 = new JournalLineQueryService(Tenant);
+					 temp.JournalLines = JournalLineService9.JournalLineCustomDataMapping(MyEntityPM,MyEntityPM.JournalLines,Tenant);
+				}
+
+							 					
 				   return temp;
 			}
             catch (Exception ex)
@@ -261,7 +268,7 @@ using Logitude.Accounting.Data;
 						var myJournalTypePM = JournalTypeJournalTypeService.JournalTypeDataMappingAndValidatin(MyEntity.JournalType,Tenant,ComputingPartnerName);
 												if(myJournalTypePM != null)
 						{
-							//temp.TypeCode = myJournalTypePM.Code;
+							temp.TypeCode = myJournalTypePM.JournalTypeID;
 						}
 						 
 					}
@@ -273,7 +280,7 @@ using Logitude.Accounting.Data;
 						var myJournalStatusTypePM = JournalStatusTypeJournalStatusTypeService.JournalStatusTypeDataMappingAndValidatin(MyEntity.JournalStatusType,Tenant,ComputingPartnerName);
 												if(myJournalStatusTypePM != null)
 						{
-						//	temp.StatusCode = myJournalStatusTypePM.Code;
+							temp.StatusCode = myJournalStatusTypePM.JournalStatusID;
 						}
 						 
 					}
@@ -291,7 +298,14 @@ using Logitude.Accounting.Data;
 					}
 			
 					
-					temp.AccountingEntityId = MyEntity.AccountingEntityId;					   
+					temp.AccountingEntityId = MyEntity.AccountingEntityId;
+					if(MyEntity.JournalLines != null && MyEntity.JournalLines.Count > 0)
+					{
+						JournalLineQueryService JournalLineService9 = new JournalLineQueryService(Tenant);
+						temp.JournalLines = JournalLineService9.JournalLineCustomDataMappingAndValidatin(MyEntity,MyEntity.JournalLines,Tenant,ComputingPartnerName);
+					}
+
+								 					   
 					   return temp;
 		    }
             catch (Exception ex)

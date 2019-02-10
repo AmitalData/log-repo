@@ -34,11 +34,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 }
                 temp.Tenant = MyEntity.Tenant;
 
-
-
-               
-           
-
+                
                 temp.JournalNumber = MyEntity.JournalNumber;
                 temp.CreateDate = MyEntity.CreateDate;
                 temp.AccountingDate = MyEntity.AccountingDate;
@@ -116,17 +112,17 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 }
 
 
-              
-                //if (MyEntity.VoidedByJournalId != null)
-                //{
-                //    var myVoidedByJournalIdPM = OriginalJournalJournalService.GetSinglePM(MyEntity.VoidedByJournalId, Tenant);
-                //    if (myVoidedByJournalIdPM != null)
-                //    {
-                //        temp.VoidedByJournal = new Journal();
-                //        temp.VoidedByJournal.JournalNumber = myVoidedByJournalIdPM.JournalNumber;
-                //    }
 
-                //}
+                if (MyEntity.VoidedByJournalId != null)
+                {
+                    var myVoidedByJournalIdPM = OriginalJournalJournalService.GetSingleJournalByNumber(MyEntity.VoidedByJournalId, Tenant);
+                    if (myVoidedByJournalIdPM != null)
+                    {
+                        temp.VoidedByJournal = new Journal();
+                        temp.VoidedByJournal.JournalNumber = myVoidedByJournalIdPM.JournalNumber;
+                    }
+
+                }
 
 
 
@@ -190,6 +186,12 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
                     }
 
+                }
+
+                if (MyEntity.JournalLines != null && MyEntity.JournalLines.Count > 0)
+                {
+                    JournalLineQueryService JournalLineService9 = new JournalLineQueryService(Tenant);
+                    temp.JournalLines = JournalLineService9.JournalLineCustomDataMapping(MyEntity, MyEntity.JournalLines, Tenant);
                 }
 
 
