@@ -21,7 +21,7 @@ namespace Unifreight.BL.EntityPMs
                 case "LP2UB":
                     return 3;
                 default:
-                    return 9;
+                    return 0;
             }
         }
     }

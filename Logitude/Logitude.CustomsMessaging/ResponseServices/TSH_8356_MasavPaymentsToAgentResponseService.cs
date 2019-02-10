@@ -55,7 +55,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 AgentMasavPaymentResult myAgentMasavPaymentResult = new AgentMasavPaymentResult();
                 myAgentMasavPaymentResult.PaymentProcess = agentMasavPaymentItem.paymentProcess.ToString();
                 myAgentMasavPaymentResult.PaymentProcessName = GetPaymentProcessName(agentMasavPaymentItem.paymentProcess.ToString());
-                myAgentMasavPaymentResult.PaymentID = agentMasavPaymentItem.paymentID.ToString();
+                //myAgentMasavPaymentResult.PaymentID = agentMasavPaymentItem.paymentID.ToString();
+                if (agentMasavPaymentItem.amount != agentMasavPaymentItem.PaymentMethodAmount)
+                {
+                    myAgentMasavPaymentResult.PaymentID = agentMasavPaymentItem.paymentID.ToString() + "-1";
+                }
+                else
+                {
+                    myAgentMasavPaymentResult.PaymentID = agentMasavPaymentItem.paymentID.ToString();
+                }
                 myAgentMasavPaymentResult.Amount = String.Format("{0:N2}", agentMasavPaymentItem.amount);
                 myAgentMasavPaymentResult.PaymentType = agentMasavPaymentItem.PaymentType.ToString();
                 myAgentMasavPaymentResult.PaymentTypeName = GetPaymentTypeName(agentMasavPaymentItem.PaymentType.ToString());
