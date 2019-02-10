@@ -754,7 +754,7 @@ export class AddEditRuleComponent extends BaseComponent {
         this.TriggerTypes = [];
 
 
-        var type1: TriggerType = new TriggerType("ALLW", "Allways");
+        var type1: TriggerType = new TriggerType("ALLW", "Always");
         this.TriggerTypes.push(type1);
 
         var type2: TriggerType = new TriggerType("COND", "Condition");

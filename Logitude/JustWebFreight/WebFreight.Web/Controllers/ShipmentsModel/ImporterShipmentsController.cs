@@ -563,6 +563,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
             }
 
+
+            if (entityAM.CustomsClearanceDate != null)
+            {
+                entityPM.IsDepositionCloseTask = true;
+            }
+
             entityPM.Tenant = entityAM.ImporterTenant;
             entityPM.GrossWeightUnitCode = "KG";
             entityPM.DimensionsUnitCode = "Cm";
