@@ -54,7 +54,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //Check if Tapag file is already exist
 
             string requestFileNumber = string.Concat(customResponse.TapagIdentifier.fileNumber, "-", customResponse.TapagIdentifier.numeral);
-            string tapagId = tapagConnectionTableQueryService.GetTapagIdByRequestFileNumber(requestFileNumber, this._MyTenant);
+            //string tapagId = tapagConnectionTableQueryService.GetTapagIdByRequestFileNumber(requestFileNumber, this._MyTenant);
+            string tapagId = tapagConnectionTableQueryService.GetTapagIdByFileAndNumeral(customResponse.TapagIdentifier.fileNumber, customResponse.TapagIdentifier.numeral, this._MyTenant);
 
             this.MyRequestSheetParam = new RequestSheetParam();
 

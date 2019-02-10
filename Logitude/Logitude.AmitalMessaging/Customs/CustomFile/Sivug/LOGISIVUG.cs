@@ -330,6 +330,8 @@
 
         private string uNIT_IDField;
 
+        private string tAXEXEMPTCODEField;
+
         private CERTIFICATES[] cERTIFICATESField;
 
         /// <remarks/>
@@ -498,6 +500,19 @@
             set
             {
                 this.uNIT_IDField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string TAXEXEMPTCODE
+        {
+            get
+            {
+                return this.tAXEXEMPTCODEField;
+            }
+            set
+            {
+                this.tAXEXEMPTCODEField = value;
             }
         }
 
@@ -732,5 +747,4 @@
             }
         }
     }
-
 }
