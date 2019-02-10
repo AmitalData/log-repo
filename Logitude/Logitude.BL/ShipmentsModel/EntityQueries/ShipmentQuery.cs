@@ -1470,6 +1470,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.FirstPickupETA = shipment.FirstPickupETA;
             shipmentPM.FirstPickupETD = shipment.FirstPickupETD;
             shipmentPM.SplitOnCarriage = shipment.SplitOnCarriage;
+            shipmentPM.From = shipment.From;
+            shipmentPM.To = shipment.To;
+            shipmentPM.Origin = shipment.Origin;
 
             if (!string.IsNullOrEmpty(shipmentPM.UpdatedByUserId))
             {
@@ -2946,6 +2949,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.FirstPickupETA = shipment.FirstPickupETA;
             shipmentPM.FirstPickupETD = shipment.FirstPickupETD;
             shipmentPM.SplitOnCarriage = shipment.SplitOnCarriage;
+            shipmentPM.From = shipment.From;
+            shipmentPM.To = shipment.To;
+            shipmentPM.Origin = shipment.Origin;
 
             if (!string.IsNullOrEmpty(shipment.LastSharedEventId))
             {
@@ -10528,6 +10534,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          LastFinalDestination = s.LastFinalDestination,
                                                          FirstPickupETA = s.FirstPickupETA,
                                                          FirstPickupETD = s.FirstPickupETD,
+                                                         From = s.From,
+                                                         To = s.To,
+                                                         Origin = s.Origin
                                                      };
 
             return shipmentsList;
@@ -10844,9 +10853,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                FromPortCountry = f.MainCarriageFromPortCountryName,
 
                                // Column: To
-                               ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageToCity : f.ToPortName,
-                               MainCarriageToState = f.MainCarriageToState,
-
+                               ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageToCity : f.ToPortName,                               
                                ToPortName = f.ToPortName,
                                ToPortCountry = f.MainCarriageToPortCountryName,
                                MasterShipmentDataId = f.MasterShipmentDataId,
@@ -10865,9 +10872,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainCarriageFromPortId = f.MainCarriageFromPortId,
 
                                // Column: Origin
-                               MainCarriageFromPortName = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageFromCity : f.FromPortName,
-                               MainCarriageFromState = f.MainCarriageFromState,
-
+                               MainCarriageFromPortName = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageFromCity : f.FromPortName,                              
                                MainCarriageATA = f.MainCarriageATA,
                                MainCarriageETD = f.MainCarriageETD,
                                IncotermId = f.IncotermId,
@@ -11053,7 +11058,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                IsDepositionRequired = f.IsDepositionRequired,
                                ImporterDepositionRequestDetails = f.ImporterDepositionRequestDetails,
                                ForwarderPartnerId = f.ForwarderPartnerId,
-
+                               From = f.From,
+                               To = f.To,
+                               Origin = f.Origin
                            };
             return myResult;
         }
@@ -11182,8 +11189,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     // Column: To
                     ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageToCity : f.ToPortName,
-                    MainCarriageToState = f.MainCarriageToState,
-
+                    
 
                     ToPortName = f.ToPortName,
                     ToPortCountry = f.MainCarriageToPortCountryName,
@@ -11204,8 +11210,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     // Column: Origin
                     MainCarriageFromPortName = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageFromCity : f.FromPortName,
-                    MainCarriageFromState = f.MainCarriageFromState,
-
+                   
                     MainCarriageATA = f.MainCarriageATA,
                     MainCarriageETD = f.MainCarriageETD,
                     IncotermId = f.IncotermId,
@@ -11386,6 +11391,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
                     ProjectNumber = f.ProjectNumber,
                     ContainerLastStatusDate = f.ContainerLastStatusDate,
+                    From = f.From,
+                    To = f.To,
+                    Origin = f.Origin
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -11507,8 +11515,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     // Column: To
                     ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageToCity : f.ToPort,
-                    MainCarriageToState = f.MainCarriageToState,
-
+                    
                     ToPortName = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationPortName) ? f.MainCarriageFinalDestinationPortName : f.ToPortName,
                     ToPortCountry = f.MainCarriageToPortCountryName,
                     MasterShipmentDataId = f.MasterShipmentDataId,
@@ -11528,8 +11535,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     // Column: Origin
                     MainCarriageFromPortName = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageFromCity : f.MainCarriageFromPortName,
-                    MainCarriageFromState = f.MainCarriageFromState,
-
+                    
                     MainCarriageATA = f.MainCarriageATA,
                     MainCarriageETD = f.MainCarriageETD,
                     IncotermId = f.IncotermId,
@@ -11633,6 +11639,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
                     ProjectNumber = f.ProjectNumber,
                     ContainerLastStatusDate = f.ContainerLastStatusDate,
+                    From = f.From,
+                    To = f.To,
+                    Origin = f.Origin
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -12093,11 +12102,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          Transshipment2ToPortId = m.Transshipment2ToPortId,
                                                          Transshipment3ToPortId = m.Transshipment3ToPortId,
                                                          MainCarriageToPortId = m.MainCarriageToPortId,
+                                                         From = s.From,
+                                                         To = s.To,
+                                                         Origin = s.Origin
                                                      };
 
             return shipmentsList;
         }
-
     }
 
     public class DeparturesArrivalsDataItem

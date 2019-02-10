@@ -14,7 +14,7 @@ AS
 SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber, dbo.Shipments.ShipperReference1, dbo.Shipments.ARInvoiceIssued, dbo.Shipments.CreditNoteIssued,
                          dbo.ShipmentMasterDatas.Tenant AS ShipmentMasterDataTenant, dbo.ShipmentMasterDatas.Id AS ShipmentMasterDataId, 
                          dbo.ShipmentMasterDatas.MainCarriageFromPortId, dbo.ShipmentMasterDatas.MainCarriageToPortId, 
-						 dbo.Shipments.LastFinalDestination, dbo.Shipments.FirstPickupETA, dbo.Shipments.FirstPickupETD,
+						 dbo.Shipments.LastFinalDestination, [dbo].[Shipments].[From], [dbo].[Shipments].[To], dbo.Shipments.Origin, dbo.Shipments.FirstPickupETA, dbo.Shipments.FirstPickupETD,
                          dbo.ShipmentMasterDatas.MainCarriageFinalDestinationPortId, dbo.ShipmentMasterDatas.Transshipment3CarrierId, 
                          dbo.ShipmentMasterDatas.Transshipment2CarrierId, dbo.ShipmentMasterDatas.Transshipment1CarrierId, dbo.ShipmentMasterDatas.MainCarriageCarrierId, 
                          dbo.ShipmentMasterDatas.MainCarriageIsFromStack, dbo.ShipmentMasterDatas.Transshipment3AdditionalMAWBOBLBL, 
@@ -200,15 +200,15 @@ SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNum
                          MainCarriageFromAddressCountries.Code AS MainCarriageFromCountryCode, MainCarriageToAddressCountries.Code AS MainCarriageToCountryCode, 
                          dbo.Shipments.CASSCode, dbo.Shipments.SpecialServicesTypeId, dbo.SpecialServicesTypes.Code AS SpecialServicesTypeCode, 
                          dbo.SpecialServicesTypes.EnglishName AS SpecialServicesTypeName,
-						 ShipmentComputedFields.NumberOfHouses as NumberOfHouses,
+						 ShipmentComputedFields.NumberOfHouses as NumberOfHouses
 
-						CASE WHEN (dbo.Shipments.TransportModeId = 'I' AND dbo.Shipments.DirectionId = 'D') THEN MainCarriageFromAddressesStates.EnglishName
-						ELSE (CASE WHEN (dbo.Shipments.ShipmentLevelCode = 'H' AND dbo.Shipments.MasterShipmentDataId is null) THEN FromPortsStates.EnglishName
-						ELSE MainCarriageFromPortsStates.EnglishName END) END AS MainCarriageFromState,
+						--CASE WHEN (dbo.Shipments.TransportModeId = 'I' AND dbo.Shipments.DirectionId = 'D') THEN MainCarriageFromAddressesStates.EnglishName
+						--ELSE (CASE WHEN (dbo.Shipments.ShipmentLevelCode = 'H' AND dbo.Shipments.MasterShipmentDataId is null) THEN FromPortsStates.EnglishName
+						--ELSE MainCarriageFromPortsStates.EnglishName END) END AS MainCarriageFromState,
 
-						CASE WHEN (dbo.Shipments.TransportModeId = 'I' AND dbo.Shipments.DirectionId = 'D') THEN MainCarriageToAddressesStates.EnglishName
-						ELSE (CASE WHEN (dbo.Shipments.ShipmentLevelCode = 'H' AND dbo.Shipments.MasterShipmentDataId is null) THEN ToPortsStates.EnglishName
-						ELSE MainCarriageFinalDestinationPortsStates.EnglishName END) END AS MainCarriageToState
+						--CASE WHEN (dbo.Shipments.TransportModeId = 'I' AND dbo.Shipments.DirectionId = 'D') THEN MainCarriageToAddressesStates.EnglishName
+						--ELSE (CASE WHEN (dbo.Shipments.ShipmentLevelCode = 'H' AND dbo.Shipments.MasterShipmentDataId is null) THEN ToPortsStates.EnglishName
+						--ELSE MainCarriageFinalDestinationPortsStates.EnglishName END) END AS MainCarriageToState
 
 
 FROM            dbo.Shipments LEFT OUTER JOIN

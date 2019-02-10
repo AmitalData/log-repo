@@ -303,6 +303,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.AdditionalChargesId).HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.FreightPayerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FreightPayerAddressId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.From).HasMaxLength(150).IsUnicode(false);
+            this.Property(t => t.To).HasMaxLength(150).IsUnicode(false);
+            this.Property(t => t.Origin).HasMaxLength(150).IsUnicode(false);
 
             //    .HasColumnAnnotation(
             //IndexAnnotation.AnnotationName,
@@ -686,6 +689,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FreightPayerAddressId).HasColumnName("FreightPayerAddressId");
             this.Property(t => t.FBLIsFromStock).HasColumnName("FBLIsFromStock");
             this.Property(t => t.HasContainerException).HasColumnName("HasContainerException");
+            this.Property(t => t.From).HasColumnName("From");
+            this.Property(t => t.To).HasColumnName("To");
+            this.Property(t => t.Origin).HasColumnName("Origin");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
