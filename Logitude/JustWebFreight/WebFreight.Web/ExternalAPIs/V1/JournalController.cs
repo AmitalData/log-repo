@@ -32,7 +32,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                JournalQueryService Service = new JournalQueryService(tenant);
+				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+				JournalQueryService Service = new JournalQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetJournalById(id, tenant);
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
@@ -60,8 +61,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         int tenant = entity.Tenant;
-
-                        if (entity != null)
+						SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+						if (entity != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<Logitude.Accounting.BL.APIDataContract.ApiV1.Journal>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
                         }
@@ -125,8 +126,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         int tenant = authToken.Tenant;
-
-                        if (entity != null)
+						SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+						if (entity != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<Logitude.Accounting.BL.APIDataContract.ApiV1.Journal>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
                         }
