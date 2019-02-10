@@ -17,6 +17,8 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { DWObjectTableListService } from '../../../../Infrastructure/Services/StandardLists/DWObjectTableListService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { DWQueryPMService } from '../../../../Infrastructure/Services/StandardPMs/DWQueryPMService';
+import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
+
 
 @Component({
     moduleId: module.id,
@@ -54,6 +56,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
     IsBIReportWorkspace: boolean = false;
     IsBIReportEditScreen: boolean = false;
     public SelectedFiltersDataSourceChanged: any;
+    public _DWQueryBuilderHelper: DWQueryBuilderHelper;
+
     constructor(private CD: ChangeDetectorRef) {
         super();
         this._DWObjectTablePMService = new DWObjectTablePMService();
@@ -62,6 +66,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this._DWQueryBuilderService = new DWQueryBuilderService();
         this._DWSubQueryPMService = new DWSubQueryPMService();
         this._DWObjectTableListService = new DWObjectTableListService();
+        this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
         if (SessionLocator.CurrentSession == null) {
             this.SearchFieldsId = "SearchFields_-1_-1";
         }
@@ -70,7 +75,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             this.SearchFieldsId = "DWQueryBuilderSearchFields_" + SessionLocator.CurrentSession.GetNewId("DWQueryBuilderSearchFields");
         }
 
-
+        //this._DWQueryBuilderHelper.FillAllFactFields("Fact_Shipments");
         this._DWObjectTableListService.getAll().subscribe(myResult => {
             this.AllTables = myResult.Result;
             this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
@@ -147,7 +152,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         }
 
                     });
+                    //this.StartFiltersBusyIndicator("Restoring filters ..");
                     this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(myResult.Result.Code).subscribe(Result => {
+                        this.ObsList = [];
                         if (!Result.HasError) {
                             Result.Result.forEach((field) => {
                                 if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) {
@@ -160,6 +167,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                             });
                             //this.DataSource = this.ObsList;
                             this.AllFieldsWithChildrenDataSource = this.ObsList;
+                            //this.StopFiltersBusyIndicator();
                         }
 
                     });
@@ -470,6 +478,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         else {
             view.ParentDataTypeCode = item.BaseDWObjectField.DataTypeCode;
         }
+        view.DisplayName = item.DisplayName;
         this.SelectedItem = view;
         if (this.SelectedItem && this.SelectedFiltersDataSource.indexOf(this.SelectedItem) == -1) {//&& this.SelectedItem.DataTypeCode != "LookUp" && this.SelectedItem.DataTypeCode != "Dimension"
             if (this.SelectedFiltersDataSource.length == 0) {
@@ -861,6 +870,19 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.ShowBusyIndicator = false;
     }
 
+    public FiltersBusyIndicatorText: string = null;
+    public FiltersShowBusyIndicator: boolean = false;
+    public StartFiltersBusyIndicator(myText: string) {
+        this.FiltersBusyIndicatorText = myText;
+        this.FiltersShowBusyIndicator = true;
+        this.CD.detectChanges();
+    }
+
+    public StopFiltersBusyIndicator() {
+        this.FiltersBusyIndicatorText = null;
+        this.FiltersShowBusyIndicator = false;
+    }
+
     private qID: string;
     public get QID() { return this.qID; }
     public set QID(newValue: string) {
@@ -1079,6 +1101,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.IndexOrder = ParentClass.SelectedFieldsDataSource.length;
         }
         if (DWObjectField != null) {
+            this.HideTree = DWObjectField.HideTree;
             this.LOVAdditionalColumns = DWObjectField.LOVAdditionalColumns;
             if (!this.LOVAdditionalColumns && ParentClass && ParentClass.AllFieldsDataSource) {
                 var field = ParentClass.AllFieldsDataSource.filter(a => a.DWObjectTableCode == DWObjectField.DWObjectTableCode && a.Code == DWObjectField.Code && a.Name == DWObjectField.Name)[0];
@@ -1089,16 +1112,17 @@ export class DWObjectFieldsDetails extends BaseComponent {
             }
 
 
-
+   
             this.Name = DWObjectField.Name;
             this.Code = DWObjectField.Code;
             this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
             this.DimensionTableCode = DWObjectField.DimensionTableCode;
             this.DataTypeCode = DWObjectField.DataTypeCode;
-            this.DisplayName = DWObjectField.Code;
+            this.DisplayName = this.ComputeDisplayName(DWObjectField);
             this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
             this.IsMeasurement = DWObjectField.IsMeasurement;
             this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
+        
             if (DWObjectField.FilterType) {
                 this.FilterType = DWObjectField.FilterType;
             }
@@ -1115,6 +1139,24 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     }
 
+    public ComputeDisplayName(DWObjectField: any) {
+        //(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
+        var Displayname = DWObjectField.DisplayName;
+        if (AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) {
+            if (DWObjectField.DWObjectTableCode.indexOf("DIM_") != -1) {
+                Displayname = DWObjectField.ParentCode + ' ' + DWObjectField.Code;
+            }
+            else {
+                Displayname = DWObjectField.Code;
+            }
+        }
+        return Displayname;
+    }
+
+
+    private hideTree: boolean;
+    public get HideTree() { return this.hideTree; }
+    public set HideTree(newValue: boolean) { this.hideTree = newValue; }
 
     Items: any[] = [];
     FilterItems: DWObjectFieldsDetails[] = [];
@@ -1200,12 +1242,12 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.TextValue = false;
         }
         if (this.dataTypeCode == "LookUp" || this.dataTypeCode == "Dimension") {
-            this.HasTree = true;
+            this.HasTree = !this.HideTree ?  true:false;
             var MyTable = this.MyParentClass.AllTables.filter(a => a.Code == this.DimensionTableCode);
             if (MyTable && MyTable.length > 0) {
                 this.Code = MyTable[0].DefaultFilterBy;
                 this.DWObjectTableCode = MyTable[0].Code;
-                this.DisplayName = this.DWObjectTableCode + ' ' + this.Code;
+                this.DisplayName = this.ComputeDisplayName(this);//(AppTool.IsNullOrEmpty(this.DisplayName)) ? (this.DWObjectTableCode + ' ' + this.Code) : (this.DisplayName);
                 this.ParentDimTabelName = this.DimensionTableCode;
             }
         }
@@ -1556,7 +1598,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
         this.DataTypeCode = DWObjectField.DataTypeCode;
         this.DimensionTableCode = DWObjectField.DimensionTableCode;
-        this.DisplayName = DWObjectField.Code;
+        this.DisplayName = this.ComputeDisplayName(DWObjectField);//(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
         this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
         this.IsMeasurement = DWObjectField.IsMeasurement;
         this.AggregationTypeCode = DWObjectField.AggregationTypeCode;

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.BL.Helpers
+namespace Logitude.BL.Mocks
 {
     public class MockLoggedContactUtil : ILoggedContactUtil
     {

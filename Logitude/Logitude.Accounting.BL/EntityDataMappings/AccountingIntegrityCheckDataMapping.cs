@@ -42,6 +42,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPOCO.ParametersXML = _xmlString;
             }
 
+            BuildSearchFields(entityPM, entityPOCO);
+
+
         }
 
         public void CustomPOCOToPM(AccountingIntegrityCheckPM entityPM, AccountingIntegrityCheck entityPOCO)
@@ -74,8 +77,26 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.ToMonthInclusive = _params.ToMonthInclusive;
                 }
             }
+
+            BuildSearchFields(entityPM, entityPOCO);
         }
-   }
+
+        private void BuildSearchFields(AccountingIntegrityCheckPM entityPM, AccountingIntegrityCheck poco)
+        {
+            string result = "";
+
+
+            if (!string.IsNullOrEmpty(entityPM.StatusName))
+            {
+                result = entityPM.StatusName + ',' + entityPM.StatusCode;
+            }
+
+            entityPM.SearchFields = result;
+            poco.SearchFields = result;
+
+        }
+
+    }
 
 
 }

@@ -8,9 +8,11 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.Interfaces;
+using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Resolvers;
 using Microsoft.Practices.Unity;
 using Simplog.Server.Infrastructure;
 using System;
@@ -218,7 +220,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public virtual string GetMessageTranslation(string code, int tenant, bool useLocal)
         {
-            return TranslateTextsClass.Translate(code, tenant, useLocal);
+            return TranslateTextsClassUtilResolver.Translate(code, tenant, useLocal);//TranslateTextsClass.Translate(code, tenant, useLocal);
         }
 
         public virtual BankAccountList GetUniqueAccount(string accountNumber, string branchNumber, string bankId, int tenant)

@@ -257,15 +257,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 else if (entityPM.DirectionId == "C")
                 {
                     PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.FromPortId, true);
-                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
-                    entityPoco.CountryForStatisticsId = country.Id;
+                    if (port != null)
+                    {
+                        Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
+                        entityPoco.CountryForStatisticsId = country.Id;
+                    }
+                
                 }
 
                 else if (entityPM.DirectionId == "R")
                 {
                     PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
-                    Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
-                    entityPoco.CountryForStatisticsId = country.Id;
+                    if (port != null)
+                    {
+                        Country country = CountryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant, true);
+                        entityPoco.CountryForStatisticsId = country.Id;
+                    }
+                   
                 }
             }
 
@@ -493,6 +501,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.FreightPayerId = entityPM.FreightPayerId;
             entityPoco.FreightPayerAddressId = entityPM.FreightPayerAddressId;
             entityPoco.HasContainerException = entityPM.HasContainerException;
+            entityPoco.From = entityPM.From;
+            entityPoco.To = entityPM.To;
+            entityPoco.Origin = entityPM.Origin;
 
             // No need to map these fields
             // they are computed via PROCEDURE

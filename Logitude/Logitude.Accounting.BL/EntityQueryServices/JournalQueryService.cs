@@ -200,6 +200,47 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return ratepms;
         }
 
+        public JournalPM GetSingleJournalByNumber(string number, int tenant)
+        {
+            Journal a = repository.GetSingleJournalByNumber(number, tenant);
+
+
+            JournalPM journal = new JournalPM()
+            {
+                AccountingDate = a.AccountingDate,
+                AccountingEntityCode = a.AccountingEntityCode,
+                AccountingEntityId = a.AccountingEntityId,
+                AccountingEntityName = a.AccountingEntityReference != null ? a.AccountingEntityReference : null,
+                AccountingEntityReference = a.AccountingEntityReference, // CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
+                ApproveDate = a.ApproveDate,
+                ApprovedByUserId = a.ApprovedByUserId,
+                ApprovedByUserName = a.ApprovedByUser != null ? a.ApprovedByUser.Contact.EnglishName : null,
+                CreateDate = a.CreateDate,
+                CreatedByUserId = a.CreatedByUserId,
+                CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+                ExternalNo = a.ExternalNo,
+                Id = a.Id,
+                JournalNumber = a.JournalNumber,
+                OriginalJournalId = a.OriginalJournalId,
+                OriginalJournalName = a.OriginalJournal != null ? a.OriginalJournal.JournalNumber : null,
+                SearchFields = a.SearchFields,
+                StatusCode = a.StatusCode,
+                StatusName = a.JournalStatusType != null ? a.JournalStatusType.EnglishName : null,
+                Tenant = a.Tenant,
+                TypeCode = a.TypeCode,
+                TypeName = a.JournalType != null ? a.JournalType.EnglishName : null,
+
+                UpdateDate = a.UpdateDate,
+                UpdatedByUserId = a.UpdatedByUserId,
+                UpdatedByUserName = a.UpdatedByUser != null ? a.VoidedByUser.Contact.EnglishName : null,
+                VoidDate = a.VoidDate,
+                VoidedByUserId = a.VoidedByUserId,
+
+            };
+
+            return journal;
+        }
+
         public JournalPM GetByAccountingEntityId(string entityId, int tenant)
         {
             Journal poco = repository.GetByAccountingEntityId(entityId, tenant);
@@ -256,6 +297,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             Journal poco = null;
             poco = repository.GetJournalByIdAndTenant(id, tenant);
             JournalPM pm = this.GetEntityPM(poco);
+            JournalLineQueryService journalLineQueryService = new JournalLineQueryService(tenant);
+            List<JournalLinePM> lines = journalLineQueryService.GetJournalLinesByJournalId(id,tenant);
+            pm.JournalLines = lines;
+
             return pm;
         }
 

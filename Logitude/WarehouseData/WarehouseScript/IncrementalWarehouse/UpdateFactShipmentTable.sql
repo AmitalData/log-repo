@@ -117,7 +117,7 @@
 
 	DECLARE ShipmentsCursor CURSOR READ_ONLY
 	FOR
-	SELECT dw_Shipments.Id, SourceTenant.[Tenant Number], ParentTenant.[Tenant Number] , dw_Directions.Name,dw_TransportModes.Name ,dw_Levels.Name,  dw_Types.Name , DIM_Departments.Id_Number ,DIM_Branches.Id_Number , dw_Shipments.ShipmentNumber, dw_Shipments.House ,dw_ShipmentMasterDatas.Master,shipperPartners.Id_Number, consigneePartners.Id_Number,
+	SELECT dw_Shipments.Id, SourceTenant.[Tenant Number], ParentTenant.[Tenant Number] ,   DIM_Directions.Name, DIM_TransportModes.Name ,DIM_Levels.Name,  DIM_Types.Name  , DIM_Departments.Id_Number ,DIM_Branches.Id_Number , dw_Shipments.ShipmentNumber, dw_Shipments.House ,dw_ShipmentMasterDatas.Master,shipperPartners.Id_Number, consigneePartners.Id_Number,
 	agentPartners.Id_Number,customerPartners.Id_Number , DIM_Incoterms.Id_Number, dw_Shipments.GrossWeightInKG ,  dw_Shipments.ChargeableWeightInKG , dw_Shipments.VolumeInCBM ,  dw_Shipments.NumberOfPackages, dw_Shipments.NumberOfContainers,SalesmanUser.Id_Number, AccountManagerUser.Id_Number,
 	dw_Shipments.ProfitInLocalCurrency,dw_Shipments.ProfitInProfitCurrency,  LocalCurrency.Id_Number  ,  ProfitCurrency.Id_Number,0,dw_Shipments.IsOperationalClosed,
 	dw_Shipments.IsAccountingClosed , DIM_ShipmentStatuses.Id_Number , dw_Shipments.StatusLocation  ,  dw_ShipmentMasterDatas.MainCarriageATD ,dw_Shipments.FinalArrivalDate, dw_Shipments.CustomsClearanceDate , dw_ShipmentMasterDatas.Id ,mainCarriageToPort.Id_Number ,  transshipment1ToPort.Id_Number ,transshipment2ToPort.Id_Number,transshipment3ToPort.Id_Number,fromPort.Id_Number, toPort.Id_Number , dw_Shipments.DirectionId ,dw_Shipments.TransportModeId ,dw_Shipments.Tenant,
@@ -132,10 +132,14 @@
 	inner JOIN DIM_Tenants SourceTenant ON dw_Shipments.Tenant = SourceTenant.[Tenant Number]
 	inner JOIN dw_DWHSettings ON dw_Shipments.Tenant = dw_DWHSettings.Tenant
 	inner JOIN DIM_Tenants ParentTenant ON dw_DWHSettings.ParentTenant = ParentTenant.[Tenant Number]
-    inner JOIN dw_Directions ON dw_Shipments.DirectionId = dw_Directions.Id
-	inner JOIN dw_TransportModes ON dw_Shipments.TransportModeId = dw_TransportModes.Id
-	inner JOIN dw_Levels ON dw_Shipments.ShipmentLevelCode = dw_Levels.Code
-	inner JOIN dw_Types ON dw_Shipments.ShipmentTypeId = dw_Types.Id
+
+
+	inner JOIN DIM_Directions ON dw_Shipments.DirectionId = DIM_Directions.Code
+    inner JOIN DIM_TransportModes ON dw_Shipments.TransportModeId = DIM_TransportModes.Code
+	inner JOIN DIM_Levels ON dw_Shipments.ShipmentLevelCode = DIM_Levels.Code
+	inner JOIN DIM_Types ON dw_Shipments.ShipmentTypeId = DIM_Types.Code
+
+
 	inner JOIN DIM_Departments ON dw_Shipments.DepartmentId = DIM_Departments.Id
 	inner JOIN DIM_Branches ON dw_Shipments.BranchId =DIM_Branches.Id
     inner JOIN dw_ShipmentMasterDatas ON dw_Shipments.MasterShipmentDataId = dw_ShipmentMasterDatas.Id

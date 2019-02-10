@@ -6,9 +6,11 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.Interfaces;
+using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Resolvers;
 using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -52,7 +54,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public virtual DateTime GetCurrentDateTime(int tenant)
         {
-            return TenantServerConfigration.GetCurrentDateTime(tenant);
+            return DateTimeUtilResolver.GetDateCurrentDateTime(tenant);//TenantServerConfigration.GetCurrentDateTime(tenant);
         }
 
 

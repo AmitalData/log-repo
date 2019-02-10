@@ -15,6 +15,8 @@ using Logitude.BL.Interfaces;
 using Logitude.BL.Security;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
+using Logitude.Server.Tools.Resolvers;
 
 namespace Logitude.UnitTest
 {
@@ -25,6 +27,9 @@ namespace Logitude.UnitTest
         public void InitializeTests()
         {
             LoggedContactResolver.RegisterMockLoggedContactUtil();
+            DateTimeUtilResolver.RegisterMockDateTimeUtil();
+            TranslateTextsClassUtilResolver.RegisterMockTranslateTextsClassUtil();
+            IdCounterUtilResolver.RegisterMockIdCounterUtil();
         }
     }
 }
