@@ -466,6 +466,11 @@ export class UserPM {
     public set ShowLocalNameInLOV(newValue: boolean) { if (this.showLocalNameInLOV != newValue) { this.showLocalNameInLOV = newValue; this.MarkAsDirty("ShowLocalNameInLOV"); } }
        
 	 
+    private userRoles: string;
+    public get UserRoles() { return this.userRoles; }
+    public set UserRoles(newValue: string) { if (this.userRoles != newValue) { this.userRoles = newValue; this.MarkAsDirty("UserRoles"); } }
+       
+	 
 
     public OldEntityPM: UserPM;
 		

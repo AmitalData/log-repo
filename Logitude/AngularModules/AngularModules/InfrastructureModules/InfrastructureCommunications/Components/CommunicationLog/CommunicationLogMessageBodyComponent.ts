@@ -67,11 +67,12 @@ export class CommunicationLogMessageBodyComponent extends BaseComponent implemen
             if (!AppTool.IsNullOrEmpty(this.EntityPM.ResponseDocumentId)) {
                 this.GetResponseBodyFileName();
             }
+
+            if (this.EntityPM.To == "FTP")
+                this.Logs = this.EntityPM.Logs;
         }
 
-        if (this.EntityPM) {
-            this.Logs = this.EntityPM.Logs;
-        } 
+       
 
   
 

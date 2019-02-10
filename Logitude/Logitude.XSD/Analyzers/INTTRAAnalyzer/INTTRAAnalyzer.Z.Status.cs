@@ -534,7 +534,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     {
                                         if (this.shipmentPM.Transshipment1ETD == null && this.shipmentPM.Transshipment1ATD == null)
                                         {
-                                            this.shipmentPM.Transshipment1ETD = this.EventLocationeDate;
+                                            this.shipmentPM.Transshipment1ETD = this.DepartureDate;
                                         }
 
                                         break;
@@ -560,7 +560,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     {
                                         if (this.shipmentPM.Transshipment1ETA == null && this.shipmentPM.Transshipment1ATA == null)
                                         {
-                                            this.shipmentPM.Transshipment1ETA = this.EventLocationeDate;
+                                            this.shipmentPM.Transshipment1ETA = this.ArrivalDate;
                                         }
 
                                         break;
@@ -601,7 +601,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     {
                                         if (this.shipmentPM.MainCarriageETD == null && this.shipmentPM.MainCarriageATD == null)
                                         {
-                                            this.shipmentPM.MainCarriageETD = this.EventLocationeDate;
+                                            this.shipmentPM.MainCarriageETD = this.DepartureDate;
                                         }
 
                                         break;
@@ -627,7 +627,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     {
                                         if (this.shipmentPM.MainCarriageETA == null && this.shipmentPM.MainCarriageATA == null)
                                         {
-                                            this.shipmentPM.MainCarriageETA = this.EventLocationeDate;
+                                            this.shipmentPM.MainCarriageETA = this.ArrivalDate;
                                         }
 
                                         break;

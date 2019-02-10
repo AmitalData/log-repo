@@ -529,6 +529,8 @@
     <Content Include="Main Branch\2019\01 - 2019\Day 27 [Maheera] Add Copy 1 to General ARInvoice.sql" />
     <Content Include="Main Branch\2019\01 - 2019\Day 30 [Rabaia] Connect DWFields To Categories.sql" />
     <Content Include="Main Branch\2019\01 - 2019\Day 30 [Rabaia] Fill DWCategories Table.sql" />
+    <Content Include="Main Branch\2019\02 - 2019\Day 9 [Abdullah] update searchfields of integrity checks.sql" />
+    <Content Include="Main Branch\2019\02 - 2019\Day 7 [Islam] Fix for empty shpment masterdataid records.sql" />
     <Content Include="Main Branch\2019\02 - 2019\Day 3[Khalid] delete objectfield and textcodes bluesnapconttractcode.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />

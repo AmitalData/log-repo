@@ -379,7 +379,7 @@ namespace Logitude.Server.Tools.FTP
                 }
                 string v_1 = "";
                 //if (uploadAsTemp) v_1 = " with 'Upload As Temp File' property ";
-                p_message = "File '" + p_filename + "' was successfully uploaded to '" + sftp.RemotePath + sftp.RemoteFile + v_1;
+                p_message = "File '" + p_filename + "' was successfully uploaded to '" + sftp.SSHHost + sftp.RemotePath + sftp.RemoteFile + v_1;
                 p_status = "0";
             }
             catch (Exception ex)

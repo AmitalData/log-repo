@@ -1,4 +1,7 @@
 <style>
+    .amcharts-axis-label{
+        font-family: Arial !important;
+    }
     .red {
         color: red !important;
     }
@@ -596,7 +599,7 @@
                                                 {{ 'GLAccounts.O.CreditLimit' | TextCodeTranslationPipe }}
                                             </div>
                                             <div class="amount" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'right'" >
-                                                {{accountCardlist.CreditLimitAmount}}
+                                                {{accountCardlist.CreditLimitAmount | NumbersPipe:'N2'}}
                                             </div>
                                             <!-- <div class="link" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}

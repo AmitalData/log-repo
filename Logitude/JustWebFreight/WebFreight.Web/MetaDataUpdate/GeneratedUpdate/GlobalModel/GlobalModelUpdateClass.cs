@@ -497,7 +497,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	
 	   
 	   
-	   
+	   	   BluesnapContractTypeUpdateClass.FillBluesnapContractType();
+	
 	   	   PaymentChannelUpdateClass.FillPaymentChannel();
 	
 	   	   PaymentCurrencyUpdateClass.FillPaymentCurrency();

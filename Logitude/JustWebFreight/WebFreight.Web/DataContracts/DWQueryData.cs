@@ -14,5 +14,6 @@ namespace WebFreight.Web.DataContracts
         public DWObjectFieldsDetails Filters { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
+        public string ColumnsSort { get; set; }
     }
 }
