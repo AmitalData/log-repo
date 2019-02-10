@@ -902,7 +902,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
             entityPM.IsImporterApprovalRequired = entityAM.IsImporterApprovalRequired;
             
-            if (currentTenant.AutoArchiveOnInvoice == true && entityAM.StatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityAM.IsOperationalClosed == false)
+            if (currentTenant.AutoArchiveOnInvoice == true && entityAM.OriginalStatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityPM.IsOperationalClosed == false)
             {
                 entityPM.IsOperationalClosed = true;
             }
