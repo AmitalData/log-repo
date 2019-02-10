@@ -129,7 +129,7 @@ export class BIReportPreviewComponent implements OnInit {
                             sortable: true,
                             width: columns[i].Width,
                             resizable: true,
-                            cellRenderer: this.DateCellRenderer,
+                            //cellRenderer: this.DateCellRenderer,
                             cellClass: columns[i].DataTypeCode,
                             //filter: 'agTextColumnFilter',
                             pivotIndex: columns[i].Index,
@@ -465,7 +465,7 @@ export class BIReportPreviewComponent implements OnInit {
         }
     }
     RunReportButtonClicked() {
-        this.RunReportCommand.emit(this.DWQueryData);
+        this.RunReportCommand.emit(this.BIReportXMLData.DWQueryData);//this.DWQueryData);
     }
     OnRunReportComplete(MyData) {
         if (MyData == "ValidationError") {
