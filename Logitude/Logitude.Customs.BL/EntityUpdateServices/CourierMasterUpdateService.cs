@@ -344,7 +344,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationId, false, false);
                         if (myDeclarationCourierStatusPM.CourierManifestStatusCode != "M" &&
-                            (setCourierManifestStatusCode == "R" && myDeclarationCourierStatusPM.CourierManifestStatusCode != "R") )
+                            (setCourierManifestStatusCode != "R" || (setCourierManifestStatusCode == "R" && myDeclarationCourierStatusPM.CourierManifestStatusCode != "R")) )
                         {
                             if(setDeclarationsList == "")
                             {

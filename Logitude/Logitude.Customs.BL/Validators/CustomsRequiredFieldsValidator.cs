@@ -1278,14 +1278,6 @@ namespace Logitude.Customs.BL.Validators
                         }
                     }
 
-                    if (info.Name == "MAWBTypeCode")
-                    {
-                        if (info.GetValue(courierMaster) == null)
-                        {
-                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
-                        }
-                    }
-
                     if (info.Name == "AirlineId")
                     {
                         if (info.GetValue(courierMaster) == null)
