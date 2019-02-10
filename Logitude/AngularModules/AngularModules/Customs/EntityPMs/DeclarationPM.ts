@@ -929,6 +929,11 @@ export class DeclarationPM {
     public set AcceptanceStatusName(newValue: string) { if (this.acceptanceStatusName != newValue) { this.acceptanceStatusName = newValue; this.MarkAsDirty("AcceptanceStatusName"); } }
        
 	 
+    private depositionStatusCode: string;
+    public get DepositionStatusCode() { return this.depositionStatusCode; }
+    public set DepositionStatusCode(newValue: string) { if (this.depositionStatusCode != newValue) { this.depositionStatusCode = newValue; this.MarkAsDirty("DepositionStatusCode"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

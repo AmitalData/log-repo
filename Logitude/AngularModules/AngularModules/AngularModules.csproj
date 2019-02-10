@@ -196,6 +196,8 @@
     <Content Include="Images\Icons\GreenV.png" />
     <Content Include="Images\Icons\OrangeV.png" />
     <Content Include="Images\Icons\RedX.png" />
+    <Content Include="Images\LogBox\DSV\Tab_Logo_Original.png" />
+    <Content Include="Images\LogBox\DSV\U_LOGBOX.png" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessProcessQueue\QueueNewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessRoleNewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\Team\TeamGeneralTabComponent.html" />
